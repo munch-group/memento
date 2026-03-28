@@ -100,7 +100,91 @@ The JSON file is a flat array of entry objects:
 
 Valid types: `fact`, `idea`, `hypothesis`, `quote`, `reference`, `observation`, `connection`, `person`.
 
+## Command-line tool (kb-manage.py)
+
+`kb-manage.py` is a Python CLI for batch operations on knowledge-base JSON files. It requires the `click` library (`pip install click`).
+
+```
+python3 kb-manage.py COMMAND [ARGS] [OPTIONS]
+```
+
+### Tags
+
+```bash
+kb-manage.py list-tags data.json                        # list all tags with counts
+kb-manage.py list-tags data.json --sort name             # sort alphabetically
+kb-manage.py rename-tag data.json "old-name" "new-name"  # rename across all entries
+kb-manage.py delete-tag data.json "unwanted"             # remove from all entries
+kb-manage.py add-tag data.json "new-tag"                 # add to all entries
+kb-manage.py add-tag data.json "reviewed" --where-type fact   # add only to facts
+kb-manage.py add-tag data.json "tau" --where-gene MAPT        # add where gene matches
+```
+
+### Genes
+
+```bash
+kb-manage.py list-genes data.json                        # list all genes with counts
+kb-manage.py rename-gene data.json "HDAC6" "HDAC6A"     # rename (case-insensitive match)
+kb-manage.py delete-gene data.json "BRCA1"               # remove from all entries
+```
+
+### Types
+
+```bash
+kb-manage.py list-types data.json                        # list types with counts
+kb-manage.py rename-type data.json "quote" "quote_para"  # rename a type
+kb-manage.py set-type data.json hypothesis --where-tag speculative  # bulk change type
+```
+
+### Removing entries
+
+All removal commands support `--dry-run` to preview without modifying the file.
+
+```bash
+kb-manage.py remove-by-tag data.json "deprecated" --dry-run  # preview
+kb-manage.py remove-by-tag data.json "deprecated"            # remove for real
+kb-manage.py remove-by-type data.json "person"               # remove all of a type
+kb-manage.py remove-by-id data.json abc123 def456            # remove specific entries
+```
+
+### Search and replace
+
+```bash
+kb-manage.py grep data.json "MAPT" -i                    # search (case-insensitive)
+kb-manage.py grep data.json "tau" --field content         # search specific field
+kb-manage.py replace data.json "BDMI" "BDM incompatibility"          # literal replace
+kb-manage.py replace data.json "chr(\d+)" "chromosome \1" --regex    # regex replace
+kb-manage.py replace data.json "old text" "new text" --dry-run       # preview changes
+```
+
+### Merging and importing files
+
+```bash
+kb-manage.py merge target.json source.json               # merge by ID (skip duplicates)
+kb-manage.py merge target.json source.json --overwrite   # merge (overwrite duplicates)
+kb-manage.py import target.json source.json              # append all (new IDs assigned)
+```
+
+### Bulk operations
+
+```bash
+kb-manage.py set-synced data.json false                  # mark all as unsynced
+kb-manage.py set-synced data.json true --where-tag reviewed  # mark filtered as synced
+kb-manage.py touch data.json                             # update all dates to now
+kb-manage.py touch data.json --where-tag active          # touch filtered entries
+```
+
+### Quality and diagnostics
+
+```bash
+kb-manage.py stats data.json       # summary: counts, types, tags, genes, content lengths
+kb-manage.py validate data.json    # check for missing fields and unknown types
+kb-manage.py clean data.json       # normalize: add missing fields, trim whitespace, dedup tags
+kb-manage.py dedup data.json       # remove duplicates by title
+kb-manage.py dedup data.json --by content --dry-run  # preview content-based dedup
+```
+
 ## Requirements
 
 - Google Chrome or Microsoft Edge (File System Access API required)
-- No server, no build step, no dependencies beyond the browser
+- `kb-manage.py` requires Python 3 and `click` (`pip install click`)

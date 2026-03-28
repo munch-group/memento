@@ -37,7 +37,7 @@
     ],
     "source": "Mao et al. / https://www.nature.com/articles/s41586-021-03519-x?fromPaywallRec=false",
     "date": "2026-03-27T12:40:59.571Z",
-    "synced": false,
+    "synced": true,
     "genes": [
       "CASK",
       "DMD"
@@ -51,7 +51,7 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T06:50:37.430Z",
-    "synced": false,
+    "synced": true,
     "genes": [
       "MAPT"
     ]
@@ -76,7 +76,7 @@
     ],
     "source": "",
     "date": "2026-03-28T07:35:15.625Z",
-    "synced": false,
+    "synced": true,
     "genes": [
       "MAPT"
     ]
@@ -89,7 +89,7 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T10:07:31.413Z",
-    "synced": false,
+    "synced": true,
     "genes": []
   },
   {
@@ -100,7 +100,7 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T10:08:30.606Z",
-    "synced": false
+    "synced": true
   },
   {
     "id": "mna6w9reeqz9",
@@ -111,7 +111,7 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T10:30:48.938Z",
-    "synced": false
+    "synced": true
   },
   {
     "id": "mnaajibbja5g",
@@ -122,39 +122,6 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T12:12:51.959Z",
-    "synced": false
-  },
-  {
-    "id": "mnaakebfmorv",
-    "type": "hypothesis",
-    "content": "blah blah",
-    "title": "Some hypothesis",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "date": "2026-03-28T12:13:33.435Z",
-    "synced": false
-  },
-  {
-    "id": "mnaalubsvj82",
-    "type": "quote",
-    "content": "asda adsf adsf dsf",
-    "title": "Some Quote",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "date": "2026-03-28T12:14:40.840Z",
-    "synced": false
-  },
-  {
-    "id": "mnaam64d5qb3",
-    "type": "reference",
-    "content": "some ference",
-    "title": "some thing",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "date": "2026-03-28T12:14:56.125Z",
-    "synced": false
+    "synced": true
   }
 ]

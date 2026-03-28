@@ -1,0 +1,470 @@
+[
+  {
+    "id": "ylx2ypzlss92",
+    "type": "reference",
+    "title": "Project: Phasic \u2014 PtD population genetics inference",
+    "content": "Active, high priority. Software for population genetic inference using phase-type distributions. Core concept: 'pedigree constraint' on ARG with invisible mutations. Applications: 1000 Genomes, archaic human introgression, baboon admixture. Features: block coalescent with selection, SMC models, two-locus likelihood, SVGD diagnostics, HMM, DFE analysis, positive selection statistics. Includes gene enrichment via STRING networks.",
+    "tags": [
+      "Phasic",
+      "PtD",
+      "methods",
+      "software",
+      "project-active"
+    ],
+    "genes": [],
+    "source": "https://munch-group.github.io/phasic",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "v4sao2mzg72s",
+    "type": "reference",
+    "title": "Project: HiC X/Y Sperm",
+    "content": "Active project. Hi-C analysis of X and Y chromosomes in sperm cells. Examines X chromosome inactivation features, FIRE peaks (Frequently Interacting Regulatory Elements), fiber-seq analysis. Uses GSE63525 dataset with HiCCUPS loop calling. Goal: understand sex chromosome-specific 3D genome structure in spermatogenesis and its relevance to meiotic drive.",
+    "tags": [
+      "chromatin",
+      "spermatogenesis",
+      "X-linked",
+      "project-active"
+    ],
+    "genes": [],
+    "source": "https://github.com/munch-group/hic-xy-sperm",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "oji7m75b84p5",
+    "type": "reference",
+    "title": "Project: Protein LoF and pathogenicity",
+    "content": "Active, high priority. Tests hypothesis that LoF mutations in autosomal genes involved in meiotic drive have different pathogenicity patterns. Includes TTLL10 gene studies and analysis of selection dynamics on pathogenic mutations. Keywords: Humans, Baboons, Primates, MD.",
+    "tags": [
+      "LoF",
+      "Drivers",
+      "primates",
+      "project-active"
+    ],
+    "genes": [
+      "TTLL10"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "w3wkepxoysax",
+    "type": "reference",
+    "title": "Project: Human-Neanderthal admixture",
+    "content": "Pilot stage, high priority. Analysis of Neanderthal-human admixture patterns using phase-type distribution methods. Examines X vs autosome admixture differences and BDMI signatures. Keywords: Humans, MD, BDMI, Admixture.",
+    "tags": [
+      "admixture",
+      "BDMI",
+      "Drivers",
+      "Neanderthal",
+      "project-pilot"
+    ],
+    "genes": [],
+    "source": "https://munch-group.github.io/human-neanderthal-admixture",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "u8m2c3yr4x7t",
+    "type": "reference",
+    "title": "Project: Chromatin in Macaque spermatogenesis",
+    "content": "Completed. Hi-C chromatin analysis during macaque spermatogenesis. Examined A/B compartment changes through spermatogenesis stages, chromatin looping, and their relevance to meiotic drive and BDMI. Keywords: Chromatin, MD, BDMI.",
+    "tags": [
+      "chromatin",
+      "spermatogenesis",
+      "BDMI",
+      "Drivers",
+      "macaque",
+      "project-done"
+    ],
+    "genes": [],
+    "source": "https://munch-group.github.io/hic-spermatogenesis",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "mbzk4u2n5m0w",
+    "type": "reference",
+    "title": "Project: Relate 1000 Genomes",
+    "content": "Completed. Analysis of 1000 Genomes Project data using Relate (tree-building tool). Extracted genealogical trees for selection analysis. Keywords: Humans, MD.",
+    "tags": [
+      "population-genetics",
+      "selection",
+      "project-done"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "uagn6sc8hpv9",
+    "type": "reference",
+    "title": "Project: A/B border inference",
+    "content": "Completed, high priority. Inference of chromatin A/B compartment borders, comparing X vs autosomes and X vs Y in spermatids. Used HiC data to identify compartment boundary positions and their enrichment for specific gene classes. Keywords: Chromatin, Humans.",
+    "tags": [
+      "chromatin",
+      "X-linked",
+      "compartments",
+      "project-done"
+    ],
+    "genes": [],
+    "source": "https://munch-group.org/hic-compartment-borders",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "ammk5v8iwr8x",
+    "type": "reference",
+    "title": "Project: Primate ILS",
+    "content": "Pilot stage, medium priority. Analysis of incomplete lineage sorting (ILS) across primate species. Examines shared ancestral polymorphisms that sorted differently in great ape lineages. Keywords: Primates, MD.",
+    "tags": [
+      "ILS",
+      "primates",
+      "Drivers",
+      "project-pilot"
+    ],
+    "genes": [],
+    "source": "https://munch-group.github.io/primate-ils",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "0pnq5moqls42",
+    "type": "reference",
+    "title": "Project: Primate LinARs",
+    "content": "Pilot stage, medium priority. Lineage-specific Accelerated Regions (LinARs) in primates. Examines LinAR density and A compartment enrichment in sperm chromatin. Keywords: MD, Chromatin.",
+    "tags": [
+      "evolution",
+      "regulation",
+      "primates",
+      "chromatin",
+      "project-pilot"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "kdiim03ca0p2",
+    "type": "reference",
+    "title": "Project: Tree selection stats",
+    "content": "Pilot stage, medium priority. Developing tree-based statistics for detecting selection, including aborted sweeps. Keywords: MD, BDMI.",
+    "tags": [
+      "selection",
+      "methods",
+      "Drivers",
+      "project-pilot"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "fhf6ft86w7kb",
+    "type": "reference",
+    "title": "Project: BDMI simulations",
+    "content": "Pilot stage, medium priority. Simulation framework for Bateson-Dobzhansky-Muller incompatibilities. Models how epistatic incompatibilities accumulate between diverging populations. Keywords: BDMI, MD.",
+    "tags": [
+      "BDMI",
+      "simulation",
+      "Drivers",
+      "project-pilot"
+    ],
+    "genes": [],
+    "source": "https://munch-group.github.io/bdmi-simulations",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "nh3qriqc3uxt",
+    "type": "reference",
+    "title": "Project: Awash hybrid incompatibility",
+    "content": "Blueprint stage, medium priority, pinned. Analysis of hybrid incompatibility in the Awash baboon hybrid zone (Ethiopia). Uses RFmix LAI to map admixture and detect BDMI signals. Keywords: Admixture, Baboons, BDMI. Scheduled June-July 2026.",
+    "tags": [
+      "BDMI",
+      "baboon",
+      "admixture",
+      "project-blueprint"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "qkd5h4wmmdx7",
+    "type": "reference",
+    "title": "Project: Bioinformatics Course",
+    "content": "Blueprint stage, low priority. University bioinformatics course covering: GWAS, Alignment, Substitution matrices, BLAST, Clustering, Phylogenetics, HMM, Gene prediction, Genome assembly, Neural networks. Weeks 6-14 lecture plan. Scheduled July-August 2026.",
+    "tags": [
+      "teaching",
+      "project-blueprint"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "k5c2eq1og9at",
+    "type": "idea",
+    "title": "Project: MAPT inversion and meiotic drive",
+    "content": "Compare MAPT frequency to the frequency of interacting genes participating in tubulin control of selective/directional transport across spermatid bridges. Could MAPT serve to control transmission ratio in the face of meiotic drive? Track H2 inversion across primates. Revisit selection in Iceland and Pygmy-Bantu admixture.",
+    "tags": [
+      "MAPT",
+      "Drivers",
+      "spermatogenesis",
+      "transport",
+      "project-idea"
+    ],
+    "genes": [
+      "MAPT"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "9bl2tvjxdpbk",
+    "type": "idea",
+    "title": "Project: FMC run-length inference",
+    "content": "Finite Markov Chain run-length inference method. Computes joint probability of same/different LAI ancestries at two loci using run-length distributions. Pinned, scheduled May 2026.",
+    "tags": [
+      "methods",
+      "LAI",
+      "admixture",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "zw87idcoxrzl",
+    "type": "idea",
+    "title": "Project: Ghost IM model inference",
+    "content": "Inference under ghost population isolation-with-migration model. Uses phase-type distribution framework to model admixture with unsampled (ghost) populations. Scheduled March 2026.",
+    "tags": [
+      "methods",
+      "PtD",
+      "admixture",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "1yglbdggi4yf",
+    "type": "idea",
+    "title": "Project: All baboon RFmix LAI",
+    "content": "Comprehensive local ancestry inference across all baboon species using RFmix. Feeds into Paper: Awash hybrid zone and Awash hybrid incompatibility projects. Pinned, scheduled April 2026.",
+    "tags": [
+      "baboon",
+      "LAI",
+      "admixture",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "py6kdu2efwi2",
+    "type": "idea",
+    "title": "Project: State lumping",
+    "content": "State lumping methods for reducing state space complexity in phase-type distribution models. Enables tractable inference for large demographic models. Scheduled April-May 2026.",
+    "tags": [
+      "methods",
+      "PtD",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "lo3uwshof5y3",
+    "type": "idea",
+    "title": "Project: Laplace transform",
+    "content": "Laplace transform methods for population genetics. Mathematical framework for computing coalescent quantities using Laplace transforms of phase-type distributions.",
+    "tags": [
+      "methods",
+      "PtD",
+      "theory",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "rvevpdli0h9b",
+    "type": "idea",
+    "title": "Project: Half-Sib Autism in macaques",
+    "content": "Half-sibling method for studying autism genetics in macaques. Method uses BLUP (Best Linear Unbiased Prediction). Key findings from literature: strong paternal heritability (19.4-25.5%) but negligible maternal (7.8-8.1%). Explores requirements for adapting this to human studies.",
+    "tags": [
+      "ASD",
+      "macaque",
+      "genetics",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "as7zkr0wymr8",
+    "type": "idea",
+    "title": "Project: X Chromosome GWAS",
+    "content": "Genome-wide association study focused on X chromosome variants. Tests whether X-linked common variants contribute disproportionately to trait heritability, particularly for conditions with sex bias like ASD.",
+    "tags": [
+      "GWAS",
+      "X-linked",
+      "ASD",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "bio53rw0v98z",
+    "type": "idea",
+    "title": "Project: X/Y DEG",
+    "content": "Differentially expressed genes between X and Y chromosomes. Examines sex-biased expression patterns and their relationship to meiotic drive, BDMI, and neurodevelopmental conditions.",
+    "tags": [
+      "X-linked",
+      "Y-chromosome",
+      "Drivers",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "757jijujppcm",
+    "type": "reference",
+    "title": "Paper: XY-GWAS",
+    "content": "Planned manuscript on X/Y chromosome GWAS. Idea stage. Needs 6 prerequisite projects completed. Pinned, scheduled May-June 2026.",
+    "tags": [
+      "manuscript",
+      "GWAS",
+      "X-linked",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "y8eyktzbn8xh",
+    "type": "reference",
+    "title": "Paper: Protein LoF",
+    "content": "Planned manuscript on protein loss-of-function and pathogenicity patterns. Idea stage. Needs 3 prerequisite projects. Scheduled August 2026.",
+    "tags": [
+      "manuscript",
+      "LoF",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "sqgtvtug40vm",
+    "type": "reference",
+    "title": "Paper: Baboon swampings",
+    "content": "Planned manuscript on baboon population swamping events. Idea stage. Depends on multiple baboon LAI and BDMI projects.",
+    "tags": [
+      "manuscript",
+      "baboon",
+      "admixture",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "t4cvryhidsaj",
+    "type": "reference",
+    "title": "Paper: Awash hybrid zone",
+    "content": "Planned manuscript on the Awash baboon hybrid zone. Idea stage. Depends on FMC run-length inference, Awash hybrid incomp., RFmix LAI, BDMI simulations, and border inference projects. Pinned, scheduled July 2026.",
+    "tags": [
+      "manuscript",
+      "baboon",
+      "BDMI",
+      "admixture",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "458dbcd6b09h",
+    "type": "reference",
+    "title": "Paper: Joint probability",
+    "content": "Planned manuscript on joint probability methods for population genetics. Uses phase-type distribution framework for computing multi-locus statistics.",
+    "tags": [
+      "manuscript",
+      "methods",
+      "PtD",
+      "project-idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "cjl2ukg6mnn9",
+    "type": "reference",
+    "title": "Project: Franklin \u2014 teaching tool",
+    "content": "Active, low priority. Teaching tool with CLI, educator, and admin components. Multiple GitHub repos (franklin-cli, franklin-educator, franklin-admin). Keywords: Teaching.",
+    "tags": [
+      "teaching",
+      "software",
+      "project-active"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  },
+  {
+    "id": "dzgl7gtihuth",
+    "type": "reference",
+    "title": "Project: Library maintenance",
+    "content": "Ongoing maintenance of software libraries used by the research group.",
+    "tags": [
+      "software",
+      "maintenance",
+      "project-active"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:12:32.672Z",
+    "synced": false
+  }
+]

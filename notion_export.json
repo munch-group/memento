@@ -1,0 +1,916 @@
+[
+  {
+    "id": "afgqc745hy99",
+    "type": "fact",
+    "title": "MAPT inversion \u2014 H1/H2 haplotypes",
+    "content": "The 17q21.31 inversion polymorphism contains H1 and H2 haplotypes. H1 is a risk factor for neurodegenerative diseases (tauopathies). H2 is protective for neurodegeneration but associated with recurrent microdeletion syndromes and neurodevelopmental disorders including ASD. H2 frequency: 20-30% in Europeans/SW Asians, nearly absent in East Asians (<5%), low in most African populations except some hunter-gatherer groups.",
+    "tags": [
+      "MAPT",
+      "Autosome",
+      "ASD",
+      "inversion"
+    ],
+    "genes": [
+      "MAPT"
+    ],
+    "source": "Pedicone et al. 2024; Donnelly et al. 2010",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "z45hiythzuh7",
+    "type": "fact",
+    "title": "Tau regulates directional microtubule transport",
+    "content": "Tau acts as a spatial and selective regulator of bidirectional transport, not a motor protein itself. Single-molecule studies: dynein reverses direction at tau patches while kinesin detaches. Kinesin inhibited at ~10x lower tau concentration than dynein. Kinesin-1 more inhibited than kinesin-2 or dynein. In healthy neurons, tau has a proximal-to-distal gradient: low tau at cell body allows kinesin anterograde transport; high tau at synapse facilitates cargo release; dynein retrograde transport is unimpeded.",
+    "tags": [
+      "tubulin",
+      "transport",
+      "MT"
+    ],
+    "genes": [
+      "MAPT"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "payqq9mofi23",
+    "type": "fact",
+    "title": "Tau transport \u2014 pathological implications",
+    "content": "In Alzheimer's disease, tau accumulates in the somatodendritic compartment. Kinesin-driven anterograde transport of new material to the axon terminal is severely compromised, leading to neurodegeneration. Tau overexpression alters run length (not velocity) of cargos in both directions, preferentially inhibiting anterograde transport, shifting net cargo movement toward the cell body.",
+    "tags": [
+      "transport",
+      "MT",
+      "neurodegeneration"
+    ],
+    "genes": [
+      "MAPT"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "aex86d5pzkuk",
+    "type": "fact",
+    "title": "Tubulin PTMs affecting tau-microtubule interactions",
+    "content": "Key post-translational modifications: (1) Polyglutamylation by TTLL1 (\u03b1-tubulin) and TTLL7 (\u03b2-tubulin) modulates tau affinity. Tuba4a lacking C-terminal polyglutamylation prevents tau and GSK3 binding. (2) Acetylation at \u03b1-tubulin K40 by \u03b1TAT1/Mec17; deacetylation by HDAC6 and SIRT2. (3) Detyrosination/tyrosination by TTL distinguishes labile vs stable MT regions. CCP1/CCP5/CCP6 are deglutamylases reversing TTLL activity.",
+    "tags": [
+      "tubulin",
+      "PTM",
+      "MT"
+    ],
+    "genes": [
+      "TTLL1",
+      "TTLL7",
+      "TUBA4A",
+      "HDAC6",
+      "SIRT2",
+      "ATAT1",
+      "TTL",
+      "CCP1",
+      "CCP5",
+      "CCP6"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "kc359cujvfe8",
+    "type": "fact",
+    "title": "Tau phosphorylation kinases",
+    "content": "GSK3B and CDK5 are the two main kinases causing abnormal tau hyperphosphorylation (Alzheimer's). MARK1-4 phosphorylate KXGS motifs causing MT disassembly; MARK2-mediated phosphorylation dissociates tau from HDAC6. Tyrosine kinases FYN, SYK, ABL phosphorylate tau at Y18, Y197, Y394 respectively. Loss of Tuba4a polyglutamylation prevents binding of both tau and GSK3 kinase to neuronal microtubules.",
+    "tags": [
+      "tubulin",
+      "PTM",
+      "MT"
+    ],
+    "genes": [
+      "MAPT",
+      "GSK3B",
+      "CDK5",
+      "MARK1",
+      "MARK2",
+      "MARK3",
+      "MARK4",
+      "FYN",
+      "SYK",
+      "ABL1"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "cgg9kommhku9",
+    "type": "fact",
+    "title": "HDAC6 \u2014 key X-linked regulator of tau and tubulin",
+    "content": "HDAC6 is located on Xp11.23 and is the most significant X-linked gene in the tau-tubulin regulatory system. It plays dual roles: (1) deacetylating tau protein (protects against tau accumulation), and (2) deacetylating tubulin (particularly \u03b1-tubulin at K40). MARK2-mediated tau phosphorylation leads to dissociation of tau from HDAC6 and reduced tau and tubulin acetylation. Most other regulatory genes in this network are autosomal.",
+    "tags": [
+      "X-linked",
+      "tubulin",
+      "MT"
+    ],
+    "genes": [
+      "HDAC6",
+      "MAPT",
+      "MARK2"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "ou931nhz33hb",
+    "type": "fact",
+    "title": "The tubulin code",
+    "content": "The 'tubulin code' refers to posttranslational modifications of tubulin proteins that regulate microtubule function: acetylation (K40), detyrosination/tyrosination, polyglutamylation, and polyglycylation. X-linked genes affecting microtubule function include DCX (Doublecortin \u2014 neuronal migration), FLNA (Filamin A \u2014 crosslinks actin and MT), FMR1 (Fragile X \u2014 MT-associated RNA transport), SRPX2 (speech/language areas, synaptic).",
+    "tags": [
+      "tubulin",
+      "PTM",
+      "MT",
+      "X-linked"
+    ],
+    "genes": [
+      "DCX",
+      "FLNA",
+      "FMR1",
+      "SRPX2"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "n607ybgv1eqg",
+    "type": "fact",
+    "title": "MAP7 family",
+    "content": "MAP7 (Microtubule-Associated Protein 7) family members stabilize microtubules and regulate motor protein activity. They are involved in neuronal development and axonal transport. MAP7 specifically activates kinesin-1 motility on microtubules, providing a mechanism for selective cargo transport along specific MT tracks.",
+    "tags": [
+      "MT",
+      "transport"
+    ],
+    "genes": [
+      "MAP7"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "a8a9hkoba4yy",
+    "type": "fact",
+    "title": "OGT modifies tau and influences directional MT transport",
+    "content": "OGT (O-GlcNAc transferase, X-linked) modifies tau: O-GlcNAcylation competes with phosphorylation for overlapping Ser/Thr residues. When OGT is active and tau is O-GlcNAcylated, tau stays bound to MTs, preferentially impeding kinesin-driven anterograde transport. OGT also modifies MAP2 and MAP4 (functionally analogous to tau). A catalytic domain missense mutation (p.N567K) in monozygotic female twins caused intellectual disability with skewed X-inactivation.",
+    "tags": [
+      "X-linked",
+      "MT",
+      "ASD",
+      "transport"
+    ],
+    "genes": [
+      "OGT",
+      "MAPT",
+      "MAP2",
+      "MAP4"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "3ptwzxy6zste",
+    "type": "fact",
+    "title": "CACNA1C and CACNA1F population frequency parallels",
+    "content": "CACNA1C variant rs1006737 shows MAF ~33-36% in Europeans but only ~6.3% in Han Chinese \u2014 a ~5-6 fold difference, paralleling the MAPT H2 inversion frequency pattern. Both enriched in Europeans, rare in East Asians. CACNA1F (X-linked calcium channel) has rare causal variants in ASD. CNTNAP2 rs2710102 shows a different pattern \u2014 common across diverse populations without the dramatic Europe-Asia contrast.",
+    "tags": [
+      "ASD",
+      "population-genetics",
+      "calcium-channel"
+    ],
+    "genes": [
+      "CACNA1C",
+      "CACNA1F",
+      "CNTNAP2"
+    ],
+    "source": "Li et al. 2015; Serafini et al. 2024",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "yqkg2i05bfun",
+    "type": "fact",
+    "title": "Gene Interaction Network \u2014 MT transport, tau regulation, spermatid sex determination",
+    "content": "Comprehensive synthesis covering ORF1, DYNLT3, DYNC1LI1, DYNLL1 in transport; CDK5, GSK3B, FYN in tau regulation; OGT and HDAC6 in post-translational modification; and their convergence on post-meiotic sex ratio distortion in spermatids. These pathways connect microtubule-based directional transport with meiotic drive mechanisms.",
+    "tags": [
+      "MT",
+      "transport",
+      "Drivers",
+      "spermatogenesis"
+    ],
+    "genes": [
+      "DYNLT3",
+      "DYNC1LI1",
+      "DYNLL1",
+      "CDK5",
+      "GSK3B",
+      "FYN",
+      "OGT",
+      "HDAC6"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "krzofaam424g",
+    "type": "fact",
+    "title": "cDEG \u2014 22 X-linked genes in microtubule-based transport",
+    "content": "Analysis of 22 X-linked cDEG (candidate differentially expressed genes) for involvement in microtubule-based transport. Core transport genes: DYNLT3 (dynein light chain), CFAP47 (cilia/flagella), OCRL (vesicle trafficking), EMD (nuclear envelope-MT link), DIAPH2 (formin, actin-MT crosstalk), PRICKLE3 (planar cell polarity), SYP (synaptic vesicle). Many have roles in spermatogenesis and neuronal function.",
+    "tags": [
+      "X-linked",
+      "MT",
+      "transport",
+      "Drivers"
+    ],
+    "genes": [
+      "DYNLT3",
+      "CFAP47",
+      "OCRL",
+      "EMD",
+      "DIAPH2",
+      "PRICKLE3",
+      "SYP"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "y6dnrisxn8ta",
+    "type": "fact",
+    "title": "X-linked genes controlling MT directional transport",
+    "content": "Key X-linked genes: KIF4A (kinesin, chromosome condensation and cytokinesis), DIAPH2 (formin linking actin nucleation to MT dynamics), AKAP4 (major fibrous sheath protein in sperm flagella). Neuronal transport genes: DCX (doublecortin \u2014 neuronal migration), CDKL5 (kinase \u2014 MT dynamics in dendrites), ARX (transcription factor for interneuron migration). Disease implications: mutations cause lissencephaly, epilepsy, intellectual disability.",
+    "tags": [
+      "X-linked",
+      "MT",
+      "transport",
+      "neuronal"
+    ],
+    "genes": [
+      "KIF4A",
+      "DIAPH2",
+      "AKAP4",
+      "DCX",
+      "CDKL5",
+      "ARX"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "8o531zt9ujm3",
+    "type": "fact",
+    "title": "Autosomal\u2013X-linked protein interactions with mitochondrial relevance",
+    "content": "STRING analysis identified 13 protein-protein interactions between autosomal mitochondrial/RNA-processing genes and X-linked genes. Top hits: MRPS7\u2013EIF1AX (score 0.888, mitoribosome\u2013translation), GRSF1\u2013RPS6KA3 (0.629, MT RNA\u2013MAPK signaling), GRSF1\u2013HSD17B10 (0.612, core MT RNA processing), PNPT1\u2013DKC1 (0.579, MT RNA\u2013ribosome biogenesis). Themes: mitochondrial RNA processing, ribosome coordination, signaling, protein quality control, epigenetic regulation.",
+    "tags": [
+      "BDMI",
+      "MT",
+      "Autosome",
+      "X-linked",
+      "mitochondria"
+    ],
+    "genes": [
+      "MRPS7",
+      "EIF1AX",
+      "GRSF1",
+      "RPS6KA3",
+      "HSD17B10",
+      "PNPT1",
+      "DKC1",
+      "DDX3X"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "l5rcu3cxecij",
+    "type": "hypothesis",
+    "title": "TTLL11 inactivation as response to X-linked meiotic drivers",
+    "content": "TTLL11, a tubulin polyglycylase, is inactivated in humans and gorillas but active in chimpanzees. Hypothesis: TTLL11 inactivation was an evolutionary response to X-linked meiotic drivers. In species with strong sperm competition (chimps), TTLL11 remains functional for flagellar motility. In monogamous/low-competition species (humans, gorillas), TTLL11 loss was tolerated or adaptive as it may suppress driver transmission via altered sperm MT dynamics.",
+    "tags": [
+      "Drivers",
+      "spermatogenesis",
+      "tubulin",
+      "evolution"
+    ],
+    "genes": [
+      "TTLL11"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "4xjevlm0ijvy",
+    "type": "fact",
+    "title": "Brain-enriched microRNAs and genomic conflict",
+    "content": "miR-9 and miR-124 are brain-enriched microRNAs hypothesized to suppress X-linked meiotic drivers. These miRNAs may have been co-opted for neuronal function after initially evolving to suppress selfish genetic elements. This creates a mechanistic link between meiotic drive suppression and male-biased neurodevelopmental vulnerability (ASD), as disruption of these regulatory networks affects both processes.",
+    "tags": [
+      "Drivers",
+      "ASD",
+      "miRNA",
+      "neuronal"
+    ],
+    "genes": [
+      "MIR9",
+      "MIR124"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "u60wt1swsdc5",
+    "type": "fact",
+    "title": "X-linked genes in intercellular bridge transport during spermatogenesis",
+    "content": "X-linked genes regulate selective transport through intercellular bridges connecting spermatids: IQSEC2 (ARF-GEF, vesicle trafficking), UPF3B (nonsense-mediated decay, RNA quality), VSIG1 (cell adhesion at bridge junctions), DYNLT3 (dynein light chain, directional cargo transport). These bridges allow sharing of X-gene products among haploid spermatids, creating opportunity for meiotic drive.",
+    "tags": [
+      "Drivers",
+      "spermatogenesis",
+      "X-linked",
+      "transport"
+    ],
+    "genes": [
+      "IQSEC2",
+      "UPF3B",
+      "VSIG1",
+      "DYNLT3"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "jf8ytu6fpjjt",
+    "type": "fact",
+    "title": "Sperm development and X-linked meiotic drive candidates",
+    "content": "X-linked gene candidates for meiotic drive in spermatogenesis, drawing parallels with mouse Slx/Slxl1 and Sly systems. Key candidates: CFAP47 (cilia/flagella motility), DYNLT3 (dynein light chain), PRICKLE3 (planar cell polarity), SPANXN5 (sperm nuclear matrix). Analysis covers manchette structure, nuclear remodeling during spermiogenesis, and how individual genes might bias sex chromosome transmission.",
+    "tags": [
+      "Drivers",
+      "spermatogenesis",
+      "X-linked"
+    ],
+    "genes": [
+      "CFAP47",
+      "DYNLT3",
+      "PRICKLE3",
+      "SPANXN5",
+      "SLX",
+      "SLY"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "zz8yga26kmfg",
+    "type": "hypothesis",
+    "title": "Theoretical predictions of male sex chromosome drive",
+    "content": "Mathematical framework for sex chromosome drive with three fitness stages: (1) fertilization to meiosis (diploid fitness), (2) meiosis to ejaculation (haploid fitness + transmission distortion), (3) sperm competition. Marginal fitness integrates across all three stages. Selection coefficients depend on interaction between diploid effects, haploid selection, transmission ratio, and sperm competition intensity.",
+    "tags": [
+      "Drivers",
+      "theory",
+      "population-genetics"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "ypp9bfu9hyt0",
+    "type": "fact",
+    "title": "Transmission distortion in humans",
+    "content": "Draft for Nature publication analyzing candidate autosomal meiotic drive genes. Potential driver loci include RP3-449H6.1, PPP1R12B, TOP1, SNAP29, PDE11A, PCDH1, ZNF469, ATP1B2, HEXIM1, RRAGC, ABCB11, MAST4. Analysis examines autosomal variation and plausible meiotic drive mechanisms across different genomic regions.",
+    "tags": [
+      "Drivers",
+      "population-genetics"
+    ],
+    "genes": [
+      "PPP1R12B",
+      "TOP1",
+      "SNAP29",
+      "PDE11A",
+      "PCDH1",
+      "ZNF469",
+      "MAST4"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "ytwdszmasxfa",
+    "type": "fact",
+    "title": "PRKX/PRKY \u2014 X-Y gametologs and ASD",
+    "content": "PRKX and PRKY are gametologous protein kinase A genes on X and Y chromosomes. PRKX has been linked to autism spectrum disorder and has roles in spermatogenesis. Evidence of positive selection in the PRKX lineage suggests functional divergence from PRKY. PRKX is involved in PKA signaling pathways relevant to both neuronal development and germ cell biology.",
+    "tags": [
+      "X-linked",
+      "ASD",
+      "spermatogenesis"
+    ],
+    "genes": [
+      "PRKX",
+      "PRKY"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "45k3qxp0lxf5",
+    "type": "fact",
+    "title": "Chromatin looping and BDMI",
+    "content": "Chromatin looping via CTCF and cohesin (RAD21/SMC3) can create cis-acting Bateson-Dobzhansky-Muller incompatibilities (BDMIs) spanning multiple megabases. Diverging loop extrusion architecture between species means hybrid genomes may have incompatible 3D chromatin organization. Case studies: cohesin misregulation in mouse oocytes, PRDM9 divergence in mice, chromosomal inversions, Drosophila HMR/LHR system.",
+    "tags": [
+      "BDMI",
+      "chromatin",
+      "speciation"
+    ],
+    "genes": [
+      "CTCF",
+      "RAD21",
+      "SMC3",
+      "PRDM9"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "s2tyqtr71n2w",
+    "type": "fact",
+    "title": "A/B compartment maps for neurons",
+    "content": "Chromatin compartment analysis (A = active, B = inactive) in neurons reveals neuron-specific 3D genome organization. Compartment boundaries may coincide with regulatory regions critical for neuronal gene expression. Relevant for understanding how chromatin architecture affects neurodevelopmental gene regulation and potential BDMI effects in hybrid genomes.",
+    "tags": [
+      "chromatin",
+      "neuronal",
+      "compartments"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "zr1zgp9ly3bx",
+    "type": "fact",
+    "title": "HiC X/Y Sperm \u2014 chromatin loops and compartments",
+    "content": "Hi-C analysis of X and Y chromosomes in sperm cells. Data from Rao et al. on X chromosome inactivation features. Analysis includes chromatin loops, FIRE peaks (Frequently Interacting Regulatory Elements), CTCF sites, and TSS regions. Uses GSE63525 dataset with HiCCUPS loop calling from multiple cell types. Relevant to understanding sex chromosome-specific 3D genome structure.",
+    "tags": [
+      "chromatin",
+      "spermatogenesis",
+      "X-linked"
+    ],
+    "genes": [
+      "CTCF"
+    ],
+    "source": "Rao et al.; GSE63525",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "omfua0hsdo57",
+    "type": "observation",
+    "title": "Accelerated non-coding regions across primate lineages",
+    "content": "LinAR (Lineage-specific Accelerated Regions) count analysis across primate species. Compares accelerated non-coding region counts across different primate lineage branches. These regions may represent regulatory innovations under positive selection in specific lineages.",
+    "tags": [
+      "evolution",
+      "regulation",
+      "primates"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "kg54wje7axnr",
+    "type": "fact",
+    "title": "Baboon BDMI \u2014 admixture and hybrid incompatibility",
+    "content": "Research on baboon admixture, hybrid zones, and Bateson-Dobzhansky-Muller incompatibilities. Studies olive/yellow/hamadryas baboon admixture patterns in Awash region (Ethiopia), Tanzania, and Arabia. Uses RFmix for local ancestry inference (LAI). Key finding: stronger selection against admixture on X chromosome than autosomes, consistent with Haldane's rule. Analyzes overlap between A/B chromatin compartment borders and cDEG.",
+    "tags": [
+      "BDMI",
+      "baboon",
+      "admixture",
+      "X-linked"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "opuyasqnh9mo",
+    "type": "idea",
+    "title": "Baboon LAI East Africa",
+    "content": "Local ancestry inference (LAI) across all baboon species in East Africa. Project to comprehensively map admixture patterns genome-wide in Ethiopian and Tanzanian baboon populations using RFmix and related methods.",
+    "tags": [
+      "BDMI",
+      "baboon",
+      "admixture",
+      "LAI"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "uco5uw1v3y7l",
+    "type": "hypothesis",
+    "title": "What explains Lewontin's paradox?",
+    "content": "Lewontin's paradox: genetic diversity varies far less across species than census population sizes would predict. Hypotheses include: linked selection (background selection and hitchhiking), recombination rate variation, population structure effects, and effective population size being decoupled from census size. Explores how recombination maps, mutation rates, and selection landscapes jointly shape diversity patterns.",
+    "tags": [
+      "population-genetics",
+      "theory",
+      "Idea"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "izdehariib5w",
+    "type": "hypothesis",
+    "title": "What drives the turnover of PRDM9 alleles?",
+    "content": "PRDM9 determines recombination hotspot locations in many mammals. Its rapid allelic turnover is paradoxical: the gene evolves faster than almost any other in the genome. Hypotheses include hotspot erosion by biased gene conversion, meiotic drive, Red Queen dynamics between PRDM9 and its binding sites, and interaction with hybrid incompatibility (PRDM9 is the only mammalian speciation gene identified so far).",
+    "tags": [
+      "PRDM9",
+      "recombination",
+      "evolution",
+      "speciation"
+    ],
+    "genes": [
+      "PRDM9"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "qnnpkvu9gsko",
+    "type": "idea",
+    "title": "Why is there no Denisova admixture on X?",
+    "content": "The X chromosome shows notably less Denisovan admixture than autosomes in modern human populations. This parallels the reduced Neanderthal ancestry on X. Potential explanations: stronger selection against introgressed X-linked variants in hemizygous males, higher density of male-fertility genes on X, or X-linked hybrid incompatibilities consistent with Haldane's rule.",
+    "tags": [
+      "admixture",
+      "X-linked",
+      "Denisova",
+      "evolution"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "4ipappxc4vlh",
+    "type": "idea",
+    "title": "Is ASD PGS enriched on chrX?",
+    "content": "Research question: Is the polygenic score (PGS) for autism spectrum disorder disproportionately enriched on the X chromosome? Would test whether X-linked common variants contribute more to ASD heritability than expected by gene count, potentially explaining the male bias in ASD prevalence.",
+    "tags": [
+      "ASD",
+      "X-linked",
+      "GWAS",
+      "population-genetics"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "jk80gxtmz38s",
+    "type": "idea",
+    "title": "Do SFARI gene variants have higher pathogenicity on X vs autosomes?",
+    "content": "Research question: Do segregating amino acid variants of SFARI genes (autism-associated) have higher mean pathogenicity scores on the X chromosome than on autosomes, after accounting for hemizygous exposure and smaller effective population size of X? Tests whether X-linked ASD genes are under different selective constraints.",
+    "tags": [
+      "ASD",
+      "X-linked",
+      "SFARI",
+      "population-genetics"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "6r1ghrdlciaz",
+    "type": "hypothesis",
+    "title": "X-Y-A-brain hypothesis",
+    "content": "Hypothesis connecting X chromosome, Y chromosome, and autosomal gene interactions to brain development and ASD. Proposes that genomic conflicts between sex chromosomes (meiotic drive, imprinting, dosage) have shaped the neurodevelopmental gene landscape, creating vulnerability to conditions like ASD that show strong male bias. Links meiotic drive suppression, X-inactivation, and sex-differential gene expression.",
+    "tags": [
+      "ASD",
+      "X-linked",
+      "Drivers",
+      "neuronal",
+      "hypothesis"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "zv07xt3ggl3u",
+    "type": "idea",
+    "title": "ASD deltaY-hap GWAS",
+    "content": "Idea for GWAS examining the association between Y chromosome haplotype variation (deltaY-hap) and autism spectrum disorder. Would test whether Y-linked variation contributes to ASD risk beyond X-linked and autosomal effects.",
+    "tags": [
+      "ASD",
+      "GWAS",
+      "Y-chromosome"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "cfftjufdfynx",
+    "type": "idea",
+    "title": "Genes that form circRNA on X chromosome",
+    "content": "Research question exploring which X-linked genes produce circular RNAs (circRNAs) and whether circRNA formation is enriched among ASD-associated or meiotic drive-related genes. CircRNAs can act as miRNA sponges and regulate gene expression.",
+    "tags": [
+      "circRNA",
+      "X-linked",
+      "regulation"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "encc6soidi1e",
+    "type": "fact",
+    "title": "Xi and MSCI \u2014 genes near A/B compartment borders",
+    "content": "X-inactivation (Xi) and meiotic sex chromosome inactivation (MSCI) involve genes near A/B chromatin compartment borders on the X chromosome. Key genes at these borders: AKAP4 (fibrous sheath), CLCN5 (chloride channel), ATP7A (copper transport), CYBB (NADPH oxidase). Position at compartment borders may make these genes sensitive to chromatin reorganization during inactivation.",
+    "tags": [
+      "X-linked",
+      "chromatin",
+      "MSCI",
+      "inactivation"
+    ],
+    "genes": [
+      "AKAP4",
+      "CLCN5",
+      "ATP7A",
+      "CYBB"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "sgr8ks5e7rxv",
+    "type": "fact",
+    "title": "Notes on mitochondria \u2014 X-linked regulation",
+    "content": "Mitochondrial DNA haplogroup variation associated with ASD. Key questions: how are mitochondria regulated by X chromosome genes? RHOT1/MIRO mediates mitochondria-dynactin interaction in axons, linking MT transport to mitochondrial positioning. Biparental inheritance of mtDNA reported in some cases. Mishmar's work highlights X-chromosome regulation of mitochondrial genes. Mitochondrial dynamics (fission/fusion) disrupted in neurodevelopmental disorders.",
+    "tags": [
+      "mitochondria",
+      "X-linked",
+      "ASD",
+      "transport"
+    ],
+    "genes": [
+      "RHOT1"
+    ],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "vdbaqsbyvzz5",
+    "type": "reference",
+    "title": "Phase-type distributions for population genetics",
+    "content": "Phase-type distributions (PtD) methodology for population genetic inference. Covers: expected residence time computation, Laplace transforms, epoch-wise time-inhomogeneous moments, discrete multivariate joint probability, state space for coalescent with selection. Foundation for the Phasic software project.",
+    "tags": [
+      "methods",
+      "theory",
+      "Phasic"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "luzw0l9w60jp",
+    "type": "reference",
+    "title": "Phasic \u2014 population genetics inference project",
+    "content": "Major software project using phase-type distributions for population genetic inference. Core concept: 'pedigree constraint' on ARG with invisible mutations. Applications: 1000 Genomes analysis, archaic human introgression, baboon admixture. Features: block coalescent with selection, SMC models, two-locus likelihood under variable population size, SVGD diagnostics, HMM with observables, DFE analysis, positive selection statistics.",
+    "tags": [
+      "methods",
+      "software",
+      "Phasic",
+      "population-genetics"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "aiavc3boicrp",
+    "type": "reference",
+    "title": "Popgen Models overview",
+    "content": "Population genetics modeling notes covering: epoch-wise time-inhomogeneous moments, block coalescent algorithm, coalescent with selection, SFS and two-locus SFS models, demography models, ghost population IM model, two-locus joint probabilities for HMM, background selection, and along-sequence inference methods.",
+    "tags": [
+      "methods",
+      "theory",
+      "population-genetics"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "ew64inoyi9zw",
+    "type": "reference",
+    "title": "SVGD \u2014 Stein Variational Gradient Descent for inference",
+    "content": "Adapting Stein Variational Gradient Descent (SVGD) for moment-based inference with phase-type distributions. Implementation in JAX for DPH (Discrete Phase-type) inference. Includes parallelization notes comparing Clang+Polly vs GCC for PtD computations, multivariate skewness/kurtosis measures, and stochastic gradient descent approaches.",
+    "tags": [
+      "methods",
+      "software",
+      "Phasic",
+      "inference"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "boqqy4prxwyg",
+    "type": "reference",
+    "title": "Along-the-genome models",
+    "content": "Models for joint probability along sequences: truncating joint prob for recent time periods, topologies as hidden states, TRAILS-like IM HMM models, Markov properties of grouped trees, non-adjacent tons with distance constraints, HMM approaches using Nbest for state labeling, two-locus two-seq models, ARG recombination modeling.",
+    "tags": [
+      "methods",
+      "theory",
+      "HMM",
+      "population-genetics"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "by9sou3qd7yj",
+    "type": "reference",
+    "title": "Inference framework",
+    "content": "Comprehensive framework for population genetic inference using PtD. Includes: parallelization of PtD computations (Clang+Polly vs GCC benchmarks), Bayesian inference with PtD, multivariate moment measures, complete JAX/SVGD implementation code, integration with PyMC, and comparison of inference approaches.",
+    "tags": [
+      "methods",
+      "software",
+      "inference",
+      "Phasic"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "abjmembffj1o",
+    "type": "reference",
+    "title": "Measure haplotype incompatibility from tree sequences",
+    "content": "SCM (sequentially Markov coalescent) framework for measuring haplotype incompatibility. Measures time until recombinant lineage coalesces. Uses topology-based counting of diamond-shaped recombination patterns. Normalization by lineage counts at recombination time. Robust to demographic variations.",
+    "tags": [
+      "methods",
+      "theory",
+      "recombination"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "runo0nvgg2b4",
+    "type": "reference",
+    "title": "LAI run-length inference",
+    "content": "Method for inferring local ancestry using run-length distributions. Based on finite Markov chain run-length theory. Computes joint probability of same or different LAI ancestries at two loci. Applicable to baboon admixture and human archaic introgression studies.",
+    "tags": [
+      "methods",
+      "LAI",
+      "admixture"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "vkcytoa710oi",
+    "type": "idea",
+    "title": "IBD on hex grid with Laplace-transform",
+    "content": "Idea for modeling identity-by-descent (IBD) on a hexagonal spatial grid using Laplace transforms. Would combine spatial population genetics with phase-type distribution methodology.",
+    "tags": [
+      "methods",
+      "theory",
+      "spatial",
+      "IBD"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "6o7ljknw2w5v",
+    "type": "idea",
+    "title": "Tree statistics for aborted sweeps",
+    "content": "Developing tree statistics to detect aborted (incomplete) selective sweeps. Statistics under development: number of runs, longest derived run, modified RELATE stat, successive pairs stat. Need to check old prox stat implementation for uniform p-values.",
+    "tags": [
+      "methods",
+      "selection",
+      "theory"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "7vy80652bwd4",
+    "type": "idea",
+    "title": "MD simulation using SLiM",
+    "content": "Idea for using SLiM (Selection on Linked Mutations) forward-time simulator for molecular dynamics simulations of evolutionary processes. SLiM allows modeling of complex scenarios including spatial structure, recombination, and selection.",
+    "tags": [
+      "methods",
+      "simulation"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "12ulfie3a2ss",
+    "type": "reference",
+    "title": "Publication plan",
+    "content": "Planned publications: (1) XYWAS + positive selection on common variants, (2) Primate protein variation, (3) Hamadryas/Olive LAI/BDMI hybridization, (4) Phasic \u2014 human/archaic analyses with run length distributions, (5) All moments of piecewise time-homogeneous PtD (epochs), (6) Information theory and Fisher-information metrics, (7) Composite likelihood approaches, (8) Joint probability of SNPs.",
+    "tags": [
+      "Funding",
+      "planning"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "j0ibmyk01z4d",
+    "type": "reference",
+    "title": "Leipzig Abstract \u2014 The Subtle Saboteur",
+    "content": "Abstract: 'The Subtle Saboteur: How meiotic drive may shape species, minds, and X-chromosomes.' Discusses how meiotic driver genes on sex chromosomes influence X chromosome evolution, speciation, and potentially neurodevelopmental conditions. Presented at Leipzig meeting.",
+    "tags": [
+      "Drivers",
+      "ASD",
+      "Abstract",
+      "X-linked"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  },
+  {
+    "id": "856fphf664xy",
+    "type": "person",
+    "title": "Jenny \u2014 macaque and baboon research",
+    "content": "Researcher working on macaque genetic studies (mtDNA clades), baboon hybridization and admixture (RFmix), Ethiopian/Tanzanian baboon populations, X-chromosome patterns and Haldane's rule, Hi-C data integration, compartment analysis, selection coefficients. Also working on phasing in macaques and simulation studies. Collaborates with Erik on admixture and negative selection.",
+    "tags": [
+      "baboon",
+      "BDMI",
+      "admixture",
+      "chromatin"
+    ],
+    "genes": [],
+    "source": "",
+    "date": "2026-03-28T14:00:53.583Z",
+    "synced": false
+  }
+]

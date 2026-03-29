@@ -112,7 +112,11 @@ a { color: inherit; }
 .card-source { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-left: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
 .synced-badge { font-family: var(--mono); font-size: 10px; color: #2a7a2a; }
 .unsynced-badge { font-family: var(--mono); font-size: 10px; color: #c44; }
-.card-actions { margin-top: 9px; padding-top: 9px; border-top: 0.5px solid var(--border); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.card-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 6px; }
+.card-actions .icon-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; opacity: 0.45; transition: opacity 0.15s; }
+.card-actions .icon-btn:hover { opacity: 0.85; }
+.card-actions .icon-btn.edit { color: var(--text); }
+.card-actions .icon-btn.delete { color: #c44; }
 .spacer { flex: 1; }
 #item-list { display: flex; gap: 8px; align-items: flex-start; }
 .item-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -629,8 +633,8 @@ function renderCard(item) {
   <div class="card-content${exp?'':' clamped'}">${exp?md(item.content):esc(item.content)}</div>
   ${(tags||genes)?`<div class="card-meta">${tags}${genes}</div>`:''}
   ${exp?`<div class="card-actions">
-    <button class="btn btn-sm" onclick="editItem(event,'${item.id}')">Edit</button>
-    <button class="btn btn-sm btn-danger" onclick="deleteFromCard(event,'${item.id}')">Delete</button>
+    <button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>
+    <button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>
   </div>`:''}
 </div>`;
 }

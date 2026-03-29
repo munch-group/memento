@@ -1,7 +1,7 @@
 [
   {
     "id": "69c660649x19",
-    "type": "connection",
+    "type": "observation",
     "content": "Christian Stenvang found ARHGAP5 as circRNA",
     "title": "",
     "tags": [
@@ -13,7 +13,8 @@
     "synced": false,
     "genes": [
       "ARHGAP5"
-    ]
+    ],
+    "_sortTag": "ASD"
   },
   {
     "id": "mn8voud8tcix",
@@ -27,7 +28,8 @@
     "source": "Mao et al. 2021 / https://www.nature.com/articles/s41586-021-03519-x?fromPaywallRec=false",
     "date": "2026-03-27T12:29:20.444Z",
     "synced": false,
-    "genes": []
+    "genes": [],
+    "_sortTag": "LoF"
   },
   {
     "id": "mn8w3ttf10m9",
@@ -43,7 +45,8 @@
     "genes": [
       "CASK",
       "DMD"
-    ]
+    ],
+    "_sortTag": "LoF"
   },
   {
     "id": "mn9z13p244y8",
@@ -56,7 +59,8 @@
     "synced": true,
     "genes": [
       "MAPT"
-    ]
+    ],
+    "_sortTag": ""
   },
   {
     "id": "mna0610oovuf",
@@ -66,7 +70,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T07:22:26.856Z",
-    "synced": true
+    "synced": true,
+    "_sortTag": ""
   },
   {
     "id": "mna0mi7dvkjk",
@@ -81,7 +86,8 @@
     "synced": true,
     "genes": [
       "MAPT"
-    ]
+    ],
+    "_sortTag": "tubulin"
   },
   {
     "id": "mna62bfer2nb",
@@ -92,7 +98,8 @@
     "source": "",
     "date": "2026-03-28T10:07:31.413Z",
     "synced": true,
-    "genes": []
+    "genes": [],
+    "_sortTag": ""
   },
   {
     "id": "mna63l3ip2gi",
@@ -102,18 +109,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T10:08:30.606Z",
-    "synced": true
-  },
-  {
-    "id": "mna6w9reeqz9",
-    "type": "fact",
-    "content": "some fact",
-    "title": "",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "date": "2026-03-28T10:30:48.938Z",
-    "synced": true
+    "synced": true,
+    "_sortTag": ""
   },
   {
     "id": "mnaajibbja5g",
@@ -124,51 +121,44 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T12:12:51.959Z",
-    "synced": true
-  },
-  {
-    "id": "mnafzfgc99ga",
-    "type": "fact",
-    "content": "Tester with image\n\n![image](images/mnafzsew_Screenshot_2026-03-16_at_21.17.27.png)",
-    "title": "Image tester",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "date": "2026-03-28T14:45:31.401Z",
-    "synced": false
+    "synced": true,
+    "_sortTag": ""
   },
   {
     "id": "mnaj6jeqa41x",
-    "type": "fact",
+    "type": "idea",
     "content": "https://bookdown.org/roback/bookdown-BeyondMLR/\n\n- Rolling Regression — PyMC example gallery https://www.pymc.io/projects/examples/en/latest/generalized_linear_models/GLM-rolling-regression.html\n- Analysis of An (AR(1)) Model in PyMC — PyMC example gallery https://www.pymc.io/projects/examples/en/latest/time_series/AR.html\n- Conditional Autoregressive (CAR) Models for Spatial Data — PyMC example gallery https://www.pymc.io/projects/examples/en/latest/spatial/conditional_autoregressive_priors.html\n- Conditional Autoregressive (CAR) Models for Spatial Data — PyMC example gallery https://www.pymc.io/projects/examples/en/latest/spatial/conditional_autoregressive_priors.html DartML/Stein-Variational-Gradient-Descent: code for the paper “Stein\n- https://www.pymc.io/projects/examples/en/latest/spatial/conditional_autoregressive_priors.html",
     "title": "PtD using PyMC",
     "genes": [],
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:14:43.394Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnaj80vnw7eb",
-    "type": "fact",
+    "type": "idea",
     "content": "**Joint prob / along sequence**\n\n- I can truncate the joint prob so I only consider the the last mill years and put the last bins without much power into the trash states.\n- If we had trees we would have perfect knowledge, and assuming an SMC, all information would be Markov, but since we only have tons, maybe there is something go gain by including also non-adjacent tons with some maximum distance. But that would present some problems with using data multiple times that would need to be addressed.\n- Use topologies as hidden states and make a TRAILS-like IM HMM model\n- I cannot use single base-pair transitions because then the model will “loose its memory” once into a stretch of 0-0 ton pairs. I need to either\n- If I group marginal trees in hidden states, then the process is only Markov if all trees in a group has the same probability of turning into a tree in another group.\n- That might be the case if I group trees by topology. It think it would also be the case if hidden states group trees by which pair coalesce last.\n- Not all the information is in the ton-pairs (because we don’t model whether a 3-ton is part of a neighboring 4-ton or not). But most of it is.\n- Posterior estimates thought: Assuming a fixed waiting time, can I treat the Ptd as a HMM and use Nbest to find the most likely labelling of time points.\n- Maybe I could even do a two-locus two-seq model and consider neigboring trees and include 1, 2, and 3 recombinations in the state space\n- Maybe it makes most sense to just sample recombination points and then treat SNPs between recombinations as part of the same tree and pairs of SNPs seperated by R recombination points as seperated by R recmobination events - with R in {1, 2, 3, 4, 5} or something sensible. If I “know” two trees, can I compute the number of recombination events separating two trees?\n- pymc-extras/notebooks/Making a Custom Statespace Model.ipynb at main · pymc-devs/pymc-extras [https://github.com/pymc-devs/pymc-extras/blob/main/notebooks/Making a Custom Statespace Model.ipynb](https://github.com/pymc-devs/pymc-extras/blob/main/notebooks/Making%20a%20Custom%20Statespace%20Model.ipynb)\n- pymc-experimental now includes state spaces models! - News - PyMC Discourse https://discourse.pymc.io/t/pymc-experimental-now-includes-state-spaces-models/12773\n- SMC’ SFS inference with rolling branch level heights.\nMake the rolling background state be total branch length (draft for sampling branch levels as random walk is in `phase-type-distributions/notebooks/smc-prime-tree-levels.py`).\n- \n- That would not require two-locus ARG joint probs, but would require modelling of allele frequencies like for selection.\n- The two conditional joint probabilities are computed using different state spaces:\nNo “non-diamond” recombination events allowed: Count recombination events like you do for each ton. Record if a coalescent event closes a “diamond loop”, in which case we reduce the nr of recombination events by 1. Redirect all edges leading to states with more than one recombination event to trash states.\nAt least one “non-diamond” recombination event happens: .Like above, but allowing only states with at least one recombination event to transition to absorbing.\n- https://www.biorxiv.org/content/10.1101/2024.03.24.586479v1.full.pdf",
     "title": "\"Along the genome\" models",
     "genes": [],
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:15:52.691Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnaj9vzuy8pv",
-    "type": "fact",
+    "type": "idea",
     "content": "Assuming discrete non-overlapping generations, the gene variant need to pass three hurdles:\n\n- Survive from fertilization to meiosis in sons and daughters (effects on organism) with probability $p_d$.\n- Survive from meiosis to ejaculation (effects on integrity of spermatogenesis,  X carrying sperm count) with probability $p_h$\n- Survive sperm competition from ejaculation to fertilization (effects on sperm X function, Y function, and sperm competition) with probability $p_c$\n\nTotal marginal fitness is $p = p_d\\, p_h\\, p_c$, were \n\n$$\n\\begin{align*} p_d &= \\frac{f'_d}{ f_d} \\\\ p_h &= f'_h \\\\ p_c &= (1-c) t'\\, f'_c + c\\, \\frac{t' f'_c}{t f_c} \\\\ &= t' f'_c \\bigg(1-c+\\frac{c}{t f_c}\\bigg) \\end{align*}\n$$\n\nHere, $p_d$ and $p_h$ are the marginal probabilities of diploid and spermatogenesis survival and $p_c$ is the marginal probability of fertilization. $f'$ and $t'$ represent individual fitness and transmission distortion and $f$ and $t$ the population means. Subscripts $f_d, f_h, f_c$ represent fitness in the diploid, haploid and competition stages. Sperm competition, $c$, is the proportion of oviduct sperm from other males. \n\n$$\np = \\frac{f'_d}{ f_d} f'_h\\, t'\\, f'_c\\, \\bigg(1-c+\\frac{c}{t f_c}\\bigg)\n$$\n\n$$\ns = \\begin{cases} t_d t_x,& \\text{with no sperm comp.} \\\\ > 0,& \\text{with strong sperm comp.}  \\end{cases}\n$$\n\nAssume an X-linked variant inducing a diploid relative fitness $f_d$ (relative to other population individuals), a haploid relative fitness $f_h$, and an X to Y transmission ratio of $t_x$. The selection coefficient on the driver will be $s = t_x f_d f_h$. \n\n$$\n\\begin{align*} s_x &= -f + t \\\\ s_y &= -f \\\\ \\end{align*}\n$$",
     "title": "Theoretical predictions of male sex chromosome drive",
     "genes": [],
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:17:19.674Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnajv09s4d7q",
@@ -179,7 +169,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:33:44.992Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnajw2ag8ced",
@@ -190,18 +181,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:34:34.264Z",
-    "synced": false
-  },
-  {
-    "id": "mnak733kes49",
-    "type": "quote",
-    "content": "Test quote",
-    "title": "quote",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "date": "2026-03-28T16:43:08.528Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnak7fw0spip",
@@ -212,7 +193,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:43:25.104Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnak83u59hd3",
@@ -223,7 +205,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:43:56.141Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnaki0jl3rtb",
@@ -234,7 +217,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T16:52:20.753Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnakvjqxzs1h",
@@ -247,7 +231,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:02:09.849Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "MT"
   },
   {
     "id": "mnakw4f1h29k",
@@ -260,7 +245,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:02:36.637Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "MT"
   },
   {
     "id": "mnakxrxvel95",
@@ -273,7 +259,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:03:53.779Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "MT"
   },
   {
     "id": "mnakyck5wrva",
@@ -286,7 +273,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:04:20.501Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "MT"
   },
   {
     "id": "mnakz5kuuy44",
@@ -299,7 +287,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:04:58.110Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "MT"
   },
   {
     "id": "mnal4zqcj1uw",
@@ -310,7 +299,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:09:49.383Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnal6io9ucmf",
@@ -321,7 +311,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:10:41.673Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnalas8rulbc",
@@ -332,7 +323,8 @@
     "tags": [],
     "source": "Cohen et al. / https://doi.org/10.1371/journal.pgen.1006407",
     "date": "2026-03-28T17:14:00.699Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnalf938v5j7",
@@ -343,7 +335,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:17:34.277Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnalgr97j7ls",
@@ -354,7 +347,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:18:39.355Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnalheytby63",
@@ -365,7 +359,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:19:26.990Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnaljhw1y4bq",
@@ -376,7 +371,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:20:47.185Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnall18u55ka",
@@ -387,7 +383,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:21:58.926Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnalmg1kuh8r",
@@ -400,7 +397,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:23:04.760Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "ASD"
   },
   {
     "id": "mnalupv6b33t",
@@ -411,7 +409,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:29:30.738Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnalwiv1jkh9",
@@ -425,7 +424,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:30:54.973Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Baboons"
   },
   {
     "id": "mnaly15qdqn5",
@@ -439,7 +439,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:32:05.342Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Baboons"
   },
   {
     "id": "mnalz4re940a",
@@ -450,7 +451,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:32:56.665Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnalzvyg8m1u",
@@ -461,7 +463,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:33:31.912Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnam0cbxbnaz",
@@ -472,7 +475,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:33:53.133Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnam1c8do6ku",
@@ -483,7 +487,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:34:39.661Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnam8wpj2zqa",
@@ -494,7 +499,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:40:32.791Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnamayvpa6xx",
@@ -505,7 +511,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:42:08.917Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnamel336yht",
@@ -516,7 +523,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:45:20.143Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnami1f8ad5o",
@@ -529,7 +537,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:47:38.804Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnami942gvut",
@@ -540,7 +549,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:47:48.770Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnamjy84xrag",
@@ -551,7 +561,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:49:07.972Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnamp0teij9n",
@@ -562,7 +573,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:53:04.610Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnamq38yyfgv",
@@ -575,7 +587,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:53:54.418Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnamqc4dhv4h",
@@ -588,7 +601,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:54:05.917Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnamrn6ms2a7",
@@ -601,11 +615,12 @@
     ],
     "source": "",
     "date": "2026-03-28T17:55:06.910Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnamsrfgs9ly",
-    "type": "reference",
+    "type": "idea",
     "content": "What If I compute s for each snp in a treesequence tree. and consider the distribution of s inside this single tree as the DFE. That should account for the DFE since some variants are ancestral and some are derived.  Is it somehow possible to treat the diffeerence between tree as a nuisance variable that can be handled if we know the demographry fromr estimating that globally.",
     "title": "",
     "genes": [],
@@ -614,7 +629,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:55:59.068Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnamtwmo82qq",
@@ -627,18 +643,20 @@
     ],
     "source": "",
     "date": "2026-03-28T17:56:52.464Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnamv6r7u882",
     "type": "reference",
     "content": "Look at Rasmus paper on length of admixed segments and DAIM for inspiration",
-    "title": "",
+    "title": "Phasic",
     "genes": [],
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:57:52.243Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnamvzjjp2dw",
@@ -649,7 +667,8 @@
     "tags": [],
     "source": "",
     "date": "2026-03-28T17:58:29.551Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnamwsd7nxyj",
@@ -662,7 +681,8 @@
     ],
     "source": "",
     "date": "2026-03-28T17:59:06.907Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnamylwb46oc",
@@ -675,11 +695,12 @@
     ],
     "source": "",
     "date": "2026-03-28T18:00:31.835Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Phasic"
   },
   {
     "id": "mnbbkl1iacgl",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes differentially expressed in X and Y spermatids",
     "title": "cDEG genes",
     "genes": [
@@ -716,11 +737,12 @@
     ],
     "source": "Meritxell's draft paper",
     "date": "2026-03-29T05:29:27.940Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "DEG"
   },
   {
     "id": "mnbc53t4iwgn",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes differentially expressed in X and Y spermatid nuclei",
     "title": "nDEG genes",
     "genes": [
@@ -825,7 +847,8 @@
     ],
     "source": "Meritxell's draft paper",
     "date": "2026-03-29T05:45:25.384Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "DEG"
   },
   {
     "id": "mnbc7xvq9wmz",
@@ -872,11 +895,12 @@
     "tags": [],
     "source": "Christian Stenvangs Master thesis",
     "date": "2026-03-29T05:47:37.670Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnbcbiincsw3",
-    "type": "reference",
+    "type": "fact",
     "content": "X inactivated genes",
     "title": "Xi genes",
     "genes": [
@@ -1201,11 +1225,12 @@
     ],
     "source": "Roman et al. 2023 / https://doi.org/10.1016/j.xgen.2023.100259",
     "date": "2026-03-29T05:50:24.383Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Xi"
   },
   {
     "id": "mnbcd0tkwdak",
-    "type": "reference",
+    "type": "fact",
     "content": "Genes escaping X chromosome inactivation",
     "title": "Xi escape genes",
     "genes": [
@@ -1301,11 +1326,12 @@
     ],
     "source": "Roman et al. 2023 / https://doi.org/10.1016/j.xgen.2023.100259",
     "date": "2026-03-29T05:51:34.760Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Xi"
   },
   {
     "id": "mnbcf2rq9uwq",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes with uncertain X chromosome inactivation status",
     "title": "Xi uncertain",
     "genes": [
@@ -1335,11 +1361,12 @@
     "tags": [],
     "source": "Roman et al. 2023 / https://doi.org/10.1016/j.xgen.2023.100259",
     "date": "2026-03-29T05:53:10.598Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnbco6ym8f41",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes with expression modulated by Xi copy number (Fibroblast or LCL)",
     "title": "Expression Xi copy number modulated",
     "genes": [
@@ -1382,7 +1409,8 @@
     ],
     "source": "Roman et al. / https://doi.org/10.1016/j.xgen.2023.100259",
     "date": "2026-03-29T06:00:15.930Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Xi"
   },
   {
     "id": "mnbcs33cmmn3",
@@ -1495,7 +1523,8 @@
     ],
     "source": "Erik's RFmix analysis",
     "date": "2026-03-29T06:03:17.544Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Baboons"
   },
   {
     "id": "mnbcuf3mi6dn",
@@ -1549,11 +1578,12 @@
     ],
     "source": "Ari's project report",
     "date": "2026-03-29T06:05:06.418Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Sweep"
   },
   {
     "id": "mnbcwuztcimc",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes in the 90% ECH regions",
     "title": "ECH90 genes",
     "genes": [
@@ -1657,11 +1687,12 @@
     ],
     "source": "Skov et al. / https://doi.org/10.1016/j.xgen.2023.100274",
     "date": "2026-03-29T06:07:00.329Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Sweep"
   },
   {
     "id": "mnbd1fmvr6b6",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes with accelerated evolution on the Simiiformes ancestral branch",
     "title": "Simiiformes accelerated genes",
     "genes": [
@@ -1722,11 +1753,12 @@
     "tags": [],
     "source": "Shao et al. 2023 / https://doi.org/10.1126/science.abn6919",
     "date": "2026-03-29T06:10:33.703Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnbd7vlf54dh",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes associated with regional SA phenotypes",
     "title": "Regional brain folding genes",
     "genes": [
@@ -1756,11 +1788,12 @@
     ],
     "source": "Mallard et al. / https://www.nature.com/articles/s41593-021-00890-w",
     "date": "2026-03-29T06:15:34.323Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "ASD"
   },
   {
     "id": "mnbe6tuog9bg",
-    "type": "reference",
+    "type": "fact",
     "content": "MAGMA genes from SOM Table 10 in \"The X chromosome’s influences on the human brain\"",
     "title": "X influence human brain MAGMA genes",
     "genes": [
@@ -1900,11 +1933,12 @@
     ],
     "source": "Jiang et al. / https://doi.org/10.1126/sciadv.adq5360",
     "date": "2026-03-29T06:42:45.024Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "ASD"
   },
   {
     "id": "mnbl8uw9d40a",
-    "type": "reference",
+    "type": "fact",
     "content": "X chromosome genes overlapping regions introgressed from humans into Neanderthals",
     "title": "Human Neanderthal introgression",
     "genes": [
@@ -1980,11 +2014,12 @@
     ],
     "source": "Hubisz et al. 2020 / https://doi.org/10.1371/journal.pgen.1008895",
     "date": "2026-03-29T10:00:16.999Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Archaic"
   },
   {
     "id": "mnbo5sc9e23i",
-    "type": "quote",
+    "type": "reference",
     "content": "> Among the top up regulated proteins identified in our dataset (Fig. 7A), thirty-five proteins belong to neurodevelopmental pathways, including proteins involved in neuronal migration (PLXND1, FAT3, ASTN2, NEUROD1), neurogenesis (NEUROD1, RBBP5, RBBP6) and synaptic function (CLCN3, SORCS3, AP3B1).",
     "title": "Up/down regulated genes in OGT knockout mouse (C921Y)",
     "genes": [
@@ -1998,7 +2033,8 @@
     "tags": [],
     "source": "https://elifesciences.org/reviewed-preprints/107170",
     "date": "2026-03-29T11:21:52.569Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnboh4l9cq3y",
@@ -2128,11 +2164,12 @@
     ],
     "source": "My own codeml pilot analysis",
     "date": "2026-03-29T11:30:41.660Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": "Selection"
   },
   {
     "id": "mnbp1p0dmh0q",
-    "type": "reference",
+    "type": "fact",
     "content": "Human X chromosome genes at lineage accelerated regions",
     "title": "Human LinAR genes",
     "genes": [
@@ -2158,11 +2195,12 @@
     "tags": [],
     "source": "Cui et al. 2025 / https://www.nature.com/articles/s41586-025-08622-x",
     "date": "2026-03-29T11:46:41.245Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnbp22zklrc8",
-    "type": "reference",
+    "type": "fact",
     "content": "Chimpanzee X chromosome genes at lineage accelerated regions",
     "title": "Chimp LinAR genes",
     "genes": [
@@ -2196,11 +2234,12 @@
     "tags": [],
     "source": "Cui et al. 2025 / https://www.nature.com/articles/s41586-025-08622-x",
     "date": "2026-03-29T11:46:59.360Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnbp2wsjudjz",
-    "type": "reference",
+    "type": "fact",
     "content": "Orangutan X chromosome genes at lineage accelerated regions",
     "title": "Orang LinAR genes",
     "genes": [
@@ -2239,11 +2278,12 @@
     "tags": [],
     "source": "Cui et al. 2025 / https://www.nature.com/articles/s41586-025-08622-x",
     "date": "2026-03-29T11:47:37.987Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
   },
   {
     "id": "mnbp7lskset7",
-    "type": "reference",
+    "type": "fact",
     "content": "Orangutan X chromosome genes at lineage accelerated regions",
     "title": "Gorilla LinAR genes",
     "genes": [
@@ -2261,6 +2301,35 @@
     "tags": [],
     "source": "Cui et al. 2025 / https://www.nature.com/articles/s41586-025-08622-x",
     "date": "2026-03-29T11:51:17.012Z",
-    "synced": false
+    "synced": false,
+    "_sortTag": ""
+  },
+  {
+    "id": "mnbt01g8v0e5",
+    "type": "idea",
+    "content": "Like it is possible to model the Brownian motion of a phenotype along the branches of given tree, it should also be possible to do that conditional on the Coalescent process. I.e. how the phenotype evolves along the branches if it is not allowed to change the coalescence process.\n\nIn the coalescent with labelled lineages, I can track one or more phenotypes as additional properties. When I would otherwise add a coalescence transition, I now only do so if the phenotype properties of the two lineages are identical or just sufficiently similar. Otherwise I route the transition to trash. I can also use a kernel to weight the the two outcomes based on phenotype similarity and train the kernel parameters. The graph the standard coalescent but additional edges to two trash states. To retain the standard coalescent, rewards must be $\\mathbf{r}=\\{r_1,r_2 \\cdots,r_{|V|\\}}$ where\n\n$$\nr_i =  (1-\\frac{1}{n}\\sum_j^n )\n$$\n\n$$\n[x_j  * ( 1 + \\frac{d_j}{x_j })]^{-1}\n$$\n\n\nwhere $I$ enumerates the $n$ states that have teh same $k$ number of lineages\n\n can compute the posterior ancestral phenotype of each possible ancestral node by scaling expected_sojourn_time to sum to one.",
+    "title": "Marginal branch process on the coalescent",
+    "genes": [],
+    "tags": [
+      "Phasic"
+    ],
+    "source": "",
+    "date": "2026-03-29T13:37:22.520Z",
+    "synced": false,
+    "_sortTag": "Phasic"
+  },
+  {
+    "id": "mnbw5rojvnoy",
+    "type": "idea",
+    "content": "Like it is possible to model the Brownian motion of a phenotype along the branches of given tree, it should also be possible to do that conditional on the Coalescent process. I.e. how the phenotype evolves along the branches if it is not allowed to change the coalescence process.\n\nIn the coalescent with labelled lineages, I can track one or more phenotypes as additional properties. When I would otherwise add a coalescence transition, I now only do so if the phenotype properties of the two lineages are identical or just sufficiently similar. Otherwise I route the transition to trash. The graph the standard coalescent but additional edges to two trash states. States must be rewarded to retain the standard coalescent. If $V'$ is the subset of vertices $V$ for which only properties independent of coalescent rate differ, $t(v_j)$ is the total outgoing rate and $d(v_j)$ is the total rate to trash, then rewards must be $\\mathbf{r}=\\{r_1,r_2 \\cdots,r_{|V|}\\}$ where\n\n$$\nr_i = \\frac{1}{n} \\sum_j \\frac{t(v_j)}{ t(v_j) + d(v_j)}\n$$\n\nWe can then compute the posterior ancestral phenotype of each possible ancestral node by scaling expected_sojourn_time to sum to one.\n\nThis should also work if some or all states state have both coalescent and trash transitions weighted by their relative probability. In this case I could use a kernel for weighting the the two outcomes based on phenotype similarity and train the kernel parameters",
+    "title": "Marginal branch process on the coalescent",
+    "genes": [],
+    "tags": [
+      "Phasic"
+    ],
+    "source": "",
+    "date": "2026-03-29T15:05:48.643Z",
+    "synced": false,
+    "_sortTag": "Phasic"
   }
 ]

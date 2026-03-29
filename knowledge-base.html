@@ -21,13 +21,13 @@
 body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
 a { color: inherit; }
 .layout { display: flex; height: 100vh; }
-.sidebar { width: 220px; flex-shrink: 0; border-right: 0.5px solid var(--border); display: flex; flex-direction: column; padding: 1rem 0; background: var(--bg2); overflow: hidden; }
+.sidebar { width: 148px; flex-shrink: 0; border-right: 0.5px solid var(--border); display: flex; flex-direction: column; padding: 1rem 0; background: var(--bg2); overflow: hidden; }
 .main { flex: 1; overflow-y: auto; padding: 1.5rem 2rem 4rem; }
 .sb-title { font-size: 13px; font-weight: 500; padding: 0 1rem 0.75rem; border-bottom: 0.5px solid var(--border); margin-bottom: 0.75rem; }
 .sb-section { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); padding: 0 1rem; margin: 0.75rem 0 0.3rem; }
-.filter-chip { display: block; width: 100%; text-align: left; font-family: var(--mono); font-size: 11px; padding: 5px 1rem; border: none; background: transparent; cursor: pointer; color: var(--text2); transition: background 0.1s, color 0.1s; }
-.filter-chip:hover { background: var(--bg3); color: var(--text); }
-.filter-chip.active { background: var(--bg3); color: var(--text); font-weight: 500; }
+.filter-chip { display: block; width: 100%; text-align: left; font-family: var(--mono); font-size: 11px; padding: 5px 1rem; border: none; background: transparent; cursor: pointer; color: var(--text); transition: background 0.1s, color 0.1s; }
+.filter-chip:hover { background: rgba(24,95,165,0.08); }
+.filter-chip.active { background: rgba(24,95,165,0.12); color: var(--text); font-weight: 500; }
 .sb-count { float: right; font-size: 10px; color: var(--text3); }
 .sb-scroll { overflow-y: auto; flex: 1; }
 .sb-bottom { flex-shrink: 0; padding: 0.75rem 1rem 0; border-top: 0.5px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
@@ -109,14 +109,17 @@ a { color: inherit; }
 .gene { font-family: var(--mono); font-size: 10px; color: #185FA5; background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; } /* alt color: #8A2425 */
 .gene:hover { background: rgba(24,95,165,0.08); }
 .gene-more { font-family: var(--mono); font-size: 10px; color: #185FA5; background: transparent; padding: 2px 7px; border-radius: 3px; cursor: default; } /* alt color: #8A2425 */
-.card-source { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-left: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
+.card-bottom { display: flex; align-items: center; margin-top: 8px; gap: 8px; }
+.card-source { font-family: var(--mono); font-size: 10px; color: var(--text3); flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
+.card-source a { color: var(--text3); text-decoration: none; }
+.card-source a:hover { text-decoration: underline; color: var(--text2); }
+.card-bottom-actions { display: flex; gap: 8px; flex-shrink: 0; }
 .synced-badge { font-family: var(--mono); font-size: 10px; color: #2a7a2a; }
 .unsynced-badge { font-family: var(--mono); font-size: 10px; color: #c44; }
-.card-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 6px; }
-.card-actions .icon-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; opacity: 0.45; transition: opacity 0.15s; }
-.card-actions .icon-btn:hover { opacity: 0.85; }
-.card-actions .icon-btn.edit { color: var(--text); }
-.card-actions .icon-btn.delete { color: #c44; }
+.card-bottom-actions .icon-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; opacity: 0.45; transition: opacity 0.15s; }
+.card-bottom-actions .icon-btn:hover { opacity: 0.85; }
+.card-bottom-actions .icon-btn.edit { color: var(--text); }
+.card-bottom-actions .icon-btn.delete { color: #c44; }
 .spacer { flex: 1; }
 #item-list { display: flex; gap: 8px; align-items: flex-start; }
 .item-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -324,6 +327,7 @@ async function loadFromFile() {
       items = [];
     }
     updateFileStatus(fileHandle.name);
+    computeSortTags();
     renderFilters();
     renderList();
   } catch(e) { showToast('Read error: '+e.message); }
@@ -469,7 +473,7 @@ function cleanupMemory() {
 }
 
 // --- Sort ---
-const SORTS = [{key:'date',label:'Modified'},{key:'synced',label:'Synced'},{key:'type',label:'Type'}];
+const SORTS = [{key:'date',label:'Modified'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'}];
 function renderSortList() {
   const arrows = {true:'↑', false:'↓'};
   document.getElementById('sort-list').innerHTML = SORTS.map(s => {
@@ -506,7 +510,23 @@ function sortItems(arr) {
       if (ta !== tb) return dir * (ta - tb);
       return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
     }
+    if (sortKey === 'tags') {
+      const at = (a.tags||[]).length ? a._sortTag || '' : '';
+      const bt = (b.tags||[]).length ? b._sortTag || '' : '';
+      if (at !== bt) return dir * at.localeCompare(bt);
+      return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
+    }
     return 0;
+  });
+}
+// Pre-compute sort tags: for each entry, pick its most common tag as sort key
+function computeSortTags() {
+  const freq = {};
+  items.forEach(i => (i.tags||[]).forEach(t => { freq[t] = (freq[t]||0) + 1; }));
+  items.forEach(i => {
+    const tags = (i.tags||[]).slice();
+    tags.sort((a,b) => (freq[b]||0) - (freq[a]||0) || a.localeCompare(b));
+    i._sortTag = tags[0] || '';
   });
 }
 
@@ -650,9 +670,12 @@ function renderCard(item) {
   </div>
   <div class="card-content${exp?'':' clamped'}">${exp?md(item.content):esc(item.content)}</div>
   ${(tags||genes)?`<div class="card-meta">${tags}${genes}</div>`:''}
-  ${exp?`<div class="card-actions">
-    <button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>
-    <button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>
+  ${exp?`<div class="card-bottom">
+    <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
+    <span class="card-bottom-actions">
+      <button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>
+      <button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>
+    </span>
   </div>`:''}
 </div>`;
 }
@@ -792,7 +815,7 @@ async function saveItem(){
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('add-form').style.display='none';
   document.getElementById('btn-add-toggle').textContent='+ Add';
-  renderFilters(); renderList();
+  computeSortTags(); renderFilters(); renderList();
   showToast(wasEdit ? 'Updated' : 'Saved');
 }
 
@@ -849,9 +872,11 @@ document.addEventListener('keydown', async e=>{
     if(document.getElementById('add-form').style.display==='none') toggleForm();
   }
   if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){
+    e.preventDefault();
     if(document.getElementById('add-form').style.display!=='none'){
-      e.preventDefault();
       saveItem();
+    } else if(expandedId){
+      editItem({stopPropagation(){}}, expandedId);
     }
   }
 });
@@ -861,6 +886,17 @@ window.addEventListener('resize', ()=>{ clearTimeout(_resizeTimer); _resizeTimer
 
 // --- Utilities ---
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function formatSource(s) {
+  if (!s) return '';
+  const urlMatch = s.match(/(https?:\/\/[^\s]+)/);
+  if (urlMatch) {
+    const url = urlMatch[1];
+    const before = esc(s.slice(0, urlMatch.index));
+    const after = esc(s.slice(urlMatch.index + url.length));
+    return `${before}<a href="${esc(url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(url)}</a>${after}`;
+  }
+  return esc(s);
+}
 function md(s){
   if(!s) return '';
   try {

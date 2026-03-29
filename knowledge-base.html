@@ -93,6 +93,17 @@ a { color: inherit; }
 .card.expanded .gene-list .gene-more { display: none; }
 .gene-copy { font-size: 11px; color: var(--text3); cursor: pointer; margin-left: 2px; opacity: 0.6; }
 .gene-copy:hover { opacity: 1; color: var(--text); }
+.gene.highlighted { color: #c44; font-weight: 600; }
+.gene.highlighted:hover { background: rgba(204,68,68,0.08); }
+.highlight-bar { margin-bottom: 1rem; }
+.highlight-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.highlight-toggle:hover { color: var(--text2); }
+.highlight-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
+.highlight-bar.active .highlight-dot { background: #c44; border-color: #c44; }
+.highlight-bar.active .highlight-toggle { color: var(--text2); }
+.highlight-input-wrap { display: flex; gap: 8px; margin-top: 6px; }
+.highlight-input-wrap input { flex: 1; font-family: var(--font); font-size: 13px; padding: 5px 10px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
+.highlight-input-wrap input:focus { border-color: #c44; }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 .gene { font-family: var(--mono); font-size: 10px; color: #185FA5; background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; } /* alt color: #8A2425 */
@@ -196,6 +207,13 @@ a { color: inherit; }
         <input type="search" id="search-input" placeholder="@MAPT @HDAC6 = AND · @MAPT,HDAC6 = OR · #tag · free text" oninput="renderList()" />
         <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
       </div>
+      <div class="highlight-bar" id="highlight-bar">
+        <div class="highlight-toggle" onclick="toggleHighlightInput()"><span class="highlight-dot"></span> Highlight genes</div>
+        <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
+          <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6" oninput="updateHighlightSet()" />
+          <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
+        </div>
+      </div>
       <div id="item-list"></div>
     </div>
   </div>
@@ -227,6 +245,7 @@ let selectedType = 'fact';
 let expandedId = null;
 let editingId = null;
 let fileHandle = null;
+let highlightGenes = new Set();
 
 // --- IndexedDB (persist file handle across sessions) ---
 function idbOpen() {
@@ -445,6 +464,12 @@ function sortItems(arr) {
   // dir: 1 = ascending, -1 = descending (default for date = newest first)
   const dir = sortAsc ? 1 : -1;
   return arr.slice().sort((a,b) => {
+    // When highlight is active, sort by highlight count first (most matches on top)
+    if (highlightGenes.size) {
+      const ha = (a.genes||[]).filter(g => highlightGenes.has(g.toUpperCase())).length;
+      const hb = (b.genes||[]).filter(g => highlightGenes.has(g.toUpperCase())).length;
+      if (ha !== hb) return hb - ha;
+    }
     if (sortKey === 'date') {
       return dir * ((a.date||'').localeCompare(b.date||''));
     }
@@ -578,7 +603,15 @@ function renderCard(item) {
   const title=item.title||item.content.split('\n')[0].slice(0,80)+(item.content.length>80?'…':'');
   const tags=(item.tags||[]).map(t=>`<span class="tag" onclick="tagClick(event,'${t.replace(/'/g,"\\'")}') ">${esc(t)}</span>`).join('');
   const allGenes = item.genes||[];
-  const visGenes = allGenes.map(g=>`<span class="gene" onclick="geneClick(event,'${g.replace(/'/g,"\\'")}')\">${esc(g)}</span>`).join('');
+  const sortedGenes = highlightGenes.size ? [...allGenes].sort((a,b) => {
+    const ha = highlightGenes.has(a.toUpperCase()) ? 0 : 1;
+    const hb = highlightGenes.has(b.toUpperCase()) ? 0 : 1;
+    return ha - hb;
+  }) : allGenes;
+  const visGenes = sortedGenes.map(g=>{
+    const hl = highlightGenes.has(g.toUpperCase()) ? ' highlighted' : '';
+    return `<span class="gene${hl}" onclick="geneClick(event,'${g.replace(/'/g,"\\'")}')\">${esc(g)}</span>`;
+  }).join('');
   const geneCopy = (exp && allGenes.length) ? `<span class="gene-copy" title="Copy gene list for search" onclick="copyGenes(event,'${item.id}')">⧉</span>` : '';
   const genes = allGenes.length ? `<span class="gene-list">${visGenes}<span class="gene-more" title="${allGenes.length} genes">…</span>${geneCopy}</span>` : '';
   const claudeBadge = item.synced
@@ -603,7 +636,34 @@ function renderCard(item) {
 }
 
 function tagClick(e, tag) { e.stopPropagation(); setTagFilter(tag); }
-function geneClick(e, gene) { e.stopPropagation(); setGeneFilter(gene); }
+function geneClick(e, gene) {
+  e.stopPropagation();
+  if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
+  setGeneFilter(gene);
+}
+function toggleHighlightInput() {
+  const wrap = document.getElementById('highlight-input-wrap');
+  const bar = document.getElementById('highlight-bar');
+  const visible = wrap.style.display !== 'none';
+  wrap.style.display = visible ? 'none' : 'flex';
+  if (!visible) document.getElementById('highlight-input').focus();
+}
+function updateHighlightSet() {
+  const raw = document.getElementById('highlight-input').value;
+  highlightGenes = new Set(raw.replace(/@/g,'').split(/[\s,]+/).filter(Boolean).map(g=>g.toUpperCase()));
+  document.getElementById('highlight-bar').classList.toggle('active', highlightGenes.size > 0);
+  renderList();
+}
+function toggleHighlightGene(gene) {
+  const upper = gene.toUpperCase();
+  if (highlightGenes.has(upper)) highlightGenes.delete(upper); else highlightGenes.add(upper);
+  const input = document.getElementById('highlight-input');
+  input.value = [...highlightGenes].join(' ');
+  document.getElementById('highlight-bar').classList.toggle('active', highlightGenes.size > 0);
+  const wrap = document.getElementById('highlight-input-wrap');
+  if (highlightGenes.size > 0 && wrap.style.display === 'none') wrap.style.display = 'flex';
+  renderList();
+}
 function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTag=null; activeType='all'; renderFilters(); renderList(); }
 function toggleCard(id,e){if(e&&e.target.closest('a[href]'))return;expandedId=expandedId===id?null:id;renderList();}
 

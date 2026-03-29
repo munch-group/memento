@@ -113,6 +113,11 @@ a { color: inherit; }
 .card-source { font-family: var(--mono); font-size: 10px; color: var(--text3); flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
 .card-source a { color: var(--text3); text-decoration: none; }
 .card-source a:hover { text-decoration: underline; color: var(--text2); }
+.conn-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
+.conn-icon:hover { opacity: 0.7; }
+.conn-icon.active { opacity: 0.85; color: #185FA5; }
+.conn-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 10px; color: var(--text2); margin-top: 4px; cursor: pointer; }
+.conn-check input { margin: 0; }
 .card-bottom-actions { display: flex; gap: 8px; flex-shrink: 0; }
 .synced-badge { font-family: var(--mono); font-size: 10px; color: #2a7a2a; }
 .unsynced-badge { font-family: var(--mono); font-size: 10px; color: #c44; }
@@ -133,12 +138,11 @@ a { color: inherit; }
 .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 8px 18px; border-radius: var(--r); font-size: 13px; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 99; white-space: nowrap; }
 .toast.show { opacity: 1; }
 [data-type="fact"]        { --tc:#185FA5; --tbg:rgba(24,95,165,0.10); }
-[data-type="idea"]        { --tc:#A68B0A; --tbg:rgba(166,139,10,0.10); }
-[data-type="hypothesis"]  { --tc:#993556; --tbg:rgba(153,53,86,0.10); }
-[data-type="quote"]       { --tc:#B54B32; --tbg:rgba(181,75,50,0.10); }
 [data-type="reference"]   { --tc:#5F5E5A; --tbg:rgba(95,94,90,0.10); }
 [data-type="observation"] { --tc:#0F6E56; --tbg:rgba(15,110,86,0.10); }
-[data-type="connection"]  { --tc:#534AB7; --tbg:rgba(83,74,183,0.10); }
+[data-type="hypothesis"]  { --tc:#993556; --tbg:rgba(153,53,86,0.10); }
+[data-type="idea"]        { --tc:#A68B0A; --tbg:rgba(166,139,10,0.10); }
+[data-type="note"]        { --tc:#B54B32; --tbg:rgba(181,75,50,0.10); }
 [data-type="people"]      { --tc:#854F0B; --tbg:rgba(133,79,11,0.10); }
 .type-badge { color: var(--tc); background: var(--tbg); } /* alt: background: #F0EFEC; border: 1px solid #D1D0CE; */
 .type-opt.active { color: var(--tc); background: var(--tbg); border-color: var(--tc); }
@@ -202,6 +206,7 @@ a { color: inherit; }
           <label>Source</label>
           <input type="text" id="f-source" placeholder="Platt et al. 2026 / https://…">
         </div>
+        <label class="conn-check" style="margin-bottom:11px"><input type="checkbox" id="f-connection"> Connection</label>
         <div class="form-actions">
           <button class="btn btn-primary" onclick="saveItem()">Save</button>
           <button class="btn" onclick="cancelEdit()">Cancel</button>
@@ -237,9 +242,9 @@ a { color: inherit; }
 // ============================================================
 
 const TYPES = [
-  {key:'fact',label:'Fact',short:'Fact'},{key:'idea',label:'Idea',short:'Idea'},{key:'hypothesis',label:'Hypothesis',short:'Hypo'},
-  {key:'quote',label:'Quote/Para',short:'Quot'},{key:'reference',label:'Reference',short:'Refe'},
-  {key:'observation',label:'Observation',short:'Obsv'},{key:'connection',label:'Connection',short:'Conn'},{key:'people',label:'Person',short:'Pers'},
+  {key:'fact',label:'Fact',short:'Fact'},{key:'reference',label:'Reference',short:'Ref'},
+  {key:'observation',label:'Observation',short:'Obs'},{key:'hypothesis',label:'Hypothesis',short:'Hypo'},
+  {key:'idea',label:'Idea',short:'Idea'},{key:'note',label:'Note',short:'Note'},{key:'people',label:'Person',short:'Pers'},
 ];
 let items = [];
 let activeType = 'all';
@@ -419,13 +424,14 @@ function syncItem(e, id) {
   e.stopPropagation();
   const item = items.find(i => i.id === id);
   if (!item) return;
+  const typePrefix = item.connection ? 'Connection · ' : '';
   const typeName = TYPES.find(t=>t.key===item.type)?.label || item.type;
   const title = item.title ? ` — ${item.title}` : '';
   const genes = (item.genes||[]).length ? `\nGenes: ${item.genes.join(', ')}` : '';
   const tags = (item.tags||[]).length ? `\nTags: ${item.tags.join(', ')}` : '';
   const source = item.source ? `\nSource: ${item.source}` : '';
   const cleanContent = stripImageMd(item.content);
-  const prompt = `Please update your memory with this knowledge base entry (id: ${item.id}). If an entry with this id already exists in your memory, replace it entirely with this version. If it does not exist, add it.\n\n[${typeName}${title}] (id: ${item.id})\n${cleanContent}${genes}${tags}${source}`;
+  const prompt = `Please update your memory with this knowledge base entry (id: ${item.id}). If an entry with this id already exists in your memory, replace it entirely with this version. If it does not exist, add it.\n\n[${typePrefix}${typeName}${title}] (id: ${item.id})\n${cleanContent}${genes}${tags}${source}`;
   navigator.clipboard.writeText(prompt).then(() => {
     item.synced = true;
     saveToFile();
@@ -440,13 +446,14 @@ function syncItem(e, id) {
 function syncAll() {
   if (items.length === 0) { showToast('No entries to sync'); return; }
   const parts = items.map(item => {
+    const typePrefix = item.connection ? 'Connection · ' : '';
     const typeName = TYPES.find(t=>t.key===item.type)?.label || item.type;
     const title = item.title ? ` — ${item.title}` : '';
     const genes = (item.genes||[]).length ? `\nGenes: ${item.genes.join(', ')}` : '';
     const tags = (item.tags||[]).length ? `\nTags: ${item.tags.join(', ')}` : '';
     const source = item.source ? `\nSource: ${item.source}` : '';
     const cleanContent = stripImageMd(item.content);
-    return `[${typeName}${title}] (id: ${item.id})\n${cleanContent}${genes}${tags}${source}`;
+    return `[${typePrefix}${typeName}${title}] (id: ${item.id})\n${cleanContent}${genes}${tags}${source}`;
   });
   const ids = items.map(i => i.id);
   const prompt = `Please perform a FULL REPLACE of all knowledge base entries in your memory. The complete and authoritative set of entries is listed below. For each entry, if it already exists in your memory (by id), replace it entirely. If it is new, add it. IMPORTANT: any knowledge base entry currently in your memory whose id is NOT in this list has been deleted — please remove it from your memory.\n\nCurrent entry ids: ${ids.join(', ')}\n\n---\n\n${parts.join('\n\n---\n\n')}`;
@@ -473,7 +480,7 @@ function cleanupMemory() {
 }
 
 // --- Sort ---
-const SORTS = [{key:'date',label:'Modified'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'}];
+const SORTS = [{key:'date',label:'Modified'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'},{key:'connection',label:'Connection'}];
 function renderSortList() {
   const arrows = {true:'↑', false:'↓'};
   document.getElementById('sort-list').innerHTML = SORTS.map(s => {
@@ -514,6 +521,11 @@ function sortItems(arr) {
       const at = (a.tags||[]).length ? a._sortTag || '' : '';
       const bt = (b.tags||[]).length ? b._sortTag || '' : '';
       if (at !== bt) return dir * at.localeCompare(bt);
+      return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
+    }
+    if (sortKey === 'connection') {
+      const ca = a.connection ? 1 : 0, cb = b.connection ? 1 : 0;
+      if (ca !== cb) return cb - ca; // connections first (regardless of dir)
       return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
     }
     return 0;
@@ -665,6 +677,7 @@ function renderCard(item) {
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text">${esc(title)}</span>
+    <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'◆':'◇'}</span>
     <span class="card-date">${fmtDate(item.date)}</span>
     ${claudeBadge}
   </div>
@@ -728,6 +741,7 @@ function editItem(e, id) {
   document.getElementById('f-genes').value = (item.genes || []).join(', ');
   document.getElementById('f-tags').value = (item.tags || []).join(', ');
   document.getElementById('f-source').value = item.source || '';
+  document.getElementById('f-connection').checked = !!item.connection;
   document.getElementById('f-content').focus();
   showFormEditButtons(true, item);
   f.scrollIntoView({behavior:'smooth', block:'nearest'});
@@ -738,8 +752,8 @@ function toggleForm(){
   const open=f.style.display==='none';
   f.style.display=open?'':'none';
   document.getElementById('btn-add-toggle').textContent=open?'× Cancel':'+ Add';
-  if(open){editingId=null;buildTypePicker();document.getElementById('f-content').focus();showFormEditButtons(false);}
-  else{editingId=null;['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');showFormEditButtons(false);}
+  if(open){editingId=null;buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-content').focus();showFormEditButtons(false);}
+  else{editingId=null;['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;showFormEditButtons(false);}
 }
 
 function showFormEditButtons(show, item) {
@@ -791,6 +805,7 @@ async function saveItem(){
   if(!content){showToast('Content is required');return;}
   const genes=document.getElementById('f-genes').value.split(/[\s,]+/).map(g=>g.trim()).filter(Boolean);
   const tags=document.getElementById('f-tags').value.split(/[\s,]+/).map(t=>t.trim()).filter(Boolean);
+  const connection=document.getElementById('f-connection').checked;
   const now = new Date().toISOString();
   if(editingId){
     const item=items.find(i=>i.id===editingId);
@@ -798,6 +813,7 @@ async function saveItem(){
       item.type=selectedType; item.content=content;
       item.title=document.getElementById('f-title').value.trim();
       item.genes=genes; item.tags=tags; item.source=document.getElementById('f-source').value.trim();
+      item.connection=connection;
       item.synced = false;
     }
   } else {
@@ -806,7 +822,7 @@ async function saveItem(){
       type:selectedType, content,
       title:document.getElementById('f-title').value.trim(),
       genes, tags, source:document.getElementById('f-source').value.trim(),
-      date:now, synced:false
+      connection, date:now, synced:false
     });
   }
   const wasEdit = !!editingId;
@@ -825,6 +841,15 @@ function copyGenes(e, id) {
   if (!item || !item.genes?.length) return;
   const text = '@' + item.genes.join(',');
   navigator.clipboard.writeText(text).then(() => showToast('Copied: ' + text));
+}
+async function toggleConnection(e, id) {
+  e.stopPropagation();
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  item.connection = !item.connection;
+  item.synced = false;
+  await saveToFile();
+  renderList();
 }
 async function deleteFromCard(e,id){ e.stopPropagation(); return deleteItem(e,id); }
 async function deleteItem(e,id){

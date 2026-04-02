@@ -64,14 +64,16 @@
   },
   {
     "id": "mna0610oovuf",
-    "type": "fact",
+    "type": "note",
     "content": "Kinases and tubulin modifying enzymes\n\n**Kinases that Phosphorylate Tau:**\n\n1. **GSK3B (Glycogen Synthase Kinase-3β)**\n    - GSK3B phosphorylates tau at serine and threonine residues, causing detachment from microtubules and their disassembly\n    - Tau mutants resistant to phosphorylation by GSK3B retained substantial toxicity and had increased affinity for microtubules\n    - Loss of Tuba4a C-terminal polyglutamylation prevents the binding of both tau and GSK3 kinase to neuronal microtubules\n2. **CDK5 (Cyclin-Dependent Kinase 5)**\n    - CDK5 and GSK3B are the two main protein kinases that have an important role in the abnormal hyperphosphorylation of MAPT which leads to Alzheimer's disease\n    - Cyclin dependent kinase 5 (cdk5) phosphorylates tau along with other kinases including GSK3β, CK1, PKA, ERKs 1/2, PKC, CaMKII, tau-tubulin kinases 1 and 2, and MARKs\n3. **MARK Kinases (MARK1-4)**\n    - Phosphorylation at serine residues in K-X-G-S motifs by MAP/microtubule affinity-regulating kinase (MARK1, MARK2, MARK3 or MARK4) causes detachment from microtubules and their disassembly\n    - MARK2-mediated tau phosphorylation led to the dissociation of tau from HDAC6 and reduced tau and tubulin acetylation\n4. **FYN, SYK, and ABL Kinases**\n    - Tau can be phosphorylated by tyrosine kinases such as the SRC family members (LCK, SYK, and FYN) and the ABL family members (ARG and ABL1), with FYN, SYK, and ABL kinases phosphorylating tau at the Y18, Y197, and Y394 residues\n\n**Tubulin-Modifying Enzymes:**\n\n1. **TTLL Family (Tubulin Tyrosine Ligase-Like enzymes)**\n    - **TTLL1**: TTLL1 is one of the two predominant neuronal polyglutamylases responsible for polyglutamylation, primarily modifying α-tubulin\n    - **TTLL7**: TTLL7 is the other predominant neuronal polyglutamylase, primarily modifying β-tubulin\n    - TTLL3, TTLL8, and TTLL10 represent polyglycylases whereas the specific function of TTLL12 is presently unknown\n2. **CCP Family (Cytosolic Carboxypeptidases - Deglutamylases)**\n    - **CCP1 and CCP6**: CCPs are tubulin-modifying enzymes that remove acidic amino acid residues, reversing polyglutamylation catalyzed by TTLL family enzymes\n    - CCP5 was identified as a functional mammalian tubulin deglutamylase enzyme\n3. **HDAC6 (Histone Deacetylase 6)**\n    - HDAC6 is a tau deacetylase that protects against tau accumulation, with acetylation of tau inhibiting its function and promoting aggregation\n    - HDAC6 is one of the enzymes involved in tubulin deacetylation\n4. **ATAT1/MEC17 (α-Tubulin Acetyltransferase)**\n    - αTAT1 and Mec17 are the major enzymes responsible for acetylation of α-tubulin at lysine-40\n5. **SIRT2 (Sirtuin 2)**\n    - SIRT2 is involved in tubulin deacetylation along with HDAC6\n6. **TTL (Tubulin Tyrosine Ligase)**\n    - Tubulin Tyrosine Ligase (TTL) is the enzyme responsible for tyrosination of tubulin dimers\n7. **TUBA4A (Tubulin Alpha-4a)**\n    - Tuba4a is a major tubulin isotype highly expressed in the postnatal nervous system and carries the longest polyglutamyl side chains, making it unique within the family of tubulins",
     "title": "Tubulin PTM genes Interacting with MAPT",
     "tags": [],
     "source": "",
     "date": "2026-03-28T07:22:26.856Z",
-    "synced": true,
-    "_sortTag": ""
+    "synced": false,
+    "_sortTag": "",
+    "genes": [],
+    "connection": false
   },
   {
     "id": "mna0mi7dvkjk",
@@ -2332,6 +2334,67 @@
     "date": "2026-03-29T15:05:48.643Z",
     "synced": false,
     "_sortTag": "Phasic",
-    "connection": true
+    "connection": false
+  },
+  {
+    "id": "mnc2f6egdaoe",
+    "type": "fact",
+    "content": "Genes that are differentially expressed in X and Y bearing spermatids are candidate meiotic drivers. Finding them among genes introgressed from humans into Neanderthals 250-300,000 years BP introduce the possibility that they did their introgression was mediated by positive selection in the form of meiotic drive.",
+    "title": "Human cDEG genes admixed into Neanderthals",
+    "genes": [
+      "CFAP47",
+      "DIAPH2",
+      "DYNLT3",
+      "SYTL5"
+    ],
+    "tags": [
+      "Archaic",
+      "DEG"
+    ],
+    "source": "[[mnbbkl1iacgl|cDEG genes]] [[mnbl8uw9d40a|Human Neanderthal introgression]]",
+    "connection": true,
+    "date": "2026-03-29T18:01:05.320Z",
+    "synced": false,
+    "_sortTag": "DEG"
+  },
+  {
+    "id": "mncxv6jqj61x",
+    "type": "people",
+    "content": "Danish male, born 1974. Master in biology (population genetics), PhD in bioinformatics (HMMs). Since 2008: evolution, population genetics, genomics. Collaborates in prestigious primate genomics consortia. Lateral thinker.\n\n## Domain expertise\n- Population genetic theory, coalescent and ARG modeling and inference\n- HMMs, phase-type distributions\n- Probabilistic programming (pymc)\n- Math/stats comfortable but not formally trained\n\n## Programming\n- Expert Python programmer\n- C/C++ occasionally\n- Former R user, now prefers Python\n- Writes and publishes conda packages (pixi, pip, conda, gh, GitHub Actions, quarto, quartodoc)\n- Range from exploratory science code to production-quality community packages\n\n## Tools & environment\n- macOS laptop + Linux compute cluster (SLURM) via VS Code remote\n- VS Code + terminal, notebooks in VS Code (not JupyterLab)\n- Pixi environments exclusively\n- Pipelines via gwf (gwf.app)\n- Tree sequence tools: tskit, Relate, sgkit\n- Data formats: md, json, yaml, csv, vcf, gvcf, bcf, bam, fastq, fasta, tabix, zarr, parquet, hdf5\n\n## Working preferences\n- Concise and precise communication; hates reading more than necessary\n- Plan first via brief back-and-forth, then produce drop-in solutions\n- Skip explanations of what was wrong or how it was fixed when obvious from context\n- Use Python/programming/testing jargon freely\n- Always include tests in the plan for code changes\n- Present gwf workflows for longer interconnected pipelines\n- Can understand approaches without concrete code examples",
+    "title": "About Kasper, the user",
+    "genes": [],
+    "tags": [],
+    "source": "",
+    "connection": false,
+    "date": "2026-03-30T08:41:20.097Z",
+    "synced": false,
+    "_sortTag": ""
+  },
+  {
+    "id": "mndbilmcd0xt",
+    "type": "hypothesis",
+    "content": "Meiotic drive is not a rare curiosity. It is a persistent engine fueling genomic conflict with broad consequences for genome evolution, gene expression, and organismal fitness.\n\n\n## An X/Y tug-of-war moderated by the autosome\n\nHypthesis: Meiotic drive: X or Y gene variants that impair the opposing sex chromosome's sperm gain a transmission advantage.\n\nLogical truths: \n- Variants of  X or Y-linked genes expressed during or after male meiosis will be meiotic drivers if they increase the relative viability or function of the sperm cell that carries it.\n- This may be achieved in two ways:\n   1. By acquiring new superior cell functionality.\n   2. By disrupting functionality in a way that more severely affects sperm carrying the other sex chromosome as long as the disruptive effect on fitness is smaller than \n\n3. Since the proportion of deleterious mutations at functional sites vastly outnumber advangtageous ones, it follows that \n\n\nPrediction:\n- \n\nNo novel function required.  Breaking shared cellular functions asymmetrically suffices.\n- Fisherian selection: Autosomal genes under strong selection to restore 1:1 sex ratio because rarer sex has higher reproductive value ().\n\n### Collateral damage hypothesis\n- Driver transmission advantage easily outweighs moderate fitness costs \n  (e.g., 60% segregation × 0.95 fitness = 57% net, s≈14% — exceeds \n  lactase persistence)\n- Autosomal variants exploiting uneven sex-ratio may be positively selected even if achieving this by disrupting some cellular function.\n- Damage extends beyond spermatogenesis to all tissues expressing driver genes\n- Selective sweeps around drivers and restorers drag linked deleterious  variants to high frequency",
+    "title": "Meiotic drive as engine of change",
+    "genes": [],
+    "tags": [
+      "Drive"
+    ],
+    "source": "",
+    "connection": false,
+    "date": "2026-03-30T15:03:27.731Z",
+    "synced": false,
+    "_sortTag": "Drive"
+  },
+  {
+    "id": "mnfzwvfzsvn4",
+    "type": "note",
+    "content": "Comparative Cognition Laboratory",
+    "title": "Cayo Santiago Field Station",
+    "genes": [],
+    "tags": [],
+    "source": "",
+    "connection": false,
+    "date": "2026-04-01T12:01:56.782Z",
+    "synced": false
   }
 ]

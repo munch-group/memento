@@ -19,6 +19,7 @@
   :root { --bg:#1c1c1a; --bg2:#242422; --bg3:#2c2c2a; --text:#e8e8e0; --text2:#9a9a94; --text3:#5a5a56; --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.20); }
 }
 body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+::placeholder { color: var(--text3); opacity: 0.4; }
 a { color: inherit; }
 .layout { display: flex; height: 100vh; }
 .sidebar { width: 148px; flex-shrink: 0; border-right: 0.5px solid var(--border); display: flex; flex-direction: column; padding: 1rem 0; background: var(--bg2); overflow: hidden; }
@@ -116,6 +117,16 @@ a { color: inherit; }
 .conn-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
 .conn-icon:hover { opacity: 0.7; }
 .conn-icon.active { opacity: 0.85; color: #185FA5; }
+.archive-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
+.archive-icon:hover { opacity: 0.7; }
+.archive-icon.active { opacity: 0.85; color: #854F0B; }
+.card.overdue { border-color: rgba(200,0,0,0.6); }
+.card.due-today { border-color: rgba(200,0,0,0.8); }
+.card.due-soon { border-color: rgba(200,0,0,0.45); }
+.card-due { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
+.card-due.overdue { color: #c44; }
+.card-due.due-today { color: #c44; }
+.card-due.due-soon { color: var(--text2); }
 .conn-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 10px; color: var(--text2); margin-top: 4px; cursor: pointer; }
 .conn-check input { margin: 0; }
 .source-row { display: flex; gap: 6px; align-items: center; }
@@ -162,13 +173,14 @@ a { color: inherit; }
   <div class="sidebar">
     <div class="sb-title">Knowledge Base</div>
     <div class="sb-scroll">
-      <div class="sb-section">Sort</div>
+      <div id="conn-filter"></div>
+      <div class="sb-section" style="margin-top:0.75rem">Sort</div>
       <div id="sort-list"></div>
-      <div id="conn-filter" style="margin-top:0.75rem"></div>
       <div class="sb-section" style="margin-top:0.75rem">Type</div>
       <div id="filter-list"></div>
       <div id="tag-filter-list"></div>
     </div>
+    <div id="archive-filter" style="padding:0 0;border-top:0.5px solid var(--border)"></div>
     <div class="sb-bottom">
       <div class="file-status" id="file-status">No file connected</div>
       <button class="btn btn-sm btn-wide" id="btn-connect" onclick="connectFolder()">Connect folder</button>
@@ -213,13 +225,20 @@ a { color: inherit; }
           <input type="text" id="f-tags" placeholder="neanderthal, admixture, selection">
         </div>
         <div class="field">
+          <label>Due <span style="font-weight:400;opacity:0.5">(optional)</span></label>
+          <input type="date" id="f-due" style="width:auto;font-family:var(--font);font-size:13px;padding:6px 10px;background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);color:var(--text);outline:none">
+        </div>
+        <div class="field">
           <label>Source</label>
           <div class="source-row">
             <input type="text" id="f-source" placeholder="Platt et al. 2026 / https://…">
             <button class="btn btn-sm btn-link-mode" id="btn-link-mode" type="button" onclick="toggleLinkMode()" title="Link mode: click cards to insert references">◆ Link</button>
           </div>
         </div>
-        <label class="conn-check" style="margin-bottom:11px"><input type="checkbox" id="f-connection"> Connection</label>
+        <div style="display:flex;gap:16px;margin-bottom:11px">
+          <label class="conn-check"><input type="checkbox" id="f-connection"> Connection</label>
+          <label class="conn-check"><input type="checkbox" id="f-archived"> Archived</label>
+        </div>
         <div class="form-actions">
           <button class="btn btn-primary" onclick="saveItem()">Save</button>
           <button class="btn" onclick="cancelEdit()">Cancel</button>
@@ -271,6 +290,7 @@ let expandedId = null;
 let editingId = null;
 let linkMode = false;
 let connFilter = 'all'; // 'all' | 'conn' | 'noconn'
+let archiveFilter = 'active'; // 'active' | 'archived'
 let fileHandle = null;
 let highlightGenes = new Set();
 
@@ -505,7 +525,7 @@ function cleanupMemory() {
 }
 
 // --- Sort ---
-const SORTS = [{key:'date',label:'Modified'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'},{key:'connection',label:'Connection'}];
+const SORTS = [{key:'date',label:'Modified'},{key:'due',label:'Due'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'},{key:'connection',label:'Connection'}];
 function renderSortList() {
   const arrows = {true:'↑', false:'↓'};
   document.getElementById('sort-list').innerHTML = SORTS.map(s => {
@@ -531,6 +551,14 @@ function sortItems(arr) {
     if (sortKey === 'date') {
       return dir * ((a.date||'').localeCompare(b.date||''));
     }
+    if (sortKey === 'due') {
+      const ad = a.due || '', bd = b.due || '';
+      // No-due-date items sink to bottom regardless of direction
+      if (ad && !bd) return -1;
+      if (!ad && bd) return 1;
+      if (!ad && !bd) return -((a.date||'').localeCompare(b.date||''));
+      return dir * ad.localeCompare(bd);
+    }
     if (sortKey === 'synced') {
       // ascending: synced first; descending (default): unsynced first
       const sa = a.synced ? 1 : 0, sb = b.synced ? 1 : 0;
@@ -550,7 +578,7 @@ function sortItems(arr) {
     }
     if (sortKey === 'connection') {
       const ca = a.connection ? 1 : 0, cb = b.connection ? 1 : 0;
-      if (ca !== cb) return cb - ca; // connections first (regardless of dir)
+      if (ca !== cb) return dir * (ca - cb);
       return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
     }
     return 0;
@@ -570,6 +598,14 @@ function computeSortTags() {
 // --- Filters ---
 function renderFilters() {
   renderSortList();
+  // Archive filter
+  const nArchived = items.filter(i => i.archived).length;
+  if (nArchived > 0) {
+    document.getElementById('archive-filter').innerHTML =
+      `<button class="filter-chip ${archiveFilter==='archived'?'active':''}" onclick="setArchiveFilter()">Archived <span class="sb-count">${nArchived}</span></button>`;
+  } else {
+    document.getElementById('archive-filter').innerHTML = '';
+  }
   // Connection filter
   const nConn = items.filter(i => i.connection).length;
   if (nConn > 0) {
@@ -623,7 +659,8 @@ function renderFilters() {
 }
 
 function setConnFilter(mode) { connFilter = connFilter===mode ? 'all' : mode; renderFilters(); renderList(); }
-function clearAllFilters() { activeType='all'; activeTag=null; activeGene=null; connFilter='all'; renderFilters(); renderList(); }
+function setArchiveFilter() { archiveFilter = archiveFilter==='archived' ? 'active' : 'archived'; renderFilters(); renderList(); }
+function clearAllFilters() { activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active'; renderFilters(); renderList(); }
 function setFilter(type) { activeType=type; activeTag=null; activeGene=null; renderFilters(); renderList(); }
 function setTagFilter(tag) { activeTag = activeTag===tag ? null : tag; activeType='all'; activeGene=null; renderFilters(); renderList(); }
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
@@ -654,6 +691,9 @@ function renderList() {
   });
   const q = freeTerms.join(' ');
   let vis=sortItems(items);
+  // Archive filter: show only archived when filter active, hide archived otherwise
+  if(archiveFilter==='archived') vis=vis.filter(i=>i.archived);
+  else vis=vis.filter(i=>!i.archived);
   if(activeType!=='all') vis=vis.filter(i=>i.type===activeType);
   if(connFilter==='conn') vis=vis.filter(i=>i.connection);
   if(connFilter==='noconn') vis=vis.filter(i=>!i.connection);
@@ -712,16 +752,24 @@ function renderCard(item) {
   const typeObj = TYPES.find(t=>t.key===item.type);
   const typeLabel = `<span class="type-badge" data-type="${item.type}" style="font-size:9px;padding:1px 6px" title="${typeObj?.label||item.type}">${typeObj?.short||item.type}</span>`;
   const lm = linkMode && item.id !== editingId ? ' link-target' : '';
-  return `<div class="card${exp?' expanded':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
+  const today = new Date().toISOString().slice(0,10);
+  const soon3 = new Date(Date.now()+3*86400000).toISOString().slice(0,10);
+  const isOverdue = item.due && item.due < today;
+  const isDueToday = item.due && item.due === today;
+  const isDueSoon = item.due && !isOverdue && !isDueToday && item.due <= soon3;
+  const dueClass = isOverdue ? ' overdue' : isDueToday ? ' due-today' : isDueSoon ? ' due-soon' : '';
+  const dueHtml = item.due ? `<span class="card-due${dueClass}" title="Due ${item.due}">${fmtDue(item.due)}</span>` : '';
+  return `<div class="card${exp?' expanded':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text">${esc(title)}</span>
-    <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'◆':'◇'}</span>
+    <span class="archive-icon${item.archived?' active':''}" title="${item.archived?'Unarchive':'Archive'}" onclick="toggleArchived(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
+    <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'}</span>
     <span class="card-date">${fmtDate(item.date)}</span>
     ${claudeBadge}
   </div>
   <div class="card-content${exp?'':' clamped'}">${exp?md(item.content):esc(item.content)}</div>
-  ${(tags||genes)?`<div class="card-meta">${tags}${genes}</div>`:''}
+  ${(tags||genes||dueHtml)?`<div class="card-meta">${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}</div>`:''}
   ${exp?`<div class="card-bottom">
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
@@ -827,7 +875,9 @@ function editItem(e, id) {
   document.getElementById('f-genes').value = (item.genes || []).join(', ');
   document.getElementById('f-tags').value = (item.tags || []).join(', ');
   document.getElementById('f-source').value = item.source || '';
+  document.getElementById('f-due').value = item.due || '';
   document.getElementById('f-connection').checked = !!item.connection;
+  document.getElementById('f-archived').checked = !!item.archived;
   document.getElementById('f-content').focus();
   showFormEditButtons(true, item);
   f.scrollIntoView({behavior:'smooth', block:'nearest'});
@@ -838,8 +888,8 @@ function toggleForm(){
   const open=f.style.display==='none';
   f.style.display=open?'':'none';
   document.getElementById('btn-add-toggle').textContent=open?'× Cancel':'+ Add';
-  if(open){editingId=null;buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-content').focus();showFormEditButtons(false);}
-  else{editingId=null;['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;showFormEditButtons(false);}
+  if(open){editingId=null;buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);}
+  else{editingId=null;['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';showFormEditButtons(false);}
 }
 
 function showFormEditButtons(show, item) {
@@ -866,6 +916,8 @@ async function deleteEditingItem() {
   document.getElementById('add-form').style.display = 'none';
   document.getElementById('btn-add-toggle').textContent = '+ Add';
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-due').value='';
+  document.getElementById('f-archived').checked=false;
   showFormEditButtons(false);
   renderFilters(); renderList(); showToast('Deleted');
 }
@@ -876,6 +928,8 @@ function cancelEdit() {
   document.getElementById('btn-add-toggle').textContent = '+ Add';
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-connection').checked=false;
+  document.getElementById('f-archived').checked=false;
+  document.getElementById('f-due').value='';
   showFormEditButtons(false);
   exitLinkMode();
   renderList();
@@ -894,6 +948,8 @@ async function saveItem(){
   const genes=document.getElementById('f-genes').value.split(/[\s,]+/).map(g=>g.trim()).filter(Boolean);
   const tags=document.getElementById('f-tags').value.split(/[\s,]+/).map(t=>t.trim()).filter(Boolean);
   const connection=document.getElementById('f-connection').checked;
+  const archived=document.getElementById('f-archived').checked;
+  const due=document.getElementById('f-due').value||'';
   const now = new Date().toISOString();
   if(editingId){
     const item=items.find(i=>i.id===editingId);
@@ -901,7 +957,7 @@ async function saveItem(){
       item.type=selectedType; item.content=content;
       item.title=document.getElementById('f-title').value.trim();
       item.genes=genes; item.tags=tags; item.source=document.getElementById('f-source').value.trim();
-      item.connection=connection;
+      item.connection=connection; item.archived=archived; item.due=due;
       item.synced = false;
     }
   } else {
@@ -910,13 +966,15 @@ async function saveItem(){
       type:selectedType, content,
       title:document.getElementById('f-title').value.trim(),
       genes, tags, source:document.getElementById('f-source').value.trim(),
-      connection, date:now, synced:false
+      connection, archived, due, date:now, synced:false
     });
   }
   const wasEdit = !!editingId;
   editingId = null;
   await saveToFile();
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-due').value='';
+  document.getElementById('f-archived').checked=false;
   document.getElementById('add-form').style.display='none';
   document.getElementById('btn-add-toggle').textContent='+ Add';
   exitLinkMode();
@@ -939,6 +997,20 @@ async function toggleConnection(e, id) {
   item.synced = false;
   await saveToFile();
   renderList();
+}
+async function toggleArchived(e, id) {
+  e.stopPropagation();
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  item.archived = !item.archived;
+  item.synced = false;
+  // If we just unarchived the last archived card, switch back to default view
+  if (!item.archived && archiveFilter === 'archived' && !items.some(i => i.archived)) {
+    archiveFilter = 'active';
+  }
+  await saveToFile();
+  renderFilters(); renderList();
+  showToast(item.archived ? 'Archived' : 'Unarchived');
 }
 async function deleteFromCard(e,id){ e.stopPropagation(); return deleteItem(e,id); }
 async function deleteItem(e,id){
@@ -1053,6 +1125,18 @@ function fmtDate(iso){
   if(diff<86400000)return Math.floor(diff/3600000)+'h';
   if(diff<7*86400000)return Math.floor(diff/86400000)+'d';
   return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+}
+function fmtDue(dateStr){
+  if(!dateStr) return '';
+  const d=new Date(dateStr+'T00:00:00');
+  const today=new Date(); today.setHours(0,0,0,0);
+  const diff=Math.round((d-today)/86400000);
+  if(diff===0) return 'due today';
+  if(diff===1) return 'due tomorrow';
+  if(diff===-1) return 'due yesterday';
+  if(diff<0) return 'due '+Math.abs(diff)+'d ago';
+  if(diff<=7) return 'due in '+diff+'d';
+  return 'due '+d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 

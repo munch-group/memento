@@ -123,9 +123,9 @@ a { color: inherit; }
 .archive-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
 .archive-icon:hover { opacity: 0.7; }
 .archive-icon.active { opacity: 0.85; color: #854F0B; }
-.card.overdue { border-color: rgba(200,0,0,0.6); }
+.card.overdue { border-color: rgba(200, 0, 0, 0.5); }
 .card.due-today { border-color: rgba(200,0,0,0.8); }
-.card.due-soon { border-color: rgba(200,0,0,0.45); }
+.card.due-soon { border-color: rgba(200, 0, 0, 0.3); }
 .card-due { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
 .card-due.overdue { color: #c44; }
 .card-due.due-today { color: #c44; }
@@ -161,11 +161,11 @@ a { color: inherit; }
 .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 8px 18px; border-radius: var(--r); font-size: 13px; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 99; white-space: nowrap; }
 .toast.show { opacity: 1; }
 [data-type="fact"]        { --tc:#185FA5; --tbg:rgba(24,95,165,0.10); }
-[data-type="reference"]   { --tc:#5F5E5A; --tbg:rgba(95,94,90,0.10); }
-[data-type="observation"] { --tc:#0F6E56; --tbg:rgba(15,110,86,0.10); }
-[data-type="hypothesis"]  { --tc:#993556; --tbg:rgba(153,53,86,0.10); }
+[data-type="reference"]   { --tc:#6b6b70; --tbg:rgba(95,94,90,0.10); }
+[data-type="observation"] { --tc:#058262; --tbg:rgba(15,110,86,0.10); }
+[data-type="hypothesis"]  { --tc:#c31851; --tbg:rgba(153,53,86,0.10); }
 [data-type="idea"]        { --tc:#A68B0A; --tbg:rgba(166,139,10,0.10); }
-[data-type="note"]        { --tc:#B54B32; --tbg:rgba(181,75,50,0.10); }
+[data-type="note"]        { --tc:#6b6b70; --tbg:rgba(95,94,90,0.10); }
 [data-type="people"]      { --tc:#854F0B; --tbg:rgba(133,79,11,0.10); }
 .type-badge { color: var(--tc); background: var(--tbg); } /* alt: background: #F0EFEC; border: 1px solid #D1D0CE; */
 .type-opt.active { color: var(--tc); background: var(--tbg); border-color: var(--tc); }
@@ -770,7 +770,7 @@ function renderCard(item) {
   const typeLabel = `<span class="type-badge" data-type="${item.type}" style="font-size:9px;padding:1px 6px" title="${typeObj?.label||item.type}">${typeObj?.short||item.type}</span>`;
   const lm = linkMode && item.id !== editingId ? ' link-target' : '';
   const today = new Date().toISOString().slice(0,10);
-  const soon3 = new Date(Date.now()+3*86400000).toISOString().slice(0,10);
+  const soon3 = (()=>{ let d=new Date(),n=0; while(n<3){d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)n++;} return d.toISOString().slice(0,10); })();
   const isOverdue = item.due && item.due < today;
   const isDueToday = item.due && item.due === today;
   const isDueSoon = item.due && !isOverdue && !isDueToday && item.due <= soon3;

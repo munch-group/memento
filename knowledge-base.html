@@ -96,8 +96,8 @@ a { color: inherit; }
 .gene-list { display: flex; gap: 2px; flex: 1; min-width: 0; overflow: hidden; align-items: center; position: relative; height: 18px; }
 .gene-list.overflowing { -webkit-mask-image: linear-gradient(to right, black 75%, transparent 100%); mask-image: linear-gradient(to right, black 75%, transparent 100%); }
 .gene-list .gene-more { display: none; }
-.card.expanded .card-meta { align-items: center; }
-.card.expanded .gene-list { flex-wrap: wrap; overflow: visible; width: 100%; }
+.card.expanded .card-meta { align-items: flex-start; }
+.card.expanded .gene-list { flex-wrap: wrap; overflow: visible; width: 100%; height: auto; }
 .card.expanded .gene-list .gene-more { display: none; }
 .gene-copy { font-size: 11px; color: var(--text3); cursor: pointer; margin-left: 2px; opacity: 0.6; }
 .gene-copy:hover { opacity: 1; color: var(--text); }
@@ -870,7 +870,7 @@ function renderCard(item) {
   return `<div class="card${exp?' expanded':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
-    <span class="card-title-text" onclick="editItem(event,'${item.id}')">${esc(title)}</span>
+    <span class="card-title-text"><span onclick="editItem(event,'${item.id}')" style="cursor:text">${esc(title)}</span></span>
     <span class="archive-icon${item.archived?' active':''}" title="${item.archived?'Unarchive':'Archive'}" onclick="toggleArchived(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
     <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'}</span>
     ${item.type==='github'&&item._ghOpenIssues?`<span class="gh-issues-icon" title="View open issues" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="gh-issues-count">${item._ghOpenIssues}</span></span>`:''}

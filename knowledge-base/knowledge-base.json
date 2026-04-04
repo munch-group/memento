@@ -7046,5 +7046,37 @@
     "date": "2026-04-04T12:51:39.000Z",
     "synced": false,
     "_sortTag": "XYbrain"
+  },
+  {
+    "id": "mnkci1az643g",
+    "type": "note",
+    "content": "Genes with SNPs significantly associatied with African-Caucasian (L / non-L MT haplogroup) differences in mtDNA gene expression.",
+    "title": "MT-Auto coevolving genes",
+    "genes": [
+      "MRPS7",
+      "GRSF1",
+      "GRSF1",
+      "PNPT1",
+      "GRSF1",
+      "PNPT1",
+      "MRPS7",
+      "PTCD1",
+      "MRPS7",
+      "MRPS7",
+      "MRPS7",
+      "MRPS7",
+      "PNPT1"
+    ],
+    "tags": [
+      "MT",
+      "X"
+    ],
+    "source": "Cohen et al. / https://doi.org/10.1371/journal.pgen.1006407",
+    "connection": false,
+    "archived": false,
+    "due": "",
+    "date": "2026-04-04T13:15:02.130Z",
+    "synced": false,
+    "_sortTag": "MT"
   }
 ]

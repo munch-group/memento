@@ -1173,11 +1173,12 @@ document.addEventListener('keydown', async e=>{
     }
   }
   if(e.key==='Escape'){
+    e.preventDefault();
     if(document.getElementById('add-form').style.display!=='none'){
       cancelEdit();
     } else {
       const search = document.getElementById('search-input');
-      if(search && search.value){ search.value=''; renderList(); }
+      if(search && search.value){ search.value=''; search.blur(); renderList(); }
     }
   }
 });

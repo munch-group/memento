@@ -4,75 +4,76 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Knowledge Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #ffffff; --bg2: #f7f7f5; --bg3: #efefeb;
-  --text: #1a1a18; --text2: #6b6b65; --text3: #adadaa;
-  /* alt: --bg: #FAF9F6; --bg2: #F8F8F4; --bg3: #F0EFEC; */
-  /* alt: --text: #141413; --text2: #73726C; */
-  --border: rgba(0,0,0,0.10); --border2: rgba(0,0,0,0.18);
-  --r: 8px; --rl: 12px;
-  --font: system-ui, sans-serif; --mono: ui-monospace, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root { --bg:#1c1c1a; --bg2:#242422; --bg3:#2c2c2a; --text:#e8e8e0; --text2:#9a9a94; --text3:#5a5a56; --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.20); }
+  --bg: #F5F4EF; --bg2: #faf9f5; --bg3: #eeeee9;
+  --text: #141413; --text2: #5c5c5a; --text3: #8c8c8a;
+  --border: #e5e4df; --border2: #d5d4cf;
+  --r: 8px; --rl: 10px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --shadow: rgba(20, 20, 19, 0.04); --shadow-hover: rgba(20, 20, 19, 0.08);
+  --accent: #D97757; --accent-hover: #c4684a;
 }
 body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
 ::placeholder { color: var(--text3); opacity: 0.4; }
 a { color: inherit; }
 .layout { display: flex; height: 100vh; }
-.sidebar { width: 148px; flex-shrink: 0; border-right: 0.5px solid var(--border); display: flex; flex-direction: column; padding: 1rem 0; background: var(--bg2); overflow: hidden; }
+.sidebar { width: 180px; flex-shrink: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1rem 0; background: var(--bg2); overflow: hidden; }
 .main { flex: 1; overflow-y: auto; padding: 1.5rem 2rem 4rem; }
-.sb-title { font-size: 13px; font-weight: 500; padding: 0 1rem 0.75rem; border-bottom: 0.5px solid var(--border); margin-bottom: 0.75rem; }
-.sb-section { font-size: 11px; color: var(--text3); padding: 0 1rem; margin: 0.75rem 0 0.3rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+.sb-title { font-size: 14px; font-weight: 600; padding: 0 1rem 0.75rem; border-bottom: 1px solid var(--border); margin-bottom: 0.75rem; }
+.sb-section { font-size: 12px; font-weight: 600; color: var(--text); padding: 0 1rem; margin: 0.75rem 0 0.3rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; text-transform: uppercase; letter-spacing: 0.05em; }
 .sb-section:hover { color: var(--text2); }
 .sb-section .sb-arrow { font-size: 9px; transition: transform 0.15s; }
 .sb-section.collapsed .sb-arrow { transform: rotate(-90deg); }
-.filter-chip { display: block; width: 100%; text-align: left; font-size: 12px; padding: 5px 1rem; border: none; background: transparent; cursor: pointer; color: var(--text); transition: background 0.1s, color 0.1s; }
-.filter-chip:hover { background: rgba(24,95,165,0.08); }
-.filter-chip.active { background: rgba(24,95,165,0.12); color: var(--text); font-weight: 500; }
-.sb-count { float: right; font-size: 11px; color: var(--text3); }
+.filter-chip { display: block; width: 100%; text-align: left; font-size: 13px; padding: 5px 1rem; border: none; background: transparent; cursor: pointer; color: var(--text); transition: background 0.15s, color 0.15s; }
+.filter-chip:hover { background: rgba(0,0,0,0.04); }
+.filter-chip.active { background: var(--bg3); color: var(--text); font-weight: 500; }
+.sb-count { float: right; font-size: 12px; color: var(--text3); }
 .sb-scroll { overflow-y: auto; flex: 1; }
-.sb-bottom { flex-shrink: 0; padding: 0.75rem 1rem 0; border-top: 0.5px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+.sb-bottom { flex-shrink: 0; padding: 0.75rem 1rem 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
 .file-status { font-size: 10px; color: var(--text3); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.file-status.ok { color: #2a7a2a; }
-.btn { background: transparent; border: 0.5px solid var(--border2); border-radius: var(--r); padding: 6px 14px; font-size: 13px; cursor: pointer; color: var(--text); font-family: var(--font); transition: background 0.1s; }
-.btn:hover { background: var(--bg3); }
-.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); }
-.btn-primary:hover { opacity: 0.85; background: var(--text); }
+.file-status.ok { color: var(--accent); }
+.btn { background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); padding: 6px 14px; font-size: 13px; cursor: pointer; color: var(--text); font-family: var(--font); transition: all 0.15s ease; font-weight: 500; }
+.btn:hover { background: var(--bg2); border-color: var(--text3); }
+.btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
 .btn-danger { color: #c00; border-color: rgba(200,0,0,0.3); }
 .btn-danger:hover { background: rgba(200,0,0,0.05); }
-.btn-sync { color: #185FA5; border-color: rgba(24,95,165,0.3); }
-.btn-sync:hover { background: rgba(24,95,165,0.05); }
+.btn-sync { color: var(--accent); border-color: rgba(217,119,87,0.3); }
+.btn-sync:hover { background: rgba(217,119,87,0.05); }
 .file-status.dirty { color: #c44; }
 .btn-wide { width: 100%; }
 .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
 .page-title { font-size: 15px; font-weight: 500; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 .searchbar { width: 100%; margin-bottom: 1rem; display: flex; gap: 8px; }
-.searchbar input { flex: 1; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
-.searchbar input:focus { border-color: var(--border2); }
-.add-form { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--rl); padding: 1.25rem; margin-bottom: 1.25rem; }
+.searchbar input { flex: 1; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
+.searchbar input:focus { border-color: var(--accent); }
+.add-form { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--rl); padding: 1.25rem; margin-bottom: 1.25rem; }
 .field { margin-bottom: 11px; }
 .field label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text2); display: block; margin-bottom: 4px; }
-.field textarea { width: 100%; min-height: 90px; resize: vertical; font-family: var(--font); font-size: 14px; line-height: 1.6; padding: 8px 10px; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
-.field textarea:focus { border-color: var(--border2); }
-.field input[type=text] { width: 100%; font-family: var(--font); font-size: 13px; padding: 6px 10px; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
-.field input[type=text]:focus { border-color: var(--border2); }
+.field textarea { width: 100%; min-height: 90px; resize: vertical; font-family: var(--font); font-size: 14px; line-height: 1.6; padding: 8px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
+.field textarea:focus { border-color: var(--accent); }
+.field input[type=text] { width: 100%; font-family: var(--font); font-size: 13px; padding: 6px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
+.field input[type=text]:focus { border-color: var(--accent); }
 .type-picker { display: flex; gap: 5px; flex-wrap: wrap; }
-.type-opt { font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 99px; border: 0.5px solid var(--border2); background: transparent; cursor: pointer; color: var(--text2); transition: all 0.1s; }
+.type-opt { font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--text2); transition: all 0.15s ease; }
 .type-opt:hover { color: var(--text); border-color: var(--text3); }
 .type-opt.active { border-width: 1.5px; }
 .form-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-.card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--rl); padding: 1rem 1.1rem; cursor: pointer; transition: border-color 0.12s, box-shadow 0.12s; }
-.card:hover { border-color: var(--border2); }
-.card.drop-over { border-color: #4a90d9; box-shadow: 0 0 0 2px rgba(74,144,217,0.25); }
+.card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1rem 1.1rem; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 1px 3px var(--shadow); }
+.card:hover { border-color: var(--border2); box-shadow: 0 4px 12px var(--shadow-hover); }
+.card.drop-over { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.25); }
 .card-top { display: flex; align-items: center; gap: 8px; }
-.type-badge { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; }
+.type-badge { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--text2); opacity: 0.7; }
 .card-title-text { font-size: 13px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.card-date { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
+.card-date { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; opacity: 0.45; }
 .card-id { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
 .card-content { font-size: 13px; line-height: 1.65; color: var(--text); font-family: var(--font); word-break: break-word; margin-top: 8px; }
 .card-content.clamped { white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text3); }
@@ -92,34 +93,34 @@ a { color: inherit; }
 .gene-list { display: flex; gap: 2px; flex: 1; min-width: 0; overflow: hidden; align-items: center; position: relative; }
 .gene-list .gene-more { display: none; position: absolute; right: 0; top: 0; padding: 2px 2px 2px 6px; background: linear-gradient(to right, transparent, var(--card) 30%); }
 .gene-list.overflowing .gene-more { display: block; }
-.card.expanded .card-meta { flex-direction: column; align-items: flex-start; }
+.card.expanded .card-meta { align-items: center; }
 .card.expanded .gene-list { flex-wrap: wrap; overflow: visible; width: 100%; }
 .card.expanded .gene-list .gene-more { display: none; }
 .gene-copy { font-size: 11px; color: var(--text3); cursor: pointer; margin-left: 2px; opacity: 0.6; }
 .gene-copy:hover { opacity: 1; color: var(--text); }
-.gene.highlighted { color: #c44; font-weight: 600; }
-.gene.highlighted:hover { background: rgba(204,68,68,0.08); }
+.gene.highlighted { color: var(--accent); font-weight: 600; }
+.gene.highlighted:hover { background: rgba(217,119,87,0.08); }
 .highlight-bar { margin-bottom: 1rem; }
 .highlight-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
 .highlight-toggle:hover { color: var(--text2); }
 .highlight-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
-.highlight-bar.active .highlight-dot { background: #c44; border-color: #c44; }
+.highlight-bar.active .highlight-dot { background: var(--accent); border-color: var(--accent); }
 .highlight-bar.active .highlight-toggle { color: var(--text2); }
 .highlight-input-wrap { display: flex; gap: 8px; margin-top: 6px; }
-.highlight-input-wrap input { flex: 1; font-family: var(--font); font-size: 13px; padding: 5px 10px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
-.highlight-input-wrap input:focus { border-color: #c44; }
+.highlight-input-wrap input { flex: 1; font-family: var(--font); font-size: 13px; padding: 5px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
+.highlight-input-wrap input:focus { border-color: var(--accent); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
-.gene { font-family: var(--mono); font-size: 10px; color: #185FA5; background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; } /* alt color: #8A2425 */
-.gene:hover { background: rgba(24,95,165,0.08); }
-.gene-more { font-family: var(--mono); font-size: 10px; color: #185FA5; background: transparent; padding: 2px 7px; border-radius: 3px; cursor: default; } /* alt color: #8A2425 */
+.gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
+.gene:hover { background: rgba(0,0,0,0.04); }
+.gene-more { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 7px; border-radius: 3px; cursor: default; }
 .card-bottom { display: flex; align-items: center; margin-top: 8px; gap: 8px; }
 .card-source { font-family: var(--mono); font-size: 10px; color: var(--text3); flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
 .card-source a { color: var(--text3); text-decoration: none; }
 .card-source a:hover { text-decoration: underline; color: var(--text2); }
 .conn-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
 .conn-icon:hover { opacity: 0.7; }
-.conn-icon.active { opacity: 0.85; color: #185FA5; }
+.conn-icon.active { opacity: 0.85; color: var(--accent); }
 .archive-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
 .archive-icon:hover { opacity: 0.7; }
 .archive-icon.active { opacity: 0.85; color: #854F0B; }
@@ -130,20 +131,22 @@ a { color: inherit; }
 .card-due.overdue { color: #c44; }
 .card-due.due-today { color: #c44; }
 .card-due.due-soon { color: var(--text2); }
-.conn-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 10px; color: var(--text2); margin-top: 4px; cursor: pointer; }
+.conn-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 10px; color: var(--text2); margin-top: 4px; cursor: pointer; accent-color: var(--accent); }
 .conn-check input { margin: 0; }
 .source-row { display: flex; gap: 6px; align-items: center; }
 .source-row input { flex: 1; }
 .btn-link-mode { font-size: 11px; white-space: nowrap; color: var(--text3); border-color: var(--border); }
-.btn-link-mode.active { color: #185FA5; border-color: #185FA5; background: rgba(24,95,165,0.08); }
-.link-mode-banner { font-family: var(--mono); font-size: 11px; color: #185FA5; background: rgba(24,95,165,0.06); border: 0.5px solid rgba(24,95,165,0.2); border-radius: var(--r); padding: 6px 10px; margin-bottom: 1rem; text-align: center; }
+.btn-link-mode.active { color: var(--accent); border-color: var(--accent); background: rgba(217,119,87,0.08); }
+.link-mode-banner { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(217,119,87,0.06); border: 1px solid rgba(217,119,87,0.2); border-radius: var(--r); padding: 6px 10px; margin-bottom: 1rem; text-align: center; }
 .card.link-target { cursor: pointer; }
-.card.link-target:hover { border-color: #185FA5; box-shadow: 0 0 0 1.5px rgba(24,95,165,0.2); }
-.card-ref { display: inline-block; font-family: var(--mono); font-size: 10px; color: #185FA5; background: rgba(24,95,165,0.08); padding: 1px 6px; border-radius: 3px; cursor: pointer; margin-right: 3px; }
-.card-ref:hover { background: rgba(24,95,165,0.15); text-decoration: underline; }
+.card.link-target:hover { border-color: var(--accent); box-shadow: 0 0 0 1.5px rgba(217,119,87,0.2); }
+.card-ref { display: inline-block; font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(217,119,87,0.08); padding: 1px 6px; border-radius: 3px; cursor: pointer; margin-right: 3px; }
+.card-ref:hover { background: rgba(217,119,87,0.15); text-decoration: underline; }
 .card-bottom-actions { display: flex; gap: 8px; flex-shrink: 0; }
-.synced-badge { font-family: var(--mono); font-size: 10px; color: #2a7a2a; }
-.unsynced-badge { font-family: var(--mono); font-size: 10px; color: #c44; }
+.synced-badge { font-size: 12px; color: var(--text3); opacity: 0.45; cursor: pointer; transition: opacity 0.15s; }
+.synced-badge:hover { opacity: 0.85; }
+.unsynced-badge { font-size: 12px; color: var(--text3); opacity: 0.35; cursor: pointer; transition: opacity 0.15s; }
+.unsynced-badge:hover { opacity: 0.85; }
 .card-bottom-actions .icon-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; opacity: 0.45; transition: opacity 0.15s; }
 .card-bottom-actions .icon-btn:hover { opacity: 0.85; }
 .card-bottom-actions .icon-btn.edit { color: var(--text); }
@@ -158,7 +161,7 @@ a { color: inherit; }
 .connect-screen h2 { font-size: 18px; font-weight: 500; }
 .connect-screen p { font-size: 14px; color: var(--text2); max-width: 360px; line-height: 1.6; }
 .connect-screen code { font-family: var(--mono); font-size: 12px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; }
-.toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 8px 18px; border-radius: var(--r); font-size: 13px; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 99; white-space: nowrap; }
+.toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 99; white-space: nowrap; box-shadow: 0 4px 20px rgba(20,20,19,0.15); }
 .toast.show { opacity: 1; }
 [data-type="fact"]        { --tc:#185FA5; --tbg:rgba(24,95,165,0.10); }
 [data-type="reference"]   { --tc:#6b6b70; --tbg:rgba(95,94,90,0.10); }
@@ -167,16 +170,16 @@ a { color: inherit; }
 [data-type="idea"]        { --tc:#A68B0A; --tbg:rgba(166,139,10,0.10); }
 [data-type="note"]        { --tc:#6b6b70; --tbg:rgba(95,94,90,0.10); }
 [data-type="people"]      { --tc:#854F0B; --tbg:rgba(133,79,11,0.10); }
-[data-type="github"]      { --tc:#6e40c9; --tbg:rgba(110,64,201,0.10); }
-.type-badge { color: var(--tc); background: var(--tbg); } /* alt: background: #F0EFEC; border: 1px solid #D1D0CE; */
+[data-type="github"]      { --tc:var(--accent); --tbg:rgba(217,119,87,0.10); }
+.type-badge svg { display: block; }
 .gh-issues-icon { font-size: 11px; cursor: pointer; opacity: 0.45; color: var(--text3); transition: opacity 0.15s; display: inline-flex; align-items: center; gap: 2px; }
 .gh-issues-icon:hover { opacity: 0.85; }
 .gh-issues-count { font-family: var(--mono); font-size: 9px; }
 .gh-meta { font-family: var(--mono); font-size: 10px; color: var(--text3); display: flex; gap: 8px; align-items: center; margin-top: 4px; }
 .gh-pat-input { display: flex; gap: 6px; align-items: center; }
-.gh-pat-input input { flex: 1; font-family: var(--mono); font-size: 10px; padding: 4px 8px; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
+.gh-pat-input input { flex: 1; font-family: var(--mono); font-size: 10px; padding: 4px 8px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .gh-status { font-size: 10px; color: var(--text3); margin-bottom: 2px; }
-.gh-status.ok { color: #6e40c9; }
+.gh-status.ok { color: var(--accent); }
 .type-opt.active { color: var(--tc); background: var(--tbg); border-color: var(--tc); }
 </style>
 </head>
@@ -186,13 +189,13 @@ a { color: inherit; }
     <div class="sb-title">Knowledge Base</div>
     <div class="sb-scroll">
       <div id="conn-filter"></div>
-      <div class="sb-section collapsed" id="sb-sort" style="margin-top:0.75rem" onclick="toggleSection('sb-sort','sort-list')"><span>Sort</span><span class="sb-arrow">▾</span></div>
-      <div id="sort-list" style="display:none"></div>
-      <div class="sb-section collapsed" id="sb-type" style="margin-top:0.75rem" onclick="toggleSection('sb-type','filter-list')"><span>Type</span><span class="sb-arrow">▾</span></div>
-      <div id="filter-list" style="display:none"></div>
+      <div class="sb-section" id="sb-sort" style="margin-top:0.75rem" onclick="toggleSection('sb-sort','sort-list')"><span>Sort</span><span class="sb-arrow">▾</span></div>
+      <div id="sort-list"></div>
+      <div class="sb-section" id="sb-type" style="margin-top:0.75rem" onclick="toggleSection('sb-type','filter-list')"><span>Type</span><span class="sb-arrow">▾</span></div>
+      <div id="filter-list"></div>
       <div id="tag-filter-list"></div>
     </div>
-    <div id="archive-filter" style="padding:0 0;border-top:0.5px solid var(--border)"></div>
+    <div id="archive-filter" style="padding:0 0;border-top:1px solid var(--border)"></div>
     <div class="sb-bottom">
       <div class="file-status" id="file-status">No file connected</div>
       <button class="btn btn-sm btn-wide" id="btn-connect" onclick="connectFolder()">Connect folder</button>
@@ -233,16 +236,16 @@ a { color: inherit; }
           <input type="text" id="f-title" placeholder="Short label">
         </div>
         <div class="field">
-          <label>Genes <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
-          <input type="text" id="f-genes" placeholder="MAPT, HDAC6, CACNA1C">
-        </div>
-        <div class="field">
           <label>Tags <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
           <input type="text" id="f-tags" placeholder="neanderthal, admixture, selection">
         </div>
         <div class="field">
+          <label>Genes <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
+          <input type="text" id="f-genes" placeholder="MAPT, HDAC6, CACNA1C">
+        </div>
+        <div class="field">
           <label>Due <span style="font-weight:400;opacity:0.5">(optional)</span></label>
-          <input type="date" id="f-due" style="width:auto;font-family:var(--font);font-size:13px;padding:6px 10px;background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r);color:var(--text);outline:none">
+          <input type="date" id="f-due" style="width:auto;font-family:var(--font);font-size:13px;padding:6px 10px;background:#ffffff;border:1px solid var(--border);border-radius:var(--r);color:var(--text);outline:none">
         </div>
         <div class="field">
           <label>Source</label>
@@ -295,6 +298,16 @@ const TYPES = [
   {key:'idea',label:'Idea',short:'Idea'},{key:'note',label:'Note',short:'Note'},{key:'people',label:'Person',short:'Pers'},
   {key:'github',label:'GitHub',short:'Git'},
 ];
+const TYPE_ICONS = {
+  fact: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="9 12 11.5 14.5 16 9.5"/></svg>',
+  reference: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3zm0 2h6v6H3V5zm8 0h10v6H11V5zM3 13h6v6H3v-6zm8 0h10v6H11v-6z"/></svg>',
+  observation: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C5 4 1 12 1 12s4 8 11 8 11-8 11-8-4-8-11-8zm0 13a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>',
+  hypothesis: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4c-1.1 0-2 .9-2 2v3.8h1.5a2.5 2.5 0 0 1 0 5H2V20c0 1.1.9 2 2 2h3.8v-1.5a2.5 2.5 0 0 1 5 0V22H17c1.1 0 2-.9 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/></svg>',
+  idea: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+  note: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3z"/><polyline points="14 3 14 8 21 8"/></svg>',
+  people: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a6 6 0 0 1 16 0v2H4z"/></svg>',
+  github: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>',
+};
 let items = [];
 let activeType = 'all';
 let activeTag = null;
@@ -665,10 +678,10 @@ function renderFilters() {
   let tagHtml = '';
   if (allTags.length > 0) {
     const tagEl = document.getElementById('sb-tags');
-    const tagCollapsed = tagEl ? tagEl.classList.contains('collapsed') : true;
+    const tagCollapsed = tagEl ? tagEl.classList.contains('collapsed') : false;
     tagHtml += `<div class="sb-section${tagCollapsed?' collapsed':''}" id="sb-tags" style="margin-top:1rem;padding-right:0.75rem" onclick="toggleSection('sb-tags','tag-items')">
       <span>Tags</span>
-      <span style="display:flex;align-items:center;gap:4px"><button onclick="event.stopPropagation();cycleTagSort()" title="${sortTitles[tagSort]}" style="font-family:var(--mono);font-size:10px;background:transparent;border:0.5px solid var(--border2);border-radius:4px;padding:1px 5px;cursor:pointer;color:var(--text3);line-height:1.4">${sortIcons[tagSort]}</button><span class="sb-arrow">▾</span></span>
+      <span style="display:flex;align-items:center;gap:4px"><button onclick="event.stopPropagation();cycleTagSort()" title="${sortTitles[tagSort]}" style="font-family:var(--mono);font-size:10px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:1px 5px;cursor:pointer;color:var(--text3);line-height:1.4">${sortIcons[tagSort]}</button><span class="sb-arrow">▾</span></span>
     </div>`;
     tagHtml += `<div id="tag-items"${tagCollapsed?' style="display:none"':''}>`;
     allTags.forEach(tag => {
@@ -715,15 +728,32 @@ function renderList() {
   const tokens = raw.match(/[@#][^\s]+|\S+/g) || [];
   const geneAnd = [], geneOr = [], tagAnd = [], tagOr = [];
   const freeTerms = [];
+  // Build lookup sets for prefix resolution
+  const allGeneNames = [...new Set(items.flatMap(i=>(i.genes||[]).map(g=>g.toUpperCase())))];
+  const allTagNames = [...new Set(items.flatMap(i=>(i.tags||[]).map(t=>t.toLowerCase())))];
+  function resolveGene(prefix) {
+    const up = prefix.toUpperCase();
+    const exact = allGeneNames.find(g => g === up);
+    if (exact) return up;
+    const matches = allGeneNames.filter(g => g.startsWith(up));
+    return matches.length === 1 ? matches[0] : up;
+  }
+  function resolveTag(prefix) {
+    const lo = prefix.toLowerCase();
+    const exact = allTagNames.find(t => t === lo);
+    if (exact) return lo;
+    const matches = allTagNames.filter(t => t.startsWith(lo));
+    return matches.length === 1 ? matches[0] : lo;
+  }
   tokens.forEach(tok => {
     if (tok.startsWith('@')) {
       const names = tok.slice(1).split(',').filter(Boolean);
-      if (names.length > 1) names.forEach(n => geneOr.push(n.toUpperCase()));
-      else if (names.length === 1) geneAnd.push(names[0].toUpperCase());
+      if (names.length > 1) names.forEach(n => geneOr.push(resolveGene(n)));
+      else if (names.length === 1) geneAnd.push(resolveGene(names[0]));
     } else if (tok.startsWith('#')) {
       const names = tok.slice(1).split(',').filter(Boolean);
-      if (names.length > 1) names.forEach(n => tagOr.push(n.toLowerCase()));
-      else if (names.length === 1) tagAnd.push(names[0].toLowerCase());
+      if (names.length > 1) names.forEach(n => tagOr.push(resolveTag(n)));
+      else if (names.length === 1) tagAnd.push(resolveTag(names[0]));
     } else {
       freeTerms.push(tok.toLowerCase());
     }
@@ -822,7 +852,7 @@ function renderCard(item) {
     ? `<span class="synced-badge" title="Re-sync to Claude" style="cursor:pointer" onclick="syncItem(event,'${item.id}')">✓</span>`
     : `<span class="unsynced-badge" title="Sync to Claude" style="cursor:pointer" onclick="syncItem(event,'${item.id}')">⊘</span>`;
   const typeObj = TYPES.find(t=>t.key===item.type);
-  const typeLabel = `<span class="type-badge" data-type="${item.type}" style="font-size:9px;padding:1px 6px" title="${typeObj?.label||item.type}">${typeObj?.short||item.type}</span>`;
+  const typeLabel = `<span class="type-badge" data-type="${item.type}" title="${typeObj?.label||item.type}">${TYPE_ICONS[item.type]||esc(typeObj?.short||item.type)}</span>`;
   const lm = linkMode && item.id !== editingId ? ' link-target' : '';
   const today = new Date().toISOString().slice(0,10);
   const soon3 = (()=>{ let d=new Date(),n=0; while(n<3){d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==6)n++;} return d.toISOString().slice(0,10); })();
@@ -834,20 +864,20 @@ function renderCard(item) {
   return `<div class="card${exp?' expanded':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
-    <span class="card-title-text">${esc(title)}</span>
+    <span class="card-title-text" onclick="editItem(event,'${item.id}')">${esc(title)}</span>
     <span class="archive-icon${item.archived?' active':''}" title="${item.archived?'Unarchive':'Archive'}" onclick="toggleArchived(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
     <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'}</span>
     ${item.type==='github'&&item._ghOpenIssues?`<span class="gh-issues-icon" title="View open issues" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="gh-issues-count">${item._ghOpenIssues}</span></span>`:''}
     <span class="card-date">${fmtDate(item.date)}</span>
     ${claudeBadge}
   </div>
-  <div class="card-content${exp?'':' clamped'}" id="cc-${item.id}">${exp?md(item.content):esc(item.content)}</div>
+  ${(()=>{ if(exp) return `<div class="card-content" id="cc-${item.id}">${md(item.content)}</div>`; const t=title.replace(/…$/,''); const c=item.content.trim(); if(c===t||c===(item.title||'').trim()) return ''; return `<div class="card-content clamped" id="cc-${item.id}">${esc(item.content)}</div>`; })()}
   ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
   ${(tags||genes||dueHtml)?`<div class="card-meta">${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}</div>`:''}
   ${exp?`<div class="card-bottom">
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
-      ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:#6e40c9">⊙</button>`:''}
+      ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:var(--accent)">⊙</button>`:''}
       <button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>
       <button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>
     </span>
@@ -1040,6 +1070,7 @@ async function saveItem(){
       item.title=document.getElementById('f-title').value.trim();
       item.genes=genes; item.tags=tags; item.source=document.getElementById('f-source').value.trim();
       item.connection=connection; item.archived=archived; item.due=due;
+      item.date = now;
       item.synced = false;
     }
   } else {
@@ -1323,7 +1354,7 @@ function renderGhControls() {
   if (pat) {
     status.textContent = 'GitHub ✓';
     status.className = 'gh-status ok';
-    controls.innerHTML = `<div style="display:flex;gap:4px"><button class="btn btn-sm btn-wide" onclick="ghSyncRepos()" style="color:#6e40c9;border-color:rgba(110,64,201,0.3)">↻ Sync GitHub</button><button class="btn btn-sm" onclick="ghDisconnect()" title="Remove token" style="color:var(--text3)">✕</button></div>`;
+    controls.innerHTML = `<div style="display:flex;gap:4px"><button class="btn btn-sm btn-wide" onclick="ghSyncRepos()" style="color:var(--accent);border-color:rgba(217,119,87,0.3)">↻ Sync GitHub</button><button class="btn btn-sm" onclick="ghDisconnect()" title="Remove token" style="color:var(--text3)">✕</button></div>`;
   } else {
     status.textContent = '';
     status.className = 'gh-status';

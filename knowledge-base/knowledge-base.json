@@ -358,11 +358,16 @@
     "content": "PtD SMC diamond lengths\n\n![image.png](images/mnalhs00_image.png)",
     "title": "Tree BDMI stat",
     "genes": [],
-    "tags": [],
+    "tags": [
+      "BDMI"
+    ],
     "source": "",
     "date": "2026-03-28T17:19:26.990Z",
     "synced": false,
-    "_sortTag": ""
+    "_sortTag": "BDMI",
+    "connection": false,
+    "archived": false,
+    "due": ""
   },
   {
     "id": "mnaljhw1y4bq",
@@ -2474,21 +2479,6 @@
     "_sortTag": ""
   },
   {
-    "id": "mnht33520yko",
-    "type": "note",
-    "content": "FTP link from Alan",
-    "title": "",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "connection": false,
-    "archived": false,
-    "due": "2026-04-06",
-    "date": "2026-04-02T18:26:21.733Z",
-    "synced": false,
-    "_sortTag": ""
-  },
-  {
     "id": "mnhtd6b5zttb",
     "type": "note",
     "content": "- BioProg. Web page “map” or General screencast intro to web interface\n- Make sure to integrate print-steps throughout the course. They students forget to use it.\n- Make small screencasts introducing web pages for web exercises\n- Make a structure for TA sessions that TAs have to adhere to. This gives better alignment of expectations and lets students attend the part they find useful.\n- The students could use more hours. Consider giving them more reading material or enforce that programming and web exercises are done before TA sessions.\n- Publish answers to web exercises at the end of each week\n- Make a list of topics we go through on the course page. Maybe a  visual timeline or something done in python that changes week by week\n- Fix myiagi -w option (does not change content\n- Indexing lecture gets too long without code interruptions. Also find biological examples so they immediately see the value of each thing\n- Find some fascinating biology to use as example for code examples in lectures\n- make pythonsteps work on return statements\n- Fix “python exec python” required to get python to print (tramboline)\n\n## Franklin\n\n- Add %explain magic that generates an explanation reveal below using AUs copilot 365\n- Make ps1 installer test execution policy\n\nGet-ExecutionPolicy\n\nOg hvis den er restricted bruge\n\nSet-ExecutionPolicy -Scope CurrentUser\n\nUnrestricted\n\n- Test and document %franklin magic automatic dependencies\n- Finish educator documentation\n- Add command for students to use devcontainer\n- Test admin workflows\n- Test entire workflow for students and educators",
@@ -2500,21 +2490,6 @@
     "archived": false,
     "due": "",
     "date": "2026-04-02T18:34:12.401Z",
-    "synced": false,
-    "_sortTag": ""
-  },
-  {
-    "id": "mnhtdi43f5wi",
-    "type": "note",
-    "content": "Hire Julien",
-    "title": "",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "connection": false,
-    "archived": false,
-    "due": "2026-04-07",
-    "date": "2026-04-02T18:34:27.698Z",
     "synced": false,
     "_sortTag": ""
   },
@@ -2569,14 +2544,16 @@
     "content": "Plan Oxford and maybe Leipzig trip",
     "title": "",
     "genes": [],
-    "tags": [],
+    "tags": [
+      "Strategy"
+    ],
     "source": "",
     "connection": false,
     "archived": false,
     "due": "",
-    "date": "2026-04-02T20:17:00.524Z",
+    "date": "2026-04-04T06:38:28.889Z",
     "synced": false,
-    "_sortTag": ""
+    "_sortTag": "Strategy"
   },
   {
     "id": "mnhx1ntgchmp",
@@ -2639,36 +2616,6 @@
     "_sortTag": ""
   },
   {
-    "id": "mnhx3csllc4n",
-    "type": "note",
-    "content": "PsychENCODE access request",
-    "title": "",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "connection": false,
-    "archived": false,
-    "due": "2026-04-07",
-    "date": "2026-04-02T20:18:32.709Z",
-    "synced": false,
-    "_sortTag": ""
-  },
-  {
-    "id": "mnhx3kqjm52y",
-    "type": "note",
-    "content": "Cencor i GT",
-    "title": "",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "connection": false,
-    "archived": false,
-    "due": "2026-04-04",
-    "date": "2026-04-02T20:18:43.003Z",
-    "synced": false,
-    "_sortTag": ""
-  },
-  {
     "id": "mnhx3xah5j0t",
     "type": "note",
     "content": "Check Claude permissions granted",
@@ -2684,49 +2631,21 @@
     "_sortTag": ""
   },
   {
-    "id": "mnhx4a7i6ida",
-    "type": "note",
-    "content": "GT projects",
-    "title": "",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "connection": false,
-    "archived": false,
-    "due": "2026-04-07",
-    "date": "2026-04-02T20:19:16.014Z",
-    "synced": false,
-    "_sortTag": ""
-  },
-  {
     "id": "mnhx4t4g9gro",
     "type": "note",
     "content": "Register for BGA and/or ESHG",
     "title": "",
     "genes": [],
-    "tags": [],
+    "tags": [
+      "Conferences"
+    ],
     "source": "",
     "connection": false,
     "archived": false,
     "due": "",
-    "date": "2026-04-02T20:19:40.528Z",
+    "date": "2026-04-04T06:38:45.009Z",
     "synced": false,
-    "_sortTag": ""
-  },
-  {
-    "id": "mnhx54ahv7td",
-    "type": "note",
-    "content": "Tommi and Prot var.. !!!",
-    "title": "",
-    "genes": [],
-    "tags": [],
-    "source": "",
-    "connection": false,
-    "archived": false,
-    "due": "2026-04-07",
-    "date": "2026-04-02T20:19:55.001Z",
-    "synced": false,
-    "_sortTag": ""
+    "_sortTag": "Conferences"
   },
   {
     "id": "mnhx5eikifrt",
@@ -3980,10 +3899,13 @@
     "type": "github",
     "title": "genominterv",
     "content": "Intervals on genomes",
-    "tags": [],
+    "tags": [
+      "Teaching",
+      "Library"
+    ],
     "genes": [],
     "source": "https://github.com/munch-group/genominterv",
-    "date": "2025-09-30T16:07:30Z",
+    "date": "2026-04-04T06:38:06.088Z",
     "synced": false,
     "connection": false,
     "_ghFullName": "munch-group/genominterv",
@@ -3992,7 +3914,9 @@
     "_ghLang": "Python",
     "_ghOpenIssues": 1,
     "_ghPrivate": false,
-    "_sortTag": ""
+    "_sortTag": "Teaching",
+    "archived": false,
+    "due": ""
   },
   {
     "id": "gh_munch-group_bp-help",
@@ -6308,6 +6232,58 @@
     "due": "",
     "date": "2026-04-03T12:52:05.635Z",
     "synced": false,
-    "_sortTag": ""
+    "_sortTag": "Phasic"
+  },
+  {
+    "id": "mnjct6bbfoan",
+    "type": "note",
+    "content": "- [ ] FTP link from Alan",
+    "title": "Downloading Baboon data",
+    "genes": [],
+    "tags": [
+      "Baboons"
+    ],
+    "source": "",
+    "connection": false,
+    "archived": false,
+    "due": "",
+    "date": "2026-04-03T20:26:17.783Z",
+    "synced": false,
+    "_sortTag": "Baboons"
+  },
+  {
+    "id": "mnjyrcz2ausk",
+    "type": "note",
+    "content": "## Genomic Thinking\n- Censor\n- Projects",
+    "title": "Teaching status",
+    "genes": [],
+    "tags": [
+      "Teaching",
+      "Status"
+    ],
+    "source": "",
+    "connection": false,
+    "archived": false,
+    "due": "",
+    "date": "2026-04-04T06:57:48.621Z",
+    "synced": false,
+    "_sortTag": "Teaching"
+  },
+  {
+    "id": "mnjzflkb662u",
+    "type": "note",
+    "content": "State and location of things",
+    "title": "Phasic status",
+    "genes": [],
+    "tags": [
+      "Phasic",
+      "Status"
+    ],
+    "source": "",
+    "connection": false,
+    "archived": false,
+    "due": "",
+    "date": "2026-04-04T06:59:35.531Z",
+    "synced": false
   }
 ]

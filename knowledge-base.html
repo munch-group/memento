@@ -92,8 +92,8 @@ a { color: inherit; }
 .card-content blockquote { border-left: 2px solid var(--border2); padding-left: 10px; color: var(--text2); margin: 0.5em 0; }
 .card-content h1, .card-content h2, .card-content h3 { font-size: 13px; font-weight: 600; margin: 0.5em 0 0.3em; }
 .card-content img { max-width: 100%; height: auto; border-radius: var(--r); margin: 0.5em 0; }
-.card-meta { margin-top: 7px; display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
-.gene-list { display: flex; gap: 2px; flex: 1; min-width: 0; overflow: hidden; align-items: center; position: relative; }
+.card-meta { margin-top: 7px; display: flex; gap: 4px; flex-wrap: wrap; align-items: center; min-height: 20px; }
+.gene-list { display: flex; gap: 2px; flex: 1; min-width: 0; overflow: hidden; align-items: center; position: relative; height: 18px; }
 .gene-list.overflowing { -webkit-mask-image: linear-gradient(to right, black 75%, transparent 100%); mask-image: linear-gradient(to right, black 75%, transparent 100%); }
 .gene-list .gene-more { display: none; }
 .card.expanded .card-meta { align-items: center; }
@@ -103,13 +103,19 @@ a { color: inherit; }
 .gene-copy:hover { opacity: 1; color: var(--text); }
 .gene.highlighted { color: var(--accent); font-weight: 600; }
 .gene.highlighted:hover { background: rgba(217,119,87,0.08); }
-.highlight-bar { margin-bottom: 1rem; }
+.highlight-bar { margin-bottom: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.preview-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.preview-toggle:hover { color: var(--text2); }
+.preview-toggle .preview-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
+.preview-toggle.active .preview-dot { background: var(--accent); border-color: var(--accent); }
+.preview-toggle.active { color: var(--text2); }
+.hide-previews .card-content.clamped { display: none; }
 .highlight-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
 .highlight-toggle:hover { color: var(--text2); }
 .highlight-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
 .highlight-bar.active .highlight-dot { background: var(--accent); border-color: var(--accent); }
 .highlight-bar.active .highlight-toggle { color: var(--text2); }
-.highlight-input-wrap { display: flex; gap: 8px; margin-top: 6px; }
+.highlight-input-wrap { display: flex; gap: 8px; margin-top: 6px; flex-basis: 100%; }
 .highlight-input-wrap input { flex: 1; font-family: var(--font); font-size: 13px; padding: 5px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .highlight-input-wrap input:focus { border-color: var(--accent); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
@@ -267,12 +273,13 @@ a { color: inherit; }
       </div>
       <div class="highlight-bar" id="highlight-bar">
         <div class="highlight-toggle" onclick="toggleHighlightInput()"><span class="highlight-dot"></span> Highlight genes</div>
+        <div class="preview-toggle" id="preview-toggle" onclick="togglePreviews()"><span class="preview-dot"></span> Card previews</div>
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
           <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6" oninput="updateHighlightSet()" />
           <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
         </div>
       </div>
-      <div id="item-list"></div>
+      <div id="item-list" class="hide-previews"></div>
     </div>
   </div>
 </div>
@@ -867,7 +874,7 @@ function renderCard(item) {
   </div>
   ${(()=>{ if(exp) return `<div class="card-content" id="cc-${item.id}">${md(item.content)}</div>`; const t=title.replace(/…$/,''); const c=item.content.trim(); if(c===t||c===(item.title||'').trim()) return ''; return `<div class="card-content clamped" id="cc-${item.id}">${esc(item.content)}</div>`; })()}
   ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
-  ${(tags||genes||dueHtml)?`<div class="card-meta">${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}</div>`:''}
+  <div class="card-meta">${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}${(!tags&&!genes&&!dueHtml)?'&nbsp;':''}</div>
   ${exp?`<div class="card-bottom">
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
@@ -884,6 +891,12 @@ function geneClick(e, gene) {
   e.stopPropagation();
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
   setGeneFilter(gene);
+}
+function togglePreviews() {
+  const list = document.getElementById('item-list');
+  const toggle = document.getElementById('preview-toggle');
+  list.classList.toggle('hide-previews');
+  toggle.classList.toggle('active', !list.classList.contains('hide-previews'));
 }
 function toggleHighlightInput() {
   const wrap = document.getElementById('highlight-input-wrap');

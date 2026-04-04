@@ -1001,6 +1001,7 @@ function editItem(e, id) {
   e.stopPropagation();
   const item = items.find(i => i.id === id);
   if (!item) return;
+  if (item.type === 'github') { showToast('GitHub cards are synced, not editable'); return; }
   editingId = item.id;
   selectedType = item.type;
   const f = document.getElementById('add-form');

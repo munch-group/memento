@@ -1172,6 +1172,14 @@ document.addEventListener('keydown', async e=>{
       editItem({stopPropagation(){}}, expandedId);
     }
   }
+  if(e.key==='Escape'){
+    if(document.getElementById('add-form').style.display!=='none'){
+      cancelEdit();
+    } else {
+      const search = document.getElementById('search-input');
+      if(search && search.value){ search.value=''; renderList(); }
+    }
+  }
 });
 window.addEventListener('focus', ()=>{ if(fileHandle) loadFromFile(); });
 let _resizeTimer;

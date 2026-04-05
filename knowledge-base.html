@@ -127,11 +127,15 @@ a { color: inherit; }
 .digest-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
 .digest-toggle.active .digest-dot { background: var(--accent); border-color: var(--accent); }
 .digest-toggle.active { color: var(--text2); }
+.digest-wrap { display: flex; gap: 1rem; align-items: flex-start; }
+.digest-left { flex: 1; min-width: 0; }
+.digest-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.digest-right-title { font-family: var(--mono); font-size: 11px; color: var(--text3); }
 .digest-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1.5rem 1.5rem; font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); box-shadow: 0 1px 3px var(--shadow); }
 .digest-card h2 { font-size: 15px; margin: 1.5rem 0 0.5rem; }
 .digest-card h2:first-child { margin-top: 0; }
 .digest-card p { margin: 0.4rem 0; }
-.digest-card .digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 1rem; }
+.digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 0.5rem; }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 .gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
@@ -941,13 +945,23 @@ function toggleDigest() {
 }
 function renderDigest() {
   const list = document.getElementById('item-list');
+  // Left: digest card
+  let leftHtml;
   if (!window._kbDigest || !window._kbDigest.markdown) {
-    list.innerHTML = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run python kb-digest.py knowledge-base/knowledge-base.json</code></p></div>';
-    return;
+    leftHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run python kb-digest.py knowledge-base/knowledge-base.json</code></p></div>';
+  } else {
+    const d = window._kbDigest;
+    const dateStr = d.date ? fmtDate(d.date) : '';
+    leftHtml = `${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + ' ago</div>' : ''}<div class="digest-card">${md(d.markdown)}</div>`;
   }
-  const d = window._kbDigest;
-  const dateStr = d.date ? fmtDate(d.date) : '';
-  list.innerHTML = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + ' ago</div>' : ''}${md(d.markdown)}</div>`;
+  // Right: recent notes and observations
+  const recent = items
+    .filter(i => (i.type === 'note' || i.type === 'observation') && !i.archived)
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    .slice(0, 15);
+  const rightCards = recent.map(i => renderCard(i)).join('');
+  const rightHtml = `<div class="digest-right-title">Recent notes & observations</div>${rightCards}`;
+  list.innerHTML = `<div class="digest-wrap"><div class="digest-left">${leftHtml}</div><div class="digest-right">${rightHtml}</div></div>`;
 }
 function toggleHighlightInput() {
   const wrap = document.getElementById('highlight-input-wrap');
@@ -1573,7 +1587,10 @@ function ghBuildStatusMarkdown(readme, commits, issues) {
   const closed = issues.filter(i => i.state === 'closed');
   if (closed.length) {
     s += '**Recently closed issues:**\n';
-    for (const i of closed) s += `- ~~#${i.number} ${i.title}~~\n`;
+    for (const i of closed) {
+      const labels = (i.labels || []).map(l => l.name).join(', ');
+      s += `- ~~#${i.number} ${i.title}~~${labels ? ' `' + labels + '`' : ''}\n`;
+    }
     s += '\n';
   }
   s += '## Next steps\n\n';

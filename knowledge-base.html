@@ -122,6 +122,16 @@ a { color: inherit; }
 .highlight-input-wrap { display: flex; gap: 8px; margin-top: 6px; flex-basis: 100%; }
 .highlight-input-wrap input { flex: 1; font-family: var(--font); font-size: 13px; padding: 5px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .highlight-input-wrap input:focus { border-color: var(--accent); }
+.digest-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.digest-toggle:hover { color: var(--text2); }
+.digest-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
+.digest-toggle.active .digest-dot { background: var(--accent); border-color: var(--accent); }
+.digest-toggle.active { color: var(--text2); }
+.digest-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1.5rem 1.5rem; font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); box-shadow: 0 1px 3px var(--shadow); }
+.digest-card h2 { font-size: 15px; margin: 1.5rem 0 0.5rem; }
+.digest-card h2:first-child { margin-top: 0; }
+.digest-card p { margin: 0.4rem 0; }
+.digest-card .digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 1rem; }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 .gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
@@ -277,6 +287,7 @@ a { color: inherit; }
       </div>
       <div class="highlight-bar" id="highlight-bar">
         <div class="highlight-toggle" onclick="toggleHighlightInput()"><span class="highlight-dot"></span> Highlight genes</div>
+        <div class="digest-toggle" id="digest-toggle" onclick="toggleDigest()"><span class="digest-dot"></span> Where am I</div>
         <div class="preview-toggle half" id="preview-toggle" onclick="togglePreviews()"><span class="preview-dot"></span> Card previews</div>
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
           <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6" oninput="updateHighlightSet()" />
@@ -725,6 +736,7 @@ function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='coun
 
 // --- List & Cards ---
 function renderList() {
+  if (digestVisible) { renderDigest(); return; }
   // Issues sub-view: render temporary issue cards instead of normal items
   if (ghIssuesRepo && ghIssuesItems.length >= 0) {
     return renderIssuesList();
@@ -920,6 +932,22 @@ function applyPreviewMode() {
   } else {
     list.classList.add('hide-meta');
   }
+}
+let digestVisible = false;
+function toggleDigest() {
+  digestVisible = !digestVisible;
+  document.getElementById('digest-toggle').classList.toggle('active', digestVisible);
+  renderList();
+}
+function renderDigest() {
+  const list = document.getElementById('item-list');
+  if (!window._kbDigest || !window._kbDigest.markdown) {
+    list.innerHTML = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run python kb-digest.py knowledge-base/knowledge-base.json</code></p></div>';
+    return;
+  }
+  const d = window._kbDigest;
+  const dateStr = d.date ? fmtDate(d.date) : '';
+  list.innerHTML = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + ' ago</div>' : ''}${md(d.markdown)}</div>`;
 }
 function toggleHighlightInput() {
   const wrap = document.getElementById('highlight-input-wrap');

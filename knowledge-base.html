@@ -589,6 +589,8 @@ function sortItems(arr) {
       if (ha !== hb) return hb - ha;
     }
     if (sortKey === 'date') {
+      const ap = a.type === 'people', bp = b.type === 'people';
+      if (ap !== bp) return ap ? 1 : -1; // people always last
       return dir * ((a.date||'').localeCompare(b.date||''));
     }
     if (sortKey === 'due') {

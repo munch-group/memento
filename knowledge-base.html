@@ -306,7 +306,7 @@ const TYPES = [
 ];
 const TYPE_ICONS = {
   fact: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="9 12 11.5 14.5 16 9.5"/></svg>',
-  reference: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H3zm0 2h6v6H3V5zm8 0h10v6H11V5zM3 13h6v6H3v-6zm8 0h10v6H11v-6z"/></svg>',
+  reference: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4a7 7 0 0 1 7 7c0 3-1.5 5.5-4 8l-1.5-1C6.5 15.5 8 13 8 11a5 5 0 0 1-5 0A4 4 0 0 1 3 4zm12 0a7 7 0 0 1 7 7c0 3-1.5 5.5-4 8l-1.5-1C18.5 15.5 20 13 20 11a5 5 0 0 1-5 0 4 4 0 0 1 0-7z"/></svg>',
   observation: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C5 4 1 12 1 12s4 8 11 8 11-8 11-8-4-8-11-8zm0 13a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>',
   hypothesis: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4c-1.1 0-2 .9-2 2v3.8h1.5a2.5 2.5 0 0 1 0 5H2V20c0 1.1.9 2 2 2h3.8v-1.5a2.5 2.5 0 0 1 5 0V22H17c1.1 0 2-.9 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/></svg>',
   idea: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
@@ -870,7 +870,7 @@ function renderCard(item) {
   return `<div class="card${exp?' expanded':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
-    <span class="card-title-text"><span onclick="editItem(event,'${item.id}')" style="cursor:text">${esc(title)}</span></span>
+    <span class="card-title-text"><span onclick="${item.type==='github'&&item._ghFullName?`ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\\\'")}')`:`editItem(event,'${item.id}')`}" style="cursor:${item.type==='github'?'pointer':'text'}">${esc(title)}</span></span>
     <span class="archive-icon${item.archived?' active':''}" title="${item.archived?'Unarchive':'Archive'}" onclick="toggleArchived(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
     <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'}</span>
     ${item.type==='github'&&item._ghOpenIssues?`<span class="gh-issues-icon" title="View open issues" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="gh-issues-count">${item._ghOpenIssues}</span></span>`:''}
@@ -1432,7 +1432,7 @@ async function ghSyncRepos() {
         existing.content = repo.description || '';
         existing.tags = [...new Set([...(existing.tags||[]), ...(repo.topics||[])])];
         existing.source = repo.html_url;
-        existing.date = repo.updated_at;
+        existing.date = repo.pushed_at;
         existing._ghFullName = repo.full_name;
         existing._ghStars = repo.stargazers_count;
         existing._ghForks = repo.forks_count;
@@ -1445,7 +1445,7 @@ async function ghSyncRepos() {
           id: ghId, type: 'github', title: repo.name,
           content: repo.description || '',
           tags: repo.topics || [], genes: [],
-          source: repo.html_url, date: repo.updated_at,
+          source: repo.html_url, date: repo.pushed_at,
           synced: false, connection: false,
           _ghFullName: repo.full_name,
           _ghStars: repo.stargazers_count, _ghForks: repo.forks_count,
@@ -1457,7 +1457,16 @@ async function ghSyncRepos() {
     }
     await saveToFile();
     computeSortTags(); renderFilters(); renderList();
-    showToast(`GitHub: ${added} added, ${updated} updated`);
+    showToast(`GitHub: ${added} added, ${updated} updated — fetching issues…`);
+    // Update mtime from latest issues for repos with open issues
+    const withIssues = items.filter(i => i.type === 'github' && i._ghOpenIssues > 0 && i._ghFullName);
+    let mtimeUpdated = 0;
+    await Promise.all(withIssues.map(async card => {
+      const d = await ghFetchLatestIssueDate(card._ghFullName);
+      if (d && d > (card.date || '')) { card.date = d; mtimeUpdated++; }
+    }));
+    if (mtimeUpdated) { await saveToFile(); renderList(); }
+    showToast(`GitHub: ${added} added, ${updated} updated, ${mtimeUpdated} dates from issues`);
   } catch(e) {
     showToast('GitHub sync failed: ' + e.message);
   }
@@ -1478,7 +1487,12 @@ async function ghFetchReadme(fullName) {
 
 async function ghExpandCard(item) {
   if (!item._ghFullName) return;
-  const readme = await ghFetchReadme(item._ghFullName);
+  const fn = item._ghFullName;
+  // Fetch README and latest issue in parallel
+  const [readme, latestIssueDate] = await Promise.all([
+    ghFetchReadme(fn),
+    ghFetchLatestIssueDate(fn),
+  ]);
   if (readme && expandedId === item.id) {
     const el = document.querySelector(`.card[data-id="${item.id}"] .card-content`);
     if (el) {
@@ -1486,6 +1500,23 @@ async function ghExpandCard(item) {
       el.innerHTML = md(readme);
     }
   }
+  // Update mtime to latest of pushed_at and newest issue
+  if (latestIssueDate && latestIssueDate > (item.date || '')) {
+    item.date = latestIssueDate;
+    const dateEl = document.querySelector(`.card[data-id="${item.id}"] .card-date`);
+    if (dateEl) dateEl.textContent = fmtDate(item.date);
+    saveToFile();
+  }
+}
+
+async function ghFetchLatestIssueDate(fullName) {
+  try {
+    const resp = await fetch(`https://api.github.com/repos/${fullName}/issues?state=open&per_page=1&sort=created&direction=desc`, { headers: ghHeaders() });
+    if (!resp.ok) return null;
+    const issues = await resp.json();
+    const real = issues.filter(i => !i.pull_request);
+    return real.length ? real[0].created_at : null;
+  } catch { return null; }
 }
 
 async function ghShowIssues(e, fullName, repoTitle) {

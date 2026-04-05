@@ -277,13 +277,13 @@ a { color: inherit; }
       </div>
       <div class="highlight-bar" id="highlight-bar">
         <div class="highlight-toggle" onclick="toggleHighlightInput()"><span class="highlight-dot"></span> Highlight genes</div>
-        <div class="preview-toggle" id="preview-toggle" onclick="togglePreviews()"><span class="preview-dot"></span> Card previews</div>
+        <div class="preview-toggle half" id="preview-toggle" onclick="togglePreviews()"><span class="preview-dot"></span> Card previews</div>
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
           <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6" oninput="updateHighlightSet()" />
           <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
         </div>
       </div>
-      <div id="item-list" class="hide-meta"></div>
+      <div id="item-list" class="hide-previews"></div>
     </div>
   </div>
 </div>
@@ -402,6 +402,8 @@ async function loadFromFile() {
     if (text.trim()) {
       const data = JSON.parse(text);
       items = (Array.isArray(data) ? data : (data.items || []));
+      window._kbDigest = items.find(i => i.id === '_digest') || null;
+      items = items.filter(i => i.id !== '_digest');
     } else {
       items = [];
     }
@@ -415,8 +417,9 @@ async function loadFromFile() {
 async function saveToFile() {
   if (!fileHandle) return;
   try {
+    const toSave = window._kbDigest ? [...items, window._kbDigest] : items;
     const writable = await fileHandle.createWritable();
-    await writable.write(JSON.stringify(items, null, 2));
+    await writable.write(JSON.stringify(toSave, null, 2));
     await writable.close();
   } catch(e) { showToast('Save error: '+e.message); }
 }
@@ -899,7 +902,7 @@ function geneClick(e, gene) {
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
   setGeneFilter(gene);
 }
-let previewMode = 'minimal'; // 'minimal' | 'compact' | 'full'
+let previewMode = 'compact'; // 'minimal' | 'compact' | 'full'
 function togglePreviews() {
   previewMode = previewMode === 'minimal' ? 'compact' : previewMode === 'compact' ? 'full' : 'minimal';
   applyPreviewMode();
@@ -1459,15 +1462,20 @@ async function ghSyncRepos() {
     }
     await saveToFile();
     computeSortTags(); renderFilters(); renderList();
-    showToast(`GitHub: ${added} added, ${updated} updated — fetching issues…`);
-    // Update mtime from latest issues for repos with open issues
-    const withIssues = items.filter(i => i.type === 'github' && i._ghOpenIssues > 0 && i._ghFullName);
+    showToast(`GitHub: ${added} added, ${updated} updated — fetching activity…`);
+    // Fetch commits, recent issues, and latest issue date for all github cards
+    const ghCards = items.filter(i => i.type === 'github' && i._ghFullName);
     let mtimeUpdated = 0;
-    await Promise.all(withIssues.map(async card => {
-      const d = await ghFetchLatestIssueDate(card._ghFullName);
-      if (d && d > (card.date || '')) { card.date = d; mtimeUpdated++; }
+    await Promise.all(ghCards.map(async card => {
+      const [commits, recentIssues, latestDate] = await Promise.all([
+        ghFetchCommits(card._ghFullName),
+        ghFetchRecentIssues(card._ghFullName),
+        card._ghOpenIssues > 0 ? ghFetchLatestIssueDate(card._ghFullName) : Promise.resolve(null),
+      ]);
+      ghStoreActivity(card, commits, recentIssues);
+      if (latestDate && latestDate > (card.date || '')) { card.date = latestDate; mtimeUpdated++; }
     }));
-    if (mtimeUpdated) { await saveToFile(); renderList(); }
+    await saveToFile(); renderList();
     showToast(`GitHub: ${added} added, ${updated} updated, ${mtimeUpdated} dates from issues`);
   } catch(e) {
     showToast('GitHub sync failed: ' + e.message);
@@ -1487,19 +1495,88 @@ async function ghFetchReadme(fullName) {
   } catch { return null; }
 }
 
+async function ghFetchCommits(fullName) {
+  try {
+    const resp = await fetch(`https://api.github.com/repos/${fullName}/commits?per_page=10`, { headers: ghHeaders() });
+    if (!resp.ok) return [];
+    return await resp.json();
+  } catch { return []; }
+}
+
+async function ghFetchRecentIssues(fullName) {
+  try {
+    const resp = await fetch(`https://api.github.com/repos/${fullName}/issues?state=all&sort=updated&direction=desc&per_page=10`, { headers: ghHeaders() });
+    if (!resp.ok) return [];
+    const issues = await resp.json();
+    return issues.filter(i => !i.pull_request);
+  } catch { return []; }
+}
+
+function ghStoreActivity(item, rawCommits, rawIssues) {
+  item._ghCommits = rawCommits.map(c => ({
+    sha: c.sha.slice(0, 7),
+    msg: c.commit.message.split('\n')[0],
+    date: c.commit.author.date,
+  }));
+  item._ghIssuesRecent = rawIssues.map(i => ({
+    number: i.number, title: i.title, state: i.state,
+    date: i.updated_at,
+    labels: (i.labels || []).map(l => l.name),
+    url: i.html_url,
+  }));
+}
+
+function ghBuildStatusMarkdown(readme, commits, issues) {
+  let s = '';
+  if (readme) s += readme + '\n\n---\n\n';
+  s += '## How I left it\n\n';
+  if (commits.length) {
+    s += '**Recent commits:**\n';
+    for (const c of commits) {
+      const ago = fmtDate(c.commit.author.date);
+      const msg = c.commit.message.split('\n')[0];
+      const sha = c.sha.slice(0, 7);
+      s += `- \`${sha}\` ${msg} *(${ago})*\n`;
+    }
+    s += '\n';
+  } else {
+    s += '*No recent commits.*\n\n';
+  }
+  const closed = issues.filter(i => i.state === 'closed');
+  if (closed.length) {
+    s += '**Recently closed issues:**\n';
+    for (const i of closed) s += `- ~~#${i.number} ${i.title}~~\n`;
+    s += '\n';
+  }
+  s += '## Next steps\n\n';
+  const open = issues.filter(i => i.state === 'open');
+  if (open.length) {
+    for (const i of open) {
+      const labels = (i.labels || []).map(l => l.name).join(', ');
+      s += `- [ ] [#${i.number}](${i.html_url}) ${i.title}${labels ? ' `' + labels + '`' : ''}\n`;
+    }
+  } else {
+    s += '*No open issues.*\n';
+  }
+  return s;
+}
+
 async function ghExpandCard(item) {
   if (!item._ghFullName) return;
   const fn = item._ghFullName;
-  // Fetch README and latest issue in parallel
-  const [readme, latestIssueDate] = await Promise.all([
+  const [readme, commits, recentIssues, latestIssueDate] = await Promise.all([
     ghFetchReadme(fn),
+    ghFetchCommits(fn),
+    ghFetchRecentIssues(fn),
     ghFetchLatestIssueDate(fn),
   ]);
-  if (readme && expandedId === item.id) {
+  ghStoreActivity(item, commits, recentIssues);
+  if (expandedId === item.id) {
+    const statusMd = ghBuildStatusMarkdown(readme, commits, recentIssues);
     const el = document.querySelector(`.card[data-id="${item.id}"] .card-content`);
     if (el) {
       el.classList.remove('clamped');
-      el.innerHTML = md(readme);
+      el.innerHTML = md(statusMd);
     }
   }
   // Update mtime to latest of pushed_at and newest issue
@@ -1507,8 +1584,8 @@ async function ghExpandCard(item) {
     item.date = latestIssueDate;
     const dateEl = document.querySelector(`.card[data-id="${item.id}"] .card-date`);
     if (dateEl) dateEl.textContent = fmtDate(item.date);
-    saveToFile();
   }
+  saveToFile();
 }
 
 async function ghFetchLatestIssueDate(fullName) {
@@ -1541,6 +1618,7 @@ async function ghShowIssues(e, fullName, repoTitle) {
       _ghIssueState: issue.state,
       _ghAssignee: issue.assignee?.login,
     }));
+    if (!ghIssuesItems.length) { showToast('No open issues'); return; }
     ghIssuesRepo = fullName;
     expandedId = null;
     renderList();

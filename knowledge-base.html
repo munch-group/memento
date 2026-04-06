@@ -127,15 +127,13 @@ a { color: inherit; }
 .digest-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
 .digest-toggle.active .digest-dot { background: var(--accent); border-color: var(--accent); }
 .digest-toggle.active { color: var(--text2); }
-.digest-wrap { display: flex; gap: 1rem; align-items: flex-start; }
-.digest-left { flex: 1; min-width: 0; }
-.digest-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.digest-right-title { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+.digest-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .digest-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1.5rem 1.5rem; font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); box-shadow: 0 1px 3px var(--shadow); }
 .digest-card h2 { font-size: 15px; margin: 1.5rem 0 0.5rem; }
-.digest-card h2:first-child { margin-top: 0; }
+.digest-card h2:first-child, .digest-card .digest-date + h2, .digest-card .digest-date:first-child + h2 { margin-top: 0; }
 .digest-card p { margin: 0.4rem 0; }
-.digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 0.5rem; }
+.digest-card { position: relative; }
+.digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); float: right; line-height: 15px; margin-top: 2px; }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 .gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
@@ -291,7 +289,7 @@ a { color: inherit; }
       </div>
       <div class="highlight-bar" id="highlight-bar">
         <div class="highlight-toggle" onclick="toggleHighlightInput()"><span class="highlight-dot"></span> Highlight genes</div>
-        <div class="digest-toggle" id="digest-toggle" onclick="toggleDigest()"><span class="digest-dot"></span> Where am I</div>
+        <div class="digest-toggle active" id="digest-toggle" onclick="toggleDigest()"><span class="digest-dot"></span> Where am I</div>
         <div class="preview-toggle half" id="preview-toggle" onclick="togglePreviews()"><span class="preview-dot"></span> Card previews</div>
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
           <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6" oninput="updateHighlightSet()" />
@@ -740,7 +738,6 @@ function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='coun
 
 // --- List & Cards ---
 function renderList() {
-  if (digestVisible) { renderDigest(); return; }
   // Issues sub-view: render temporary issue cards instead of normal items
   if (ghIssuesRepo && ghIssuesItems.length >= 0) {
     return renderIssuesList();
@@ -803,7 +800,18 @@ function renderList() {
   const list=document.getElementById('item-list');
   if(!list)return;
   if(vis.length===0){
-    list.innerHTML=`<div class="empty"><p>${items.length===0?'Nothing yet.':'No matches.'}</p><small>${items.length===0?'Add your first entry above.':'Try a different search.'}</small></div>`;
+    const emptyHtml = `<div class="empty"><p>${items.length===0?'Nothing yet.':'No matches.'}</p><small>${items.length===0?'Add your first entry above.':'Try a different search.'}</small></div>`;
+    if (digestVisible) {
+      const d = window._kbDigest;
+      let digestHtml;
+      if (!d || !d.markdown) { digestHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'; }
+      else { const dateStr = d.date ? fmtDate(d.date) : ''; digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + ' ago</div>' : ''}${md(d.markdown)}</div>`; }
+      const pCard = items.find(i => i.id === '_priorities');
+      const pH = pCard ? renderCard(pCard, true) : '<div class="card priorities-placeholder" style="border:1px dashed var(--border);color:var(--text3);text-align:center;padding:1.5rem;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
+      list.innerHTML = `<div class="digest-col">${digestHtml}</div><div class="item-col">${pH}${emptyHtml}</div>`;
+    } else {
+      list.innerHTML = emptyHtml;
+    }
     return;
   }
   // Round-robin distribution across columns for left-to-right sort order
@@ -815,11 +823,36 @@ function renderList() {
     const sw = sidebar ? sidebar.offsetWidth + 24 : 260;
     listWidth = Math.max(450, window.innerWidth - sw - 48);
   }
-  const nCols = Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8)));
+  const totalCols = Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8)));
+  const nCols = digestVisible ? Math.max(1, totalCols - 2) : totalCols;
+  // In digest view, pull _priorities card out for pinning at top of first column
+  if (digestVisible) {
+    const pIdx = vis.findIndex(i => i.id === '_priorities');
+    if (pIdx >= 0) vis.splice(pIdx, 1);
+  }
   const cols = Array.from({length: nCols}, () => []);
   vis.forEach((item, i) => cols[i % nCols].push(renderCard(item)));
+  // Prepend priorities card to first column in digest view
+  if (digestVisible && cols.length) {
+    const pCard = items.find(i => i.id === '_priorities');
+    const pH = pCard ? renderCard(pCard, true) : '<div class="card priorities-placeholder" style="border:1px dashed var(--border);color:var(--text3);text-align:center;padding:1.5rem;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
+    cols[0].unshift(pH);
+  }
   const banner = linkMode ? '<div class="link-mode-banner">Link mode — click a card to insert a reference · <a href="#" onclick="toggleLinkMode();return false">Done</a></div>' : '';
-  list.innerHTML = banner + cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
+  let colsHtml = '';
+  if (digestVisible) {
+    const d = window._kbDigest;
+    let digestHtml;
+    if (!d || !d.markdown) {
+      digestHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>';
+    } else {
+      const dateStr = d.date ? fmtDate(d.date) : '';
+      digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + ' ago</div>' : ''}${md(d.markdown)}</div>`;
+    }
+    colsHtml = `<div class="digest-col">${digestHtml}</div>`;
+  }
+  colsHtml += cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
+  list.innerHTML = banner + colsHtml;
   resolveImages();
   document.querySelectorAll('.gene-list').forEach(el => {
     el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth);
@@ -859,8 +892,8 @@ function renderIssuesList() {
   list.innerHTML = cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
 }
 
-function renderCard(item) {
-  const exp=expandedId===item.id;
+function renderCard(item, forceExpand) {
+  const exp=forceExpand||expandedId===item.id;
   const title=item.title||item.content.split('\n')[0].slice(0,80)+(item.content.length>80?'…':'');
   const tags=(item.tags||[]).map(t=>`<span class="tag" onclick="tagClick(event,'${t.replace(/'/g,"\\'")}') ">${esc(t)}</span>`).join('');
   const allGenes = item.genes||[];
@@ -937,31 +970,24 @@ function applyPreviewMode() {
     list.classList.add('hide-meta');
   }
 }
-let digestVisible = false;
+let digestVisible = true;
 function toggleDigest() {
   digestVisible = !digestVisible;
   document.getElementById('digest-toggle').classList.toggle('active', digestVisible);
   renderList();
 }
-function renderDigest() {
-  const list = document.getElementById('item-list');
-  // Left: digest card
-  let leftHtml;
-  if (!window._kbDigest || !window._kbDigest.markdown) {
-    leftHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run python kb-digest.py knowledge-base/knowledge-base.json</code></p></div>';
-  } else {
-    const d = window._kbDigest;
-    const dateStr = d.date ? fmtDate(d.date) : '';
-    leftHtml = `${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + ' ago</div>' : ''}<div class="digest-card">${md(d.markdown)}</div>`;
-  }
-  // Right: recent notes and observations
-  const recent = items
-    .filter(i => (i.type === 'note' || i.type === 'observation') && !i.archived)
-    .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
-    .slice(0, 15);
-  const rightCards = recent.map(i => renderCard(i)).join('');
-  const rightHtml = `<div class="digest-right-title">Recent notes & observations</div>${rightCards}`;
-  list.innerHTML = `<div class="digest-wrap"><div class="digest-left">${leftHtml}</div><div class="digest-right">${rightHtml}</div></div>`;
+async function createPrioritiesCard() {
+  items.push({
+    id: '_priorities', type: 'note',
+    title: 'Priorities',
+    content: '- \n',
+    tags: [], genes: [], source: '',
+    date: new Date().toISOString(),
+    synced: false, connection: false, archived: false, due: '',
+  });
+  await saveToFile();
+  editItem(new Event('click'), '_priorities');
+  renderList();
 }
 function toggleHighlightInput() {
   const wrap = document.getElementById('highlight-input-wrap');

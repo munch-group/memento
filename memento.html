@@ -742,7 +742,7 @@ function toggleSection(headerId, contentId) {
 }
 function cycleConnFilter() { connFilter = connFilter==='all' ? 'conn' : connFilter==='conn' ? 'noconn' : 'all'; renderFilters(); renderList(); }
 function setArchiveFilter() { archiveFilter = archiveFilter==='archived' ? 'active' : 'archived'; renderFilters(); renderList(); }
-function clearAllFilters() { activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active'; ghIssuesRepo=null; ghIssuesItems=[]; renderFilters(); renderList(); }
+function clearAllFilters() { activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active'; ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; renderFilters(); renderList(); }
 function setFilter(type) { activeType=type; activeTag=null; activeGene=null; renderFilters(); renderList(); }
 function setTagFilter(tag) { activeTag = activeTag===tag ? null : tag; activeType='all'; activeGene=null; renderFilters(); renderList(); }
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
@@ -752,6 +752,14 @@ function renderList() {
   // Issues sub-view: render temporary issue cards instead of normal items
   if (ghIssuesRepo && ghIssuesItems.length >= 0) {
     return renderIssuesList();
+  }
+  // Digest focus: show single repo card
+  if (digestFocusCardId) {
+    const list = document.getElementById('item-list');
+    if (!list) return;
+    const item = items.find(i => i.id === digestFocusCardId);
+    if (!item) { digestFocusCardId = null; }
+    else { list.innerHTML = `<div class="item-col">${renderCard(item)}</div>`; resolveImages(); return; }
   }
   const raw=(document.getElementById('search-input')?.value||'').trim();
   // Parse search: comma with at least one flanking space = OR between groups.
@@ -816,7 +824,7 @@ function renderList() {
       const d = window._kbDigest;
       let digestHtml;
       if (!d || !d.markdown) { digestHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'; }
-      else { const dateStr = d.date ? fmtDateAgo(d.date) : ''; digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}${md(d.markdown)}</div>`; }
+      else { const dateStr = d.date ? fmtDateAgo(d.date) : ''; digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}<h2>Where am I</h2>${linkifyDigestRepos(md(d.markdown))}</div>`; }
       const pCard = items.find(i => i.id === '_priorities');
       const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
       list.innerHTML = `<div class="digest-col">${digestHtml}</div><div class="item-col">${pH}${emptyHtml}</div>`;
@@ -858,7 +866,7 @@ function renderList() {
       digestHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>';
     } else {
       const dateStr = d.date ? fmtDate(d.date) : '';
-      digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}${md(d.markdown)}</div>`;
+      digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}<h2>Where am I</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
     }
     colsHtml = `<div class="digest-col">${digestHtml}</div>`;
   }
@@ -986,6 +994,33 @@ function toggleDigest() {
   digestVisible = !digestVisible;
   document.getElementById('digest-toggle').classList.toggle('active', digestVisible);
   renderList();
+}
+let digestFocusCardId = null;
+function navigateToRepoCard(cardId) {
+  const item = items.find(i => i.id === cardId);
+  if (!item) return;
+  digestFocusCardId = cardId;
+  expandedId = cardId;
+  renderList();
+  const el = document.getElementById('page-title');
+  el.innerHTML = `<span style="cursor:pointer" onclick="backFromDigestFocus()" title="Back to digest">← ${esc(item.title)}</span>`;
+  if (item.type === 'github' && item._ghFullName) ghExpandCard(item);
+}
+function backFromDigestFocus() {
+  digestFocusCardId = null;
+  expandedId = null;
+  renderFilters(); renderList();
+}
+function linkifyDigestRepos(html) {
+  const ghCards = items.filter(i => i.type === 'github');
+  if (!ghCards.length) return html;
+  const nameToId = {};
+  ghCards.forEach(c => { nameToId[c.title.toLowerCase()] = c.id; });
+  return html.replace(/<strong>([^<]+)<\/strong>/g, (m, name) => {
+    const id = nameToId[name.toLowerCase()];
+    if (!id) return m;
+    return `<strong><a href="#" onclick="navigateToRepoCard('${id}');return false" style="text-decoration:none;color:inherit">${esc(name)}</a></strong>`;
+  });
 }
 async function createPrioritiesCard() {
   items.push({

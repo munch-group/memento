@@ -1,4 +1,4 @@
-# Knowledge Base
+# Memento 
 
 A single-file browser app for managing a local JSON knowledge base with Claude memory sync support. Works in Chrome and Edge using the File System Access API.
 

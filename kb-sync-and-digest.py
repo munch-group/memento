@@ -117,7 +117,11 @@ def build_activity_summary(cards, days=None):
 SYSTEM_PROMPT = """\
 You are a research assistant helping a scientist stay on top of their GitHub projects. \
 Given activity data from multiple repositories, write a concise morning briefing. \
-For each active project, summarize where they left it and what needs attention next. \
+Scale detail inversely with recency: \
+repos touched today or yesterday need only a one-liner (the work is fresh in memory). \
+Repos untouched for a week or more need the most context: what was the last thing done, \
+what is pending, what needs attention, enough to jog memory. \
+Repos in between get moderate detail. \
 Be specific - mention commit messages, issue titles. \
 Issue labels like "bug", "enhancement", "documentation" indicate the issue type. \
 Use this to characterize work (e.g. "2 open bugs", "a feature request for X"). \

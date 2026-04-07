@@ -834,7 +834,7 @@ function renderList() {
     const sw = sidebar ? sidebar.offsetWidth + 24 : 260;
     listWidth = Math.max(450, window.innerWidth - sw - 48);
   }
-  const totalCols = Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8)));
+  const totalCols = Math.min(4, Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8))));
   const nCols = digestVisible ? Math.max(1, totalCols - 2) : totalCols;
   // In digest view, pull _priorities card out for pinning at top of first column
   if (digestVisible) {
@@ -882,7 +882,7 @@ function renderIssuesList() {
   }
   const colWidth = 450;
   let listWidth = list.offsetWidth || Math.max(450, window.innerWidth - 260 - 48);
-  const nCols = Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8)));
+  const nCols = Math.min(4, Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8))));
   const cols = Array.from({length: nCols}, () => []);
   vis.forEach((issue, i) => {
     const exp = expandedId === issue.id;

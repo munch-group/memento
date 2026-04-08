@@ -1,0 +1,90 @@
+{
+  "id": "gh_munch-group_bioinformatics",
+  "type": "github",
+  "title": "bioinformatics",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/bioinformatics",
+  "date": "2026-04-04T13:48:17Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/bioinformatics",
+  "_ghStars": 0,
+  "_ghForks": 2,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 2,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "4248c73",
+      "msg": "update",
+      "date": "2026-04-04T13:37:54Z"
+    },
+    {
+      "sha": "2cc28bd",
+      "msg": "update",
+      "date": "2026-01-05T10:12:13Z"
+    },
+    {
+      "sha": "6ffbddb",
+      "msg": "Added exam set for 2025",
+      "date": "2026-01-04T12:58:52Z"
+    },
+    {
+      "sha": "a52ddb6",
+      "msg": "updated exam info",
+      "date": "2025-12-03T08:51:20Z"
+    },
+    {
+      "sha": "05c9aa9",
+      "msg": "update",
+      "date": "2025-12-02T19:57:10Z"
+    },
+    {
+      "sha": "2551b49",
+      "msg": "updated slides",
+      "date": "2025-12-02T19:55:03Z"
+    },
+    {
+      "sha": "2705167",
+      "msg": "update",
+      "date": "2025-12-01T00:02:46Z"
+    },
+    {
+      "sha": "c55a525",
+      "msg": "updated front page",
+      "date": "2025-12-01T00:00:51Z"
+    },
+    {
+      "sha": "73852c3",
+      "msg": "updated exam info",
+      "date": "2025-11-30T23:31:47Z"
+    },
+    {
+      "sha": "f6d3012",
+      "msg": "slides",
+      "date": "2025-11-16T21:21:47Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 2,
+      "title": "Finish quarto migration",
+      "state": "open",
+      "date": "2023-11-16T10:43:27Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/bioinformatics/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "Finish migrating text",
+      "state": "closed",
+      "date": "2023-11-16T10:37:55Z",
+      "labels": [
+        "documentation"
+      ],
+      "url": "https://github.com/munch-group/bioinformatics/issues/1"
+    }
+  ]
+}

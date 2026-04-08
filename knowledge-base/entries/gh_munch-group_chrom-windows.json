@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_chrom-windows",
+  "type": "github",
+  "title": "chrom-windows",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/chrom-windows",
+  "date": "2025-09-19T19:44:28Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/chrom-windows",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "611664f",
+      "msg": "update",
+      "date": "2025-09-19T19:42:41Z"
+    },
+    {
+      "sha": "cbbf2a2",
+      "msg": "update",
+      "date": "2025-09-19T19:32:41Z"
+    },
+    {
+      "sha": "4fa2113",
+      "msg": "update",
+      "date": "2025-09-19T17:05:48Z"
+    },
+    {
+      "sha": "6a1d4a4",
+      "msg": "update",
+      "date": "2025-09-19T16:58:38Z"
+    },
+    {
+      "sha": "c32f709",
+      "msg": "update",
+      "date": "2025-09-19T16:23:31Z"
+    },
+    {
+      "sha": "2dcf7f7",
+      "msg": "update",
+      "date": "2025-09-19T14:57:11Z"
+    },
+    {
+      "sha": "99d9b08",
+      "msg": "Updaetd docs",
+      "date": "2025-09-19T14:42:34Z"
+    },
+    {
+      "sha": "a34c713",
+      "msg": "update",
+      "date": "2025-09-19T14:04:53Z"
+    },
+    {
+      "sha": "80877cf",
+      "msg": "patch  version bump",
+      "date": "2025-09-19T13:59:19Z"
+    },
+    {
+      "sha": "d414dfa",
+      "msg": "patch  version bump",
+      "date": "2025-09-19T10:49:00Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -11,15 +11,7 @@ import anthropic
 import click
 import urllib.request
 
-
-def load(path):
-    with open(path) as f:
-        return json.load(f)
-
-
-def save(path, entries):
-    with open(path, "w") as f:
-        json.dump(entries, f, indent=2)
+from kb_io import load_all, save_entry
 
 
 def gh_get(url, token):
@@ -140,18 +132,18 @@ Write a "Where am I" digest I can read in a few minutes.
 
 
 @click.command()
-@click.argument("json_file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--days", type=int, default=None, help="Only include activity from the last N days")
 @click.option("--model", default="claude-sonnet-4-20250514", help="Claude model to use")
 @click.option("--sync-only", is_flag=True, help="Only sync GitHub data, skip digest generation")
-def main(json_file, days, model, sync_only):
+def main(kb_dir, days, model, sync_only):
     """Sync GitHub activity and generate a morning digest."""
     gh_token = os.environ.get("GITHUB_TOKEN")
     if not gh_token:
         click.echo("Error: GITHUB_TOKEN environment variable not set.", err=True)
         sys.exit(1)
 
-    entries = load(json_file)
+    entries = load_all(kb_dir)
     gh_cards = [e for e in entries if e.get("type") == "github" and e.get("_ghFullName")]
 
     if not gh_cards:
@@ -181,7 +173,8 @@ def main(json_file, days, model, sync_only):
             if done % 20 == 0:
                 click.echo(f"  {done}/{len(gh_cards)}…", err=True)
 
-    save(json_file, entries)
+    for card in gh_cards:
+        save_entry(kb_dir, card)
     click.echo(f"Synced {len(gh_cards)} repos ({mtime_updated} dates updated from issues)", err=True)
 
     if sync_only:
@@ -211,18 +204,15 @@ def main(json_file, days, model, sync_only):
     markdown = response.content[0].text
     click.echo(markdown)
 
-    # Save digest to JSON
+    # Save _digest entry
     digest_entry = {
         "id": "_digest",
         "type": "_digest",
         "date": datetime.now(timezone.utc).isoformat(timespec="milliseconds"),
         "markdown": markdown,
     }
-    entries = load(json_file)  # reload in case web app saved in the meantime
-    entries = [e for e in entries if e.get("id") != "_digest"]
-    entries.append(digest_entry)
-    save(json_file, entries)
-    click.echo(f"\nDigest saved to {json_file}", err=True)
+    save_entry(kb_dir, digest_entry)
+    click.echo(f"\nDigest saved to {kb_dir}/entries/_digest.*", err=True)
 
 
 if __name__ == "__main__":

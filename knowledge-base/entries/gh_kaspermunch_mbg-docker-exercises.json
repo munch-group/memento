@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_mbg-docker-exercises",
+  "type": "github",
+  "title": "mbg-docker-exercises",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/mbg-docker-exercises",
+  "date": "2024-05-03T20:00:22Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/mbg-docker-exercises",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "530e1f9",
+      "msg": "Added environment.yml",
+      "date": "2024-05-03T20:00:07Z"
+    },
+    {
+      "sha": "d8eed10",
+      "msg": "Updated dockerfile and magda notebook",
+      "date": "2024-05-03T19:38:44Z"
+    },
+    {
+      "sha": "09c4d51",
+      "msg": "Updated Dockerfile",
+      "date": "2024-03-13T17:05:34Z"
+    },
+    {
+      "sha": "d2692de",
+      "msg": "update",
+      "date": "2024-03-14T11:14:38Z"
+    },
+    {
+      "sha": "3076d80",
+      "msg": "Update docker-publish.yml",
+      "date": "2024-03-13T21:46:14Z"
+    },
+    {
+      "sha": "43ecf7f",
+      "msg": "Update docker-publish.yml",
+      "date": "2024-03-13T21:32:21Z"
+    },
+    {
+      "sha": "29592b5",
+      "msg": "Update docker-publish.yml",
+      "date": "2024-03-13T21:27:45Z"
+    },
+    {
+      "sha": "02e2740",
+      "msg": "Update docker-publish.yml",
+      "date": "2024-03-13T21:24:23Z"
+    },
+    {
+      "sha": "b925847",
+      "msg": "Update docker-publish.yml",
+      "date": "2024-03-13T20:36:13Z"
+    },
+    {
+      "sha": "03d2ffd",
+      "msg": "Create docker-publish.yml",
+      "date": "2024-03-13T17:05:09Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

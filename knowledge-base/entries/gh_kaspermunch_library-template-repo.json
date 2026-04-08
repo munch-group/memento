@@ -1,0 +1,41 @@
+{
+  "id": "gh_kaspermunch_library-template-repo",
+  "type": "github",
+  "title": "library-template-repo",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/library-template-repo",
+  "date": "2024-01-30T13:53:04Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/library-template-repo",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "a55806d",
+      "msg": "Create LICENSE",
+      "date": "2024-01-30T13:53:04Z"
+    },
+    {
+      "sha": "c9a6e82",
+      "msg": "Delete LICENSE",
+      "date": "2024-01-30T13:48:48Z"
+    },
+    {
+      "sha": "d79b3c7",
+      "msg": "Added files",
+      "date": "2023-11-11T12:20:06Z"
+    },
+    {
+      "sha": "2d06264",
+      "msg": "Initial commit",
+      "date": "2023-11-11T11:52:32Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

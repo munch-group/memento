@@ -1,0 +1,56 @@
+{
+  "id": "gh_munch-group_xy-drive-dynamics",
+  "type": "github",
+  "title": "xy-drive-dynamics",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/xy-drive-dynamics",
+  "date": "2024-06-01T15:01:40Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/xy-drive-dynamics",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ab470c8",
+      "msg": "Update",
+      "date": "2024-06-01T15:01:31Z"
+    },
+    {
+      "sha": "edacce5",
+      "msg": "added files",
+      "date": "2024-05-14T11:45:03Z"
+    },
+    {
+      "sha": "016600d",
+      "msg": "Updated notebook and environment",
+      "date": "2024-05-03T06:29:09Z"
+    },
+    {
+      "sha": "c18efe8",
+      "msg": "Adden env file",
+      "date": "2024-02-16T19:27:58Z"
+    },
+    {
+      "sha": "2ecc497",
+      "msg": "Notebook update",
+      "date": "2024-02-16T19:13:33Z"
+    },
+    {
+      "sha": "d367340",
+      "msg": "Added notebooks",
+      "date": "2023-03-28T14:19:07Z"
+    },
+    {
+      "sha": "3eea8bc",
+      "msg": "Initial commit",
+      "date": "2023-01-23T11:56:23Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

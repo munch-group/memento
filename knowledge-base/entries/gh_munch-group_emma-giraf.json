@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_emma-giraf",
+  "type": "github",
+  "title": "emma-giraf",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/emma-giraf",
+  "date": "2026-04-07T08:06:05Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/emma-giraf",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "950c37e",
+      "msg": "Opdateret",
+      "date": "2026-04-07T08:02:07Z"
+    },
+    {
+      "sha": "a810d7d",
+      "msg": "Ændring",
+      "date": "2026-04-01T13:53:40Z"
+    },
+    {
+      "sha": "1ad09ff",
+      "msg": "Ændring",
+      "date": "2026-04-01T13:40:23Z"
+    },
+    {
+      "sha": "658e48b",
+      "msg": "Ændring",
+      "date": "2026-04-01T13:21:15Z"
+    },
+    {
+      "sha": "c9ef94d",
+      "msg": "Ændring",
+      "date": "2026-04-01T13:11:48Z"
+    },
+    {
+      "sha": "3dacac1",
+      "msg": "Ændring",
+      "date": "2026-04-01T12:32:56Z"
+    },
+    {
+      "sha": "d011dfc",
+      "msg": "Ændring",
+      "date": "2026-04-01T11:35:44Z"
+    },
+    {
+      "sha": "bc36fa2",
+      "msg": "Ændring",
+      "date": "2026-04-01T11:34:52Z"
+    },
+    {
+      "sha": "722c59d",
+      "msg": "Opdateret",
+      "date": "2026-04-01T10:59:01Z"
+    },
+    {
+      "sha": "1abf5fc",
+      "msg": "Opdateret",
+      "date": "2026-04-01T10:04:39Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

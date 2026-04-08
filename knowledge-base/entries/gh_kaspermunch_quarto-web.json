@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_quarto-web",
+  "type": "github",
+  "title": "quarto-web",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/quarto-web",
+  "date": "2024-05-31T12:55:51Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/quarto-web",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "2e0e989",
+      "msg": "Apply automatic changes",
+      "date": "2024-05-31T12:55:49Z"
+    },
+    {
+      "sha": "5bf567b",
+      "msg": "fix typo html-themes.qmd (#1123)",
+      "date": "2024-05-30T16:53:35Z"
+    },
+    {
+      "sha": "183c4c6",
+      "msg": "Merge pull request #1120 from quarto-dev/quarto-workshops",
+      "date": "2024-05-28T18:09:53Z"
+    },
+    {
+      "sha": "2159ef8",
+      "msg": "Add Quarto workshops post",
+      "date": "2024-05-28T14:55:08Z"
+    },
+    {
+      "sha": "cfbbfcf",
+      "msg": "Suggest linux users put execs in ~/.local/bin (#1118)",
+      "date": "2024-05-28T14:26:53Z"
+    },
+    {
+      "sha": "9faf1af",
+      "msg": "Update README about our actions",
+      "date": "2024-05-27T18:46:16Z"
+    },
+    {
+      "sha": "a988e73",
+      "msg": "gha - a PAT is needed to trigger",
+      "date": "2024-05-27T15:48:16Z"
+    },
+    {
+      "sha": "fe00a57",
+      "msg": "gha - correct user id for the bot",
+      "date": "2024-05-27T15:29:55Z"
+    },
+    {
+      "sha": "95cbb7a",
+      "msg": "gha - simplify by using comment trigger",
+      "date": "2024-05-27T15:25:49Z"
+    },
+    {
+      "sha": "05af549",
+      "msg": "gha - correct set the rule for the status check",
+      "date": "2024-05-27T15:05:46Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

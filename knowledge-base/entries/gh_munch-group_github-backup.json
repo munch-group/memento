@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_github-backup",
+  "type": "github",
+  "title": "github-backup",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/github-backup",
+  "date": "2025-05-18T11:49:37Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/github-backup",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Shell",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "7793ee8",
+      "msg": "Added files",
+      "date": "2025-05-18T11:49:27Z"
+    },
+    {
+      "sha": "f8a17d1",
+      "msg": "Update README.md",
+      "date": "2025-05-18T11:08:45Z"
+    },
+    {
+      "sha": "2ae3549",
+      "msg": "Initial commit",
+      "date": "2025-05-18T11:07:32Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

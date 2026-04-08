@@ -1,0 +1,1 @@
+GWF workflow for RFmix

@@ -1,0 +1,1 @@
+Python implementation of Richard McElreath's Statistical Rethinking 2023 lecture series on causal inference & Bayesian estimation.

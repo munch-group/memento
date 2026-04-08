@@ -1,0 +1,31 @@
+{
+  "id": "gh_munch-group_y-haplo-assignment",
+  "type": "github",
+  "title": "y-haplo-assignment",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/y-haplo-assignment",
+  "date": "2024-10-18T11:14:05Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/y-haplo-assignment",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "4b72336",
+      "msg": "Cleaned up repo",
+      "date": "2024-10-18T11:12:23Z"
+    },
+    {
+      "sha": "44d9d39",
+      "msg": "Initial commit",
+      "date": "2024-10-18T10:10:10Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_projectname",
+  "type": "github",
+  "title": "projectname",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/projectname",
+  "date": "2025-07-15T06:12:43Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/projectname",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "8d68b78",
+      "msg": "added gwfinfo script",
+      "date": "2025-07-15T06:12:31Z"
+    },
+    {
+      "sha": "443263a",
+      "msg": "added devcontainer",
+      "date": "2025-07-14T09:21:05Z"
+    },
+    {
+      "sha": "82d6b4d",
+      "msg": "Update .gitignore",
+      "date": "2025-06-10T08:39:00Z"
+    },
+    {
+      "sha": "8efc1dd",
+      "msg": "update",
+      "date": "2025-05-15T07:44:45Z"
+    },
+    {
+      "sha": "c054689",
+      "msg": "update",
+      "date": "2025-05-15T07:41:31Z"
+    },
+    {
+      "sha": "2134d9f",
+      "msg": "update",
+      "date": "2025-05-15T07:32:22Z"
+    },
+    {
+      "sha": "73086c6",
+      "msg": "update",
+      "date": "2025-05-15T07:06:12Z"
+    },
+    {
+      "sha": "6738f9f",
+      "msg": "Added chromium install to quarto git action",
+      "date": "2025-05-15T06:56:57Z"
+    },
+    {
+      "sha": "0343d5a",
+      "msg": "Added script to clear notebooks",
+      "date": "2025-04-15T12:26:37Z"
+    },
+    {
+      "sha": "28a8b50",
+      "msg": "Update index.qmd",
+      "date": "2025-02-26T10:54:28Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "`tbl-label` is shown twice in the rendered PDF.",
+      "state": "open",
+      "date": "2024-11-25T08:31:03Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/projectname/issues/1"
+    }
+  ]
+}

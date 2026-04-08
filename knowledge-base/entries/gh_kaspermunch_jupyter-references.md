@@ -1,0 +1,1 @@
+Lightweight system for citing papers and making a reference list in jupyter

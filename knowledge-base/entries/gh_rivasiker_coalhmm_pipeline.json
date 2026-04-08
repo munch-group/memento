@@ -1,0 +1,71 @@
+{
+  "id": "gh_rivasiker_coalhmm_pipeline",
+  "type": "github",
+  "title": "coalhmm_pipeline",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/rivasiker/coalhmm_pipeline",
+  "date": "2020-04-07T08:23:07Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "rivasiker/coalhmm_pipeline",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "11f3ffe",
+      "msg": "Update to maffilter_controlfile_generation.sh",
+      "date": "2020-04-07T08:23:06Z"
+    },
+    {
+      "sha": "763e4aa",
+      "msg": "Add explanation of script",
+      "date": "2020-04-01T13:19:50Z"
+    },
+    {
+      "sha": "6c980dd",
+      "msg": "Add explanation of script.",
+      "date": "2020-04-01T13:18:08Z"
+    },
+    {
+      "sha": "f67e3c1",
+      "msg": "Add target_seqname as key and re-encode for loop",
+      "date": "2020-04-01T12:59:12Z"
+    },
+    {
+      "sha": "7902b6a",
+      "msg": "Change data type to int and substitute NaN with -1",
+      "date": "2020-04-01T12:57:35Z"
+    },
+    {
+      "sha": "856c003",
+      "msg": "Create create_big_table.py",
+      "date": "2020-04-01T12:07:45Z"
+    },
+    {
+      "sha": "a3cb1de",
+      "msg": "Update collect_posteriors.py",
+      "date": "2020-04-01T12:06:45Z"
+    },
+    {
+      "sha": "2ffbd71",
+      "msg": "Update workflow.py",
+      "date": "2020-04-01T12:04:20Z"
+    },
+    {
+      "sha": "7f66feb",
+      "msg": "Updating the coalhmmparamfile_generatir.sh",
+      "date": "2020-03-31T14:57:17Z"
+    },
+    {
+      "sha": "6fdd55c",
+      "msg": "Update coalhmm_paramfile_generation.sh",
+      "date": "2020-03-31T14:53:27Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,1 @@
+X chromosome genes with expression modulated by Xi copy number (Fibroblast or LCL)

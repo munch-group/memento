@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_iplot",
+  "type": "github",
+  "title": "iplot",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/iplot",
+  "date": "2026-04-01T11:39:51Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/iplot",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "63ac3c5",
+      "msg": "Bump version to 0.1.9",
+      "date": "2025-09-25T16:00:26Z"
+    },
+    {
+      "sha": "61b1505",
+      "msg": "patch  version bump",
+      "date": "2025-09-25T14:51:15Z"
+    },
+    {
+      "sha": "23cae53",
+      "msg": "patch  version bump",
+      "date": "2025-09-25T14:19:32Z"
+    },
+    {
+      "sha": "1d30549",
+      "msg": "patch  version bump",
+      "date": "2025-09-24T12:27:05Z"
+    },
+    {
+      "sha": "4d50be1",
+      "msg": "patch  version bump",
+      "date": "2025-09-24T12:10:53Z"
+    },
+    {
+      "sha": "943ddec",
+      "msg": "patch  version bump",
+      "date": "2025-09-24T12:09:37Z"
+    },
+    {
+      "sha": "5a03187",
+      "msg": "update",
+      "date": "2025-09-06T14:41:19Z"
+    },
+    {
+      "sha": "55a95c3",
+      "msg": "update",
+      "date": "2025-08-16T20:28:10Z"
+    },
+    {
+      "sha": "4fdf08e",
+      "msg": "update",
+      "date": "2025-08-07T17:49:22Z"
+    },
+    {
+      "sha": "39ebc38",
+      "msg": "update",
+      "date": "2025-08-07T14:57:42Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Fix github action",
+      "state": "open",
+      "date": "2026-04-01T11:39:51Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/iplot/issues/1"
+    }
+  ]
+}

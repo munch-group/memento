@@ -1,0 +1,56 @@
+{
+  "id": "gh_munch-group_relate1k",
+  "type": "github",
+  "title": "relate1k",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/relate1k",
+  "date": "2025-03-22T08:23:16Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/relate1k",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5a5f43e",
+      "msg": "Updated workflow",
+      "date": "2025-03-22T08:22:04Z"
+    },
+    {
+      "sha": "7c96b09",
+      "msg": "Update conda-release.yml",
+      "date": "2025-03-21T13:31:50Z"
+    },
+    {
+      "sha": "e65ddbe",
+      "msg": "Update requirements.txt",
+      "date": "2025-03-21T13:26:08Z"
+    },
+    {
+      "sha": "f41a72f",
+      "msg": "Update requirements.txt",
+      "date": "2025-03-21T13:25:41Z"
+    },
+    {
+      "sha": "1ec47e9",
+      "msg": "update",
+      "date": "2025-03-21T13:14:09Z"
+    },
+    {
+      "sha": "28131f9",
+      "msg": "initial commit",
+      "date": "2025-03-21T12:59:21Z"
+    },
+    {
+      "sha": "a6284bc",
+      "msg": "Initial commit",
+      "date": "2025-03-20T15:43:37Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

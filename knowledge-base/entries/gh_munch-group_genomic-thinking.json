@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_genomic-thinking",
+  "type": "github",
+  "title": "genomic-thinking",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/genomic-thinking",
+  "date": "2026-03-18T11:47:28Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/genomic-thinking",
+  "_ghStars": 12,
+  "_ghForks": 8,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e7745ae",
+      "msg": "update",
+      "date": "2026-03-09T10:17:09Z"
+    },
+    {
+      "sha": "b50e9af",
+      "msg": "update",
+      "date": "2026-03-05T14:51:17Z"
+    },
+    {
+      "sha": "3961424",
+      "msg": "update",
+      "date": "2026-03-05T11:09:10Z"
+    },
+    {
+      "sha": "0bf16b1",
+      "msg": "added slides",
+      "date": "2026-03-05T08:42:34Z"
+    },
+    {
+      "sha": "7eb1c24",
+      "msg": "updated docs",
+      "date": "2026-03-05T08:31:29Z"
+    },
+    {
+      "sha": "998ea2a",
+      "msg": "update",
+      "date": "2026-02-23T06:51:32Z"
+    },
+    {
+      "sha": "ae04a16",
+      "msg": "update",
+      "date": "2026-02-23T06:45:56Z"
+    },
+    {
+      "sha": "380247e",
+      "msg": "updated psmc exercise",
+      "date": "2026-02-19T05:58:32Z"
+    },
+    {
+      "sha": "e20e83e",
+      "msg": "Added psmc exercise as submodule",
+      "date": "2026-02-16T12:11:05Z"
+    },
+    {
+      "sha": "1f1c80f",
+      "msg": "Added repo for pca and admixture exercise as submodule",
+      "date": "2026-02-16T12:02:26Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Dummy issue",
+      "state": "open",
+      "date": "2025-06-01T22:51:27Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/genomic-thinking/issues/1"
+    }
+  ]
+}

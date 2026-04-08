@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_franklin-magic",
+  "type": "github",
+  "title": "franklin-magic",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/franklin-magic",
+  "date": "2025-08-19T20:58:25Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/franklin-magic",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "8c27abc",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:58:11Z"
+    },
+    {
+      "sha": "638b593",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:52:19Z"
+    },
+    {
+      "sha": "5317dd5",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:51:55Z"
+    },
+    {
+      "sha": "e3fbf10",
+      "msg": "update",
+      "date": "2025-08-19T20:15:30Z"
+    },
+    {
+      "sha": "72fb82c",
+      "msg": "update",
+      "date": "2025-08-06T15:18:08Z"
+    },
+    {
+      "sha": "d5346b4",
+      "msg": "update",
+      "date": "2025-08-06T15:16:18Z"
+    },
+    {
+      "sha": "99c1f31",
+      "msg": "added github actions and conda-build",
+      "date": "2025-08-03T20:10:11Z"
+    },
+    {
+      "sha": "2a4d98b",
+      "msg": "extension still not working",
+      "date": "2025-06-15T07:04:12Z"
+    },
+    {
+      "sha": "06fa75a",
+      "msg": "Added more files",
+      "date": "2025-06-14T16:49:30Z"
+    },
+    {
+      "sha": "400d85d",
+      "msg": "added jupyterlab exension code for changing cell to raw after executtion",
+      "date": "2025-06-14T14:45:09Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

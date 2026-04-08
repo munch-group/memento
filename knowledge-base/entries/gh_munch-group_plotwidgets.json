@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_plotwidgets",
+  "type": "github",
+  "title": "plotwidgets",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/plotwidgets",
+  "date": "2025-09-06T13:02:18Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/plotwidgets",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "60a1a7b",
+      "msg": "update",
+      "date": "2025-09-06T13:02:16Z"
+    },
+    {
+      "sha": "8b20f6b",
+      "msg": "update",
+      "date": "2025-06-15T20:59:20Z"
+    },
+    {
+      "sha": "a6fa51a",
+      "msg": "update",
+      "date": "2025-06-15T20:58:41Z"
+    },
+    {
+      "sha": "cb5aea2",
+      "msg": "update",
+      "date": "2025-06-15T20:57:34Z"
+    },
+    {
+      "sha": "019c7b6",
+      "msg": "update",
+      "date": "2024-11-07T07:39:15Z"
+    },
+    {
+      "sha": "b155cb5",
+      "msg": "update",
+      "date": "2024-11-06T12:45:20Z"
+    },
+    {
+      "sha": "a5d85b1",
+      "msg": "added documentation",
+      "date": "2024-11-01T15:40:22Z"
+    },
+    {
+      "sha": "15b73cd",
+      "msg": "More setup",
+      "date": "2024-11-01T14:57:39Z"
+    },
+    {
+      "sha": "a005570",
+      "msg": "Initial setup",
+      "date": "2024-11-01T14:51:44Z"
+    },
+    {
+      "sha": "e30192c",
+      "msg": "Initial commit",
+      "date": "2024-11-01T14:44:57Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

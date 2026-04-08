@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_relate-selection-exercise",
+  "type": "github",
+  "title": "relate-selection-exercise",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/relate-selection-exercise",
+  "date": "2026-03-02T14:47:47Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/relate-selection-exercise",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "94aeaa1",
+      "msg": "update",
+      "date": "2026-03-02T14:47:45Z"
+    },
+    {
+      "sha": "eb1bb07",
+      "msg": "update",
+      "date": "2026-03-02T13:33:03Z"
+    },
+    {
+      "sha": "176ca13",
+      "msg": "update",
+      "date": "2026-03-02T13:08:45Z"
+    },
+    {
+      "sha": "055100e",
+      "msg": "update",
+      "date": "2026-03-02T13:05:25Z"
+    },
+    {
+      "sha": "8854091",
+      "msg": "updat",
+      "date": "2026-03-02T12:17:42Z"
+    },
+    {
+      "sha": "61c1cee",
+      "msg": "update",
+      "date": "2026-03-02T12:12:06Z"
+    },
+    {
+      "sha": "f983286",
+      "msg": "update",
+      "date": "2026-03-02T11:28:36Z"
+    },
+    {
+      "sha": "0a16a76",
+      "msg": "deleted files",
+      "date": "2026-03-02T10:06:53Z"
+    },
+    {
+      "sha": "eb13789",
+      "msg": "update",
+      "date": "2026-03-02T09:56:57Z"
+    },
+    {
+      "sha": "9d37cc9",
+      "msg": "Exercise almost done",
+      "date": "2026-03-02T09:56:09Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

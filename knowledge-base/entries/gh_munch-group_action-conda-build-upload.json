@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_action-conda-build-upload",
+  "type": "github",
+  "title": "action-conda-build-upload",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/action-conda-build-upload",
+  "date": "2025-05-18T16:07:10Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/action-conda-build-upload",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "d341c6e",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T16:06:50Z"
+    },
+    {
+      "sha": "d0d5022",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T15:45:18Z"
+    },
+    {
+      "sha": "8775f14",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T15:23:41Z"
+    },
+    {
+      "sha": "2644bc7",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T15:00:01Z"
+    },
+    {
+      "sha": "bfef7ab",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T14:55:26Z"
+    },
+    {
+      "sha": "34f634a",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T14:51:08Z"
+    },
+    {
+      "sha": "1cf3309",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T14:16:50Z"
+    },
+    {
+      "sha": "e2ce786",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T13:40:41Z"
+    },
+    {
+      "sha": "d1ae4fa",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T13:20:21Z"
+    },
+    {
+      "sha": "e3ae203",
+      "msg": "Update action.yml",
+      "date": "2025-05-18T13:07:24Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_status-monitor-vscode",
+  "type": "github",
+  "title": "status-monitor-vscode",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/status-monitor-vscode",
+  "date": "2026-03-23T12:59:10Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/status-monitor-vscode",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "TypeScript",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "55945d3",
+      "msg": "Update README.md",
+      "date": "2026-03-23T12:59:09Z"
+    },
+    {
+      "sha": "e7bbdab",
+      "msg": "update",
+      "date": "2026-03-23T08:58:11Z"
+    },
+    {
+      "sha": "aff0de8",
+      "msg": "0.1.0",
+      "date": "2026-03-23T08:54:33Z"
+    },
+    {
+      "sha": "3f27566",
+      "msg": "added icon",
+      "date": "2026-03-23T08:54:02Z"
+    },
+    {
+      "sha": "686fa8c",
+      "msg": "0.0.2",
+      "date": "2026-03-23T07:36:41Z"
+    },
+    {
+      "sha": "79c43a3",
+      "msg": "Changed use case to fit VS_* prefixed env vars",
+      "date": "2026-03-23T07:35:50Z"
+    },
+    {
+      "sha": "438cfdb",
+      "msg": "update",
+      "date": "2026-03-11T11:32:11Z"
+    },
+    {
+      "sha": "915f39a",
+      "msg": "update",
+      "date": "2026-03-11T11:09:05Z"
+    },
+    {
+      "sha": "922cb06",
+      "msg": "update",
+      "date": "2026-03-11T11:07:16Z"
+    },
+    {
+      "sha": "66f3987",
+      "msg": "Added vsix file",
+      "date": "2026-03-11T11:00:55Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

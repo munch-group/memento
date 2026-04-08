@@ -1,0 +1,1 @@
+Browse and edit Notion pages directly in Visual Studio Code

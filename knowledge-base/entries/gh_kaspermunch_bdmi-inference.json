@@ -1,0 +1,41 @@
+{
+  "id": "gh_kaspermunch_bdmi-inference",
+  "type": "github",
+  "title": "bdmi-inference",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/bdmi-inference",
+  "date": "2024-07-13T12:32:35Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/bdmi-inference",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "4d76e1f",
+      "msg": "Updated a notebook",
+      "date": "2024-07-13T12:32:20Z"
+    },
+    {
+      "sha": "1ebf9c8",
+      "msg": "Updated notebooks",
+      "date": "2024-05-27T06:14:37Z"
+    },
+    {
+      "sha": "33613a2",
+      "msg": "Added two notebooks",
+      "date": "2024-05-26T15:11:56Z"
+    },
+    {
+      "sha": "0061755",
+      "msg": "Initial commit",
+      "date": "2024-05-26T15:02:40Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

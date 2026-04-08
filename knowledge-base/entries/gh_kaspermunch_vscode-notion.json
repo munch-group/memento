@@ -1,0 +1,46 @@
+{
+  "id": "gh_kaspermunch_vscode-notion",
+  "type": "github",
+  "title": "vscode-notion",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/vscode-notion",
+  "date": "2024-08-29T12:31:21Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/vscode-notion",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "038610a",
+      "msg": "chore: release",
+      "date": "2024-08-29T12:28:32Z"
+    },
+    {
+      "sha": "35d75e2",
+      "msg": "fix: fix broken open page command",
+      "date": "2024-08-29T12:25:46Z"
+    },
+    {
+      "sha": "bc47996",
+      "msg": "chore: release",
+      "date": "2024-08-23T11:19:03Z"
+    },
+    {
+      "sha": "cbcbe0b",
+      "msg": "docs: update README.md",
+      "date": "2024-08-23T11:18:37Z"
+    },
+    {
+      "sha": "b892d6d",
+      "msg": "feat: publish v2",
+      "date": "2024-08-23T11:11:04Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

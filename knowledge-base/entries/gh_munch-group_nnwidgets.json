@@ -1,0 +1,61 @@
+{
+  "id": "gh_munch-group_nnwidgets",
+  "type": "github",
+  "title": "nnwidgets",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/nnwidgets",
+  "date": "2025-09-06T13:14:00Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/nnwidgets",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ef77fae",
+      "msg": "update",
+      "date": "2025-09-06T13:12:39Z"
+    },
+    {
+      "sha": "187121e",
+      "msg": "update",
+      "date": "2025-09-06T13:11:59Z"
+    },
+    {
+      "sha": "194c01f",
+      "msg": "Added notebook",
+      "date": "2024-11-28T06:51:51Z"
+    },
+    {
+      "sha": "3480ca2",
+      "msg": "Update _quarto.yml",
+      "date": "2024-11-26T12:01:07Z"
+    },
+    {
+      "sha": "6656d6d",
+      "msg": "Update _quarto.yml",
+      "date": "2024-11-26T11:54:43Z"
+    },
+    {
+      "sha": "854dd10",
+      "msg": "Delete docs/pages/something.ipynb",
+      "date": "2024-11-26T11:53:30Z"
+    },
+    {
+      "sha": "ae195ba",
+      "msg": "Initial commit",
+      "date": "2024-11-26T08:28:12Z"
+    },
+    {
+      "sha": "2522b62",
+      "msg": "Initial commit",
+      "date": "2024-11-26T08:26:04Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

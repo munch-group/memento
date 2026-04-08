@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_admixture_baboons",
+  "type": "github",
+  "title": "admixture_baboons",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/admixture_baboons",
+  "date": "2025-12-15T09:20:49Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/admixture_baboons",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "02574c4",
+      "msg": "Plotting work",
+      "date": "2025-12-15T09:09:32Z"
+    },
+    {
+      "sha": "28052d3",
+      "msg": "Relate updated analysis",
+      "date": "2023-09-28T11:38:09Z"
+    },
+    {
+      "sha": "0087772",
+      "msg": "Remove ignored files",
+      "date": "2023-03-01T10:54:42Z"
+    },
+    {
+      "sha": "b7848a1",
+      "msg": "Remove ignored files",
+      "date": "2023-03-01T10:53:52Z"
+    },
+    {
+      "sha": "817eac9",
+      "msg": "Remove ignored files",
+      "date": "2023-03-01T10:51:47Z"
+    },
+    {
+      "sha": "1666834",
+      "msg": "ReLERNN implementation",
+      "date": "2023-03-01T10:48:03Z"
+    },
+    {
+      "sha": "d1e8b01",
+      "msg": "lai analysis setup",
+      "date": "2023-02-13T13:46:19Z"
+    },
+    {
+      "sha": "e5ec0f9",
+      "msg": "lai analysis setup",
+      "date": "2023-02-13T13:41:08Z"
+    },
+    {
+      "sha": "0772ebb",
+      "msg": "Git test",
+      "date": "2022-01-18T15:22:45Z"
+    },
+    {
+      "sha": "de86599",
+      "msg": "Recombination/ancestry interaction",
+      "date": "2022-01-18T15:19:55Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

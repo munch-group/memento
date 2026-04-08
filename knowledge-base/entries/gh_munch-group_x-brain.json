@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_x-brain",
+  "type": "github",
+  "title": "x-brain",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/x-brain",
+  "date": "2025-02-13T21:57:52Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/x-brain",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "15d624f",
+      "msg": "notebook update",
+      "date": "2025-02-13T21:57:40Z"
+    },
+    {
+      "sha": "1528bbb",
+      "msg": "Updated notebooks",
+      "date": "2023-08-18T09:48:56Z"
+    },
+    {
+      "sha": "1eda6c8",
+      "msg": "notebook update and file cleanup",
+      "date": "2023-05-16T06:37:15Z"
+    },
+    {
+      "sha": "77910a3",
+      "msg": "Updated notebook",
+      "date": "2023-03-28T11:15:18Z"
+    },
+    {
+      "sha": "8167cb5",
+      "msg": "gitignore",
+      "date": "2023-03-23T21:25:47Z"
+    },
+    {
+      "sha": "84176e8",
+      "msg": "Notebook update and added env yml",
+      "date": "2023-03-15T18:59:00Z"
+    },
+    {
+      "sha": "922d09d",
+      "msg": "Added files",
+      "date": "2023-02-13T14:47:21Z"
+    },
+    {
+      "sha": "12abe56",
+      "msg": "Updates",
+      "date": "2022-08-13T09:39:29Z"
+    },
+    {
+      "sha": "6b07301",
+      "msg": "fix",
+      "date": "2022-08-12T18:43:55Z"
+    },
+    {
+      "sha": "53ab2fd",
+      "msg": "Added test data",
+      "date": "2022-08-12T18:43:10Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

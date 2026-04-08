@@ -1,0 +1,1 @@
+Distribution package for the Prgressive Cactus multiple genome aligner.  Dependencies are linked as submodules

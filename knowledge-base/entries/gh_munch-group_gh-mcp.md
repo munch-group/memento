@@ -1,0 +1,1 @@
+MCP server that wraps GitHub CLI functionality

@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_higlass-python",
+  "type": "github",
+  "title": "higlass-python",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/higlass-python",
+  "date": "2025-10-04T07:41:52Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/higlass-python",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "3bc22ec",
+      "msg": "chore(deps): bump the actions group with 3 updates (#192)",
+      "date": "2025-09-05T20:01:11Z"
+    },
+    {
+      "sha": "2819a7a",
+      "msg": "Add doc for chromsizes grid overlay (#187)",
+      "date": "2025-04-10T13:33:26Z"
+    },
+    {
+      "sha": "d401e1b",
+      "msg": "fix:  Resolve Jupyter server tile sources in combined tracks (#186)",
+      "date": "2025-04-07T00:20:03Z"
+    },
+    {
+      "sha": "a22b771",
+      "msg": "feat(widget): Batch tile requests within an animation frame (#181)",
+      "date": "2025-03-11T03:24:28Z"
+    },
+    {
+      "sha": "12fde00",
+      "msg": "chore: Add dev instructions for JavaScript code (#180)",
+      "date": "2025-02-13T00:55:53Z"
+    },
+    {
+      "sha": "b9f4447",
+      "msg": "refactor(frontend): Custom data fetcher setup (#179)",
+      "date": "2025-02-13T00:34:59Z"
+    },
+    {
+      "sha": "8965585",
+      "msg": "feat: Add stub `higlass.server` with deprecation warnings (#178)",
+      "date": "2025-02-12T21:23:11Z"
+    },
+    {
+      "sha": "b4afd99",
+      "msg": "feat: Replace `higlass.tilesets.register` with `higlass.Tileset` (#177)",
+      "date": "2025-02-12T20:53:58Z"
+    },
+    {
+      "sha": "af0059a",
+      "msg": "chore: Fix anywidget typo in README.md",
+      "date": "2025-02-12T20:53:43Z"
+    },
+    {
+      "sha": "bec4dcc",
+      "msg": "chore(deps): bump actions/configure-pages in the actions group (#162)",
+      "date": "2025-02-12T19:42:24Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

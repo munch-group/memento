@@ -1,0 +1,56 @@
+{
+  "id": "gh_kaspermunch_MultiProcessing",
+  "type": "github",
+  "title": "MultiProcessing",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/MultiProcessing",
+  "date": "2016-10-05T06:53:40Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/MultiProcessing",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "cbea8ce",
+      "msg": "fixed print to fit py3",
+      "date": "2016-10-05T06:53:30Z"
+    },
+    {
+      "sha": "6652c9d",
+      "msg": "fix to setup.py",
+      "date": "2016-10-01T15:17:50Z"
+    },
+    {
+      "sha": "c95160d",
+      "msg": "python 3 fixes",
+      "date": "2016-10-01T15:13:24Z"
+    },
+    {
+      "sha": "4c98dea",
+      "msg": "fixed setup.py",
+      "date": "2016-10-01T12:35:22Z"
+    },
+    {
+      "sha": "0ecf1df",
+      "msg": "Added setup.py",
+      "date": "2016-10-01T12:33:12Z"
+    },
+    {
+      "sha": "b27b117",
+      "msg": "Added code",
+      "date": "2016-07-08T10:05:04Z"
+    },
+    {
+      "sha": "1e76462",
+      "msg": "Initial commit",
+      "date": "2016-07-08T10:02:40Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

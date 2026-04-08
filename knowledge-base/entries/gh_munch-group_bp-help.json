@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_bp-help",
+  "type": "github",
+  "title": "bp-help",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/bp-help",
+  "date": "2024-09-10T10:51:25Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/bp-help",
+  "_ghStars": 1,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5525b9c",
+      "msg": "update",
+      "date": "2024-09-10T10:51:24Z"
+    },
+    {
+      "sha": "0e0af27",
+      "msg": "support for lower case print steps comments and missing spaces",
+      "date": "2024-09-05T10:22:12Z"
+    },
+    {
+      "sha": "b04bbff",
+      "msg": "update",
+      "date": "2024-08-29T21:51:53Z"
+    },
+    {
+      "sha": "552c6ac",
+      "msg": "update",
+      "date": "2024-08-29T21:51:35Z"
+    },
+    {
+      "sha": "7f3d552",
+      "msg": "update",
+      "date": "2024-08-29T21:50:05Z"
+    },
+    {
+      "sha": "4fc4945",
+      "msg": "update",
+      "date": "2024-08-29T21:46:58Z"
+    },
+    {
+      "sha": "8ee158a",
+      "msg": "update",
+      "date": "2024-08-29T21:35:10Z"
+    },
+    {
+      "sha": "27e7230",
+      "msg": "update",
+      "date": "2024-08-29T21:24:04Z"
+    },
+    {
+      "sha": "048bc14",
+      "msg": "update",
+      "date": "2024-08-29T21:14:54Z"
+    },
+    {
+      "sha": "2591760",
+      "msg": "update",
+      "date": "2024-08-29T20:46:52Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Finish quarto setup",
+      "state": "closed",
+      "date": "2023-11-16T10:40:50Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/bp-help/issues/1"
+    }
+  ]
+}

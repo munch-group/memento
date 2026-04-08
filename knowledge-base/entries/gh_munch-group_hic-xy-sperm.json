@@ -1,0 +1,51 @@
+{
+  "id": "gh_munch-group_hic-xy-sperm",
+  "type": "github",
+  "title": "hic-xy-sperm",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/hic-xy-sperm",
+  "date": "2026-01-02T14:30:06Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/hic-xy-sperm",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "7fe9665",
+      "msg": "GO info update",
+      "date": "2026-01-02T14:29:53Z"
+    },
+    {
+      "sha": "11f110d",
+      "msg": "Updated notebooks",
+      "date": "2026-01-02T13:58:01Z"
+    },
+    {
+      "sha": "9c895f9",
+      "msg": "Tidy up files",
+      "date": "2025-12-16T11:33:34Z"
+    },
+    {
+      "sha": "7c93b85",
+      "msg": "Renamed notebooks",
+      "date": "2025-12-16T11:24:41Z"
+    },
+    {
+      "sha": "84980a5",
+      "msg": "Added files from Soerens repo",
+      "date": "2025-12-16T11:21:39Z"
+    },
+    {
+      "sha": "0cad92b",
+      "msg": "Initial commit",
+      "date": "2025-12-15T15:38:51Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,41 @@
+{
+  "id": "mnbbkl1iacgl",
+  "type": "fact",
+  "title": "cDEG genes",
+  "genes": [
+    "AKAP4",
+    "BEX2",
+    "CFAP47",
+    "CXorf51A",
+    "DDX3X",
+    "DIAPH2",
+    "DYNLT3",
+    "EDA",
+    "FHL1",
+    "FTSJ1",
+    "HMGB3",
+    "HTR2C",
+    "IL13RA2",
+    "MAP7D3",
+    "NCBP2L",
+    "OCRL",
+    "OFD1",
+    "PDK3",
+    "PJA1",
+    "PPEF1",
+    "RPGR",
+    "SPANXN5",
+    "SYP",
+    "SYTL5",
+    "UPF3B",
+    "VCX2"
+  ],
+  "tags": [
+    "DEG",
+    "Drive"
+  ],
+  "source": "Meritxell's draft paper",
+  "date": "2026-03-29T05:29:27.940Z",
+  "synced": false,
+  "_sortTag": "DEG"
+}

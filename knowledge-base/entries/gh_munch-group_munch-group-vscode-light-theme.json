@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_munch-group-vscode-light-theme",
+  "type": "github",
+  "title": "munch-group-vscode-light-theme",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/munch-group-vscode-light-theme",
+  "date": "2026-04-07T11:59:33Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/munch-group-vscode-light-theme",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ec78f46",
+      "msg": "update",
+      "date": "2026-04-07T11:59:20Z"
+    },
+    {
+      "sha": "0d47ae1",
+      "msg": "Added files",
+      "date": "2026-04-07T10:21:29Z"
+    },
+    {
+      "sha": "f38f8ce",
+      "msg": "Initial commit",
+      "date": "2026-04-07T09:52:10Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

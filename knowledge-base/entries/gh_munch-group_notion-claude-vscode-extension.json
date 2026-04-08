@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_notion-claude-vscode-extension",
+  "type": "github",
+  "title": "notion-claude-vscode-extension",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/notion-claude-vscode-extension",
+  "date": "2025-07-26T16:31:39Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/notion-claude-vscode-extension",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "TypeScript",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "c86af8e",
+      "msg": "Added more files",
+      "date": "2025-07-26T16:31:32Z"
+    },
+    {
+      "sha": "9958682",
+      "msg": "Added files",
+      "date": "2025-07-26T16:25:01Z"
+    },
+    {
+      "sha": "c9525e0",
+      "msg": "Initial commit",
+      "date": "2025-07-26T16:23:16Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

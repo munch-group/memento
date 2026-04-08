@@ -1,0 +1,26 @@
+{
+  "id": "gh_kaspermunch_mbg-course-week",
+  "type": "github",
+  "title": "mbg-course-week",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/mbg-course-week",
+  "date": "2024-03-15T12:42:06Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/mbg-course-week",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "6a66d51",
+      "msg": "Initial commit",
+      "date": "2024-03-15T12:42:06Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

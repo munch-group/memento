@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_widgetplots",
+  "type": "github",
+  "title": "widgetplots",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/widgetplots",
+  "date": "2025-08-04T23:40:22Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/widgetplots",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "1976e98",
+      "msg": "Update __init__.py",
+      "date": "2025-08-04T23:39:01Z"
+    },
+    {
+      "sha": "e61c439",
+      "msg": "update",
+      "date": "2024-10-29T22:09:18Z"
+    },
+    {
+      "sha": "5e7cb9b",
+      "msg": "update",
+      "date": "2024-10-29T22:07:47Z"
+    },
+    {
+      "sha": "eb32e18",
+      "msg": "update",
+      "date": "2024-10-29T21:55:59Z"
+    },
+    {
+      "sha": "d83ed4c",
+      "msg": "update",
+      "date": "2024-10-29T21:53:57Z"
+    },
+    {
+      "sha": "cb7c6a2",
+      "msg": "update",
+      "date": "2024-10-29T17:03:04Z"
+    },
+    {
+      "sha": "803eea0",
+      "msg": "update",
+      "date": "2024-10-29T16:55:50Z"
+    },
+    {
+      "sha": "a2eb86c",
+      "msg": "removed files",
+      "date": "2024-10-29T16:24:28Z"
+    },
+    {
+      "sha": "0f21d32",
+      "msg": "Added files",
+      "date": "2024-10-29T14:11:17Z"
+    },
+    {
+      "sha": "35d8378",
+      "msg": "Initial commit",
+      "date": "2024-10-29T13:53:32Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

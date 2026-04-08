@@ -1,0 +1,46 @@
+{
+  "id": "gh_kaspermunch_old-popgen-dashboards",
+  "type": "github",
+  "title": "old-popgen-dashboards",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/old-popgen-dashboards",
+  "date": "2020-05-24T11:03:28Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/old-popgen-dashboards",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "60d5e51",
+      "msg": "Updates",
+      "date": "2020-05-24T11:03:20Z"
+    },
+    {
+      "sha": "3e76cf4",
+      "msg": "Updated esthetics",
+      "date": "2020-05-23T14:57:35Z"
+    },
+    {
+      "sha": "7ea2a88",
+      "msg": "Added file structure",
+      "date": "2020-02-01T18:35:09Z"
+    },
+    {
+      "sha": "51e8387",
+      "msg": "Update README.md",
+      "date": "2020-02-01T16:22:21Z"
+    },
+    {
+      "sha": "770baf1",
+      "msg": "Initial commit",
+      "date": "2020-02-01T16:12:11Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

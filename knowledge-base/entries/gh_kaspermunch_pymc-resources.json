@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_pymc-resources",
+  "type": "github",
+  "title": "pymc-resources",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/pymc-resources",
+  "date": "2023-01-03T15:30:43Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/pymc-resources",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "a05c140",
+      "msg": "Update Chapter_2.ipynb (#224)",
+      "date": "2023-01-03T15:30:43Z"
+    },
+    {
+      "sha": "5f0ad67",
+      "msg": "rerun notebooks to get clean output (#221)",
+      "date": "2022-12-15T02:56:42Z"
+    },
+    {
+      "sha": "19662aa",
+      "msg": "initialize winter 2022 lecture code (#215)",
+      "date": "2022-11-14T05:46:49Z"
+    },
+    {
+      "sha": "643902a",
+      "msg": "Ch 14 convert v4 (#214)",
+      "date": "2022-11-12T19:20:03Z"
+    },
+    {
+      "sha": "594a07c",
+      "msg": "add foxes data (#213)",
+      "date": "2022-11-12T19:19:30Z"
+    },
+    {
+      "sha": "5151378",
+      "msg": "updating chapter 11,12,13 code to pymc v4 (#211)",
+      "date": "2022-11-04T13:49:37Z"
+    },
+    {
+      "sha": "9c739b2",
+      "msg": "Rethinking_2 Chp 6,7,8,9 conversion to PyMC v4 (#206)",
+      "date": "2022-09-11T15:07:03Z"
+    },
+    {
+      "sha": "3e4be1a",
+      "msg": "Chp 06 v4 update (#205)",
+      "date": "2022-07-30T03:01:50Z"
+    },
+    {
+      "sha": "2c6b2c0",
+      "msg": "Update README.md (#203)",
+      "date": "2022-07-28T13:00:36Z"
+    },
+    {
+      "sha": "0a2e04f",
+      "msg": "Rethinking_2 - Converting Chapters 2-4 to PyMC v4 (#202)",
+      "date": "2022-07-22T13:54:25Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

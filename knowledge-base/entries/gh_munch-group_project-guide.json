@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_project-guide",
+  "type": "github",
+  "title": "project-guide",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/project-guide",
+  "date": "2025-09-17T13:25:43Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/project-guide",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "2568628",
+      "msg": "update",
+      "date": "2025-09-17T13:25:05Z"
+    },
+    {
+      "sha": "38bef32",
+      "msg": "Update custom.scss",
+      "date": "2024-08-03T22:11:34Z"
+    },
+    {
+      "sha": "094bb55",
+      "msg": "Merge pull request #5 from munch-group/kaspermunch-patch-4",
+      "date": "2024-08-03T22:01:44Z"
+    },
+    {
+      "sha": "b973b05",
+      "msg": "Update _quarto.yml",
+      "date": "2024-08-03T21:58:02Z"
+    },
+    {
+      "sha": "9b67123",
+      "msg": "Add files via upload",
+      "date": "2024-08-03T21:57:15Z"
+    },
+    {
+      "sha": "4311ec8",
+      "msg": "Merge pull request #4 from munch-group/kaspermunch-patch-3",
+      "date": "2024-06-03T10:30:36Z"
+    },
+    {
+      "sha": "91e45ac",
+      "msg": "Update cluster_setup.qmd",
+      "date": "2024-06-03T10:28:51Z"
+    },
+    {
+      "sha": "c22e356",
+      "msg": "Merge pull request #3 from munch-group/kaspermunch-patch-2",
+      "date": "2024-06-01T15:31:41Z"
+    },
+    {
+      "sha": "b447c41",
+      "msg": "Update cluster_setup.qmd",
+      "date": "2024-06-01T15:31:10Z"
+    },
+    {
+      "sha": "911d762",
+      "msg": "Update",
+      "date": "2024-06-01T14:54:18Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Change project-guide to not use base environment by default",
+      "state": "open",
+      "date": "2024-03-05T07:43:47Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/project-guide/issues/1"
+    }
+  ]
+}

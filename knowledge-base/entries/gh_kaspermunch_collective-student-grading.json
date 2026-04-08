@@ -1,0 +1,31 @@
+{
+  "id": "gh_kaspermunch_collective-student-grading",
+  "type": "github",
+  "title": "collective-student-grading",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/collective-student-grading",
+  "date": "2026-04-04T13:26:21Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/collective-student-grading",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "c6182b7",
+      "msg": "Added notebook",
+      "date": "2026-04-04T13:26:10Z"
+    },
+    {
+      "sha": "f0856d8",
+      "msg": "Initial commit",
+      "date": "2026-01-08T11:41:34Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

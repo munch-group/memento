@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_statistical-rethinking-2023",
+  "type": "github",
+  "title": "statistical-rethinking-2023",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/statistical-rethinking-2023",
+  "date": "2023-12-21T19:13:17Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/statistical-rethinking-2023",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "a0f4f2d",
+      "msg": "Edits",
+      "date": "2023-12-21T19:13:12Z"
+    },
+    {
+      "sha": "6c7c852",
+      "msg": "Fix formula bug",
+      "date": "2023-12-21T04:17:20Z"
+    },
+    {
+      "sha": "417ae29",
+      "msg": "Fix formula bug",
+      "date": "2023-12-21T04:09:55Z"
+    },
+    {
+      "sha": "f98d00d",
+      "msg": "Update TODO",
+      "date": "2023-09-23T18:43:22Z"
+    },
+    {
+      "sha": "262f2d3",
+      "msg": "Fix typo",
+      "date": "2023-09-21T16:46:43Z"
+    },
+    {
+      "sha": "eb35a7f",
+      "msg": "Add video hyperlinks",
+      "date": "2023-09-20T19:31:35Z"
+    },
+    {
+      "sha": "0f29c01",
+      "msg": "Add Lecture 20 notebook",
+      "date": "2023-09-20T19:03:52Z"
+    },
+    {
+      "sha": "4fd8413",
+      "msg": "Update README watermark",
+      "date": "2023-09-20T19:03:06Z"
+    },
+    {
+      "sha": "a7cc326",
+      "msg": "Add Lecture 20 notebook",
+      "date": "2023-09-20T19:01:43Z"
+    },
+    {
+      "sha": "e93b8b0",
+      "msg": "Add Lecture 19 notebook",
+      "date": "2023-09-19T23:45:32Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,18 @@
+{
+  "id": "mn8voud8tcix",
+  "type": "fact",
+  "title": "CACNA1C ILS",
+  "tags": [
+    "XYbrain",
+    "LoF",
+    "ILS"
+  ],
+  "source": "Mao et al. 2021 / https://www.nature.com/articles/s41586-021-03519-x?fromPaywallRec=false",
+  "date": "2026-04-04T08:17:58.054Z",
+  "synced": false,
+  "genes": [],
+  "_sortTag": "XYbrain",
+  "connection": false,
+  "archived": false,
+  "due": ""
+}

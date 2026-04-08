@@ -1,0 +1,1 @@
+Relate GWF pipeline for use as git submodule

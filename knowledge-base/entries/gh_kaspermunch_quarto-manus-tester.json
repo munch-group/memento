@@ -1,0 +1,26 @@
+{
+  "id": "gh_kaspermunch_quarto-manus-tester",
+  "type": "github",
+  "title": "quarto-manus-tester",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/quarto-manus-tester",
+  "date": "2024-04-25T13:34:49Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/quarto-manus-tester",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "d63b630",
+      "msg": "Initial commit",
+      "date": "2024-04-25T12:54:51Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

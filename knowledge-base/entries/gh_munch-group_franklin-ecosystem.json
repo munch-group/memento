@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_franklin-ecosystem",
+  "type": "github",
+  "title": "franklin-ecosystem",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/franklin-ecosystem",
+  "date": "2025-09-21T08:54:38Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/franklin-ecosystem",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Shell",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ab318b1",
+      "msg": "Added franklin repos as submodules for easy cloning of all",
+      "date": "2025-09-21T08:53:14Z"
+    },
+    {
+      "sha": "77cb386",
+      "msg": "update",
+      "date": "2025-09-21T08:40:19Z"
+    },
+    {
+      "sha": "6ec1ba1",
+      "msg": "Initial commit",
+      "date": "2025-09-21T08:28:28Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

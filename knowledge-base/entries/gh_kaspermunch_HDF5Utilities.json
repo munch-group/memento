@@ -1,0 +1,31 @@
+{
+  "id": "gh_kaspermunch_HDF5Utilities",
+  "type": "github",
+  "title": "HDF5Utilities",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/HDF5Utilities",
+  "date": "2016-07-07T17:59:55Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/HDF5Utilities",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "904477f",
+      "msg": "Create README.md",
+      "date": "2016-07-07T17:59:54Z"
+    },
+    {
+      "sha": "047832e",
+      "msg": "Initial commit",
+      "date": "2016-07-07T17:57:53Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

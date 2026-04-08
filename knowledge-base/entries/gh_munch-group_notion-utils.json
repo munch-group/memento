@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_notion-utils",
+  "type": "github",
+  "title": "notion-utils",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/notion-utils",
+  "date": "2025-12-04T10:41:53Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/notion-utils",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "157f91a",
+      "msg": "env update",
+      "date": "2025-12-04T10:41:46Z"
+    },
+    {
+      "sha": "cf36815",
+      "msg": "email stuff",
+      "date": "2025-10-26T08:20:03Z"
+    },
+    {
+      "sha": "267510a",
+      "msg": "patch  version bump",
+      "date": "2025-09-17T15:48:54Z"
+    },
+    {
+      "sha": "d043cd7",
+      "msg": "Recovered files",
+      "date": "2025-09-17T15:44:38Z"
+    },
+    {
+      "sha": "2585460",
+      "msg": "retrieved add_page.py",
+      "date": "2025-09-17T15:39:03Z"
+    },
+    {
+      "sha": "ebb5423",
+      "msg": "added email_assistant.py again",
+      "date": "2025-09-17T15:07:37Z"
+    },
+    {
+      "sha": "4da60ec",
+      "msg": "update",
+      "date": "2025-09-17T08:10:16Z"
+    },
+    {
+      "sha": "d688e36",
+      "msg": "update",
+      "date": "2025-09-15T10:48:20Z"
+    },
+    {
+      "sha": "ed7f94b",
+      "msg": "patch  version bump",
+      "date": "2025-09-12T07:53:22Z"
+    },
+    {
+      "sha": "d5ad0fa",
+      "msg": "update",
+      "date": "2025-09-12T07:52:42Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Make a command that dumps the Human Genes table as a csv file with a True/False column for each gene tag occuring the the database",
+      "state": "open",
+      "date": "2025-09-18T11:15:34Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/notion-utils/issues/1"
+    }
+  ]
+}

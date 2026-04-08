@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_PhaseTypeR",
+  "type": "github",
+  "title": "PhaseTypeR",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/PhaseTypeR",
+  "date": "2022-07-12T08:09:01Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/PhaseTypeR",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "R",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5938da6",
+      "msg": "Update PH_functions.R",
+      "date": "2022-07-12T08:09:01Z"
+    },
+    {
+      "sha": "fb59232",
+      "msg": "Update PH_functions.R",
+      "date": "2022-07-12T08:07:50Z"
+    },
+    {
+      "sha": "47e97d4",
+      "msg": "Update reward_phase_type.R",
+      "date": "2022-07-11T09:53:08Z"
+    },
+    {
+      "sha": "3746878",
+      "msg": "Update var.R",
+      "date": "2022-07-11T09:51:58Z"
+    },
+    {
+      "sha": "3c7f023",
+      "msg": "Update moments.R",
+      "date": "2022-07-11T09:50:31Z"
+    },
+    {
+      "sha": "be2e38f",
+      "msg": "Update mean.R",
+      "date": "2022-07-11T07:55:18Z"
+    },
+    {
+      "sha": "17e9c5c",
+      "msg": "Update moments.R",
+      "date": "2022-07-11T07:54:07Z"
+    },
+    {
+      "sha": "0faa9d3",
+      "msg": "Update mean.R",
+      "date": "2022-07-11T07:35:43Z"
+    },
+    {
+      "sha": "0e4fcfa",
+      "msg": "Update moments.R",
+      "date": "2022-07-11T07:35:09Z"
+    },
+    {
+      "sha": "53e0953",
+      "msg": "Update moments.R",
+      "date": "2022-07-11T07:28:45Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

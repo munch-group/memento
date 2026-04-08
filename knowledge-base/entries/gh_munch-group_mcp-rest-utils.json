@@ -1,0 +1,31 @@
+{
+  "id": "gh_munch-group_mcp-rest-utils",
+  "type": "github",
+  "title": "mcp-rest-utils",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/mcp-rest-utils",
+  "date": "2025-12-09T18:16:47Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/mcp-rest-utils",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "TypeScript",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "daaa20c",
+      "msg": "Standalone repo: Add README, LICENSE, and .gitignore",
+      "date": "2025-12-09T18:16:00Z"
+    },
+    {
+      "sha": "49b4c8c",
+      "msg": "Added files",
+      "date": "2025-09-30T20:33:19Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

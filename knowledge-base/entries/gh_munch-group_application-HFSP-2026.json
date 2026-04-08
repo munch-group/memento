@@ -1,0 +1,31 @@
+{
+  "id": "gh_munch-group_application-HFSP-2026",
+  "type": "github",
+  "title": "application-HFSP-2026",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/application-HFSP-2026",
+  "date": "2026-04-04T13:45:56Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/application-HFSP-2026",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e4b6d27",
+      "msg": "update",
+      "date": "2026-04-04T13:45:48Z"
+    },
+    {
+      "sha": "b82c9da",
+      "msg": "Initial commit",
+      "date": "2026-03-10T13:24:31Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

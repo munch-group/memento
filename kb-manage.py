@@ -1,22 +1,15 @@
 #!/usr/bin/env python3
-"""Command-line tool for batch operations on knowledge-base JSON files."""
+"""Command-line tool for batch operations on per-entry knowledge base files."""
 
 import json
 import re
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 import click
 
-
-def load(path):
-    with open(path) as f:
-        return json.load(f)
-
-
-def save(path, entries):
-    with open(path, "w") as f:
-        json.dump(entries, f, indent=2)
+from kb_io import load_all, save_entry, save_all, delete_entry, entry_ids_on_disk
 
 
 def now_iso():
@@ -31,7 +24,7 @@ VALID_TYPES = [
 
 @click.group()
 def cli():
-    """Batch operations on a knowledge-base JSON file."""
+    """Batch operations on a knowledge-base directory."""
     pass
 
 
@@ -39,51 +32,52 @@ def cli():
 
 
 @cli.command("rename-tag")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("old")
 @click.argument("new")
-def rename_tag(file, old, new):
+def rename_tag(kb_dir, old, new):
     """Rename a tag across all entries.  OLD → NEW"""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
         tags = e.get("tags", [])
         if old in tags:
             tags = [new if t == old else t for t in tags]
-            # deduplicate while preserving order
             seen = set()
             e["tags"] = [t for t in tags if not (t in seen or seen.add(t))]
-            n += 1
-    save(file, entries)
-    click.echo(f"Renamed tag '{old}' → '{new}' in {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Renamed tag '{old}' → '{new}' in {len(changed)} entries.")
 
 
 @cli.command("delete-tag")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("tag")
-def delete_tag(file, tag):
+def delete_tag(kb_dir, tag):
     """Remove a tag from all entries."""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
         tags = e.get("tags", [])
         if tag in tags:
             e["tags"] = [t for t in tags if t != tag]
-            n += 1
-    save(file, entries)
-    click.echo(f"Removed tag '{tag}' from {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Removed tag '{tag}' from {len(changed)} entries.")
 
 
 @cli.command("add-tag")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("tag")
 @click.option("--where-tag", help="Only add to entries that already have this tag.")
 @click.option("--where-type", help="Only add to entries of this type.")
 @click.option("--where-gene", help="Only add to entries containing this gene.")
-def add_tag(file, tag, where_tag, where_type, where_gene):
+def add_tag(kb_dir, tag, where_tag, where_type, where_gene):
     """Add a tag to entries (optionally filtered)."""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
         if where_tag and where_tag not in e.get("tags", []):
             continue
@@ -95,18 +89,19 @@ def add_tag(file, tag, where_tag, where_type, where_gene):
         if tag not in tags:
             tags.append(tag)
             e["tags"] = tags
-            n += 1
-    save(file, entries)
-    click.echo(f"Added tag '{tag}' to {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Added tag '{tag}' to {len(changed)} entries.")
 
 
 @cli.command("list-tags")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--sort", "sort_by", type=click.Choice(["name", "count"]), default="count",
               help="Sort by name or count (default: count).")
-def list_tags(file, sort_by):
+def list_tags(kb_dir, sort_by):
     """List all tags with usage counts."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     counts = {}
     for e in entries:
         for t in e.get("tags", []):
@@ -124,13 +119,13 @@ def list_tags(file, sort_by):
 
 
 @cli.command("rename-gene")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("old")
 @click.argument("new")
-def rename_gene(file, old, new):
+def rename_gene(kb_dir, old, new):
     """Rename a gene across all entries.  OLD → NEW"""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
         genes = e.get("genes", [])
         matched = [i for i, g in enumerate(genes) if g.upper() == old.upper()]
@@ -139,33 +134,35 @@ def rename_gene(file, old, new):
                 genes[i] = new
             seen = set()
             e["genes"] = [g for g in genes if not (g.upper() in seen or seen.add(g.upper()))]
-            n += 1
-    save(file, entries)
-    click.echo(f"Renamed gene '{old}' → '{new}' in {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Renamed gene '{old}' → '{new}' in {len(changed)} entries.")
 
 
 @cli.command("delete-gene")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("gene")
-def delete_gene(file, gene):
+def delete_gene(kb_dir, gene):
     """Remove a gene from all entries."""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
         genes = e.get("genes", [])
         if any(g.upper() == gene.upper() for g in genes):
             e["genes"] = [g for g in genes if g.upper() != gene.upper()]
-            n += 1
-    save(file, entries)
-    click.echo(f"Removed gene '{gene}' from {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Removed gene '{gene}' from {len(changed)} entries.")
 
 
 @cli.command("list-genes")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--sort", "sort_by", type=click.Choice(["name", "count"]), default="count")
-def list_genes(file, sort_by):
+def list_genes(kb_dir, sort_by):
     """List all genes with usage counts."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     counts = {}
     for e in entries:
         for g in e.get("genes", []):
@@ -184,25 +181,27 @@ def list_genes(file, sort_by):
 
 
 @cli.command("rename-type")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("old")
 @click.argument("new")
-def rename_type(file, old, new):
+def rename_type(kb_dir, old, new):
     """Rename a type across all entries.  OLD → NEW"""
-    entries = load(file)
-    n = sum(1 for e in entries if e.get("type") == old)
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
         if e.get("type") == old:
             e["type"] = new
-    save(file, entries)
-    click.echo(f"Renamed type '{old}' → '{new}' in {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Renamed type '{old}' → '{new}' in {len(changed)} entries.")
 
 
 @cli.command("list-types")
-@click.argument("file", type=click.Path(exists=True))
-def list_types(file):
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
+def list_types(kb_dir):
     """List all types with usage counts."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     counts = {}
     for e in entries:
         t = e.get("type", "")
@@ -215,12 +214,12 @@ def list_types(file):
 
 
 @cli.command("remove-by-tag")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("tag")
-@click.option("--dry-run", is_flag=True, help="Show what would be removed without changing the file.")
-def remove_by_tag(file, tag, dry_run):
+@click.option("--dry-run", is_flag=True, help="Show what would be removed.")
+def remove_by_tag(kb_dir, tag, dry_run):
     """Remove all entries that have TAG."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     keep, drop = [], []
     for e in entries:
         (drop if tag in e.get("tags", []) else keep).append(e)
@@ -229,17 +228,18 @@ def remove_by_tag(file, tag, dry_run):
             click.echo(f"  would remove: [{e.get('type')}] {e.get('title') or e.get('id')}")
         click.echo(f"\n{len(drop)} entries would be removed ({len(keep)} kept).")
     else:
-        save(file, keep)
+        for e in drop:
+            delete_entry(kb_dir, e["id"])
         click.echo(f"Removed {len(drop)} entries with tag '{tag}' ({len(keep)} kept).")
 
 
 @cli.command("remove-by-type")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("type_name")
 @click.option("--dry-run", is_flag=True)
-def remove_by_type(file, type_name, dry_run):
+def remove_by_type(kb_dir, type_name, dry_run):
     """Remove all entries of TYPE_NAME."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     keep, drop = [], []
     for e in entries:
         (drop if e.get("type") == type_name else keep).append(e)
@@ -248,40 +248,43 @@ def remove_by_type(file, type_name, dry_run):
             click.echo(f"  would remove: {e.get('title') or e.get('id')}")
         click.echo(f"\n{len(drop)} entries would be removed ({len(keep)} kept).")
     else:
-        save(file, keep)
+        for e in drop:
+            delete_entry(kb_dir, e["id"])
         click.echo(f"Removed {len(drop)} entries of type '{type_name}' ({len(keep)} kept).")
 
 
 @cli.command("remove-by-id")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("ids", nargs=-1, required=True)
-def remove_by_id(file, ids):
+def remove_by_id(kb_dir, ids):
     """Remove entries by one or more IDs."""
-    entries = load(file)
     id_set = set(ids)
-    keep = [e for e in entries if e["id"] not in id_set]
-    removed = len(entries) - len(keep)
-    save(file, keep)
-    click.echo(f"Removed {removed} entries ({len(keep)} kept).")
+    existing = entry_ids_on_disk(kb_dir)
+    removed = 0
+    for eid in id_set:
+        if eid in existing:
+            delete_entry(kb_dir, eid)
+            removed += 1
+    click.echo(f"Removed {removed} entries.")
 
 
 # ── Search / Replace ────────────────────────────────────────
 
 
 @cli.command("replace")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("pattern")
 @click.argument("replacement")
 @click.option("--field", multiple=True, default=("content", "title"),
               help="Fields to search (default: content, title). Repeat for multiple.")
 @click.option("--regex", "use_regex", is_flag=True, help="Treat PATTERN as a regex.")
 @click.option("--dry-run", is_flag=True)
-def replace(file, pattern, replacement, field, use_regex, dry_run):
+def replace(kb_dir, pattern, replacement, field, use_regex, dry_run):
     """Search/replace text across entries."""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
-        changed = False
+        entry_changed = False
         for f in field:
             val = e.get(f, "")
             if not isinstance(val, str):
@@ -295,23 +298,24 @@ def replace(file, pattern, replacement, field, use_regex, dry_run):
                     click.echo(f"  [{e.get('id')}] {f}: '{pattern}' found")
                 else:
                     e[f] = new_val
-                changed = True
-        if changed:
-            n += 1
+                entry_changed = True
+        if entry_changed:
+            changed.append(e)
     if not dry_run:
-        save(file, entries)
-    click.echo(f"{'Would modify' if dry_run else 'Modified'} {n} entries.")
+        for e in changed:
+            save_entry(kb_dir, e)
+    click.echo(f"{'Would modify' if dry_run else 'Modified'} {len(changed)} entries.")
 
 
 @cli.command("grep")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("pattern")
 @click.option("--field", multiple=True, default=("content", "title", "tags", "genes"),
               help="Fields to search.")
 @click.option("-i", "--ignore-case", is_flag=True)
-def grep(file, pattern, field, ignore_case):
+def grep(kb_dir, pattern, field, ignore_case):
     """Search entries for PATTERN and print matches."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     flags = re.IGNORECASE if ignore_case else 0
     rx = re.compile(pattern, flags)
     n = 0
@@ -337,62 +341,59 @@ def grep(file, pattern, field, ignore_case):
 
 
 @cli.command("merge")
-@click.argument("target", type=click.Path(exists=True))
-@click.argument("source", type=click.Path(exists=True))
+@click.argument("target", type=click.Path(exists=True, file_okay=False))
+@click.argument("source", type=click.Path(exists=True, file_okay=False))
 @click.option("--overwrite", is_flag=True,
               help="If an ID exists in both, overwrite with SOURCE version.")
 def merge(target, source, overwrite):
-    """Merge SOURCE entries into TARGET file."""
-    t_entries = load(target)
-    s_entries = load(source)
-    t_ids = {e["id"]: i for i, e in enumerate(t_entries)}
+    """Merge SOURCE entries into TARGET directory."""
+    t_entries = load_all(target)
+    s_entries = load_all(source)
+    t_ids = {e["id"] for e in t_entries}
     added, updated = 0, 0
     for se in s_entries:
         if se["id"] in t_ids:
             if overwrite:
-                t_entries[t_ids[se["id"]]] = se
+                save_entry(target, se)
                 updated += 1
         else:
-            t_entries.append(se)
+            save_entry(target, se)
             added += 1
-    save(target, t_entries)
-    click.echo(f"Merged: {added} added, {updated} updated. Total: {len(t_entries)}.")
+    click.echo(f"Merged: {added} added, {updated} updated.")
 
 
 @cli.command("import")
-@click.argument("target", type=click.Path(exists=True))
-@click.argument("source", type=click.Path(exists=True))
+@click.argument("target", type=click.Path(exists=True, file_okay=False))
+@click.argument("source", type=click.Path(exists=True, file_okay=False))
 def import_file(target, source):
     """Append all entries from SOURCE into TARGET (new IDs assigned to avoid collisions)."""
     import random
     import string
-    t_entries = load(target)
-    s_entries = load(source)
-    existing_ids = {e["id"] for e in t_entries}
+    s_entries = load_all(source)
+    existing_ids = entry_ids_on_disk(target)
     n = 0
     for se in s_entries:
         while se["id"] in existing_ids:
             se["id"] = "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         existing_ids.add(se["id"])
-        t_entries.append(se)
+        save_entry(target, se)
         n += 1
-    save(target, t_entries)
-    click.echo(f"Imported {n} entries into {target}. Total: {len(t_entries)}.")
+    click.echo(f"Imported {n} entries into {target}.")
 
 
 # ── Bulk field operations ───────────────────────────────────
 
 
 @cli.command("set-synced")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("value", type=click.Choice(["true", "false"]))
 @click.option("--where-tag", help="Only affect entries with this tag.")
 @click.option("--where-type", help="Only affect entries of this type.")
-def set_synced(file, value, where_tag, where_type):
+def set_synced(kb_dir, value, where_tag, where_type):
     """Set the synced flag on all (or filtered) entries."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     val = value == "true"
-    n = 0
+    changed = []
     for e in entries:
         if where_tag and where_tag not in e.get("tags", []):
             continue
@@ -400,20 +401,21 @@ def set_synced(file, value, where_tag, where_type):
             continue
         if e.get("synced") != val:
             e["synced"] = val
-            n += 1
-    save(file, entries)
-    click.echo(f"Set synced={val} on {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Set synced={val} on {len(changed)} entries.")
 
 
 @cli.command("set-type")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.argument("new_type")
 @click.option("--where-tag", help="Only affect entries with this tag.")
 @click.option("--where-type", help="Only affect entries currently of this type.")
-def set_type(file, new_type, where_tag, where_type):
+def set_type(kb_dir, new_type, where_tag, where_type):
     """Change the type of filtered entries."""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
         if where_tag and where_tag not in e.get("tags", []):
             continue
@@ -421,38 +423,39 @@ def set_type(file, new_type, where_tag, where_type):
             continue
         if e.get("type") != new_type:
             e["type"] = new_type
-            n += 1
-    save(file, entries)
-    click.echo(f"Set type='{new_type}' on {n} entries.")
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Set type='{new_type}' on {len(changed)} entries.")
 
 
 @cli.command("touch")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--where-tag", help="Only touch entries with this tag.")
-def touch(file, where_tag):
+def touch(kb_dir, where_tag):
     """Update the date field to now (marks entries as recently modified)."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     stamp = now_iso()
-    n = 0
+    changed = []
     for e in entries:
         if where_tag and where_tag not in e.get("tags", []):
             continue
         e["date"] = stamp
-        n += 1
-    save(file, entries)
-    click.echo(f"Touched {n} entries.")
+        changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Touched {len(changed)} entries.")
 
 
 # ── Stats ───────────────────────────────────────────────────
 
 
 @cli.command("stats")
-@click.argument("file", type=click.Path(exists=True))
-def stats(file):
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
+def stats(kb_dir):
     """Print summary statistics for the knowledge base."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     click.echo(f"Entries:  {len(entries)}")
-    # types
     types = {}
     for e in entries:
         t = e.get("type", "?")
@@ -460,20 +463,16 @@ def stats(file):
     click.echo("Types:")
     for t, c in sorted(types.items(), key=lambda x: -x[1]):
         click.echo(f"  {c:4d}  {t}")
-    # synced
     synced = sum(1 for e in entries if e.get("synced"))
     click.echo(f"Synced:   {synced}/{len(entries)}")
-    # tags
     all_tags = set()
     for e in entries:
         all_tags.update(e.get("tags", []))
     click.echo(f"Tags:     {len(all_tags)} unique")
-    # genes
     all_genes = set()
     for e in entries:
         all_genes.update(g.upper() for g in e.get("genes", []))
     click.echo(f"Genes:    {len(all_genes)} unique")
-    # content
     lengths = [len(e.get("content", "")) for e in entries]
     if lengths:
         click.echo(f"Content:  {min(lengths)}-{max(lengths)} chars (avg {sum(lengths)//len(lengths)})")
@@ -486,13 +485,13 @@ def stats(file):
 
 
 @cli.command("dedup")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--by", "by_field", type=click.Choice(["title", "content", "id"]),
               default="title", help="Field to detect duplicates on.")
 @click.option("--dry-run", is_flag=True)
-def dedup(file, by_field, dry_run):
+def dedup(kb_dir, by_field, dry_run):
     """Remove duplicate entries based on a field."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     seen = set()
     keep, drop = [], []
     for e in entries:
@@ -510,7 +509,8 @@ def dedup(file, by_field, dry_run):
             click.echo(f"  would remove: [{e.get('type')}] {e.get('title') or e.get('id')}")
         click.echo(f"\n{len(drop)} duplicates found ({len(keep)} would be kept).")
     else:
-        save(file, keep)
+        for e in drop:
+            delete_entry(kb_dir, e["id"])
         click.echo(f"Removed {len(drop)} duplicates ({len(keep)} kept).")
 
 
@@ -518,10 +518,10 @@ def dedup(file, by_field, dry_run):
 
 
 @cli.command("validate")
-@click.argument("file", type=click.Path(exists=True))
-def validate(file):
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
+def validate(kb_dir):
     """Check entries for schema issues."""
-    entries = load(file)
+    entries = load_all(kb_dir)
     required = {"id", "type", "content", "title", "tags", "date", "synced"}
     issues = 0
     for i, e in enumerate(entries):
@@ -548,25 +548,22 @@ def validate(file):
 
 
 @cli.command("clean")
-@click.argument("file", type=click.Path(exists=True))
-def clean(file):
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
+def clean(kb_dir):
     """Normalize entries: ensure all required fields, trim whitespace, sort tags/genes."""
-    entries = load(file)
-    n = 0
+    entries = load_all(kb_dir)
+    changed = []
     for e in entries:
-        changed = False
-        # ensure fields
+        modified = False
         for f, default in [("title", ""), ("tags", []), ("genes", []),
                            ("source", ""), ("synced", False)]:
             if f not in e:
                 e[f] = default
-                changed = True
-        # trim strings
+                modified = True
         for f in ("title", "content", "source"):
             if isinstance(e.get(f), str) and e[f] != e[f].strip():
                 e[f] = e[f].strip()
-                changed = True
-        # sort and deduplicate tags/genes
+                modified = True
         for f in ("tags", "genes"):
             if isinstance(e.get(f), list):
                 orig = e[f]
@@ -574,46 +571,40 @@ def clean(file):
                 deduped = [x for x in orig if not (x in seen or seen.add(x))]
                 if deduped != orig:
                     e[f] = deduped
-                    changed = True
-        if changed:
-            n += 1
-    save(file, entries)
-    click.echo(f"Cleaned {n} entries.")
+                    modified = True
+        if modified:
+            changed.append(e)
+    for e in changed:
+        save_entry(kb_dir, e)
+    click.echo(f"Cleaned {len(changed)} entries.")
 
 
 # ── Prune images ────────────────────────────────────────────
 
 
 @cli.command("prune-images")
-@click.argument("file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--dry-run", is_flag=True, help="Show what would be deleted without removing files.")
-def prune_images(file, dry_run):
+def prune_images(kb_dir, dry_run):
     """Delete images in the images/ subfolder that are not referenced by any entry."""
-    from pathlib import Path
-
-    entries = load(file)
-    base = Path(file).parent
-    img_dir = base / "images"
+    entries = load_all(kb_dir)
+    img_dir = Path(kb_dir) / "images"
 
     if not img_dir.is_dir():
         click.echo("No images/ subfolder found.")
         return
 
-    # Collect all image references from content and source fields
     referenced = set()
     for e in entries:
         for field in ("content", "source"):
             text = e.get(field, "")
             if not isinstance(text, str):
                 continue
-            # Match markdown images: ![...](images/filename)
             for m in re.finditer(r'!\[[^\]]*\]\(images/([^)]+)\)', text):
                 referenced.add(m.group(1))
-            # Match bare images/ paths (e.g. in HTML img tags)
             for m in re.finditer(r'images/([^\s"\'<>)]+)', text):
                 referenced.add(m.group(1))
 
-    # Scan actual files
     on_disk = set()
     for p in img_dir.iterdir():
         if p.is_file():

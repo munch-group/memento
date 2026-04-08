@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_ChromosomeWindows",
+  "type": "github",
+  "title": "ChromosomeWindows",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/ChromosomeWindows",
+  "date": "2019-11-26T09:31:47Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/ChromosomeWindows",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "17cc5dc",
+      "msg": "Merge branch 'master' of https://github.com/kaspermunch/ChromosomeWindows",
+      "date": "2019-11-26T09:30:37Z"
+    },
+    {
+      "sha": "2dc203a",
+      "msg": "Changed to new name in import",
+      "date": "2019-11-26T09:20:16Z"
+    },
+    {
+      "sha": "14e76cb",
+      "msg": "Merge branch 'master' of ssh://github.com/kaspermunch/GenomicWindows",
+      "date": "2019-09-05T07:26:41Z"
+    },
+    {
+      "sha": "a8d0024",
+      "msg": "Updated import statement to new name",
+      "date": "2019-09-05T07:26:23Z"
+    },
+    {
+      "sha": "fbb6670",
+      "msg": "Fixed new library name in import statement",
+      "date": "2019-08-09T19:59:37Z"
+    },
+    {
+      "sha": "c34bb23",
+      "msg": "Changed name to ChromosomeWindows",
+      "date": "2019-05-17T14:59:28Z"
+    },
+    {
+      "sha": "c3fdb2b",
+      "msg": "Fixed a few bugs",
+      "date": "2019-04-10T09:35:05Z"
+    },
+    {
+      "sha": "1b309e5",
+      "msg": "Small update",
+      "date": "2019-04-09T20:37:58Z"
+    },
+    {
+      "sha": "3968f3a",
+      "msg": "Changed functionality for empty windows and filling of chromosomes",
+      "date": "2019-04-09T20:35:49Z"
+    },
+    {
+      "sha": "74720f6",
+      "msg": "Rolled back change",
+      "date": "2019-01-30T14:38:49Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

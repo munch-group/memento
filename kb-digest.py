@@ -9,15 +9,7 @@ from datetime import datetime, timedelta, timezone
 import anthropic
 import click
 
-
-def load(path):
-    with open(path) as f:
-        return json.load(f)
-
-
-def save(path, entries):
-    with open(path, "w") as f:
-        json.dump(entries, f, indent=2)
+from kb_io import load_all, save_entry
 
 
 def fmt_date(iso):
@@ -100,12 +92,12 @@ Write a "Where am I" digest I can read in a few minutes.
 
 
 @click.command()
-@click.argument("json_file", type=click.Path(exists=True))
+@click.argument("kb_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--days", type=int, default=None, help="Only include activity from the last N days")
 @click.option("--model", default="claude-sonnet-4-20250514", help="Claude model to use")
-def digest(json_file, days, model):
+def digest(kb_dir, days, model):
     """Generate a morning digest from GitHub activity in the knowledge base."""
-    entries = load(json_file)
+    entries = load_all(kb_dir)
     gh_cards = [e for e in entries if e.get("type") == "github" and (e.get("_ghCommits") or e.get("_ghIssuesRecent"))]
 
     if not gh_cards:
@@ -137,18 +129,15 @@ def digest(json_file, days, model):
     # Print plain text to terminal
     click.echo(markdown)
 
-    # Save to JSON as _digest entry
+    # Save _digest entry
     digest_entry = {
         "id": "_digest",
         "type": "_digest",
         "date": datetime.now(timezone.utc).isoformat(timespec="milliseconds"),
         "markdown": markdown,
     }
-    # Upsert: replace existing _digest or append
-    entries = [e for e in entries if e.get("id") != "_digest"]
-    entries.append(digest_entry)
-    save(json_file, entries)
-    click.echo(f"\nDigest saved to {json_file}", err=True)
+    save_entry(kb_dir, digest_entry)
+    click.echo(f"\nDigest saved to {kb_dir}/entries/_digest.*", err=True)
 
 
 if __name__ == "__main__":

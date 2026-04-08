@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_progressiveCactus",
+  "type": "github",
+  "title": "progressiveCactus",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/progressiveCactus",
+  "date": "2016-09-01T18:24:31Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/progressiveCactus",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "91d6344",
+      "msg": "update hal to latest master",
+      "date": "2016-09-01T18:24:28Z"
+    },
+    {
+      "sha": "e099c9b",
+      "msg": "update sonLib to allow caf speedups to compile",
+      "date": "2016-06-21T18:58:46Z"
+    },
+    {
+      "sha": "ec66d28",
+      "msg": "backport fix from cPecan",
+      "date": "2016-06-21T18:24:39Z"
+    },
+    {
+      "sha": "81b3f6a",
+      "msg": "update RC params",
+      "date": "2016-06-21T18:08:50Z"
+    },
+    {
+      "sha": "586098f",
+      "msg": "caf speedups",
+      "date": "2016-06-21T17:52:19Z"
+    },
+    {
+      "sha": "6e8ac78",
+      "msg": "fix running out of stack space on large bar problems",
+      "date": "2016-06-21T17:51:38Z"
+    },
+    {
+      "sha": "f575a06",
+      "msg": "accept the minSpeciesPerBlock option",
+      "date": "2016-04-27T00:55:52Z"
+    },
+    {
+      "sha": "679d4fc",
+      "msg": "fix an unhelpful crash on 0-length input and give a warning instead",
+      "date": "2016-04-27T00:53:32Z"
+    },
+    {
+      "sha": "3a99354",
+      "msg": "enable removing recoverable chains",
+      "date": "2016-04-11T22:02:59Z"
+    },
+    {
+      "sha": "d23c029",
+      "msg": "pull hal update",
+      "date": "2016-04-07T23:24:21Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

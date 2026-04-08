@@ -1,0 +1,41 @@
+{
+  "id": "gh_munch-group_phasic-traces",
+  "type": "github",
+  "title": "phasic-traces",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/phasic-traces",
+  "date": "2025-10-21T21:03:39Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/phasic-traces",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "d7430d6",
+      "msg": "Add graph_hash to coalescent_n5_theta1 for hash-based lookup",
+      "date": "2025-10-21T21:03:37Z"
+    },
+    {
+      "sha": "63ca9be",
+      "msg": "Update with real IPFS CIDs",
+      "date": "2025-10-21T20:04:01Z"
+    },
+    {
+      "sha": "f6a2c73",
+      "msg": "Add initial trace library",
+      "date": "2025-10-21T19:28:14Z"
+    },
+    {
+      "sha": "323a2e7",
+      "msg": "Initialize phasic-traces registry",
+      "date": "2025-10-21T19:23:03Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,26 @@
+{
+  "id": "mnptlb0wibbj",
+  "type": "reference",
+  "title": "Systematic analysis and prediction of genes associated with monogenic disorders on human chromosome X | Nature Communications",
+  "genes": [
+    "MECP2",
+    "CDKL57",
+    "DDX3X",
+    "IQSEC2",
+    "NEXMIF",
+    "KDM5C",
+    "HUWE1",
+    "USP9X",
+    "CLCN4",
+    "PCDH19",
+    "EFNB1"
+  ],
+  "tags": [],
+  "source": "https://www.nature.com/articles/s41467-022-34264-y",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-04-08T09:05:48.059Z",
+  "synced": false,
+  "_sortTag": ""
+}

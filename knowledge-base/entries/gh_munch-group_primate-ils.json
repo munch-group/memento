@@ -1,0 +1,51 @@
+{
+  "id": "gh_munch-group_primate-ils",
+  "type": "github",
+  "title": "primate-ils",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/primate-ils",
+  "date": "2025-04-15T12:25:12Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/primate-ils",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "0084bf4",
+      "msg": "Rename",
+      "date": "2025-04-15T12:24:59Z"
+    },
+    {
+      "sha": "4340233",
+      "msg": "added data files",
+      "date": "2025-04-15T06:29:04Z"
+    },
+    {
+      "sha": "4e6472a",
+      "msg": "updated notebooks and added clear output script",
+      "date": "2025-04-15T06:28:01Z"
+    },
+    {
+      "sha": "edfa1ae",
+      "msg": "Added data and result files to lfs",
+      "date": "2025-04-14T18:01:10Z"
+    },
+    {
+      "sha": "3beead9",
+      "msg": "Added files",
+      "date": "2025-04-14T13:07:22Z"
+    },
+    {
+      "sha": "1131ec4",
+      "msg": "Initial commit",
+      "date": "2025-04-14T12:55:35Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

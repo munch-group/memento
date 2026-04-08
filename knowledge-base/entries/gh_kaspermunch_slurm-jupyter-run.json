@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_slurm-jupyter-run",
+  "type": "github",
+  "title": "slurm-jupyter-run",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/slurm-jupyter-run",
+  "date": "2020-11-19T16:43:00Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/slurm-jupyter-run",
+  "_ghStars": 2,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "830b6e2",
+      "msg": "Added TODO",
+      "date": "2020-11-19T16:42:48Z"
+    },
+    {
+      "sha": "25cc8fe",
+      "msg": "Fix for spiked in code cells",
+      "date": "2020-11-19T10:18:53Z"
+    },
+    {
+      "sha": "c01958e",
+      "msg": "Fix for spiked in cells",
+      "date": "2020-11-19T07:34:12Z"
+    },
+    {
+      "sha": "544f3e9",
+      "msg": "Added support for miniconda envs",
+      "date": "2020-10-13T07:43:35Z"
+    },
+    {
+      "sha": "27e5272",
+      "msg": "Bumped verison",
+      "date": "2020-08-07T20:29:48Z"
+    },
+    {
+      "sha": "2ad2044",
+      "msg": "Fixed --inplace argument bug",
+      "date": "2020-08-07T20:19:54Z"
+    },
+    {
+      "sha": "3b267df",
+      "msg": "Bumped version",
+      "date": "2020-08-05T20:26:44Z"
+    },
+    {
+      "sha": "8a5235e",
+      "msg": "Updated setup.py",
+      "date": "2020-08-05T20:24:36Z"
+    },
+    {
+      "sha": "1044e6b",
+      "msg": "Fixed conda.sh",
+      "date": "2020-08-05T19:45:33Z"
+    },
+    {
+      "sha": "4270c8b",
+      "msg": "Added scripts for pypi and conda build",
+      "date": "2020-08-05T14:01:38Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

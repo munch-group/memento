@@ -1,0 +1,61 @@
+{
+  "id": "gh_munch-group_relate-tree-exercise",
+  "type": "github",
+  "title": "relate-tree-exercise",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/relate-tree-exercise",
+  "date": "2026-03-09T08:36:44Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/relate-tree-exercise",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "9a2e545",
+      "msg": "update",
+      "date": "2026-03-09T08:36:42Z"
+    },
+    {
+      "sha": "05c39c4",
+      "msg": "update",
+      "date": "2026-03-09T08:32:14Z"
+    },
+    {
+      "sha": "13c87b0",
+      "msg": "update",
+      "date": "2026-03-09T08:29:20Z"
+    },
+    {
+      "sha": "7da7f97",
+      "msg": "update",
+      "date": "2026-03-09T08:16:22Z"
+    },
+    {
+      "sha": "93169eb",
+      "msg": "merged selection exercise into this",
+      "date": "2026-03-08T16:58:24Z"
+    },
+    {
+      "sha": "8ad6597",
+      "msg": "update",
+      "date": "2026-03-02T11:15:14Z"
+    },
+    {
+      "sha": "7b2b1e6",
+      "msg": "Added files",
+      "date": "2026-02-22T20:15:46Z"
+    },
+    {
+      "sha": "520e985",
+      "msg": "Initial commit",
+      "date": "2026-02-22T16:28:55Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

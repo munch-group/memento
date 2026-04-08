@@ -1,0 +1,1 @@
+Standing morning meetings at 8:45 each morning

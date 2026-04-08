@@ -1,0 +1,26 @@
+{
+  "id": "gh_munch-group_x-gwas",
+  "type": "github",
+  "title": "x-gwas",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/x-gwas",
+  "date": "2024-09-02T11:50:27Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/x-gwas",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "6612b50",
+      "msg": "Initial commit",
+      "date": "2024-09-02T09:54:42Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

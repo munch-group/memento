@@ -1,0 +1,1 @@
+Is density of Lin ARs explained by what is A compartment in sperm (or better explained than by what is A in somatic cells)? Are Lin ARs enriched around A/B borders or near cDEG genes?

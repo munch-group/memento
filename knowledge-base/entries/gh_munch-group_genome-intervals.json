@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_genome-intervals",
+  "type": "github",
+  "title": "genome-intervals",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/genome-intervals",
+  "date": "2026-01-04T13:19:44Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/genome-intervals",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "1a8f256",
+      "msg": "patch  version bump",
+      "date": "2026-01-04T13:19:34Z"
+    },
+    {
+      "sha": "9455de6",
+      "msg": "update",
+      "date": "2026-01-04T13:19:23Z"
+    },
+    {
+      "sha": "a043a5e",
+      "msg": "patch  version bump",
+      "date": "2026-01-04T13:17:47Z"
+    },
+    {
+      "sha": "ba2c9d1",
+      "msg": "patch  version bump",
+      "date": "2025-10-02T07:24:03Z"
+    },
+    {
+      "sha": "6c64321",
+      "msg": "patch  version bump",
+      "date": "2025-10-01T20:25:33Z"
+    },
+    {
+      "sha": "3c4b8c8",
+      "msg": "patch  version bump",
+      "date": "2025-10-01T19:37:23Z"
+    },
+    {
+      "sha": "0d4e307",
+      "msg": "patch  version bump",
+      "date": "2025-10-01T19:18:33Z"
+    },
+    {
+      "sha": "825b395",
+      "msg": "patch  version bump",
+      "date": "2025-10-01T18:36:54Z"
+    },
+    {
+      "sha": "11c795d",
+      "msg": "patch  version bump",
+      "date": "2025-10-01T16:59:34Z"
+    },
+    {
+      "sha": "685c0f7",
+      "msg": "update",
+      "date": "2025-10-01T16:55:58Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

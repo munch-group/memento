@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_munch-group-project",
+  "type": "github",
+  "title": "munch-group-project",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/munch-group-project",
+  "date": "2026-03-13T18:16:23Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/munch-group-project",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "df6b08d",
+      "msg": "update",
+      "date": "2026-03-13T18:16:21Z"
+    },
+    {
+      "sha": "c065abb",
+      "msg": "Change publish path to root in quarto-publish.yml",
+      "date": "2026-03-03T12:56:16Z"
+    },
+    {
+      "sha": "1586a12",
+      "msg": "Change Quarto publish path from 'docs' to '.'",
+      "date": "2026-03-03T12:55:05Z"
+    },
+    {
+      "sha": "bc6c214",
+      "msg": "update",
+      "date": "2026-03-03T12:37:15Z"
+    },
+    {
+      "sha": "059f14f",
+      "msg": "Update authors and command settings in pixi.toml",
+      "date": "2026-02-04T11:14:23Z"
+    },
+    {
+      "sha": "16c7657",
+      "msg": "Added css for markdown previews",
+      "date": "2025-12-21T11:24:41Z"
+    },
+    {
+      "sha": "5800027",
+      "msg": "update",
+      "date": "2025-12-15T23:36:02Z"
+    },
+    {
+      "sha": "9d38c06",
+      "msg": "Clean up README by removing command and badge",
+      "date": "2025-12-15T07:56:59Z"
+    },
+    {
+      "sha": "37081bb",
+      "msg": "Update upstream repository URL in README",
+      "date": "2025-12-15T07:54:48Z"
+    },
+    {
+      "sha": "1f88371",
+      "msg": "Update README with new setup instructions and links",
+      "date": "2025-12-15T07:54:05Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

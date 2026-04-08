@@ -1,0 +1,1 @@
+X chromosome genes in the ECH90 regions identified as subject to selective sweeps in non-Africans approximately 45,000-55,000 years before present.

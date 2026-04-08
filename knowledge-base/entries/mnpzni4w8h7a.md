@@ -1,0 +1,1 @@
+Did Neanderthals recieve the 13 genes interacting with MT when they also got the MT?

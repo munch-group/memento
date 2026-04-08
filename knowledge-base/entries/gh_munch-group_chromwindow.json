@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_chromwindow",
+  "type": "github",
+  "title": "chromwindow",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/chromwindow",
+  "date": "2023-01-30T16:39:43Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/chromwindow",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "9d22f55",
+      "msg": "Updated conda.sh",
+      "date": "2023-01-30T16:39:34Z"
+    },
+    {
+      "sha": "d0b62eb",
+      "msg": "Added some code for genetic map bins",
+      "date": "2022-01-26T15:20:44Z"
+    },
+    {
+      "sha": "4ddb382",
+      "msg": "Update conda.sh",
+      "date": "2020-08-05T19:56:03Z"
+    },
+    {
+      "sha": "981d5cd",
+      "msg": "Bumped version",
+      "date": "2020-05-15T15:11:50Z"
+    },
+    {
+      "sha": "f9d79d1",
+      "msg": "Fixed bug in right_fill",
+      "date": "2020-05-15T15:07:58Z"
+    },
+    {
+      "sha": "cba7079",
+      "msg": "Added start kwd option to window. Fixed bug in right_fill.",
+      "date": "2020-05-12T13:38:05Z"
+    },
+    {
+      "sha": "847aa5f",
+      "msg": "Updated example notebook.",
+      "date": "2020-05-06T18:08:03Z"
+    },
+    {
+      "sha": "f45acb1",
+      "msg": "Added requirements.txt",
+      "date": "2020-04-30T20:39:19Z"
+    },
+    {
+      "sha": "69db972",
+      "msg": "Fixes for conda package",
+      "date": "2020-04-30T20:36:35Z"
+    },
+    {
+      "sha": "91e2341",
+      "msg": "Added pypi.sh and conda.sh",
+      "date": "2020-04-30T19:30:44Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

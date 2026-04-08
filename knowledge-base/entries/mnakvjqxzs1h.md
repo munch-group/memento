@@ -1,0 +1,3 @@
+Ask Mishmar about the potential for X regulation of mitochondrial expression Could the chr1 gene with only expression in spermatids be one that compensates x driven transport of mitochondria?
+- RHOT1 (AKA MIRO) is in the middle of the chr1 low-ILS region (along with several others)
+- RHOT1 has transcription factor binding sites in promoter for SRY (not expressed) and FOXO3 (peak in late round spermatids) and SRF (week but consistent peak in early round spermatids)

@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_argweaver",
+  "type": "github",
+  "title": "argweaver",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/argweaver",
+  "date": "2020-03-06T10:16:06Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/argweaver",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "7191343",
+      "msg": "fix link to documentation",
+      "date": "2019-06-29T05:07:16Z"
+    },
+    {
+      "sha": "df88375",
+      "msg": "documentation/help updates",
+      "date": "2019-06-29T04:55:20Z"
+    },
+    {
+      "sha": "6adb900",
+      "msg": "add --add-switch-errors option",
+      "date": "2019-06-28T15:03:31Z"
+    },
+    {
+      "sha": "1c47055",
+      "msg": "fixed bug in --branchlen-per-time",
+      "date": "2019-06-28T15:01:48Z"
+    },
+    {
+      "sha": "4638a0b",
+      "msg": "code cleanup, fix warnings",
+      "date": "2019-06-28T14:59:04Z"
+    },
+    {
+      "sha": "f048473",
+      "msg": "documentation update",
+      "date": "2019-06-28T13:05:23Z"
+    },
+    {
+      "sha": "81924b1",
+      "msg": "added cex.leafname argument to plotTrees",
+      "date": "2019-06-28T13:04:34Z"
+    },
+    {
+      "sha": "e3f7e78",
+      "msg": "minor R code updates",
+      "date": "2019-05-07T02:59:42Z"
+    },
+    {
+      "sha": "9df5b9f",
+      "msg": "add documentation for some R code",
+      "date": "2019-05-07T02:51:37Z"
+    },
+    {
+      "sha": "dbf9dd8",
+      "msg": "added writeSites function to R code",
+      "date": "2019-05-07T02:45:46Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_bdmi-simulations",
+  "type": "github",
+  "title": "bdmi-simulations",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/bdmi-simulations",
+  "date": "2026-04-04T13:25:33Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/bdmi-simulations",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "cab0803",
+      "msg": "Updated notebook",
+      "date": "2026-04-04T13:25:22Z"
+    },
+    {
+      "sha": "274d163",
+      "msg": "update",
+      "date": "2025-12-17T11:06:45Z"
+    },
+    {
+      "sha": "db8a890",
+      "msg": "update",
+      "date": "2025-12-16T22:40:15Z"
+    },
+    {
+      "sha": "79a2cbd",
+      "msg": "update",
+      "date": "2025-12-16T21:42:54Z"
+    },
+    {
+      "sha": "a90170d",
+      "msg": "update",
+      "date": "2025-12-16T21:42:42Z"
+    },
+    {
+      "sha": "9c349aa",
+      "msg": "added Ab and aB incomp and improved plotting",
+      "date": "2025-12-16T20:53:49Z"
+    },
+    {
+      "sha": "4662dac",
+      "msg": "Added pixi env",
+      "date": "2025-09-05T08:57:56Z"
+    },
+    {
+      "sha": "eab5c7e",
+      "msg": "Updates",
+      "date": "2024-10-08T10:26:49Z"
+    },
+    {
+      "sha": "041ca72",
+      "msg": "update",
+      "date": "2024-10-07T17:37:07Z"
+    },
+    {
+      "sha": "7e30044",
+      "msg": "Added slide support",
+      "date": "2024-10-07T06:32:18Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

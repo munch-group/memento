@@ -1,0 +1,31 @@
+{
+  "id": "mnkci1az643g",
+  "type": "fact",
+  "title": "MT-Auto coevolving genes",
+  "genes": [
+    "MRPS7",
+    "GRSF1",
+    "GRSF1",
+    "PNPT1",
+    "GRSF1",
+    "PNPT1",
+    "MRPS7",
+    "PTCD1",
+    "MRPS7",
+    "MRPS7",
+    "MRPS7",
+    "MRPS7",
+    "PNPT1"
+  ],
+  "tags": [
+    "MT",
+    "X"
+  ],
+  "source": "Cohen et al. / https://doi.org/10.1371/journal.pgen.1006407",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-04-05T08:41:49.366Z",
+  "synced": false,
+  "_sortTag": "MT"
+}

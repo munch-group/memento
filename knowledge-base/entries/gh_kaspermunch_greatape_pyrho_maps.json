@@ -1,0 +1,26 @@
+{
+  "id": "gh_kaspermunch_greatape_pyrho_maps",
+  "type": "github",
+  "title": "greatape_pyrho_maps",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/greatape_pyrho_maps",
+  "date": "2019-11-07T09:52:34Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/greatape_pyrho_maps",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "443bce8",
+      "msg": "Initial commit",
+      "date": "2019-11-07T09:52:33Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

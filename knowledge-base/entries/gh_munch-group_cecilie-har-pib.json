@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_cecilie-har-pib",
+  "type": "github",
+  "title": "cecilie-har-pib",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/cecilie-har-pib",
+  "date": "2026-01-14T13:36:52Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/cecilie-har-pib",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ac7a759",
+      "msg": "New analyses and data files added",
+      "date": "2026-01-14T13:36:05Z"
+    },
+    {
+      "sha": "c421bfa",
+      "msg": "Separated notebook into multiple notebooks",
+      "date": "2025-12-09T01:10:27Z"
+    },
+    {
+      "sha": "ebe2370",
+      "msg": "Added analyses and chrx gene file",
+      "date": "2025-11-26T11:17:22Z"
+    },
+    {
+      "sha": "495cf31",
+      "msg": "added analyses and files",
+      "date": "2025-11-15T14:05:39Z"
+    },
+    {
+      "sha": "81af55f",
+      "msg": "added analyses",
+      "date": "2025-10-29T16:21:17Z"
+    },
+    {
+      "sha": "4f16292",
+      "msg": "notebook analyses changes",
+      "date": "2025-10-27T21:58:25Z"
+    },
+    {
+      "sha": "4249538",
+      "msg": "Comment out pip install command in quarto-publish.yml",
+      "date": "2025-10-24T13:22:26Z"
+    },
+    {
+      "sha": "d88b42f",
+      "msg": "Added analyses",
+      "date": "2025-10-23T06:13:20Z"
+    },
+    {
+      "sha": "74b7bc0",
+      "msg": "Added more analyses to pib_notebook.ipynb",
+      "date": "2025-10-01T10:24:57Z"
+    },
+    {
+      "sha": "6b5c7a1",
+      "msg": "Deleted conda-release.yml",
+      "date": "2025-09-25T09:21:24Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

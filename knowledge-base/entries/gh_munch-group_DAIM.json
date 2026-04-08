@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_DAIM",
+  "type": "github",
+  "title": "DAIM",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/DAIM",
+  "date": "2023-05-16T06:30:46Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/DAIM",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "28939d9",
+      "msg": "workflow update",
+      "date": "2023-05-16T06:30:31Z"
+    },
+    {
+      "sha": "8187f09",
+      "msg": "Added workflow",
+      "date": "2023-03-23T21:23:33Z"
+    },
+    {
+      "sha": "b4c7379",
+      "msg": "Added gitignore",
+      "date": "2023-03-23T20:40:27Z"
+    },
+    {
+      "sha": "2855e05",
+      "msg": "Changed all command line args to options",
+      "date": "2023-03-21T06:45:15Z"
+    },
+    {
+      "sha": "09929a9",
+      "msg": "observed AF in the output",
+      "date": "2021-01-18T10:16:46Z"
+    },
+    {
+      "sha": "05ab10b",
+      "msg": "No selection period option",
+      "date": "2020-12-22T16:51:03Z"
+    },
+    {
+      "sha": "871179f",
+      "msg": "Bug fix",
+      "date": "2020-12-07T10:44:49Z"
+    },
+    {
+      "sha": "e35210d",
+      "msg": "Minor update",
+      "date": "2020-10-26T14:19:21Z"
+    },
+    {
+      "sha": "063a8ca",
+      "msg": "Added directory with files for simulation pipeline",
+      "date": "2020-08-20T10:59:15Z"
+    },
+    {
+      "sha": "6096a21",
+      "msg": "small fix to header",
+      "date": "2020-04-17T07:53:48Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

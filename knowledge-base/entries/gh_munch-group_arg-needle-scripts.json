@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_arg-needle-scripts",
+  "type": "github",
+  "title": "arg-needle-scripts",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/arg-needle-scripts",
+  "date": "2025-07-23T09:34:36Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/arg-needle-scripts",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "0b1683a",
+      "msg": "update",
+      "date": "2025-07-23T09:34:28Z"
+    },
+    {
+      "sha": "9fe3e11",
+      "msg": "add covariate adjustment script",
+      "date": "2023-08-17T10:21:35Z"
+    },
+    {
+      "sha": "2ad39e4",
+      "msg": "Initial commit",
+      "date": "2023-05-02T01:15:27Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "gh_kaspermunch_smcpp_workflow",
+  "type": "github",
+  "title": "smcpp_workflow",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/smcpp_workflow",
+  "date": "2021-07-09T08:48:49Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/smcpp_workflow",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "c6f4431",
+      "msg": "Cosmetic fixes",
+      "date": "2021-07-09T08:48:27Z"
+    },
+    {
+      "sha": "44e2c2b",
+      "msg": "Updated workflow",
+      "date": "2021-03-17T09:20:15Z"
+    },
+    {
+      "sha": "8d40884",
+      "msg": "Update README.md",
+      "date": "2021-03-17T08:39:00Z"
+    },
+    {
+      "sha": "7d9dcfa",
+      "msg": "Added workflow file",
+      "date": "2021-03-16T20:18:34Z"
+    },
+    {
+      "sha": "113bd24",
+      "msg": "Initial commit",
+      "date": "2021-03-16T19:48:51Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

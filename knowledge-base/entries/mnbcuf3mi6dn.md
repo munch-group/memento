@@ -1,0 +1,1 @@
+X chromosome genes in Ari's RELATE analysis on 1000 genomes populations except PUR

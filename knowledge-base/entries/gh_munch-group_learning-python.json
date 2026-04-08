@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_learning-python",
+  "type": "github",
+  "title": "learning-python",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/learning-python",
+  "date": "2024-09-24T17:26:44Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/learning-python",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "3487af6",
+      "msg": "Update suppl2024.qmd",
+      "date": "2024-09-24T17:25:59Z"
+    },
+    {
+      "sha": "7468c01",
+      "msg": "Update suppl2024.qmd",
+      "date": "2024-09-21T14:14:15Z"
+    },
+    {
+      "sha": "84368ce",
+      "msg": "update",
+      "date": "2024-09-16T10:12:34Z"
+    },
+    {
+      "sha": "b1d575c",
+      "msg": "update",
+      "date": "2024-09-16T10:07:08Z"
+    },
+    {
+      "sha": "a8e87f4",
+      "msg": "update",
+      "date": "2024-09-16T10:04:27Z"
+    },
+    {
+      "sha": "cb5bcde",
+      "msg": "Update your_own_types_of_objects.md",
+      "date": "2024-09-16T09:53:41Z"
+    },
+    {
+      "sha": "45ca229",
+      "msg": "Update _quarto.yml",
+      "date": "2024-09-16T09:50:14Z"
+    },
+    {
+      "sha": "3747ab6",
+      "msg": "Update using_code_from_other_files.md",
+      "date": "2024-09-16T09:48:26Z"
+    },
+    {
+      "sha": "9ae63b3",
+      "msg": "Update suppl2024.qmd",
+      "date": "2024-09-16T09:46:21Z"
+    },
+    {
+      "sha": "c9e4896",
+      "msg": "Update suppl2024.qmd",
+      "date": "2024-09-11T20:01:00Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

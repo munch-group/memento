@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_munch-group-library",
+  "type": "github",
+  "title": "munch-group-library",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/munch-group-library",
+  "date": "2026-03-23T11:16:57Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/munch-group-library",
+  "_ghStars": 0,
+  "_ghForks": 3,
+  "_ghLang": "Shell",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "32fcb7e",
+      "msg": "Update pyproject.toml",
+      "date": "2026-03-23T11:16:56Z"
+    },
+    {
+      "sha": "411d983",
+      "msg": "update",
+      "date": "2026-03-01T20:18:15Z"
+    },
+    {
+      "sha": "e3cf580",
+      "msg": "update",
+      "date": "2026-03-01T20:12:55Z"
+    },
+    {
+      "sha": "7878147",
+      "msg": "remove files",
+      "date": "2026-03-01T20:08:24Z"
+    },
+    {
+      "sha": "c5a6e6a",
+      "msg": "added quarto publish to init task",
+      "date": "2026-03-01T20:04:01Z"
+    },
+    {
+      "sha": "e76d6ae",
+      "msg": "updte",
+      "date": "2026-03-01T19:58:53Z"
+    },
+    {
+      "sha": "c8a812c",
+      "msg": "rename script fix",
+      "date": "2026-03-01T19:54:01Z"
+    },
+    {
+      "sha": "feb83e7",
+      "msg": "pyproject fix",
+      "date": "2026-03-01T19:46:57Z"
+    },
+    {
+      "sha": "681456e",
+      "msg": "update",
+      "date": "2026-02-20T09:11:52Z"
+    },
+    {
+      "sha": "5b58d5c",
+      "msg": "Fix subprocess import and update directory rename messages",
+      "date": "2026-02-04T12:10:28Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_humanXsweeps",
+  "type": "github",
+  "title": "humanXsweeps",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/humanXsweeps",
+  "date": "2023-03-18T08:05:56Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/humanXsweeps",
+  "_ghStars": 2,
+  "_ghForks": 1,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "3a2c4aa",
+      "msg": "Added any remaining results files written from notebooks except argweaver_sweep_tmrca_5e-05_25%.hdf",
+      "date": "2023-03-18T08:05:18Z"
+    },
+    {
+      "sha": "ce6c952",
+      "msg": "Added result files read by used notebooks except chalmel_genes.hdf pi_data_chr7.hdf pi_data_chrX.hdf",
+      "date": "2023-03-18T07:53:45Z"
+    },
+    {
+      "sha": "2c4dbda",
+      "msg": "Added result files",
+      "date": "2023-03-16T21:35:26Z"
+    },
+    {
+      "sha": "c7ab331",
+      "msg": "Updated gitignote",
+      "date": "2023-03-16T19:03:38Z"
+    },
+    {
+      "sha": "bb499a4",
+      "msg": "Added back notebooks to main",
+      "date": "2023-01-11T11:30:27Z"
+    },
+    {
+      "sha": "4377558",
+      "msg": "Update README.md",
+      "date": "2022-12-15T08:33:33Z"
+    },
+    {
+      "sha": "91cf645",
+      "msg": "More cleanup",
+      "date": "2022-12-14T18:56:01Z"
+    },
+    {
+      "sha": "27a8bc8",
+      "msg": "Deleted notes",
+      "date": "2022-12-14T17:25:09Z"
+    },
+    {
+      "sha": "218f42d",
+      "msg": "Added yml for jupyter environment",
+      "date": "2022-12-14T17:24:01Z"
+    },
+    {
+      "sha": "57ddba8",
+      "msg": "Cleanup of notebooks and removal of unused ones",
+      "date": "2022-12-14T17:21:44Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

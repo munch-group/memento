@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_tree-stats",
+  "type": "github",
+  "title": "tree-stats",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/tree-stats",
+  "date": "2025-04-14T17:55:39Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/tree-stats",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e39eebb",
+      "msg": "update",
+      "date": "2025-04-14T17:46:38Z"
+    },
+    {
+      "sha": "42c0bbd",
+      "msg": "update",
+      "date": "2025-02-26T11:01:38Z"
+    },
+    {
+      "sha": "dde1846",
+      "msg": "notebook updates",
+      "date": "2025-02-13T20:10:12Z"
+    },
+    {
+      "sha": "57f1cad",
+      "msg": "update",
+      "date": "2024-11-07T07:40:25Z"
+    },
+    {
+      "sha": "ed096c1",
+      "msg": "UPdated notebook",
+      "date": "2024-10-22T11:55:56Z"
+    },
+    {
+      "sha": "722c8ea",
+      "msg": "update",
+      "date": "2024-10-20T11:08:25Z"
+    },
+    {
+      "sha": "a2694ab",
+      "msg": "Updated notebooks",
+      "date": "2024-06-08T07:32:21Z"
+    },
+    {
+      "sha": "ef0efc9",
+      "msg": "Update",
+      "date": "2024-06-01T14:59:55Z"
+    },
+    {
+      "sha": "d65a4cb",
+      "msg": "Updated notebooks",
+      "date": "2024-06-01T14:57:50Z"
+    },
+    {
+      "sha": "9ca3c3a",
+      "msg": "Added notebook",
+      "date": "2024-04-11T14:50:11Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

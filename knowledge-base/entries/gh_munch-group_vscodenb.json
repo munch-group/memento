@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_vscodenb",
+  "type": "github",
+  "title": "vscodenb",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/vscodenb",
+  "date": "2026-04-07T11:28:54Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/vscodenb",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ab86c0e",
+      "msg": "patch  version bump",
+      "date": "2026-04-07T11:27:28Z"
+    },
+    {
+      "sha": "738ea22",
+      "msg": "patch  version bump",
+      "date": "2026-04-07T11:20:45Z"
+    },
+    {
+      "sha": "7864309",
+      "msg": "patch  version bump",
+      "date": "2026-04-07T11:20:40Z"
+    },
+    {
+      "sha": "18d0e07",
+      "msg": "Changed default light theme to my own munch-group light theme",
+      "date": "2026-04-07T11:19:51Z"
+    },
+    {
+      "sha": "f498ac1",
+      "msg": "update",
+      "date": "2026-03-22T18:29:51Z"
+    },
+    {
+      "sha": "477d598",
+      "msg": "update",
+      "date": "2026-03-22T18:27:09Z"
+    },
+    {
+      "sha": "70d2b7d",
+      "msg": "patch  version bump",
+      "date": "2026-03-22T18:19:02Z"
+    },
+    {
+      "sha": "ae17f08",
+      "msg": "patch  version bump",
+      "date": "2026-03-22T18:18:58Z"
+    },
+    {
+      "sha": "5e4b5e9",
+      "msg": "update",
+      "date": "2026-03-22T18:18:43Z"
+    },
+    {
+      "sha": "5fbd4b4",
+      "msg": "update",
+      "date": "2026-03-22T18:18:21Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

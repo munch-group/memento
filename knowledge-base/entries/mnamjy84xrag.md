@@ -1,0 +1,1 @@
+Make a time-homogeneous IM model and figure out what the estimated parameters correspond to in terms of migration rate through time

@@ -1,0 +1,1 @@
+QQ plot with “best p-values for each SNP” accross many sets of males males sampled randomly vs males with some max Y chrom genetic distance. (a bit like different BLUSUM matrices compared to random)

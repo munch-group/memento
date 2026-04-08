@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_franklin-container",
+  "type": "github",
+  "title": "franklin-container",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/franklin-container",
+  "date": "2025-10-02T11:24:21Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/franklin-container",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e2c38da",
+      "msg": "update",
+      "date": "2025-08-19T20:47:08Z"
+    },
+    {
+      "sha": "26b7d2b",
+      "msg": "update",
+      "date": "2025-08-19T20:46:42Z"
+    },
+    {
+      "sha": "b78c774",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:46:31Z"
+    },
+    {
+      "sha": "84ceeec",
+      "msg": "update",
+      "date": "2025-08-19T17:14:42Z"
+    },
+    {
+      "sha": "bd02517",
+      "msg": "update",
+      "date": "2025-08-06T15:16:05Z"
+    },
+    {
+      "sha": "ae71546",
+      "msg": "update",
+      "date": "2025-08-05T00:40:46Z"
+    },
+    {
+      "sha": "ef495d6",
+      "msg": "update",
+      "date": "2025-06-18T08:41:11Z"
+    },
+    {
+      "sha": "79555b3",
+      "msg": "update",
+      "date": "2025-06-18T07:05:17Z"
+    },
+    {
+      "sha": "b38c51c",
+      "msg": "update",
+      "date": "2025-06-15T14:11:09Z"
+    },
+    {
+      "sha": "84a56c1",
+      "msg": "update",
+      "date": "2025-06-15T10:34:16Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "replace pixi tasks with franklin commands",
+      "state": "open",
+      "date": "2025-10-02T11:24:21Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-container/issues/1"
+    }
+  ]
+}

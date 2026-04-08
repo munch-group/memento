@@ -1,0 +1,41 @@
+{
+  "id": "gh_kaspermunch_sweepstats",
+  "type": "github",
+  "title": "sweepstats",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/sweepstats",
+  "date": "2019-11-26T13:32:33Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/sweepstats",
+  "_ghStars": 1,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ccc3ebf",
+      "msg": "Added support for click",
+      "date": "2019-11-26T13:32:20Z"
+    },
+    {
+      "sha": "5719130",
+      "msg": "Added hapday.py",
+      "date": "2019-04-26T12:58:46Z"
+    },
+    {
+      "sha": "3d0cf4f",
+      "msg": "Create README.md",
+      "date": "2019-04-26T06:53:50Z"
+    },
+    {
+      "sha": "103a0c0",
+      "msg": "Initial commit",
+      "date": "2019-04-26T06:53:27Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

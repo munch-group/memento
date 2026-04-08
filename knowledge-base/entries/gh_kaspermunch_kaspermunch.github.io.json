@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_kaspermunch.github.io",
+  "type": "github",
+  "title": "kaspermunch.github.io",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/kaspermunch.github.io",
+  "date": "2023-12-25T19:10:22Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/kaspermunch.github.io",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "SCSS",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "373d9c8",
+      "msg": "Create README.md",
+      "date": "2023-12-25T19:10:22Z"
+    },
+    {
+      "sha": "2a6cbae",
+      "msg": "typo",
+      "date": "2023-11-16T09:52:27Z"
+    },
+    {
+      "sha": "3463c20",
+      "msg": "updated people",
+      "date": "2023-11-16T09:48:54Z"
+    },
+    {
+      "sha": "28c6098",
+      "msg": "Updated people and research pages",
+      "date": "2023-11-16T09:39:45Z"
+    },
+    {
+      "sha": "43cd20a",
+      "msg": "Update index.md",
+      "date": "2023-11-04T14:54:18Z"
+    },
+    {
+      "sha": "82db402",
+      "msg": "Update index.md",
+      "date": "2023-11-04T14:51:51Z"
+    },
+    {
+      "sha": "25ef262",
+      "msg": "Update index.md",
+      "date": "2023-11-04T14:46:05Z"
+    },
+    {
+      "sha": "d9ea1c1",
+      "msg": "Update index.md",
+      "date": "2023-09-08T10:19:40Z"
+    },
+    {
+      "sha": "70c9396",
+      "msg": "Update index.md",
+      "date": "2023-09-08T10:16:23Z"
+    },
+    {
+      "sha": "dd667d8",
+      "msg": "Update index.md",
+      "date": "2023-09-08T10:15:46Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

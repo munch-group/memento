@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_pymc",
+  "type": "github",
+  "title": "pymc",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/pymc",
+  "date": "2025-09-06T13:16:41Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/pymc",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "3bd62f8",
+      "msg": "update",
+      "date": "2025-09-06T13:16:36Z"
+    },
+    {
+      "sha": "2cc9edb",
+      "msg": "updated notebooks",
+      "date": "2025-04-14T18:22:45Z"
+    },
+    {
+      "sha": "7f88b3a",
+      "msg": "Added two tutorial notebooks",
+      "date": "2025-01-28T13:11:17Z"
+    },
+    {
+      "sha": "6d46cdb",
+      "msg": "Added time series notebook",
+      "date": "2025-01-25T22:53:03Z"
+    },
+    {
+      "sha": "ba1a6e2",
+      "msg": "Added notebooks",
+      "date": "2024-05-02T14:06:52Z"
+    },
+    {
+      "sha": "c43e00b",
+      "msg": "notebook update and reorganizing",
+      "date": "2024-03-02T11:04:32Z"
+    },
+    {
+      "sha": "7352d96",
+      "msg": "update",
+      "date": "2024-02-29T21:45:56Z"
+    },
+    {
+      "sha": "afb93e5",
+      "msg": "notebook update",
+      "date": "2024-02-29T21:04:27Z"
+    },
+    {
+      "sha": "7e3181e",
+      "msg": "model update",
+      "date": "2024-02-29T14:44:09Z"
+    },
+    {
+      "sha": "4fdc60a",
+      "msg": "updated notebook",
+      "date": "2024-02-27T07:46:59Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

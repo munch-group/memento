@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_argweaver-clues",
+  "type": "github",
+  "title": "argweaver-clues",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/argweaver-clues",
+  "date": "2023-03-28T10:45:59Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/argweaver-clues",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "1dc8991",
+      "msg": "Updates to scripts and workflows",
+      "date": "2023-03-28T10:45:38Z"
+    },
+    {
+      "sha": "b971395",
+      "msg": "Updates regarding filenames",
+      "date": "2020-11-25T09:44:19Z"
+    },
+    {
+      "sha": "8292c79",
+      "msg": "Updates",
+      "date": "2020-08-12T10:25:57Z"
+    },
+    {
+      "sha": "707cbf6",
+      "msg": "More fixes to workflow",
+      "date": "2020-07-06T14:45:11Z"
+    },
+    {
+      "sha": "f77ab2c",
+      "msg": "Added smc2bed-all from ARGweaver package",
+      "date": "2020-07-06T13:10:39Z"
+    },
+    {
+      "sha": "2063aa1",
+      "msg": "Updated README and cleaned up workflows a bit",
+      "date": "2020-07-06T11:48:29Z"
+    },
+    {
+      "sha": "c6bf96d",
+      "msg": "Updated README",
+      "date": "2020-07-06T11:33:44Z"
+    },
+    {
+      "sha": "9d71dfb",
+      "msg": "Renamed a workflow file",
+      "date": "2020-07-06T11:25:49Z"
+    },
+    {
+      "sha": "fc3fd9a",
+      "msg": "Merge branch 'master' of github.com:kaspermunch/argweaver-clues",
+      "date": "2020-07-06T11:21:04Z"
+    },
+    {
+      "sha": "179efe6",
+      "msg": "Updated workflow and scripts",
+      "date": "2020-07-06T11:17:26Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

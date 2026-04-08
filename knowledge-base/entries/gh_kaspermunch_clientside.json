@@ -1,0 +1,31 @@
+{
+  "id": "gh_kaspermunch_clientside",
+  "type": "github",
+  "title": "clientside",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/clientside",
+  "date": "2023-10-08T15:17:39Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/clientside",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "f7f3b9f",
+      "msg": "added files",
+      "date": "2023-10-08T15:17:30Z"
+    },
+    {
+      "sha": "dad24ca",
+      "msg": "Initial commit",
+      "date": "2023-10-08T11:54:41Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_horizonplot",
+  "type": "github",
+  "title": "horizonplot",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/horizonplot",
+  "date": "2025-11-08T13:50:04Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/horizonplot",
+  "_ghStars": 1,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "c08fef9",
+      "msg": "bug fix",
+      "date": "2023-11-11T17:27:00Z"
+    },
+    {
+      "sha": "9f87ce1",
+      "msg": "Added python distributions to conda build",
+      "date": "2023-04-09T12:59:26Z"
+    },
+    {
+      "sha": "97d0f46",
+      "msg": "Changed arguments, colors and added quantile_span:",
+      "date": "2023-04-09T12:55:55Z"
+    },
+    {
+      "sha": "63ce77c",
+      "msg": "Changed colors",
+      "date": "2021-05-31T09:59:40Z"
+    },
+    {
+      "sha": "8f7efc2",
+      "msg": "Bug fix",
+      "date": "2020-12-04T10:48:35Z"
+    },
+    {
+      "sha": "5216646",
+      "msg": "Fixed groupby bug due to new sorting default",
+      "date": "2020-12-04T10:39:15Z"
+    },
+    {
+      "sha": "cea2e4a",
+      "msg": "Bumped version",
+      "date": "2020-12-03T13:09:15Z"
+    },
+    {
+      "sha": "c248f34",
+      "msg": "Added colours as keyword argument",
+      "date": "2020-12-03T13:08:29Z"
+    },
+    {
+      "sha": "19e6387",
+      "msg": "Update conda.sh",
+      "date": "2020-08-05T19:55:35Z"
+    },
+    {
+      "sha": "df29d5d",
+      "msg": "Bumped version",
+      "date": "2020-05-27T17:45:52Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

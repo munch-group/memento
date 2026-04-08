@@ -1,0 +1,36 @@
+{
+  "id": "gh_kaspermunch_relate",
+  "type": "github",
+  "title": "relate",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/relate",
+  "date": "2025-02-13T22:40:06Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/relate",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "80444f6",
+      "msg": "Added old files",
+      "date": "2025-02-13T22:39:57Z"
+    },
+    {
+      "sha": "4441f23",
+      "msg": "Added Eriks draft workflow",
+      "date": "2023-10-11T15:49:07Z"
+    },
+    {
+      "sha": "796a8ce",
+      "msg": "Initial commit",
+      "date": "2023-10-11T15:48:05Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

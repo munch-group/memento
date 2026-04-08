@@ -1,0 +1,1 @@
+> Among the top up regulated proteins identified in our dataset (Fig. 7A), thirty-five proteins belong to neurodevelopmental pathways, including proteins involved in neuronal migration (PLXND1, FAT3, ASTN2, NEUROD1), neurogenesis (NEUROD1, RBBP5, RBBP6) and synaptic function (CLCN3, SORCS3, AP3B1).

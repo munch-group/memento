@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_baboons",
+  "type": "github",
+  "title": "baboons",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/baboons",
+  "date": "2025-04-15T05:32:52Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/baboons",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "10e63be",
+      "msg": "data files",
+      "date": "2025-04-15T05:32:41Z"
+    },
+    {
+      "sha": "4cb4304",
+      "msg": "Added notebook updates",
+      "date": "2025-04-14T12:46:36Z"
+    },
+    {
+      "sha": "7e6c83e",
+      "msg": "Added AB and TAD lines from Aurora",
+      "date": "2024-07-29T07:00:41Z"
+    },
+    {
+      "sha": "ef0af24",
+      "msg": "Added files",
+      "date": "2024-06-06T04:45:02Z"
+    },
+    {
+      "sha": "738256b",
+      "msg": "relate submodule update",
+      "date": "2024-05-30T05:16:46Z"
+    },
+    {
+      "sha": "2df66e0",
+      "msg": "Added rfmix repo as submodule",
+      "date": "2024-05-30T04:58:00Z"
+    },
+    {
+      "sha": "fa9b3c3",
+      "msg": "Updated readme",
+      "date": "2024-05-30T04:48:40Z"
+    },
+    {
+      "sha": "4859725",
+      "msg": "Added scripts",
+      "date": "2024-05-29T23:04:47Z"
+    },
+    {
+      "sha": "047f258",
+      "msg": "Added workflow files",
+      "date": "2024-05-29T23:04:03Z"
+    },
+    {
+      "sha": "cf4cfff",
+      "msg": "Initial commit",
+      "date": "2024-05-29T23:03:16Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

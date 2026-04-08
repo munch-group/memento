@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_DrosophilaLinkedSelectionMaps",
+  "type": "github",
+  "title": "DrosophilaLinkedSelectionMaps",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/DrosophilaLinkedSelectionMaps",
+  "date": "2016-10-24T16:48:31Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/DrosophilaLinkedSelectionMaps",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "bc58a43",
+      "msg": "Update README.md",
+      "date": "2016-10-24T16:48:31Z"
+    },
+    {
+      "sha": "30320a2",
+      "msg": "Update README.md",
+      "date": "2016-10-24T16:47:06Z"
+    },
+    {
+      "sha": "c33eba9",
+      "msg": "-- Fixed some minor formatting and supressed a earlier debug print out",
+      "date": "2016-09-21T17:28:42Z"
+    },
+    {
+      "sha": "4ba78ad",
+      "msg": "fixed the way selection coefficients are set at the beginning so that BS and CS each have their own single vector instead of an array. using an array led to hidden problems downstream...",
+      "date": "2016-09-15T23:10:01Z"
+    },
+    {
+      "sha": "2d409c1",
+      "msg": "Turned off the genmap (gmask) filter on neutral positions, which was causing a mismatch between poly site indices and poly sites since only the positions were being masked...",
+      "date": "2016-09-15T18:07:54Z"
+    },
+    {
+      "sha": "259e3fc",
+      "msg": "-- several small format changes",
+      "date": "2016-09-14T15:10:40Z"
+    },
+    {
+      "sha": "f688d05",
+      "msg": "Changed config file to run with CS as well",
+      "date": "2016-09-14T15:01:12Z"
+    },
+    {
+      "sha": "4ca38fe",
+      "msg": "included is a slightly modified McVicker calc_bkgd source code in the directory \"bkgd\"",
+      "date": "2016-08-03T17:44:14Z"
+    },
+    {
+      "sha": "9663ac0",
+      "msg": "updated the README.md file",
+      "date": "2016-08-03T17:06:46Z"
+    },
+    {
+      "sha": "11bd34a",
+      "msg": "added run scripts to \"run\"",
+      "date": "2016-08-03T16:59:23Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

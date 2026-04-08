@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_genominterv",
+  "type": "github",
+  "title": "genominterv",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/genominterv",
+  "date": "2022-02-21T21:23:42Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/genominterv",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e863c37",
+      "msg": "Fixed bug in proximity_test",
+      "date": "2022-02-21T21:23:16Z"
+    },
+    {
+      "sha": "2b73cc7",
+      "msg": "git added an invert function",
+      "date": "2020-12-30T15:17:08Z"
+    },
+    {
+      "sha": "af7bad4",
+      "msg": "Update conda.sh",
+      "date": "2020-08-05T19:54:43Z"
+    },
+    {
+      "sha": "45f67c1",
+      "msg": "Bumped version.",
+      "date": "2020-05-06T20:36:33Z"
+    },
+    {
+      "sha": "b37cdb2",
+      "msg": "Update requirements.txt",
+      "date": "2020-05-06T20:34:34Z"
+    },
+    {
+      "sha": "f1f43b6",
+      "msg": "Set up for conda package.",
+      "date": "2020-04-30T21:16:19Z"
+    },
+    {
+      "sha": "2ab825f",
+      "msg": "Typo",
+      "date": "2020-04-24T15:55:16Z"
+    },
+    {
+      "sha": "d269da9",
+      "msg": "Some bug fixing. Added an example notebook.",
+      "date": "2020-04-24T15:51:01Z"
+    },
+    {
+      "sha": "1a43e1f",
+      "msg": "Fixed bug in reporting of proximal coordinates.",
+      "date": "2020-04-24T08:57:13Z"
+    },
+    {
+      "sha": "498908b",
+      "msg": "Rolled back mistake",
+      "date": "2019-12-19T08:30:42Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

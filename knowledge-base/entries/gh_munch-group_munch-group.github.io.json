@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_munch-group.github.io",
+  "type": "github",
+  "title": "munch-group.github.io",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/munch-group.github.io",
+  "date": "2025-11-30T22:53:16Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/munch-group.github.io",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "CSS",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e360bc7",
+      "msg": "Rename _index.html to index.html",
+      "date": "2025-11-30T22:53:15Z"
+    },
+    {
+      "sha": "13c59a4",
+      "msg": "Rename index.md to _index.md",
+      "date": "2025-11-30T22:52:50Z"
+    },
+    {
+      "sha": "1f950ec",
+      "msg": "Update redirect URL in _index.html",
+      "date": "2025-11-30T22:51:56Z"
+    },
+    {
+      "sha": "6682a5e",
+      "msg": "Delete CNAME",
+      "date": "2025-11-20T15:35:07Z"
+    },
+    {
+      "sha": "f02a1d0",
+      "msg": "Renamed index files back",
+      "date": "2025-11-20T15:29:28Z"
+    },
+    {
+      "sha": "3a37b43",
+      "msg": "Added redirect index.html",
+      "date": "2025-11-20T12:58:15Z"
+    },
+    {
+      "sha": "e56e3e8",
+      "msg": "Clean up head.html by removing unused elements",
+      "date": "2025-11-20T12:54:22Z"
+    },
+    {
+      "sha": "9cbc910",
+      "msg": "Add meta refresh tag to head.html",
+      "date": "2025-11-20T12:53:47Z"
+    },
+    {
+      "sha": "9968bb7",
+      "msg": "Comment out meta refresh tag in head.html",
+      "date": "2025-11-09T14:38:56Z"
+    },
+    {
+      "sha": "19df530",
+      "msg": "Add meta refresh for Notion site redirect",
+      "date": "2025-11-09T13:57:36Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Change color theme to something less \"pastel\"",
+      "state": "open",
+      "date": "2024-08-09T07:29:38Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/munch-group.github.io/issues/1"
+    }
+  ]
+}

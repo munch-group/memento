@@ -1,0 +1,26 @@
+{
+  "id": "gh_munch-group_baboons_v3_calling",
+  "type": "github",
+  "title": "baboons_v3_calling",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/baboons_v3_calling",
+  "date": "2026-03-10T14:35:14Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/baboons_v3_calling",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "9efbf0b",
+      "msg": "Initial commit",
+      "date": "2026-03-10T14:35:14Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

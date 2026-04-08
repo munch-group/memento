@@ -1,0 +1,80 @@
+{
+  "id": "gh_kaspermunch_jupyter-references",
+  "type": "github",
+  "title": "jupyter-references",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/jupyter-references",
+  "date": "2024-10-03T16:44:19Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/jupyter-references",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "TeX",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "97efdd3",
+      "msg": "Draft new code",
+      "date": "2024-06-11T14:16:13Z"
+    },
+    {
+      "sha": "8825f44",
+      "msg": "Renamed file back",
+      "date": "2024-06-11T11:54:55Z"
+    },
+    {
+      "sha": "1ab0ff1",
+      "msg": "Added files",
+      "date": "2024-06-10T11:03:38Z"
+    },
+    {
+      "sha": "ed1c84d",
+      "msg": "Adde example notebook",
+      "date": "2024-06-01T07:31:05Z"
+    },
+    {
+      "sha": "7971366",
+      "msg": "Changed to reading ref info from bibtex.bib file",
+      "date": "2023-05-07T07:16:18Z"
+    },
+    {
+      "sha": "5bdb26a",
+      "msg": "updated gitignore",
+      "date": "2023-05-06T09:14:20Z"
+    },
+    {
+      "sha": "542f276",
+      "msg": "fixed bug and added callback for ref format",
+      "date": "2023-05-06T09:11:46Z"
+    },
+    {
+      "sha": "37eb8ea",
+      "msg": "bug fix",
+      "date": "2023-05-05T18:44:31Z"
+    },
+    {
+      "sha": "54f5913",
+      "msg": "devel",
+      "date": "2023-05-05T18:23:22Z"
+    },
+    {
+      "sha": "26ecea9",
+      "msg": "Populated repo",
+      "date": "2023-05-05T17:10:28Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Read and parse json from readcube",
+      "state": "open",
+      "date": "2024-10-03T16:44:19Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/jupyter-references/issues/1"
+    }
+  ]
+}

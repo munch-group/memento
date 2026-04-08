@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_slurm-code",
+  "type": "github",
+  "title": "slurm-code",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/slurm-code",
+  "date": "2026-03-22T18:23:24Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/slurm-code",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "cd72075",
+      "msg": "update",
+      "date": "2026-03-22T18:21:23Z"
+    },
+    {
+      "sha": "a9ccc4d",
+      "msg": "patch  version bump",
+      "date": "2026-03-22T18:09:48Z"
+    },
+    {
+      "sha": "68cf5b9",
+      "msg": "patch  version bump",
+      "date": "2026-03-22T18:09:41Z"
+    },
+    {
+      "sha": "0c35b88",
+      "msg": "patch  version bump",
+      "date": "2026-03-22T17:12:29Z"
+    },
+    {
+      "sha": "6d93e8a",
+      "msg": "patch  version bump",
+      "date": "2026-03-22T17:12:24Z"
+    },
+    {
+      "sha": "6080adb",
+      "msg": "Now writing slurm env vars with a VS_prefix to not interfere with srun and sbatch and so on",
+      "date": "2026-03-22T17:11:52Z"
+    },
+    {
+      "sha": "a49f600",
+      "msg": "patch  version bump",
+      "date": "2026-03-18T13:32:20Z"
+    },
+    {
+      "sha": "ce9665b",
+      "msg": "patch  version bump",
+      "date": "2026-03-18T13:32:00Z"
+    },
+    {
+      "sha": "02012ce",
+      "msg": "slurm job names now unique",
+      "date": "2026-03-18T13:31:35Z"
+    },
+    {
+      "sha": "1946e46",
+      "msg": "patch  version bump",
+      "date": "2026-03-10T10:42:51Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

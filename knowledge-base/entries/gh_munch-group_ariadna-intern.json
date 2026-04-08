@@ -1,0 +1,152 @@
+{
+  "id": "gh_munch-group_ariadna-intern",
+  "type": "github",
+  "title": "ariadna-intern",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/ariadna-intern",
+  "date": "2024-10-16T12:27:55Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/ariadna-intern",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e1319d6",
+      "msg": "update",
+      "date": "2024-10-16T12:26:09Z"
+    },
+    {
+      "sha": "4db4cf5",
+      "msg": "update",
+      "date": "2024-10-16T12:21:08Z"
+    },
+    {
+      "sha": "775cd32",
+      "msg": "update",
+      "date": "2024-10-16T12:18:08Z"
+    },
+    {
+      "sha": "e50680e",
+      "msg": "update",
+      "date": "2024-10-16T12:14:22Z"
+    },
+    {
+      "sha": "28e3982",
+      "msg": "update",
+      "date": "2024-10-16T12:02:04Z"
+    },
+    {
+      "sha": "d9c79e8",
+      "msg": "update",
+      "date": "2024-10-16T11:10:52Z"
+    },
+    {
+      "sha": "4287b8a",
+      "msg": "update",
+      "date": "2024-10-16T11:01:09Z"
+    },
+    {
+      "sha": "d9e014e",
+      "msg": "update",
+      "date": "2024-10-16T10:59:28Z"
+    },
+    {
+      "sha": "f13ec78",
+      "msg": "update",
+      "date": "2024-10-16T10:44:28Z"
+    },
+    {
+      "sha": "7a2ba01",
+      "msg": "update",
+      "date": "2024-10-16T10:40:36Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 14,
+      "title": "Fisher method",
+      "state": "closed",
+      "date": "2024-06-05T13:56:46Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/14"
+    },
+    {
+      "number": 13,
+      "title": "Repeating process for whole chr X",
+      "state": "closed",
+      "date": "2024-06-05T13:56:46Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/13"
+    },
+    {
+      "number": 12,
+      "title": "Relate & Geneinfo on europeans & asians",
+      "state": "closed",
+      "date": "2024-06-05T13:56:46Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/12"
+    },
+    {
+      "number": 11,
+      "title": "Geneinfo",
+      "state": "closed",
+      "date": "2024-06-05T13:56:45Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/11"
+    },
+    {
+      "number": 10,
+      "title": "Holidays",
+      "state": "closed",
+      "date": "2024-06-05T13:56:45Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/10"
+    },
+    {
+      "number": 9,
+      "title": "Plot selection results",
+      "state": "closed",
+      "date": "2024-06-05T13:56:45Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/9"
+    },
+    {
+      "number": 7,
+      "title": "Report writing",
+      "state": "closed",
+      "date": "2024-06-05T13:56:44Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/7"
+    },
+    {
+      "number": 6,
+      "title": "Relate workflow",
+      "state": "closed",
+      "date": "2024-06-05T13:56:44Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/6"
+    },
+    {
+      "number": 5,
+      "title": "Introduction to Relate",
+      "state": "closed",
+      "date": "2024-06-05T13:56:44Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/5"
+    },
+    {
+      "number": 4,
+      "title": "Gwf and Jupyter",
+      "state": "closed",
+      "date": "2024-06-05T13:56:43Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/ariadna-intern/issues/4"
+    }
+  ]
+}

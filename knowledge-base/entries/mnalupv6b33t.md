@@ -1,0 +1,1 @@
+ECH’s could be explained as haplotypes incompatible invading because a driver at one is strong enough to offset the negative selection. Once the autosomal or Y antagonizers catch up, the sweep stops, and the incompatible haplotypes are allowed to persist they are in similar frequencies. Try out the scenario in the BDMI simulations.

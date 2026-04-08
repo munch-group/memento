@@ -1,0 +1,19 @@
+{
+  "id": "mn8w3ttf10m9",
+  "type": "fact",
+  "title": "",
+  "tags": [
+    "LoF"
+  ],
+  "source": "Mao et al. / https://www.nature.com/articles/s41586-021-03519-x?fromPaywallRec=false",
+  "date": "2026-04-04T08:19:30.151Z",
+  "synced": false,
+  "genes": [
+    "CASK",
+    "DMD"
+  ],
+  "_sortTag": "LoF",
+  "connection": false,
+  "archived": false,
+  "due": ""
+}

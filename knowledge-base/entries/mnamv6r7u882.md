@@ -1,0 +1,1 @@
+Look at Rasmus paper on length of admixed segments and DAIM for inspiration

@@ -1,0 +1,1 @@
+Extremely fast and scalable algorithms for phase-type distributions (including discrete, multivariate, rewarded, and time-inhomogeneous). Interface to both C and R

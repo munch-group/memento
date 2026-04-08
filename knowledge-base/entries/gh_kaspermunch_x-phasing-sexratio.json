@@ -1,0 +1,41 @@
+{
+  "id": "gh_kaspermunch_x-phasing-sexratio",
+  "type": "github",
+  "title": "x-phasing-sexratio",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/x-phasing-sexratio",
+  "date": "2025-04-14T18:21:09Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/x-phasing-sexratio",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e0f4fe3",
+      "msg": "update",
+      "date": "2025-04-14T18:21:02Z"
+    },
+    {
+      "sha": "50b4d79",
+      "msg": "Added notebook and a script",
+      "date": "2024-07-13T12:33:31Z"
+    },
+    {
+      "sha": "f20c146",
+      "msg": "Delete package_name directory",
+      "date": "2023-07-01T11:21:16Z"
+    },
+    {
+      "sha": "59bb29a",
+      "msg": "Initial commit",
+      "date": "2023-07-01T11:20:02Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

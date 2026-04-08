@@ -1,0 +1,1 @@
+Widgets for interactive plotting in Jupyter notebooks

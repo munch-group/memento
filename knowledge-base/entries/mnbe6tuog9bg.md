@@ -1,0 +1,1 @@
+MAGMA genes from SOM Table 10 in "The X chromosome’s influences on the human brain"

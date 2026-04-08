@@ -1,0 +1,1 @@
+Template for manuscript or report merging projects

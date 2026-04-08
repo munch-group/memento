@@ -1,0 +1,120 @@
+{
+  "id": "gh_kaspermunch_bioinf-prog-course",
+  "type": "github",
+  "title": "bioinf-prog-course",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/bioinf-prog-course",
+  "date": "2024-08-29T09:15:10Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/bioinf-prog-course",
+  "_ghStars": 0,
+  "_ghForks": 2,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 7,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "87a6dab",
+      "msg": "Suggestion for introduction to list comprehensions (building_lists_on_the_fly.md) including three exercises.",
+      "date": "2024-08-23T13:07:46Z"
+    },
+    {
+      "sha": "bf62bae",
+      "msg": "update",
+      "date": "2024-08-29T09:13:48Z"
+    },
+    {
+      "sha": "fc6eb53",
+      "msg": "Update",
+      "date": "2024-08-29T09:13:10Z"
+    },
+    {
+      "sha": "b508e6d",
+      "msg": "update",
+      "date": "2024-08-29T09:10:20Z"
+    },
+    {
+      "sha": "f020e4f",
+      "msg": "Merge pull request #4 from rasmusfreund/bioinf-prog-edit",
+      "date": "2024-08-23T10:48:27Z"
+    },
+    {
+      "sha": "eef7d64",
+      "msg": "Fixed typos and duplications",
+      "date": "2024-08-23T09:39:45Z"
+    },
+    {
+      "sha": "2fa8c6e",
+      "msg": "renamed lecture_notes to notes",
+      "date": "2023-10-06T07:53:38Z"
+    },
+    {
+      "sha": "2dd16cc",
+      "msg": "Added markdown with proejct file links for pasting into Brightspace page",
+      "date": "2023-10-06T07:36:23Z"
+    },
+    {
+      "sha": "6ef7886",
+      "msg": "Fixed deprecation warning in projects",
+      "date": "2023-10-06T06:44:12Z"
+    },
+    {
+      "sha": "47871bc",
+      "msg": "Added gwas draft",
+      "date": "2023-10-04T12:17:44Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 8,
+      "title": "11.7",
+      "state": "open",
+      "date": "2024-09-07T07:09:58Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/bioinf-prog-course/issues/8"
+    },
+    {
+      "number": 7,
+      "title": "modstrid 8.7 og 8.8",
+      "state": "open",
+      "date": "2024-09-01T07:30:23Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/bioinf-prog-course/issues/7"
+    },
+    {
+      "number": 6,
+      "title": "stavefejl og forslag",
+      "state": "open",
+      "date": "2024-08-26T15:34:03Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/bioinf-prog-course/issues/6"
+    },
+    {
+      "number": 3,
+      "title": "Assemblyproject get_overlap testfile",
+      "state": "open",
+      "date": "2021-09-22T16:53:46Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/bioinf-prog-course/issues/3"
+    },
+    {
+      "number": 2,
+      "title": "Exercise 8-3",
+      "state": "open",
+      "date": "2021-09-03T12:34:28Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/bioinf-prog-course/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "Exercise 5-7",
+      "state": "open",
+      "date": "2021-09-03T09:30:38Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/bioinf-prog-course/issues/1"
+    }
+  ]
+}

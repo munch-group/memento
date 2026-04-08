@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_PyPathway",
+  "type": "github",
+  "title": "PyPathway",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/PyPathway",
+  "date": "2021-02-10T10:32:06Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/PyPathway",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "JavaScript",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "b1ac9bd",
+      "msg": "Changed name of attribute .node to .nodes",
+      "date": "2021-02-10T10:31:47Z"
+    },
+    {
+      "sha": "6cbb859",
+      "msg": "no message",
+      "date": "2018-01-11T02:56:35Z"
+    },
+    {
+      "sha": "ebc4d8e",
+      "msg": "fix docs",
+      "date": "2018-01-11T02:54:35Z"
+    },
+    {
+      "sha": "66ff44f",
+      "msg": "Add notebook tests",
+      "date": "2018-01-09T03:03:21Z"
+    },
+    {
+      "sha": "aa447d9",
+      "msg": "Remove spit test from travis-ci",
+      "date": "2018-01-02T10:14:53Z"
+    },
+    {
+      "sha": "a3f57ed",
+      "msg": "gsea",
+      "date": "2018-01-02T10:04:50Z"
+    },
+    {
+      "sha": "6534139",
+      "msg": "rm readme from testing",
+      "date": "2018-01-02T09:43:02Z"
+    },
+    {
+      "sha": "67db888",
+      "msg": "Remove test spia for travis-ci",
+      "date": "2018-01-02T09:16:32Z"
+    },
+    {
+      "sha": "5462853",
+      "msg": "Update tests for Travis-ci",
+      "date": "2018-01-02T02:20:10Z"
+    },
+    {
+      "sha": "08cb520",
+      "msg": "Update readme.md",
+      "date": "2018-01-02T02:08:58Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

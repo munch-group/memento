@@ -1,0 +1,98 @@
+{
+  "id": "gh_munch-group_franklin-educator",
+  "type": "github",
+  "title": "franklin-educator",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/franklin-educator",
+  "date": "2025-09-21T08:38:34Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/franklin-educator",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 3,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "8a7b24b",
+      "msg": "update",
+      "date": "2025-09-21T08:38:32Z"
+    },
+    {
+      "sha": "b4f70a6",
+      "msg": "patch  version bump",
+      "date": "2025-08-21T17:08:18Z"
+    },
+    {
+      "sha": "36ffbd9",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:40:22Z"
+    },
+    {
+      "sha": "10b8713",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:35:28Z"
+    },
+    {
+      "sha": "7527598",
+      "msg": "update",
+      "date": "2025-08-19T20:24:56Z"
+    },
+    {
+      "sha": "96db44b",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:24:28Z"
+    },
+    {
+      "sha": "e4968f3",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:23:56Z"
+    },
+    {
+      "sha": "354775e",
+      "msg": "update",
+      "date": "2025-08-19T17:13:01Z"
+    },
+    {
+      "sha": "5533d4e",
+      "msg": "update",
+      "date": "2025-08-07T09:37:44Z"
+    },
+    {
+      "sha": "8fdf30d",
+      "msg": "update",
+      "date": "2025-08-06T15:15:22Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 3,
+      "title": "Make sure the right jupyter kernel name is in the docs (is it prod or franklin?).",
+      "state": "open",
+      "date": "2025-06-17T07:47:29Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-educator/issues/3"
+    },
+    {
+      "number": 2,
+      "title": "Allow educators to download their token to a .franklin local dir so they can change password",
+      "state": "open",
+      "date": "2025-06-16T06:38:45Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-educator/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "Check that the user actually made the new repo public and prompt otherwise",
+      "state": "open",
+      "date": "2025-06-12T08:16:13Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-educator/issues/1"
+    }
+  ]
+}

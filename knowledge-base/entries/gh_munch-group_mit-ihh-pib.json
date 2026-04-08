@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_mit-ihh-pib",
+  "type": "github",
+  "title": "mit-ihh-pib",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/mit-ihh-pib",
+  "date": "2026-01-28T17:07:25Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/mit-ihh-pib",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "d0fe49e",
+      "msg": "Step 4: Hierarchical overlap analysis: within and across superpopulations",
+      "date": "2026-01-28T17:07:20Z"
+    },
+    {
+      "sha": "bc6b993",
+      "msg": "script to visualize the iHS analysis pipeline needed for figure 3 in section 3.4.2 of the report",
+      "date": "2026-01-28T16:21:35Z"
+    },
+    {
+      "sha": "21cf010",
+      "msg": "script to analyse top 15 protein coding genes under selection on X for report section 3.4.1 (figure 2 and table 6)",
+      "date": "2026-01-28T16:19:14Z"
+    },
+    {
+      "sha": "8528419",
+      "msg": "script to analyze overlapping regions under putative selection in section 3.2.2 of project report",
+      "date": "2026-01-28T16:11:16Z"
+    },
+    {
+      "sha": "d41580a",
+      "msg": "Step 2a: Quality control and distribution characteristics",
+      "date": "2026-01-28T15:49:45Z"
+    },
+    {
+      "sha": "4b7d62e",
+      "msg": "Step 3: Definition of regions under putative selection and annotation with genes using GENCODE v44 -- original annotation script",
+      "date": "2026-01-28T15:29:03Z"
+    },
+    {
+      "sha": "6b679c0",
+      "msg": "Step 3: Definition of regions under putative selection and annotation with genes using GENCODE v44 -- original region definition script",
+      "date": "2026-01-28T15:23:58Z"
+    },
+    {
+      "sha": "65ef6c6",
+      "msg": "delete unused slurm scripts",
+      "date": "2026-01-28T15:17:22Z"
+    },
+    {
+      "sha": "77e2020",
+      "msg": "delete unused slurm scripts",
+      "date": "2026-01-28T15:16:07Z"
+    },
+    {
+      "sha": "6096578",
+      "msg": "Step 3: Definition of regions under putative selection and annotation with genes using GENCODE v44",
+      "date": "2026-01-28T15:13:47Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,144 @@
+{
+  "id": "gh_munch-group_hic-spermatogenesis",
+  "type": "github",
+  "title": "hic-spermatogenesis",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/hic-spermatogenesis",
+  "date": "2025-11-13T07:23:43Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/hic-spermatogenesis",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 10,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e98bda3",
+      "msg": "Merge remote-tracking branch 'refs/remotes/origin/main'",
+      "date": "2025-11-13T07:17:55Z"
+    },
+    {
+      "sha": "7aca6f6",
+      "msg": "workflow pixi patches",
+      "date": "2025-11-13T07:08:21Z"
+    },
+    {
+      "sha": "24ee0b4",
+      "msg": "Merge pull request #29 from munch-group:portability",
+      "date": "2025-11-07T19:44:57Z"
+    },
+    {
+      "sha": "1d2c72c",
+      "msg": "Updated workflow",
+      "date": "2025-02-18T11:17:17Z"
+    },
+    {
+      "sha": "890f454",
+      "msg": "Defence v2.0",
+      "date": "2025-01-30T10:59:55Z"
+    },
+    {
+      "sha": "ed260d2",
+      "msg": "Defence v1.9",
+      "date": "2025-01-30T10:16:30Z"
+    },
+    {
+      "sha": "a4c9277",
+      "msg": "Defence v1.8",
+      "date": "2025-01-30T09:05:57Z"
+    },
+    {
+      "sha": "d0f478f",
+      "msg": "Defence v1.7",
+      "date": "2025-01-29T23:20:53Z"
+    },
+    {
+      "sha": "b047aaa",
+      "msg": "Defence v1.6",
+      "date": "2025-01-29T20:40:33Z"
+    },
+    {
+      "sha": "31d5f7a",
+      "msg": "Defence v1.5",
+      "date": "2025-01-29T20:03:26Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 27,
+      "title": "Look at genes with `geneinfo`",
+      "state": "closed",
+      "date": "2025-01-09T08:46:38Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/27"
+    },
+    {
+      "number": 14,
+      "title": "Compare ECH coordinates with E1 tracks using `genomeinterv`",
+      "state": "closed",
+      "date": "2025-01-09T08:44:07Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/14"
+    },
+    {
+      "number": 17,
+      "title": "Wishlist: Quarto/LaTeX template fixes",
+      "state": "open",
+      "date": "2025-01-05T19:44:05Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/17"
+    },
+    {
+      "number": 23,
+      "title": "Modify `workflow.py` for reproducibility",
+      "state": "open",
+      "date": "2025-01-05T19:40:59Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/23"
+    },
+    {
+      "number": 26,
+      "title": "Compare baboon regions to E1 tracks",
+      "state": "open",
+      "date": "2025-01-05T19:39:43Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/26"
+    },
+    {
+      "number": 15,
+      "title": "Hand in first draft before Christmas",
+      "state": "closed",
+      "date": "2024-12-28T11:59:55Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/15"
+    },
+    {
+      "number": 28,
+      "title": "Add global c.InlineBackend.rc file so that all figures are the same style",
+      "state": "open",
+      "date": "2024-12-20T11:39:27Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/28"
+    },
+    {
+      "number": 25,
+      "title": "Figures: Change if I have time",
+      "state": "open",
+      "date": "2024-12-19T12:02:40Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/25"
+    },
+    {
+      "number": 21,
+      "title": "Write: Discussion",
+      "state": "open",
+      "date": "2024-12-17T09:42:12Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/hic-spermatogenesis/issues/21"
+    }
+  ]
+}

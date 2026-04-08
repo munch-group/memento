@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_test-manus",
+  "type": "github",
+  "title": "test-manus",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/test-manus",
+  "date": "2025-12-15T07:56:46Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/test-manus",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "69c8802",
+      "msg": "Refactor README for clarity and updates",
+      "date": "2025-12-15T07:56:46Z"
+    },
+    {
+      "sha": "22bbd84",
+      "msg": "update",
+      "date": "2025-12-14T11:50:54Z"
+    },
+    {
+      "sha": "1883b3f",
+      "msg": "Remove slides configuration and clean up project structure for manuscript focus",
+      "date": "2025-12-13T23:30:39Z"
+    },
+    {
+      "sha": "2783e95",
+      "msg": "removed manuscript and renamed thesis to manuscript",
+      "date": "2025-12-10T15:02:02Z"
+    },
+    {
+      "sha": "0a431c6",
+      "msg": "update",
+      "date": "2025-12-10T12:00:37Z"
+    },
+    {
+      "sha": "f784e75",
+      "msg": "Added script for adding submodules",
+      "date": "2025-12-08T11:13:07Z"
+    },
+    {
+      "sha": "8056d33",
+      "msg": "Moved to pixi.toml and fixed github action",
+      "date": "2025-12-03T11:25:01Z"
+    },
+    {
+      "sha": "2642705",
+      "msg": "Added example.ipynb notebook back",
+      "date": "2025-11-30T18:57:44Z"
+    },
+    {
+      "sha": "0cd26dc",
+      "msg": "Removed library files",
+      "date": "2025-11-16T09:40:19Z"
+    },
+    {
+      "sha": "746713b",
+      "msg": "Update quarto-publish.yml",
+      "date": "2025-10-25T17:05:13Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

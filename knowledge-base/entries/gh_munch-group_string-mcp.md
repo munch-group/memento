@@ -1,0 +1,1 @@
+MCP server for STRING protein-protein interaction database

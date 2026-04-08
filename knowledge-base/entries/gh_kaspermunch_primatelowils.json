@@ -1,0 +1,31 @@
+{
+  "id": "gh_kaspermunch_primatelowils",
+  "type": "github",
+  "title": "primatelowils",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/primatelowils",
+  "date": "2022-10-01T11:24:08Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/primatelowils",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5607806",
+      "msg": "Iniatial commit from exploration of low-ils regions across species",
+      "date": "2022-10-01T11:10:28Z"
+    },
+    {
+      "sha": "6164a44",
+      "msg": "Initial commit",
+      "date": "2022-07-18T18:57:58Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

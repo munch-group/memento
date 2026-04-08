@@ -9,7 +9,9 @@
 import json, os, subprocess, random, string, time
 from datetime import datetime, timezone
 
-KB_FILE = os.path.expanduser("~/knowledge-base/knowledge-base.json")
+from kb_io import load_all, save_entry
+
+KB_DIR = os.path.expanduser("~/knowledge-base")
 TYPES = ["fact", "idea", "hypothesis", "quote", "observation", "connection", "reference", "people"]
 
 JXA_CONTENT_DIALOG = """\
@@ -148,20 +150,6 @@ def ask_meta(preview):
     return entry_type, tags, source
 
 
-def load_items():
-    if os.path.exists(KB_FILE):
-        with open(KB_FILE, "r", encoding="utf-8") as f:
-            try:
-                return json.load(f)
-            except json.JSONDecodeError:
-                return []
-    return []
-
-
-def save_items(items):
-    os.makedirs(os.path.dirname(os.path.abspath(KB_FILE)), exist_ok=True)
-    with open(KB_FILE, "w", encoding="utf-8") as f:
-        json.dump(items, f, indent=2, ensure_ascii=False)
 
 
 def main():
@@ -187,9 +175,7 @@ def main():
         "external": True,
     }
 
-    items = load_items()
-    items.append(item)
-    save_items(items)
+    save_entry(KB_DIR, item)
 
     tag_str = f" [{', '.join(tags)}]" if tags else ""
     print(f"Saved {entry_type}{tag_str}: {content[:60]}{'…' if len(content) > 60 else ''}")

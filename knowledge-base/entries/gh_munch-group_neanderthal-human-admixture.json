@@ -1,0 +1,51 @@
+{
+  "id": "gh_munch-group_neanderthal-human-admixture",
+  "type": "github",
+  "title": "neanderthal-human-admixture",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/neanderthal-human-admixture",
+  "date": "2025-02-13T21:37:24Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/neanderthal-human-admixture",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "a19cb98",
+      "msg": "notebook update",
+      "date": "2025-02-13T21:36:58Z"
+    },
+    {
+      "sha": "8748d84",
+      "msg": "notebook update",
+      "date": "2025-02-13T20:25:21Z"
+    },
+    {
+      "sha": "b4cd2bc",
+      "msg": "Added large files",
+      "date": "2025-02-13T20:24:48Z"
+    },
+    {
+      "sha": "0bce9a2",
+      "msg": "Added git lfs",
+      "date": "2025-02-13T20:22:41Z"
+    },
+    {
+      "sha": "6d2b82a",
+      "msg": "Updates",
+      "date": "2023-04-11T07:01:18Z"
+    },
+    {
+      "sha": "f7c137b",
+      "msg": "Initial commit",
+      "date": "2023-03-30T05:56:46Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

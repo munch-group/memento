@@ -1,0 +1,1 @@
+Y-stratified GWAS in Indian British and/or African americans. How does the deeply diverged Y haplogroups affect GWAS/PGS? How do their effect interact with local ancestry across the genome.

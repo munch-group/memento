@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_chromatin-structure",
+  "type": "github",
+  "title": "chromatin-structure",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/chromatin-structure",
+  "date": "2026-02-25T13:41:56Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/chromatin-structure",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "d64e34a",
+      "msg": "update",
+      "date": "2026-02-25T13:41:49Z"
+    },
+    {
+      "sha": "41d9b47",
+      "msg": "Added SOM data with superloop and CTCF info",
+      "date": "2025-12-09T16:43:51Z"
+    },
+    {
+      "sha": "955a6c4",
+      "msg": "Initial commit",
+      "date": "2025-12-09T14:54:15Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

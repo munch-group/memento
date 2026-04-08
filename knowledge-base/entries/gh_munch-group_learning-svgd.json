@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_learning-svgd",
+  "type": "github",
+  "title": "learning-svgd",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/learning-svgd",
+  "date": "2025-09-06T14:42:59Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/learning-svgd",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "1d222b6",
+      "msg": "update",
+      "date": "2025-09-06T14:42:57Z"
+    },
+    {
+      "sha": "4b3f40a",
+      "msg": "Fixed ffi example",
+      "date": "2025-07-21T18:07:14Z"
+    },
+    {
+      "sha": "a2fdde9",
+      "msg": "added in memory caching",
+      "date": "2025-07-19T18:36:01Z"
+    },
+    {
+      "sha": "034a611",
+      "msg": "added hdf5 caching",
+      "date": "2025-07-19T15:48:55Z"
+    },
+    {
+      "sha": "5ed3b5a",
+      "msg": "added jax extension example",
+      "date": "2025-07-19T09:01:26Z"
+    },
+    {
+      "sha": "395e572",
+      "msg": "added ndim versions",
+      "date": "2025-07-17T05:18:25Z"
+    },
+    {
+      "sha": "251b801",
+      "msg": "Added files",
+      "date": "2025-07-16T19:58:39Z"
+    },
+    {
+      "sha": "3547675",
+      "msg": "update to draft multi machine slurm setup",
+      "date": "2025-07-16T07:59:21Z"
+    },
+    {
+      "sha": "6ea49bd",
+      "msg": "added toy examples for multi machine",
+      "date": "2025-07-16T07:29:47Z"
+    },
+    {
+      "sha": "e2052b1",
+      "msg": "Added and updated files",
+      "date": "2025-07-14T09:18:12Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

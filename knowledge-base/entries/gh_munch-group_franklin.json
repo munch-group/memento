@@ -1,0 +1,46 @@
+{
+  "id": "gh_munch-group_franklin",
+  "type": "github",
+  "title": "franklin",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/franklin",
+  "date": "2025-08-20T21:51:32Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/franklin",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "0203e61",
+      "msg": "update",
+      "date": "2025-08-20T21:51:30Z"
+    },
+    {
+      "sha": "a4bc679",
+      "msg": "Merge branch 'gh-pages'",
+      "date": "2025-08-20T17:43:28Z"
+    },
+    {
+      "sha": "d6c3089",
+      "msg": "update",
+      "date": "2025-08-20T17:41:00Z"
+    },
+    {
+      "sha": "ff4a0d1",
+      "msg": "update",
+      "date": "2025-08-20T17:39:37Z"
+    },
+    {
+      "sha": "a2203f7",
+      "msg": "Initial commit",
+      "date": "2025-08-20T17:26:33Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

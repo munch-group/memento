@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_interaction-store",
+  "type": "github",
+  "title": "interaction-store",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/interaction-store",
+  "date": "2026-03-22T08:14:28Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/interaction-store",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "9d7cfb1",
+      "msg": "update",
+      "date": "2026-03-22T08:14:14Z"
+    },
+    {
+      "sha": "4166241",
+      "msg": "update",
+      "date": "2026-03-22T06:15:48Z"
+    },
+    {
+      "sha": "b1a4e80",
+      "msg": "updates",
+      "date": "2026-03-21T18:50:35Z"
+    },
+    {
+      "sha": "fc998bb",
+      "msg": "Moved json files to git and now track database as *.db file",
+      "date": "2026-03-19T12:46:15Z"
+    },
+    {
+      "sha": "98231b0",
+      "msg": "update",
+      "date": "2026-03-16T20:28:13Z"
+    },
+    {
+      "sha": "4264f87",
+      "msg": "update",
+      "date": "2026-03-16T13:12:40Z"
+    },
+    {
+      "sha": "f3a68d1",
+      "msg": "update",
+      "date": "2026-03-16T10:41:07Z"
+    },
+    {
+      "sha": "e133cbe",
+      "msg": "update",
+      "date": "2026-03-16T07:38:38Z"
+    },
+    {
+      "sha": "a1a402e",
+      "msg": "update",
+      "date": "2026-03-15T16:48:36Z"
+    },
+    {
+      "sha": "3e5b2e2",
+      "msg": "update",
+      "date": "2026-03-15T13:33:25Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

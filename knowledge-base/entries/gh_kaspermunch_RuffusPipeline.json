@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_RuffusPipeline",
+  "type": "github",
+  "title": "RuffusPipeline",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/RuffusPipeline",
+  "date": "2016-10-28T21:30:30Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/RuffusPipeline",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "7551c9f",
+      "msg": "fixed installation bug",
+      "date": "2016-10-28T21:30:25Z"
+    },
+    {
+      "sha": "d12342a",
+      "msg": "Changed setup.py to work without ez_setup",
+      "date": "2015-07-28T09:41:43Z"
+    },
+    {
+      "sha": "48ce5cc",
+      "msg": "Changed execution of distributed tasks in distribute",
+      "date": "2015-07-28T08:54:56Z"
+    },
+    {
+      "sha": "f1e525f",
+      "msg": "Added a ‘dump’ mode that lets you dump the command lines that run each individual part of each subtask.",
+      "date": "2013-11-22T11:21:16Z"
+    },
+    {
+      "sha": "c7868db",
+      "msg": "Merge https://github.com/kaspermunch/RuffusPipeline",
+      "date": "2013-09-28T20:05:18Z"
+    },
+    {
+      "sha": "60deb2b",
+      "msg": "Initial commit",
+      "date": "2013-09-28T20:01:05Z"
+    },
+    {
+      "sha": "6da9fe4",
+      "msg": "Changed parsing of input file names to give shorter and output names under more conditions",
+      "date": "2013-09-28T18:52:33Z"
+    },
+    {
+      "sha": "fb2112a",
+      "msg": "Improvements in external command calling",
+      "date": "2013-09-12T07:28:37Z"
+    },
+    {
+      "sha": "38ae64c",
+      "msg": "commented out unfinished code",
+      "date": "2012-08-06T12:19:59Z"
+    },
+    {
+      "sha": "00f5772",
+      "msg": "Added a setup.py",
+      "date": "2012-08-03T20:02:14Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

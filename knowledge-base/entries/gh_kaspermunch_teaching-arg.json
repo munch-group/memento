@@ -1,0 +1,41 @@
+{
+  "id": "gh_kaspermunch_teaching-arg",
+  "type": "github",
+  "title": "teaching-arg",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/teaching-arg",
+  "date": "2023-02-14T12:29:35Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/teaching-arg",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "fa8433f",
+      "msg": "Updates",
+      "date": "2023-02-14T12:29:28Z"
+    },
+    {
+      "sha": "488f847",
+      "msg": "Completed functionality",
+      "date": "2020-02-15T22:27:07Z"
+    },
+    {
+      "sha": "56dd21c",
+      "msg": "Initial devel",
+      "date": "2020-02-10T22:45:59Z"
+    },
+    {
+      "sha": "5533dd6",
+      "msg": "Initial commit",
+      "date": "2020-02-01T16:19:41Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

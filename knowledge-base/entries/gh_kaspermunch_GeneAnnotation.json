@@ -1,0 +1,31 @@
+{
+  "id": "gh_kaspermunch_GeneAnnotation",
+  "type": "github",
+  "title": "GeneAnnotation",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/GeneAnnotation",
+  "date": "2018-06-10T11:07:25Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/GeneAnnotation",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "1061909",
+      "msg": "initial code",
+      "date": "2018-06-10T11:07:17Z"
+    },
+    {
+      "sha": "debbc70",
+      "msg": "Initial commit",
+      "date": "2018-06-10T11:05:21Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

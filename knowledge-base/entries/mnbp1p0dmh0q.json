@@ -1,0 +1,30 @@
+{
+  "id": "mnbp1p0dmh0q",
+  "type": "fact",
+  "title": "Human LinAR genes",
+  "genes": [
+    "AC244197.3",
+    "AGTR2",
+    "DMD",
+    "FGF13",
+    "FRMPD3",
+    "GCNA",
+    "GPC3",
+    "GPC4",
+    "IGSF1",
+    "IL1RAPL1",
+    "MID2",
+    "NHSL2",
+    "POLA1",
+    "PTCHD1",
+    "RAI2",
+    "SLITRK2",
+    "TENM1",
+    "TMSB15B"
+  ],
+  "tags": [],
+  "source": "Cui et al. 2025 / https://www.nature.com/articles/s41586-025-08622-x",
+  "date": "2026-03-29T11:46:41.245Z",
+  "synced": false,
+  "_sortTag": ""
+}

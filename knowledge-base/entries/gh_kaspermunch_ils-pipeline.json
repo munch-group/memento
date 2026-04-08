@@ -1,0 +1,26 @@
+{
+  "id": "gh_kaspermunch_ils-pipeline",
+  "type": "github",
+  "title": "ils-pipeline",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/ils-pipeline",
+  "date": "2020-02-26T20:28:46Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/ils-pipeline",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "d08a1f3",
+      "msg": "Initial commit",
+      "date": "2020-02-26T20:28:45Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

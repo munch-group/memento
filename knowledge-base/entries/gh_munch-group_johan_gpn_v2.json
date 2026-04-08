@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_johan_gpn_v2",
+  "type": "github",
+  "title": "johan_gpn_v2",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/johan_gpn_v2",
+  "date": "2025-09-27T18:07:02Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/johan_gpn_v2",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "f838411",
+      "msg": "profreading",
+      "date": "2025-09-27T18:03:25Z"
+    },
+    {
+      "sha": "49d1139",
+      "msg": "here is some update with intro",
+      "date": "2025-09-27T06:47:53Z"
+    },
+    {
+      "sha": "6e1ae17",
+      "msg": "updating figuers for control experiments and updating index.qmd to reflect these changes",
+      "date": "2025-09-25T07:53:46Z"
+    },
+    {
+      "sha": "0a48c55",
+      "msg": "update to index",
+      "date": "2025-09-23T15:49:58Z"
+    },
+    {
+      "sha": "2c7527e",
+      "msg": "updata master",
+      "date": "2025-09-20T16:46:04Z"
+    },
+    {
+      "sha": "46b3c3e",
+      "msg": "update to manuscript",
+      "date": "2025-09-18T13:28:46Z"
+    },
+    {
+      "sha": "ef12e91",
+      "msg": "moving old files around, do not suggest changes to these files",
+      "date": "2025-08-19T12:57:15Z"
+    },
+    {
+      "sha": "5e88cce",
+      "msg": "Add Tippy.js library and styles, along with new analysis files",
+      "date": "2025-08-19T12:56:00Z"
+    },
+    {
+      "sha": "58a6f5b",
+      "msg": "updata to the notebook files to reflect the latest changes in the data structure and visualization requirements.",
+      "date": "2025-08-19T12:50:23Z"
+    },
+    {
+      "sha": "99f9df6",
+      "msg": "Add GC compartment analysis PDF and update slide content for remapping repeats",
+      "date": "2025-08-18T13:33:29Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

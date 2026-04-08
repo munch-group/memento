@@ -1,0 +1,1 @@
+![diamond_stat.png](images/mnlh3b6c_diamond_stat.png)

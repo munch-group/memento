@@ -1,0 +1,46 @@
+{
+  "id": "gh_munch-group_gpn",
+  "type": "github",
+  "title": "gpn",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/gpn",
+  "date": "2025-02-18T11:24:55Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/gpn",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "HTML",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ddb1a9f",
+      "msg": "Added files",
+      "date": "2025-02-18T11:22:29Z"
+    },
+    {
+      "sha": "2def37a",
+      "msg": "Added sripts for gwf version of workflow",
+      "date": "2025-02-18T11:19:21Z"
+    },
+    {
+      "sha": "ffae39e",
+      "msg": "Added bird annot files",
+      "date": "2024-12-13T15:50:15Z"
+    },
+    {
+      "sha": "329ca1f",
+      "msg": "Initial commit",
+      "date": "2024-12-13T07:12:38Z"
+    },
+    {
+      "sha": "d902755",
+      "msg": "Initial commit",
+      "date": "2024-12-13T07:03:26Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,61 @@
+{
+  "id": "gh_munch-group_.github",
+  "type": "github",
+  "title": ".github",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/.github",
+  "date": "2023-12-25T18:38:26Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/.github",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "506ee61",
+      "msg": "Update README.md",
+      "date": "2023-12-25T18:38:26Z"
+    },
+    {
+      "sha": "8e18ea7",
+      "msg": "Update README.md",
+      "date": "2023-12-25T18:22:24Z"
+    },
+    {
+      "sha": "7f0f8b8",
+      "msg": "Update README.md",
+      "date": "2023-12-25T17:45:38Z"
+    },
+    {
+      "sha": "02f8d38",
+      "msg": "Update README.md",
+      "date": "2023-12-25T17:44:42Z"
+    },
+    {
+      "sha": "b00fb86",
+      "msg": "Update README.md",
+      "date": "2023-12-25T17:44:04Z"
+    },
+    {
+      "sha": "c652e5c",
+      "msg": "Delete README.md",
+      "date": "2023-12-25T17:00:09Z"
+    },
+    {
+      "sha": "592cbcb",
+      "msg": "Create README.md",
+      "date": "2023-12-25T16:58:02Z"
+    },
+    {
+      "sha": "9ae313e",
+      "msg": "Initial commit",
+      "date": "2023-12-25T16:57:32Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

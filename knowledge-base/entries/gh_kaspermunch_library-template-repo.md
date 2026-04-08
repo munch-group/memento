@@ -1,0 +1,1 @@
+Template repository for a python library

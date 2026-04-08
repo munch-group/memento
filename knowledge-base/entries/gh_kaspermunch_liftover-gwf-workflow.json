@@ -1,0 +1,51 @@
+{
+  "id": "gh_kaspermunch_liftover-gwf-workflow",
+  "type": "github",
+  "title": "liftover-gwf-workflow",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/liftover-gwf-workflow",
+  "date": "2024-06-01T18:05:15Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/liftover-gwf-workflow",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "3c3c622",
+      "msg": "Added rec map",
+      "date": "2024-06-01T18:04:52Z"
+    },
+    {
+      "sha": "df9f525",
+      "msg": "Updated workflow.",
+      "date": "2020-07-05T20:22:15Z"
+    },
+    {
+      "sha": "da85a2c",
+      "msg": "Updates",
+      "date": "2020-06-28T18:34:24Z"
+    },
+    {
+      "sha": "64512f1",
+      "msg": "Updated gitignore",
+      "date": "2020-06-28T18:25:24Z"
+    },
+    {
+      "sha": "aa5e089",
+      "msg": "Added workflow.py and scripts",
+      "date": "2020-06-28T18:19:54Z"
+    },
+    {
+      "sha": "5488c4c",
+      "msg": "Initial commit",
+      "date": "2020-06-28T13:08:30Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

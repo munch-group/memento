@@ -1,0 +1,51 @@
+{
+  "id": "gh_munch-group_mcp-servers",
+  "type": "github",
+  "title": "mcp-servers",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/mcp-servers",
+  "date": "2025-12-09T18:19:55Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/mcp-servers",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ade84e0",
+      "msg": "Archive monorepo: Split into separate repositories",
+      "date": "2025-12-09T18:19:49Z"
+    },
+    {
+      "sha": "a656096",
+      "msg": "env update and a script",
+      "date": "2025-12-04T10:41:01Z"
+    },
+    {
+      "sha": "a55794c",
+      "msg": "update",
+      "date": "2025-11-01T21:30:47Z"
+    },
+    {
+      "sha": "12b72c8",
+      "msg": "Added gh server",
+      "date": "2025-10-31T12:57:14Z"
+    },
+    {
+      "sha": "9fd75e7",
+      "msg": "Added files",
+      "date": "2025-09-30T20:33:19Z"
+    },
+    {
+      "sha": "fc88565",
+      "msg": "Initial commit",
+      "date": "2025-09-30T20:31:00Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_CoalhmmPipeline",
+  "type": "github",
+  "title": "CoalhmmPipeline",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/CoalhmmPipeline",
+  "date": "2016-10-29T19:19:30Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/CoalhmmPipeline",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "f226a53",
+      "msg": "More fixes to accomodate pytables 3.*",
+      "date": "2016-10-29T19:19:23Z"
+    },
+    {
+      "sha": "73583c8",
+      "msg": "fixed compatability with pytables 3.3",
+      "date": "2016-10-28T21:43:29Z"
+    },
+    {
+      "sha": "6603e2b",
+      "msg": "fixed installation bug",
+      "date": "2016-10-28T21:31:40Z"
+    },
+    {
+      "sha": "408f414",
+      "msg": "Added a maf filter that only looks at teh ingroup sequences",
+      "date": "2016-10-28T18:58:44Z"
+    },
+    {
+      "sha": "328dbb5",
+      "msg": "Bumped version",
+      "date": "2016-10-28T08:21:05Z"
+    },
+    {
+      "sha": "fa9a9a3",
+      "msg": "Made chromosome name encoding more general",
+      "date": "2016-10-26T18:46:47Z"
+    },
+    {
+      "sha": "bf50127",
+      "msg": "small fix",
+      "date": "2016-10-26T18:46:23Z"
+    },
+    {
+      "sha": "321703a",
+      "msg": "Merge branch 'master' of https://github.com/kaspermunch/CoalhmmPipeline",
+      "date": "2015-07-28T09:33:04Z"
+    },
+    {
+      "sha": "1845937",
+      "msg": "Changed setup.py to not use ez_setup",
+      "date": "2015-07-28T09:32:20Z"
+    },
+    {
+      "sha": "aabaa12",
+      "msg": "Changed chunkinization code to handle junkchars and gaps seperately. Added new MafMasker class as argument to Chunkinizer",
+      "date": "2015-07-28T08:41:59Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

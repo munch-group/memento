@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_lai-segment-analysis",
+  "type": "github",
+  "title": "lai-segment-analysis",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/lai-segment-analysis",
+  "date": "2026-04-04T13:33:03Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/lai-segment-analysis",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "f6da56d",
+      "msg": "update",
+      "date": "2026-04-04T13:32:44Z"
+    },
+    {
+      "sha": "59a4a2d",
+      "msg": "update",
+      "date": "2026-03-07T22:22:01Z"
+    },
+    {
+      "sha": "6a736a8",
+      "msg": "update",
+      "date": "2026-03-07T15:41:42Z"
+    },
+    {
+      "sha": "fb506a3",
+      "msg": "update",
+      "date": "2026-03-07T11:43:41Z"
+    },
+    {
+      "sha": "27fcfba",
+      "msg": "Fixed null dist for left and right segment fix",
+      "date": "2026-03-07T11:10:11Z"
+    },
+    {
+      "sha": "347d2f5",
+      "msg": "update",
+      "date": "2026-03-07T08:56:15Z"
+    },
+    {
+      "sha": "2a9504d",
+      "msg": "Refactor code structure for improved readability and maintainability",
+      "date": "2026-03-06T17:25:44Z"
+    },
+    {
+      "sha": "bbc7645",
+      "msg": "update",
+      "date": "2026-03-06T11:05:58Z"
+    },
+    {
+      "sha": "a06b37e",
+      "msg": "update",
+      "date": "2026-03-05T23:01:47Z"
+    },
+    {
+      "sha": "07996f8",
+      "msg": "Initial commit",
+      "date": "2026-03-05T17:31:22Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

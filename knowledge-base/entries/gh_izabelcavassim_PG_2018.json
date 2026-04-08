@@ -1,0 +1,71 @@
+{
+  "id": "gh_izabelcavassim_PG_2018",
+  "type": "github",
+  "title": "PG_2018",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/izabelcavassim/PG_2018",
+  "date": "2018-04-30T14:10:13Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "izabelcavassim/PG_2018",
+  "_ghStars": 3,
+  "_ghForks": 2,
+  "_ghLang": "HTML",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e1f9977",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-30T14:10:12Z"
+    },
+    {
+      "sha": "a6eb279",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-30T13:42:18Z"
+    },
+    {
+      "sha": "30c3eb6",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-30T12:57:02Z"
+    },
+    {
+      "sha": "1265367",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-30T12:54:11Z"
+    },
+    {
+      "sha": "eed5f3f",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-30T12:46:23Z"
+    },
+    {
+      "sha": "84ad343",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-30T12:42:16Z"
+    },
+    {
+      "sha": "30755c1",
+      "msg": "Update README.md",
+      "date": "2018-04-25T10:54:11Z"
+    },
+    {
+      "sha": "4f0d439",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-25T10:34:47Z"
+    },
+    {
+      "sha": "46ca82e",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-25T09:52:57Z"
+    },
+    {
+      "sha": "4e16255",
+      "msg": "Update Projects_description.Rmd",
+      "date": "2018-04-25T09:52:07Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_MultiPurpose",
+  "type": "github",
+  "title": "MultiPurpose",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/MultiPurpose",
+  "date": "2018-09-19T19:05:42Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/MultiPurpose",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ba6ce28",
+      "msg": "Commented out print",
+      "date": "2018-09-19T19:05:30Z"
+    },
+    {
+      "sha": "d237f33",
+      "msg": "Commented out print",
+      "date": "2018-09-19T18:59:59Z"
+    },
+    {
+      "sha": "853bfef",
+      "msg": "Changed setup.py to work without ez_setup",
+      "date": "2015-07-28T09:40:03Z"
+    },
+    {
+      "sha": "f549d8b",
+      "msg": "Adjusted assert",
+      "date": "2015-07-28T08:22:29Z"
+    },
+    {
+      "sha": "1c3561f",
+      "msg": "Added iteration over fields in Data object",
+      "date": "2015-07-28T08:21:42Z"
+    },
+    {
+      "sha": "c4282c3",
+      "msg": "Added support for variable bin sizes",
+      "date": "2015-05-04T12:10:16Z"
+    },
+    {
+      "sha": "fa70258",
+      "msg": "Added support for prespecified bins. Also added a module function that computes bins with an even number of observations in each.",
+      "date": "2015-03-10T10:46:00Z"
+    },
+    {
+      "sha": "f25cef2",
+      "msg": "Added contructor argument specifying output stream",
+      "date": "2015-03-10T10:44:04Z"
+    },
+    {
+      "sha": "a9e2c24",
+      "msg": "Several fixes",
+      "date": "2014-03-28T12:06:59Z"
+    },
+    {
+      "sha": "99d6d34",
+      "msg": "Merge branch 'master' of https://github.com/kaspermunch/MultiPurpose",
+      "date": "2013-11-20T08:42:05Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

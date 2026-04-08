@@ -1,0 +1,61 @@
+{
+  "id": "gh_munch-group_sjup",
+  "type": "github",
+  "title": "sjup",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/sjup",
+  "date": "2024-06-08T07:39:21Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/sjup",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "fa78466",
+      "msg": "Update",
+      "date": "2024-06-05T18:13:53Z"
+    },
+    {
+      "sha": "092765e",
+      "msg": "Small update",
+      "date": "2024-06-04T08:05:08Z"
+    },
+    {
+      "sha": "a4754c0",
+      "msg": "Added a missing file",
+      "date": "2024-06-04T08:02:41Z"
+    },
+    {
+      "sha": "f27065e",
+      "msg": "Updated readme",
+      "date": "2024-06-04T07:58:28Z"
+    },
+    {
+      "sha": "a6a8a25",
+      "msg": "Added old doc files and temporary old_code.py file for old code",
+      "date": "2024-06-04T07:54:26Z"
+    },
+    {
+      "sha": "9d02fb2",
+      "msg": "Added and changed gwf files to make a project that installs",
+      "date": "2024-06-04T07:42:40Z"
+    },
+    {
+      "sha": "22b6b89",
+      "msg": "Added files from gwf",
+      "date": "2024-06-03T17:41:48Z"
+    },
+    {
+      "sha": "7834c21",
+      "msg": "Initial commit",
+      "date": "2024-06-03T14:54:55Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

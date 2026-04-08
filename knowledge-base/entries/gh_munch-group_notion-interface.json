@@ -1,0 +1,112 @@
+{
+  "id": "gh_munch-group_notion-interface",
+  "type": "github",
+  "title": "notion-interface",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/notion-interface",
+  "date": "2025-09-06T14:40:00Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/notion-interface",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "TypeScript",
+  "_ghOpenIssues": 5,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e6eb4b6",
+      "msg": "update",
+      "date": "2025-09-06T14:39:58Z"
+    },
+    {
+      "sha": "0b31638",
+      "msg": "update",
+      "date": "2025-07-28T12:53:59Z"
+    },
+    {
+      "sha": "8809d90",
+      "msg": "Added dump tree command",
+      "date": "2025-07-28T05:53:40Z"
+    },
+    {
+      "sha": "1ef838c",
+      "msg": "update",
+      "date": "2025-07-27T14:53:43Z"
+    },
+    {
+      "sha": "38b7772",
+      "msg": "small bug",
+      "date": "2025-07-27T14:28:19Z"
+    },
+    {
+      "sha": "4c890b7",
+      "msg": "Fixed mardown title bug",
+      "date": "2025-07-27T13:38:45Z"
+    },
+    {
+      "sha": "40b4845",
+      "msg": "Cleaned up repo and fixed go-it-alone mode",
+      "date": "2025-07-27T09:35:41Z"
+    },
+    {
+      "sha": "1e67b8e",
+      "msg": "added go-it-alone, default, and always-ask preset modes",
+      "date": "2025-07-27T08:51:11Z"
+    },
+    {
+      "sha": "47911e5",
+      "msg": "Made search work including saerch for properties",
+      "date": "2025-07-27T08:26:39Z"
+    },
+    {
+      "sha": "6f76720",
+      "msg": "fixed markdown",
+      "date": "2025-07-26T21:33:03Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 5,
+      "title": "Add GitHub Action for publishing to VS Code Marketplace",
+      "state": "open",
+      "date": "2025-07-27T09:25:38Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/notion-interface/issues/5"
+    },
+    {
+      "number": 4,
+      "title": "Add @ prefix support for property-only search",
+      "state": "open",
+      "date": "2025-07-27T09:24:44Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/notion-interface/issues/4"
+    },
+    {
+      "number": 3,
+      "title": "Update extension description to clarify single database limitation",
+      "state": "open",
+      "date": "2025-07-27T09:23:18Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/notion-interface/issues/3"
+    },
+    {
+      "number": 2,
+      "title": "Add command palette command to configure Notion database",
+      "state": "open",
+      "date": "2025-07-27T09:22:25Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/notion-interface/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "Default to tree view on startup",
+      "state": "open",
+      "date": "2025-07-27T09:21:31Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/notion-interface/issues/1"
+    }
+  ]
+}

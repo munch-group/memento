@@ -1,0 +1,1 @@
+GitHub Action: new conda packages are built and uploaded to Anaconda when a new released or pre-released version is declared.

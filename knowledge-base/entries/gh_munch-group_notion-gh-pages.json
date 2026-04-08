@@ -1,0 +1,41 @@
+{
+  "id": "gh_munch-group_notion-gh-pages",
+  "type": "github",
+  "title": "notion-gh-pages",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/notion-gh-pages",
+  "date": "2025-09-06T12:58:40Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/notion-gh-pages",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "2c65b0e",
+      "msg": "update",
+      "date": "2025-09-06T12:58:38Z"
+    },
+    {
+      "sha": "d350e9f",
+      "msg": "update",
+      "date": "2025-09-05T14:11:58Z"
+    },
+    {
+      "sha": "19baa0c",
+      "msg": "initialized repo",
+      "date": "2025-09-05T14:01:07Z"
+    },
+    {
+      "sha": "27d198d",
+      "msg": "Initial commit",
+      "date": "2025-09-05T13:51:53Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

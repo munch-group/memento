@@ -1,0 +1,88 @@
+{
+  "id": "gh_munch-group_pythonsteps",
+  "type": "github",
+  "title": "pythonsteps",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/pythonsteps",
+  "date": "2025-10-06T10:07:43Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/pythonsteps",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 2,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e3fbfc9",
+      "msg": "update",
+      "date": "2025-10-06T10:05:49Z"
+    },
+    {
+      "sha": "d547456",
+      "msg": "patch  version bump",
+      "date": "2025-09-15T09:46:36Z"
+    },
+    {
+      "sha": "5780e81",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T16:29:23Z"
+    },
+    {
+      "sha": "b162341",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T16:20:50Z"
+    },
+    {
+      "sha": "5fa4d57",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T16:01:18Z"
+    },
+    {
+      "sha": "901b7b8",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T15:56:58Z"
+    },
+    {
+      "sha": "66760b7",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T15:39:19Z"
+    },
+    {
+      "sha": "e49824d",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T15:33:54Z"
+    },
+    {
+      "sha": "cdc075c",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T15:26:07Z"
+    },
+    {
+      "sha": "e2f8dfd",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T14:22:18Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 2,
+      "title": "Add support for return statements and statements inside functions using function parameters",
+      "state": "open",
+      "date": "2025-10-06T10:05:28Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/pythonsteps/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "print steps only prints line as written if expression has no variables",
+      "state": "open",
+      "date": "2025-09-07T21:47:57Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/pythonsteps/issues/1"
+    }
+  ]
+}

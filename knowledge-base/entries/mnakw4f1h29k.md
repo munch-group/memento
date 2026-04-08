@@ -1,0 +1,1 @@
+Do mitochondria genes often have a pachytene peak or is that only CO1 CO2 and the ND genes that Mishmar finds?

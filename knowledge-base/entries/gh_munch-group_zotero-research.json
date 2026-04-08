@@ -1,0 +1,26 @@
+{
+  "id": "gh_munch-group_zotero-research",
+  "type": "github",
+  "title": "zotero-research",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/zotero-research",
+  "date": "2025-07-24T06:19:18Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/zotero-research",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "b8b542b",
+      "msg": "Initial commit",
+      "date": "2025-07-24T06:19:18Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

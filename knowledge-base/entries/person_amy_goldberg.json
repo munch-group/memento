@@ -1,0 +1,14 @@
+{
+  "id": "person_amy_goldberg",
+  "type": "people",
+  "title": "Amy Goldberg",
+  "tags": [
+    "Primates"
+  ],
+  "genes": [],
+  "source": "https://www.goldberglab.org",
+  "date": "2026-04-04T08:13:09.030859+00:00",
+  "synced": false,
+  "connection": false,
+  "_sortTag": "Primates"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "gh_munch-group_h2chrY",
+  "type": "github",
+  "title": "h2chrY",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/h2chrY",
+  "date": "2026-04-05T09:38:00Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/h2chrY",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "84a4d89",
+      "msg": "update",
+      "date": "2026-03-06T12:54:08Z"
+    },
+    {
+      "sha": "472c2ae",
+      "msg": "Made ready for real data",
+      "date": "2026-02-13T12:59:28Z"
+    },
+    {
+      "sha": "b4fd83d",
+      "msg": "Added chrX and GRM reading code",
+      "date": "2026-01-22T13:03:48Z"
+    },
+    {
+      "sha": "ab9d4c9",
+      "msg": "Added files",
+      "date": "2026-01-11T15:52:18Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Test issue",
+      "state": "open",
+      "date": "2026-04-05T09:38:00Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/h2chrY/issues/1"
+    }
+  ]
+}

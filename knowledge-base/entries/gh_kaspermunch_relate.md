@@ -1,0 +1,1 @@
+Generic Relate workflow for use as submodule

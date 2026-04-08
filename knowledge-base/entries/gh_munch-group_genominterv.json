@@ -1,0 +1,85 @@
+{
+  "id": "gh_munch-group_genominterv",
+  "type": "github",
+  "title": "genominterv",
+  "tags": [
+    "Teaching",
+    "Library"
+  ],
+  "genes": [],
+  "source": "https://github.com/munch-group/genominterv",
+  "date": "2025-09-30T16:08:51Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/genominterv",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "Teaching",
+  "archived": false,
+  "due": "",
+  "_ghCommits": [
+    {
+      "sha": "1e0d934",
+      "msg": "update",
+      "date": "2025-09-30T16:07:24Z"
+    },
+    {
+      "sha": "cd51479",
+      "msg": "update",
+      "date": "2025-09-30T16:04:23Z"
+    },
+    {
+      "sha": "1a5524e",
+      "msg": "update",
+      "date": "2025-01-10T14:26:50Z"
+    },
+    {
+      "sha": "91da06b",
+      "msg": "update",
+      "date": "2025-01-06T15:33:40Z"
+    },
+    {
+      "sha": "fef1f17",
+      "msg": "Updated docs",
+      "date": "2025-01-06T15:29:32Z"
+    },
+    {
+      "sha": "55ba224",
+      "msg": "Updated docs",
+      "date": "2025-01-06T14:32:03Z"
+    },
+    {
+      "sha": "9b30b36",
+      "msg": "update",
+      "date": "2025-01-06T14:24:37Z"
+    },
+    {
+      "sha": "b3957bf",
+      "msg": "Updated docs",
+      "date": "2025-01-06T14:16:53Z"
+    },
+    {
+      "sha": "108295d",
+      "msg": "pytest for action",
+      "date": "2025-01-06T13:58:11Z"
+    },
+    {
+      "sha": "bb12b85",
+      "msg": "Added pytest to github action",
+      "date": "2025-01-06T13:56:50Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "@bootstrap decorator doesn't recognize 'rheMac10' (or 'Mmul_10') ",
+      "state": "open",
+      "date": "2024-11-27T11:50:10Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/genominterv/issues/1"
+    }
+  ]
+}

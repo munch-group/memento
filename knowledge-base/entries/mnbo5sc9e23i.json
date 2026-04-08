@@ -1,0 +1,18 @@
+{
+  "id": "mnbo5sc9e23i",
+  "type": "reference",
+  "title": "Up/down regulated genes in OGT knockout mouse (C921Y)",
+  "genes": [
+    "NEUROD1",
+    "RBBP5",
+    "RBBP6",
+    "CLCN3",
+    "SORCS3",
+    "AP3B1"
+  ],
+  "tags": [],
+  "source": "https://elifesciences.org/reviewed-preprints/107170",
+  "date": "2026-03-29T11:21:52.569Z",
+  "synced": false,
+  "_sortTag": ""
+}

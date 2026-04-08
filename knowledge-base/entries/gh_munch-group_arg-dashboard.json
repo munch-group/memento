@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_arg-dashboard",
+  "type": "github",
+  "title": "arg-dashboard",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/arg-dashboard",
+  "date": "2026-02-05T10:15:20Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/arg-dashboard",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5c89d7e",
+      "msg": "bump",
+      "date": "2026-02-05T10:15:12Z"
+    },
+    {
+      "sha": "1587516",
+      "msg": "version bump",
+      "date": "2026-02-05T10:11:13Z"
+    },
+    {
+      "sha": "1b0f831",
+      "msg": "patch  version bump",
+      "date": "2026-02-04T15:10:11Z"
+    },
+    {
+      "sha": "9ac2481",
+      "msg": "Re-execute notebook outputs",
+      "date": "2026-02-04T15:10:08Z"
+    },
+    {
+      "sha": "a4666dd",
+      "msg": "update",
+      "date": "2026-02-04T15:09:14Z"
+    },
+    {
+      "sha": "a7664bb",
+      "msg": "patch  version bump",
+      "date": "2026-02-04T15:08:40Z"
+    },
+    {
+      "sha": "e0e48e0",
+      "msg": "Re-execute notebook cells to update outputs",
+      "date": "2026-02-04T15:08:23Z"
+    },
+    {
+      "sha": "557fd4e",
+      "msg": "update",
+      "date": "2026-02-04T15:07:22Z"
+    },
+    {
+      "sha": "e3a2c2a",
+      "msg": "update",
+      "date": "2026-02-04T15:04:23Z"
+    },
+    {
+      "sha": "cded6f1",
+      "msg": "update",
+      "date": "2026-02-04T14:56:55Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,152 @@
+{
+  "id": "gh_munch-group_geneinfo",
+  "type": "github",
+  "title": "geneinfo",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/geneinfo",
+  "date": "2026-03-23T11:28:53Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/geneinfo",
+  "_ghStars": 5,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 13,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "f145b28",
+      "msg": "update",
+      "date": "2026-03-23T11:26:21Z"
+    },
+    {
+      "sha": "9f37669",
+      "msg": "Added draft code for circos and upset plots",
+      "date": "2026-03-23T11:14:42Z"
+    },
+    {
+      "sha": "1ac7955",
+      "msg": "patch  version bump",
+      "date": "2026-02-24T13:54:18Z"
+    },
+    {
+      "sha": "f08602d",
+      "msg": "patch  version bump",
+      "date": "2026-02-24T13:54:10Z"
+    },
+    {
+      "sha": "489fdb9",
+      "msg": "update",
+      "date": "2026-02-24T13:51:30Z"
+    },
+    {
+      "sha": "381d284",
+      "msg": "patch  version bump",
+      "date": "2026-02-23T12:01:08Z"
+    },
+    {
+      "sha": "0d56ede",
+      "msg": "patch  version bump",
+      "date": "2026-02-23T12:01:03Z"
+    },
+    {
+      "sha": "48d6301",
+      "msg": "patch  version bump",
+      "date": "2026-02-20T21:38:28Z"
+    },
+    {
+      "sha": "507a7dd",
+      "msg": "patch  version bump",
+      "date": "2026-02-20T21:38:23Z"
+    },
+    {
+      "sha": "0361477",
+      "msg": "patch  version bump",
+      "date": "2026-02-20T21:23:47Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 14,
+      "title": "Zoom centromere color in dark mode",
+      "state": "open",
+      "date": "2026-02-27T11:26:36Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/14"
+    },
+    {
+      "number": 13,
+      "title": "Font size bug",
+      "state": "open",
+      "date": "2026-02-27T11:16:19Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/13"
+    },
+    {
+      "number": 12,
+      "title": "Exploit this repo",
+      "state": "open",
+      "date": "2025-08-19T16:57:55Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/12"
+    },
+    {
+      "number": 11,
+      "title": "Deps missing, add rapidfuzz and HTTPBasicAuth",
+      "state": "open",
+      "date": "2025-07-30T12:35:40Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/11"
+    },
+    {
+      "number": 10,
+      "title": "HiC plot",
+      "state": "open",
+      "date": "2025-07-27T15:41:57Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/10"
+    },
+    {
+      "number": 9,
+      "title": "ChromIdeogram renders wrong with alpha keyword used",
+      "state": "open",
+      "date": "2025-07-02T11:07:07Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/9"
+    },
+    {
+      "number": 8,
+      "title": "Triangle matshow with labels",
+      "state": "open",
+      "date": "2025-06-11T13:32:57Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/8"
+    },
+    {
+      "number": 7,
+      "title": "Always use HGCN IDs for comparing gene lists",
+      "state": "open",
+      "date": "2025-04-16T08:25:57Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/7"
+    },
+    {
+      "number": 6,
+      "title": "Use matplotlib Rectangle patches for gene label backgrounds to allow more different background formats",
+      "state": "open",
+      "date": "2024-07-30T08:14:05Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/6"
+    },
+    {
+      "number": 5,
+      "title": "Add legend to gene plot",
+      "state": "open",
+      "date": "2024-07-30T08:08:34Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/5"
+    }
+  ]
+}

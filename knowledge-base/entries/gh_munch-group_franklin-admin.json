@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_franklin-admin",
+  "type": "github",
+  "title": "franklin-admin",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/franklin-admin",
+  "date": "2025-09-21T08:38:56Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/franklin-admin",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "404b2c2",
+      "msg": "update",
+      "date": "2025-09-21T08:38:54Z"
+    },
+    {
+      "sha": "4545269",
+      "msg": "patch  version bump",
+      "date": "2025-08-21T17:09:30Z"
+    },
+    {
+      "sha": "0447e15",
+      "msg": "patch  version bump",
+      "date": "2025-08-21T17:09:12Z"
+    },
+    {
+      "sha": "cc7a639",
+      "msg": "patch  version bump",
+      "date": "2025-08-21T17:08:35Z"
+    },
+    {
+      "sha": "00a93b3",
+      "msg": "patch  version bump",
+      "date": "2025-08-20T17:10:35Z"
+    },
+    {
+      "sha": "6ab3210",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:44:48Z"
+    },
+    {
+      "sha": "efbe7ed",
+      "msg": "patch  version bump",
+      "date": "2025-08-19T20:44:04Z"
+    },
+    {
+      "sha": "f980d34",
+      "msg": "update",
+      "date": "2025-08-19T17:13:39Z"
+    },
+    {
+      "sha": "69d0c52",
+      "msg": "update",
+      "date": "2025-08-19T17:13:15Z"
+    },
+    {
+      "sha": "12e0c11",
+      "msg": "update",
+      "date": "2025-08-18T19:08:52Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Auto update does not work",
+      "state": "open",
+      "date": "2025-06-16T00:30:53Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-admin/issues/1"
+    }
+  ]
+}

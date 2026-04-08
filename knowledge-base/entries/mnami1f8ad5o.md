@@ -1,0 +1,1 @@
+“pedigree constraint” on an (two-locus) ARG can be represented by “invisble” mutations along the ARG branches with descendants at both loci that must be earned. I.e. you can only go through the model with at least one of each kind of invisible mutation.

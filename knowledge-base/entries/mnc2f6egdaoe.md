@@ -1,0 +1,1 @@
+Genes that are differentially expressed in X and Y bearing spermatids are candidate meiotic drivers. Finding them among genes introgressed from humans into Neanderthals 250-300,000 years BP introduce the possibility that they did their introgression was mediated by positive selection in the form of meiotic drive.

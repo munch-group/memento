@@ -1,0 +1,41 @@
+{
+  "id": "gh_kaspermunch_relate-clues",
+  "type": "github",
+  "title": "relate-clues",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/relate-clues",
+  "date": "2023-03-28T10:44:14Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/relate-clues",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "77ad5be",
+      "msg": "Updates to README workflow and new files",
+      "date": "2023-03-28T10:44:06Z"
+    },
+    {
+      "sha": "01c2f92",
+      "msg": "Updated readme",
+      "date": "2022-07-26T22:08:10Z"
+    },
+    {
+      "sha": "07e8cc2",
+      "msg": "Added workflows",
+      "date": "2022-07-26T21:52:19Z"
+    },
+    {
+      "sha": "740fb98",
+      "msg": "Initial commit",
+      "date": "2022-07-24T17:35:53Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

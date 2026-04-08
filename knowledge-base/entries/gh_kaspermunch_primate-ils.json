@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_primate-ils",
+  "type": "github",
+  "title": "primate-ils",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/primate-ils",
+  "date": "2025-02-13T22:10:58Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/primate-ils",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "24e0471",
+      "msg": "Added large files",
+      "date": "2025-02-13T22:10:23Z"
+    },
+    {
+      "sha": "d48fc40",
+      "msg": "added env file and updated notebooks",
+      "date": "2025-02-13T21:53:53Z"
+    },
+    {
+      "sha": "82acf93",
+      "msg": "Updated notebooks",
+      "date": "2023-06-02T07:57:42Z"
+    },
+    {
+      "sha": "0e7d79b",
+      "msg": "Updated workflow",
+      "date": "2023-04-11T06:54:21Z"
+    },
+    {
+      "sha": "c25e0da",
+      "msg": "Updated notebooks",
+      "date": "2023-04-11T06:53:48Z"
+    },
+    {
+      "sha": "587c140",
+      "msg": "gitignore",
+      "date": "2023-03-23T21:22:17Z"
+    },
+    {
+      "sha": "df2475f",
+      "msg": "Updated gitignore",
+      "date": "2023-03-23T21:20:04Z"
+    },
+    {
+      "sha": "c213c81",
+      "msg": "Changed workflow to run as submodule as well",
+      "date": "2023-03-21T06:42:04Z"
+    },
+    {
+      "sha": "115b40a",
+      "msg": "Script, workflow and notebook updates",
+      "date": "2023-03-15T19:24:28Z"
+    },
+    {
+      "sha": "f3c183c",
+      "msg": "First pass of notebooks",
+      "date": "2020-05-28T15:00:09Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

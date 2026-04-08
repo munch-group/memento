@@ -1,0 +1,17 @@
+{
+  "id": "mnlu989u3dyq",
+  "type": "observation",
+  "title": "High freq ASD genes CACNA1C CACNA1F connections with cDEGs",
+  "genes": [
+    "CACNA1C",
+    "CACNA1F"
+  ],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-04-05T14:11:05.854Z",
+  "synced": false,
+  "_sortTag": ""
+}

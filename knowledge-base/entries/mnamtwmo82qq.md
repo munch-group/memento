@@ -1,0 +1,1 @@
+With SCC caching I can extend the model in the seq direction almost for free by adding chunks

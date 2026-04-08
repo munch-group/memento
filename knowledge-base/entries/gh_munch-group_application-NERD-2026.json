@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_application-NERD-2026",
+  "type": "github",
+  "title": "application-NERD-2026",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/application-NERD-2026",
+  "date": "2026-02-25T12:35:04Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/application-NERD-2026",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "734c716",
+      "msg": "submitted version",
+      "date": "2026-02-25T12:34:50Z"
+    },
+    {
+      "sha": "d5bc698",
+      "msg": "update",
+      "date": "2026-02-19T00:25:54Z"
+    },
+    {
+      "sha": "0d7368f",
+      "msg": "update",
+      "date": "2026-02-18T13:38:12Z"
+    },
+    {
+      "sha": "cd7b628",
+      "msg": "update",
+      "date": "2026-02-18T13:35:38Z"
+    },
+    {
+      "sha": "41ec14d",
+      "msg": "update",
+      "date": "2026-02-18T12:53:14Z"
+    },
+    {
+      "sha": "495406f",
+      "msg": "update",
+      "date": "2026-02-18T12:25:09Z"
+    },
+    {
+      "sha": "13546e0",
+      "msg": "update",
+      "date": "2026-02-17T16:40:12Z"
+    },
+    {
+      "sha": "1e74539",
+      "msg": "update",
+      "date": "2026-02-17T15:25:30Z"
+    },
+    {
+      "sha": "5e73afa",
+      "msg": "update",
+      "date": "2026-02-17T11:21:54Z"
+    },
+    {
+      "sha": "5c93b0f",
+      "msg": "update",
+      "date": "2026-02-17T08:57:57Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

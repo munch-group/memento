@@ -351,7 +351,7 @@ let editingId = null;
 let linkMode = false;
 let connFilter = 'all'; // 'all' | 'conn' | 'noconn'
 let archiveFilter = 'active'; // 'active' | 'archived'
-let fileHandle = null;
+let entriesHandle = null; // DirectoryHandle for entries/
 let highlightGenes = new Set();
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
 let ghIssuesItems = [];  // temporary issue cards (not saved to JSON)
@@ -377,25 +377,13 @@ async function idbGet(key){
 
 // --- File System Access ---
 let dirHandle = null;
-const JSON_NAME = 'knowledge-base.json';
 
 async function connectFolder() {
   try {
     const dh = await window.showDirectoryPicker({mode:'readwrite'});
     dirHandle = dh;
     await idbPut('dh', dirHandle);
-    // Find or create the JSON file inside the folder
-    try {
-      fileHandle = await dirHandle.getFileHandle(JSON_NAME);
-    } catch {
-      // No JSON file yet — let user pick a name or create default
-      fileHandle = await dirHandle.getFileHandle(JSON_NAME, {create: true});
-      items = [];
-      const wr = await fileHandle.createWritable();
-      await wr.write('[]');
-      await wr.close();
-    }
-    await idbPut('fh', fileHandle);
+    entriesHandle = await dirHandle.getDirectoryHandle('entries', {create: true});
     await loadFromFile();
     showApp();
   } catch(e) {
@@ -403,48 +391,80 @@ async function connectFolder() {
   }
 }
 
-// Switch to a different JSON file within the same folder
-async function switchFile() {
-  try {
-    const [fh] = await window.showOpenFilePicker({
-      types:[{description:'JSON',accept:{'application/json':['.json']}}],
-      excludeAcceptAllOption:false
-    });
-    fileHandle = fh;
-    await idbPut('fh', fileHandle);
-    await loadFromFile();
-  } catch(e) {
-    if (e.name !== 'AbortError') showToast('Could not open file: ' + e.message);
-  }
-}
-
 async function loadFromFile() {
-  if (!fileHandle) return;
+  if (!dirHandle) return;
   try {
-    const file = await fileHandle.getFile();
-    const text = await file.text();
-    if (text.trim()) {
-      const data = JSON.parse(text);
-      items = (Array.isArray(data) ? data : (data.items || []));
-      window._kbDigest = items.find(i => i.id === '_digest') || null;
-      items = items.filter(i => i.id !== '_digest');
-    } else {
-      items = [];
+    if (!entriesHandle) entriesHandle = await dirHandle.getDirectoryHandle('entries', {create: true});
+    const loaded = [];
+    for await (const [name, handle] of entriesHandle) {
+      if (!name.endsWith('.json') || handle.kind !== 'file') continue;
+      const eid = name.slice(0, -5);
+      const jsonFile = await handle.getFile();
+      const entry = JSON.parse(await jsonFile.text());
+      // Read companion .md
+      let mdText = '';
+      try {
+        const mdHandle = await entriesHandle.getFileHandle(eid + '.md');
+        const mdFile = await mdHandle.getFile();
+        mdText = await mdFile.text();
+      } catch(_) {}
+      if (entry.type === '_digest') {
+        entry.markdown = mdText;
+      } else {
+        entry.content = mdText;
+      }
+      loaded.push(entry);
     }
-    updateFileStatus(fileHandle.name);
+    window._kbDigest = loaded.find(i => i.id === '_digest') || null;
+    items = loaded.filter(i => i.id !== '_digest');
+    updateFileStatus(dirHandle.name);
     computeSortTags();
     renderFilters();
     renderList();
   } catch(e) { showToast('Read error: '+e.message); }
 }
 
+async function saveEntryToFile(entry) {
+  if (!dirHandle) return;
+  try {
+    if (!entriesHandle) entriesHandle = await dirHandle.getDirectoryHandle('entries', {create: true});
+    const eid = entry.id;
+    // Separate content from metadata
+    const meta = Object.assign({}, entry);
+    let mdText;
+    if (meta.type === '_digest') {
+      mdText = meta.markdown || '';
+      delete meta.markdown;
+    } else {
+      mdText = meta.content || '';
+      delete meta.content;
+    }
+    // Write .json
+    const jh = await entriesHandle.getFileHandle(eid + '.json', {create: true});
+    const jw = await jh.createWritable();
+    await jw.write(JSON.stringify(meta, null, 2));
+    await jw.close();
+    // Write .md
+    const mh = await entriesHandle.getFileHandle(eid + '.md', {create: true});
+    const mw = await mh.createWritable();
+    await mw.write(mdText);
+    await mw.close();
+  } catch(e) { showToast('Save error: '+e.message); }
+}
+
+async function deleteEntryFile(eid) {
+  if (!entriesHandle) return;
+  try { await entriesHandle.removeEntry(eid + '.json'); } catch(_) {}
+  try { await entriesHandle.removeEntry(eid + '.md'); } catch(_) {}
+}
+
 async function saveToFile() {
-  if (!fileHandle) return;
+  if (!dirHandle) return;
   try {
     const toSave = window._kbDigest ? [...items, window._kbDigest] : items;
-    const writable = await fileHandle.createWritable();
-    await writable.write(JSON.stringify(toSave, null, 2));
-    await writable.close();
+    for (const entry of toSave) {
+      await saveEntryToFile(entry);
+    }
   } catch(e) { showToast('Save error: '+e.message); }
 }
 
@@ -455,25 +475,12 @@ async function tryRestoreHandle() {
       const perm = await dh.queryPermission({mode:'readwrite'});
       if (perm === 'granted') {
         dirHandle = dh;
-      }
-    }
-    const fh = await idbGet('fh');
-    if (fh) {
-      fileHandle = fh;
-      // If we have dirHandle, permissions are already granted (readwrite on dir covers files)
-      if (dirHandle) {
+        entriesHandle = await dirHandle.getDirectoryHandle('entries', {create: true});
         await loadFromFile();
         showApp();
       } else {
-        // Legacy: file handle without dir handle — try read permission
-        const perm = await fileHandle.queryPermission({mode:'read'});
-        if (perm === 'granted') {
-          await loadFromFile();
-          showApp();
-        } else {
-          updateFileStatus(fileHandle.name + ' (click Connect to re-authorize)');
-          showApp();
-        }
+        updateFileStatus(dh.name + ' (click Connect to re-authorize)');
+        showApp();
       }
     }
   } catch(e) {}
@@ -482,7 +489,7 @@ async function tryRestoreHandle() {
 function showApp() {
   document.getElementById('connect-screen').style.display='none';
   document.getElementById('app-area').style.display='';
-  updateFileStatus(fileHandle?.name || '');
+  updateFileStatus(dirHandle?.name || '');
   applyClipParams();
 }
 
@@ -1178,7 +1185,7 @@ async function deleteEditingItem() {
   editingId = null;
   items = items.filter(i => i.id !== id);
   if (expandedId === id) expandedId = null;
-  await saveToFile();
+  await deleteEntryFile(id);
   document.getElementById('add-form').style.display = 'none';
   document.getElementById('btn-add-toggle').textContent = '+ Add';
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
@@ -1293,7 +1300,7 @@ async function deleteItem(e,id){
   if(!confirm('Delete this entry?'))return;
   items=items.filter(i=>i.id!==id);
   if(expandedId===id)expandedId=null;
-  await saveToFile();
+  await deleteEntryFile(id);
   renderFilters(); renderList(); showToast('Deleted');
 }
 
@@ -1462,7 +1469,7 @@ document.addEventListener('keydown', async e=>{
     }
   }
 });
-window.addEventListener('focus', ()=>{ if(fileHandle) loadFromFile(); });
+window.addEventListener('focus', ()=>{ if(dirHandle) loadFromFile(); });
 let _resizeTimer;
 window.addEventListener('resize', ()=>{ clearTimeout(_resizeTimer); _resizeTimer = setTimeout(renderList, 150); });
 
@@ -1711,7 +1718,10 @@ async function ghSyncRepos() {
     const ghFullNames = new Set(allRepos.map(r => r.full_name));
     const removed = items.filter(i => i.type === 'github' && i._ghFullName && !ghFullNames.has(i._ghFullName));
     const removedCount = removed.length;
-    if (removedCount) items = items.filter(i => !(i.type === 'github' && i._ghFullName && !ghFullNames.has(i._ghFullName)));
+    if (removedCount) {
+      for (const r of removed) await deleteEntryFile(r.id);
+      items = items.filter(i => !(i.type === 'github' && i._ghFullName && !ghFullNames.has(i._ghFullName)));
+    }
     await saveToFile();
     computeSortTags(); renderFilters(); renderList();
     showToast(`GitHub: ${added} added, ${updated} updated, ${removedCount} removed — fetching activity…`);

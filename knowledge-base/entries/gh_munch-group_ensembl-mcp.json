@@ -1,0 +1,31 @@
+{
+  "id": "gh_munch-group_ensembl-mcp",
+  "type": "github",
+  "title": "ensembl-mcp",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/ensembl-mcp",
+  "date": "2025-12-09T18:17:03Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/ensembl-mcp",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "TypeScript",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "2109355",
+      "msg": "Standalone repo: Update dependencies, add conda recipe, update README and .gitignore",
+      "date": "2025-12-09T18:16:02Z"
+    },
+    {
+      "sha": "967f099",
+      "msg": "Added files",
+      "date": "2025-09-30T20:33:19Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,112 @@
+{
+  "id": "gh_kaspermunch_sap",
+  "type": "github",
+  "title": "sap",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/sap",
+  "date": "2023-05-01T19:32:19Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/sap",
+  "_ghStars": 4,
+  "_ghForks": 2,
+  "_ghLang": "C",
+  "_ghOpenIssues": 4,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "fa3f8af",
+      "msg": "Added message and exit if entrez query does not find any entries",
+      "date": "2023-02-12T10:11:43Z"
+    },
+    {
+      "sha": "83af0d1",
+      "msg": "Update README.md",
+      "date": "2023-01-15T18:27:47Z"
+    },
+    {
+      "sha": "663f71a",
+      "msg": "Added some files I don't remember if I need (just in case)",
+      "date": "2023-01-15T17:58:11Z"
+    },
+    {
+      "sha": "2b9d5ed",
+      "msg": "Removed exe mode from some files (755 to 644)",
+      "date": "2023-01-15T17:53:30Z"
+    },
+    {
+      "sha": "59217bf",
+      "msg": "env for M1 image",
+      "date": "2023-01-15T17:51:18Z"
+    },
+    {
+      "sha": "69ae59a",
+      "msg": "Updates to version 1.10.1",
+      "date": "2023-01-15T17:48:15Z"
+    },
+    {
+      "sha": "a9b554e",
+      "msg": "small fix",
+      "date": "2022-05-03T15:31:36Z"
+    },
+    {
+      "sha": "1ab09ef",
+      "msg": "Updated readme",
+      "date": "2022-05-03T15:26:36Z"
+    },
+    {
+      "sha": "fd3c465",
+      "msg": "Fixes for experimental --ingroup option",
+      "date": "2022-05-03T15:26:24Z"
+    },
+    {
+      "sha": "dbc75ce",
+      "msg": "Added __contains__ and remove options",
+      "date": "2022-05-03T15:25:41Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 13,
+      "title": "There seems to be a problem at the NCBI server. The retrieved annotation is not valid XML. Try again later",
+      "state": "closed",
+      "date": "2022-03-02T19:34:17Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/sap/issues/13"
+    },
+    {
+      "number": 11,
+      "title": "Issues installing on macOS Sierra",
+      "state": "closed",
+      "date": "2021-10-13T13:21:11Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/sap/issues/11"
+    },
+    {
+      "number": 10,
+      "title": "\"clade\" levels in NCBI taxonomies",
+      "state": "closed",
+      "date": "2021-10-04T17:36:04Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/sap/issues/10"
+    },
+    {
+      "number": 8,
+      "title": "SAP NCBI server error",
+      "state": "closed",
+      "date": "2021-10-04T17:35:39Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/sap/issues/8"
+    },
+    {
+      "number": 5,
+      "title": "Underscores in sequence",
+      "state": "closed",
+      "date": "2020-05-23T10:30:08Z",
+      "labels": [],
+      "url": "https://github.com/kaspermunch/sap/issues/5"
+    }
+  ]
+}

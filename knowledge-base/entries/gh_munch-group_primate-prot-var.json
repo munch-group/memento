@@ -1,0 +1,80 @@
+{
+  "id": "gh_munch-group_primate-prot-var",
+  "type": "github",
+  "title": "primate-prot-var",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/primate-prot-var",
+  "date": "2026-04-05T16:30:37Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/primate-prot-var",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 1,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "662d351",
+      "msg": "Update from cluster",
+      "date": "2025-10-13T12:56:06Z"
+    },
+    {
+      "sha": "5c1f8f8",
+      "msg": "Update from cluster",
+      "date": "2025-10-13T12:54:55Z"
+    },
+    {
+      "sha": "a0c0ed5",
+      "msg": "update",
+      "date": "2025-10-10T10:51:43Z"
+    },
+    {
+      "sha": "ff066f8",
+      "msg": "added claude scripts",
+      "date": "2025-10-10T10:50:12Z"
+    },
+    {
+      "sha": "5edcd6b",
+      "msg": "Added script",
+      "date": "2025-09-23T08:50:04Z"
+    },
+    {
+      "sha": "83c0470",
+      "msg": "Added scripts",
+      "date": "2025-09-23T08:27:38Z"
+    },
+    {
+      "sha": "1e4aacc",
+      "msg": "Added LFS",
+      "date": "2025-09-22T09:43:51Z"
+    },
+    {
+      "sha": "5b8b379",
+      "msg": "Added alignment script",
+      "date": "2025-09-22T06:23:41Z"
+    },
+    {
+      "sha": "c9cf06d",
+      "msg": "Added orthologs code from somewhere else",
+      "date": "2025-09-20T19:25:19Z"
+    },
+    {
+      "sha": "f36f493",
+      "msg": "Added files",
+      "date": "2025-09-09T18:26:18Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Complete VEP workflow",
+      "state": "open",
+      "date": "2026-04-05T16:30:37Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/primate-prot-var/issues/1"
+    }
+  ]
+}

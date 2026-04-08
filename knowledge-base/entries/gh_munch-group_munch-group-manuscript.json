@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_munch-group-manuscript",
+  "type": "github",
+  "title": "munch-group-manuscript",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/munch-group-manuscript",
+  "date": "2026-03-13T18:17:18Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/munch-group-manuscript",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "b79e79d",
+      "msg": "update",
+      "date": "2026-03-13T18:17:16Z"
+    },
+    {
+      "sha": "df72c2a",
+      "msg": "Added multi repo support",
+      "date": "2026-03-10T11:48:16Z"
+    },
+    {
+      "sha": "bbe643e",
+      "msg": "Added more files",
+      "date": "2026-03-10T11:04:30Z"
+    },
+    {
+      "sha": "17cbd62",
+      "msg": "Added multi agent setup",
+      "date": "2026-03-10T10:49:27Z"
+    },
+    {
+      "sha": "4394f0a",
+      "msg": "Added css for markdown previews",
+      "date": "2025-12-21T11:25:17Z"
+    },
+    {
+      "sha": "69c8802",
+      "msg": "Refactor README for clarity and updates",
+      "date": "2025-12-15T07:56:46Z"
+    },
+    {
+      "sha": "22bbd84",
+      "msg": "update",
+      "date": "2025-12-14T11:50:54Z"
+    },
+    {
+      "sha": "1883b3f",
+      "msg": "Remove slides configuration and clean up project structure for manuscript focus",
+      "date": "2025-12-13T23:30:39Z"
+    },
+    {
+      "sha": "2783e95",
+      "msg": "removed manuscript and renamed thesis to manuscript",
+      "date": "2025-12-10T15:02:02Z"
+    },
+    {
+      "sha": "0a431c6",
+      "msg": "update",
+      "date": "2025-12-10T12:00:37Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

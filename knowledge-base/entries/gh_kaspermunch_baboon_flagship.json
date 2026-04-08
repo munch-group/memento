@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_baboon_flagship",
+  "type": "github",
+  "title": "baboon_flagship",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/baboon_flagship",
+  "date": "2021-11-06T11:23:52Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/baboon_flagship",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "b18bc42",
+      "msg": "updated notebook",
+      "date": "2021-11-06T11:23:43Z"
+    },
+    {
+      "sha": "bfbe926",
+      "msg": "Updated notebook",
+      "date": "2021-11-01T14:13:11Z"
+    },
+    {
+      "sha": "8df674f",
+      "msg": "Updates",
+      "date": "2021-07-05T15:22:59Z"
+    },
+    {
+      "sha": "3c86ebf",
+      "msg": "Updated workflow",
+      "date": "2021-01-18T19:37:05Z"
+    },
+    {
+      "sha": "9e77a23",
+      "msg": "Updated scripts",
+      "date": "2021-01-18T19:36:42Z"
+    },
+    {
+      "sha": "bf2960d",
+      "msg": "Updated notebooks",
+      "date": "2021-01-18T19:36:23Z"
+    },
+    {
+      "sha": "099d8a0",
+      "msg": "More updates",
+      "date": "2021-01-04T12:11:14Z"
+    },
+    {
+      "sha": "a5f3b5e",
+      "msg": "Updated gitignore",
+      "date": "2020-12-30T10:50:51Z"
+    },
+    {
+      "sha": "23986ec",
+      "msg": "Added modin notebook",
+      "date": "2020-12-30T10:49:56Z"
+    },
+    {
+      "sha": "2e9810d",
+      "msg": "Added encrypted IUCN range data",
+      "date": "2020-12-30T10:45:55Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

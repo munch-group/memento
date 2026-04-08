@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_argdash",
+  "type": "github",
+  "title": "argdash",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/argdash",
+  "date": "2025-06-02T13:13:28Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/argdash",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "19b3826",
+      "msg": "update",
+      "date": "2025-06-02T13:13:18Z"
+    },
+    {
+      "sha": "6939e71",
+      "msg": "update",
+      "date": "2025-06-02T13:12:51Z"
+    },
+    {
+      "sha": "7fd6110",
+      "msg": "Update meta.yaml",
+      "date": "2025-06-02T12:08:44Z"
+    },
+    {
+      "sha": "e8dcf51",
+      "msg": "Update requirements.txt",
+      "date": "2025-06-02T12:07:54Z"
+    },
+    {
+      "sha": "7598daf",
+      "msg": "update",
+      "date": "2025-03-13T09:01:07Z"
+    },
+    {
+      "sha": "f898fd3",
+      "msg": "update",
+      "date": "2025-03-13T06:34:56Z"
+    },
+    {
+      "sha": "8043f8b",
+      "msg": "update",
+      "date": "2025-03-11T23:00:19Z"
+    },
+    {
+      "sha": "3a24996",
+      "msg": "update",
+      "date": "2025-03-11T22:59:47Z"
+    },
+    {
+      "sha": "dc0bf98",
+      "msg": "update",
+      "date": "2025-03-11T07:41:21Z"
+    },
+    {
+      "sha": "234a1fa",
+      "msg": "update",
+      "date": "2025-03-10T11:04:25Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

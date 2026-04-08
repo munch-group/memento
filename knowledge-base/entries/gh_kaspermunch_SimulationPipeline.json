@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_SimulationPipeline",
+  "type": "github",
+  "title": "SimulationPipeline",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/SimulationPipeline",
+  "date": "2020-05-27T07:04:52Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/SimulationPipeline",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5cea3fb",
+      "msg": "Initial 2to3 conversion",
+      "date": "2019-12-16T21:31:06Z"
+    },
+    {
+      "sha": "b09d824",
+      "msg": "Changed dir of coalhmm and bppseqgen to bpp_coalhmm",
+      "date": "2016-10-28T10:04:13Z"
+    },
+    {
+      "sha": "61b4c37",
+      "msg": "changed from distutils to setuptools",
+      "date": "2016-10-11T11:06:30Z"
+    },
+    {
+      "sha": "047988f",
+      "msg": "Added dummy code for for ILS16 support.",
+      "date": "2015-10-21T07:25:09Z"
+    },
+    {
+      "sha": "3aa32a7",
+      "msg": "Added back entry points",
+      "date": "2015-07-30T14:10:25Z"
+    },
+    {
+      "sha": "7f53ac8",
+      "msg": "Changed setup.py to work without ez_setup",
+      "date": "2015-07-28T09:42:40Z"
+    },
+    {
+      "sha": "52273dd",
+      "msg": "Merge branch 'master' of https://github.com/kaspermunch/SimulationPipeline",
+      "date": "2015-07-28T08:25:14Z"
+    },
+    {
+      "sha": "aea669c",
+      "msg": "Added pycharm files to gitignore",
+      "date": "2015-07-28T08:25:02Z"
+    },
+    {
+      "sha": "a49a7b8",
+      "msg": "Mainly changes that allows retrieving toplogy",
+      "date": "2015-04-30T20:41:55Z"
+    },
+    {
+      "sha": "db273fc",
+      "msg": "Made leaf hack default",
+      "date": "2014-02-25T20:36:03Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

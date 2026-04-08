@@ -1,0 +1,1 @@
+An undergraduate course in bioinformatics and programming

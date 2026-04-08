@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_asd-xwas",
+  "type": "github",
+  "title": "asd-xwas",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/asd-xwas",
+  "date": "2024-11-29T09:58:53Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/asd-xwas",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e3ad5ae",
+      "msg": "Create plot_PCs_danes.R",
+      "date": "2024-11-29T09:56:54Z"
+    },
+    {
+      "sha": "86597f2",
+      "msg": "Create PCA_iPSYCH2015_1000G_danes.sh",
+      "date": "2024-11-29T09:53:50Z"
+    },
+    {
+      "sha": "7390dde",
+      "msg": "Update merge_iPSYCH2015_1000G.sh",
+      "date": "2024-11-29T09:51:00Z"
+    },
+    {
+      "sha": "4710509",
+      "msg": "Create merge_iPSYCH2015_1000G.sh",
+      "date": "2024-11-29T09:50:27Z"
+    },
+    {
+      "sha": "e25f033",
+      "msg": "Create relatedness_check.sh",
+      "date": "2024-11-29T09:46:53Z"
+    },
+    {
+      "sha": "06769ad",
+      "msg": "Fixed a bug",
+      "date": "2024-10-19T09:04:00Z"
+    },
+    {
+      "sha": "f8c5116",
+      "msg": "Update environment.yml",
+      "date": "2024-10-18T12:47:27Z"
+    },
+    {
+      "sha": "e1c8959",
+      "msg": "Delete slides/_quarto.yml",
+      "date": "2024-10-18T11:07:05Z"
+    },
+    {
+      "sha": "8cdd913",
+      "msg": "Update _quarto-book.yml",
+      "date": "2024-10-18T11:02:44Z"
+    },
+    {
+      "sha": "41536d2",
+      "msg": "Update environment.yml",
+      "date": "2024-10-18T09:37:31Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

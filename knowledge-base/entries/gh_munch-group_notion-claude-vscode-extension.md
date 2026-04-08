@@ -1,0 +1,1 @@
+VS Code extension for interacting with Notion pages using Claude

@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_FiveColorMap",
+  "type": "github",
+  "title": "FiveColorMap",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/FiveColorMap",
+  "date": "2024-06-01T15:24:39Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/FiveColorMap",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "85b1ce0",
+      "msg": "Added a backup file",
+      "date": "2024-06-01T15:24:30Z"
+    },
+    {
+      "sha": "d52f41a",
+      "msg": "Added code for making maps with geoplot",
+      "date": "2020-12-26T16:16:23Z"
+    },
+    {
+      "sha": "6bd4883",
+      "msg": "Added geoplot examples",
+      "date": "2020-12-04T08:23:45Z"
+    },
+    {
+      "sha": "eebdd2f",
+      "msg": "Updated notebook and added a data file",
+      "date": "2020-10-27T12:11:47Z"
+    },
+    {
+      "sha": "ec293cb",
+      "msg": "Added Faceting example",
+      "date": "2020-10-26T22:56:30Z"
+    },
+    {
+      "sha": "dfe7f0a",
+      "msg": "Updated deprecated parts",
+      "date": "2020-10-26T22:24:01Z"
+    },
+    {
+      "sha": "8049105",
+      "msg": "Updated readme",
+      "date": "2020-09-30T17:18:31Z"
+    },
+    {
+      "sha": "543fd2a",
+      "msg": "Added conda environment yml file",
+      "date": "2020-09-30T17:09:58Z"
+    },
+    {
+      "sha": "550474a",
+      "msg": "Updated notebook",
+      "date": "2019-12-25T22:15:10Z"
+    },
+    {
+      "sha": "51a0f5f",
+      "msg": "Added first stab at drop shadow",
+      "date": "2019-02-28T09:29:48Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

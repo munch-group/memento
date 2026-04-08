@@ -1,0 +1,100 @@
+{
+  "id": "gh_mailund_IMCoalHMM",
+  "type": "github",
+  "title": "IMCoalHMM",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/mailund/IMCoalHMM",
+  "date": "2021-02-24T22:58:42Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "mailund/IMCoalHMM",
+  "_ghStars": 7,
+  "_ghForks": 1,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 3,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "34e88ab",
+      "msg": "Merge pull request #3 from harvardinformatics/docker",
+      "date": "2021-02-24T05:21:22Z"
+    },
+    {
+      "sha": "d3b1916",
+      "msg": "Import missing Forwarder class in prepare-alignments.py",
+      "date": "2021-02-23T21:19:17Z"
+    },
+    {
+      "sha": "adb964f",
+      "msg": "Add Dockerfile",
+      "date": "2021-02-19T20:22:09Z"
+    },
+    {
+      "sha": "fb7bb4a",
+      "msg": "Added link to the correct ziphmm module",
+      "date": "2017-03-08T08:25:59Z"
+    },
+    {
+      "sha": "5dd77a0",
+      "msg": "Merge branch 'release/v0.7.0'",
+      "date": "2017-03-08T08:18:44Z"
+    },
+    {
+      "sha": "ac88335",
+      "msg": "Bumped version for mini-ziphmm version",
+      "date": "2017-03-08T08:18:08Z"
+    },
+    {
+      "sha": "0d7d3be",
+      "msg": "Merge branch 'feature/mini-ziphmm' into develop",
+      "date": "2017-03-08T08:16:39Z"
+    },
+    {
+      "sha": "14284cc",
+      "msg": "Updated make file and setup.",
+      "date": "2017-03-08T08:16:25Z"
+    },
+    {
+      "sha": "f25900e",
+      "msg": "Migration model and MCMCs ported.",
+      "date": "2017-03-08T08:10:43Z"
+    },
+    {
+      "sha": "8ebecbf",
+      "msg": "Got rid of scripts that I rarely use and don't want to spend time on porting",
+      "date": "2017-03-08T08:10:15Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 4,
+      "title": "prepare-alignments.py AttributeError for quartet alignment",
+      "state": "open",
+      "date": "2022-08-14T15:26:57Z",
+      "labels": [],
+      "url": "https://github.com/mailund/IMCoalHMM/issues/4"
+    },
+    {
+      "number": 2,
+      "title": "Make a conda package",
+      "state": "open",
+      "date": "2017-07-04T11:34:41Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/mailund/IMCoalHMM/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "Kill the entire job when a sub-process dies",
+      "state": "open",
+      "date": "2014-07-23T07:16:25Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/mailund/IMCoalHMM/issues/1"
+    }
+  ]
+}

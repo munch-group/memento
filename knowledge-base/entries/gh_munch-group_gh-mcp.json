@@ -1,0 +1,31 @@
+{
+  "id": "gh_munch-group_gh-mcp",
+  "type": "github",
+  "title": "gh-mcp",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/gh-mcp",
+  "date": "2025-12-09T18:17:17Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/gh-mcp",
+  "_ghStars": 1,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "260f15f",
+      "msg": "Standalone repo: Update README, add conda recipe and LICENSE",
+      "date": "2025-12-09T18:16:04Z"
+    },
+    {
+      "sha": "3a483f5",
+      "msg": "Added gh server",
+      "date": "2025-10-31T12:57:14Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

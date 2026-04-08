@@ -1,0 +1,1 @@
+Hard edges of pure baboon ancestry regions could be explained as drivers unlinked from their antagonizers sweeping. Emulate it with BDMI simulations (one locus as driver and another as antagonizer).

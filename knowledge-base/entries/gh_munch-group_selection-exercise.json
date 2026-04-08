@@ -1,0 +1,41 @@
+{
+  "id": "gh_munch-group_selection-exercise",
+  "type": "github",
+  "title": "selection-exercise",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/selection-exercise",
+  "date": "2026-03-09T21:37:05Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/selection-exercise",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "8df0666",
+      "msg": "update",
+      "date": "2026-03-09T21:36:47Z"
+    },
+    {
+      "sha": "a64de59",
+      "msg": "update",
+      "date": "2026-03-09T14:00:06Z"
+    },
+    {
+      "sha": "3e3279d",
+      "msg": "update",
+      "date": "2026-03-09T11:32:54Z"
+    },
+    {
+      "sha": "387f9be",
+      "msg": "Initial commit",
+      "date": "2026-03-09T08:00:49Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

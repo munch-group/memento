@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_codeml",
+  "type": "github",
+  "title": "codeml",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/codeml",
+  "date": "2025-02-13T22:36:05Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/codeml",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "c313047",
+      "msg": "Added large files",
+      "date": "2025-02-13T22:35:43Z"
+    },
+    {
+      "sha": "48b5443",
+      "msg": "script update",
+      "date": "2025-02-13T21:45:48Z"
+    },
+    {
+      "sha": "4cc8802",
+      "msg": "started adding branch site model",
+      "date": "2023-05-16T06:32:43Z"
+    },
+    {
+      "sha": "35aa33b",
+      "msg": "Updates",
+      "date": "2023-04-11T06:57:00Z"
+    },
+    {
+      "sha": "628c00f",
+      "msg": "gitignore",
+      "date": "2023-03-23T21:46:44Z"
+    },
+    {
+      "sha": "6e0346c",
+      "msg": "Devel and fixes",
+      "date": "2023-03-23T21:41:36Z"
+    },
+    {
+      "sha": "869c029",
+      "msg": "Delete",
+      "date": "2023-03-15T20:01:37Z"
+    },
+    {
+      "sha": "a5fd520",
+      "msg": "Updated workflow.py",
+      "date": "2023-03-15T20:00:57Z"
+    },
+    {
+      "sha": "fcb54be",
+      "msg": "Now requiring at least 4 sequences and only indels in multiples of three",
+      "date": "2023-03-13T08:48:37Z"
+    },
+    {
+      "sha": "2e1ba87",
+      "msg": "Updated .gitignore",
+      "date": "2023-03-13T08:48:05Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

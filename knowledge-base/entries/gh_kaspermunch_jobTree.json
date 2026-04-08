@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_jobTree",
+  "type": "github",
+  "title": "jobTree",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/jobTree",
+  "date": "2016-10-18T14:47:07Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/jobTree",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "3a8f1b7",
+      "msg": "Merge pull request #24 from ifiddes/master",
+      "date": "2015-01-09T21:16:47Z"
+    },
+    {
+      "sha": "1b7acee",
+      "msg": "don't want to pass parser here, it doesn't work",
+      "date": "2015-01-05T23:45:46Z"
+    },
+    {
+      "sha": "945bd2b",
+      "msg": "Merge remote-tracking branch 'origin/master' into development",
+      "date": "2014-06-20T04:50:12Z"
+    },
+    {
+      "sha": "81a4076",
+      "msg": "Merge remote-tracking branch 'origin/development' into development",
+      "date": "2014-06-20T04:48:27Z"
+    },
+    {
+      "sha": "6cf2863",
+      "msg": "-",
+      "date": "2014-06-20T04:47:59Z"
+    },
+    {
+      "sha": "2f1f8f3",
+      "msg": "Update README.md",
+      "date": "2014-06-20T04:46:40Z"
+    },
+    {
+      "sha": "68751ac",
+      "msg": "Update README.md",
+      "date": "2014-06-19T22:39:05Z"
+    },
+    {
+      "sha": "427f502",
+      "msg": "Adding new code to make functions into targets!",
+      "date": "2014-06-19T22:25:37Z"
+    },
+    {
+      "sha": "6df1c93",
+      "msg": "Update README.md",
+      "date": "2014-06-13T16:22:14Z"
+    },
+    {
+      "sha": "cb8a862",
+      "msg": "Update README.md",
+      "date": "2014-06-13T01:05:50Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

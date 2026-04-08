@@ -1,0 +1,1 @@
+The H2 inversion and CACNA1C rs1006737 show strongly parallel frequency distributions—both are enriched in Europeans (~25-35%) and rare in East Asians (~5-6%).

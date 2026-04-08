@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_gwf",
+  "type": "github",
+  "title": "gwf",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/gwf",
+  "date": "2023-04-02T17:12:24Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/gwf",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "6850aa6",
+      "msg": "Added ensure_dir to plugins to allow component workflows to run in subdirs",
+      "date": "2023-04-02T17:11:52Z"
+    },
+    {
+      "sha": "541bfc2",
+      "msg": "Oops! (#401)",
+      "date": "2023-03-29T06:09:41Z"
+    },
+    {
+      "sha": "84d1534",
+      "msg": "Small fixes to include changelog in release",
+      "date": "2023-03-13T19:22:33Z"
+    },
+    {
+      "sha": "60c346a",
+      "msg": "Try to automatically create GitHub Release",
+      "date": "2023-03-13T19:14:31Z"
+    },
+    {
+      "sha": "a1a437a",
+      "msg": "Fix lint",
+      "date": "2023-03-13T18:43:06Z"
+    },
+    {
+      "sha": "82747cd",
+      "msg": "Update docs",
+      "date": "2023-03-13T18:39:28Z"
+    },
+    {
+      "sha": "cfa037a",
+      "msg": "Fix lint",
+      "date": "2023-03-13T18:32:44Z"
+    },
+    {
+      "sha": "be54775",
+      "msg": "Much improved spec hashing implementation",
+      "date": "2023-03-12T18:30:10Z"
+    },
+    {
+      "sha": "b07e37c",
+      "msg": "Fix clean target",
+      "date": "2023-03-12T12:07:08Z"
+    },
+    {
+      "sha": "cd0808a",
+      "msg": "Fix spec hashing and refactor with attrs",
+      "date": "2023-03-12T11:45:17Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

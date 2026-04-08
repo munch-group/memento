@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_vscode-markdown-url-extension",
+  "type": "github",
+  "title": "vscode-markdown-url-extension",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/vscode-markdown-url-extension",
+  "date": "2024-08-08T08:09:38Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/vscode-markdown-url-extension",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "TypeScript",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "c9b4130",
+      "msg": "small fix",
+      "date": "2024-08-08T08:09:36Z"
+    },
+    {
+      "sha": "32784b9",
+      "msg": "Added files",
+      "date": "2024-08-08T08:08:16Z"
+    },
+    {
+      "sha": "331bddd",
+      "msg": "Create README.md",
+      "date": "2024-08-08T07:59:40Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

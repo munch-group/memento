@@ -1,0 +1,71 @@
+{
+  "id": "gh_MarjolaineRousselle_coalhmm_pipeline",
+  "type": "github",
+  "title": "coalhmm_pipeline",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/MarjolaineRousselle/coalhmm_pipeline",
+  "date": "2020-03-25T11:08:20Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "MarjolaineRousselle/coalhmm_pipeline",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "c5e59e9",
+      "msg": "Adding targets for maf filtering",
+      "date": "2020-03-25T11:07:52Z"
+    },
+    {
+      "sha": "3231e32",
+      "msg": "Update argv arguments",
+      "date": "2020-03-24T08:11:59Z"
+    },
+    {
+      "sha": "d6e3ec6",
+      "msg": "Update create_fasta_and_info_table.py",
+      "date": "2020-03-24T08:10:22Z"
+    },
+    {
+      "sha": "9ee1e67",
+      "msg": "Updated trees from phylo",
+      "date": "2020-03-23T14:48:29Z"
+    },
+    {
+      "sha": "846faed",
+      "msg": "Changing the name of the slicing script to start_end",
+      "date": "2020-03-13T12:08:17Z"
+    },
+    {
+      "sha": "22234b8",
+      "msg": "Add description for the scripts",
+      "date": "2020-03-13T12:07:11Z"
+    },
+    {
+      "sha": "39f7df0",
+      "msg": "Update Maf_slicing_and_saving_fasta-checkpoint.ipynb",
+      "date": "2020-03-13T12:02:29Z"
+    },
+    {
+      "sha": "63bcbdc",
+      "msg": "Update workflow",
+      "date": "2020-03-13T12:01:30Z"
+    },
+    {
+      "sha": "e3daf1f",
+      "msg": "Update script for slicing such that it also saves the number of alignmnents.",
+      "date": "2020-03-13T12:01:10Z"
+    },
+    {
+      "sha": "1dc846b",
+      "msg": "Create script for extracting info table and generate individual fasta files",
+      "date": "2020-03-13T12:00:20Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

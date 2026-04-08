@@ -1,0 +1,71 @@
+{
+  "id": "gh_kaspermunch_birc-project",
+  "type": "github",
+  "title": "birc-project",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/kaspermunch/birc-project",
+  "date": "2022-02-18T09:50:07Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "kaspermunch/birc-project",
+  "_ghStars": 0,
+  "_ghForks": 17,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5a0570e",
+      "msg": "Updated readme",
+      "date": "2022-02-18T09:50:02Z"
+    },
+    {
+      "sha": "99aca04",
+      "msg": "Update README.md",
+      "date": "2022-02-18T08:46:09Z"
+    },
+    {
+      "sha": "c1a33e3",
+      "msg": "Update README.md",
+      "date": "2022-02-18T08:45:21Z"
+    },
+    {
+      "sha": "7c9f48f",
+      "msg": "Update README.md",
+      "date": "2022-02-17T20:19:39Z"
+    },
+    {
+      "sha": "a49b4fb",
+      "msg": "Update README.md",
+      "date": "2022-02-17T20:16:11Z"
+    },
+    {
+      "sha": "b2d5bb5",
+      "msg": "Update README.md",
+      "date": "2022-02-17T20:14:33Z"
+    },
+    {
+      "sha": "555313a",
+      "msg": "Update README.md",
+      "date": "2022-02-17T20:12:05Z"
+    },
+    {
+      "sha": "e66f633",
+      "msg": "Update README.md",
+      "date": "2022-02-17T16:54:07Z"
+    },
+    {
+      "sha": "5564638",
+      "msg": "Update README.md",
+      "date": "2022-02-17T16:30:04Z"
+    },
+    {
+      "sha": "4d38a89",
+      "msg": "Update README.md",
+      "date": "2022-02-17T16:28:11Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

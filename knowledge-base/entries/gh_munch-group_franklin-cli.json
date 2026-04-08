@@ -1,0 +1,154 @@
+{
+  "id": "gh_munch-group_franklin-cli",
+  "type": "github",
+  "title": "franklin-cli",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/franklin-cli",
+  "date": "2026-03-16T11:26:28Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/franklin-cli",
+  "_ghStars": 0,
+  "_ghForks": 1,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 32,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "ab12b1f",
+      "msg": "patch  version bump",
+      "date": "2026-03-16T11:25:59Z"
+    },
+    {
+      "sha": "2f9f5d4",
+      "msg": "updated read token",
+      "date": "2026-03-16T11:24:03Z"
+    },
+    {
+      "sha": "5289494",
+      "msg": "Change GitLab token in config.py",
+      "date": "2025-12-22T12:26:41Z"
+    },
+    {
+      "sha": "83719b6",
+      "msg": "Change GitHub write issue token",
+      "date": "2025-12-11T10:44:36Z"
+    },
+    {
+      "sha": "a60a4df",
+      "msg": "patch  version bump",
+      "date": "2025-08-29T20:48:31Z"
+    },
+    {
+      "sha": "b58efff",
+      "msg": "update",
+      "date": "2025-08-29T20:46:50Z"
+    },
+    {
+      "sha": "972f0fd",
+      "msg": "patch  version bump",
+      "date": "2025-08-28T20:23:27Z"
+    },
+    {
+      "sha": "1a295e7",
+      "msg": "patch  version bump",
+      "date": "2025-08-27T07:46:20Z"
+    },
+    {
+      "sha": "eb4caf2",
+      "msg": "patch  version bump",
+      "date": "2025-08-27T07:40:03Z"
+    },
+    {
+      "sha": "d9f8c0b",
+      "msg": "patch  version bump",
+      "date": "2025-08-27T07:15:45Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 51,
+      "title": "Clean up Franklin docs",
+      "state": "open",
+      "date": "2025-09-20T17:48:33Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/51"
+    },
+    {
+      "number": 50,
+      "title": "Franklin download only downloads an empty folder",
+      "state": "open",
+      "date": "2025-09-19T10:43:33Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/50"
+    },
+    {
+      "number": 49,
+      "title": "Make sure all command options are only single-dash format",
+      "state": "open",
+      "date": "2025-09-19T08:39:59Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/49"
+    },
+    {
+      "number": 48,
+      "title": "Move install_pixi.sh and test_notebook.sh to franklin installed scripts  install franklin in build stage and copy only the two files to prod stage",
+      "state": "open",
+      "date": "2025-08-23T18:07:00Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/48"
+    },
+    {
+      "number": 47,
+      "title": ".pixi.py should run as a Pixi task instead.",
+      "state": "open",
+      "date": "2025-08-23T18:06:33Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/47"
+    },
+    {
+      "number": 46,
+      "title": "tasks.collect-dependencies should also find unused libraries in toml and as if pixi.toml should be updated accordingly",
+      "state": "open",
+      "date": "2025-08-23T18:04:38Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/46"
+    },
+    {
+      "number": 45,
+      "title": "franklin grant prof should create token and set a password for course admin",
+      "state": "open",
+      "date": "2025-08-17T09:33:41Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/45"
+    },
+    {
+      "number": 44,
+      "title": "Add --template standard/R/etc to franklin exercise new",
+      "state": "open",
+      "date": "2025-08-17T07:49:48Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/44"
+    },
+    {
+      "number": 43,
+      "title": "Franklin download shoul remove dot files and dirs added to git by vip by mistake ",
+      "state": "open",
+      "date": "2025-08-14T08:18:05Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/43"
+    },
+    {
+      "number": 42,
+      "title": "Crash: Failed to find running container for image registry.gitlab.au.dk/franklin/molecular-biology-ii-proce",
+      "state": "closed",
+      "date": "2025-08-04T21:33:55Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/42"
+    }
+  ]
+}

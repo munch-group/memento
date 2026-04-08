@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_profiling-toolkit",
+  "type": "github",
+  "title": "profiling-toolkit",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/profiling-toolkit",
+  "date": "2025-11-16T08:50:29Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/profiling-toolkit",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "e798905",
+      "msg": "Readme update",
+      "date": "2025-11-16T08:50:25Z"
+    },
+    {
+      "sha": "b668ca6",
+      "msg": "Added files",
+      "date": "2025-11-16T08:15:12Z"
+    },
+    {
+      "sha": "b942850",
+      "msg": "Fix gprof2dot command syntax and add macOS platform detection for py-spy",
+      "date": "2025-11-16T08:13:56Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

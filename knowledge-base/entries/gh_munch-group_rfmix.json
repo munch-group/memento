@@ -1,0 +1,46 @@
+{
+  "id": "gh_munch-group_rfmix",
+  "type": "github",
+  "title": "rfmix",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/rfmix",
+  "date": "2024-05-30T05:14:41Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/rfmix",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "5906ff1",
+      "msg": "Updated mem spec",
+      "date": "2024-05-30T05:14:24Z"
+    },
+    {
+      "sha": "b397efb",
+      "msg": "Updated workflow",
+      "date": "2024-05-29T22:59:38Z"
+    },
+    {
+      "sha": "fe3b946",
+      "msg": "New files",
+      "date": "2024-05-28T11:03:28Z"
+    },
+    {
+      "sha": "bebb77f",
+      "msg": "Update README.md",
+      "date": "2024-05-28T09:31:36Z"
+    },
+    {
+      "sha": "0ace2e3",
+      "msg": "Initial commit",
+      "date": "2024-05-28T09:29:44Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

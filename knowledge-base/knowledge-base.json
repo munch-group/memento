@@ -62,7 +62,7 @@
     "title": "MAPT inversion",
     "tags": [],
     "source": "",
-    "date": "2026-04-04T08:28:55.699Z",
+    "date": "2026-04-08T12:40:44.177Z",
     "synced": false,
     "genes": [
       "MAPT"
@@ -2787,6 +2787,31 @@
     "due": "",
     "_ghCommits": [
       {
+        "sha": "cf9d34f",
+        "msg": "Added source papers for developing notation standard",
+        "date": "2026-04-08T10:17:29Z"
+      },
+      {
+        "sha": "f1f373a",
+        "msg": "deleted an outdated file",
+        "date": "2026-04-08T09:53:03Z"
+      },
+      {
+        "sha": "f24a595",
+        "msg": "updated docs",
+        "date": "2026-04-08T09:48:44Z"
+      },
+      {
+        "sha": "76d429d",
+        "msg": "Added a notebook for hexgrid modelling with fewer resistance paramters",
+        "date": "2026-04-08T09:47:26Z"
+      },
+      {
+        "sha": "d5cc20f",
+        "msg": "Fixed bugs and tested accuracy after removing base_weight and adding JAX/FFI support for log scale and callback to update_weights",
+        "date": "2026-04-08T09:45:22Z"
+      },
+      {
         "sha": "65819a5",
         "msg": "Removed old base_weight code and fixed a bug",
         "date": "2026-04-07T18:59:44Z"
@@ -2810,31 +2835,6 @@
         "sha": "73ada8f",
         "msg": "Added notebooks for psmc transitions and moved bffg notebooks",
         "date": "2026-04-06T21:48:55Z"
-      },
-      {
-        "sha": "475cf72",
-        "msg": "patch  version bump",
-        "date": "2026-04-03T11:35:18Z"
-      },
-      {
-        "sha": "6b31feb",
-        "msg": "patch  version bump",
-        "date": "2026-04-03T11:08:04Z"
-      },
-      {
-        "sha": "cf39340",
-        "msg": "Fixed rand_r compilation error on windows. Added function equivalent for windows",
-        "date": "2026-04-03T11:07:16Z"
-      },
-      {
-        "sha": "bbf5e6f",
-        "msg": "patch  version bump",
-        "date": "2026-04-02T20:12:34Z"
-      },
-      {
-        "sha": "be72102",
-        "msg": "pixi task fix",
-        "date": "2026-04-02T20:12:21Z"
       }
     ],
     "_ghIssuesRecent": [
@@ -15569,6 +15569,21 @@
     "archived": false,
     "due": "",
     "date": "2026-04-08T10:06:37.898Z",
+    "synced": false,
+    "_sortTag": ""
+  },
+  {
+    "id": "mnpzni4w8h7a",
+    "type": "note",
+    "content": "Did Neanderthals recieve the 13 genes interacting with MT when they also got the MT?",
+    "title": "",
+    "genes": [],
+    "tags": [],
+    "source": "[[mnkci1az643g|MT-Auto coevolving genes]] [[mnalzvyg8m1u|Human-Nean admixture]]",
+    "connection": true,
+    "archived": false,
+    "due": "",
+    "date": "2026-04-08T11:54:01.509Z",
     "synced": false,
     "_sortTag": ""
   },

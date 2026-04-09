@@ -128,6 +128,7 @@ a { color: inherit; }
 .digest-toggle.active .digest-dot { background: var(--accent); border-color: var(--accent); }
 .digest-toggle.active { color: var(--text2); }
 .digest-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.digest-stacked { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 .digest-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1.5rem 1.5rem; font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); box-shadow: 0 1px 3px var(--shadow); }
 .digest-card h1, .digest-card h2, .digest-card h3 { font-size: 13px; font-weight: 600; margin: 0.5em 0 0.3em; }
 .digest-card h2:first-child, .digest-card .digest-date + h2, .digest-card .digest-date:first-child + h2 { font-size: 15px; margin-top: 0; }
@@ -213,11 +214,22 @@ a { color: inherit; }
 .gh-issues-count { font-family: var(--mono); font-size: 9px; }
 .gh-meta { font-family: var(--mono); font-size: 10px; color: var(--text3); display: flex; gap: 8px; align-items: center; margin-top: 4px; }
 .type-opt.active { color: var(--tc); background: var(--tbg); border-color: var(--tc); }
+.sb-menu-btn { display: none; position: fixed; top: 12px; left: 12px; z-index: 20; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 6px 10px; font-size: 16px; cursor: pointer; color: var(--text); line-height: 1; }
+.sb-menu-btn:hover { background: var(--bg3); }
+@media (max-width: 640px) {
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; z-index: 15; transform: translateX(-100%); transition: transform 0.2s ease; }
+  .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
+  .sb-menu-btn { display: block; }
+  .main { padding: 1.25rem 1rem 4rem; padding-top: 3rem; }
+  .sb-overlay { display: none; position: fixed; inset: 0; z-index: 14; background: rgba(0,0,0,0.2); }
+  .sidebar.open ~ .sb-overlay { display: block; }
+}
 </style>
 </head>
 <body>
 <div class="layout">
-  <div class="sidebar">
+  <button class="sb-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+  <div class="sidebar" id="sidebar">
     <div class="sb-title">Memento</div>
     <div class="sb-scroll">
       <div id="archive-filter"></div>
@@ -234,6 +246,7 @@ a { color: inherit; }
       <div id="vscode-row"></div>
     </div>
   </div>
+  <div class="sb-overlay" onclick="document.querySelector('.sidebar').classList.remove('open')"></div>
   <div class="main" id="main-area">
     <div class="connect-screen" id="connect-screen">
       <div id="connect-fs">
@@ -887,8 +900,16 @@ function renderList() {
       else { const dateStr = d.date ? fmtDateAgo(d.date) : ''; digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}<h2>Where am I</h2>${linkifyDigestRepos(md(d.markdown))}</div>`; }
       const pCard = items.find(i => i.id === '_priorities');
       const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
-      list.innerHTML = `<div class="digest-col">${digestHtml}</div><div class="item-col">${pH}${emptyHtml}</div>`;
+      const ew = list.offsetWidth || Math.max(450, window.innerWidth - 260 - 48);
+      const eStacked = Math.floor((ew + 8) / (450 + 8)) <= 1;
+      list.style.flexDirection = eStacked ? 'column' : '';
+      if (eStacked) {
+        list.innerHTML = `<div class="digest-stacked">${digestHtml}${pH}</div>${emptyHtml}`;
+      } else {
+        list.innerHTML = `<div class="digest-col">${digestHtml}</div><div class="item-col">${pH}${emptyHtml}</div>`;
+      }
     } else {
+      list.style.flexDirection = '';
       list.innerHTML = emptyHtml;
     }
     return;
@@ -903,7 +924,8 @@ function renderList() {
     listWidth = Math.max(450, window.innerWidth - sw - 48);
   }
   const totalCols = Math.min(4, Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8))));
-  const nCols = digestVisible ? Math.max(1, totalCols - 2) : totalCols;
+  const digestStacked = digestVisible && totalCols <= 1;
+  const nCols = digestVisible && !digestStacked ? Math.max(1, totalCols - 2) : totalCols;
   // In digest view, pull _priorities card out for pinning at top of first column
   if (digestVisible) {
     const pIdx = vis.findIndex(i => i.id === '_priorities');
@@ -911,8 +933,8 @@ function renderList() {
   }
   const cols = Array.from({length: nCols}, () => []);
   vis.forEach((item, i) => cols[i % nCols].push(renderCard(item)));
-  // Prepend priorities card to first column in digest view
-  if (digestVisible && cols.length) {
+  // Prepend priorities card to first column in digest view (side-by-side only)
+  if (digestVisible && !digestStacked && cols.length) {
     const pCard = items.find(i => i.id === '_priorities');
     const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
     cols[0].unshift(pH);
@@ -928,9 +950,20 @@ function renderList() {
       const dateStr = d.date ? fmtDate(d.date) : '';
       digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}<h2>Where am I</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
     }
-    colsHtml = `<div class="digest-col">${digestHtml}</div>`;
+    if (digestStacked) {
+      // Stack digest + priorities above the card columns
+      const pCard = items.find(i => i.id === '_priorities');
+      const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
+      colsHtml = `<div class="digest-stacked">${digestHtml}${pH}</div>`;
+    } else {
+      colsHtml = `<div class="digest-col">${digestHtml}</div>`;
+    }
   }
-  colsHtml += cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
+  // Switch to column layout when stacked
+  list.style.flexDirection = digestStacked ? 'column' : '';
+  colsHtml += digestStacked
+    ? `<div style="display:flex;gap:8px;align-items:flex-start">${cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('')}</div>`
+    : cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
   list.innerHTML = banner + colsHtml;
   resolveImages();
   document.querySelectorAll('.gene-list').forEach(el => {
@@ -2055,6 +2088,12 @@ async function tryLoadFromGitHubCache() {
 }
 
 // --- Init ---
+// Auto-close sidebar on mobile after tapping a filter
+document.getElementById('sidebar').addEventListener('click', e => {
+  if (e.target.closest('.filter-chip') && window.innerWidth <= 640) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+});
 renderGhControls();
 if (hasFSAccess) {
   tryRestoreHandle();

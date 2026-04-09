@@ -19,8 +19,8 @@
   --shadow: rgba(20, 20, 19, 0.04); --shadow-hover: rgba(20, 20, 19, 0.08);
   --accent: #D97757; --accent-hover: #c4684a;
 }
-body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-html { overflow-x: hidden; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; overscroll-behavior-x: none; }
+html { overflow-x: hidden; overscroll-behavior-x: none; }
 ::placeholder { color: var(--text3); opacity: 0.4; }
 a { color: inherit; }
 .layout { display: flex; height: 100vh; overflow-x: hidden; }
@@ -218,12 +218,19 @@ a { color: inherit; }
 .sb-menu-btn { display: none; position: fixed; top: 12px; left: 12px; z-index: 20; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 6px 10px; font-size: 16px; cursor: pointer; color: var(--text); line-height: 1; }
 .sb-menu-btn:hover { background: var(--bg3); }
 @media (max-width: 640px) {
+  .layout { width: 100vw; max-width: 100vw; }
   .sidebar { position: fixed; left: 0; top: 0; bottom: 0; z-index: 15; transform: translateX(-100%); transition: transform 0.2s ease; }
   .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
   .sb-menu-btn { display: block; }
-  .main { padding: 1.25rem 1rem 4rem; padding-top: 3rem; }
+  .main { padding: 1.25rem 1rem 4rem; padding-top: 3rem; width: 100%; min-width: 0; max-width: 100vw; }
   .sb-overlay { display: none; position: fixed; inset: 0; z-index: 14; background: rgba(0,0,0,0.2); }
   .sidebar.open ~ .sb-overlay { display: block; }
+  #item-list { max-width: 100%; }
+  .item-col, .digest-col, .digest-stacked { max-width: 100%; }
+  .card { max-width: 100%; overflow-wrap: break-word; word-break: break-word; }
+  .card-content { overflow-x: auto; }
+  .page-header { flex-wrap: wrap; gap: 8px; }
+  .header-actions { flex-wrap: wrap; }
 }
 </style>
 </head>

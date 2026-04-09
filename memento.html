@@ -231,6 +231,7 @@ a { color: inherit; }
     <div class="sb-bottom">
       <div id="file-row"></div>
       <div id="gh-row"></div>
+      <div id="vscode-row"></div>
     </div>
   </div>
   <div class="main" id="main-area">
@@ -352,6 +353,7 @@ let linkMode = false;
 let connFilter = 'all'; // 'all' | 'conn' | 'noconn'
 let archiveFilter = 'active'; // 'active' | 'archived'
 let entriesHandle = null; // DirectoryHandle for entries/
+let basePath = '';         // absolute path to knowledge-base folder (for vscode:// links)
 let highlightGenes = new Set();
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
 let ghIssuesItems = [];  // temporary issue cards (not saved to JSON)
@@ -470,6 +472,8 @@ async function saveToFile() {
 
 async function tryRestoreHandle() {
   try {
+    const bp = await idbGet('basePath');
+    if (bp) basePath = bp;
     const dh = await idbGet('dh');
     if (dh) {
       const perm = await dh.queryPermission({mode:'readwrite'});
@@ -490,6 +494,7 @@ function showApp() {
   document.getElementById('connect-screen').style.display='none';
   document.getElementById('app-area').style.display='';
   updateFileStatus(dirHandle?.name || '');
+  updateVSCodeRow();
   applyClipParams();
 }
 
@@ -518,6 +523,27 @@ function updateFileStatus(name) {
   } else {
     row.innerHTML = `<button class="sb-link" onclick="connectFolder()">Connect folder</button>`;
   }
+}
+
+// --- VS Code integration ---
+function updateVSCodeRow() {
+  const row = document.getElementById('vscode-row');
+  if (basePath) {
+    row.innerHTML = `<div class="sb-row"><span class="sb-row-label" title="${esc(basePath)}">VS Code ✓</span><button class="sb-action" onclick="promptBasePath()" title="Change path">⇄</button></div>`;
+  } else {
+    row.innerHTML = `<button class="sb-link" onclick="promptBasePath()">Set path for VS Code</button>`;
+  }
+}
+function promptBasePath() {
+  const v = prompt('Absolute path to knowledge-base folder (for "Open in VS Code"):', basePath || '/Users/kmt/memento/knowledge-base');
+  if (v === null) return;
+  basePath = v.replace(/\/+$/, '');
+  idbPut('basePath', basePath);
+  updateVSCodeRow();
+}
+function openInVSCode(id) {
+  if (!basePath) { promptBasePath(); if (!basePath) return; }
+  window.open(`vscode://file/${basePath}/entries/${id}.md`, '_blank');
 }
 
 // --- Strip image markdown for sync (Claude can't see local images) ---
@@ -551,7 +577,7 @@ function syncItem(e, id) {
   const prompt = `Please update your memory with this knowledge base entry (id: ${item.id}). If an entry with this id already exists in your memory, replace it entirely with this version. If it does not exist, add it.\n\n[${typePrefix}${typeName}${title}] (id: ${item.id})\n${cleanContent}${genes}${tags}${source}`;
   navigator.clipboard.writeText(prompt).then(() => {
     item.synced = true;
-    saveToFile();
+    saveEntryToFile(item);
     renderList();
     showToast('Sync prompt copied — paste in any Claude chat');
   }).catch(() => {
@@ -964,6 +990,7 @@ function renderCard(item, forceExpand) {
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
       ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:var(--accent)">⊙</button>`:''}
+      ${basePath?`<button class="icon-btn" onclick="event.stopPropagation();openInVSCode('${item.id}')" title="Open in VS Code" style="font-size:11px;font-weight:600">VS</button>`:''}
       <button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>
       <span class="icon-btn sync-bottom" onclick="syncItem(event,'${item.id}')" title="${item.synced?'Re-sync to Claude':'Sync to Claude'}">${item.synced?'✓':'⊘'}</span>
       <button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>
@@ -1039,7 +1066,7 @@ async function createPrioritiesCard() {
     date: new Date().toISOString(),
     synced: false, connection: false, archived: false, due: '',
   });
-  await saveToFile();
+  await saveEntryToFile(items[items.length - 1]);
   editItem(new Event('click'), '_priorities');
   renderList();
 }
@@ -1244,8 +1271,9 @@ async function saveItem(){
     });
   }
   const wasEdit = !!editingId;
+  const savedItem = wasEdit ? items.find(i=>i.id===editingId) : items[items.length - 1];
   editingId = null;
-  await saveToFile();
+  await saveEntryToFile(savedItem);
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-due').value='';
   document.getElementById('f-archived').checked=false;
@@ -1269,7 +1297,7 @@ async function toggleConnection(e, id) {
   if (!item) return;
   item.connection = !item.connection;
   item.synced = false;
-  await saveToFile();
+  await saveEntryToFile(item);
   renderList();
 }
 async function toggleArchived(e, id) {
@@ -1282,7 +1310,7 @@ async function toggleArchived(e, id) {
   if (!item.archived && archiveFilter === 'archived' && !items.some(i => i.archived)) {
     archiveFilter = 'active';
   }
-  await saveToFile();
+  await saveEntryToFile(item);
   renderFilters(); renderList();
   showToast(item.archived ? 'Archived' : 'Unarchived');
 }
@@ -1291,7 +1319,7 @@ async function togglePin(e, id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
   item.pinned = !item.pinned;
-  await saveToFile();
+  await saveEntryToFile(item);
   renderList();
 }
 async function deleteFromCard(e,id){ e.stopPropagation(); return deleteItem(e,id); }
@@ -1623,7 +1651,7 @@ async function cardDrop(e, id) {
     }
     item.date = new Date().toISOString();
     item.synced = false;
-    await saveToFile();
+    await saveEntryToFile(item);
     renderList();
     showToast(`${files.length} image${files.length > 1 ? 's' : ''} added`);
   } catch(err) {
@@ -1851,7 +1879,7 @@ async function ghExpandCard(item) {
     const dateEl = document.querySelector(`.card[data-id="${item.id}"] .card-date`);
     if (dateEl) dateEl.textContent = fmtDate(item.date);
   }
-  saveToFile();
+  saveEntryToFile(item);
 }
 
 async function ghFetchLatestIssueDate(fullName) {

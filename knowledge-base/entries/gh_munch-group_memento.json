@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/memento",
-  "date": "2026-04-07T11:58:28Z",
+  "date": "2026-04-08T15:01:27Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/memento",
@@ -16,6 +16,21 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "c2e7e37",
+      "msg": "Changed backend to file structure for better git merge support",
+      "date": "2026-04-08T15:01:05Z"
+    },
+    {
+      "sha": "5687a7a",
+      "msg": "update",
+      "date": "2026-04-08T14:27:57Z"
+    },
+    {
+      "sha": "4ebe8e2",
+      "msg": "added links and genes to clips",
+      "date": "2026-04-08T10:09:05Z"
+    },
     {
       "sha": "bd26eb3",
       "msg": "update",
@@ -50,21 +65,6 @@
       "sha": "b0839a0",
       "msg": "update",
       "date": "2026-04-06T14:15:35Z"
-    },
-    {
-      "sha": "2e52aab",
-      "msg": "update",
-      "date": "2026-04-06T06:40:41Z"
-    },
-    {
-      "sha": "360f6cc",
-      "msg": "update",
-      "date": "2026-04-06T06:36:07Z"
-    },
-    {
-      "sha": "7576e81",
-      "msg": "update",
-      "date": "2026-04-06T06:31:35Z"
     }
   ],
   "_ghIssuesRecent": [

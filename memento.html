@@ -236,10 +236,18 @@ a { color: inherit; }
   </div>
   <div class="main" id="main-area">
     <div class="connect-screen" id="connect-screen">
-      <h2>Connect your knowledge base folder</h2>
-      <p>Select the folder containing <code>knowledge-base.json</code> (or an empty folder to start fresh). The app reads and writes directly to files on disk.</p>
-      <button class="btn btn-primary" onclick="connectFolder()">Choose folder</button>
-      <p style="font-size:12px;color:var(--text3);margin-top:0.5rem">Works in Chrome and Edge. You can drag images onto cards.</p>
+      <div id="connect-fs">
+        <h2>Connect your knowledge base folder</h2>
+        <p>Select the folder containing <code>knowledge-base.json</code> (or an empty folder to start fresh). The app reads and writes directly to files on disk.</p>
+        <button class="btn btn-primary" onclick="connectFolder()">Choose folder</button>
+        <p style="font-size:12px;color:var(--text3);margin-top:0.5rem">Works in Chrome and Edge. You can drag images onto cards.</p>
+      </div>
+      <div id="connect-gh" style="display:none">
+        <h2>Memento <span style="font-size:14px;color:var(--text3);font-weight:400">read-only</span></h2>
+        <p>Load your knowledge base from GitHub. Entries are cached locally for fast repeat visits.</p>
+        <button class="btn btn-primary" onclick="ghLoadEntries()">Load from GitHub</button>
+        <p style="font-size:12px;color:var(--text3);margin-top:0.5rem">Requires a GitHub Personal Access Token with repo read access.</p>
+      </div>
     </div>
     <div id="app-area" style="display:none">
       <div class="page-header">
@@ -339,6 +347,8 @@ const TYPE_ICONS = {
   people: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a6 6 0 0 1 16 0v2H4z"/></svg>',
   github: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>',
 };
+const GH_REPO = 'munch-group/memento';
+const GH_ENTRIES_PATH = 'knowledge-base/entries';
 let items = [];
 let activeType = 'all';
 let activeTag = null;
@@ -354,6 +364,9 @@ let connFilter = 'all'; // 'all' | 'conn' | 'noconn'
 let archiveFilter = 'active'; // 'active' | 'archived'
 let entriesHandle = null; // DirectoryHandle for entries/
 let basePath = '';         // absolute path to knowledge-base folder (for vscode:// links)
+const hasFSAccess = typeof window.showDirectoryPicker === 'function';
+const readOnly = !hasFSAccess;
+let ghRepoMode = false;    // true when entries loaded from GitHub API
 let highlightGenes = new Set();
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
 let ghIssuesItems = [];  // temporary issue cards (not saved to JSON)
@@ -427,7 +440,7 @@ async function loadFromFile() {
 }
 
 async function saveEntryToFile(entry) {
-  if (!dirHandle) return;
+  if (readOnly || !dirHandle) return;
   try {
     if (!entriesHandle) entriesHandle = await dirHandle.getDirectoryHandle('entries', {create: true});
     const eid = entry.id;
@@ -455,13 +468,13 @@ async function saveEntryToFile(entry) {
 }
 
 async function deleteEntryFile(eid) {
-  if (!entriesHandle) return;
+  if (readOnly || !entriesHandle) return;
   try { await entriesHandle.removeEntry(eid + '.json'); } catch(_) {}
   try { await entriesHandle.removeEntry(eid + '.md'); } catch(_) {}
 }
 
 async function saveToFile() {
-  if (!dirHandle) return;
+  if (readOnly || !dirHandle) return;
   try {
     const toSave = window._kbDigest ? [...items, window._kbDigest] : items;
     for (const entry of toSave) {
@@ -493,7 +506,16 @@ async function tryRestoreHandle() {
 function showApp() {
   document.getElementById('connect-screen').style.display='none';
   document.getElementById('app-area').style.display='';
-  updateFileStatus(dirHandle?.name || '');
+  if (readOnly) {
+    document.getElementById('btn-add-toggle').style.display='none';
+    document.getElementById('btn-sync-all').style.display='none';
+    document.getElementById('btn-reload').style.display='none';
+    const cleanup = document.querySelector('[onclick="cleanupMemory()"]');
+    if (cleanup) cleanup.style.display='none';
+    updateFileStatus('GitHub (read-only)');
+  } else {
+    updateFileStatus(dirHandle?.name || '');
+  }
   updateVSCodeRow();
   applyClipParams();
 }
@@ -517,7 +539,9 @@ function applyClipParams() {
 
 function updateFileStatus(name) {
   const row = document.getElementById('file-row');
-  if (name) {
+  if (ghRepoMode) {
+    row.innerHTML = `<div class="sb-row"><span class="sb-row-label" title="Read-only via GitHub">GitHub ↓</span><button class="sb-action" onclick="ghLoadEntries()" title="Refresh from GitHub">↻</button></div>`;
+  } else if (name) {
     const dirName = dirHandle ? dirHandle.name + '/' : '';
     row.innerHTML = `<div class="sb-row"><span class="sb-row-label" title="${dirName}${name}">${dirName}${name}</span><button class="sb-action" onclick="connectFolder()" title="Switch folder">⇄</button></div>`;
   } else {
@@ -991,9 +1015,9 @@ function renderCard(item, forceExpand) {
     <span class="card-bottom-actions">
       ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:var(--accent)">⊙</button>`:''}
       ${basePath?`<button class="icon-btn" onclick="event.stopPropagation();openInVSCode('${item.id}')" title="Open in VS Code" style="font-size:11px;font-weight:600">VS</button>`:''}
-      <button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>
-      <span class="icon-btn sync-bottom" onclick="syncItem(event,'${item.id}')" title="${item.synced?'Re-sync to Claude':'Sync to Claude'}">${item.synced?'✓':'⊘'}</span>
-      <button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>
+      ${readOnly?'':`<button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>`}
+      ${readOnly?'':`<span class="icon-btn sync-bottom" onclick="syncItem(event,'${item.id}')" title="${item.synced?'Re-sync to Claude':'Sync to Claude'}">${item.synced?'✓':'⊘'}</span>`}
+      ${readOnly?'':`<button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>`}
     </span>
   </div>`:''}
 </div>`;
@@ -1158,6 +1182,7 @@ function exitLinkMode() {
 // --- Add / Edit ---
 function editItem(e, id) {
   e.stopPropagation();
+  if (readOnly) return;
   const item = items.find(i => i.id === id);
   if (!item) return;
   if (item.type === 'github') { showToast('GitHub cards are synced, not editable'); return; }
@@ -1579,21 +1604,29 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 const _blobCache = {};
 
 async function resolveImages() {
-  if (!dirHandle) return;
   const imgs = document.querySelectorAll('.card-content img');
   for (const img of imgs) {
     const src = img.getAttribute('src');
     if (!src || !src.startsWith('images/')) continue;
     if (_blobCache[src]) { img.src = _blobCache[src]; continue; }
-    try {
-      const imgDir = await dirHandle.getDirectoryHandle('images');
+    if (ghRepoMode) {
+      // Resolve via GitHub raw URL
       const fileName = src.slice('images/'.length);
-      const fh = await imgDir.getFileHandle(fileName);
-      const file = await fh.getFile();
-      const url = URL.createObjectURL(file);
-      _blobCache[src] = url;
-      img.src = url;
-    } catch(e) { /* image not found — leave alt text */ }
+      const rawUrl = `https://raw.githubusercontent.com/${GH_REPO}/main/knowledge-base/${src}`;
+      _blobCache[src] = rawUrl;
+      img.src = rawUrl;
+    } else {
+      if (!dirHandle) continue;
+      try {
+        const imgDir = await dirHandle.getDirectoryHandle('images');
+        const fileName = src.slice('images/'.length);
+        const fh = await imgDir.getFileHandle(fileName);
+        const file = await fh.getFile();
+        const url = URL.createObjectURL(file);
+        _blobCache[src] = url;
+        img.src = url;
+      } catch(e) { /* image not found — leave alt text */ }
+    }
   }
 }
 
@@ -1609,7 +1642,7 @@ function hasImageFile(e) {
 }
 
 function cardDragOver(e) {
-  if (!hasImageFile(e)) return;
+  if (readOnly || !hasImageFile(e)) return;
   e.preventDefault();
   e.stopPropagation();
   e.currentTarget.classList.add('drop-over');
@@ -1930,9 +1963,113 @@ function ghBackFromIssues() {
   renderFilters(); renderList();
 }
 
+// --- GitHub read-only mode (for iOS / browsers without File System Access API) ---
+
+async function ghLoadEntries() {
+  const pat = ghPat();
+  if (!pat) {
+    ghPromptPat();
+    if (!ghPat()) return;
+  }
+  showToast('Loading from GitHub…');
+  try {
+    // Check if cache is still valid
+    const cachedSha = await idbGet('gh_tree_sha');
+    const headResp = await fetch(`https://api.github.com/repos/${GH_REPO}/commits/main`, { headers: ghHeaders() });
+    if (!headResp.ok) throw new Error(`GitHub API ${headResp.status}: ${headResp.statusText}`);
+    const headData = await headResp.json();
+    const currentSha = headData.sha;
+
+    if (cachedSha === currentSha) {
+      const cached = await idbGet('gh_entries');
+      if (cached) {
+        window._kbDigest = cached.find(i => i.id === '_digest') || null;
+        items = cached.filter(i => i.id !== '_digest');
+        ghRepoMode = true;
+        computeSortTags(); renderFilters(); renderList();
+        showApp();
+        showToast('Loaded from cache');
+        return;
+      }
+    }
+
+    // Fetch directory listing (Contents API supports up to 1000 files per directory)
+    const listResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_ENTRIES_PATH}`, { headers: ghHeaders() });
+    if (!listResp.ok) throw new Error(`GitHub API ${listResp.status}: ${listResp.statusText}`);
+    const files = await listResp.json();
+
+    // Group by entry id
+    const jsonFiles = files.filter(f => f.name.endsWith('.json'));
+
+    // Fetch all files in parallel via raw download_url (not rate-limited)
+    const loaded = [];
+    const batchSize = 20;
+    for (let i = 0; i < jsonFiles.length; i += batchSize) {
+      const batch = jsonFiles.slice(i, i + batchSize);
+      const results = await Promise.all(batch.map(async jf => {
+        const eid = jf.name.slice(0, -5);
+        const [jsonResp, mdResp] = await Promise.all([
+          fetch(jf.download_url),
+          fetch(jf.download_url.replace(/\.json$/, '.md')).catch(() => null),
+        ]);
+        const entry = await jsonResp.json();
+        let mdText = '';
+        if (mdResp && mdResp.ok) mdText = await mdResp.text();
+        if (entry.type === '_digest') {
+          entry.markdown = mdText;
+        } else {
+          entry.content = mdText;
+        }
+        return entry;
+      }));
+      loaded.push(...results);
+    }
+
+    // Cache in IndexedDB
+    await idbPut('gh_entries', loaded);
+    await idbPut('gh_tree_sha', currentSha);
+
+    window._kbDigest = loaded.find(i => i.id === '_digest') || null;
+    items = loaded.filter(i => i.id !== '_digest');
+    ghRepoMode = true;
+    computeSortTags(); renderFilters(); renderList();
+    showApp();
+    showToast(`Loaded ${items.length} entries from GitHub`);
+  } catch(e) {
+    showToast('GitHub load failed: ' + e.message);
+  }
+}
+
+async function tryLoadFromGitHubCache() {
+  try {
+    const cached = await idbGet('gh_entries');
+    if (cached && cached.length) {
+      window._kbDigest = cached.find(i => i.id === '_digest') || null;
+      items = cached.filter(i => i.id !== '_digest');
+      ghRepoMode = true;
+      computeSortTags(); renderFilters(); renderList();
+      return true;
+    }
+  } catch(_) {}
+  return false;
+}
+
 // --- Init ---
 renderGhControls();
-tryRestoreHandle();
+if (hasFSAccess) {
+  tryRestoreHandle();
+} else {
+  // iOS / Safari: show GitHub connect screen, try cache first
+  document.getElementById('connect-fs').style.display = 'none';
+  document.getElementById('connect-gh').style.display = '';
+  tryLoadFromGitHubCache().then(loaded => {
+    if (loaded) {
+      showApp();
+    } else if (ghPat()) {
+      ghLoadEntries();
+    }
+  });
+}
 </script>
 </body>
 </html>

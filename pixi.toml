@@ -7,7 +7,7 @@ version = "0.1.0"
 
 [tasks]
 digest = "python kb-sync-and-digest.py knowledge-base/ --days 30"
-push = "git add -u ; git add knowledge_base ; git commit -m 'update' ; git push"
+push = "git add -u ; git add knowledge-base ; git commit -m 'update' ; git push"
 pull = "git pull --rebase"
 
 [dependencies]

@@ -1,0 +1,1 @@
+See how the Tishkoff segments in the three archiacs that Moi has distribute across the X chromosome

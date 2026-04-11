@@ -1,1 +1,3 @@
-Plot Shannon's LAVA regions on X/Y sperm chromatin ideogram
+- Plot Shannon's LAVA regions
+- X/Y sperm chromatin
+- Tishkoff regions

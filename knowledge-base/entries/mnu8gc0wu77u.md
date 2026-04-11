@@ -1,0 +1,1 @@
+Planning session with Claude, upload the knowledge base, and discuss plan and preferences and strategey

@@ -7,7 +7,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/phasic",
-  "date": "2026-04-10T00:10:49Z",
+  "date": "2026-04-11T14:21:21Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/phasic",
@@ -21,57 +21,81 @@
   "due": "",
   "_ghCommits": [
     {
-      "sha": "9db8a07",
+      "sha": "09bb270",
+      "msg": "Found the tutorial notebooks in backup",
+      "date": "2026-04-10T20:51:22Z"
+    },
+    {
+      "sha": "4cef739",
+      "msg": "update",
+      "date": "2026-04-10T18:34:03Z"
+    },
+    {
+      "sha": "960684a",
       "msg": "Added figures",
       "date": "2026-04-10T00:05:56Z"
     },
     {
-      "sha": "a6cd0f8",
+      "sha": "91bd44a",
       "msg": "bug fixes in mathref docs",
       "date": "2026-04-09T23:39:54Z"
     },
     {
-      "sha": "490ef0a",
+      "sha": "fd9e5e4",
       "msg": "updated mathref book",
       "date": "2026-04-09T13:26:35Z"
     },
     {
-      "sha": "441207f",
+      "sha": "748e78d",
       "msg": "renamed som to mathref",
       "date": "2026-04-09T11:32:46Z"
     },
     {
-      "sha": "6244688",
+      "sha": "4b79235",
       "msg": "Created math reference as a book subproject under the website",
       "date": "2026-04-09T11:12:50Z"
     },
     {
-      "sha": "d36b0f0",
+      "sha": "9f89b11",
       "msg": "Add initial draft of the SOM Production Plan document",
       "date": "2026-04-08T15:11:09Z"
     },
     {
-      "sha": "cf9d34f",
+      "sha": "bce7878",
       "msg": "Added source papers for developing notation standard",
       "date": "2026-04-08T10:17:29Z"
     },
     {
-      "sha": "f1f373a",
+      "sha": "22b450f",
       "msg": "deleted an outdated file",
       "date": "2026-04-08T09:53:03Z"
-    },
-    {
-      "sha": "f24a595",
-      "msg": "updated docs",
-      "date": "2026-04-08T09:48:44Z"
-    },
-    {
-      "sha": "76d429d",
-      "msg": "Added a notebook for hexgrid modelling with fewer resistance paramters",
-      "date": "2026-04-08T09:47:26Z"
     }
   ],
   "_ghIssuesRecent": [
+    {
+      "number": 15,
+      "title": "Review test coverage",
+      "state": "open",
+      "date": "2026-04-11T14:21:21Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/15"
+    },
+    {
+      "number": 14,
+      "title": "Make benchmarking utility",
+      "state": "open",
+      "date": "2026-04-11T14:20:59Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/14"
+    },
+    {
+      "number": 13,
+      "title": "Test sharing feature",
+      "state": "open",
+      "date": "2026-04-11T14:20:39Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/13"
+    },
     {
       "number": 10,
       "title": "Tester 2 from vscode",
@@ -129,31 +153,7 @@
       "date": "2026-03-25T07:22:20Z",
       "labels": [],
       "url": "https://github.com/munch-group/phasic/issues/7"
-    },
-    {
-      "number": 6,
-      "title": "Compare to the exact results of Pool and Nielsen for pairwise coelescence (time-inhomogeneous.ipynb)",
-      "state": "open",
-      "date": "2026-03-25T07:21:04Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/6"
-    },
-    {
-      "number": 4,
-      "title": "foobar",
-      "state": "closed",
-      "date": "2025-11-16T14:24:24Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/4"
-    },
-    {
-      "number": 3,
-      "title": "Create_vertex problem",
-      "state": "open",
-      "date": "2025-09-25T12:00:23Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/3"
     }
   ],
-  "pinned": true
+  "pinned": false
 }

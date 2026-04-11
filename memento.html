@@ -60,6 +60,7 @@ a { color: inherit; }
 .searchbar input { flex: 1; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .searchbar input:focus { border-color: var(--accent); }
 .add-form { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--rl); padding: 1.25rem; margin-bottom: 1.25rem; }
+.add-form.gh-edit .field-full { display: none; }
 .field { margin-bottom: 11px; }
 .field label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text2); display: block; margin-bottom: 4px; }
 .field textarea { width: 100%; min-height: 90px; resize: vertical; font-family: var(--font); font-size: 14px; line-height: 1.6; padding: 8px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
@@ -74,6 +75,7 @@ a { color: inherit; }
 .card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1rem 1.1rem; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 1px 3px var(--shadow); }
 .card:hover { border-color: var(--border2); box-shadow: 0 4px 12px var(--shadow-hover); }
 .card.drop-over { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.25); }
+.card.pinned { outline: 1.5px solid rgba(217,119,87,0.55); outline-offset: -1px; }
 .card-top { display: flex; align-items: center; gap: 8px; }
 .type-badge { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--text2); opacity: 0.7; }
 .card-title-text { font-size: 13px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -129,7 +131,7 @@ a { color: inherit; }
 .digest-toggle.active .digest-dot { background: var(--accent); border-color: var(--accent); }
 .digest-toggle.active { color: var(--text2); }
 .digest-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-.digest-stacked { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.digest-stacked { display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 0; }
 .digest-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1.5rem 1.5rem; font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); box-shadow: 0 1px 3px var(--shadow); }
 .digest-card h1, .digest-card h2, .digest-card h3 { font-size: 13px; font-weight: 600; margin: 0.5em 0 0.3em; }
 .digest-card h2:first-child, .digest-card .digest-date + h2, .digest-card .digest-date:first-child + h2 { font-size: 15px; margin-top: 0; }
@@ -146,7 +148,7 @@ a { color: inherit; }
 .digest-card { position: relative; }
 .digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); float: right; line-height: 15px; margin-top: 2px; }
 .priorities-card { cursor: pointer; }
-.priorities-card:hover { border-color: var(--accent); }
+.priorities-card:hover { border-color: var(--border2); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 .gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
@@ -190,7 +192,7 @@ a { color: inherit; }
 .card-bottom-actions .icon-btn.sync-bottom { color: var(--text3); }
 .card-bottom-actions .icon-btn.delete { color: #c44; }
 .spacer { flex: 1; }
-#item-list { display: flex; gap: 8px; align-items: flex-start; }
+#item-list { display: flex; gap: 8px; align-items: flex-start; min-width: 0; max-width: 100%; }
 .item-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .empty { text-align: center; padding: 4rem 0; color: var(--text3); width: 100%; }
 .empty p { font-size: 14px; margin-bottom: 6px; color: var(--text2); }
@@ -281,15 +283,15 @@ a { color: inherit; }
         </div>
       </div>
       <div class="add-form" id="add-form" style="display:none">
-        <div class="field">
+        <div class="field field-full" id="field-type">
           <label>Type</label>
           <div class="type-picker" id="type-picker"></div>
         </div>
-        <div class="field">
+        <div class="field field-full" id="field-content">
           <label>Content</label>
           <textarea id="f-content" rows="5" placeholder="Paste a paragraph, write an idea, note a fact…"></textarea>
         </div>
-        <div class="field">
+        <div class="field field-full" id="field-title">
           <label>Title <span style="font-weight:400;opacity:0.5">(optional)</span></label>
           <input type="text" id="f-title" placeholder="Short label">
         </div>
@@ -297,22 +299,22 @@ a { color: inherit; }
           <label>Tags <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
           <input type="text" id="f-tags" placeholder="neanderthal, admixture, selection">
         </div>
-        <div class="field">
+        <div class="field field-full">
           <label>Genes <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
           <input type="text" id="f-genes" placeholder="MAPT, HDAC6, CACNA1C">
         </div>
-        <div class="field">
+        <div class="field field-full" id="field-due">
           <label>Due <span style="font-weight:400;opacity:0.5">(optional)</span></label>
           <input type="date" id="f-due" style="width:auto;font-family:var(--font);font-size:13px;padding:6px 10px;background:#ffffff;border:1px solid var(--border);border-radius:var(--r);color:var(--text);outline:none">
         </div>
-        <div class="field">
+        <div class="field field-full" id="field-source">
           <label>Source</label>
           <div class="source-row">
             <input type="text" id="f-source" placeholder="Platt et al. 2026 / https://…">
             <button class="btn btn-sm btn-link-mode" id="btn-link-mode" type="button" onclick="toggleLinkMode()" title="Link mode: click cards to insert references">◆ Link</button>
           </div>
         </div>
-        <div style="display:flex;gap:16px;margin-bottom:11px">
+        <div class="field-full" id="field-checks" style="display:flex;gap:16px;margin-bottom:11px">
           <label class="conn-check"><input type="checkbox" id="f-connection"> Connection</label>
           <label class="conn-check"><input type="checkbox" id="f-archived"> Archived</label>
         </div>
@@ -380,6 +382,7 @@ let tagSort = 'count';
 let selectedType = 'note';
 let expandedId = null;
 let editingId = null;
+let ghEditMode = false;
 let linkMode = false;
 let connFilter = 'all'; // 'all' | 'conn' | 'noconn'
 let archiveFilter = 'active'; // 'active' | 'archived'
@@ -970,7 +973,7 @@ function renderList() {
   // Switch to column layout when stacked
   list.style.flexDirection = digestStacked ? 'column' : '';
   colsHtml += digestStacked
-    ? `<div style="display:flex;gap:8px;align-items:flex-start">${cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('')}</div>`
+    ? `<div style="display:flex;gap:8px;align-items:flex-start;min-width:0;width:100%">${cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('')}</div>`
     : cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
   list.innerHTML = banner + colsHtml;
   resolveImages();
@@ -1038,7 +1041,7 @@ function renderCard(item, forceExpand) {
   const isDueSoon = item.due && !isOverdue && !isDueToday && item.due <= soon3;
   const dueClass = isOverdue ? ' overdue' : isDueToday ? ' due-today' : isDueSoon ? ' due-soon' : '';
   const dueHtml = item.due ? `<span class="card-due${dueClass}" title="Due ${item.due}">${fmtDue(item.due)}</span>` : '';
-  return `<div class="card${exp?' expanded':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
+  return `<div class="card${exp?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text"><span onclick="${item.type==='github'&&item._ghFullName?`ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\\\'")}')`:`editItem(event,'${item.id}')`}" style="cursor:${item.type==='github'?'pointer':'text'}">${esc(title)}</span></span>
@@ -1226,23 +1229,24 @@ function editItem(e, id) {
   if (readOnly) return;
   const item = items.find(i => i.id === id);
   if (!item) return;
-  if (item.type === 'github') { showToast('GitHub cards are synced, not editable'); return; }
+  ghEditMode = item.type === 'github';
   editingId = item.id;
   selectedType = item.type;
   const f = document.getElementById('add-form');
+  f.classList.toggle('gh-edit', ghEditMode);
   f.style.display = '';
   document.getElementById('btn-add-toggle').textContent = '× Cancel';
-  buildTypePicker();
-  document.getElementById('f-content').value = item.content;
-  document.getElementById('f-title').value = item.title || '';
+  if (!ghEditMode) buildTypePicker();
+  if (!ghEditMode) document.getElementById('f-content').value = item.content;
+  if (!ghEditMode) document.getElementById('f-title').value = item.title || '';
   document.getElementById('f-genes').value = (item.genes || []).join(', ');
   document.getElementById('f-tags').value = (item.tags || []).join(', ');
-  document.getElementById('f-source').value = item.source || '';
-  document.getElementById('f-due').value = item.due || '';
-  document.getElementById('f-connection').checked = !!item.connection;
-  document.getElementById('f-archived').checked = !!item.archived;
-  document.getElementById('f-content').focus();
-  showFormEditButtons(true, item);
+  if (!ghEditMode) document.getElementById('f-source').value = item.source || '';
+  if (!ghEditMode) document.getElementById('f-due').value = item.due || '';
+  if (!ghEditMode) document.getElementById('f-connection').checked = !!item.connection;
+  if (!ghEditMode) document.getElementById('f-archived').checked = !!item.archived;
+  (ghEditMode ? document.getElementById('f-tags') : document.getElementById('f-content')).focus();
+  showFormEditButtons(!ghEditMode, item);
   f.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
@@ -1254,8 +1258,8 @@ function toggleForm(){
   f.style.display=open?'':'none';
   if(open && window._taHeight) ta.style.height=window._taHeight;
   document.getElementById('btn-add-toggle').textContent=open?'× Cancel':'+ Add';
-  if(open){editingId=null;buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);}
-  else{editingId=null;['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';showFormEditButtons(false);}
+  if(open){editingId=null;ghEditMode=false;f.classList.remove('gh-edit');buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);}
+  else{editingId=null;ghEditMode=false;f.classList.remove('gh-edit');['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';showFormEditButtons(false);}
 }
 
 function showFormEditButtons(show, item) {
@@ -1290,7 +1294,8 @@ async function deleteEditingItem() {
 
 function cancelEdit() {
   editingId = null;
-  document.getElementById('add-form').style.display = 'none';
+  ghEditMode = false;
+  const f=document.getElementById('add-form'); f.classList.remove('gh-edit'); f.style.display = 'none';
   document.getElementById('btn-add-toggle').textContent = '+ Add';
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-connection').checked=false;
@@ -1310,7 +1315,7 @@ function selType(k){selectedType=k;buildTypePicker();}
 
 async function saveItem(){
   const content=document.getElementById('f-content').value;
-  if(!content.trim()){showToast('Content is required');return;}
+  if(!ghEditMode && !content.trim()){showToast('Content is required');return;}
   const genes=document.getElementById('f-genes').value.split(/[\s,]+/).map(g=>g.trim()).filter(Boolean);
   const tags=document.getElementById('f-tags').value.split(/[\s,]+/).map(t=>t.trim()).filter(Boolean);
   const connection=document.getElementById('f-connection').checked;
@@ -1320,12 +1325,17 @@ async function saveItem(){
   if(editingId){
     const item=items.find(i=>i.id===editingId);
     if(item){
-      item.type=selectedType; item.content=content;
-      item.title=document.getElementById('f-title').value.trim();
-      item.genes=genes; item.tags=tags; item.source=document.getElementById('f-source').value.trim();
-      item.connection=connection; item.archived=archived; item.due=due;
-      item.date = now;
-      item.synced = false;
+      if (ghEditMode) {
+        item.tags=tags;
+        item.synced = false;
+      } else {
+        item.type=selectedType; item.content=content;
+        item.title=document.getElementById('f-title').value.trim();
+        item.genes=genes; item.tags=tags; item.source=document.getElementById('f-source').value.trim();
+        item.connection=connection; item.archived=archived; item.due=due;
+        item.date = now;
+        item.synced = false;
+      }
     }
   } else {
     items.push({
@@ -1339,11 +1349,12 @@ async function saveItem(){
   const wasEdit = !!editingId;
   const savedItem = wasEdit ? items.find(i=>i.id===editingId) : items[items.length - 1];
   editingId = null;
+  ghEditMode = false;
   await saveEntryToFile(savedItem);
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-due').value='';
   document.getElementById('f-archived').checked=false;
-  document.getElementById('add-form').style.display='none';
+  const ff=document.getElementById('add-form'); ff.classList.remove('gh-edit'); ff.style.display='none';
   document.getElementById('btn-add-toggle').textContent='+ Add';
   exitLinkMode();
   computeSortTags(); renderFilters(); renderList();

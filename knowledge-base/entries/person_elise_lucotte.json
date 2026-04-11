@@ -2,13 +2,13 @@
   "id": "person_elise_lucotte",
   "type": "people",
   "title": "Elise Lucotte",
-  "tags": [
-    "Ampliconic"
-  ],
+  "tags": [],
   "genes": [],
   "source": "",
-  "date": "2026-04-04T08:13:09.030859+00:00",
+  "date": "2026-04-11T14:13:33.595Z",
   "synced": false,
   "connection": false,
-  "_sortTag": "Ampliconic"
+  "_sortTag": "Ampliconic",
+  "archived": false,
+  "due": ""
 }

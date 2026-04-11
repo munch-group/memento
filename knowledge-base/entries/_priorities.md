@@ -1,4 +1,8 @@
+Website
+Time Machine on laptop and for office
+
 ## Week work
+- Time Machine on laptop and for office
 - Move applications to separate repos planned as manuscripts
 - Registration/Hotel in Amsterdam
 - Oxford trip

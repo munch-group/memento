@@ -148,6 +148,7 @@ a { color: inherit; }
 .digest-card { position: relative; }
 .digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); float: right; line-height: 15px; margin-top: 2px; }
 .priorities-card { cursor: pointer; }
+.inbox-card { cursor: default; }
 .priorities-card:hover { border-color: var(--border2); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
@@ -456,6 +457,12 @@ async function loadFromFile() {
     }
     window._kbDigest = loaded.find(i => i.id === '_digest') || null;
     items = loaded.filter(i => i.id !== '_digest');
+    // Read INBOX.md from root
+    try {
+      const inboxHandle = await dirHandle.getFileHandle('INBOX.md');
+      const inboxFile = await inboxHandle.getFile();
+      window._kbInbox = await inboxFile.text();
+    } catch(_) { window._kbInbox = ''; }
     updateFileStatus(dirHandle.name);
     computeSortTags();
     renderFilters();
@@ -914,10 +921,11 @@ function renderList() {
       const ew = list.offsetWidth || Math.max(450, window.innerWidth - 260 - 48);
       const eStacked = Math.floor((ew + 8) / (450 + 8)) <= 1;
       list.style.flexDirection = eStacked ? 'column' : '';
+      const iH = renderInboxCard();
       if (eStacked) {
-        list.innerHTML = `<div class="digest-stacked">${digestHtml}${pH}</div>${emptyHtml}`;
+        list.innerHTML = `<div class="digest-stacked">${digestHtml}${iH}${pH}</div>${emptyHtml}`;
       } else {
-        list.innerHTML = `<div class="digest-col">${digestHtml}</div><div class="item-col">${pH}${emptyHtml}</div>`;
+        list.innerHTML = `<div class="digest-col">${digestHtml}</div><div class="item-col">${iH}${pH}${emptyHtml}</div>`;
       }
     } else {
       list.style.flexDirection = '';
@@ -944,11 +952,13 @@ function renderList() {
   }
   const cols = Array.from({length: nCols}, () => []);
   vis.forEach((item, i) => cols[i % nCols].push(renderCard(item)));
-  // Prepend priorities card to first column in digest view (side-by-side only)
+  // Prepend inbox + priorities card to first column in digest view (side-by-side only)
   if (digestVisible && !digestStacked && cols.length) {
     const pCard = items.find(i => i.id === '_priorities');
     const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
+    const iH = renderInboxCard();
     cols[0].unshift(pH);
+    if (iH) cols[0].unshift(iH);
   }
   const banner = linkMode ? '<div class="link-mode-banner">Link mode — click a card to insert a reference · <a href="#" onclick="toggleLinkMode();return false">Done</a></div>' : '';
   let colsHtml = '';
@@ -962,10 +972,11 @@ function renderList() {
       digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}<h2>Where am I</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
     }
     if (digestStacked) {
-      // Stack digest + priorities above the card columns
+      // Stack digest + inbox + priorities above the card columns
       const pCard = items.find(i => i.id === '_priorities');
       const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
-      colsHtml = `<div class="digest-stacked">${digestHtml}${pH}</div>`;
+      const iH = renderInboxCard();
+      colsHtml = `<div class="digest-stacked">${digestHtml}${iH}${pH}</div>`;
     } else {
       colsHtml = `<div class="digest-col">${digestHtml}</div>`;
     }
@@ -1142,6 +1153,11 @@ function renderPrioritiesCard(item) {
   const dateStr = item.date ? fmtDateAgo(item.date) : '';
   const stale = item.date && (new Date() - new Date(item.date)) > 4*86400000;
   return `<div class="digest-card priorities-card" onclick="editItem(event,'_priorities')">${dateStr ? '<div class="digest-date"' + (stale ? ' style="color:#c44"' : '') + '>Edited ' + esc(dateStr) + '</div>' : ''}<h2>Priorities</h2>${md(item.content)}</div>`;
+}
+function renderInboxCard() {
+  const text = window._kbInbox;
+  if (!text || !text.trim()) return '';
+  return `<div class="digest-card inbox-card"><h2>Inbox</h2>${md(text)}</div>`;
 }
 function toggleHighlightInput() {
   const wrap = document.getElementById('highlight-input-wrap');
@@ -2036,6 +2052,7 @@ async function ghLoadEntries() {
       const cached = await idbGet('gh_entries');
       if (cached) {
         window._kbDigest = cached.find(i => i.id === '_digest') || null;
+        window._kbInbox = await idbGet('gh_inbox') || '';
         items = cached.filter(i => i.id !== '_digest');
         ghRepoMode = true;
         computeSortTags(); renderFilters(); renderList();
@@ -2045,10 +2062,14 @@ async function ghLoadEntries() {
       }
     }
 
-    // Fetch directory listing (Contents API supports up to 1000 files per directory)
-    const listResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_ENTRIES_PATH}`, { headers: ghHeaders() });
+    // Fetch directory listing and INBOX.md in parallel
+    const [listResp, inboxResp] = await Promise.all([
+      fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_ENTRIES_PATH}`, { headers: ghHeaders() }),
+      fetch(`https://api.github.com/repos/${GH_REPO}/contents/INBOX.md`, { headers: {...ghHeaders(), 'Accept': 'application/vnd.github.raw'} }).catch(() => null),
+    ]);
     if (!listResp.ok) throw new Error(`GitHub API ${listResp.status}: ${listResp.statusText}`);
     const files = await listResp.json();
+    window._kbInbox = (inboxResp && inboxResp.ok) ? await inboxResp.text() : '';
 
     // Group by entry id
     const jsonFiles = files.filter(f => f.name.endsWith('.json'));
@@ -2080,6 +2101,7 @@ async function ghLoadEntries() {
     // Cache in IndexedDB
     await idbPut('gh_entries', loaded);
     await idbPut('gh_tree_sha', currentSha);
+    await idbPut('gh_inbox', window._kbInbox || '');
 
     window._kbDigest = loaded.find(i => i.id === '_digest') || null;
     items = loaded.filter(i => i.id !== '_digest');
@@ -2097,6 +2119,7 @@ async function tryLoadFromGitHubCache() {
     const cached = await idbGet('gh_entries');
     if (cached && cached.length) {
       window._kbDigest = cached.find(i => i.id === '_digest') || null;
+      window._kbInbox = await idbGet('gh_inbox') || '';
       items = cached.filter(i => i.id !== '_digest');
       ghRepoMode = true;
       computeSortTags(); renderFilters(); renderList();

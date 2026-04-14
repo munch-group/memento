@@ -1,0 +1,26 @@
+{
+  "id": "gh_munch-group_gwas-association-exercise",
+  "type": "github",
+  "title": "gwas-association-exercise",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/gwas-association-exercise",
+  "date": "2026-04-13T09:27:57Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/gwas-association-exercise",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "cce2552",
+      "msg": "Initial commit",
+      "date": "2026-04-13T09:27:57Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

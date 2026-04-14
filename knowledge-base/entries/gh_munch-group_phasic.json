@@ -7,68 +7,68 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/phasic",
-  "date": "2026-04-11T14:21:21Z",
+  "date": "2026-04-14T09:01:23Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/phasic",
   "_ghStars": 0,
   "_ghForks": 0,
   "_ghLang": "Jupyter Notebook",
-  "_ghOpenIssues": 10,
+  "_ghOpenIssues": 13,
   "_ghPrivate": false,
   "_sortTag": "Phasic",
   "archived": false,
   "due": "",
   "_ghCommits": [
     {
-      "sha": "09bb270",
-      "msg": "Found the tutorial notebooks in backup",
-      "date": "2026-04-10T20:51:22Z"
+      "sha": "5fbdfbd",
+      "msg": "Added images for later inclusion in mathref",
+      "date": "2026-04-14T08:56:19Z"
     },
     {
-      "sha": "4cef739",
-      "msg": "update",
-      "date": "2026-04-10T18:34:03Z"
+      "sha": "5edc82b",
+      "msg": "Added backmore lost notebooks",
+      "date": "2026-04-14T08:55:43Z"
     },
     {
-      "sha": "960684a",
-      "msg": "Added figures",
-      "date": "2026-04-10T00:05:56Z"
+      "sha": "56e76fe",
+      "msg": "correct format on notebooks for webpage",
+      "date": "2026-04-13T19:16:44Z"
     },
     {
-      "sha": "91bd44a",
-      "msg": "bug fixes in mathref docs",
-      "date": "2026-04-09T23:39:54Z"
+      "sha": "5ac6238",
+      "msg": "updated docs and notebooks",
+      "date": "2026-04-13T17:19:18Z"
     },
     {
-      "sha": "fd9e5e4",
-      "msg": "updated mathref book",
-      "date": "2026-04-09T13:26:35Z"
+      "sha": "e73104c",
+      "msg": "Added back the notebooks I accidentally deleted",
+      "date": "2026-04-13T13:00:11Z"
     },
     {
-      "sha": "748e78d",
-      "msg": "renamed som to mathref",
-      "date": "2026-04-09T11:32:46Z"
+      "sha": "6080b49",
+      "msg": "  Composable graph operations: discretize, laplace_transform, and add_epoch now return new graphs",
+      "date": "2026-04-13T12:58:16Z"
     },
     {
-      "sha": "4b79235",
-      "msg": "Created math reference as a book subproject under the website",
-      "date": "2026-04-09T11:12:50Z"
+      "sha": "b463126",
+      "msg": "updated docs",
+      "date": "2026-04-13T06:12:26Z"
     },
     {
-      "sha": "9f89b11",
-      "msg": "Add initial draft of the SOM Production Plan document",
-      "date": "2026-04-08T15:11:09Z"
+      "sha": "0991d1d",
+      "msg": "Plan to implement composable modeling operations: Introduce new `add_epoch` and updated `discretize` methods to enhance graph composition, ensuring automatic coefficient management and consistent state handling across operations.",
+      "date": "2026-04-12T18:33:48Z"
     },
     {
-      "sha": "bce7878",
-      "msg": "Added source papers for developing notation standard",
-      "date": "2026-04-08T10:17:29Z"
+      "sha": "96d5b36",
+      "msg": "Refactor documentation: Enhance clarity and structure in graph builder and Van Loan equivalence sections; add references section with comprehensive bibliography",
+      "date": "2026-04-12T17:09:02Z"
     },
     {
-      "sha": "22b450f",
-      "msg": "deleted an outdated file",
-      "date": "2026-04-08T09:53:03Z"
+      "sha": "89bbde9",
+      "msg": "Merge branch 'dynamic-min-degree-ordering'",
+      "date": "2026-04-12T14:01:45Z"
     }
   ],
   "_ghIssuesRecent": [

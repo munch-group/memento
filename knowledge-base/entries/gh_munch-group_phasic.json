@@ -21,6 +21,11 @@
   "due": "",
   "_ghCommits": [
     {
+      "sha": "d2a87b0",
+      "msg": "Fixed navbar in mathref book",
+      "date": "2026-04-18T09:17:07Z"
+    },
+    {
       "sha": "523970f",
       "msg": "docs update",
       "date": "2026-04-14T09:27:13Z"
@@ -64,11 +69,6 @@
       "sha": "0991d1d",
       "msg": "Plan to implement composable modeling operations: Introduce new `add_epoch` and updated `discretize` methods to enhance graph composition, ensuring automatic coefficient management and consistent state handling across operations.",
       "date": "2026-04-12T18:33:48Z"
-    },
-    {
-      "sha": "96d5b36",
-      "msg": "Refactor documentation: Enhance clarity and structure in graph builder and Van Loan equivalence sections; add references section with comprehensive bibliography",
-      "date": "2026-04-12T17:09:02Z"
     }
   ],
   "_ghIssuesRecent": [

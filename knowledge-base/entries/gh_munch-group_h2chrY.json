@@ -46,5 +46,10 @@
       "labels": [],
       "url": "https://github.com/munch-group/h2chrY/issues/1"
     }
-  ]
+  ],
+  "_ghDigest": {
+    "markdown": "**h2chrY**  \nThe repository has been quiet for about 8 months, with only one test issue (#1) created back in April that remains open. This project focuses on estimating heritability while treating chromosome Y effects as nuisance parameters. No recent development activity suggests the project may be in early stages or on hold, with the test issue likely serving as a placeholder for future development work.",
+    "fingerprint": "f8a4e28f155dc7fb79a30e78c288b23b0b5ebfce",
+    "generated_at": "2026-04-20T10:51:34.859+00:00"
+  }
 }

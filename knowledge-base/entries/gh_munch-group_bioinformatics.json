@@ -86,5 +86,10 @@
       ],
       "url": "https://github.com/munch-group/bioinformatics/issues/1"
     }
-  ]
+  ],
+  "_ghDigest": {
+    "markdown": "**bioinformatics**  \nUpdated 4 months ago with a simple \"update\" commit, but without more context it's unclear what specific changes were made to these bioinformatics and programming lecture notes.",
+    "fingerprint": "cee51cb44842106fd743929bd6e77a45f4b70949",
+    "generated_at": "2026-04-20T10:51:39.847+00:00"
+  }
 }

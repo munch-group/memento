@@ -32,5 +32,10 @@
       "date": "2026-04-07T09:52:10Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**munch-group-vscode-light-theme**  \nNew VSCode theme repository created today with initial setup and files added, described as having a \"Claude feel\" for light theme users.",
+    "fingerprint": "baefce9064518ab89b51f72f17f5a30d819bb56a",
+    "generated_at": "2026-04-20T10:51:31.138+00:00"
+  }
 }

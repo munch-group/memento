@@ -67,5 +67,10 @@
       "date": "2026-02-04T12:10:28Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**munch-group-library**  \nUpdated pyproject.toml about four months ago - this Python library template hasn't seen recent activity and may need attention to stay current with evolving Python packaging standards and dependencies.",
+    "fingerprint": "fb4dc40eaef2fe06c7e7acb7caa07b92100d09ad",
+    "generated_at": "2026-04-20T10:51:38.609+00:00"
+  }
 }

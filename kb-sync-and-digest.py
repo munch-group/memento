@@ -5,13 +5,14 @@ import json
 import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
 import anthropic
 import click
 import urllib.request
 
 from kb_io import load_all, save_entry
+from kb_digest_lib import refresh_digests, assemble_markdown
 
 
 def gh_get(url, token):
@@ -52,83 +53,6 @@ def sync_card(card, token):
     latest_issue_date = latest_real[0]["created_at"] if latest_real else None
 
     return card["id"], gh_commits, gh_issues, latest_issue_date
-
-
-def fmt_date(iso):
-    if not iso:
-        return ""
-    return iso[:10]
-
-
-def build_activity_summary(cards, days=None):
-    cutoff = None
-    if days:
-        cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
-
-    sections = []
-    for card in cards:
-        commits = card.get("_ghCommits", [])
-        issues = card.get("_ghIssuesRecent", [])
-        if not commits and not issues:
-            continue
-        if cutoff:
-            commits = [c for c in commits if (c.get("date", "") >= cutoff)]
-            issues = [i for i in issues if (i.get("date", "") >= cutoff)]
-            if not commits and not issues:
-                continue
-
-        lines = [f"### {card.get('title', card.get('_ghFullName', '?'))}"]
-        lines.append(f"URL: {card.get('source', '')}")
-        if card.get("content"):
-            lines.append(f"Description: {card['content']}")
-        if commits:
-            lines.append("\nRecent commits:")
-            for c in commits:
-                lines.append(f"  - [{c['sha']}] {c['msg']} ({fmt_date(c['date'])})")
-
-        open_issues = [i for i in issues if i.get("state") == "open"]
-        closed_issues = [i for i in issues if i.get("state") == "closed"]
-        if closed_issues:
-            lines.append("\nRecently closed issues:")
-            for i in closed_issues:
-                labels = ", ".join(i.get("labels", []))
-                label_str = f" [{labels}]" if labels else ""
-                lines.append(f"  - #{i['number']} {i['title']}{label_str} ({fmt_date(i['date'])})")
-        if open_issues:
-            lines.append("\nOpen issues:")
-            for i in open_issues:
-                labels = ", ".join(i.get("labels", []))
-                label_str = f" [{labels}]" if labels else ""
-                lines.append(f"  - #{i['number']} {i['title']}{label_str} ({fmt_date(i['date'])})")
-
-        sections.append("\n".join(lines))
-
-    return "\n\n".join(sections)
-
-
-SYSTEM_PROMPT = """\
-You are a research assistant helping a scientist stay on top of their GitHub projects. \
-Given activity data from multiple repositories, write a concise morning briefing. \
-Scale detail inversely with recency: \
-repos touched today or yesterday need only a one-liner (the work is fresh in memory). \
-Repos untouched for a week or more need the most context: what was the last thing done, \
-what is pending, what needs attention, enough to jog memory. \
-Repos in between get moderate detail. \
-Be specific - mention commit messages, issue titles. \
-Issue labels like "bug", "enhancement", "documentation" indicate the issue type. \
-Use this to characterize work (e.g. "2 open bugs", "a feature request for X"). \
-Keep it scannable. \
-Format as markdown. Use **bold** for project names on their own line with two trailing spaces for a line break, \
-then the summary prose on the next line (no blank line between them). \
-Express all dates as relative time in prose (e.g. "two days ago", "about a month ago"), never as absolute dates or abbreviated parenthetical timestamps. \
-Do not use long dashes (em dashes). Use periods or commas instead. \
-Skip projects with no meaningful activity."""
-
-USER_PROMPT_TEMPLATE = """\
-Here is my recent GitHub activity across all projects. \
-Write a "Where am I" digest I can read in a few minutes.
-
-{activity}"""
 
 
 @click.command()
@@ -173,35 +97,36 @@ def main(kb_dir, days, model, sync_only):
             if done % 20 == 0:
                 click.echo(f"  {done}/{len(gh_cards)}…", err=True)
 
-    for card in gh_cards:
-        save_entry(kb_dir, card)
     click.echo(f"Synced {len(gh_cards)} repos ({mtime_updated} dates updated from issues)", err=True)
 
     if sync_only:
+        for card in gh_cards:
+            save_entry(kb_dir, card)
         return
 
-    # Step 2: Generate digest
+    # Step 2: Refresh per-repo digests (only for repos whose fingerprint changed)
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         click.echo("Error: ANTHROPIC_API_KEY environment variable not set.", err=True)
         sys.exit(1)
 
-    activity = build_activity_summary(gh_cards, days=days)
-    if not activity.strip():
+    client = anthropic.Anthropic(api_key=api_key)
+    click.echo("Refreshing per-repo digests…", err=True)
+
+    blocks, stats = refresh_digests(
+        gh_cards, client, model, days=days,
+        log=lambda msg: click.echo(msg, err=True),
+    )
+
+    # Persist all cards (captures both sync updates and _ghDigest cache updates)
+    for card in gh_cards:
+        save_entry(kb_dir, card)
+
+    if not blocks:
         click.echo("No activity found" + (f" in the last {days} days" if days else "") + ".")
         return
 
-    client = anthropic.Anthropic(api_key=api_key)
-    click.echo("Generating digest…", err=True)
-
-    response = client.messages.create(
-        model=model,
-        max_tokens=2048,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": USER_PROMPT_TEMPLATE.format(activity=activity)}],
-    )
-
-    markdown = response.content[0].text
+    markdown = assemble_markdown(blocks)
     click.echo(markdown)
 
     # Save _digest entry
@@ -212,7 +137,11 @@ def main(kb_dir, days, model, sync_only):
         "markdown": markdown,
     }
     save_entry(kb_dir, digest_entry)
-    click.echo(f"\nDigest saved to {kb_dir}/entries/_digest.*", err=True)
+    click.echo(
+        f"\nDigest saved to {kb_dir}/entries/_digest.* "
+        f"({stats['refreshed']} regenerated, {stats['cached']} cached)",
+        err=True,
+    )
 
 
 if __name__ == "__main__":

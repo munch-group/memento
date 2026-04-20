@@ -155,5 +155,10 @@
       "url": "https://github.com/munch-group/phasic/issues/7"
     }
   ],
-  "pinned": false
+  "pinned": false,
+  "_ghDigest": {
+    "markdown": "**phasic**  \nRecent work has focused on documentation improvements and implementing composable graph operations, with the latest commit fixing the navbar in the mathematical reference book two days ago. The major development was introducing composable modeling operations like `add_epoch` and updated `discretize` methods that return new graphs for better composition. Several notebooks were accidentally deleted and restored mid-week. There are 9 open issues including a bug with `update_weights` on reward transformed graphs, numerical issues in time-inhomogeneous notebooks, test coverage review, and a benchmarking utility request.",
+    "fingerprint": "ff1b53fb34cd140c6bed53385147c969da54f775",
+    "generated_at": "2026-04-20T10:51:38.836+00:00"
+  }
 }

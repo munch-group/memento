@@ -27,5 +27,10 @@
       "date": "2026-03-10T13:24:31Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**application-HFSP-2026**  \nUpdated about 8 months ago with a generic \"update\" commit, suggesting ongoing work on what appears to be a 2026 HFSP (Human Frontier Science Program) grant application.",
+    "fingerprint": "47530608efa7351a1f1ff8e9710ca642b9e6f145",
+    "generated_at": "2026-04-20T10:51:32.932+00:00"
+  }
 }

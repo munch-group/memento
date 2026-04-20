@@ -67,5 +67,10 @@
       "date": "2026-03-11T11:00:55Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**status-monitor-vscode**  \nVery active today with multiple commits including version bumps to 0.1.0, README updates, icon addition, and changes to use VS_* prefixed environment variables for better integration.",
+    "fingerprint": "0c57bd893f5a8de422f9032ee66bbe9d125bd2a3",
+    "generated_at": "2026-04-20T10:51:38.150+00:00"
+  }
 }

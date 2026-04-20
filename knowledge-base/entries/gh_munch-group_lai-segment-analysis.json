@@ -67,5 +67,10 @@
       "date": "2026-03-05T17:31:22Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**lai-segment-analysis**  \nUpdated today with a generic commit message, suggesting minor changes or maintenance work.",
+    "fingerprint": "5566fc86dfb51de50685ed3d87318e0b76ed4deb",
+    "generated_at": "2026-04-20T10:51:30.944+00:00"
+  }
 }

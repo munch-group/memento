@@ -76,5 +76,10 @@
       "labels": [],
       "url": "https://github.com/munch-group/primate-prot-var/issues/1"
     }
-  ]
+  ],
+  "_ghDigest": {
+    "markdown": "**primate-prot-var**  \nThis repository has been inactive for about 8 months, with one open issue to complete the VEP (Variant Effect Predictor) workflow. Without recent commits or activity visible, it's unclear what progress has been made on the variant annotation pipeline or what specific components of the VEP integration still need implementation.",
+    "fingerprint": "c249ef7b087caaf18c2deb972d49abcfdeaa50ed",
+    "generated_at": "2026-04-20T10:51:35.783+00:00"
+  }
 }

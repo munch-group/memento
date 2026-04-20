@@ -17,6 +17,26 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "965b246",
+      "msg": "Opdateret",
+      "date": "2026-04-20T10:20:57Z"
+    },
+    {
+      "sha": "87d39a7",
+      "msg": "Opdateret",
+      "date": "2026-04-20T10:20:48Z"
+    },
+    {
+      "sha": "e4aa937",
+      "msg": "Opdateret",
+      "date": "2026-04-20T10:07:17Z"
+    },
+    {
+      "sha": "fc1e92b",
+      "msg": "Opdateret",
+      "date": "2026-04-20T09:49:05Z"
+    },
+    {
       "sha": "8e7d31b",
       "msg": "Opdateret",
       "date": "2026-04-19T14:58:14Z"
@@ -45,27 +65,12 @@
       "sha": "2e9e03d",
       "msg": "Opdateret",
       "date": "2026-04-12T12:56:41Z"
-    },
-    {
-      "sha": "fa6641c",
-      "msg": "Opdateret",
-      "date": "2026-04-12T12:19:09Z"
-    },
-    {
-      "sha": "ed82295",
-      "msg": "Opdateret",
-      "date": "2026-04-12T11:19:24Z"
-    },
-    {
-      "sha": "f5823ad",
-      "msg": "Opdateret",
-      "date": "2026-04-12T11:14:58Z"
-    },
-    {
-      "sha": "f112e25",
-      "msg": "Opdateret",
-      "date": "2026-04-12T10:50:43Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**emma-giraf**  \nActive development with multiple \"Opdateret\" (updated) commits made yesterday and today, suggesting ongoing refinements or incremental improvements to the codebase.",
+    "fingerprint": "0538a53981265f5e8262a2187d075b6297510bb3",
+    "generated_at": "2026-04-20T10:51:31.146+00:00"
+  }
 }

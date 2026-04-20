@@ -67,5 +67,10 @@
       "date": "2026-04-07T11:20:40Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**vscodenb**  \nMultiple patch version bumps over the past week, with the most recent activity two days ago and several bumps on April 11th and 7th, suggesting active development or bug fixes for the VSCode theme-sensitive plotting library.",
+    "fingerprint": "7bc9843332bc0728beb7934b71141419420b657f",
+    "generated_at": "2026-04-20T10:51:37.007+00:00"
+  }
 }

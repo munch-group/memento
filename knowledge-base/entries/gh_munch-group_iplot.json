@@ -76,5 +76,10 @@
       "labels": [],
       "url": "https://github.com/munch-group/iplot/issues/1"
     }
-  ]
+  ],
+  "_ghDigest": {
+    "markdown": "**iplot**  \nOne open issue from about 8 months ago needs attention: \"Fix github action\", suggesting the CI/CD pipeline may be broken and requiring maintenance.",
+    "fingerprint": "832ad803cb71371da98cda5122b645ad0fc32ad4",
+    "generated_at": "2026-04-20T10:51:39.814+00:00"
+  }
 }

@@ -67,5 +67,10 @@
       "date": "2024-10-07T06:32:18Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [],
+  "_ghDigest": {
+    "markdown": "**bdmi-simulations**  \nUpdated notebook four months ago with commit cab0803. This repository contains simple calculations and simulations of Bateson-Dobzhansky-Muller incompatibilities. With no recent activity since spring, you may want to review what specific updates were made to the notebook and whether any follow-up work or documentation is needed for the simulation models.",
+    "fingerprint": "878a4f9a448398ffe855051bc240f672a393f336",
+    "generated_at": "2026-04-20T10:51:35.823+00:00"
+  }
 }

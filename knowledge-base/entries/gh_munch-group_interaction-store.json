@@ -69,8 +69,8 @@
   ],
   "_ghIssuesRecent": [],
   "_ghDigest": {
-    "markdown": "**interaction-store**  \nThree commits over the past two days with generic \"update\" messages, suggesting active but incremental development on this gene interaction exploration tool that integrates Claude Code and INDRA.",
-    "fingerprint": "6ea879fdfed4bdc1395a5d3c2145299a50383f26",
-    "generated_at": "2026-04-20T10:51:33.025+00:00"
+    "markdown": "**interaction-store**  \nUpdated yesterday with a brief commit message, suggesting minor maintenance or tweaks to this gene interaction exploration tool that integrates Claude Code and INDRA.",
+    "fingerprint": "9cb3ce9774eef6458ec5e9c7c54edd514087968d",
+    "generated_at": "2026-04-21T07:55:07.504+00:00"
   }
 }

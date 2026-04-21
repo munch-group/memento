@@ -1,0 +1,1 @@
+Email Tishkoff person to ask if Moi can share the intervals

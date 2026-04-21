@@ -17,6 +17,41 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "7788af1",
+      "msg": "Opdateret",
+      "date": "2026-04-20T14:45:29Z"
+    },
+    {
+      "sha": "982076d",
+      "msg": "Opdateret",
+      "date": "2026-04-20T14:38:13Z"
+    },
+    {
+      "sha": "c3f2cf4",
+      "msg": "Opdateret",
+      "date": "2026-04-20T14:01:28Z"
+    },
+    {
+      "sha": "c9d8332",
+      "msg": "Opdateret",
+      "date": "2026-04-20T13:39:41Z"
+    },
+    {
+      "sha": "130d19c",
+      "msg": "Opdateret",
+      "date": "2026-04-20T13:03:48Z"
+    },
+    {
+      "sha": "642c876",
+      "msg": "Opdateret",
+      "date": "2026-04-20T11:28:04Z"
+    },
+    {
+      "sha": "35f7b1e",
+      "msg": "Opdateret",
+      "date": "2026-04-20T11:27:34Z"
+    },
+    {
       "sha": "965b246",
       "msg": "Opdateret",
       "date": "2026-04-20T10:20:57Z"
@@ -30,47 +65,12 @@
       "sha": "e4aa937",
       "msg": "Opdateret",
       "date": "2026-04-20T10:07:17Z"
-    },
-    {
-      "sha": "fc1e92b",
-      "msg": "Opdateret",
-      "date": "2026-04-20T09:49:05Z"
-    },
-    {
-      "sha": "8e7d31b",
-      "msg": "Opdateret",
-      "date": "2026-04-19T14:58:14Z"
-    },
-    {
-      "sha": "756ef35",
-      "msg": "Opdateret",
-      "date": "2026-04-19T13:49:06Z"
-    },
-    {
-      "sha": "62e20be",
-      "msg": "Opdateret",
-      "date": "2026-04-19T11:35:34Z"
-    },
-    {
-      "sha": "ee4b88a",
-      "msg": "Opdateret",
-      "date": "2026-04-14T07:06:16Z"
-    },
-    {
-      "sha": "d8573c3",
-      "msg": "Opdateret",
-      "date": "2026-04-13T13:44:07Z"
-    },
-    {
-      "sha": "2e9e03d",
-      "msg": "Opdateret",
-      "date": "2026-04-12T12:56:41Z"
     }
   ],
   "_ghIssuesRecent": [],
   "_ghDigest": {
-    "markdown": "**emma-giraf**  \nActive development with multiple \"Opdateret\" (updated) commits made yesterday and today, suggesting ongoing refinements or incremental improvements to the codebase.",
-    "fingerprint": "0538a53981265f5e8262a2187d075b6297510bb3",
-    "generated_at": "2026-04-20T10:51:31.146+00:00"
+    "markdown": "**emma-giraf**  \nHeavy activity today with 10 commits all labeled \"Opdateret\" (Updated), suggesting significant ongoing development or updates being pushed through.",
+    "fingerprint": "781d2459365b2b3bc9df79540c51ab1fa7ed70d8",
+    "generated_at": "2026-04-21T07:55:07.782+00:00"
   }
 }

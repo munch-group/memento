@@ -17,54 +17,54 @@
   "_sortTag": "",
   "_ghCommits": [
     {
-      "sha": "82ea6f7",
-      "msg": "patch  version bump",
-      "date": "2026-04-20T09:59:57Z"
-    },
-    {
-      "sha": "c16b535",
-      "msg": "patch  version bump",
-      "date": "2026-04-20T09:59:50Z"
-    },
-    {
-      "sha": "dc911a6",
-      "msg": "Fixed and updated documentation notebooks",
-      "date": "2026-04-20T08:30:12Z"
-    },
-    {
-      "sha": "46fa2ab",
-      "msg": "fixed fuzzy segments",
-      "date": "2026-04-19T16:29:31Z"
-    },
-    {
-      "sha": "6179ad7",
+      "sha": "bd4a88e",
       "msg": "update",
-      "date": "2026-04-18T18:43:17Z"
+      "date": "2026-04-21T07:45:55Z"
     },
     {
-      "sha": "d4ab06d",
-      "msg": "patch  version bump",
-      "date": "2026-04-18T18:10:58Z"
+      "sha": "0a8137d",
+      "msg": "Added with-track heatmap coloring by variable",
+      "date": "2026-04-21T06:26:28Z"
     },
     {
-      "sha": "60dc0e2",
-      "msg": "patch  version bump",
-      "date": "2026-04-18T18:08:25Z"
-    },
-    {
-      "sha": "a10fb94",
-      "msg": "patch  version bump",
-      "date": "2026-04-18T18:08:12Z"
-    },
-    {
-      "sha": "177ebfd",
+      "sha": "c8d3014",
       "msg": "update",
-      "date": "2026-04-18T18:03:36Z"
+      "date": "2026-04-20T20:46:21Z"
     },
     {
-      "sha": "993d900",
+      "sha": "11e1d65",
       "msg": "update",
-      "date": "2026-04-18T13:29:59Z"
+      "date": "2026-04-20T20:30:42Z"
+    },
+    {
+      "sha": "19a1b7e",
+      "msg": "update",
+      "date": "2026-04-20T20:16:49Z"
+    },
+    {
+      "sha": "4e28c91",
+      "msg": "update",
+      "date": "2026-04-20T20:06:30Z"
+    },
+    {
+      "sha": "8403090",
+      "msg": "update",
+      "date": "2026-04-20T18:10:04Z"
+    },
+    {
+      "sha": "1989972",
+      "msg": "update",
+      "date": "2026-04-20T18:06:30Z"
+    },
+    {
+      "sha": "98969d9",
+      "msg": "update",
+      "date": "2026-04-20T15:32:05Z"
+    },
+    {
+      "sha": "d084e9a",
+      "msg": "Added better gene seperation in gene track",
+      "date": "2026-04-20T15:09:50Z"
     }
   ],
   "_ghIssuesRecent": [
@@ -150,8 +150,8 @@
     }
   ],
   "_ghDigest": {
-    "markdown": "**geneinfo**  \nRecent flurry of activity with multiple patch version bumps and fixes to fuzzy segments, plus updated documentation notebooks for the mygene-based Jupyter gene annotation tool.",
-    "fingerprint": "acfa5285801021f1f13b51a504f864d2e543e3ec",
-    "generated_at": "2026-04-20T10:51:37.627+00:00"
+    "markdown": "**geneinfo**  \nVery active development yesterday and today with multiple commits, including adding better gene separation in gene track functionality and new heatmap coloring features by variable.",
+    "fingerprint": "d82daee68ead8acd6dadf39e5ee762b7ccf57438",
+    "generated_at": "2026-04-21T07:55:07.504+00:00"
   }
 }

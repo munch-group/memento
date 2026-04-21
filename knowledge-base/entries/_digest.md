@@ -1,5 +1,5 @@
 **emma-giraf**  
-Active development with multiple "Opdateret" (updated) commits made yesterday and today, suggesting ongoing refinements or incremental improvements to the codebase.
+Heavy activity today with 10 commits all labeled "Opdateret" (Updated), suggesting significant ongoing development or updates being pushed through.
 
 **munch-group-vscode-light-theme**  
 New VSCode theme repository created today with initial setup and files added, described as having a "Claude feel" for light theme users.
@@ -8,7 +8,7 @@ New VSCode theme repository created today with initial setup and files added, de
 Updated about 8 months ago with a generic "update" commit, suggesting ongoing work on what appears to be a 2026 HFSP (Human Frontier Science Program) grant application.
 
 **memento**  
-Active development with daily commits through yesterday, including multiple INBOX.md updates and general updates. One open enhancement from two weeks ago requesting a priorities page alongside the digest feature.
+Very active development with daily commits through yesterday, mostly generic "update" messages and INBOX.md modifications. One open enhancement from about two weeks ago requesting a priorities page alongside the digest feature.
 
 **lai-segment-analysis**  
 Updated today with a generic commit message, suggesting minor changes or maintenance work.
@@ -17,7 +17,7 @@ Updated today with a generic commit message, suggesting minor changes or mainten
 Added notebook two months ago - this appears to be the most recent activity on the repository, suggesting it may be in a stable state or awaiting further development.
 
 **interaction-store**  
-Three commits over the past two days with generic "update" messages, suggesting active but incremental development on this gene interaction exploration tool that integrates Claude Code and INDRA.
+Updated yesterday with a brief commit message, suggesting minor maintenance or tweaks to this gene interaction exploration tool that integrates Claude Code and INDRA.
 
 **slurm-code**  
 Recent flurry of activity yesterday with multiple patch version bumps and an important fix to prevent environment variable conflicts by adding VS_ prefixes to avoid interference with srun and sbatch commands.
@@ -44,7 +44,7 @@ Recent work has focused on documentation improvements and implementing composabl
 Initial repository setup with first commit made about 8 months ago. This appears to be a new educational exercise project focused on genomic thinking and GWAS (genome-wide association studies). No further development activity since the initial commit, suggesting the project may be in early planning stages or awaiting course scheduling.
 
 **geneinfo**  
-Recent flurry of activity with multiple patch version bumps and fixes to fuzzy segments, plus updated documentation notebooks for the mygene-based Jupyter gene annotation tool.
+Very active development yesterday and today with multiple commits, including adding better gene separation in gene track functionality and new heatmap coloring features by variable.
 
 **status-monitor-vscode**  
 Very active today with multiple commits including version bumps to 0.1.0, README updates, icon addition, and changes to use VS_* prefixed environment variables for better integration.

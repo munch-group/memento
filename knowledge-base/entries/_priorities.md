@@ -14,6 +14,7 @@
 - Drive: Protein LoF with Leipzig, Primate LinARs, X/Y DEG.  
 - Xbrain: Relate 1000g, A/B border inference, HiC X/Y sperm.   
 - Bioinformatics course.  
+- Plan for exploiting UKbiobank
 - Drive: Pratto, Devanji collaboration.  
 
 ## Quarter plan

@@ -170,6 +170,8 @@ a { color: inherit; }
 .pin-icon { font-size: 12px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; }
 .pin-icon:hover { opacity: 0.7; }
 .pin-icon.active { opacity: 0.85; color: var(--accent); }
+.copy-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
+.copy-icon:hover { opacity: 0.7; }
 .card.overdue { border-color: rgba(200, 0, 0, 0.5); }
 .card.due-today { border-color: rgba(200,0,0,0.8); }
 .card.due-soon { border-color: rgba(200, 0, 0, 0.3); }
@@ -1064,6 +1066,7 @@ function renderCard(item, forceExpand) {
     ${item.type==='github'&&item._ghOpenIssues?`<span class="gh-issues-icon" title="View open issues" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="gh-issues-count">${item._ghOpenIssues}</span></span>`:''}
     <span class="card-date">${fmtDate(item.date)}</span>
     ${item.id!=='_priorities'&&item.id!=='_digest'?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
+    <span class="copy-icon" title="Copy as Markdown" onclick="copyCardMarkdown(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
   </div>
   ${(()=>{ if(exp) { if(item.type==='github'&&item._ghFullName) { const desc = item.content ? '<p>'+esc(item.content)+'</p>' : ''; const cachedStatus = (item._ghCommits || item._ghIssuesRecent) ? ghBuildStatusHtml(item._ghCommits||[], item._ghIssuesRecent||[]) : '<span style="color:var(--muted)">Loading…</span>'; return `<div class="card-content" id="cc-${item.id}">${desc}${desc?'<hr>':''}<div id="gh-status-${item.id}">${cachedStatus}</div></div>`; } return `<div class="card-content" id="cc-${item.id}">${md(item.content)}</div>`; } const t=title.replace(/…$/,''); const c=item.content.trim(); if(c===t||c===(item.title||'').trim()) return ''; return `<div class="card-content clamped" id="cc-${item.id}">${esc(item.content)}</div>`; })()}
   ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
@@ -1074,7 +1077,6 @@ function renderCard(item, forceExpand) {
       ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:var(--accent)">⊙</button>`:''}
       ${basePath?`<button class="icon-btn" onclick="event.stopPropagation();openInVSCode('${item.id}')" title="Open in VS Code" style="font-size:11px;font-weight:600">VS</button>`:''}
       ${readOnly?'':`<button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>`}
-      <button class="icon-btn" onclick="copyCardMarkdown(event,'${item.id}')" title="Copy as Markdown"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
       ${readOnly?'':`<span class="icon-btn sync-bottom" onclick="syncItem(event,'${item.id}')" title="${item.synced?'Re-sync to Claude':'Sync to Claude'}">${item.synced?'✓':'⊘'}</span>`}
       ${readOnly?'':`<button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>`}
     </span>

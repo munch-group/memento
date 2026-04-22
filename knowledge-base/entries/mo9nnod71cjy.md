@@ -1,0 +1,1 @@
+Does the retention of histones in sperm chromatin reflect weak A/B compartments? What controls the transition from histones to protamines?

@@ -1,3 +1,5 @@
+
+
 > I'll search for information about MAPT's relationship with tubulin post-translational modifications and its interacting genes in this context.Based on my research, I can provide you with a comprehensive overview of MAPT's relationship with tubulin post-translational modifications and the key interacting genes.
 > 
 

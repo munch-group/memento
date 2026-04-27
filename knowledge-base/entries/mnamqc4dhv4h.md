@@ -1,1 +1,0 @@
-PSMC: Can I somehow truncate the time states and have all transitions to deeper coalescences go to trash?

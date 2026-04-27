@@ -1,1 +1,0 @@
-Given a 3.ton, what is teh probability of another ton overlapping/including those *same* 3 lineages?

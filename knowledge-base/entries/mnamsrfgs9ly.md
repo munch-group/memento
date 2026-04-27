@@ -1,1 +1,0 @@
-What If I compute s for each snp in a treesequence tree. and consider the distribution of s inside this single tree as the DFE. That should account for the DFE since some variants are ancestral and some are derived.  Is it somehow possible to treat the diffeerence between tree as a nuisance variable that can be handled if we know the demographry fromr estimating that globally.

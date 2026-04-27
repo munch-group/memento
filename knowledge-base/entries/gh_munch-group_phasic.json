@@ -7,7 +7,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/phasic",
-  "date": "2026-04-18T09:21:57Z",
+  "date": "2026-04-27T09:15:37Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/phasic",
@@ -73,6 +73,38 @@
   ],
   "_ghIssuesRecent": [
     {
+      "number": 17,
+      "title": "test dynamic ordering in elimination",
+      "state": "open",
+      "date": "2026-04-27T09:18:43Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/17"
+    },
+    {
+      "number": 19,
+      "title": "Make sure c/cpp headers are installed when phasic or ptdalgorithms is",
+      "state": "open",
+      "date": "2026-04-27T09:15:37Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/19"
+    },
+    {
+      "number": 18,
+      "title": "Consider implementing this instead of fixed granularity for all parameterizations",
+      "state": "open",
+      "date": "2026-04-27T09:12:31Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/18"
+    },
+    {
+      "number": 16,
+      "title": "feat: create benchmarking submodule",
+      "state": "open",
+      "date": "2026-04-27T08:50:52Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/16"
+    },
+    {
       "number": 15,
       "title": "Review test coverage",
       "state": "open",
@@ -121,78 +153,6 @@
       "date": "2026-04-06T13:29:30Z",
       "labels": [],
       "url": "https://github.com/munch-group/phasic/issues/11"
-    },
-    {
-      "number": 5,
-      "title": "Translate benchmark code from R to python",
-      "state": "open",
-      "date": "2026-04-06T13:23:35Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/5"
-    },
-    {
-      "number": 9,
-      "title": "Tester issue from vscode",
-      "state": "open",
-      "date": "2026-04-06T12:45:31Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/9"
-    },
-    {
-      "number": 8,
-      "title": "update_weights does not work on reward transformed graphs because the reward transformation does not preserve the edges as parameterized (time-inhomogeneous.ipynb)",
-      "state": "open",
-      "date": "2026-03-25T07:22:51Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/8"
-    },
-    {
-      "number": 7,
-      "title": "Check/fix numerical issue in time-inhomogeneous.ipynb cell",
-      "state": "open",
-      "date": "2026-03-25T07:22:20Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/7"
-    },
-    {
-      "number": 6,
-      "title": "Compare to the exact results of Pool and Nielsen for pairwise coelescence (time-inhomogeneous.ipynb)",
-      "state": "open",
-      "date": "2026-03-25T07:21:04Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/6"
-    },
-    {
-      "number": 4,
-      "title": "foobar",
-      "state": "closed",
-      "date": "2025-11-16T14:24:24Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/4"
-    },
-    {
-      "number": 3,
-      "title": "Create_vertex problem",
-      "state": "open",
-      "date": "2025-09-25T12:00:23Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/3"
-    },
-    {
-      "number": 2,
-      "title": "State vector length seg fault",
-      "state": "open",
-      "date": "2024-06-26T05:46:52Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/2"
-    },
-    {
-      "number": 1,
-      "title": "Initial state not recorded as created edges are later created back to them",
-      "state": "open",
-      "date": "2024-06-16T16:50:14Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/1"
     }
   ],
   "pinned": false,

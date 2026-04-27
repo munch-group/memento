@@ -2052,7 +2052,7 @@ function ghBuildStatusHtml(commits, issues, repoName) {
     for (const i of open) {
       const labels = (i.labels || []).map(l => typeof l === 'string' ? l : l.name).join(', ');
       const labelHtml = labels ? ' <code>' + esc(labels) + '</code>' : '';
-      const url = i.url || i.html_url;
+      const url = i.html_url || i.url;
       const date = i.date || i.updated_at;
       h += `<li><a href="${esc(url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title)}${labelHtml} <span style="color:var(--muted)">${fmtDate(date)}</span></li>`;
     }

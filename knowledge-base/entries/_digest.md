@@ -1,7 +1,13 @@
 ### Past week
 
+**phasic**  
+Recent work has focused on documentation improvements and implementing composable graph operations, with the latest commit fixing the navbar in the mathematical reference book two days ago. The major development was introducing composable modeling operations like `add_epoch` and updated `discretize` methods that return new graphs for better composition. Several notebooks were accidentally deleted and restored mid-week. There are 9 open issues including a bug with `update_weights` on reward transformed graphs, numerical issues in time-inhomogeneous notebooks, test coverage review, and a benchmarking utility request.
+
 **emma-giraf**  
 Heavy activity today with 10 commits all labeled "Opdateret" (Updated), suggesting significant ongoing development or updates being pushed through.
+
+**memento**  
+Very active development with daily commits through yesterday, mostly generic "update" messages and INBOX.md modifications. One open enhancement from about two weeks ago requesting a priorities page alongside the digest feature.
 
 **atlas-variant-ages**  
 (summary unavailable)
@@ -11,9 +17,6 @@ Heavy activity today with 10 commits all labeled "Opdateret" (Updated), suggesti
 
 **munch-group-library**  
 Updated pyproject.toml about four months ago - this Python library template hasn't seen recent activity and may need attention to stay current with evolving Python packaging standards and dependencies.
-
-**memento**  
-Very active development with daily commits through yesterday, mostly generic "update" messages and INBOX.md modifications. One open enhancement from about two weeks ago requesting a priorities page alongside the digest feature.
 
 **munch-group-project**  
 (summary unavailable)
@@ -28,9 +31,6 @@ One open issue from about 8 months ago needs attention: "Fix github action", sug
 Multiple patch version bumps over the past week, with the most recent activity two days ago and several bumps on April 11th and 7th, suggesting active development or bug fixes for the VSCode theme-sensitive plotting library.
 
 ### Past month
-
-**phasic**  
-Recent work has focused on documentation improvements and implementing composable graph operations, with the latest commit fixing the navbar in the mathematical reference book two days ago. The major development was introducing composable modeling operations like `add_epoch` and updated `discretize` methods that return new graphs for better composition. Several notebooks were accidentally deleted and restored mid-week. There are 9 open issues including a bug with `update_weights` on reward transformed graphs, numerical issues in time-inhomogeneous notebooks, test coverage review, and a benchmarking utility request.
 
 **chrom-tracks**  
 (summary unavailable)

@@ -1,1 +1,0 @@
-Make use of the fact that the genetic distance between TreeSequence trees is uniform. I.e. All adjacent trees have the same distance, all trees separated by, say five, other trees do to. That means SNPs and in all adjacent trees can be modelled with the same recombination rate in the two-locus model. Same with those in trees with some other offset.

@@ -5,6 +5,7 @@
 - Lundbeck Experiment funds
 - Funding overview
 - Plan trips
+- remove tot_reward_limit option
 
 ## Week work
 - Time Machine on office machine

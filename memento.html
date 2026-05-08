@@ -173,6 +173,9 @@ a { color: inherit; }
 .pin-icon.active { opacity: 0.85; color: var(--accent); }
 .copy-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
 .copy-icon:hover { opacity: 0.7; }
+.focus-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
+.focus-icon:hover { opacity: 0.7; }
+.focus-icon.active { opacity: 0.85; color: var(--accent); }
 .card.overdue { border-color: rgba(200, 0, 0, 0.5); }
 .card.due-today { border-color: rgba(200,0,0,0.8); }
 .card.due-soon { border-color: rgba(200, 0, 0, 0.3); }
@@ -387,6 +390,7 @@ let sortAsc = false;     // false = descending (newest/unsynced first)
 let tagSort = 'count';
 let selectedType = 'note';
 let expandedId = null;
+let focusedCardId = null;
 let editingId = null;
 let ghEditMode = false;
 let inboxEditMode = false;
@@ -822,9 +826,17 @@ function renderFilters() {
   }
   document.getElementById('tag-filter-list').innerHTML = tagHtml;
 
+  const el = document.getElementById('page-title');
+  if (focusedCardId) {
+    const fItem = items.find(i => i.id === focusedCardId);
+    if (fItem) {
+      const fTitle = fItem.title || fItem.content.split('\n')[0].slice(0,80);
+      el.innerHTML = `<span style="cursor:pointer" onclick="backFromFocus()" title="Back to all entries">← ${esc(fTitle)}</span>`;
+      return;
+    }
+  }
   const hasFilter = activeGene || activeTag || activeType !== 'all';
   const title = activeGene ? `@${activeGene}` : activeTag ? `#${activeTag}` : activeType==='all' ? `All entries (${items.length})` : (TYPES.find(t=>t.key===activeType)?.label||activeType);
-  const el = document.getElementById('page-title');
   el.innerHTML = hasFilter ? `<span style="cursor:pointer" onclick="clearAllFilters()" title="Back to all entries">← ${esc(title)}</span>` : esc(title);
 }
 
@@ -837,7 +849,7 @@ function toggleSection(headerId, contentId) {
 }
 function cycleConnFilter() { connFilter = connFilter==='all' ? 'conn' : connFilter==='conn' ? 'noconn' : 'all'; renderFilters(); renderList(); }
 function setArchiveFilter() { archiveFilter = archiveFilter==='archived' ? 'active' : 'archived'; renderFilters(); renderList(); }
-function clearAllFilters() { activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active'; ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; renderFilters(); renderList(); }
+function clearAllFilters() { activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active'; ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; focusedCardId=null; renderFilters(); renderList(); }
 function setFilter(type) { activeType=type; activeTag=null; activeGene=null; renderFilters(); renderList(); }
 function setTagFilter(tag) { activeTag = activeTag===tag ? null : tag; activeType='all'; activeGene=null; renderFilters(); renderList(); }
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
@@ -910,6 +922,19 @@ function renderList() {
     const item = items.find(i => i.id === digestFocusCardId);
     if (!item) { digestFocusCardId = null; }
     else { list.innerHTML = `<div class="item-col">${renderCard(item)}</div>`; resolveImages(); return; }
+  }
+  // Card focus: show single card spanning full width
+  if (focusedCardId) {
+    const list = document.getElementById('item-list');
+    if (!list) return;
+    const item = items.find(i => i.id === focusedCardId);
+    if (!item) { focusedCardId = null; }
+    else {
+      list.style.flexDirection = '';
+      list.innerHTML = `<div class="item-col" style="flex:1 1 100%;max-width:100%">${renderCard(item, true)}</div>`;
+      resolveImages();
+      return;
+    }
   }
   const { vis } = getVisibleItems();
   const list=document.getElementById('item-list');
@@ -1067,6 +1092,7 @@ function renderCard(item, forceExpand) {
     <span class="card-date">${fmtDate(item.date)}</span>
     ${item.id!=='_priorities'&&item.id!=='_digest'?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
     <span class="copy-icon" title="Copy as Markdown" onclick="copyCardMarkdown(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+    <span class="focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
   </div>
   ${(()=>{ if(exp) { if(item.type==='github'&&item._ghFullName) { const desc = item.content ? '<p>'+esc(item.content)+'</p>' : ''; const cachedStatus = (item._ghCommits || item._ghIssuesRecent) ? ghBuildStatusHtml(item._ghCommits||[], item._ghIssuesRecent||[], item.title) : '<span style="color:var(--muted)">Loading…</span>'; return `<div class="card-content" id="cc-${item.id}">${desc}${desc?'<hr>':''}<div id="gh-status-${item.id}">${cachedStatus}</div></div>`; } return `<div class="card-content" id="cc-${item.id}">${md(item.content)}</div>`; } const t=title.replace(/…$/,''); const c=item.content.trim(); if(c===t||c===(item.title||'').trim()) return ''; return `<div class="card-content clamped" id="cc-${item.id}">${esc(item.content)}</div>`; })()}
   ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
@@ -1128,6 +1154,23 @@ function navigateToRepoCard(cardId) {
 }
 function backFromDigestFocus() {
   digestFocusCardId = null;
+  expandedId = null;
+  renderFilters(); renderList();
+}
+function focusCard(e, id) {
+  e.stopPropagation();
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  focusedCardId = id;
+  expandedId = id;
+  renderList();
+  const el = document.getElementById('page-title');
+  const title = item.title || item.content.split('\n')[0].slice(0,80);
+  el.innerHTML = `<span style="cursor:pointer" onclick="backFromFocus()" title="Back to all entries">← ${esc(title)}</span>`;
+  if (item.type === 'github' && item._ghFullName) ghExpandCard(item);
+}
+function backFromFocus() {
+  focusedCardId = null;
   expandedId = null;
   renderFilters(); renderList();
 }

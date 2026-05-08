@@ -8,7 +8,10 @@
     "BDMI"
   ],
   "source": "",
-  "date": "2026-03-28T17:32:05.342Z",
+  "date": "2026-05-08T10:50:17.455Z",
   "synced": false,
-  "_sortTag": "Baboons"
+  "_sortTag": "Baboons",
+  "connection": false,
+  "archived": false,
+  "due": ""
 }

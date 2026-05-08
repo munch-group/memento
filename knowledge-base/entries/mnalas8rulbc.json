@@ -3,11 +3,17 @@
   "type": "note",
   "title": "Baboon swamping, Y, and MY",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Baboons",
+    "X",
+    "Y",
+    "MT",
+    "LAI"
+  ],
   "source": "Cohen et al. / https://doi.org/10.1371/journal.pgen.1006407",
-  "date": "2026-04-04T12:54:05.805Z",
+  "date": "2026-05-08T10:49:43.275Z",
   "synced": false,
-  "_sortTag": "",
+  "_sortTag": "Baboons",
   "connection": false,
   "archived": false,
   "due": ""

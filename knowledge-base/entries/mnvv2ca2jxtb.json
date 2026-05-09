@@ -3,12 +3,14 @@
   "type": "note",
   "title": "Dynamic ordering in elimination",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-04-12T14:30:32.618Z",
+  "date": "2026-05-09T07:49:53.607Z",
   "synced": false,
   "_sortTag": ""
 }

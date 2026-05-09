@@ -1,11 +1,16 @@
 {
   "id": "mnamv6r7u882",
-  "type": "reference",
-  "title": "Phasic",
+  "type": "idea",
+  "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "source": "",
-  "date": "2026-03-28T17:57:52.243Z",
+  "date": "2026-05-09T07:50:28.183Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "",
+  "connection": false,
+  "archived": false,
+  "due": ""
 }

@@ -2,10 +2,57 @@
 
 import json
 import os
+import re
 
 
 def _entries_dir(kb_dir):
     return os.path.join(kb_dir, "entries")
+
+
+_TABLE_ROW_RE = re.compile(r"^\s*\|.*\|\s*$")
+_UNESCAPED_PIPE_RE = re.compile(r"(?<!\\)\|")
+
+
+def _pad_table_row(line):
+    """Ensure single-space padding around every unescaped pipe in a table row."""
+    leading_ws = line[: len(line) - len(line.lstrip())]
+    stripped = line.strip()
+    # Split on unescaped pipes; outer empty fields come from the leading/trailing |.
+    parts = _UNESCAPED_PIPE_RE.split(stripped)
+    if len(parts) < 3 or parts[0] != "" or parts[-1] != "":
+        return line
+    cells = [c.strip() for c in parts[1:-1]]
+    return leading_ws + "| " + " | ".join(cells) + " |"
+
+
+def _needs_table_padding(line):
+    """True if a table-row line has any cell boundary without inside whitespace."""
+    stripped = line.strip()
+    inner = stripped[1:-1]
+    # Look for a non-space, non-backslash char directly adjacent to an unescaped pipe.
+    return bool(re.search(r"\|[^\s|]", inner) or re.search(r"(?<!\\)[^\s|]\|", inner))
+
+
+def _normalize_md(text):
+    """Sanitize markdown for storage: swap box-drawing pipes for ASCII, pad tight table rows.
+
+    Skips fenced code blocks so code samples are untouched.
+    """
+    if not text:
+        return text
+    text = text.replace("│", "|")
+    out_lines = []
+    in_fence = False
+    for line in text.split("\n"):
+        if line.lstrip().startswith("```") or line.lstrip().startswith("~~~"):
+            in_fence = not in_fence
+            out_lines.append(line)
+            continue
+        if not in_fence and _TABLE_ROW_RE.match(line) and _needs_table_padding(line):
+            out_lines.append(_pad_table_row(line))
+        else:
+            out_lines.append(line)
+    return "\n".join(out_lines)
 
 
 def load_all(kb_dir):
@@ -50,6 +97,8 @@ def save_entry(kb_dir, entry):
         md_text = meta.pop("markdown", "")
     else:
         md_text = meta.pop("content", "")
+
+    md_text = _normalize_md(md_text)
 
     with open(os.path.join(edir, f"{eid}.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, indent=2, ensure_ascii=False)

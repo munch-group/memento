@@ -1,1 +1,0 @@
-Is ptd_dph_normalize_graph obsolete?

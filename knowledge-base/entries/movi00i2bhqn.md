@@ -1,1 +1,0 @@
-It is probably the rare multi mutation events that are most informative, since these are the only ones linking numbers of mutations (tree height) to the distribution of different kinds/tons (epoch population sizes)

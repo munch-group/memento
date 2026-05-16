@@ -119,8 +119,13 @@ a { color: inherit; }
 .preview-toggle.active { color: var(--text2); }
 .preview-toggle.half .preview-dot { border-color: var(--accent); }
 .preview-toggle.half { color: var(--text2); }
+.preview-toggle.lines2 .preview-dot { background: linear-gradient(to right, var(--accent) 50%, transparent 50%); border-color: var(--accent); }
+.preview-toggle.lines2 { color: var(--text2); }
+.preview-toggle.lines10 .preview-dot { background: var(--accent); border-color: var(--accent); }
+.preview-toggle.lines10 { color: var(--text2); }
 .hide-previews .card-content.clamped { display: none; }
 .hide-meta .card-content.clamped { display: none; }
+.show-lines10 .card-content.clamped { -webkit-line-clamp: 10; color: var(--text2); }
 .hide-meta .card:not(.expanded) .card-meta { display: none; }
 .highlight-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
 .highlight-toggle:hover { color: var(--text2); }
@@ -1119,18 +1124,24 @@ function geneClick(e, gene) {
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
   setGeneFilter(gene);
 }
-let previewMode = 'compact'; // 'minimal' | 'compact' | 'full'
+let previewMode = 'compact'; // 'minimal' | 'compact' | 'lines2' | 'lines10'
 function togglePreviews() {
-  previewMode = previewMode === 'minimal' ? 'compact' : previewMode === 'compact' ? 'full' : 'minimal';
+  previewMode = previewMode === 'minimal' ? 'compact'
+    : previewMode === 'compact' ? 'lines2'
+    : previewMode === 'lines2' ? 'lines10'
+    : 'minimal';
   applyPreviewMode();
 }
 function applyPreviewMode() {
   const list = document.getElementById('item-list');
   const toggle = document.getElementById('preview-toggle');
-  list.classList.remove('hide-previews', 'hide-meta');
-  toggle.classList.remove('active', 'half');
-  if (previewMode === 'full') {
-    toggle.classList.add('active');
+  list.classList.remove('hide-previews', 'hide-meta', 'show-lines10');
+  toggle.classList.remove('active', 'half', 'lines2', 'lines10');
+  if (previewMode === 'lines10') {
+    list.classList.add('show-lines10');
+    toggle.classList.add('lines10');
+  } else if (previewMode === 'lines2') {
+    toggle.classList.add('lines2');
   } else if (previewMode === 'compact') {
     list.classList.add('hide-previews');
     toggle.classList.add('half');
@@ -1668,17 +1679,37 @@ document.addEventListener('keydown', async e=>{
     const imported = await tryClipImport();
     if (imported) e.preventDefault();
   }
-  if((e.metaKey||e.ctrlKey)&&e.key==='n'){
-    if(document.getElementById('app-area').style.display==='none') return;
-    e.preventDefault();
-    if(document.getElementById('add-form').style.display==='none') toggleForm();
-  }
-  if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){
-    e.preventDefault();
-    if(document.getElementById('add-form').style.display!=='none'){
-      saveItem();
-    } else if(expandedId){
-      editItem({stopPropagation(){}}, expandedId);
+  if(e.altKey && !e.metaKey && !e.ctrlKey && !e.shiftKey){
+    const active = document.activeElement;
+    const inField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+    const appHidden = document.getElementById('app-area').style.display==='none';
+    if(!appHidden){
+      const k = e.key.toLowerCase();
+      if(k==='n'){
+        e.preventDefault();
+        if(document.getElementById('add-form').style.display==='none') toggleForm();
+        return;
+      }
+      if(e.key==='Enter'){
+        e.preventDefault();
+        if(document.getElementById('add-form').style.display!=='none'){
+          saveItem();
+        } else if(expandedId){
+          editItem({stopPropagation(){}}, expandedId);
+        }
+        return;
+      }
+      if(!inField){
+        if(k==='s'){
+          e.preventDefault();
+          const search = document.getElementById('search-input');
+          if(search){ search.focus(); search.select(); }
+          return;
+        }
+        if(k==='d'){ e.preventDefault(); toggleDigest(); return; }
+        if(k==='c'){ e.preventDefault(); togglePreviews(); return; }
+        if(k==='h'){ e.preventDefault(); toggleHighlightInput(); return; }
+      }
     }
   }
   if(e.key==='Escape'){

@@ -1716,7 +1716,6 @@ document.addEventListener('keydown', async e=>{
     const inField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
     if(inField){
       e.preventDefault();
-      if(active.id === 'search-input' && active.value){ active.value=''; renderList(); }
       active.blur();
       return;
     }

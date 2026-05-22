@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/vscodenb",
-  "date": "2026-04-22T11:15:25Z",
+  "date": "2026-05-21T09:17:00Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/vscodenb",
@@ -17,54 +17,54 @@
   "_sortTag": "",
   "_ghCommits": [
     {
-      "sha": "8c47cf7",
+      "sha": "907500c",
       "msg": "patch  version bump",
-      "date": "2026-04-22T11:13:18Z"
+      "date": "2026-05-21T09:13:12Z"
     },
     {
-      "sha": "9b937c8",
+      "sha": "59622d3",
       "msg": "patch  version bump",
-      "date": "2026-04-22T11:13:14Z"
+      "date": "2026-05-21T09:13:11Z"
     },
     {
-      "sha": "2fb1eba",
+      "sha": "e647296",
+      "msg": "Changed default figure format to svg",
+      "date": "2026-05-21T09:12:48Z"
+    },
+    {
+      "sha": "c98dfd5",
+      "msg": "patch  version bump",
+      "date": "2026-05-10T08:14:35Z"
+    },
+    {
+      "sha": "3ef8683",
+      "msg": "patch  version bump",
+      "date": "2026-05-10T08:14:35Z"
+    },
+    {
+      "sha": "6123e7d",
       "msg": "update",
-      "date": "2026-04-22T11:12:53Z"
+      "date": "2026-05-10T08:14:27Z"
     },
     {
-      "sha": "20dc1b5",
+      "sha": "a3b8016",
       "msg": "patch  version bump",
-      "date": "2026-04-13T16:06:05Z"
+      "date": "2026-05-04T13:45:53Z"
     },
     {
-      "sha": "091cf56",
+      "sha": "d04030d",
       "msg": "patch  version bump",
-      "date": "2026-04-13T16:06:02Z"
+      "date": "2026-05-04T13:45:53Z"
     },
     {
-      "sha": "1cc56f0",
+      "sha": "f912272",
+      "msg": "updated plot suppressing context",
+      "date": "2026-05-04T13:39:14Z"
+    },
+    {
+      "sha": "9917f68",
       "msg": "patch  version bump",
-      "date": "2026-04-13T15:57:21Z"
-    },
-    {
-      "sha": "143a783",
-      "msg": "patch  version bump",
-      "date": "2026-04-13T15:57:17Z"
-    },
-    {
-      "sha": "10f5084",
-      "msg": "patch  version bump",
-      "date": "2026-04-11T10:23:53Z"
-    },
-    {
-      "sha": "58ca9e8",
-      "msg": "patch  version bump",
-      "date": "2026-04-11T10:23:48Z"
-    },
-    {
-      "sha": "4c6baaf",
-      "msg": "update",
-      "date": "2026-04-11T10:23:39Z"
+      "date": "2026-04-29T19:27:33Z"
     }
   ],
   "_ghIssuesRecent": [

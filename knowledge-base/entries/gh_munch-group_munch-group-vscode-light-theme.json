@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/munch-group-vscode-light-theme",
-  "date": "2026-04-07T11:59:33Z",
+  "date": "2026-04-29T18:17:31Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/munch-group-vscode-light-theme",
@@ -16,6 +16,11 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "04f67d9",
+      "msg": "update",
+      "date": "2026-04-29T18:17:22Z"
+    },
     {
       "sha": "ec78f46",
       "msg": "update",

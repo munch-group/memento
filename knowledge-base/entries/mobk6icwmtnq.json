@@ -1,14 +1,14 @@
 {
   "id": "mobk6icwmtnq",
-  "type": "note",
-  "title": "",
+  "type": "reference",
+  "title": "CSV file extracted from SOM figures in Akbari et al.",
   "genes": [],
   "tags": [],
-  "source": "",
+  "source": "Akbari et al. 2026 / https://www.nature.com/articles/s41586-026-10358-1",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-04-23T14:10:10.160Z",
+  "date": "2026-05-29T14:32:30.482Z",
   "synced": false,
   "_sortTag": ""
 }

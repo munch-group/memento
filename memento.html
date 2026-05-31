@@ -165,6 +165,8 @@ a { color: inherit; }
 .priorities-card:hover { border-color: var(--border2); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
+.tag-suggest { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; max-height: 96px; overflow-y: auto; }
+.tag-suggest .tag.added { opacity: 0.4; }
 .gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
 .gene:hover { background: rgba(0,0,0,0.04); }
 .gene-more { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 7px; border-radius: 3px; cursor: default; }
@@ -316,7 +318,8 @@ a { color: inherit; }
         </div>
         <div class="field">
           <label>Tags <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
-          <input type="text" id="f-tags" placeholder="neanderthal, admixture, selection">
+          <input type="text" id="f-tags" placeholder="neanderthal, admixture, selection" oninput="renderTagSuggest()">
+          <div id="f-tags-suggest" class="tag-suggest"></div>
         </div>
         <div class="field field-full">
           <label>Genes <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
@@ -1359,6 +1362,7 @@ function editItem(e, id) {
   if (!ghEditMode) document.getElementById('f-title').value = item.title || '';
   document.getElementById('f-genes').value = (item.genes || []).join(', ');
   document.getElementById('f-tags').value = (item.tags || []).join(', ');
+  renderTagSuggest();
   if (!ghEditMode) document.getElementById('f-source').value = item.source || '';
   if (!ghEditMode) document.getElementById('f-due').value = item.due || '';
   if (!ghEditMode) document.getElementById('f-connection').checked = !!item.connection;
@@ -1376,8 +1380,29 @@ function toggleForm(){
   f.style.display=open?'':'none';
   if(open && window._taHeight) ta.style.height=window._taHeight;
   document.getElementById('btn-add-toggle').textContent=open?'× Cancel':'+ Add';
-  if(open){editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);}
+  if(open){editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);renderTagSuggest();}
   else{editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';showFormEditButtons(false);}
+}
+
+function renderTagSuggest(){
+  const box=document.getElementById('f-tags-suggest');
+  if(!box) return;
+  const cur=new Set(document.getElementById('f-tags').value.split(/[\s,]+/).map(t=>t.trim()).filter(Boolean));
+  const all=[...new Set(items.flatMap(i=>i.tags||[]))].sort((a,b)=>a.localeCompare(b));
+  box.style.display = all.length ? 'flex' : 'none';
+  box.innerHTML = all.map(t=>{
+    const safe=t.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<span class="tag${cur.has(t)?' added':''}" onclick="addTagToInput('${safe}')">${esc(t)}</span>`;
+  }).join('');
+}
+function addTagToInput(tag){
+  const input=document.getElementById('f-tags');
+  const cur=input.value.split(/[\s,]+/).map(t=>t.trim()).filter(Boolean);
+  const i=cur.indexOf(tag);
+  if(i===-1) cur.push(tag); else cur.splice(i,1);
+  input.value = cur.length ? cur.join(', ')+', ' : '';
+  renderTagSuggest();
+  input.focus();
 }
 
 function showFormEditButtons(show, item) {
@@ -1725,6 +1750,11 @@ document.addEventListener('keydown', async e=>{
     } else {
       const search = document.getElementById('search-input');
       if(search && search.value){ search.value=''; renderList(); }
+      else {
+        // Nothing else for Esc to do — if a "← back" link is showing in the title, follow it.
+        const back = document.querySelector('#page-title [onclick]');
+        if(back) back.click();
+      }
     }
   }
 });

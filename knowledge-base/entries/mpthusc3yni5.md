@@ -1,0 +1,1 @@
+Does IHO1 coevolve with PRDM9 to build robustness to pairing the majority allele with other segratating alleles (which would be mild cases of what Simons finds)

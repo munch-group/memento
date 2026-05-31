@@ -1,31 +1,15 @@
 {
   "id": "mn9z13p244y8",
   "type": "note",
-  "title": "MAPT inversion",
-  "tags": [
-    "Does",
-    "the",
-    "frequencies",
-    "of",
-    "the",
-    "two",
-    "MAPT",
-    "haplotypes",
-    "serve",
-    "to",
-    "establish",
-    "an",
-    "averagely",
-    "even",
-    "transmission?"
-  ],
+  "title": "Do the frequencies of the two MAPT haplotypes serve to establish an averagely even transmission?",
+  "tags": [],
   "source": "",
-  "date": "2026-04-22T06:09:28.566Z",
+  "date": "2026-05-31T07:59:57.602Z",
   "synced": false,
   "genes": [
     "MAPT"
   ],
-  "_sortTag": "the",
+  "_sortTag": "MAPT",
   "connection": false,
   "archived": false,
   "due": ""

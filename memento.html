@@ -415,7 +415,8 @@ let basePath = '';         // absolute path to knowledge-base folder (for vscode
 const hasFSAccess = typeof window.showDirectoryPicker === 'function';
 const readOnly = !hasFSAccess;
 let ghRepoMode = false;    // true when entries loaded from GitHub API
-let highlightGenes = new Set();
+let highlightGenes = new Set();      // combined: highlight-input genes ∪ @genes in the search bar
+let highlightInputGenes = new Set(); // genes typed into the "Highlight genes" input
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
 let ghIssuesItems = [];  // temporary issue cards (not saved to JSON)
 const _readmeCache = {};
@@ -911,6 +912,10 @@ function getVisibleItems() {
     return true;
   }
   const orGroups = raw ? raw.split(/\s*,\s+|\s+,\s*/).map(s=>s.trim()).filter(Boolean).map(parseGroup) : [];
+  // A gene is highlighted if it is in the highlight input OR referenced as @gene in the search bar.
+  const searchGenes = orGroups.flatMap(g => [...g.geneAnd, ...g.geneOr]);
+  highlightGenes = new Set([...highlightInputGenes, ...searchGenes]);
+  document.getElementById('highlight-bar')?.classList.toggle('active', highlightGenes.size > 0);
   let vis=sortItems(items);
   if(archiveFilter==='archived') vis=vis.filter(i=>i.archived);
   else vis=vis.filter(i=>!i.archived);
@@ -1074,11 +1079,15 @@ function renderCard(item, forceExpand) {
   const title=item.title||item.content.split('\n')[0].slice(0,80)+(item.content.length>80?'…':'');
   const tags=(item.tags||[]).map(t=>`<span class="tag" onclick="tagClick(event,'${t.replace(/'/g,"\\'")}') ">${esc(t)}</span>`).join('');
   const allGenes = item.genes||[];
-  const sortedGenes = highlightGenes.size ? [...allGenes].sort((a,b) => {
-    const ha = highlightGenes.has(a.toUpperCase()) ? 0 : 1;
-    const hb = highlightGenes.has(b.toUpperCase()) ? 0 : 1;
-    return ha - hb;
-  }) : allGenes;
+  // Always alphabetical; when highlighting is active, highlighted genes float to the top (each group alphabetical).
+  const sortedGenes = [...allGenes].sort((a,b) => {
+    if (highlightGenes.size) {
+      const ha = highlightGenes.has(a.toUpperCase()) ? 0 : 1;
+      const hb = highlightGenes.has(b.toUpperCase()) ? 0 : 1;
+      if (ha !== hb) return ha - hb;
+    }
+    return a.toUpperCase().localeCompare(b.toUpperCase());
+  });
   const visGenes = sortedGenes.map(g=>{
     const hl = highlightGenes.has(g.toUpperCase()) ? ' highlighted' : '';
     return `<span class="gene${hl}" onclick="geneClick(event,'${g.replace(/'/g,"\\'")}')\">${esc(g)}</span>`;
@@ -1273,19 +1282,18 @@ function toggleHighlightInput() {
 }
 function updateHighlightSet() {
   const raw = document.getElementById('highlight-input').value;
-  highlightGenes = new Set(raw.replace(/@/g,'').split(/[\s,]+/).filter(Boolean).map(g=>g.toUpperCase()));
-  document.getElementById('highlight-bar').classList.toggle('active', highlightGenes.size > 0);
-  renderList();
+  highlightInputGenes = new Set(raw.replace(/@/g,'').split(/[\s,]+/).filter(Boolean).map(g=>g.toUpperCase()));
+  renderList(); // getVisibleItems() recomputes the combined highlightGenes and toggles the bar
+
 }
 function toggleHighlightGene(gene) {
   const upper = gene.toUpperCase();
-  if (highlightGenes.has(upper)) highlightGenes.delete(upper); else highlightGenes.add(upper);
+  if (highlightInputGenes.has(upper)) highlightInputGenes.delete(upper); else highlightInputGenes.add(upper);
   const input = document.getElementById('highlight-input');
-  input.value = [...highlightGenes].join(' ');
-  document.getElementById('highlight-bar').classList.toggle('active', highlightGenes.size > 0);
+  input.value = [...highlightInputGenes].join(' ');
   const wrap = document.getElementById('highlight-input-wrap');
-  if (highlightGenes.size > 0 && wrap.style.display === 'none') wrap.style.display = 'flex';
-  renderList();
+  if (highlightInputGenes.size > 0 && wrap.style.display === 'none') wrap.style.display = 'flex';
+  renderList(); // getVisibleItems() recomputes the combined highlightGenes and toggles the bar
 }
 function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTag=null; activeType='all'; renderFilters(); renderList(); }
 function toggleCard(id,e){
@@ -1511,7 +1519,7 @@ function copyGenes(e, id) {
   e.stopPropagation();
   const item = items.find(i => i.id === id);
   if (!item || !item.genes?.length) return;
-  const text = '@' + item.genes.join(',');
+  const text = '@' + [...item.genes].sort((a,b)=>a.toUpperCase().localeCompare(b.toUpperCase())).join(',');
   navigator.clipboard.writeText(text).then(() => showToast('Copied: ' + text));
 }
 function copyCardMarkdown(e, id) {

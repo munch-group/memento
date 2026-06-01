@@ -1,0 +1,1 @@
+X chromosome inactivation (XI) status (from Roman, Page 2023 Table S6A)

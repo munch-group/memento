@@ -1,26 +1,19 @@
 
-
-Issue: When constructing a joint prob graph with epochs (or other slots), the slots (E.g., epoch) in the base graph indexer remain at their original index in the joint prob index. Fix StateIndexer so slots do not need to be at the end, but can be interspersed between property sets.
-
-use tree span as mutation rate weight
-
-maybe have a mutation coefficient for each kind of ton branch and update them usimg the mean span of clades below rach kind of ton branch
-
-likelihood tatio test
-
 ## Today todo
-- Email/admin back on track.  
-- Cont. joint prob. models in model-selection nb do not run.
-- Fix disc. graphs with rewards
-- Sort out docs for time-inhom joint prob models and inference
-- Drive: VEP workflow.  
-- Ideogram plot with new data
+- RejsUd
+- Status with Shannon
+- Gotteborg
+- Emma
 - Lundbeck Experiment funds
-- Funding overview
-- Plan trips
-- remove tot_reward_limit option
+- Laptop for Juilen
 
 ## Week work
+- Email/admin back on track.  
+- Fix disc. graphs with rewards
+- Drive: VEP workflow.  
+- Widget ideogram xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
+- remove tot_reward_limit option
+- Funding overview
 - Time Machine on office machine
 - Registration/Hotel in Amsterdam
 - Oxford trip

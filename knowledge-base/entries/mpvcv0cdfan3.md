@@ -1,0 +1,1 @@
+> The cyclin-dependent kinase inhibitor p57^kip2^ is encoded by an imprinted gene *Cdkn1c*, with the paternal allele being silenced. The possible expression and function of the paternal allele of *Cdkn1c* have remained little studied, however. We now show that the paternal allele of the *Cdkn1c* gene is expressed at a low level in the developing mouse neocortex.

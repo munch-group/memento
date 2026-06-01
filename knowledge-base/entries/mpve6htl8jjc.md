@@ -1,0 +1,1 @@
+Supplementary Table 9. Bonobo genes that have potential frameshifting indels disrupting the primary isoform relative to the human reference (GRCh38)

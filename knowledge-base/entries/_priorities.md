@@ -1,39 +1,34 @@
 
 ## Today todo
-- RejsUd
-- Status with Shannon
-- Gotteborg
 - Emma
-- Lundbeck Experiment funds
-- Laptop for Juilen
+- RejsUd
+- Gotteborg
+- Status with Shannon
+- Lundbeck Experiment and FNU funds overview
+- Laptop for Julien
+- Email/admin back on track.
+- Get back to Ana, Simon and "Jan"
 
-## Week work
-- Email/admin back on track.  
+## Week run
 - Fix disc. graphs with rewards
-- Drive: VEP workflow.  
-- Widget ideogram xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
-- remove tot_reward_limit option
-- Funding overview
+- VEP workflow.  
+- Funding application overview/plan
 - Time Machine on office machine
-- Registration/Hotel in Amsterdam
-- Oxford trip
-- Organize how data produced by different projects/repos are stored for use in other projects (maybe deep links to git-lfs)
-- Phasic code and test review
-- PSMC/BFFG/Ghost model
+- Widget ideogram with gene list highlights, ECH regions, xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
+- Organize how data produced by different projects/repos are stored for use in other projects (close down git-lfs and use my new "lfs" library)
+- LoF with Leipzig, Primate LinARs, X/Y DEG.  
 
 ## Month tactic
-- Drive: Protein LoF with Leipzig, Primate LinARs, X/Y DEG.  
-- Xbrain: Relate 1000g, A/B border inference, HiC X/Y sperm.   
+- PSMC/BFFG/Ghost model
 - Bioinformatics course.  
 - Plan for exploiting UKbiobank
-- Drive: Pratto, Devanji collaboration.  
+- Xbrain: Paper: XY-GWAS.  
 
 ## Quarter plan
-- Xbrain: Paper: XY-GWAS.  
 - Phasic: Joint prob., BFFG, Ghost IM, Paper.  
 - Phasic: Coalescent with selection, State lumping, Paper.  
 
-## Year goals
+## Year strategy
 - Phasic paper on joint probability.  
 - Phasic paper on coalescent with selection.  
 - Phasic paper on PSMC/BFFG/demography.  
@@ -42,5 +37,5 @@
 - More funding.  
 - Tree selection stats paper.  
 
-## Three-year strategy
+## Three-year goals
 - Larger group.  

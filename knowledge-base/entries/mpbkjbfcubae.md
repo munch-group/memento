@@ -1,3 +1,14 @@
+- More detail on SVGD
+- Man ikke regne med der bliver kigget i notebooks. Thesis skal stå alene. F.eks. under "To-ø modellen: identifiability og asymmetrisk migration": NB03 tester to-ø modellen systematisk.... (der skal stå i teksten hvordan...)
+- Hvorfor bliver SVGD trace "hakket"
+- Kalibrering af SVGD-inferens: nævn default moments-based prior
+- ; efter figs for at undgaa <Figure size 900x400 with 0 Axes>
+- 
+
+
+
+
+
 - Better/clearer separation between introduction reiterating my work and her own contribution. Up to "To ø model..." it is mostly introduction.
 - Make the introduction serve the results rather than being a review of Phasic's features. Introduce the relevant ones with an explicit purpose.
 - More detail on SVGD theory and Bayesian statistics

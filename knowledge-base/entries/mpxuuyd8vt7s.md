@@ -1,0 +1,1 @@
+See if PRDM9 is exchanged between baboon species. If so, it might be interesting to do PCR on all the baboons to get their PRDM9 alleles.

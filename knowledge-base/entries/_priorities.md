@@ -10,6 +10,9 @@
 - Get back to Ana, Simon and "Jan"
 
 ## Week run
+- Look at sticcs
+- Shannons poster
+- Gotteborg hotel
 - Fix disc. graphs with rewards
 - VEP workflow.  
 - Funding application overview/plan

@@ -1766,6 +1766,48 @@ document.addEventListener('keydown', async e=>{
     }
   }
 });
+// Option+Arrow moves the current line — or all lines touched by a selection —
+// up or down in the content field (VS Code-style ⌥↑/⌥↓).
+function moveTextareaLines(ta, dir){
+  const value = ta.value, selStart = ta.selectionStart, selEnd = ta.selectionEnd;
+  const blockStart = value.lastIndexOf('\n', selStart - 1) + 1;   // col 0 of first line
+  // A selection ending at col 0 of a line doesn't really include that line.
+  let endProbe = selEnd;
+  if (selEnd > selStart && value[selEnd - 1] === '\n') endProbe = selEnd - 1;
+  let blockEnd = value.indexOf('\n', endProbe);
+  if (blockEnd === -1) blockEnd = value.length;
+  const setRange = (a, b) => {
+    const max = ta.value.length;
+    ta.selectionStart = Math.max(0, Math.min(a, max));
+    ta.selectionEnd   = Math.max(0, Math.min(b, max));
+  };
+  if (dir < 0){
+    if (blockStart === 0) return;                                 // already at the top
+    const prevStart = value.lastIndexOf('\n', blockStart - 2) + 1;
+    const shift = blockStart - prevStart;                         // chars the block jumps
+    const prevLine = value.slice(prevStart, blockStart - 1);
+    const block = value.slice(blockStart, blockEnd);
+    ta.value = value.slice(0, prevStart) + block + '\n' + prevLine + value.slice(blockEnd);
+    setRange(selStart - shift, selEnd - shift);
+  } else {
+    if (blockEnd === value.length) return;                        // already at the bottom
+    let nextEnd = value.indexOf('\n', blockEnd + 1);
+    if (nextEnd === -1) nextEnd = value.length;
+    const shift = nextEnd - blockEnd;
+    const nextLine = value.slice(blockEnd + 1, nextEnd);
+    const block = value.slice(blockStart, blockEnd);
+    ta.value = value.slice(0, blockStart) + nextLine + '\n' + block + value.slice(nextEnd);
+    setRange(selStart + shift, selEnd + shift);
+  }
+  ta.dispatchEvent(new Event('input', {bubbles:true}));
+}
+document.getElementById('f-content').addEventListener('keydown', e=>{
+  if(e.altKey && !e.metaKey && !e.ctrlKey && !e.shiftKey &&
+     (e.key==='ArrowUp' || e.key==='ArrowDown')){
+    e.preventDefault();
+    moveTextareaLines(e.currentTarget, e.key==='ArrowUp' ? -1 : 1);
+  }
+});
 window.addEventListener('focus', ()=>{ if(dirHandle) loadFromFile(); });
 let _resizeTimer;
 window.addEventListener('resize', ()=>{ clearTimeout(_resizeTimer); _resizeTimer = setTimeout(renderList, 150); });

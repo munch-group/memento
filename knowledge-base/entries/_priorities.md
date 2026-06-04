@@ -1,18 +1,17 @@
-
 ## Today todo
-- Emma
 - RejsUd
-- Gotteborg
-- Status with Shannon
+- Gotteborg hotel and train
 - Lundbeck Experiment and FNU funds overview
-- Laptop for Julien
 - Email/admin back on track.
 - Get back to Ana, Simon and "Jan"
+- Fresh Moran coalescent model
 
 ## Week run
 - Look at sticcs
+- Sync ferie med resten af BiRC
+- Udfyld eksamensspøgsmål til GT
 - Shannons poster
-- Gotteborg hotel
+- PsychENCODE access request
 - Fix disc. graphs with rewards
 - VEP workflow.  
 - Funding application overview/plan

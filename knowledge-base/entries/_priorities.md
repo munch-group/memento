@@ -1,16 +1,16 @@
 ## Today todo
-- RejsUd
-- Gotteborg hotel and train
-- Lundbeck Experiment and FNU funds overview
 - Email/admin back on track.
+- Gotteborg hotel and train
+- RejsUd
 - Get back to Ana, Simon and "Jan"
 - Fresh Moran coalescent model
 
 ## Week run
+- Udfyld eksamensspøgsmål til GT og skriv til stud om at eksamen begynder 10.30 i stedet.
+- Send GT proejcts to Rasmus
+- New controller about Lundbeck Experiment wrap-up
 - Look at sticcs
 - Sync ferie med resten af BiRC
-- Udfyld eksamensspøgsmål til GT
-- Shannons poster
 - PsychENCODE access request
 - Fix disc. graphs with rewards
 - VEP workflow.  

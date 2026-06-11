@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/vscodenb",
-  "date": "2026-05-21T09:17:00Z",
+  "date": "2026-06-08T04:22:04Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/vscodenb",
@@ -16,6 +16,21 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "d16d8c4",
+      "msg": "patch  version bump",
+      "date": "2026-06-08T04:20:38Z"
+    },
+    {
+      "sha": "082011d",
+      "msg": "patch  version bump",
+      "date": "2026-06-08T04:20:18Z"
+    },
+    {
+      "sha": "40ca5d1",
+      "msg": "Theme fix",
+      "date": "2026-06-08T04:19:46Z"
+    },
     {
       "sha": "907500c",
       "msg": "patch  version bump",
@@ -50,21 +65,6 @@
       "sha": "a3b8016",
       "msg": "patch  version bump",
       "date": "2026-05-04T13:45:53Z"
-    },
-    {
-      "sha": "d04030d",
-      "msg": "patch  version bump",
-      "date": "2026-05-04T13:45:53Z"
-    },
-    {
-      "sha": "f912272",
-      "msg": "updated plot suppressing context",
-      "date": "2026-05-04T13:39:14Z"
-    },
-    {
-      "sha": "9917f68",
-      "msg": "patch  version bump",
-      "date": "2026-04-29T19:27:33Z"
     }
   ],
   "_ghIssuesRecent": [

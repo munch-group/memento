@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_turtle-widget",
+  "type": "github",
+  "title": "turtle-widget",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/turtle-widget",
+  "date": "2026-05-23T17:11:27Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/turtle-widget",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "518fb6d",
+      "msg": "update",
+      "date": "2026-05-23T17:10:25Z"
+    },
+    {
+      "sha": "d8c9d88",
+      "msg": "patch  version bump",
+      "date": "2026-05-23T17:05:44Z"
+    },
+    {
+      "sha": "0bf46fd",
+      "msg": "patch  version bump",
+      "date": "2026-05-23T17:05:42Z"
+    },
+    {
+      "sha": "ed8cef9",
+      "msg": "update",
+      "date": "2026-05-23T17:05:17Z"
+    },
+    {
+      "sha": "55c8a3c",
+      "msg": "notebook updates",
+      "date": "2026-05-23T16:49:54Z"
+    },
+    {
+      "sha": "2b690b2",
+      "msg": "patch  version bump",
+      "date": "2026-05-23T16:23:13Z"
+    },
+    {
+      "sha": "599cc51",
+      "msg": "patch  version bump",
+      "date": "2026-05-23T16:23:08Z"
+    },
+    {
+      "sha": "f4a6729",
+      "msg": "update",
+      "date": "2026-05-23T16:22:34Z"
+    },
+    {
+      "sha": "0aafc0c",
+      "msg": "patch  version bump",
+      "date": "2026-05-23T14:32:10Z"
+    },
+    {
+      "sha": "d5d8b2b",
+      "msg": "patch  version bump",
+      "date": "2026-05-23T14:32:08Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

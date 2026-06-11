@@ -7,71 +7,87 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/phasic",
-  "date": "2026-05-22T09:24:29Z",
+  "date": "2026-06-11T12:11:21Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/phasic",
   "_ghStars": 0,
   "_ghForks": 0,
   "_ghLang": "Python",
-  "_ghOpenIssues": 26,
+  "_ghOpenIssues": 28,
   "_ghPrivate": false,
   "_sortTag": "Phasic",
   "archived": false,
   "due": "",
   "_ghCommits": [
     {
-      "sha": "d6859a8",
+      "sha": "de99cc6",
       "msg": "docs update",
-      "date": "2026-05-21T20:36:51Z"
+      "date": "2026-06-10T10:57:01Z"
     },
     {
-      "sha": "6bd52dc",
-      "msg": "Added new smc notebook",
-      "date": "2026-05-21T12:45:01Z"
+      "sha": "90f0677",
+      "msg": "method_of_moments: same per-mode theta_dim resolution as svgd (shared helper)",
+      "date": "2026-06-10T09:37:20Z"
     },
     {
-      "sha": "a6ed1ef",
-      "msg": "updated env",
-      "date": "2026-05-21T12:44:16Z"
+      "sha": "d4e2398",
+      "msg": "svgd: resolve/validate theta_dim by weight mode (callback requires it; formula infers n_theta)",
+      "date": "2026-06-10T09:23:18Z"
     },
     {
-      "sha": "7b95b19",
-      "msg": "Slides update",
-      "date": "2026-05-21T12:06:27Z"
+      "sha": "e2eaca6",
+      "msg": "docs update",
+      "date": "2026-06-10T06:26:33Z"
     },
     {
-      "sha": "8966105",
-      "msg": "Reimplemented joint_prob_graph method",
-      "date": "2026-05-21T12:06:12Z"
-    },
-    {
-      "sha": "1a827ff",
-      "msg": "Fix format_label wrapping: pick width for cols≈2·rows, last row ≥ half full",
-      "date": "2026-05-21T12:01:54Z"
-    },
-    {
-      "sha": "0c99f09",
-      "msg": "Fix graph-cache hit dropping the callback (broke add_epoch/extend)",
-      "date": "2026-05-21T11:38:13Z"
-    },
-    {
-      "sha": "801ea07",
-      "msg": "SVGD joint-prob speedups (crash fix + dedup + OMP tuning)",
-      "date": "2026-05-19T19:05:58Z"
-    },
-    {
-      "sha": "d4bfdce",
+      "sha": "637bc78",
       "msg": "patch  version bump",
-      "date": "2026-05-19T11:11:23Z"
+      "date": "2026-06-09T19:25:53Z"
     },
     {
-      "sha": "ea519f8",
-      "msg": "update",
-      "date": "2026-05-19T11:11:06Z"
+      "sha": "a9988de",
+      "msg": "docs update",
+      "date": "2026-06-09T19:25:40Z"
+    },
+    {
+      "sha": "9cd8f5b",
+      "msg": "weight_formula: per-edge constant folding so complex formulas ~= inner product",
+      "date": "2026-06-09T07:00:31Z"
+    },
+    {
+      "sha": "91e30a8",
+      "msg": "docs: weight_formula theta_dim<coeff now works on joint paths + graph_cache",
+      "date": "2026-06-08T17:32:37Z"
+    },
+    {
+      "sha": "4315450",
+      "msg": "B2: theta_dim < coeff_length through joint_prob_graph + graph_cache theta_dim fix",
+      "date": "2026-06-08T17:31:22Z"
+    },
+    {
+      "sha": "a3372c9",
+      "msg": "Verify + document weight_formula on the joint_index and epoch_starts SVGD paths",
+      "date": "2026-06-08T16:49:33Z"
     }
   ],
   "_ghIssuesRecent": [
+    {
+      "number": 30,
+      "title": "Review rewards with discretized graphs to make sure it works and composes",
+      "state": "open",
+      "date": "2026-06-11T12:11:22Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/30"
+    },
+    {
+      "number": 29,
+      "title": "Remove tot_reward_limit option",
+      "state": "open",
+      "date": "2026-06-02T06:35:09Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/phasic/issues/29"
+    },
     {
       "number": 28,
       "title": "graph.prewarm_cache() should accept a callback kwarg for graphs updated with a callback. Otherwise the theta_dim in the cache will be wrong",
@@ -135,168 +151,6 @@
       "date": "2026-05-13T11:35:02Z",
       "labels": [],
       "url": "https://github.com/munch-group/phasic/issues/21"
-    },
-    {
-      "number": 20,
-      "title": "Update mathref to describe active caching paths",
-      "state": "open",
-      "date": "2026-05-09T08:41:24Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/20"
-    },
-    {
-      "number": 17,
-      "title": "test dynamic ordering in elimination",
-      "state": "open",
-      "date": "2026-04-27T09:18:43Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/17"
-    },
-    {
-      "number": 19,
-      "title": "Make sure c/cpp headers are installed when phasic or ptdalgorithms is",
-      "state": "open",
-      "date": "2026-04-27T09:15:37Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/19"
-    },
-    {
-      "number": 18,
-      "title": "Consider implementing this instead of fixed granularity for all parameterizations",
-      "state": "open",
-      "date": "2026-04-27T09:12:31Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/18"
-    },
-    {
-      "number": 16,
-      "title": "feat: create benchmarking submodule",
-      "state": "open",
-      "date": "2026-04-27T08:50:52Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/16"
-    },
-    {
-      "number": 15,
-      "title": "Review test coverage",
-      "state": "open",
-      "date": "2026-04-11T14:21:21Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/15"
-    },
-    {
-      "number": 14,
-      "title": "Make benchmarking utility",
-      "state": "open",
-      "date": "2026-04-11T14:20:59Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/14"
-    },
-    {
-      "number": 13,
-      "title": "Test sharing feature",
-      "state": "open",
-      "date": "2026-04-11T14:20:39Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/13"
-    },
-    {
-      "number": 10,
-      "title": "Tester 2 from vscode",
-      "state": "open",
-      "date": "2026-04-06T13:45:52Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/10"
-    },
-    {
-      "number": 12,
-      "title": "Issue Title",
-      "state": "open",
-      "date": "2026-04-06T13:45:40Z",
-      "labels": [
-        "bug"
-      ],
-      "url": "https://github.com/munch-group/phasic/issues/12"
-    },
-    {
-      "number": 11,
-      "title": "this is a tester",
-      "state": "closed",
-      "date": "2026-04-06T13:29:30Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/11"
-    },
-    {
-      "number": 5,
-      "title": "Translate benchmark code from R to python",
-      "state": "open",
-      "date": "2026-04-06T13:23:35Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/5"
-    },
-    {
-      "number": 9,
-      "title": "Tester issue from vscode",
-      "state": "open",
-      "date": "2026-04-06T12:45:31Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/9"
-    },
-    {
-      "number": 8,
-      "title": "update_weights does not work on reward transformed graphs because the reward transformation does not preserve the edges as parameterized (time-inhomogeneous.ipynb)",
-      "state": "open",
-      "date": "2026-03-25T07:22:51Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/8"
-    },
-    {
-      "number": 7,
-      "title": "Check/fix numerical issue in time-inhomogeneous.ipynb cell",
-      "state": "open",
-      "date": "2026-03-25T07:22:20Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/7"
-    },
-    {
-      "number": 6,
-      "title": "Compare to the exact results of Pool and Nielsen for pairwise coelescence (time-inhomogeneous.ipynb)",
-      "state": "open",
-      "date": "2026-03-25T07:21:04Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/6"
-    },
-    {
-      "number": 4,
-      "title": "foobar",
-      "state": "closed",
-      "date": "2025-11-16T14:24:24Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/4"
-    },
-    {
-      "number": 3,
-      "title": "Create_vertex problem",
-      "state": "open",
-      "date": "2025-09-25T12:00:23Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/3"
-    },
-    {
-      "number": 2,
-      "title": "State vector length seg fault",
-      "state": "open",
-      "date": "2024-06-26T05:46:52Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/2"
-    },
-    {
-      "number": 1,
-      "title": "Initial state not recorded as created edges are later created back to them",
-      "state": "open",
-      "date": "2024-06-16T16:50:14Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/phasic/issues/1"
     }
   ],
   "pinned": false,

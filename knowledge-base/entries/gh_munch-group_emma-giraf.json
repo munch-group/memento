@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/emma-giraf",
-  "date": "2026-05-21T15:38:21Z",
+  "date": "2026-06-08T15:02:37Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/emma-giraf",
@@ -17,54 +17,54 @@
   "_sortTag": "",
   "_ghCommits": [
     {
-      "sha": "c4509bf",
+      "sha": "2a6493f",
       "msg": "Opdateret",
-      "date": "2026-05-21T15:33:04Z"
+      "date": "2026-06-08T14:55:43Z"
     },
     {
-      "sha": "b941c9d",
+      "sha": "92a1d7e",
       "msg": "Opdateret",
-      "date": "2026-05-21T15:10:23Z"
+      "date": "2026-06-08T13:20:24Z"
     },
     {
-      "sha": "82b795b",
-      "msg": "Implement feature X to enhance user experience and optimize performance",
-      "date": "2026-05-21T14:43:23Z"
+      "sha": "3db4a91",
+      "msg": "Opdateret",
+      "date": "2026-06-08T12:52:10Z"
     },
     {
-      "sha": "46bb115",
+      "sha": "34e1738",
       "msg": "Opdateret",
-      "date": "2026-05-21T14:42:42Z"
+      "date": "2026-06-08T12:46:20Z"
     },
     {
-      "sha": "536b662",
+      "sha": "f9ea4a9",
       "msg": "Opdateret",
-      "date": "2026-05-21T13:57:19Z"
+      "date": "2026-06-07T18:01:22Z"
     },
     {
-      "sha": "7a278ac",
+      "sha": "57d93e4",
       "msg": "Opdateret",
-      "date": "2026-05-21T13:54:30Z"
+      "date": "2026-06-07T17:52:06Z"
     },
     {
-      "sha": "5a9939f",
+      "sha": "1d98371",
       "msg": "Opdateret",
-      "date": "2026-05-21T13:49:56Z"
+      "date": "2026-06-07T17:44:30Z"
     },
     {
-      "sha": "e167722",
+      "sha": "0140b7a",
       "msg": "Opdateret",
-      "date": "2026-05-20T15:08:15Z"
+      "date": "2026-06-07T17:37:22Z"
     },
     {
-      "sha": "5039823",
+      "sha": "5d6ddad",
       "msg": "Opdateret",
-      "date": "2026-05-20T14:46:04Z"
+      "date": "2026-06-07T17:30:59Z"
     },
     {
-      "sha": "d7ba6e8",
+      "sha": "e6bf8a6",
       "msg": "Opdateret",
-      "date": "2026-05-19T16:05:57Z"
+      "date": "2026-06-07T17:24:24Z"
     }
   ],
   "_ghIssuesRecent": [],

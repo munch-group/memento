@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/bird-hotspots",
-  "date": "2024-10-25T12:40:24Z",
+  "date": "2026-05-28T13:50:05Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/bird-hotspots",
@@ -16,6 +16,16 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "37ab314",
+      "msg": "Added old chages to notebooks and scripts",
+      "date": "2026-05-28T13:49:20Z"
+    },
+    {
+      "sha": "46cb76d",
+      "msg": "Added pixi env",
+      "date": "2026-05-28T13:45:17Z"
+    },
     {
       "sha": "7827242",
       "msg": "Brushed off notebooks to make sure they run",

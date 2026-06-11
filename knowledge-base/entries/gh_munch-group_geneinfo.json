@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/geneinfo",
-  "date": "2026-05-11T06:37:44Z",
+  "date": "2026-05-31T11:07:56Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/geneinfo",
@@ -16,6 +16,41 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "f9ddf87",
+      "msg": "new chr3 notebook",
+      "date": "2026-05-31T11:05:15Z"
+    },
+    {
+      "sha": "85656ce",
+      "msg": "notebook update",
+      "date": "2026-05-31T08:20:48Z"
+    },
+    {
+      "sha": "edaac61",
+      "msg": "added some cells to look for genes in chr3 region",
+      "date": "2026-05-31T08:14:30Z"
+    },
+    {
+      "sha": "0154e44",
+      "msg": "patch  version bump",
+      "date": "2026-05-29T14:08:54Z"
+    },
+    {
+      "sha": "f13be16",
+      "msg": "patch  version bump",
+      "date": "2026-05-29T14:08:51Z"
+    },
+    {
+      "sha": "9ec3b8b",
+      "msg": "Addded fallback to US mirror of UCSC API",
+      "date": "2026-05-29T14:08:05Z"
+    },
+    {
+      "sha": "bc0ccc0",
+      "msg": "notebook updates",
+      "date": "2026-05-22T11:25:33Z"
+    },
     {
       "sha": "2100d2c",
       "msg": "patch  version bump",
@@ -30,41 +65,6 @@
       "sha": "b64e9b5",
       "msg": "small theme mods",
       "date": "2026-05-11T06:34:50Z"
-    },
-    {
-      "sha": "ac19a12",
-      "msg": "patch  version bump",
-      "date": "2026-04-29T16:32:51Z"
-    },
-    {
-      "sha": "8448a30",
-      "msg": "patch  version bump",
-      "date": "2026-04-29T16:32:49Z"
-    },
-    {
-      "sha": "1ebeacf",
-      "msg": "updated conda build pkg CI",
-      "date": "2026-04-29T16:32:19Z"
-    },
-    {
-      "sha": "01dfedd",
-      "msg": "notebook with new UI",
-      "date": "2026-04-22T21:02:40Z"
-    },
-    {
-      "sha": "2bd7f16",
-      "msg": "widget: performance and long-function extractions",
-      "date": "2026-04-22T20:40:31Z"
-    },
-    {
-      "sha": "59c40d8",
-      "msg": "widget: accessibility + help popover",
-      "date": "2026-04-22T20:21:34Z"
-    },
-    {
-      "sha": "c5a66ae",
-      "msg": "widget: UI silent-failure fixes",
-      "date": "2026-04-22T20:14:26Z"
     }
   ],
   "_ghIssuesRecent": [
@@ -147,30 +147,6 @@
       "date": "2024-07-30T08:08:34Z",
       "labels": [],
       "url": "https://github.com/munch-group/geneinfo/issues/5"
-    },
-    {
-      "number": 1,
-      "title": "clear_cache method",
-      "state": "open",
-      "date": "2024-03-05T07:45:52Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/geneinfo/issues/1"
-    },
-    {
-      "number": 4,
-      "title": "Make test to see if a gene set is less evenly distributed across the genome than a background set",
-      "state": "open",
-      "date": "2024-03-05T07:41:07Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/geneinfo/issues/4"
-    },
-    {
-      "number": 3,
-      "title": "Have a nice weekend",
-      "state": "open",
-      "date": "2024-01-19T09:20:15Z",
-      "labels": [],
-      "url": "https://github.com/munch-group/geneinfo/issues/3"
     }
   ],
   "_ghDigest": {

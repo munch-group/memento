@@ -107,38 +107,6 @@
       "date": "2020-05-23T10:30:08Z",
       "labels": [],
       "url": "https://github.com/kaspermunch/sap/issues/5"
-    },
-    {
-      "number": 9,
-      "title": "gxx_linux-64 needed",
-      "state": "closed",
-      "date": "2020-05-23T10:29:39Z",
-      "labels": [],
-      "url": "https://github.com/kaspermunch/sap/issues/9"
-    },
-    {
-      "number": 4,
-      "title": "Sequence stuck at \"Using cached Blast results... done\"",
-      "state": "closed",
-      "date": "2019-07-25T09:56:39Z",
-      "labels": [],
-      "url": "https://github.com/kaspermunch/sap/issues/4"
-    },
-    {
-      "number": 2,
-      "title": "Unable to use local database",
-      "state": "closed",
-      "date": "2019-07-25T09:56:04Z",
-      "labels": [],
-      "url": "https://github.com/kaspermunch/sap/issues/2"
-    },
-    {
-      "number": 1,
-      "title": "Support for local Genbank DB?",
-      "state": "closed",
-      "date": "2019-07-25T09:55:15Z",
-      "labels": [],
-      "url": "https://github.com/kaspermunch/sap/issues/1"
     }
   ]
 }

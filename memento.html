@@ -123,11 +123,10 @@ a { color: inherit; }
 .preview-toggle.half { color: var(--text2); }
 .preview-toggle.lines2 .preview-dot { background: linear-gradient(to right, var(--accent) 50%, transparent 50%); border-color: var(--accent); }
 .preview-toggle.lines2 { color: var(--text2); }
-.preview-toggle.lines10 .preview-dot { background: var(--accent); border-color: var(--accent); }
-.preview-toggle.lines10 { color: var(--text2); }
+.preview-toggle.full .preview-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.35); }
+.preview-toggle.full { color: var(--text2); }
 .hide-previews .card-content.clamped { display: none; }
 .hide-meta .card-content.clamped { display: none; }
-.show-lines10 .card-content.clamped { -webkit-line-clamp: 10; color: var(--text2); }
 .hide-meta .card:not(.expanded) .card-meta { display: none; }
 .highlight-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
 .highlight-toggle:hover { color: var(--text2); }
@@ -998,6 +997,7 @@ function renderList() {
     const pIdx = vis.findIndex(i => i.id === '_priorities');
     if (pIdx >= 0) vis.splice(pIdx, 1);
   }
+  fullRenderActive = previewMode === 'full' && vis.length <= FULL_RENDER_MAX;
   const cols = Array.from({length: nCols}, () => []);
   vis.forEach((item, i) => cols[i % nCols].push(renderCard(item)));
   // Prepend inbox + priorities card to first column in digest view (side-by-side only)
@@ -1075,7 +1075,7 @@ function renderIssuesList() {
 }
 
 function renderCard(item, forceExpand) {
-  const exp=forceExpand||expandedId===item.id;
+  const exp=forceExpand||expandedId===item.id||(previewMode==='full'&&fullRenderActive);
   const title=item.title||item.content.split('\n')[0].slice(0,80)+(item.content.length>80?'…':'');
   const tags=(item.tags||[]).map(t=>`<span class="tag" onclick="tagClick(event,'${t.replace(/'/g,"\\'")}') ">${esc(t)}</span>`).join('');
   const allGenes = item.genes||[];
@@ -1138,22 +1138,29 @@ function geneClick(e, gene) {
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
   setGeneFilter(gene);
 }
-let previewMode = 'compact'; // 'minimal' | 'compact' | 'lines2' | 'lines10'
+const FULL_RENDER_MAX = 100;      // skip full render above this many visible cards
+let fullRenderActive = false;     // recomputed per render in renderList()
+let previewMode = 'compact'; // 'minimal' | 'compact' | 'lines2' | 'full'
 function togglePreviews() {
+  const wasFull = previewMode === 'full';
   previewMode = previewMode === 'minimal' ? 'compact'
     : previewMode === 'compact' ? 'lines2'
-    : previewMode === 'lines2' ? 'lines10'
+    : previewMode === 'lines2' ? 'full'
     : 'minimal';
   applyPreviewMode();
+  if (previewMode === 'full' || wasFull) {
+    renderList(); // full mode changes card HTML (not just CSS), so a re-render is required
+    if (previewMode === 'full' && !fullRenderActive)
+      showToast(`Full view skipped — over ${FULL_RENDER_MAX} cards`);
+  }
 }
 function applyPreviewMode() {
   const list = document.getElementById('item-list');
   const toggle = document.getElementById('preview-toggle');
-  list.classList.remove('hide-previews', 'hide-meta', 'show-lines10');
-  toggle.classList.remove('active', 'half', 'lines2', 'lines10');
-  if (previewMode === 'lines10') {
-    list.classList.add('show-lines10');
-    toggle.classList.add('lines10');
+  list.classList.remove('hide-previews', 'hide-meta');
+  toggle.classList.remove('active', 'half', 'lines2', 'full');
+  if (previewMode === 'full') {
+    toggle.classList.add('full');
   } else if (previewMode === 'lines2') {
     toggle.classList.add('lines2');
   } else if (previewMode === 'compact') {

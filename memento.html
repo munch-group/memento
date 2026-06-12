@@ -1819,6 +1819,25 @@ window.addEventListener('focus', ()=>{ if(dirHandle) loadFromFile(); });
 let _resizeTimer;
 window.addEventListener('resize', ()=>{ clearTimeout(_resizeTimer); _resizeTimer = setTimeout(renderList, 150); });
 
+// --- Click vs. click-drag ---------------------------------------------------
+// A native click fires on pointer-up even if the pointer was dragged, so
+// drag-selecting text on a card also toggled/navigated it. Standard behaviour:
+// if the pointer moved more than a few px between down and up, treat it as a
+// drag and swallow the click. One capture-phase listener covers every onclick
+// in the app (cards, icons, tags, genes, links, sidebar chips) untouched.
+let _downX = null, _downY = null;
+const CLICK_DRAG_PX = 5;            // movement threshold; tune if needed
+document.addEventListener('pointerdown', e => {
+  if (e.button !== 0) return;       // primary button only
+  _downX = e.clientX; _downY = e.clientY;
+}, true);
+document.addEventListener('click', e => {
+  if (_downX === null || e.detail === 0) return;  // skip keyboard/synthetic clicks (e.g. back.click())
+  const moved = Math.hypot(e.clientX - _downX, e.clientY - _downY);
+  _downX = _downY = null;
+  if (moved > CLICK_DRAG_PX) { e.stopPropagation(); e.preventDefault(); }
+}, true);                           // capture phase: runs before any onclick
+
 // --- Utilities ---
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function formatSource(s) {

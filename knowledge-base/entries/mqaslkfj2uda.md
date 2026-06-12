@@ -1,1 +1,3 @@
 Shannon autosomal genes
+
+HAR: ADAMTS9 KIAA0930 NUP50 PRICKLE2 UPK3A

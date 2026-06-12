@@ -1,1 +1,1 @@
-Hybrid DEG gene list (chrX)
+Hybrid DEG chrX

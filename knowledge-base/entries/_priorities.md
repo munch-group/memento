@@ -6,6 +6,7 @@
 
 ## Week run
 - BP reexam evaluation
+- Run code-review using the Fabel model
 - Check up on SMBE receipt
 - New controller about Lundbeck Experiment wrap-up
 - Flesh out the phasic-popgen repo (Coal. Sel. / PSMC / Ghost model / sticcs tool)

@@ -1,0 +1,32 @@
+{
+  "id": "mqarxlki4i5a",
+  "type": "fact",
+  "title": "",
+  "genes": [
+    "BHLHB9",
+    "CT47",
+    "CTAG2L2",
+    "FAM90A1B",
+    "FNDC3C1",
+    "ITPKB",
+    "JAK3",
+    "METRN",
+    "NKX6-1",
+    "PIF1",
+    "RHOX11-PS2",
+    "SFN",
+    "KIF4",
+    "SUPT20-PS",
+    "SUSD3",
+    "USF1",
+    "ZFP763"
+  ],
+  "tags": [],
+  "source": "Hunnicut et al. / https://academic.oup.com/genetics/article/229/2/iyae198/7909257",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T10:20:35.956Z",
+  "synced": false,
+  "_sortTag": ""
+}

@@ -54,8 +54,8 @@ a { color: inherit; }
 .btn-danger:hover { background: rgba(200,0,0,0.05); }
 .btn-sync { color: var(--accent); border-color: rgba(217,119,87,0.3); }
 .btn-sync:hover { background: rgba(217,119,87,0.05); }
-.btn-save-view { color: var(--accent); border-color: rgba(217,119,87,0.45); }
-.btn-save-view:hover { background: rgba(217,119,87,0.08); border-color: var(--accent); }
+.view-bookmark { display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; background: none; border: none; color: #6E56CF; cursor: pointer; opacity: 0.75; transition: opacity 0.15s; }
+.view-bookmark:hover { opacity: 1; }
 .view-capture-summary { font-family: var(--mono); font-size: 12px; color: var(--text2); background: var(--bg2); padding: 7px 10px; border-radius: var(--r); border: 1px solid var(--border); }
 .view-run-hint { font-family: var(--mono); font-size: 11px; color: var(--text3); margin: 2px 0 0; display: flex; align-items: center; gap: 5px; }
 .card.view-active { border-color: var(--tc); box-shadow: 0 0 0 1px var(--tc); }
@@ -357,8 +357,8 @@ a { color: inherit; }
       </div>
       <div class="searchbar">
         <input type="search" id="search-input" placeholder="space = AND · , = OR · @gene · @gene1,gene2 = OR · #tag · #tag1,tag2 = OR" oninput="renderList()" />
+        <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
         <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
-        <button class="btn btn-sm btn-save-view" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card">🔖 Save view</button>
       </div>
       <div class="highlight-bar" id="highlight-bar">
         <div class="digest-toggle active" id="digest-toggle" onclick="toggleDigest()"><span class="digest-dot"></span> Dashboard</div>

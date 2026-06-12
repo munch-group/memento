@@ -1,6 +1,6 @@
 {
   "id": "mpvedrzglbny",
-  "type": "reference",
+  "type": "fact",
   "title": "",
   "genes": [
     "AKAP4",
@@ -35,7 +35,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-01T16:02:57.388Z",
+  "date": "2026-06-12T12:04:43.702Z",
   "synced": false,
   "_sortTag": ""
 }

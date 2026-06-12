@@ -1,5 +1,3 @@
-Shannon's chrX genes
-
 | Set | Genes |
 |:---|:---|
 | nucl. diff. expr. spermatids |  **CYLC1** **FRMPD3** |
@@ -14,4 +12,3 @@ Shannon's chrX genes
 | Pos. sel.l primates (codeml) | **CYLC1** PCDH11X **RBMX2** **SYAP1** TGIF2LX TLR8 USP26 |
 | circRNA genes| HDX RPS6KA6 |
 | Bonobo LoF rel. to human | PDHA1 PRKDC |
-

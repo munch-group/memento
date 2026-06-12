@@ -1,0 +1,28 @@
+{
+  "id": "mqaw78rb32lb",
+  "type": "observation",
+  "title": "LAVA regions with different heritability in I and R males",
+  "genes": [
+    "SORCS2",
+    "AFAP1",
+    "ABLIM2",
+    "SH3TC1",
+    "HTRA3",
+    "ORCS2",
+    "AFAP1",
+    "ABLIM2",
+    "SPIDR",
+    "CEBPD",
+    "PRKDC",
+    "MCM4",
+    "UBE2V2"
+  ],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T12:43:40.566Z",
+  "synced": false,
+  "_sortTag": ""
+}

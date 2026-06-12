@@ -1,7 +1,7 @@
 {
   "id": "mqaslkfj2uda",
   "type": "observation",
-  "title": "",
+  "title": "LAVA regions with heritability both I and R males",
   "genes": [
     "ABLIM2",
     "ACP4",
@@ -60,7 +60,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-12T11:50:56.799Z",
+  "date": "2026-06-12T12:22:33.379Z",
   "synced": false,
   "_sortTag": ""
 }

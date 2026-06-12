@@ -1,0 +1,28 @@
+{
+  "id": "mqavlsry32a3",
+  "type": "fact",
+  "title": "",
+  "genes": [
+    "ASB9",
+    "ASB11",
+    "TXLNG",
+    "PTCHD1-AS",
+    "DMD",
+    "HDAC8",
+    "PABPC1L2A",
+    "PCDH11X",
+    "PCDH19",
+    "HTR2C",
+    "ENOX2",
+    "PDHA1",
+    "LOC124905257",
+    "FGF13"
+  ],
+  "tags": [],
+  "source": "Mendes et al. 2025 / https://doi.org/10.1016/j.ajhg.2024.11.008",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T12:01:37.774Z",
+  "synced": false
+}

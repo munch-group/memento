@@ -1,0 +1,28 @@
+{
+  "id": "mqay4qbf9qwj",
+  "type": "fact",
+  "title": "",
+  "genes": [
+    "STAG3",
+    "SYCE2",
+    "HORMAD2",
+    "HORMAD1",
+    "SYCP2",
+    "SYCP1",
+    "TEX12",
+    "SIX6OS1",
+    "SYCE3",
+    "REC8",
+    "RAD21L",
+    "RAD21",
+    "SMC1B"
+  ],
+  "tags": [],
+  "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T13:13:06.856Z",
+  "synced": false,
+  "_sortTag": ""
+}

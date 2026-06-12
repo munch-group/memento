@@ -1,0 +1,28 @@
+{
+  "id": "mqay44snu2r4",
+  "type": "fact",
+  "title": "",
+  "genes": [
+    "GEN1",
+    "FANCM",
+    "FANCC",
+    "MLH1",
+    "MLH3",
+    "EXO1",
+    "MUS81",
+    "EME1",
+    "EME2",
+    "SLX1A",
+    "SLX4",
+    "XPF",
+    "ERCC1"
+  ],
+  "tags": [],
+  "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T13:13:14.229Z",
+  "synced": false,
+  "_sortTag": ""
+}

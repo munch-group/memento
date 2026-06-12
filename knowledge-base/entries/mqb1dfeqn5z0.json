@@ -1,0 +1,25 @@
+{
+  "id": "mqb1dfeqn5z0",
+  "type": "view",
+  "title": "Tester",
+  "genes": [],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T14:47:11.804Z",
+  "synced": false,
+  "view": {
+    "q": "@PRKDC,SORCS2,HCN1",
+    "type": "all",
+    "tag": null,
+    "gene": null,
+    "genes": [],
+    "sortKey": "date",
+    "sortAsc": false,
+    "conn": "all",
+    "archive": "active"
+  },
+  "_sortTag": ""
+}

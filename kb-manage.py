@@ -18,7 +18,7 @@ def now_iso():
 
 VALID_TYPES = [
     "fact", "idea", "hypothesis", "quote", "reference",
-    "observation", "connection", "person",
+    "observation", "connection", "person", "view",
 ]
 
 

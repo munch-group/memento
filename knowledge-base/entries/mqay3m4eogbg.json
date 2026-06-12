@@ -1,0 +1,30 @@
+{
+  "id": "mqay3m4eogbg",
+  "type": "fact",
+  "title": "",
+  "genes": [
+    "TEX11",
+    "PRR19",
+    "CNTD1",
+    "CDK2",
+    "SHOC1",
+    "RNF212B",
+    "RNF212",
+    "MSH4",
+    "MSH5",
+    "HFM1",
+    "SPO16",
+    "REDIC1",
+    "HEI10",
+    "BLMM1A",
+    "PPCH2"
+  ],
+  "tags": [],
+  "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T13:13:22.358Z",
+  "synced": false,
+  "_sortTag": ""
+}

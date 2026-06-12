@@ -1,0 +1,32 @@
+{
+  "id": "mqaza97o2oto",
+  "type": "reference",
+  "title": "Non-homologous end joining (NHEJ)",
+  "genes": [
+    "XRCC6",
+    "XRCC5",
+    "PRKDC",
+    "NHEJ1",
+    "XRCC4",
+    "LIG4",
+    "PAXX",
+    "DCLRE1C",
+    "POLL",
+    "DNTT",
+    "PNKP",
+    "APLF",
+    "APTX",
+    "TDP1",
+    "TDP2",
+    "WRN",
+    "CYREN"
+  ],
+  "tags": [],
+  "source": "Liu et al. 2025 / https://www.nature.com/articles/s41586-025-09078-9",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-12T13:46:18.005Z",
+  "synced": false,
+  "_sortTag": ""
+}

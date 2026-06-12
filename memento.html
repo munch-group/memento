@@ -54,6 +54,11 @@ a { color: inherit; }
 .btn-danger:hover { background: rgba(200,0,0,0.05); }
 .btn-sync { color: var(--accent); border-color: rgba(217,119,87,0.3); }
 .btn-sync:hover { background: rgba(217,119,87,0.05); }
+.btn-save-view { color: var(--accent); border-color: rgba(217,119,87,0.45); }
+.btn-save-view:hover { background: rgba(217,119,87,0.08); border-color: var(--accent); }
+.view-capture-summary { font-family: var(--mono); font-size: 12px; color: var(--text2); background: var(--bg2); padding: 7px 10px; border-radius: var(--r); border: 1px solid var(--border); }
+.view-run-hint { font-family: var(--mono); font-size: 11px; color: var(--text3); margin: 2px 0 0; display: flex; align-items: center; gap: 5px; }
+.card.view-active { border-color: var(--tc); box-shadow: 0 0 0 1px var(--tc); }
 .btn-wide { width: 100%; }
 .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
 .page-title { font-size: 15px; font-weight: 500; }
@@ -184,6 +189,8 @@ a { color: inherit; }
 .pin-icon.active { opacity: 0.85; color: var(--accent); }
 .copy-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
 .copy-icon:hover { opacity: 0.7; }
+.gene-search-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
+.gene-search-icon:hover { opacity: 0.7; color: var(--accent); }
 .focus-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
 .focus-icon:hover { opacity: 0.7; }
 .focus-icon.active { opacity: 0.85; color: var(--accent); }
@@ -231,6 +238,7 @@ a { color: inherit; }
 [data-type="note"]        { --tc:#6b6b70; --tbg:rgba(95,94,90,0.10); }
 [data-type="people"]      { --tc:#854F0B; --tbg:rgba(133,79,11,0.10); }
 [data-type="github"]      { --tc:var(--accent); --tbg:rgba(217,119,87,0.10); }
+[data-type="view"]        { --tc:#6E56CF; --tbg:rgba(110,86,207,0.10); }
 .type-badge svg { display: block; }
 .gh-issues-icon { font-size: 11px; cursor: pointer; opacity: 0.45; color: var(--text3); transition: opacity 0.15s; display: inline-flex; align-items: center; gap: 2px; }
 .gh-issues-icon:hover { opacity: 0.85; }
@@ -350,6 +358,7 @@ a { color: inherit; }
       <div class="searchbar">
         <input type="search" id="search-input" placeholder="space = AND · , = OR · @gene · @gene1,gene2 = OR · #tag · #tag1,tag2 = OR" oninput="renderList()" />
         <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
+        <button class="btn btn-sm btn-save-view" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card">🔖 Save view</button>
       </div>
       <div class="highlight-bar" id="highlight-bar">
         <div class="digest-toggle active" id="digest-toggle" onclick="toggleDigest()"><span class="digest-dot"></span> Dashboard</div>
@@ -379,7 +388,7 @@ const TYPES = [
   {key:'fact',label:'Fact',short:'Fact'},{key:'reference',label:'Reference',short:'Ref'},
   {key:'observation',label:'Observation',short:'Obs'},{key:'hypothesis',label:'Hypothesis',short:'Hypo'},
   {key:'idea',label:'Idea',short:'Idea'},{key:'note',label:'Note',short:'Note'},{key:'people',label:'Person',short:'Pers'},
-  {key:'github',label:'GitHub',short:'Git'},
+  {key:'github',label:'GitHub',short:'Git'},{key:'view',label:'View',short:'View'},
 ];
 const TYPE_ICONS = {
   fact: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="9 12 11.5 14.5 16 9.5"/></svg>',
@@ -390,6 +399,7 @@ const TYPE_ICONS = {
   note: '<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M87.24,52.59a8,8,0,0,0-14.48,0l-64,136a8,8,0,1,0,14.48,6.81L39.9,160h80.2l16.66,35.4a8,8,0,1,0,14.48-6.81ZM47.43,144,80,74.79,112.57,144ZM200,96c-12.76,0-22.73,3.47-29.63,10.32a8,8,0,0,0,11.26,11.36c3.8-3.77,10-5.68,18.37-5.68,13.23,0,24,9,24,20v3.22A42.76,42.76,0,0,0,200,128c-22.06,0-40,16.15-40,36s17.94,36,40,36a42.73,42.73,0,0,0,24-7.25,8,8,0,0,0,16-.75V132C240,112.15,222.06,96,200,96Zm0,88c-13.23,0-24-9-24-20s10.77-20,24-20,24,9,24,20S213.23,184,200,184Z"/></svg>',
   people: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a6 6 0 0 1 16 0v2H4z"/></svg>',
   github: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>',
+  view: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg>',
 };
 const GH_REPO = 'munch-group/memento';
 const GH_ENTRIES_PATH = 'knowledge-base/entries';
@@ -418,6 +428,9 @@ let highlightGenes = new Set();      // combined: highlight-input genes ∪ @gen
 let highlightInputGenes = new Set(); // genes typed into the "Highlight genes" input
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
 let ghIssuesItems = [];  // temporary issue cards (not saved to JSON)
+let activeViewId = null;   // when set, a saved view card is "running" (focused result screen)
+let viewFormMode = false;  // true while the Add form is creating/editing a view card
+let pendingView = null;    // captured search/filter snapshot awaiting save
 const _readmeCache = {};
 
 // --- IndexedDB (persist file handle across sessions) ---
@@ -862,10 +875,105 @@ function toggleSection(headerId, contentId) {
 }
 function cycleConnFilter() { connFilter = connFilter==='all' ? 'conn' : connFilter==='conn' ? 'noconn' : 'all'; renderFilters(); renderList(); }
 function setArchiveFilter() { archiveFilter = archiveFilter==='archived' ? 'active' : 'archived'; renderFilters(); renderList(); }
-function clearAllFilters() { activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active'; ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; focusedCardId=null; renderFilters(); renderList(); }
+function clearAllFilters() {
+  activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active';
+  ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; focusedCardId=null;
+  const si=document.getElementById('search-input'); if (si) si.value='';
+  highlightInputGenes=new Set(); const hi=document.getElementById('highlight-input'); if (hi) hi.value='';
+  if (activeViewId) {
+    activeViewId=null; expandedId=null;
+    if (window._viewPrevDigest!==undefined) { digestVisible=window._viewPrevDigest; document.getElementById('digest-toggle')?.classList.toggle('active', digestVisible); }
+    window._viewPrevDigest=undefined;
+  }
+  renderFilters(); renderList();
+}
 function setFilter(type) { activeType=type; activeTag=null; activeGene=null; renderFilters(); renderList(); }
 function setTagFilter(tag) { activeTag = activeTag===tag ? null : tag; activeType='all'; activeGene=null; renderFilters(); renderList(); }
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
+
+// --- Saved views ---
+// Snapshot the current search/filter/highlight state so it can be stored on a view card.
+function captureView() {
+  return {
+    q: (document.getElementById('search-input')?.value||'').trim(),
+    type: activeType, tag: activeTag, gene: activeGene,
+    genes: [...highlightInputGenes],
+    sortKey, sortAsc, conn: connFilter, archive: archiveFilter
+  };
+}
+// True when there is something worth saving as a view (any active search or filter).
+function hasActiveView() {
+  const q = (document.getElementById('search-input')?.value||'').trim();
+  return !!(q || activeType!=='all' || activeTag || activeGene || highlightInputGenes.size);
+}
+// Short human summary of a captured view, e.g. `Obs · #circRNA · @ARHGAP5 · hl:MAPT · "drive"`.
+function describeView(v) {
+  if (!v) return 'all cards';
+  const parts = [];
+  if (v.type && v.type!=='all') { const t=TYPES.find(t=>t.key===v.type); parts.push(t?t.short:v.type); }
+  if (v.tag) parts.push('#'+v.tag);
+  if (v.gene) parts.push('@'+v.gene);
+  if (v.genes && v.genes.length) parts.push('hl:'+v.genes.join(','));
+  if (v.q) parts.push('"'+v.q+'"');
+  return parts.join(' · ') || 'all cards';
+}
+// Open the Add form to save the current search as a new view card.
+function startSaveView() {
+  pendingView = captureView();
+  const f = document.getElementById('add-form');
+  editingId = null; ghEditMode = false; inboxEditMode = false;
+  selectedType = 'view';
+  f.classList.remove('gh-edit','inbox-edit');
+  f.style.display = '';
+  document.getElementById('btn-add-toggle').textContent = '× Cancel';
+  ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('f-due').value='';
+  document.getElementById('f-connection').checked = false;
+  document.getElementById('f-archived').checked = false;
+  showFormEditButtons(false);
+  setViewFormMode(true);
+  renderTagSuggest();
+  document.getElementById('f-content').focus();
+  f.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+// Toggle the Add form between normal (type picker) and view mode (captured-search summary).
+function setViewFormMode(on) {
+  viewFormMode = on;
+  const lbl = document.querySelector('#field-type label');
+  const tp = document.getElementById('type-picker');
+  if (on) {
+    if (lbl) lbl.textContent = 'Saved search';
+    const v = pendingView || (editingId ? (items.find(i=>i.id===editingId)||{}).view : null);
+    if (tp) tp.innerHTML = `<div class="view-capture-summary">🔖 ${esc(describeView(v))}</div>`;
+  } else {
+    if (lbl) lbl.textContent = 'Type';
+    buildTypePicker();
+  }
+}
+// Run a saved view: apply its captured snapshot and enter the focused result screen.
+function applyView(item) {
+  const v = item.view || {};
+  const si = document.getElementById('search-input'); if (si) si.value = v.q || '';
+  activeType = v.type || 'all';
+  activeTag = v.tag || null;
+  activeGene = v.gene || null;
+  highlightInputGenes = new Set(v.genes || []);
+  const hi = document.getElementById('highlight-input'); if (hi) hi.value = [...highlightInputGenes].join(' ');
+  if (highlightInputGenes.size) { const w=document.getElementById('highlight-input-wrap'); if (w) w.style.display='flex'; }
+  if (v.sortKey) sortKey = v.sortKey;
+  if (typeof v.sortAsc === 'boolean') sortAsc = v.sortAsc;
+  if (v.conn) connFilter = v.conn;
+  if (v.archive) archiveFilter = v.archive;
+  activeViewId = item.id;
+  expandedId = item.id;
+  focusedCardId = null; digestFocusCardId = null; ghIssuesRepo = null;
+  if (window._viewPrevDigest === undefined) window._viewPrevDigest = digestVisible;
+  digestVisible = false;
+  document.getElementById('digest-toggle')?.classList.toggle('active', false);
+  renderFilters(); renderList();
+}
+// Exit a running view: restore the dashboard and a clean, unfiltered list.
+function exitView() { clearAllFilters(); }
 
 // --- List & Cards ---
 function getVisibleItems() {
@@ -915,6 +1023,7 @@ function getVisibleItems() {
   const searchGenes = orGroups.flatMap(g => [...g.geneAnd, ...g.geneOr]);
   highlightGenes = new Set([...highlightInputGenes, ...searchGenes]);
   document.getElementById('highlight-bar')?.classList.toggle('active', highlightGenes.size > 0);
+  const _vs = document.getElementById('view-save'); if (_vs) _vs.style.display = (hasActiveView() && !activeViewId) ? '' : 'none';
   let vis=sortItems(items);
   if(archiveFilter==='archived') vis=vis.filter(i=>i.archived);
   else vis=vis.filter(i=>!i.archived);
@@ -954,6 +1063,13 @@ function renderList() {
     }
   }
   const { vis } = getVisibleItems();
+  if (activeViewId) {
+    const vIdx = vis.findIndex(i => i.id === activeViewId);
+    if (vIdx >= 0) vis.splice(vIdx, 1);
+    const vItem = items.find(i => i.id === activeViewId);
+    if (vItem) vis.unshift(vItem);  // pin the running view card first, even if it doesn't match its own filters
+    else activeViewId = null;       // view card was deleted — drop out of view mode
+  }
   const list=document.getElementById('item-list');
   if(!list)return;
   if(vis.length===0){
@@ -1104,7 +1220,7 @@ function renderCard(item, forceExpand) {
   const isDueSoon = item.due && !isOverdue && !isDueToday && item.due <= soon3;
   const dueClass = isOverdue ? ' overdue' : isDueToday ? ' due-today' : isDueSoon ? ' due-soon' : '';
   const dueHtml = item.due ? `<span class="card-due${dueClass}" title="Due ${item.due}">${fmtDue(item.due)}</span>` : '';
-  return `<div class="card${exp?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
+  return `<div class="card${exp?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text"><span onclick="${item.type==='github'&&item._ghFullName?`ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\\\'")}')`:`editItem(event,'${item.id}')`}" style="cursor:${item.type==='github'?'pointer':'text'}">${esc(title)}</span></span>
@@ -1113,17 +1229,19 @@ function renderCard(item, forceExpand) {
     ${item.type==='github'&&item._ghOpenIssues?`<span class="gh-issues-icon" title="View open issues" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="gh-issues-count">${item._ghOpenIssues}</span></span>`:''}
     <span class="card-date">${fmtDate(item.date)}</span>
     ${item.id!=='_priorities'&&item.id!=='_digest'?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
-    <span class="copy-icon" title="Copy as Markdown" onclick="copyCardMarkdown(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+    ${allGenes.length?`<span class="gene-search-icon" title="Add genes to search bar" onclick="appendGenesToSearch(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>`:''}
     <span class="focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
   </div>
   ${(()=>{ if(exp) { if(item.type==='github'&&item._ghFullName) { const desc = item.content ? '<p>'+esc(item.content)+'</p>' : ''; const cachedStatus = (item._ghCommits || item._ghIssuesRecent) ? ghBuildStatusHtml(item._ghCommits||[], item._ghIssuesRecent||[], item.title) : '<span style="color:var(--muted)">Loading…</span>'; return `<div class="card-content" id="cc-${item.id}">${desc}${desc?'<hr>':''}<div id="gh-status-${item.id}">${cachedStatus}</div></div>`; } return `<div class="card-content" id="cc-${item.id}">${md(item.content)}</div>`; } const t=title.replace(/…$/,''); const c=item.content.trim(); if(c===t||c===(item.title||'').trim()) return ''; return `<div class="card-content clamped" id="cc-${item.id}">${esc(item.content)}</div>`; })()}
   ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
+  ${item.type==='view'?`<div class="view-run-hint">${item.id===activeViewId?'● running · click to exit':'▶ '+esc(describeView(item.view))}</div>`:''}
   <div class="card-meta">${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}${(!tags&&!genes&&!dueHtml)?'&nbsp;':''}</div>
   ${exp?`<div class="card-bottom">
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
       ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:var(--accent)">⊙</button>`:''}
       ${basePath?`<button class="icon-btn" onclick="event.stopPropagation();openInVSCode('${item.id}')" title="Open in VS Code" style="font-size:11px;font-weight:600">VS</button>`:''}
+      <button class="icon-btn" onclick="copyCardMarkdown(event,'${item.id}')" title="Copy as Markdown" style="display:inline-flex;align-items:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
       ${readOnly?'':`<button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>`}
       ${readOnly?'':`<span class="icon-btn sync-bottom" onclick="syncItem(event,'${item.id}')" title="${item.synced?'Re-sync to Claude':'Sync to Claude'}">${item.synced?'✓':'⊘'}</span>`}
       ${readOnly?'':`<button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>`}
@@ -1310,6 +1428,8 @@ function toggleCard(id,e){
     insertCardRef(id);
     return;
   }
+  const _it = items.find(i=>i.id===id);
+  if (_it && _it.type==='view') { if (activeViewId===id) exitView(); else applyView(_it); return; }
   expandedId=expandedId===id?null:id;renderList();
   // Lazy-load README for GitHub cards when expanding
   if (expandedId) {
@@ -1367,12 +1487,13 @@ function editItem(e, id) {
   if (!item) return;
   ghEditMode = item.type === 'github';
   editingId = item.id;
+  pendingView = null;
   selectedType = item.type;
   const f = document.getElementById('add-form');
   f.classList.toggle('gh-edit', ghEditMode);
   f.style.display = '';
   document.getElementById('btn-add-toggle').textContent = '× Cancel';
-  if (!ghEditMode) buildTypePicker();
+  if (!ghEditMode) { if (item.type==='view') setViewFormMode(true); else setViewFormMode(false); }
   if (!ghEditMode) document.getElementById('f-content').value = item.content;
   if (!ghEditMode) document.getElementById('f-title').value = item.title || '';
   document.getElementById('f-genes').value = (item.genes || []).join(', ');
@@ -1395,8 +1516,8 @@ function toggleForm(){
   f.style.display=open?'':'none';
   if(open && window._taHeight) ta.style.height=window._taHeight;
   document.getElementById('btn-add-toggle').textContent=open?'× Cancel':'+ Add';
-  if(open){editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');buildTypePicker();document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);renderTagSuggest();}
-  else{editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';showFormEditButtons(false);}
+  if(open){editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');pendingView=null;setViewFormMode(false);document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);renderTagSuggest();}
+  else{editingId=null;ghEditMode=false;inboxEditMode=false;viewFormMode=false;pendingView=null;f.classList.remove('gh-edit','inbox-edit');['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';showFormEditButtons(false);}
 }
 
 function renderTagSuggest(){
@@ -1454,6 +1575,7 @@ function cancelEdit() {
   editingId = null;
   ghEditMode = false;
   inboxEditMode = false;
+  viewFormMode = false; pendingView = null;
   const f=document.getElementById('add-form'); f.classList.remove('gh-edit','inbox-edit'); f.style.display = 'none';
   document.getElementById('btn-add-toggle').textContent = '+ Add';
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
@@ -1466,7 +1588,7 @@ function cancelEdit() {
 }
 
 function buildTypePicker(){
-  document.getElementById('type-picker').innerHTML=TYPES.filter(t=>t.key!=='github').map(t=>
+  document.getElementById('type-picker').innerHTML=TYPES.filter(t=>t.key!=='github'&&t.key!=='view').map(t=>
     `<button class="type-opt${selectedType===t.key?' active':''}" data-type="${t.key}" onclick="selType('${t.key}')">${t.label}</button>`
   ).join('');
 }
@@ -1475,7 +1597,7 @@ function selType(k){selectedType=k;buildTypePicker();}
 async function saveItem(){
   if (inboxEditMode) { await saveInbox(); return; }
   const content=document.getElementById('f-content').value;
-  if(!ghEditMode && !content.trim()){showToast('Content is required');return;}
+  if(!ghEditMode && !content.trim() && !(selectedType==='view' && document.getElementById('f-title').value.trim())){showToast('Content is required');return;}
   const genes=document.getElementById('f-genes').value.split(/[\s,]+/).map(g=>g.trim()).filter(Boolean);
   const tags=document.getElementById('f-tags').value.split(/[\s,]+/).map(t=>t.trim()).filter(Boolean);
   const connection=document.getElementById('f-connection').checked;
@@ -1498,19 +1620,23 @@ async function saveItem(){
       }
     }
   } else {
-    items.push({
+    const newItem = {
       id: Date.now().toString(36)+Math.random().toString(36).slice(2,6),
       type:selectedType, content,
       title:document.getElementById('f-title').value.trim(),
       genes, tags, source:document.getElementById('f-source').value.trim(),
       connection, archived, due, date:now, synced:false
-    });
+    };
+    if (selectedType==='view') newItem.view = pendingView || captureView();
+    items.push(newItem);
   }
   const wasEdit = !!editingId;
   const savedItem = wasEdit ? items.find(i=>i.id===editingId) : items[items.length - 1];
+  const wasNewView = !wasEdit && savedItem && savedItem.type==='view';
   editingId = null;
   ghEditMode = false;
   inboxEditMode = false;
+  viewFormMode = false; pendingView = null;
   await saveEntryToFile(savedItem);
   ['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-due').value='';
@@ -1519,6 +1645,7 @@ async function saveItem(){
   document.getElementById('btn-add-toggle').textContent='+ Add';
   exitLinkMode();
   computeSortTags(); renderFilters(); renderList();
+  if (wasNewView) clearAllFilters();  // reset filters so the new view card is visible in the list
   showToast(wasEdit ? 'Updated' : 'Saved');
 }
 
@@ -1528,6 +1655,18 @@ function copyGenes(e, id) {
   if (!item || !item.genes?.length) return;
   const text = '@' + [...item.genes].sort((a,b)=>a.toUpperCase().localeCompare(b.toUpperCase())).join(',');
   navigator.clipboard.writeText(text).then(() => showToast('Copied: ' + text));
+}
+function appendGenesToSearch(e, id) {
+  e.stopPropagation();
+  const item = items.find(i => i.id === id);
+  if (!item || !item.genes?.length) return;
+  const text = '@' + [...item.genes].sort((a,b)=>a.toUpperCase().localeCompare(b.toUpperCase())).join(',');
+  const input = document.getElementById('search-input');
+  if (!input) return;
+  const cur = input.value.trim();
+  input.value = cur ? cur + ' ' + text : text;
+  renderList();
+  showToast('Added to search: ' + text);
 }
 function copyCardMarkdown(e, id) {
   e.stopPropagation();

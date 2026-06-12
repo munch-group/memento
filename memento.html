@@ -411,6 +411,7 @@ let sortKey = 'date';   // 'date' | 'synced' | 'type'
 let sortAsc = false;     // false = descending (newest/unsynced first)
 let tagSort = 'count';
 let selectedType = 'note';
+let lastType = 'note';   // last real card type used; reused for new cards (never 'view'/'github')
 let expandedId = null;
 let focusedCardId = null;
 let editingId = null;
@@ -1516,7 +1517,7 @@ function toggleForm(){
   f.style.display=open?'':'none';
   if(open && window._taHeight) ta.style.height=window._taHeight;
   document.getElementById('btn-add-toggle').textContent=open?'× Cancel':'+ Add';
-  if(open){editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');pendingView=null;setViewFormMode(false);document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);renderTagSuggest();}
+  if(open){editingId=null;ghEditMode=false;inboxEditMode=false;f.classList.remove('gh-edit','inbox-edit');pendingView=null;selectedType=lastType;setViewFormMode(false);document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';document.getElementById('f-content').focus();showFormEditButtons(false);renderTagSuggest();}
   else{editingId=null;ghEditMode=false;inboxEditMode=false;viewFormMode=false;pendingView=null;f.classList.remove('gh-edit','inbox-edit');['f-content','f-title','f-genes','f-tags','f-source'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-connection').checked=false;document.getElementById('f-archived').checked=false;document.getElementById('f-due').value='';showFormEditButtons(false);}
 }
 
@@ -1592,7 +1593,7 @@ function buildTypePicker(){
     `<button class="type-opt${selectedType===t.key?' active':''}" data-type="${t.key}" onclick="selType('${t.key}')">${t.label}</button>`
   ).join('');
 }
-function selType(k){selectedType=k;buildTypePicker();}
+function selType(k){selectedType=k;lastType=k;buildTypePicker();}
 
 async function saveItem(){
   if (inboxEditMode) { await saveInbox(); return; }
@@ -1633,6 +1634,7 @@ async function saveItem(){
   const wasEdit = !!editingId;
   const savedItem = wasEdit ? items.find(i=>i.id===editingId) : items[items.length - 1];
   const wasNewView = !wasEdit && savedItem && savedItem.type==='view';
+  if (savedItem && savedItem.type!=='view' && savedItem.type!=='github') lastType = savedItem.type;
   editingId = null;
   ghEditMode = false;
   inboxEditMode = false;

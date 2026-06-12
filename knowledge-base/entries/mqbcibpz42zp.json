@@ -1,17 +1,17 @@
 {
-  "id": "mqb1dfeqn5z0",
+  "id": "mqbcibpz42zp",
   "type": "view",
-  "title": "Tester",
+  "title": "",
   "genes": [],
   "tags": [],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-12T19:50:45.539Z",
+  "date": "2026-06-12T19:54:49.175Z",
   "synced": false,
   "view": {
-    "q": "@PRKDC,SORCS2,HCN1",
+    "q": "",
     "type": "all",
     "tag": null,
     "gene": null,
@@ -20,6 +20,5 @@
     "sortAsc": false,
     "conn": "all",
     "archive": "active"
-  },
-  "_sortTag": ""
+  }
 }

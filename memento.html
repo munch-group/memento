@@ -180,21 +180,21 @@ a { color: inherit; }
 .card-source { font-family: var(--mono); font-size: 10px; color: var(--text3); flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
 .card-source a { color: var(--text3); text-decoration: none; }
 .card-source a:hover { text-decoration: underline; color: var(--text2); }
-.conn-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
-.conn-icon:hover { opacity: 0.7; }
+.conn-icon { font-size: 11px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
+.conn-icon:hover { opacity: 1; }
 .conn-icon.active { opacity: 0.85; color: var(--accent); }
-.archive-icon { font-size: 11px; cursor: pointer; opacity: 0.35; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
-.archive-icon:hover { opacity: 0.7; }
+.archive-icon { font-size: 11px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s, color 0.15s; }
+.archive-icon:hover { opacity: 1; }
 .archive-icon.active { opacity: 0.85; color: #854F0B; }
-.pin-icon { font-size: 12px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; }
-.pin-icon:hover { opacity: 0.7; }
+.pin-icon { font-size: 12px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; }
+.pin-icon:hover { opacity: 1; }
 .pin-icon.active { opacity: 0.85; color: var(--accent); }
 .copy-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
 .copy-icon:hover { opacity: 0.7; }
-.gene-search-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
-.gene-search-icon:hover { opacity: 0.7; color: var(--accent); }
-.focus-icon { font-size: 11px; cursor: pointer; opacity: 0.3; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
-.focus-icon:hover { opacity: 0.7; }
+.gene-search-icon { font-size: 11px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
+.gene-search-icon:hover { opacity: 1; color: var(--accent); }
+.focus-icon { font-size: 11px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
+.focus-icon:hover { opacity: 1; }
 .focus-icon.active { opacity: 0.85; color: var(--accent); }
 .card.overdue { border-color: rgba(200, 0, 0, 0.5); }
 .card.due-today { border-color: rgba(200,0,0,0.8); }
@@ -242,8 +242,8 @@ a { color: inherit; }
 [data-type="github"]      { --tc:var(--accent); --tbg:rgba(217,119,87,0.10); }
 [data-type="view"]        { --tc:#6E56CF; --tbg:rgba(110,86,207,0.10); }
 .type-badge svg { display: block; }
-.gh-issues-icon { font-size: 11px; cursor: pointer; opacity: 0.45; color: var(--text3); transition: opacity 0.15s; display: inline-flex; align-items: center; gap: 2px; }
-.gh-issues-icon:hover { opacity: 0.85; }
+.gh-issues-icon { font-size: 11px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s; display: inline-flex; align-items: center; gap: 2px; }
+.gh-issues-icon:hover { opacity: 1; }
 .gh-issues-count { font-family: var(--mono); font-size: 9px; }
 .gh-meta { font-family: var(--mono); font-size: 10px; color: var(--text3); display: flex; gap: 8px; align-items: center; margin-top: 4px; }
 .type-opt.active { color: var(--tc); background: var(--tbg); border-color: var(--tc); }
@@ -1007,12 +1007,11 @@ function getVisibleItems() {
   }
   function parseGroup(str) {
     const tokens = str.match(/[@#][^\s]+|\S+/g) || [];
-    const geneAnd = [], geneOr = [], tagAnd = [], tagOr = [], typeOr = [], freeTerms = [];
+    const geneLists = [], tagAnd = [], tagOr = [], typeOr = [], freeTerms = [];
     tokens.forEach(tok => {
       if (tok.startsWith('@')) {
-        const names = tok.slice(1).split(/[,/]/).filter(Boolean);
-        if (names.length > 1) names.forEach(n => geneOr.push(resolveGene(n)));
-        else if (names.length === 1) geneAnd.push(resolveGene(names[0]));
+        const names = tok.slice(1).split(/[,/]/).filter(Boolean).map(n => resolveGene(n));
+        if (names.length) geneLists.push(names);   // each @token is its own OR-list; multiple @tokens are AND'd
       } else if (tok.startsWith('#')) {
         const names = tok.slice(1).split(',').filter(Boolean);
         if (names.length > 1) names.forEach(n => tagOr.push(resolveTag(n)));
@@ -1023,11 +1022,11 @@ function getVisibleItems() {
         freeTerms.push(tok.toLowerCase());
       }
     });
-    return { geneAnd, geneOr, tagAnd, tagOr, typeOr, q: freeTerms.join(' ') };
+    return { geneLists, tagAnd, tagOr, typeOr, q: freeTerms.join(' ') };
   }
   function matchesGroup(i, g) {
-    if (g.geneAnd.length && !g.geneAnd.every(gn=>(i.genes||[]).some(ig=>geneAliasesU(ig).includes(gn)))) return false;
-    if (g.geneOr.length && !g.geneOr.some(gn=>(i.genes||[]).some(ig=>geneAliasesU(ig).includes(gn)))) return false;
+    // every @-list must be satisfied (AND across tokens), with OR within each list
+    if (g.geneLists.length && !g.geneLists.every(list => list.some(gn=>(i.genes||[]).some(ig=>geneAliasesU(ig).includes(gn))))) return false;
     if (g.tagAnd.length && !g.tagAnd.every(t=>(i.tags||[]).some(it=>it.toLowerCase()===t))) return false;
     if (g.tagOr.length && !g.tagOr.some(t=>(i.tags||[]).some(it=>it.toLowerCase()===t))) return false;
     if (g.typeOr.length && !g.typeOr.includes(i.type)) return false;
@@ -1035,8 +1034,15 @@ function getVisibleItems() {
     return true;
   }
   const orGroups = raw ? raw.split(/\s*,\s+|\s+,\s*/).map(s=>s.trim()).filter(Boolean).map(parseGroup) : [];
-  // A gene is highlighted if it is in the highlight input OR referenced as @gene in the search bar.
-  const searchGenes = orGroups.flatMap(g => [...g.geneAnd, ...g.geneOr]);
+  // Highlight reflects the filter criterion: within a group, the genes common to every @-list
+  // (their intersection) plus any single-gene (required) term; unioned across OR-groups and the highlight input.
+  const searchGenes = orGroups.flatMap(g => {
+    const lists = g.geneLists;
+    if (!lists.length) return [];
+    const inter = lists.reduce((acc, l) => acc.filter(x => l.includes(x)), [...lists[0]]);
+    const required = lists.filter(l => l.length === 1).flat();
+    return [...inter, ...required];
+  });
   highlightGenes = new Set([...highlightInputGenes, ...searchGenes]);
   document.getElementById('highlight-bar')?.classList.toggle('active', highlightGenes.size > 0);
   const _vs = document.getElementById('view-save'); if (_vs) _vs.style.display = (hasActiveView() && !activeViewId) ? '' : 'none';
@@ -1252,7 +1258,20 @@ function renderCard(item, forceExpand) {
     ${allGenes.length?`<span class="gene-search-icon" title="Add genes to search bar" onclick="appendGenesToSearch(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>`:''}
     <span class="focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
   </div>
-  ${(()=>{ if(exp) { if(item.type==='github'&&item._ghFullName) { const desc = item.content ? '<p>'+esc(item.content)+'</p>' : ''; const cachedStatus = (item._ghCommits || item._ghIssuesRecent) ? ghBuildStatusHtml(item._ghCommits||[], item._ghIssuesRecent||[], item.title) : '<span style="color:var(--muted)">Loading…</span>'; return `<div class="card-content" id="cc-${item.id}">${desc}${desc?'<hr>':''}<div id="gh-status-${item.id}">${cachedStatus}</div></div>`; } return `<div class="card-content" id="cc-${item.id}">${md(item.content)}</div>`; } const t=title.replace(/…$/,''); const c=item.content.trim(); if(c===t||c===(item.title||'').trim()) return ''; return `<div class="card-content clamped" id="cc-${item.id}">${esc(item.content)}</div>`; })()}
+  ${(()=>{
+    const noTitle = !item.title;
+    // When the title is taken from the first body line, drop that line from the body so it isn't shown twice.
+    const bodyText = noTitle ? item.content.replace(/^[^\n]*(\n|$)/,'').replace(/^\n+/,'') : item.content;
+    if(exp) {
+      if(item.type==='github'&&item._ghFullName) { const desc = item.content ? '<p>'+esc(item.content)+'</p>' : ''; const cachedStatus = (item._ghCommits || item._ghIssuesRecent) ? ghBuildStatusHtml(item._ghCommits||[], item._ghIssuesRecent||[], item.title) : '<span style="color:var(--muted)">Loading…</span>'; return `<div class="card-content" id="cc-${item.id}">${desc}${desc?'<hr>':''}<div id="gh-status-${item.id}">${cachedStatus}</div></div>`; }
+      if(!bodyText.trim()) return '';
+      return `<div class="card-content" id="cc-${item.id}">${md(bodyText)}</div>`;
+    }
+    const c=bodyText.trim();
+    if(!c) return '';
+    if(!noTitle && c===item.title.trim()) return '';
+    return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
+  })()}
   ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
   ${(()=>{ const meta=`${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}`; if(meta) return `<div class="card-meta">${meta}</div>`; return (item.type==='view'||item.type==='github')?'':`<div class="card-meta">&nbsp;</div>`; })()}
   ${exp?`<div class="card-bottom">

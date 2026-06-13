@@ -2,13 +2,15 @@
   "id": "mnhs3dmls8ll",
   "type": "idea",
   "title": "",
-  "genes": [],
+  "genes": [
+    "MAPT"
+  ],
   "tags": [],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-04-02T17:58:35.709Z",
+  "date": "2026-06-13T18:38:39.457Z",
   "synced": false,
   "_sortTag": ""
 }

@@ -2,10 +2,15 @@
   "id": "mnam1c8do6ku",
   "type": "idea",
   "title": "MAPT inversion",
-  "genes": [],
+  "genes": [
+    "MAPT"
+  ],
   "tags": [],
   "source": "",
-  "date": "2026-03-28T17:34:39.661Z",
+  "date": "2026-06-13T18:38:56.692Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "",
+  "connection": false,
+  "archived": false,
+  "due": ""
 }

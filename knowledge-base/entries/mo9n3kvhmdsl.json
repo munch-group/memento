@@ -3,7 +3,9 @@
   "type": "note",
   "title": "Does the frequencies of the two MAPT haplotypes serve to establish an averagely even transmission?",
   "genes": [
-    "MAPT"
+    "MAPT",
+    "OTA",
+    "OTF"
   ],
   "tags": [
     "Neanderthal",
@@ -13,7 +15,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-04-22T06:09:42.601Z",
+  "date": "2026-06-13T18:44:03.168Z",
   "synced": false,
   "_sortTag": "Drive"
 }

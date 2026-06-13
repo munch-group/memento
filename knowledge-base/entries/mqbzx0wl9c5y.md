@@ -27,3 +27,11 @@ Role of the X chromosome in complex trait genetics in humans
 - ARHGAP36 (relate in PUR) targets PKA for degradation
 - Which gene are activated by cAMP?
 
+
+
+News talk on ASD
+
+- Autism seqeuncing consortium (exome date) rare variants
+- shank3
+- scn2A
+- ~253 genes with FDR < 0.001

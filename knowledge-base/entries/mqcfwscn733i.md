@@ -1,1 +1,1 @@
-Primary cilia (incl. tip and transition zone)
+Primary cilia (incl. tip, transition zone, and basal body)

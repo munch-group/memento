@@ -1,5 +1,5 @@
 {
-  "id": "mqb1dfeqn5z0",
+  "id": "mqc1qgek5vn8",
   "type": "view",
   "title": "",
   "genes": [],
@@ -8,10 +8,10 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-13T07:42:20.953Z",
+  "date": "2026-06-13T07:40:58.892Z",
   "synced": false,
   "view": {
-    "q": "@PRKDC,SORCS2,HCN1",
+    "q": "@OGT,RLIM,HCFC1",
     "type": "all",
     "tag": null,
     "gene": null,
@@ -20,6 +20,5 @@
     "sortAsc": false,
     "conn": "all",
     "archive": "active"
-  },
-  "_sortTag": ""
+  }
 }

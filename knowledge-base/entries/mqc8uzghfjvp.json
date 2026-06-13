@@ -1,0 +1,40 @@
+{
+  "id": "mqc8uzghfjvp",
+  "type": "fact",
+  "title": "Pos. sel. apoptosis genes (human-chimp codeml)",
+  "genes": [
+    "EMP2",
+    "CARD8",
+    "CCNB3",
+    "FNA8",
+    "CTSG",
+    "CARD6",
+    "HTRA4",
+    "ZMB",
+    "EMP1",
+    "TNFRSF11A",
+    "CD3E",
+    "CD3G",
+    "CASP8",
+    "GZMH",
+    "TMEM16J",
+    "SET",
+    "IL3RB",
+    "ARHGEF1",
+    "COL4A3",
+    "NOX5",
+    "APOL6",
+    "SPN",
+    "TNFAIP8L3",
+    "CDKN2A"
+  ],
+  "tags": [
+    "Apoptosis"
+  ],
+  "source": "http://dx.doi.org/10.1016/j.febslet.2009.12.022",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-13T11:00:27.521Z",
+  "synced": false
+}

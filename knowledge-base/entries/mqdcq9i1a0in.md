@@ -1,0 +1,1 @@
+See if there are long-read genomes with the haplogroups, and if so use avg. read-depth as proxy for chromatin-sink effect.

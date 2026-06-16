@@ -1,0 +1,24 @@
+{
+  "id": "mqgf7nundz1o",
+  "type": "view",
+  "title": "",
+  "genes": [],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-16T09:09:21.407Z",
+  "synced": false,
+  "view": {
+    "q": "@AC114267,AC236972,ACSM1,ADAMTS13,ADAMTS20,AIMP2,APOL4,ASB15,ATAD3C,BTNL2,C12ORF54,C12ORF60,C6ORF15,CCDC40,CLPB,DGLUCY,FMO1,FSIP2,GLB1L2,GLT6D1,IL37,IL6R,ITFG2,KLHDC8A,KRTAP19-6,LCE5A,LYPD6,MAGEC1,MAL2,MALRD1,MAP4K1,MROH2A,MUC12,MUC4,NAT16,NLRP10,NLRP4,NRG1,NWD1,OR10G4,OR11A1,OR2T10,OR7C1,OSCAR,PCDH15,PLA2G6,PRH2,PRMT2,RFPL1,RRP8,SAMD9,SFSWAP,SLC22A24,SLC35G4,SMCO2,TBC1D8B,TMEM175,TTC23,UBXN11,VCAM1,ZNF112,ZNF280C",
+    "type": "all",
+    "tag": null,
+    "gene": null,
+    "genes": [],
+    "sortKey": "date",
+    "sortAsc": false,
+    "conn": "all",
+    "archive": "active"
+  }
+}

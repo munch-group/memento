@@ -1,0 +1,24 @@
+{
+  "id": "mqggkp7vne38",
+  "type": "view",
+  "title": "",
+  "genes": [],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-16T09:47:29.323Z",
+  "synced": false,
+  "view": {
+    "q": "@CASK,C3orf49,TOX,CASK,MGAM,BCO1,DAGLB,CD247,CENPC,CENPLN,CENPH,CENPI,CENPK,CENPM,CENPO,CENPP,CENPQ,CENPU,CENPR,CENPT,CENPW,CENPS,CENPX,",
+    "type": "all",
+    "tag": null,
+    "gene": null,
+    "genes": [],
+    "sortKey": "date",
+    "sortAsc": false,
+    "conn": "all",
+    "archive": "active"
+  }
+}

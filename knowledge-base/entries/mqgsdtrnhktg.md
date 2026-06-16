@@ -1,0 +1,2 @@
+Why are there so many CTCF (cystic fibrose) mutations? Why are they on top of each other? Why do the mutations differ so much in frequency between populations? Are they too frequent given their fitness disadvantage (despite being recessive)? Is CTCF too "mutagenic"? Could there be an advantage to be hererozytote carrier? Is it balancing selection like sicle-cell? Are the mutations older than they are supposed to be given their age? Could balancing selection explain the large diversity of mutations.
+

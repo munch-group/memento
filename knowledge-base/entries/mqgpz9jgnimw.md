@@ -92,9 +92,9 @@ Refinement 1 — **it's a loss of chain *elongation*, not of glycylation.** TTLL
 
 Refinement 2 — **the loss is two-hit and partially polymorphic, which is itself the selection lead.** mut3 segregates: alleles lacking mut3 are common in sub-Saharan Africans (55% heterozygous, ~17% homozygous) but mut3 reaches ~92% in Europeans. Since you need both hits to inactivate, mut5 is presumably the older fixing lesion and mut3 a second, population-differentiated layer. That layering — one fixed inactivation plus a swept second site — is exactly the structure you'd test for adaptive "locking in," and it gives you a concrete allele with a frequency trajectory rather than a monomorphic knockout.
 
-**The branch you're probably underweighting: NAP1, not just the axoneme**
+**NAP1 and nucleosome assembly**
 
-TTLL10 isn't only a tubulin enzyme. Its original identification was as a polyglycylase of nucleosome assembly protein 1 (NAP1), a 60-kDa cytoplasmic protein that accumulates in elongating spermatids. That puts a TTLL10 substrate squarely in the spermatid chromatin-remodeling window — the histone-to-protamine transition — rather than the flagellum. Given your heterochromatin-sink framing, a chromatin-chaperone substrate of the lost enzyme is arguably a *better* drive-chain candidate than the axoneme, because chromatin-state asymmetries are one of the few things that can plausibly stay cell-autonomous in a syncytium. I'd treat NAP1 polyglycylation as a first-class lead, not a footnote.
+TTLL10 isn't only a tubulin enzyme. **Its original identification was as a polyglycylase of nucleosome assembly protein 1 (NAP1)**, a 60-kDa cytoplasmic protein that accumulates in elongating spermatids. That puts a TTLL10 substrate squarely in the spermatid chromatin-remodeling window — the histone-to-protamine transition — rather than the flagellum. Given your heterochromatin-sink framing, a chromatin-chaperone substrate of the lost enzyme is arguably a *better* drive-chain candidate than the axoneme, because chromatin-state asymmetries are one of the few things that can plausibly stay cell-autonomous in a syncytium. I'd treat NAP1 polyglycylation as a first-class lead, not a footnote.
 
 **Candidate "next link" genes (chain-length-dependent effectors)**
 
@@ -158,3 +158,8 @@ But the crux you can't skip is the same one as before, one level up: glycylation
 4. For the collaborator, in an XY model (mouse): does TTLL10 KO shift transmission ratio or offspring sex ratio? Is long-chain glycylation actually present on manchette/bridge-traversing microtubules (not just the axoneme)? Is chromatoid-body/KIF17b traffic across bridges altered? And the decisive one for the cis-asymmetry question: is there *any* detectable asymmetry in glycylation or KIF17b-cargo distribution between connected X- and Y-spermatids — zero in WT would confirm fair sharing, and a driver's signature would be local rectification.
 
 Three honest caveats to keep in view: zebrafish can't speak to the XY-drive arm; KIF17b has a documented microtubule-*independent*, PKA-driven mode for at least one cargo (ACT), so not all its transport reads the tubulin code; and whether glycylation marks the relevant non-axonemal spermatid microtubules is still an open empirical question rather than an established fact. The cis-asymmetry source remains the load-bearing unknown — that's the thing I'd design the next experiment around.
+
+> No sequenced human carry TTLL10   introgressed from Neanderthals. A single human carries a TTLL10 recieved from Denisovans that only admixed with central/east asian modern humans (expecially Oceeania). Through my research network i know of a hospital rutinely sequencing pations that about 5 in 50,000 patients carry a functional TTLL10 and also that a functional TTLL10 has been observed in a small number of West Africans (Camaroon). No TTLL* genes in the Akbari data set. I have a selection scan on the 1000-genomes data set that can query when I get home.
+
+
+> Can KIF17b carry any cargo?

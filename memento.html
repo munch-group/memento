@@ -741,11 +741,16 @@ function sortItems(arr) {
     // Pinned items always sort first
     const pa = a.pinned ? 1 : 0, pb = b.pinned ? 1 : 0;
     if (pa !== pb) return pb - pa;
-    // When highlight is active, sort by highlight count first (most matches on top)
+    // When highlight is active, sort by match fraction first (matches ÷ genes listed in the
+    // card), so a card where most genes match outranks a huge list with the same raw count.
     if (highlightGenes.size) {
-      const ha = (a.genes||[]).filter(g => geneAliasesU(g).some(al=>highlightGenes.has(al))).length;
-      const hb = (b.genes||[]).filter(g => geneAliasesU(g).some(al=>highlightGenes.has(al))).length;
-      if (ha !== hb) return hb - ha;
+      const ga = a.genes||[], gb = b.genes||[];
+      const ha = ga.filter(g => geneAliasesU(g).some(al=>highlightGenes.has(al))).length;
+      const hb = gb.filter(g => geneAliasesU(g).some(al=>highlightGenes.has(al))).length;
+      const fa = ga.length ? ha/ga.length : 0;
+      const fb = gb.length ? hb/gb.length : 0;
+      if (fa !== fb) return fb - fa;
+      if (ha !== hb) return hb - ha; // tie on fraction → more matches first
     }
     if (sortKey === 'date') {
       const ap = a.type === 'people', bp = b.type === 'people';

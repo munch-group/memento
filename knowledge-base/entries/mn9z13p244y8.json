@@ -2,9 +2,11 @@
   "id": "mn9z13p244y8",
   "type": "note",
   "title": "Do the frequencies of the two MAPT haplotypes serve to establish an averagely even transmission?",
-  "tags": [],
+  "tags": [
+    "LoF"
+  ],
   "source": "",
-  "date": "2026-05-31T07:59:57.602Z",
+  "date": "2026-06-16T16:07:48.813Z",
   "synced": false,
   "genes": [
     "MAPT"

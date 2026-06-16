@@ -5,9 +5,11 @@
   "genes": [
     "MAPT"
   ],
-  "tags": [],
+  "tags": [
+    "LoF"
+  ],
   "source": "",
-  "date": "2026-04-22T06:09:57.917Z",
+  "date": "2026-06-16T16:09:19.534Z",
   "synced": false,
   "_sortTag": "",
   "connection": false,

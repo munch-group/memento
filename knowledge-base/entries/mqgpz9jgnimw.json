@@ -32,12 +32,14 @@
     "ACT",
     "KIF17b"
   ],
-  "tags": [],
+  "tags": [
+    "LoF"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-16T15:45:33.787Z",
+  "date": "2026-06-16T19:56:42.978Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "LoF"
 }

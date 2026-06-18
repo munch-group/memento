@@ -94,7 +94,7 @@ a { color: inherit; }
 .card-content p { margin: 0 0 0.5em; }
 .card-content p:last-child { margin-bottom: 0; }
 .card-content .more { display: block; color: var(--text3); margin-top: 2px; }
-.card-content .truncated-tail { opacity: 0.5; }
+.card-content.rendered.truncated { -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
 .card-content ul, .card-content ol { margin: 0.3em 0 0.5em 1.5em; }
 .card-content li { margin: 0; }
 .card-content li p { margin: 0; }
@@ -1279,8 +1279,10 @@ function renderCard(item, forceExpand) {
     const c=bodyText.trim();
     if(!c) return '';
     if(!noTitle && c===item.title.trim()) return '';
-    if(previewMode==='rendered'&&fullRenderActive)
-      return `<div class="card-content rendered" id="cc-${item.id}">${truncateRendered(md(bodyText), 1200)}</div>`;
+    if(previewMode==='rendered'&&fullRenderActive){
+      const r = truncateRendered(md(bodyText), 1200);
+      return `<div class="card-content rendered${r.truncated?' truncated':''}" id="cc-${item.id}">${r.html}</div>`;
+    }
     return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
   })()}
   ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
@@ -2086,24 +2088,54 @@ function md(s){
 // Render-truncate: keep whole top-level blocks until the cumulative DISPLAYED text
 // length crosses `limit`, then drop the rest. Cuts only at block boundaries, so the
 // returned HTML is always well-formed.
+// Render-truncate: walk the parsed DOM depth-first, spending a shared character budget on text
+// nodes. The only mutations are (a) shortening one text node at the cut and (b) deleting whole
+// nodes after it — so the serialized innerHTML is always well-formed. Cuts inside paragraphs/
+// lists/cells, snaps to word boundaries, and never splits a KaTeX formula.
 function truncateRendered(html, limit = 1200){
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
-  let total = 0, cut = false, dropped = false, lastKept = null;
-  for (const node of [...tmp.childNodes]){
-    const text = node.textContent || '';
-    const blank = !text.trim();          // layout whitespace (e.g. newlines between blocks)
-    if (cut){ node.remove(); if (!blank) dropped = true; continue; }
-    if (blank) continue;                 // don't count whitespace toward the limit
-    total += text.length;
-    lastKept = node;                     // last content block kept
-    if (total > limit) cut = true;       // keep the block that crosses the limit, drop the rest
+  const KATEX_COST = 16;            // nominal: math reads short; its textContent double-counts
+  const st = { left: limit, cut: false };
+
+  // returns true if `node` should be kept, false if the caller should remove it;
+  // sets st.cut once the budget is spent, after which the caller drops all later siblings.
+  function walk(node){
+    if (node.nodeType === 3){                       // text
+      const t = node.data;
+      if (!t || !t.trim()) return true;             // empty / whitespace: keep, no cost
+      if (t.length <= st.left){ st.left -= t.length; return true; }
+      let end = st.left;
+      const sp = t.lastIndexOf(' ', end);           // snap to word boundary...
+      if (sp > 0) end = sp;                          // ...else hard-cut a spaceless token
+      node.data = t.slice(0, end).replace(/\s+$/, '');
+      st.left = 0; st.cut = true;
+      return node.data.length > 0;                   // keep the trimmed node iff text remains
+    }
+    if (node.nodeType === 1){                       // element
+      if (node.classList && (node.classList.contains('katex') || node.classList.contains('katex-display'))){
+        if (KATEX_COST <= st.left){ st.left -= KATEX_COST; return true; }
+        st.cut = true; return false;                // can't fit: drop whole formula
+      }
+      const kids = [...node.childNodes];
+      if (!kids.length) return true;                // zero-text leaf (img/hr/br/empty): keep, free
+      let kept = false;
+      for (let i = 0; i < kids.length; i++){
+        if (walk(kids[i])) kept = true; else kids[i].remove();
+        if (st.cut){ for (let j = i+1; j < kids.length; j++) kids[j].remove(); break; }
+      }
+      return kept;                                  // keep this element iff it still holds content
+    }
+    return false;                                   // comments / other: drop
   }
-  if (dropped) {                         // only when real content was cut
-    if (lastKept && lastKept.nodeType === 1) lastKept.classList.add('truncated-tail');  // dim the final, partial-feeling block
-    tmp.insertAdjacentHTML('beforeend', '<span class="more">…</span>');
+
+  const top = [...tmp.childNodes];
+  for (let i = 0; i < top.length; i++){
+    if (!walk(top[i])) top[i].remove();
+    if (st.cut){ for (let j = i+1; j < top.length; j++) top[j].remove(); break; }
   }
-  return tmp.innerHTML;
+  if (st.cut) tmp.insertAdjacentHTML('beforeend', '<span class="more">…</span>');
+  return { html: tmp.innerHTML, truncated: st.cut };
 }
 function fmtDateAgo(iso){ const s=fmtDate(iso); return s==='just now'?s:s+' ago'; }
 function fmtDate(iso){

@@ -360,7 +360,7 @@ a { color: inherit; }
         </div>
       </div>
       <div class="searchbar">
-        <input type="search" id="search-input" placeholder="space = AND · , = OR · @gene · #tag · /type · /type1,type2 = OR" oninput="scheduleSearchRender()" />
+        <input type="search" id="search-input" placeholder="space = AND · , = OR · @gene · #tag · /type · /type1,type2 = OR" oninput="renderList()" />
         <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
         <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
       </div>
@@ -1495,6 +1495,18 @@ function toggleHighlightGene(gene) {
   renderList(); // getVisibleItems() recomputes the combined highlightGenes and toggles the bar
 }
 function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTag=null; activeType='all'; renderFilters(); renderList(); }
+// Re-render one card in place (expand/collapse) without rebuilding the whole list.
+// Returns false if the card isn't currently in the DOM, so the caller can fall back to renderList().
+function updateCardInPlace(id){
+  const el = [...document.querySelectorAll('#item-list .card')].find(c=>c.dataset.id===id);
+  const item = items.find(i=>i.id===id);
+  if(!el || !item) return false;
+  el.outerHTML = renderCard(item);
+  const cc = document.getElementById('cc-'+id);
+  if(cc && cc.dataset.lazy) observeLazyEls(cc.parentElement);   // a freshly-collapsed card becomes a lazy placeholder
+  resolveImages();
+  return true;
+}
 function toggleCard(id,e){
   if(e&&e.target.closest('a[href]'))return;
   if(linkMode){
@@ -1504,7 +1516,12 @@ function toggleCard(id,e){
   }
   const _it = items.find(i=>i.id===id);
   if (_it && _it.type==='view') { if (activeViewId===id) exitView(); else applyView(_it); return; }
-  expandedId=expandedId===id?null:id;renderList();
+  const prev = expandedId;
+  expandedId = expandedId===id ? null : id;
+  // Update only the affected card(s) in place — instant, no full re-render, no scroll jump.
+  let ok = updateCardInPlace(id);
+  if (ok && prev && prev !== id) ok = updateCardInPlace(prev);
+  if (!ok) renderList();   // fallback if a card isn't currently in the DOM
   // Lazy-load README for GitHub cards when expanding
   if (expandedId) {
     const item = items.find(i => i.id === expandedId);
@@ -2032,8 +2049,6 @@ document.getElementById('f-content').addEventListener('keydown', e=>{
 window.addEventListener('focus', ()=>{ if(dirHandle) loadFromFile(); });
 let _resizeTimer;
 window.addEventListener('resize', ()=>{ clearTimeout(_resizeTimer); _resizeTimer = setTimeout(renderList, 150); });
-let _searchTimer;
-function scheduleSearchRender(){ clearTimeout(_searchTimer); _searchTimer = setTimeout(renderList, 120); }  // coalesce keystrokes
 
 // --- Click vs. click-drag ---------------------------------------------------
 // A native click fires on pointer-up even if the pointer was dragged, so

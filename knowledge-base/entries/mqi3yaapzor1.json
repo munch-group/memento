@@ -2,13 +2,21 @@
   "id": "mqi3yaapzor1",
   "type": "note",
   "title": "Human-specific loss of TTLL10 polyglycylation as a candidate suppressor of an X–Y conflict in the male germline",
-  "genes": [],
-  "tags": [],
+  "genes": [
+    "TTLL10",
+    "NAP1",
+    "KIF17b",
+    "TTLL3",
+    "TTLL8"
+  ],
+  "tags": [
+    "TTLL10"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-17T16:10:58.433Z",
+  "date": "2026-06-18T07:59:13.975Z",
   "synced": false,
   "_sortTag": ""
 }

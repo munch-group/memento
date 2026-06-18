@@ -1,0 +1,1 @@
+High Fst SNP X genes in Tishkoff Cameroon admixture

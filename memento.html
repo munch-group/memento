@@ -1142,7 +1142,6 @@ function renderList() {
     const pIdx = vis.findIndex(i => i.id === '_priorities');
     if (pIdx >= 0) vis.splice(pIdx, 1);
   }
-  fullRenderActive = (previewMode === 'full' || previewMode === 'rendered') && vis.length <= FULL_RENDER_MAX;
   const cols = Array.from({length: nCols}, () => []);
   vis.forEach((item, i) => cols[i % nCols].push(renderCard(item)));
   // Prepend inbox + priorities card to first column in digest view (side-by-side only)
@@ -1181,6 +1180,7 @@ function renderList() {
     : cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
   list.innerHTML = banner + colsHtml;
   resolveImages();
+  observeLazyCards();
   document.querySelectorAll('.gene-list').forEach(el => {
     el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth);
   });
@@ -1219,8 +1219,14 @@ function renderIssuesList() {
   list.innerHTML = cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
 }
 
+// Body text shared by renderCard and the lazy upgrade path — keep these in sync.
+function cardBodyText(item){
+  return item.title ? item.content
+    : item.content.replace(/^[^\n]*(\n|$)/,'').replace(/^\n+/,'');
+}
 function renderCard(item, forceExpand) {
-  const exp=forceExpand||expandedId===item.id||(previewMode==='full'&&fullRenderActive);
+  const eagerExp = forceExpand||expandedId===item.id;   // the one card the user opened/focused
+  const expChrome = eagerExp||previewMode==='full';      // show expanded chrome (icons/meta/actions)
   const title=item.title||item.content.split('\n')[0].slice(0,80)+(item.content.length>80?'…':'');
   const tags=(item.tags||[]).map(t=>`<span class="tag" onclick="tagClick(event,'${t.replace(/'/g,"\\'")}') ">${esc(t)}</span>`).join('');
   const allGenes = item.genes||[];
@@ -1241,7 +1247,7 @@ function renderCard(item, forceExpand) {
     }).join('<span class="gene-sep">/</span>');
     return `<span class="gene">${inner}</span>`;
   }).join('');
-  const geneCopy = (exp && allGenes.length) ? `<span class="gene-copy" title="Copy gene list for search" onclick="copyGenes(event,'${item.id}')">⧉</span>` : '';
+  const geneCopy = (expChrome && allGenes.length) ? `<span class="gene-copy" title="Copy gene list for search" onclick="copyGenes(event,'${item.id}')">⧉</span>` : '';
   const genes = allGenes.length ? `<span class="gene-list">${visGenes}<span class="gene-more" title="${allGenes.length} genes">…</span>${geneCopy}</span>` : '';
   const typeObj = TYPES.find(t=>t.key===item.type);
   const typeLabel = `<span class="type-badge" data-type="${item.type}" title="${typeObj?.label||item.type}">${TYPE_ICONS[item.type]||esc(typeObj?.short||item.type)}</span>`;
@@ -1253,7 +1259,7 @@ function renderCard(item, forceExpand) {
   const isDueSoon = item.due && !isOverdue && !isDueToday && item.due <= soon3;
   const dueClass = isOverdue ? ' overdue' : isDueToday ? ' due-today' : isDueSoon ? ' due-soon' : '';
   const dueHtml = item.due ? `<span class="card-due${dueClass}" title="Due ${item.due}">${fmtDue(item.due)}</span>` : '';
-  return `<div class="card${exp?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
+  return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text"><span onclick="${item.type==='github'&&item._ghFullName?`ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\\\'")}')`:`editItem(event,'${item.id}')`}" style="cursor:${item.type==='github'?'pointer':'text'}">${esc(title)}</span></span>
@@ -1267,25 +1273,23 @@ function renderCard(item, forceExpand) {
   </div>
   ${(()=>{
     const noTitle = !item.title;
-    // When the title is taken from the first body line, drop that line from the body so it isn't shown twice.
-    const bodyText = noTitle ? item.content.replace(/^[^\n]*(\n|$)/,'').replace(/^\n+/,'') : item.content;
-    if(exp) {
-      if(item.type==='github'&&item._ghFullName) { const desc = item.content ? '<p>'+esc(item.content)+'</p>' : ''; const cachedStatus = (item._ghCommits || item._ghIssuesRecent) ? ghBuildStatusHtml(item._ghCommits||[], item._ghIssuesRecent||[], item.title) : '<span style="color:var(--muted)">Loading…</span>'; return `<div class="card-content" id="cc-${item.id}">${desc}${desc?'<hr>':''}<div id="gh-status-${item.id}">${cachedStatus}</div></div>`; }
+    const bodyText = cardBodyText(item);
+    // github cards: cheap esc + cached status (never md()); eager whenever chrome is expanded.
+    if(expChrome&&item.type==='github'&&item._ghFullName) { const desc = item.content ? '<p>'+esc(item.content)+'</p>' : ''; const cachedStatus = (item._ghCommits || item._ghIssuesRecent) ? ghBuildStatusHtml(item._ghCommits||[], item._ghIssuesRecent||[], item.title) : '<span style="color:var(--muted)">Loading…</span>'; return `<div class="card-content" id="cc-${item.id}">${desc}${desc?'<hr>':''}<div id="gh-status-${item.id}">${cachedStatus}</div></div>`; }
+    if(eagerExp) {
       if(!bodyText.trim()) return '';
       return `<div class="card-content" id="cc-${item.id}">${md(bodyText)}</div>`;
     }
     const c=bodyText.trim();
     if(!c) return '';
     if(!noTitle && c===item.title.trim()) return '';
-    if(previewMode==='rendered'&&fullRenderActive){
-      const r = truncateRendered(md(bodyText), 1200);
-      return `<div class="card-content rendered${r.truncated?' truncated':''}" id="cc-${item.id}">${r.html}</div>`;
-    }
+    if(previewMode==='full')     return `<div class="card-content clamped" id="cc-${item.id}" data-lazy="full">${esc(bodyText)}</div>`;
+    if(previewMode==='rendered') return `<div class="card-content clamped" id="cc-${item.id}" data-lazy="rendered">${esc(bodyText)}</div>`;
     return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
   })()}
-  ${(exp&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
+  ${(expChrome&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
   ${(()=>{ const meta=`${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}`; if(meta) return `<div class="card-meta">${meta}</div>`; return (item.type==='view'||item.type==='github')?'':`<div class="card-meta">&nbsp;</div>`; })()}
-  ${exp?`<div class="card-bottom">
+  ${expChrome?`<div class="card-bottom">
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
       ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:var(--accent)">⊙</button>`:''}
@@ -1305,8 +1309,6 @@ function geneClick(e, gene) {
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
   setGeneFilter(gene);
 }
-const FULL_RENDER_MAX = 100;      // skip full render above this many visible cards
-let fullRenderActive = false;     // recomputed per render in renderList()
 let previewMode = 'compact'; // 'minimal' | 'compact' | 'rendered' | 'full'
 function togglePreviews() {
   // 'rendered' and 'full' render markdown into the card HTML; the others only toggle CSS.
@@ -1317,11 +1319,7 @@ function togglePreviews() {
     : previewMode === 'rendered' ? 'full'
     : 'minimal';
   applyPreviewMode();
-  if (heavy(previewMode) || heavy(was)) {
-    renderList(); // these modes change card HTML (not just CSS), so a re-render is required
-    if (heavy(previewMode) && !fullRenderActive)
-      showToast(`${previewMode === 'full' ? 'Full' : 'Rendered'} view skipped — over ${FULL_RENDER_MAX} cards`);
-  }
+  if (heavy(previewMode) || heavy(was)) renderList(); // these modes change card HTML, not just CSS
 }
 function applyPreviewMode() {
   const list = document.getElementById('item-list');
@@ -2183,6 +2181,32 @@ async function resolveImages() {
       } catch(e) { /* image not found — leave alt text */ }
     }
   }
+}
+
+// --- Lazy on-scroll markdown rendering (replaces the old FULL_RENDER cap) ---
+let lazyObserver = null;
+function upgradeLazyCard(el){
+  const id = el.closest('.card')?.dataset.id;
+  if(!id) return;
+  const item = items.find(i=>i.id===id);
+  if(!item){ el.removeAttribute('data-lazy'); return; }
+  const mode = el.dataset.lazy, bodyText = cardBodyText(item);
+  el.removeAttribute('data-lazy'); el.classList.remove('clamped');
+  if(mode==='rendered'){ const r=truncateRendered(md(bodyText),1200); el.classList.add('rendered'); if(r.truncated) el.classList.add('truncated'); el.innerHTML=r.html; }
+  else { el.innerHTML = md(bodyText); }
+}
+function observeLazyCards(){
+  const list = document.getElementById('item-list'); if(!list) return;
+  const lazy = list.querySelectorAll('.card-content[data-lazy]');
+  if(!('IntersectionObserver' in window)){ lazy.forEach(upgradeLazyCard); resolveImages(); return; }
+  if(!lazyObserver){
+    lazyObserver = new IntersectionObserver((entries,obs)=>{
+      let any=false;
+      for(const e of entries){ if(!e.isIntersecting) continue; obs.unobserve(e.target); if(e.target.dataset.lazy){ upgradeLazyCard(e.target); any=true; } }
+      if(any) resolveImages();
+    }, { root: document.getElementById('main-area'), rootMargin: '600px 0px' });
+  } else lazyObserver.disconnect();
+  lazy.forEach(el => lazyObserver.observe(el));
 }
 
 // --- Image drop on cards ---

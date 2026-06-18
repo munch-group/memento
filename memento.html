@@ -1065,7 +1065,12 @@ function getVisibleItems() {
   return { vis, orGroups };
 }
 
+let _streamRaf = 0, _streamGen = 0;
+function geneOverflowPass(){
+  document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
+}
 function renderList() {
+  _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
   // Issues sub-view: render temporary issue cards instead of normal items
   if (ghIssuesRepo && ghIssuesItems.length >= 0) {
     return renderIssuesList();
@@ -1175,15 +1180,35 @@ function renderList() {
   }
   // Switch to column layout when stacked
   list.style.flexDirection = digestStacked ? 'column' : '';
+  // Progressive insert: paint the first FIRST cards per column now, then stream the rest over later
+  // frames so a large list never builds its whole DOM synchronously. All cards still end up present.
+  const FIRST = 18, BATCH = 24;
+  const colDiv = arr => `<div class="item-col">${arr.join('')}</div>`;
+  const firstHtml = cols.map(c => colDiv(c.slice(0, FIRST))).join('');
   colsHtml += digestStacked
-    ? `<div style="display:flex;gap:8px;align-items:flex-start;min-width:0;width:100%">${cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('')}</div>`
-    : cols.map(c => `<div class="item-col">${c.join('')}</div>`).join('');
+    ? `<div style="display:flex;gap:8px;align-items:flex-start;min-width:0;width:100%">${firstHtml}</div>`
+    : firstHtml;
   list.innerHTML = banner + colsHtml;
   resolveImages();
   observeLazyCards();
-  document.querySelectorAll('.gene-list').forEach(el => {
-    el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth);
-  });
+  geneOverflowPass();
+  if (cols.some(c => c.length > FIRST)) {
+    const gen = _streamGen, colEls = list.querySelectorAll('.item-col');
+    let k = FIRST;
+    const step = () => {
+      _streamRaf = 0;
+      if (gen !== _streamGen) return;                 // superseded by a newer render
+      let any = false;
+      colEls.forEach((el, ci) => {
+        const chunk = cols[ci].slice(k, k + BATCH);
+        if (chunk.length) { el.insertAdjacentHTML('beforeend', chunk.join('')); any = true; }
+      });
+      k += BATCH;
+      if (any) { observeLazyEls(list); resolveImages(); _streamRaf = requestAnimationFrame(step); }
+      else geneOverflowPass();                         // everything inserted — final overflow pass
+    };
+    _streamRaf = requestAnimationFrame(step);
+  }
 }
 
 function renderIssuesList() {
@@ -2215,17 +2240,26 @@ function drainLazyQueue(){
   if(did) resolveImages();
   if(lazyQueue.length && !lazyRaf) lazyRaf = requestAnimationFrame(drainLazyQueue);
 }
+function ensureLazyObserver(){
+  if(lazyObserver) return lazyObserver;
+  lazyObserver = new IntersectionObserver((entries,obs)=>{
+    for(const e of entries){ if(e.isIntersecting && e.target.dataset.lazy){ obs.unobserve(e.target); lazyQueue.push(e.target); } }
+    if(lazyQueue.length && !lazyRaf) lazyRaf = requestAnimationFrame(drainLazyQueue);
+  }, { root: document.getElementById('main-area'), rootMargin: '300px 0px' });
+  return lazyObserver;
+}
+// Observe every placeholder within `scope` (incremental — re-observing an existing target is a no-op).
+function observeLazyEls(scope){
+  const lazy = scope.querySelectorAll('.card-content[data-lazy]');
+  if(!('IntersectionObserver' in window)){ lazy.forEach(upgradeLazyCard); resolveImages(); return; }
+  const obs = ensureLazyObserver();
+  lazy.forEach(el => obs.observe(el));
+}
+// Full re-render: drop the previous render's observations + pending upgrades, then observe afresh.
 function observeLazyCards(){
   const list = document.getElementById('item-list'); if(!list) return;
-  const lazy = list.querySelectorAll('.card-content[data-lazy]');
-  if(!('IntersectionObserver' in window)){ lazy.forEach(upgradeLazyCard); resolveImages(); return; }
-  if(!lazyObserver){
-    lazyObserver = new IntersectionObserver((entries,obs)=>{
-      for(const e of entries){ if(e.isIntersecting && e.target.dataset.lazy){ obs.unobserve(e.target); lazyQueue.push(e.target); } }
-      if(lazyQueue.length && !lazyRaf) lazyRaf = requestAnimationFrame(drainLazyQueue);
-    }, { root: document.getElementById('main-area'), rootMargin: '300px 0px' });
-  } else { lazyObserver.disconnect(); lazyQueue = []; if(lazyRaf){ cancelAnimationFrame(lazyRaf); lazyRaf = 0; } }
-  lazy.forEach(el => lazyObserver.observe(el));
+  if(lazyObserver){ lazyObserver.disconnect(); lazyQueue = []; if(lazyRaf){ cancelAnimationFrame(lazyRaf); lazyRaf = 0; } }
+  observeLazyEls(list);
 }
 
 // --- Image drop on cards ---

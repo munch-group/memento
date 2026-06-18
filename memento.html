@@ -1148,7 +1148,10 @@ function renderList() {
     if (pIdx >= 0) vis.splice(pIdx, 1);
   }
   const cols = Array.from({length: nCols}, () => []);
-  vis.forEach((item, i) => cols[i % nCols].push(renderCard(item)));
+  // Render the first ~screenful of bodies eagerly (visible cards are complete on first paint, no flash);
+  // everything below stays a lazy placeholder. md() is memoized, so re-renders of seen cards stay cheap.
+  const EAGER = 6 * nCols;
+  vis.forEach((item, i) => cols[i % nCols].push(renderCard(item, false, i < EAGER)));
   // Prepend inbox + priorities card to first column in digest view (side-by-side only)
   if (digestVisible && !digestStacked && cols.length) {
     const pCard = items.find(i => i.id === '_priorities');
@@ -1204,7 +1207,7 @@ function renderList() {
         if (chunk.length) { el.insertAdjacentHTML('beforeend', chunk.join('')); any = true; }
       });
       k += BATCH;
-      if (any) { observeLazyEls(list); resolveImages(); _streamRaf = requestAnimationFrame(step); }
+      if (any) { observeLazyEls(list); _streamRaf = requestAnimationFrame(step); }   // streamed cards are placeholders (no images until upgraded)
       else geneOverflowPass();                         // everything inserted — final overflow pass
     };
     _streamRaf = requestAnimationFrame(step);
@@ -1249,7 +1252,7 @@ function cardBodyText(item){
   return item.title ? item.content
     : item.content.replace(/^[^\n]*(\n|$)/,'').replace(/^\n+/,'');
 }
-function renderCard(item, forceExpand) {
+function renderCard(item, forceExpand, eagerBody) {
   const eagerExp = forceExpand||expandedId===item.id;   // the one card the user opened/focused
   const expChrome = eagerExp||previewMode==='full';      // show expanded chrome (icons/meta/actions)
   const title=item.title||item.content.split('\n')[0].slice(0,80)+(item.content.length>80?'…':'');
@@ -1308,8 +1311,13 @@ function renderCard(item, forceExpand) {
     const c=bodyText.trim();
     if(!c) return '';
     if(!noTitle && c===item.title.trim()) return '';
-    if(previewMode==='full')     return `<div class="card-content clamped" id="cc-${item.id}" data-lazy="full">${esc(bodyText)}</div>`;
-    if(previewMode==='rendered') return `<div class="card-content clamped" id="cc-${item.id}" data-lazy="rendered">${esc(bodyText)}</div>`;
+    if(previewMode==='full') return eagerBody
+      ? `<div class="card-content" id="cc-${item.id}">${md(bodyText)}</div>`
+      : `<div class="card-content clamped" id="cc-${item.id}" data-lazy="full">${esc(bodyText)}</div>`;
+    if(previewMode==='rendered'){
+      if(eagerBody){ const r = truncateRendered(md(bodyText), 1200); return `<div class="card-content rendered${r.truncated?' truncated':''}" id="cc-${item.id}">${r.html}</div>`; }
+      return `<div class="card-content clamped" id="cc-${item.id}" data-lazy="rendered">${esc(bodyText)}</div>`;
+    }
     return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
   })()}
   ${(expChrome&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
@@ -2119,6 +2127,7 @@ function md(s){
       h = h.replace(id, rendered);
     }
     h = h.replace(/<a /g, '<a target="_blank" rel="noopener" ');
+    h = h.replace(/<img /g, '<img loading="lazy" decoding="async" ');   // let the browser schedule decode/load (real src set later by resolveImages)
     // Wrap purely numeric reference links as superscripts (from clipped footnotes)
     h = h.replace(/<a ([^>]*)>([\d]+)<\/a>/g, '<sup><a $1>$2</a></sup>');
     out = h;

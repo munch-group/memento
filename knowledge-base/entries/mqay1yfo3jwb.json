@@ -1,7 +1,7 @@
 {
   "id": "mqay1yfo3jwb",
   "type": "fact",
-  "title": "",
+  "title": "Recombination genes",
   "genes": [
     "HELLS",
     "ZCWPW2",
@@ -158,7 +158,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-12T13:12:55.058Z",
+  "date": "2026-06-18T12:20:58.031Z",
   "synced": false,
   "_sortTag": ""
 }

@@ -1,0 +1,1 @@
+Do RELATE on TTLL10 on 1000g long read data

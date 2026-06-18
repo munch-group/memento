@@ -1,25 +1,23 @@
 ## Today todo
 - Email/admin back on track.
-- Udfyld eksamensspøgsmål til GT og skriv til stud om at eksamen begynder 10.30 i stedet.
-- Send GT proejcts to Rasmus
-- Sync ferie med resten af BiRC
+- Prepare GT exam
 
 ## Week run
+- Sync ferie med resten af BiRC
 - BP reexam evaluation
-- Run code-review using the Fabel model
+- Get back to Sriram
 - Check up on SMBE receipt
+- PsychENCODE access request
+- Review phasic issues
+- Funding application overview/plan
 - New controller about Lundbeck Experiment wrap-up
 - Flesh out the phasic-popgen repo (Coal. Sel. / PSMC / Ghost model / sticcs tool)
-- Review phasic issues
-- VEP workflow.  
+- Plan what to do with VEP / long-read / TTLL10 project
 - Widget ideogram with gene list highlights, ECH regions, xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
 - Organize how data produced by different projects/repos are stored for use in other projects (close down git-lfs and use my new "lfs" library)
-- LoF with Leipzig, Primate LinARs, X/Y DEG.  
 - Get back to Ana, Simon and "Jan"
 
 ## Month tactic
-- PsychENCODE access request
-- Funding application overview/plan
 - Time Machine on office machine
 - Bioinformatics course.  
 - Plan for exploiting UKbiobank

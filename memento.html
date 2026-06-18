@@ -360,7 +360,7 @@ a { color: inherit; }
         </div>
       </div>
       <div class="searchbar">
-        <input type="search" id="search-input" placeholder="space = AND · , = OR · @gene · #tag · /type · /type1,type2 = OR" oninput="renderList()" />
+        <input type="search" id="search-input" placeholder="space = AND · , = OR · @gene · #tag · /type · /type1,type2 = OR" oninput="scheduleSearchRender()" />
         <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
         <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
       </div>
@@ -2007,6 +2007,8 @@ document.getElementById('f-content').addEventListener('keydown', e=>{
 window.addEventListener('focus', ()=>{ if(dirHandle) loadFromFile(); });
 let _resizeTimer;
 window.addEventListener('resize', ()=>{ clearTimeout(_resizeTimer); _resizeTimer = setTimeout(renderList, 150); });
+let _searchTimer;
+function scheduleSearchRender(){ clearTimeout(_searchTimer); _searchTimer = setTimeout(renderList, 120); }  // coalesce keystrokes
 
 // --- Click vs. click-drag ---------------------------------------------------
 // A native click fires on pointer-up even if the pointer was dragged, so
@@ -2047,8 +2049,12 @@ function formatSource(s) {
   });
   return out;
 }
+const _mdCache = new Map();   // memoize markdown+KaTeX render (pure fn of input) so re-renders are cheap
 function md(s){
   if(!s) return '';
+  const key = s;   // cache under the ORIGINAL input; `s` is mutated below by math extraction
+  const hit = _mdCache.get(key); if(hit !== undefined) return hit;
+  let out;
   try {
     // Extract math BEFORE marked so LaTeX doesn't get HTML-escaped
     const placeholders = [];
@@ -2075,8 +2081,11 @@ function md(s){
     h = h.replace(/<a /g, '<a target="_blank" rel="noopener" ');
     // Wrap purely numeric reference links as superscripts (from clipped footnotes)
     h = h.replace(/<a ([^>]*)>([\d]+)<\/a>/g, '<sup><a $1>$2</a></sup>');
-    return h;
-  } catch(e) { return esc(s); }
+    out = h;
+  } catch(e) { out = esc(s); }
+  if(_mdCache.size > 1200) _mdCache.clear();   // soft cap so a long edit-heavy session can't grow it unbounded
+  _mdCache.set(key, out);
+  return out;
 }
 // Render-truncate: keep whole top-level blocks until the cumulative DISPLAYED text
 // length crosses `limit`, then drop the rest. Cuts only at block boundaries, so the
@@ -2184,7 +2193,7 @@ async function resolveImages() {
 }
 
 // --- Lazy on-scroll markdown rendering (replaces the old FULL_RENDER cap) ---
-let lazyObserver = null;
+let lazyObserver = null, lazyQueue = [], lazyRaf = 0;
 function upgradeLazyCard(el){
   const id = el.closest('.card')?.dataset.id;
   if(!id) return;
@@ -2195,17 +2204,27 @@ function upgradeLazyCard(el){
   if(mode==='rendered'){ const r=truncateRendered(md(bodyText),1200); el.classList.add('rendered'); if(r.truncated) el.classList.add('truncated'); el.innerHTML=r.html; }
   else { el.innerHTML = md(bodyText); }
 }
+// Upgrade queued cards in ~10ms time slices so a screenful of math-heavy cards never blocks the main thread.
+function drainLazyQueue(){
+  lazyRaf = 0;
+  const t0 = performance.now(); let did = false;
+  while(lazyQueue.length && performance.now() - t0 < 10){
+    const el = lazyQueue.shift();
+    if(el.isConnected && el.dataset.lazy){ upgradeLazyCard(el); did = true; }
+  }
+  if(did) resolveImages();
+  if(lazyQueue.length && !lazyRaf) lazyRaf = requestAnimationFrame(drainLazyQueue);
+}
 function observeLazyCards(){
   const list = document.getElementById('item-list'); if(!list) return;
   const lazy = list.querySelectorAll('.card-content[data-lazy]');
   if(!('IntersectionObserver' in window)){ lazy.forEach(upgradeLazyCard); resolveImages(); return; }
   if(!lazyObserver){
     lazyObserver = new IntersectionObserver((entries,obs)=>{
-      let any=false;
-      for(const e of entries){ if(!e.isIntersecting) continue; obs.unobserve(e.target); if(e.target.dataset.lazy){ upgradeLazyCard(e.target); any=true; } }
-      if(any) resolveImages();
-    }, { root: document.getElementById('main-area'), rootMargin: '600px 0px' });
-  } else lazyObserver.disconnect();
+      for(const e of entries){ if(e.isIntersecting && e.target.dataset.lazy){ obs.unobserve(e.target); lazyQueue.push(e.target); } }
+      if(lazyQueue.length && !lazyRaf) lazyRaf = requestAnimationFrame(drainLazyQueue);
+    }, { root: document.getElementById('main-area'), rootMargin: '300px 0px' });
+  } else { lazyObserver.disconnect(); lazyQueue = []; if(lazyRaf){ cancelAnimationFrame(lazyRaf); lazyRaf = 0; } }
   lazy.forEach(el => lazyObserver.observe(el));
 }
 

@@ -1,0 +1,17 @@
+{
+  "id": "mqjakhy5jrq3",
+  "type": "observation",
+  "title": "",
+  "genes": [
+    "TTLL10"
+  ],
+  "tags": [
+    "LoF"
+  ],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-18T09:22:40.733Z",
+  "synced": false
+}

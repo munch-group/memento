@@ -1,0 +1,1 @@
+Abkari/Reich analysis finds a SNP (rs2813773) ~40kb downstream of TTLL10 (chr1 110364821) to be under recent selection with inferred s of ~0.5%

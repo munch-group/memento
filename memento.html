@@ -130,8 +130,6 @@ a { color: inherit; }
 .preview-toggle.active { color: var(--text2); }
 .preview-toggle.half .preview-dot { border-color: var(--accent); }
 .preview-toggle.half { color: var(--text2); }
-.preview-toggle.lines2 .preview-dot { background: linear-gradient(to right, var(--accent) 50%, transparent 50%); border-color: var(--accent); }
-.preview-toggle.lines2 { color: var(--text2); }
 .preview-toggle.rendered .preview-dot { background: linear-gradient(to right, var(--accent) 75%, transparent 75%); border-color: var(--accent); }
 .preview-toggle.rendered { color: var(--text2); }
 .preview-toggle.full .preview-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.35); }
@@ -1309,14 +1307,13 @@ function geneClick(e, gene) {
 }
 const FULL_RENDER_MAX = 100;      // skip full render above this many visible cards
 let fullRenderActive = false;     // recomputed per render in renderList()
-let previewMode = 'compact'; // 'minimal' | 'compact' | 'lines2' | 'rendered' | 'full'
+let previewMode = 'compact'; // 'minimal' | 'compact' | 'rendered' | 'full'
 function togglePreviews() {
   // 'rendered' and 'full' render markdown into the card HTML; the others only toggle CSS.
   const heavy = m => m === 'full' || m === 'rendered';
   const was = previewMode;
   previewMode = previewMode === 'minimal' ? 'compact'
-    : previewMode === 'compact' ? 'lines2'
-    : previewMode === 'lines2' ? 'rendered'
+    : previewMode === 'compact' ? 'rendered'
     : previewMode === 'rendered' ? 'full'
     : 'minimal';
   applyPreviewMode();
@@ -1330,13 +1327,11 @@ function applyPreviewMode() {
   const list = document.getElementById('item-list');
   const toggle = document.getElementById('preview-toggle');
   list.classList.remove('hide-previews', 'hide-meta');
-  toggle.classList.remove('active', 'half', 'lines2', 'rendered', 'full');
+  toggle.classList.remove('active', 'half', 'rendered', 'full');
   if (previewMode === 'full') {
     toggle.classList.add('full');
   } else if (previewMode === 'rendered') {
     toggle.classList.add('rendered');
-  } else if (previewMode === 'lines2') {
-    toggle.classList.add('lines2');
   } else if (previewMode === 'compact') {
     list.classList.add('hide-previews');
     toggle.classList.add('half');

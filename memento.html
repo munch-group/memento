@@ -1068,6 +1068,16 @@ let _streamRaf = 0, _streamGen = 0;
 function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
+// Dashboard "head" cards (Dashboard digest, Priorities, Inbox) — each sits atop a column in digest view.
+function digestHeads(){
+  const d = window._kbDigest;
+  const digestHtml = (!d || !d.markdown)
+    ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
+    : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
+  const pCard = items.find(i => i.id === '_priorities');
+  const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
+  return [digestHtml, pH, renderInboxCard()].filter(Boolean);
+}
 function renderList() {
   _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
   // Issues sub-view: render temporary issue cards instead of normal items
@@ -1095,7 +1105,13 @@ function renderList() {
       return;
     }
   }
-  const { vis } = getVisibleItems();
+  let { vis } = getVisibleItems();
+  if (digestVisible) {
+    vis = vis.filter(i => i.pinned && i.id !== '_priorities');   // dashboard: only pinned cards (plus the heads)
+  } else {
+    const pIdx = vis.findIndex(i => i.id === '_priorities');     // priorities card lives only on the dashboard
+    if (pIdx >= 0) vis.splice(pIdx, 1);
+  }
   if (activeViewId) {
     const vIdx = vis.findIndex(i => i.id === activeViewId);
     if (vIdx >= 0) vis.splice(vIdx, 1);
@@ -1105,28 +1121,9 @@ function renderList() {
   }
   const list=document.getElementById('item-list');
   if(!list)return;
-  if(vis.length===0){
-    const emptyHtml = `<div class="empty"><p>${items.length===0?'Nothing yet.':'No matches.'}</p><small>${items.length===0?'Add your first entry above.':'Try a different search.'}</small></div>`;
-    if (digestVisible) {
-      const d = window._kbDigest;
-      let digestHtml;
-      if (!d || !d.markdown) { digestHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'; }
-      else { const dateStr = d.date ? fmtDateAgo(d.date) : ''; digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`; }
-      const pCard = items.find(i => i.id === '_priorities');
-      const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
-      const ew = list.offsetWidth || Math.max(450, window.innerWidth - 260 - 48);
-      const eStacked = Math.floor((ew + 8) / (450 + 8)) <= 1;
-      list.style.flexDirection = eStacked ? 'column' : '';
-      const iH = renderInboxCard();
-      if (eStacked) {
-        list.innerHTML = `<div class="digest-stacked">${digestHtml}${iH}${pH}</div>${emptyHtml}`;
-      } else {
-        list.innerHTML = `<div class="digest-col">${digestHtml}</div><div class="item-col">${iH}${pH}${emptyHtml}</div>`;
-      }
-    } else {
-      list.style.flexDirection = '';
-      list.innerHTML = emptyHtml;
-    }
+  if(vis.length===0 && !digestVisible){   // digest view still renders its heads below, even with no pinned cards
+    list.style.flexDirection = '';
+    list.innerHTML = `<div class="empty"><p>${items.length===0?'Nothing yet.':'No matches.'}</p><small>${items.length===0?'Add your first entry above.':'Try a different search.'}</small></div>`;
     return;
   }
   // Round-robin distribution across columns for left-to-right sort order
@@ -1139,58 +1136,27 @@ function renderList() {
     listWidth = Math.max(450, window.innerWidth - sw - 48);
   }
   const totalCols = Math.min(4, Math.max(1, Math.floor((listWidth + 8) / (colWidth + 8))));
-  const digestStacked = digestVisible && totalCols <= 1;
-  const nCols = digestVisible && !digestStacked ? Math.max(1, totalCols - 2) : totalCols;
-  // In digest view, pull _priorities card out for pinning at top of first column
-  if (digestVisible) {
-    const pIdx = vis.findIndex(i => i.id === '_priorities');
-    if (pIdx >= 0) vis.splice(pIdx, 1);
-  }
+  const nCols = totalCols;
   const cols = Array.from({length: nCols}, () => []);
   // Render the first ~screenful of bodies eagerly (visible cards are complete on first paint, no flash);
   // everything below stays a lazy placeholder. md() is memoized, so re-renders of seen cards stay cheap.
   const EAGER = 6 * nCols;
   vis.forEach((item, i) => cols[i % nCols].push(renderCard(item, false, i < EAGER)));
-  // Prepend inbox + priorities card to first column in digest view (side-by-side only)
-  if (digestVisible && !digestStacked && cols.length) {
-    const pCard = items.find(i => i.id === '_priorities');
-    const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
-    const iH = renderInboxCard();
-    cols[0].unshift(pH);
-    if (iH) cols[0].unshift(iH);
+  // Dashboard view: Dashboard / Priorities / Inbox each sit atop their own column; pinned cards fill below each.
+  if (digestVisible) {
+    const heads = digestHeads();
+    const headCols = Array.from({length: nCols}, () => []);
+    heads.forEach((h, i) => headCols[i % nCols].push(h));
+    for (let c = 0; c < nCols; c++) cols[c] = headCols[c].concat(cols[c]);
   }
   const banner = linkMode ? '<div class="link-mode-banner">Link mode — click a card to insert a reference · <a href="#" onclick="toggleLinkMode();return false">Done</a></div>' : '';
-  let colsHtml = '';
-  if (digestVisible) {
-    const d = window._kbDigest;
-    let digestHtml;
-    if (!d || !d.markdown) {
-      digestHtml = '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>';
-    } else {
-      const dateStr = d.date ? fmtDate(d.date) : '';
-      digestHtml = `<div class="digest-card">${dateStr ? '<div class="digest-date">Generated ' + esc(dateStr) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
-    }
-    if (digestStacked) {
-      // Stack digest + inbox + priorities above the card columns
-      const pCard = items.find(i => i.id === '_priorities');
-      const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
-      const iH = renderInboxCard();
-      colsHtml = `<div class="digest-stacked">${digestHtml}${iH}${pH}</div>`;
-    } else {
-      colsHtml = `<div class="digest-col">${digestHtml}</div>`;
-    }
-  }
-  // Switch to column layout when stacked
-  list.style.flexDirection = digestStacked ? 'column' : '';
+  list.style.flexDirection = '';
   // Progressive insert: paint the first FIRST cards per column now, then stream the rest over later
   // frames so a large list never builds its whole DOM synchronously. All cards still end up present.
   const FIRST = 18, BATCH = 24;
   const colDiv = arr => `<div class="item-col">${arr.join('')}</div>`;
   const firstHtml = cols.map(c => colDiv(c.slice(0, FIRST))).join('');
-  colsHtml += digestStacked
-    ? `<div style="display:flex;gap:8px;align-items:flex-start;min-width:0;width:100%">${firstHtml}</div>`
-    : firstHtml;
-  list.innerHTML = banner + colsHtml;
+  list.innerHTML = banner + firstHtml;
   resolveImages();
   observeLazyCards();
   geneOverflowPass();
@@ -2167,8 +2133,8 @@ function truncateRendered(html){
     }
     if (node.nodeType === 1){                       // element
       const disp = node.classList && node.classList.contains('katex-display');
-      if (BLOCK.has(node.tagName) || disp){         // one line break -> the 75 × lines tally
-        st.lines++;
+      if (BLOCK.has(node.tagName) || disp){         // line break(s) -> the 75 × lines tally
+        st.lines += node.tagName === 'TR' ? 2 : 1;   // table rows are tall -> count as two lines
         if (PER_LINE * st.lines > HARD){ st.cut = true; return false; }   // line tally passed 900: stop here
       }
       if (node.classList && (node.classList.contains('katex') || disp)){

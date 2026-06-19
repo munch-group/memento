@@ -93,7 +93,6 @@ a { color: inherit; }
 .card-content.clamped { white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text3); }
 .card-content p { margin: 0 0 0.5em; }
 .card-content p:last-child { margin-bottom: 0; }
-.card-content .more { display: block; color: var(--text3); margin-top: 2px; }
 .card-content.rendered.truncated { -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
 .card-content ul, .card-content ol { margin: 0.3em 0 0.5em 1.5em; }
 .card-content li { margin: 0; }
@@ -2189,7 +2188,6 @@ function truncateRendered(html){
     if (!walk(top[i])) top[i].remove();
     if (st.cut){ for (let j = i+1; j < top.length; j++) top[j].remove(); break; }
   }
-  if (st.cut) tmp.insertAdjacentHTML('beforeend', '<span class="more">…</span>');
   return { html: tmp.innerHTML, truncated: st.cut };
 }
 function fmtDateAgo(iso){ const s=fmtDate(iso); return s==='just now'?s:s+' ago'; }

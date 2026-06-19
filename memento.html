@@ -1315,7 +1315,7 @@ function renderCard(item, forceExpand, eagerBody) {
       ? `<div class="card-content" id="cc-${item.id}">${md(bodyText)}</div>`
       : `<div class="card-content clamped" id="cc-${item.id}" data-lazy="full">${esc(bodyText)}</div>`;
     if(previewMode==='rendered'){
-      if(eagerBody){ const r = truncateRendered(md(bodyText), 1200); return `<div class="card-content rendered${r.truncated?' truncated':''}" id="cc-${item.id}">${r.html}</div>`; }
+      if(eagerBody){ const r = truncateRendered(md(bodyText), 1000); return `<div class="card-content rendered${r.truncated?' truncated':''}" id="cc-${item.id}">${r.html}</div>`; }
       return `<div class="card-content clamped" id="cc-${item.id}" data-lazy="rendered">${esc(bodyText)}</div>`;
     }
     return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
@@ -2143,7 +2143,7 @@ function md(s){
 // nodes. The only mutations are (a) shortening one text node at the cut and (b) deleting whole
 // nodes after it — so the serialized innerHTML is always well-formed. Cuts inside paragraphs/
 // lists/cells, snaps to word boundaries, and never splits a KaTeX formula.
-function truncateRendered(html, limit = 1200){
+function truncateRendered(html, limit = 1000){
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
   const KATEX_COST = 16;            // nominal: math reads short; its textContent double-counts
@@ -2250,7 +2250,7 @@ function upgradeLazyCard(el){
   if(!item){ el.removeAttribute('data-lazy'); return; }
   const mode = el.dataset.lazy, bodyText = cardBodyText(item);
   el.removeAttribute('data-lazy'); el.classList.remove('clamped');
-  if(mode==='rendered'){ const r=truncateRendered(md(bodyText),1200); el.classList.add('rendered'); if(r.truncated) el.classList.add('truncated'); el.innerHTML=r.html; }
+  if(mode==='rendered'){ const r=truncateRendered(md(bodyText),1000); el.classList.add('rendered'); if(r.truncated) el.classList.add('truncated'); el.innerHTML=r.html; }
   else { el.innerHTML = md(bodyText); }
 }
 // Upgrade queued cards in ~10ms time slices so a screenful of math-heavy cards never blocks the main thread.

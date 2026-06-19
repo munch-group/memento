@@ -1315,7 +1315,7 @@ function renderCard(item, forceExpand, eagerBody) {
       ? `<div class="card-content" id="cc-${item.id}">${md(bodyText)}</div>`
       : `<div class="card-content clamped" id="cc-${item.id}" data-lazy="full">${esc(bodyText)}</div>`;
     if(previewMode==='rendered'){
-      if(eagerBody){ const r = truncateRendered(md(bodyText), 1000); return `<div class="card-content rendered${r.truncated?' truncated':''}" id="cc-${item.id}">${r.html}</div>`; }
+      if(eagerBody){ const r = truncateRendered(md(bodyText)); return `<div class="card-content rendered${r.truncated?' truncated':''}" id="cc-${item.id}">${r.html}</div>`; }
       return `<div class="card-content clamped" id="cc-${item.id}" data-lazy="rendered">${esc(bodyText)}</div>`;
     }
     return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
@@ -2136,18 +2136,19 @@ function md(s){
   _mdCache.set(key, out);
   return out;
 }
-// Render-truncate: keep whole top-level blocks until the cumulative DISPLAYED text
-// length crosses `limit`, then drop the rest. Cuts only at block boundaries, so the
-// returned HTML is always well-formed.
-// Render-truncate: walk the parsed DOM depth-first, spending a shared character budget on text
-// nodes. The only mutations are (a) shortening one text node at the cut and (b) deleting whole
-// nodes after it — so the serialized innerHTML is always well-formed. Cuts inside paragraphs/
-// lists/cells, snaps to word boundaries, and never splits a KaTeX formula.
-function truncateRendered(html, limit = 1000){
+// Render-truncate the rendered-preview HTML: walk the DOM depth-first, trimming one text node at the
+// cut and deleting whole nodes after it (serialized HTML stays well-formed). Budget is dynamic —
+// min(900 chars, 75 × line-breaks-so-far), where each header/paragraph/list-item/table-row/formula
+// adds a break — so dense walls of text are cut sooner and structured content is allowed up to 900.
+// Snaps to word boundaries; never splits a KaTeX formula.
+function truncateRendered(html){
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
-  const KATEX_COST = 16;            // nominal: math reads short; its textContent double-counts
-  const st = { left: limit, cut: false };
+  const HARD = 900, PER_BREAK = 75, KATEX_COST = 16;   // KATEX_COST: nominal (its textContent double-counts)
+  // Elements that end a visual line (a "line break" is counted when we enter one).
+  const BLOCK = new Set(['P','H1','H2','H3','H4','H5','H6','LI','TR','BLOCKQUOTE','PRE','HR']);
+  const st = { chars: 0, breaks: 0, cut: false };
+  const room = () => Math.min(HARD, PER_BREAK * st.breaks) - st.chars;   // chars still allowed right now
 
   // returns true if `node` should be kept, false if the caller should remove it;
   // sets st.cut once the budget is spent, after which the caller drops all later siblings.
@@ -2155,17 +2156,20 @@ function truncateRendered(html, limit = 1000){
     if (node.nodeType === 3){                       // text
       const t = node.data;
       if (!t || !t.trim()) return true;             // empty / whitespace: keep, no cost
-      if (t.length <= st.left){ st.left -= t.length; return true; }
-      let end = st.left;
+      const r = room();
+      if (t.length <= r){ st.chars += t.length; return true; }
+      let end = Math.max(0, r);
       const sp = t.lastIndexOf(' ', end);           // snap to word boundary...
       if (sp > 0) end = sp;                          // ...else hard-cut a spaceless token
       node.data = t.slice(0, end).replace(/\s+$/, '');
-      st.left = 0; st.cut = true;
+      st.chars += end; st.cut = true;
       return node.data.length > 0;                   // keep the trimmed node iff text remains
     }
     if (node.nodeType === 1){                       // element
-      if (node.classList && (node.classList.contains('katex') || node.classList.contains('katex-display'))){
-        if (KATEX_COST <= st.left){ st.left -= KATEX_COST; return true; }
+      const disp = node.classList && node.classList.contains('katex-display');
+      if (BLOCK.has(node.tagName) || disp) st.breaks++;   // entering a block adds a line break (raises the budget)
+      if (node.classList && (node.classList.contains('katex') || disp)){
+        if (KATEX_COST <= room()){ st.chars += KATEX_COST; return true; }
         st.cut = true; return false;                // can't fit: drop whole formula
       }
       const kids = [...node.childNodes];
@@ -2250,7 +2254,7 @@ function upgradeLazyCard(el){
   if(!item){ el.removeAttribute('data-lazy'); return; }
   const mode = el.dataset.lazy, bodyText = cardBodyText(item);
   el.removeAttribute('data-lazy'); el.classList.remove('clamped');
-  if(mode==='rendered'){ const r=truncateRendered(md(bodyText),1000); el.classList.add('rendered'); if(r.truncated) el.classList.add('truncated'); el.innerHTML=r.html; }
+  if(mode==='rendered'){ const r=truncateRendered(md(bodyText)); el.classList.add('rendered'); if(r.truncated) el.classList.add('truncated'); el.innerHTML=r.html; }
   else { el.innerHTML = md(bodyText); }
 }
 // Upgrade queued cards in ~10ms time slices so a screenful of math-heavy cards never blocks the main thread.

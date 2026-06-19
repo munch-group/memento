@@ -2136,28 +2136,28 @@ function md(s){
   return out;
 }
 // Render-truncate the rendered-preview HTML: walk the DOM depth-first, trimming one text node at the
-// cut and deleting whole nodes after it (serialized HTML stays well-formed). Budget is dynamic —
-// min(900 chars, 75 × line-breaks-so-far), where each header/paragraph/list-item/table-row/formula
-// adds a break — so dense walls of text are cut sooner and structured content is allowed up to 900.
-// Snaps to word boundaries; never splits a KaTeX formula.
+// cut and deleting whole nodes after it (serialized HTML stays well-formed). Two independent tallies
+// race to 900: displayed characters, and 75 × line breaks (each header/paragraph/list-item/table-row/
+// formula = one line). Whichever reaches 900 first ends the preview — so a ~900-char wall of text and
+// a ~12-line list both cap out, while short structured cards show in full. Snaps to word boundaries;
+// never splits a KaTeX formula.
 function truncateRendered(html){
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
-  const HARD = 900, PER_BREAK = 75, KATEX_COST = 16;   // KATEX_COST: nominal (its textContent double-counts)
-  // Elements that end a visual line (a "line break" is counted when we enter one).
+  const HARD = 900, PER_LINE = 75, KATEX_COST = 16;   // KATEX_COST: nominal (its textContent double-counts)
+  // Elements that end a visual line (counted toward the 75 × lines tally when we enter one).
   const BLOCK = new Set(['P','H1','H2','H3','H4','H5','H6','LI','TR','BLOCKQUOTE','PRE','HR']);
-  const st = { chars: 0, breaks: 0, cut: false };
-  const room = () => Math.min(HARD, PER_BREAK * st.breaks) - st.chars;   // chars still allowed right now
+  const st = { chars: 0, lines: 0, cut: false };
 
   // returns true if `node` should be kept, false if the caller should remove it;
-  // sets st.cut once the budget is spent, after which the caller drops all later siblings.
+  // sets st.cut once either tally reaches 900, after which the caller drops all later siblings.
   function walk(node){
-    if (node.nodeType === 3){                       // text
+    if (node.nodeType === 3){                       // text — counts toward the 900-char tally
       const t = node.data;
       if (!t || !t.trim()) return true;             // empty / whitespace: keep, no cost
-      const r = room();
-      if (t.length <= r){ st.chars += t.length; return true; }
-      let end = Math.max(0, r);
+      const room = HARD - st.chars;
+      if (t.length <= room){ st.chars += t.length; return true; }
+      let end = Math.max(0, room);
       const sp = t.lastIndexOf(' ', end);           // snap to word boundary...
       if (sp > 0) end = sp;                          // ...else hard-cut a spaceless token
       node.data = t.slice(0, end).replace(/\s+$/, '');
@@ -2166,10 +2166,13 @@ function truncateRendered(html){
     }
     if (node.nodeType === 1){                       // element
       const disp = node.classList && node.classList.contains('katex-display');
-      if (BLOCK.has(node.tagName) || disp) st.breaks++;   // entering a block adds a line break (raises the budget)
+      if (BLOCK.has(node.tagName) || disp){         // one line break -> the 75 × lines tally
+        st.lines++;
+        if (PER_LINE * st.lines > HARD){ st.cut = true; return false; }   // line tally passed 900: stop here
+      }
       if (node.classList && (node.classList.contains('katex') || disp)){
-        if (KATEX_COST <= room()){ st.chars += KATEX_COST; return true; }
-        st.cut = true; return false;                // can't fit: drop whole formula
+        if (st.chars + KATEX_COST <= HARD){ st.chars += KATEX_COST; return true; }
+        st.cut = true; return false;                // can't fit the char tally: drop whole formula
       }
       const kids = [...node.childNodes];
       if (!kids.length) return true;                // zero-text leaf (img/hr/br/empty): keep, free

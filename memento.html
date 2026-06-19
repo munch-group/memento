@@ -1348,7 +1348,8 @@ function togglePreviews() {
   const was = previewMode;
   previewMode = previewMode === 'minimal' ? 'compact'
     : previewMode === 'compact' ? 'rendered'
-    : previewMode === 'rendered' ? 'full'
+    // : previewMode === 'rendered' ? 'full'   // 'full' (fully rendered cards) disabled — uncomment to restore
+    : previewMode === 'rendered' ? 'minimal'
     : 'minimal';
   applyPreviewMode();
   if (heavy(previewMode) || heavy(was)) renderList(); // these modes change card HTML, not just CSS

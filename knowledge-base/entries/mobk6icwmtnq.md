@@ -1,366 +1,366 @@
-| abs_X_badge | badge_color | badge_rgb | gene | rsid | chrom | pos | REF | ALT | ANC | s | s_se | X | P_X | pi_threshold |
-|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| YES | 16.53 | <span style="color:#0173b2"><b>hue201</b></style> | SLC22A4 | rs6860806 | chr5 | 131640536 | G | A | G | 0.0171 | 0.001 | -16.53 | 2.2e-61 | 0.99 |
-| YES | 16.52 | <span style="color:#ffffff"><b>unknown</b></style> | MCM6 | rs4988235 | chr2 | 136608646 | G | A | G | 0.0421 | 0.0025 | 16.52 | 2.5e-61 | 0.99 |
-| YES | 16.15 | <span style="color:#ffffff"><b>unknown</b></style> | FADS2 | rs174576 | chr11 | 61603510 | A | C | A | 0.0154 | 0.001 | 16.15 | 1.1e-58 | 0.99 |
-| YES | 15.6 | <span style="color:#ffffff"><b>unknown</b></style> | ATXN2 | rs653178 | chr12 | 112007756 | T | C | T | 0.0188 | 0.0012 | 15.60 | 7.7e-55 | 0.99 |
-| YES | 15.14 | <span style="color:#ffffff"><b>unknown</b></style> | OAS1 | rs10774671 | chr12 | 113357193 | G | A | G | 0.0151 | 0.001 | -15.14 | 8.6e-52 | 0.99 |
-| YES | 13.83 | <span style="color:#ffff0b"><b>yellow</b></style> | HSPA1A | rs562047 | chr6 | 31783863 | G | C | G | 0.0368 | 0.0027 | 13.83 | 1.6e-43 | 0.99 |
-| YES | 13.37 | <span style="color:#ffec00"><b>yellow</b></style> | TYR | rs1042602 | chr11 | 88911696 | C | A | C | 0.0169 | 0.0013 | 13.37 | 8.6e-41 | 0.99 |
-| YES | 13.15 | <span style="color:#ffdc00"><b>yellow</b></style> | SLC45A2 | rs16891982 | chr5 | 33951693 | C | G | C | 0.0236 | 0.0018 | 13.15 | 1.7e-39 | 0.99 |
-| YES | 12.42 | <span style="color:#ffb000"><b>orange</b></style> | XXbac-BPG181B23.7 | rs2428479 | chr6 | 31361110 | . | C | . | 0.0419 | 0.0034 | 12.42 | 2.1e-35 | 0.99 |
-| YES | 12.14 | <span style="color:#ffa000"><b>orange</b></style> | HLA-B | rs9266092 | chr6 | 31320578 | A | G | A | 0.0144 | 0.0012 | -12.14 | 6.7e-34 | 0.99 |
-| YES | 12.09 | <span style="color:#ff9d00"><b>orange</b></style> | DUOX2 | rs269863 | chr15 | 45397566 | G | C | G | 0.0147 | 0.0012 | 12.09 | 1.2e-33 | 0.99 |
-| YES | 11.79 | <span style="color:#ff8b00"><b>orange</b></style> | TRIM15 | rs2523734 | chr6 | 30129676 | A | C | A | 0.0246 | 0.0021 | 11.79 | 4.6e-32 | 0.99 |
-| YES | 11.64 | <span style="color:#ff8300"><b>orange</b></style> | TLRI1 | rs5743618 | chr4 | 38798648 | A | C | A | 0.0197 | 0.0017 | 11.64 | 2.4e-31 | 0.99 |
-| YES | 11.22 | <span style="color:#ff6900"><b>orange</b></style> | HLA-DRB3Q | rs4711298 | chr6 | 32443804 | G | A | G | 0.0358 | 0.0032 | -11.22 | 3.2e-29 | 0.99 |
-| YES | 10.96 | <span style="color:#ff5900"><b>orange</b></style> | FUT3 | rs2608894 | chr19 | 5848000 | T | C | T | 0.009 | 0.0008 | 10.96 | 5.8e-28 | 0.99 |
-| YES | 10.82 | <span style="color:#ff5100"><b>orange</b></style> | HCG24 | rs4713611 | chr6 | 33108015 | G | A | G | 0.01 | 0.0009 | -10.82 | 2.7e-27 | 0.99 |
-| YES | 10.79 | <span style="color:#ff4e00"><b>orange</b></style> | GYPB | rs13107492 | chr4 | 145041345 | C | T | C | 0.0093 | 0.0009 | 10.79 | 3.8e-27 | 0.99 |
-| YES | 10.69 | <span style="color:#ff4700"><b>orange</b></style> | ASZ1 | rs7779160 | chr7 | 117065618 | - | A | - | 0.0087 | 0.0008 | -10.69 | 1.1e-26 | 0.99 |
-| YES | 10.57 | <span style="color:#ff4100"><b>orange</b></style> | ABO | rs10901252 | chr9 | 136128000 | G | C | G | 0.027 | 0.0026 | 10.57 | 4.2e-26 | 0.99 |
-| YES | 10.51 | <span style="color:#ff3c00"><b>red</b></style> | NSF | None | chr17 | 44738865 | G | C | G | 0.0205 | 0.002 | 10.51 | 7.7e-26 | 0.99 |
-| YES | 10.41 | <span style="color:#ff3700"><b>red</b></style> | CYP1A2 | rs2472304 | chr15 | 75044238 | G | A | G | 0.0105 | 0.001 | 10.41 | 2.2e-25 | 0.99 |
-| YES | 10.21 | <span style="color:#ff2a00"><b>red</b></style> | ADHI1C | rs1789900 | chr4 | 100258717 | . | T | . | 0.0094 | 0.0009 | -10.21 | 1.7e-24 | 0.99 |
-| YES | 10.16 | <span style="color:#ff2700"><b>red</b></style> | SHISA8 | rs73165126 | chr22 | 42313995 | C | T | C | 0.0119 | 0.0012 | -10.16 | 2.9e-24 | 0.99 |
-| YES | 10.1 | <span style="color:#ff2400"><b>red</b></style> | HCG27 | rs73728294 | chr6 | 31170227 | A | G | A | 0.0108 | 0.0011 | -10.10 | 5.8e-24 | 0.99 |
-| YES | 10.04 | <span style="color:#ff1f00"><b>red</b></style> | DHCR7 | rs11606033 | chr11 | 71154204 | G | A | G | 0.0096 | 0.001 | -10.04 | 1.0e-23 | 0.99 |
-| YES | 9.89 | <span style="color:#ff1700"><b>red</b></style> | TMIGD1 | rs6505173 | chr17 | 28646057 | G | A | G | 0.0079 | 0.0008 | 9.89 | 4.8e-23 | 0.99 |
-| YES | 9.68 | <span style="color:#ff0a00"><b>red</b></style> | TCHHL1 | rs17646946 | chr1 | 152062767 | G | A | G | -0.0084 | 0.0009 | -9.68 | 3.8e-22 | 0.99 |
-| YES | 9.67 | <span style="color:#ff0a00"><b>red</b></style> | CYP21A1P | rs41315832 | chr6 | 31975110 | C | T | C | 0.0217 | 0.0022 | 9.67 | 3.9e-22 | 0.99 |
-| YES | 9.48 | <span style="color:#fc0000"><b>red</b></style> | TLR1 | rs10005625 | chr4 | 38795152 | C | T | C | -0.018 | 0.0019 | -9.48 | 2.6e-21 | 0.99 |
-| YES | 9.28 | <span style="color:#f20000"><b>red</b></style> | HLA-DQB1 | rs9273369 | chr6 | 32626484 | . | C | . | 0.0582 | 0.0063 | 9.28 | 1.8e-20 | 0.99 |
-| YES | 9.21 | <span style="color:#ec0000"><b>red</b></style> | HCP5 | rs4360170 | chr6 | 31430359 | A | G | A | 0.018 | 0.002 | 9.21 | 3.4e-20 | 0.99 |
-| YES | 9.09 | <span style="color:#e70000"><b>red</b></style> | TYR | rs17174064 | chr11 | 88979491 | T | C | T | -0.0112 | 0.0012 | -9.09 | 9.7e-20 | 0.99 |
-| YES | 9.07 | <span style="color:#e40000"><b>red</b></style> | POU2F3 | rs745361528 | chr11 | 120111041 | G | C | G | -0.0102 | 0.0011 | -9.07 | 1.2e-19 | 0.99 |
-| YES | 8.94 | <span style="color:#dd0000"><b>red</b></style> | DEF8 | rs8049897 | chr16 | 90024202 | A | G | A | -0.0178 | 0.002 | -8.94 | 3.9e-19 | 0.99 |
-| YES | 8.83 | <span style="color:#d50000"><b>red</b></style> | HLA-DPB1 | rs112104961 | chr6 | 33049881 | . | G | . | -0.0172 | 0.002 | 8.83 | 1.1e-18 | 0.99 |
-| YES | 8.73 | <span style="color:#cf0000"><b>red</b></style> | MUC4 | rs3096337 | chr3 | 195533332 | N | T | N | -0.0124 | 0.0014 | -8.73 | 2.5e-18 | 0.99 |
-| YES | 8.72 | <span style="color:#cf0000"><b>red</b></style> | GRM5 | rs12792431 | chr11 | 88420837 | G | C | G | 0.0096 | 0.0011 | 8.72 | 2.8e-18 | 0.99 |
-| YES | 8.69 | <span style="color:#cd0000"><b>red</b></style> | UQCRHP1 | rs2857702 | chr6 | 31577283 | G | C | G | -0.0082 | 0.0009 | -8.69 | 3.6e-18 | 0.99 |
-| YES | 8.56 | <span style="color:#c50000"><b>red</b></style> | CHMP1A | rs164745 | chr16 | 89709664 | C | T | C | -0.0073 | 0.0009 | -8.56 | 1.2e-17 | 0.99 |
-| YES | 8.54 | <span style="color:#c50000"><b>red</b></style> | NOTCH4 | rs2555457 | chr6 | 32173800 | C | A | C | -0.0251 | 0.0029 | 8.54 | 1.3e-17 | 0.99 |
-| YES | 8.54 | <span style="color:#c50000"><b>red</b></style> | SLC9A4 | rs1468788 | chr2 | 103092513 | T | C | T | 0.007 | 0.0008 | 8.54 | 1.4e-17 | 0.99 |
-| YES | 8.47 | <span style="color:#c00000"><b>red</b></style> | PSORS1C1 | rs62400601 | chr6 | 31099113 | G | A | G | 0.0302 | 0.0036 | 8.47 | 2.4e-17 | 0.99 |
-| YES | 8.46 | <span style="color:#c00000"><b>red</b></style> | FCGR2B | rs76277413 | chr1 | 161565381 | . | G | . | 0.0113 | 0.0013 | 8.46 | 2.7e-17 | 0.99 |
-| YES | 8.45 | <span style="color:#c00000"><b>red</b></style> | PPARD | rs6906237 | chr6 | 35375526 | A | C | A | -0.0193 | 0.0023 | -8.45 | 3.0e-17 | 0.99 |
-| YES | 8.4 | <span style="color:#ba0000"><b>red</b></style> | CDHR3 | rs73195680 | chr7 | 105677675 | T | C | T | 0.0075 | 0.0009 | 8.40 | 4.5e-17 | 0.99 |
-| YES | 8.39 | <span style="color:#ba0000"><b>red</b></style> | PAH | rs10778208 | chr12 | 103277165 | C | T | C | 0.0092 | 0.0011 | 8.39 | 4.7e-17 | 0.99 |
-| YES | 8.35 | <span style="color:#b80000"><b>red</b></style> | BTN3A3 | rs6935678 | chr6 | 26451888 | T | C | T | 0.0429 | 0.0051 | 8.35 | 6.7e-17 | 0.99 |
-| YES | 8.32 | <span style="color:#b80000"><b>red</b></style> | C5orf56 | rs11745587 | chr5 | 131796922 | G | A | G | -0.0067 | 0.0008 | -8.32 | 8.5e-17 | 0.99 |
-| YES | 8.32 | <span style="color:#b80000"><b>red</b></style> | TRIM26 | rs117114071 | chr6 | 30179268 | T | C | T | -0.0127 | 0.0015 | -8.32 | 8.6e-17 | 0.99 |
-| YES | 8.25 | <span style="color:#b30000"><b>red</b></style> | MIR4456 | rs72704787 | chr5 | 540731 | T | C | T | 0.0096 | 0.0012 | 8.25 | 1.6e-16 | 0.99 |
-| YES | 8.18 | <span style="color:#ad0000"><b>red</b></style> | TUBB3 | rs1805005 | chr16 | 89985844 | G | T | G | 0.0128 | 0.0016 | 8.18 | 2.9e-16 | 0.99 |
-| YES | 8.18 | <span style="color:#b00000"><b>red</b></style> | HAL | rs721199 | chr12 | 96374057 | T | C | T | 0.0065 | 0.0008 | 8.18 | 2.7e-16 | 0.99 |
-| YES | 8.03 | <span style="color:#a50000"><b>red</b></style> | ASXL1 | rs2377474 | chr20 | 30964673 | A | G | A | -0.0068 | 0.0008 | 8.03 | 1.0e-15 | 0.99 |
-| YES | 8.03 | <span style="color:#a50000"><b>red</b></style> | TAP2 | rs7762120 | chr6 | 32785284 | T | C | T | -0.0091 | 0.0011 | -8.03 | 9.7e-16 | 0.99 |
-| YES | 8 | <span style="color:#a30000"><b>red</b></style> | TAP1 | rs991760 | chr6 | 32823567 | G | A | G | -0.0097 | 0.0012 | -8.00 | 1.2e-15 | 0.99 |
-| YES | 7.96 | <span style="color:#a00000"><b>red</b></style> | CRYLI | rs9509242 | chr13 | 21060942 | C | T | C | -0.0068 | 0.0008 | -7.96 | 1.7e-15 | 0.99 |
-| YES | 7.95 | <span style="color:#a00000"><b>red</b></style> | IGF2 | rs35506085 | chr11 | 2165576 | G | A | G | 0.0084 | 0.0011 | 7.95 | 1.9e-15 | 0.99 |
-| YES | 7.94 | <span style="color:#a00000"><b>red</b></style> | NFKB1 | rs62327180 | chr4 | 103540762 | G | A | G | -0.0065 | 0.0008 | -7.94 | 2.0e-15 | 0.99 |
-| YES | 7.92 | <span style="color:#a00000"><b>red</b></style> | CMAHP | rs4712888 | chr6 | 25147518 | T | C | T | 0.0368 | 0.0046 | 7.92 | 2.3e-15 | 0.99 |
-| YES | 7.84 | <span style="color:#9b0000"><b>red</b></style> | MARCI | rs2642438 | chr1 | 220970028 | G | A | G | -0.0064 | 0.0008 | -7.84 | 4.4e-15 | 0.99 |
-| YES | 7.78 | <span style="color:#960000"><b>red</b></style> | IL7R | rs35648552 | chr5 | 35852923 | G | T | G | 0.0074 | 0.001 | 7.78 | 7.4e-15 | 0.99 |
-| YES | 7.77 | <span style="color:#960000"><b>red</b></style> | NAALAD2 | rs11606817 | chr11 | 89864492 | T | G | T | 0.0116 | 0.0015 | 7.77 | 7.9e-15 | 0.99 |
-| YES | 7.76 | <span style="color:#960000"><b>red</b></style> | HLA-L | rs17188303 | chr6 | 30227206 | G | A | G | -0.0109 | 0.0014 | -7.76 | 8.8e-15 | 0.99 |
-| YES | 7.76 | <span style="color:#960000"><b>red</b></style> | PCBP1-AS1 | rs75923814 | chr2 | 70294260 | C | T | C | -0.0099 | 0.0013 | -7.76 | 8.6e-15 | 0.99 |
-| YES | 7.75 | <span style="color:#930000"><b>red</b></style> | NSMCEZ2 | rs2385094 | chr8 | 126356449 | T | C | T | -0.0076 | 0.001 | -7.75 | 9.4e-15 | 0.99 |
-| YES | 7.69 | <span style="color:#900000"><b>red</b></style> | SLC17A1 | rs9467602 | chr6 | 25803235 | C | T | C | 0.0226 | 0.0029 | 7.69 | 1.5e-14 | 0.99 |
-| YES | 7.68 | <span style="color:#900000"><b>red</b></style> | TCF25 | rs78498439 | chr16 | 89967514 | G | A | G | 0.0234 | 0.0031 | 7.68 | 1.6e-14 | 0.99 |
-| YES | 7.63 | <span style="color:#8e0000"><b>red</b></style> | DSTYK | rs2369633 | chr1 | 205181062 | C | T | C | 0.0134 | 0.0018 | 7.63 | 2.4e-14 | 0.99 |
-| YES | 7.58 | <span style="color:#8b0000"><b>red</b></style> | GONAL | rs112685832 | chr1 | 155822629 | C | A | C | 0.0122 | 0.0016 | 7.58 | 3.4e-14 | 0.99 |
-| YES | 7.55 | <span style="color:#890000"><b>red</b></style> | LST1 | rs3179004 | chr6 | 31556922 | C | T | C | 0.0204 | 0.0027 | 7.55 | 4.3e-14 | 0.99 |
-| YES | 7.51 | <span style="color:#860000"><b>red</b></style> | HCARI | rs10773445 | chr12 | 123177108 | A | G | A | -0.0066 | 0.0009 | 7.51 | 6.1e-14 | 0.99 |
-| YES | 7.47 | <span style="color:#830000"><b>red</b></style> | CDC42SE2 | rs382216 | chr5 | 130687137 | C | T | C | 0.0064 | 0.0009 | 7.47 | 8.2e-14 | 0.99 |
-| YES | 7.45 | <span style="color:#810000"><b>red</b></style> | HLA-B | rs34277309 | chr6 | 31329245 | . | G | . | -0.0085 | 0.0011 | -7.45 | 9.6e-14 | 0.99 |
-| YES | 7.45 | <span style="color:#830000"><b>red</b></style> | GARNL3 | rs76790252 | chr9 | 130156103 | A | T | A | 0.014 | 0.0019 | 7.45 | 9.2e-14 | 0.99 |
-| YES | 7.44 | <span style="color:#810000"><b>red</b></style> | ACO020601.1 | rs72854918 | chr2 | 138633330 | T | C | T | 0.0254 | 0.0034 | 7.44 | 1.0e-13 | 0.99 |
-| YES | 7.39 | <span style="color:#7e0000"><b>red</b></style> | GRK6 | rs2731672 | chr5 | 176842474 | C | T | C | -0.0072 | 0.001 | -7.39 | 1.5e-13 | 0.99 |
-| YES | 7.35 | <span style="color:#7b0000"><b>red</b></style> | LRRC16A | rs79606827 | chr6 | 25466589 | C | T | C | 0.0167 | 0.0023 | 7.35 | 2.0e-13 | 0.99 |
-| YES | 7.33 | <span style="color:#7b0000"><b>red</b></style> | AFG3L1P | rs72813468 | chr16 | 90064140 | G | T | G | 0.0257 | 0.0035 | 7.33 | 2.2e-13 | 0.99 |
-| YES | 7.26 | <span style="color:#760000"><b>red</b></style> | GRM5 | rs61903379 | chr11 | 88798054 | G | C | G | 0.008 | 0.0011 | 7.26 | 3.8e-13 | 0.99 |
-| YES | 7.22 | <span style="color:#740000"><b>red</b></style> | MAPKAPK2 | rs4256810 | chr1 | 206890449 | T | C | T | 0.0067 | 0.0009 | 7.22 | 5.4e-13 | 0.99 |
-| YES | 7.21 | <span style="color:#740000"><b>red</b></style> | GRB2 | rs2164243 | chr17 | 73333951 | A | T | A | -0.0071 | 0.001 | -7.21 | 5.5e-13 | 0.99 |
-| YES | 7.18 | <span style="color:#710000"><b>red</b></style> | MED12L | rs12497330 | chr3 | 151069951 | G | A | G | -0.0058 | 0.0008 | -7.18 | 6.8e-13 | 0.99 |
-| YES | 7.17 | <span style="color:#710000"><b>red</b></style> | ARHGAP23 | rs4795278 | chr17 | 36594211 | C | G | C | 0.0061 | 0.0008 | -7.17 | 7.4e-13 | 0.99 |
-| YES | 7.14 | <span style="color:#6e0000"><b>red</b></style> | LRRC36 | None | chr16 | 67381383 | G | C | G | 0.0134 | 0.0019 | 7.14 | 9.4e-13 | 0.99 |
-| YES | 7.12 | <span style="color:#6e0000"><b>red</b></style> | NCOR2 | rs58463871 | chr12 | 124836115 | T | A | T | -0.0086 | 0.0012 | 7.12 | 1.1e-12 | 0.99 |
-| YES | 7.08 | <span style="color:#6c0000"><b>red</b></style> | MICB | rs146431191 | chr6 | 31471205 | C | T | C | 0.0115 | 0.0016 | -7.08 | 1.5e-12 | 0.99 |
-| NO | 7.07 | <span style="color:#6c0000"><b>red</b></style> | PLA2G2A | rs1774131 | chr1 | 20307563 | A | G | A | -0.0058 | 0.0008 | -7.07 | 1.6e-12 | 0.99 |
-| YES | 7.05 | <span style="color:#690000"><b>red</b></style> | NOL3 | rs13339140 | chr16 | 67213923 | T | C | T | 0.0091 | 0.0013 | 7.05 | 1.7e-12 | 0.99 |
-| YES | 7.3 | <span style="color:#790000"><b>red</b></style> | KLB | rs2381379 | chr4 | 39404306 | C | T | C | -0.0059 | 0.0008 | -7.30 | 2.9e-13 | 0.99 |
-| YES | 7.01 | <span style="color:#660000"><b>red</b></style> | IGF1 | rs12313279 | chr12 | 102846504 | A | G | A | -0.0071 | 0.001 | -7.01 | 2.4e-12 | 0.99 |
-| YES | 7.01 | <span style="color:#660000"><b>red</b></style> | TMEM231 | rs2550885 | chr16 | 75570162 | C | T | C | -0.0059 | 0.0008 | 7.01 | 2.3e-12 | 0.99 |
-| YES | 6.98 | <span style="color:#660000"><b>red</b></style> | INPPL1 | rs10751199 | chr11 | 71947822 | G | A | G | -0.0063 | 0.0009 | 6.98 | 2.9e-12 | 0.99 |
-| YES | 6.98 | <span style="color:#660000"><b>red</b></style> | KANSL3 | rs12329128 | chr2 | 97284917 | G | A | G | -0.0062 | 0.0009 | 6.98 | 2.9e-12 | 0.99 |
-| YES | 6.98 | <span style="color:#660000"><b>red</b></style> | THEMS | rs923547 | chr1 | 151822003 | C | A | C | 0.0082 | 0.0012 | 6.98 | 3.0e-12 | 0.99 |
-| YES | 6.97 | <span style="color:#640000"><b>red</b></style> | IFNGR1 | rs4896244 | chr6 | 137529772 | C | T | C | -0.0056 | 0.0008 | -6.97 | 3.3e-12 | 0.99 |
-| YES | 6.97 | <span style="color:#640000"><b>red</b></style> | SDC1 | rs3771247 | chr2 | 20410480 | G | A | G | 0.0055 | 0.0008 | 6.97 | 3.2e-12 | 0.99 |
-| YES | 6.97 | <span style="color:#640000"><b>red</b></style> | TNFSF13B | rs73609086 | chr13 | 108914496 | T | C | T | -0.0116 | 0.0017 | 6.97 | 3.2e-12 | 0.99 |
-| YES | 6.91 | <span style="color:#610000"><b>red</b></style> | BNC2 | rs10962600 | chr9 | 16795783 | C | T | C | 0.0064 | 0.0009 | 6.91 | 4.8e-12 | 0.99 |
-| YES | 6.91 | <span style="color:#610000"><b>red</b></style> | TBX21 | rs41444548 | chr17 | 45811354 | C | G | C | -0.0155 | 0.0022 | 6.91 | 5.0e-12 | 0.99 |
-| YES | 6.88 | <span style="color:#5f0000"><b>red</b></style> | HCG20 | rs73425733 | chr6 | 30748297 | A | G | A | 0.0154 | 0.0022 | 6.88 | 5.9e-12 | 0.99 |
-| YES | 6.87 | <span style="color:#5f0000"><b>red</b></style> | EBF1 | rs891903 | chr5 | 158279638 | G | A | G | 0.0077 | 0.0011 | 6.87 | 6.3e-12 | 0.99 |
-| YES | 6.86 | <span style="color:#5f0000"><b>red</b></style> | UBE2Z | rs55929017 | chr17 | 46995304 | T | A | T | -0.0102 | 0.0015 | 6.86 | 7.0e-12 | 0.99 |
-| YES | 6.84 | <span style="color:#5c0000"><b>red</b></style> | AC021860.1 | rs57978465 | chr4 | 38659457 | G | A | G | -0.0078 | 0.0011 | -6.84 | 8.0e-12 | 0.99 |
-| YES | 6.84 | <span style="color:#5c0000"><b>red</b></style> | BPIFB9P | rs293709 | chr20 | 31938106 | A | C | A | 0.0214 | 0.0031 | 6.84 | 8.0e-12 | 0.99 |
-| YES | 6.8 | <span style="color:#590000"><b>red</b></style> | TLR1O | rs77530927 | chr4 | 38769487 | G | A | G | 0.0178 | 0.0026 | 6.80 | 1.1e-11 | 0.99 |
-| YES | 6.8 | <span style="color:#5c0000"><b>red</b></style> | THSD7B | rs143866305 | chr2 | 137704248 | G | A | G | 0.0265 | 0.0039 | 6.80 | 1.0e-11 | 0.99 |
-| YES | 6.78 | <span style="color:#590000"><b>red</b></style> | FAM26F | rs1057192 | chr6 | 116783330 | G | A | G | -0.0058 | 0.0008 | -6.78 | 1.2e-11 | 0.99 |
-| YES | 6.78 | <span style="color:#590000"><b>red</b></style> | FMNL3 | rs7963954 | chr12 | 50064928 | G | A | G | -0.0062 | 0.0009 | 6.78 | 1.2e-11 | 0.99 |
-| YES | 6.76 | <span style="color:#590000"><b>red</b></style> | AFF4 | rs149849572 | chr5 | 132244521 | G | C | G | -0.0109 | 0.0016 | 6.76 | 1.3e-11 | 0.99 |
-| YES | 6.76 | <span style="color:#590000"><b>red</b></style> | HCP5 | rs2395004 | chr6 | 31412513 | G | C | G | 0.0092 | 0.0014 | 6.76 | 1.4e-11 | 0.99 |
-| YES | 6.74 | <span style="color:#570000"><b>red</b></style> | GSDMB | rs883770 | chr17 | 38063381 | T | C | T | 0.0056 | 0.0008 | 6.74 | 1.6e-11 | 0.99 |
-| YES | 6.72 | <span style="color:#570000"><b>red</b></style> | FUT2 | rs368565 | chr19 | 49201217 | C | T | C | -0.0069 | 0.001 | -6.72 | 1.8e-11 | 0.99 |
-| YES | 6.7 | <span style="color:#540000"><b>red</b></style> | LINC00243 | rs1264368 | chr6 | 30771612 | G | A | G | -0.0066 | 0.001 | -6.70 | 2.1e-11 | 0.99 |
-| YES | 6.69 | <span style="color:#540000"><b>red</b></style> | CFTR | rs2237725 | chr7 | 117181152 | A | G | A | 0.0132 | 0.002 | 6.69 | 2.2e-11 | 0.99 |
-| YES | 6.69 | <span style="color:#540000"><b>red</b></style> | FAM114A1 | rs145816305 | chr4 | 38875713 | G | T | G | -0.0131 | 0.002 | -6.69 | 2.3e-11 | 0.99 |
-| YES | 6.68 | <span style="color:#540000"><b>red</b></style> | MYO9B | rs7246865 | chr19 | 17219105 | G | A | G | -0.0065 | 0.001 | 6.68 | 2.4e-11 | 0.99 |
-| YES | 6.68 | <span style="color:#540000"><b>red</b></style> | SORD | rs142596519 | chr15 | 45327845 | G | A | G | -0.0149 | 0.0022 | -6.68 | 2.4e-11 | 0.99 |
-| YES | 6.67 | <span style="color:#540000"><b>red</b></style> | FOXRED1 | rs2276025 | chr11 | 126145931 | C | T | C | 0.0054 | 0.0008 | 6.67 | 2.5e-11 | 0.99 |
-| YES | 6.66 | <span style="color:#510000"><b>red</b></style> | HLA-W | rs17186258 | chr6 | 29924496 | T | C | T | 0.0203 | 0.003 | 6.66 | 2.7e-11 | 0.99 |
-| YES | 6.63 | <span style="color:#510000"><b>red</b></style> | PDGFA | rs62433354 | chr7 | 561838 | T | C | T | -0.0132 | 0.002 | 6.63 | 3.3e-11 | 0.99 |
-| YES | 6.59 | <span style="color:#4f0000"><b>red</b></style> | RREB1 | None | chr6 | 7247344 | C | A | C | -0.0107 | 0.0016 | 6.59 | 4.5e-11 | 0.99 |
-| YES | 6.59 | <span style="color:#4f0000"><b>red</b></style> | TNXB | rs397948 | chr6 | 32011714 | G | A | G | -0.0068 | 0.001 | -6.59 | 4.5e-11 | 0.99 |
-| YES | 6.58 | <span style="color:#4c0000"><b>red</b></style> | B3GALTS | rs4816636 | chr21 | 41026510 | G | T | G | -0.0061 | 0.0009 | 6.58 | 4.6e-11 | 0.99 |
-| YES | 6.58 | <span style="color:#4c0000"><b>red</b></style> | LPA | rs191555775 | chr6 | 161005389 | A | T | A | 0.0141 | 0.0022 | 6.58 | 4.7e-11 | 0.99 |
-| YES | 6.57 | <span style="color:#4c0000"><b>red</b></style> | FAM114A1 | rs2271031 | chr4 | 38937372 | C | T | C | 0.0055 | 0.0008 | 6.57 | 5.0e-11 | 0.99 |
-| YES | 6.56 | <span style="color:#4c0000"><b>red</b></style> | BNC2 | rs1927640 | chr9 | 16456965 | A | G | A | 0.007 | 0.0011 | 6.56 | 5.5e-11 | 0.99 |
-| YES | 6.56 | <span style="color:#4c0000"><b>red</b></style> | TNFRSF13B | rs11867717 | chr17 | 16864419 | C | G | C | -0.0056 | 0.0009 | -6.56 | 5.5e-11 | 0.99 |
-| NO | 6.55 | <span style="color:#4c0000"><b>red</b></style> | THSD7B | rs77701389 | chr2 | 138347431 | G | T | G | 0.0152 | 0.0023 | 6.55 | 5.9e-11 | 0.99 |
-| YES | 6.55 | <span style="color:#4c0000"><b>red</b></style> | BRD2 | rs78300601 | chr6 | 32948721 | C | G | C | -0.0086 | 0.0013 | -6.55 | 5.8e-11 | 0.99 |
-| YES | 6.54 | <span style="color:#4a0000"><b>red</b></style> | SEMA3G | rs634382 | chr3 | 52482851 | G | A | G | -0.0061 | 0.0009 | -6.54 | 6.2e-11 | 0.99 |
-| YES | 6.53 | <span style="color:#4a0000"><b>red</b></style> | FAM114A1 | rs73236680 | chr4 | 38949451 | C | T | C | -0.0186 | 0.0028 | 6.53 | 6.4e-11 | 0.99 |
-| YES | 6.52 | <span style="color:#4a0000"><b>red</b></style> | LTBR | rs10849448 | chr12 | 6493351 | G | A | G | -0.0056 | 0.0009 | -6.52 | 6.9e-11 | 0.99 |
-| YES | 6.52 | <span style="color:#4a0000"><b>red</b></style> | MIR1275 | rs6908185 | chr6 | 33965787 | G | A | G | -0.0206 | 0.0032 | -6.52 | 7.2e-11 | 0.99 |
-| YES | 6.51 | <span style="color:#4a0000"><b>red</b></style> | ZRANB3 | rs17331388 | chr2 | 136289565 | C | T | C | -0.008 | 0.0012 | -6.51 | 7.5e-11 | 0.99 |
-| YES | 6.5 | <span style="color:#4a0000"><b>red</b></style> | C1QTNF3 | rs840395 | chr5 | 34016554 | T | G | T | -0.0054 | 0.0008 | -6.50 | 7.8e-11 | 0.99 |
-| YES | 6.49 | <span style="color:#470000"><b>red</b></style> | EHF | rs286889 | chr11 | 34680853 | G | T | G | -0.0056 | 0.0009 | -6.49 | 8.9e-11 | 0.99 |
-| YES | 6.49 | <span style="color:#470000"><b>red</b></style> | FLG | rs71625202 | chr1 | 152280265 | C | G | C | -0.0074 | 0.0011 | 6.49 | 8.4e-11 | 0.99 |
-| YES | 6.47 | <span style="color:#470000"><b>red</b></style> | HLA-C | rs12234123 | chr6 | 31243604 | G | A | G | -0.0096 | 0.0015 | -6.47 | 1.0e-10 | 0.99 |
-| YES | 6.47 | <span style="color:#470000"><b>red</b></style> | LINC00184 | rs630579 | chr1 | 234764423 | T | A | T | 0.0137 | 0.0021 | 6.47 | 9.8e-11 | 0.99 |
-| YES | 6.47 | <span style="color:#470000"><b>red</b></style> | RAB44 | rs86703 | chr6 | 36700468 | C | T | C | -0.0058 | 0.0009 | 6.47 | 1.0e-10 | 0.99 |
-| YES | 6.47 | <span style="color:#470000"><b>red</b></style> | ZSWIM6 | rs13160801 | chr5 | 60771688 | G | C | G | 0.0052 | 0.0008 | 6.47 | 9.8e-11 | 0.99 |
-| YES | 6.46 | <span style="color:#470000"><b>red</b></style> | CCDC132 | rs17711548 | chr7 | 92977414 | A | G | A | 0.0073 | 0.0011 | 6.46 | 1.0e-10 | 0.99 |
-| YES | 6.46 | <span style="color:#470000"><b>red</b></style> | PKHD1 | rs1750963 | chr6 | 51553252 | C | T | C | 0.0144 | 0.0022 | 6.46 | 1.1e-10 | 0.99 |
-| YES | 6.45 | <span style="color:#440000"><b>red</b></style> | STARD4-AS1 | rs1379553 | chr5 | 110979116 | G | A | G | -0.0058 | 0.0009 | 6.45 | 1.1e-10 | 0.99 |
-| YES | 6.42 | <span style="color:#440000"><b>red</b></style> | LSMD1 | rs74439044 | chr17 | 7781019 | T | C | T | 0.0097 | 0.0015 | 6.42 | 1.4e-10 | 0.99 |
-| YES | 6.4 | <span style="color:#420000"><b>red</b></style> | TLR3 | rs78963230 | chr4 | 186990948 | A | G | A | -0.0113 | 0.0018 | 6.40 | 1.6e-10 | 0.99 |
-| YES | 6.39 | <span style="color:#420000"><b>red</b></style> | UQCRC1 | rs11715496 | chr3 | 48633245 | C | A | C | 0.0209 | 0.0033 | 6.39 | 1.6e-10 | 0.99 |
-| YES | 6.37 | <span style="color:#420000"><b>red</b></style> | VARS2 | rs148906136 | chr6 | 30895306 | C | T | C | 0.0323 | 0.0051 | 6.37 | 1.9e-10 | 0.99 |
-| YES | 6.36 | <span style="color:#3f0000"><b>red</b></style> | OR2W1 | rs6456890 | chr6 | 29015126 | T | C | T | 0.038 | 0.006 | 6.36 | 2.1e-10 | 0.99 |
-| YES | 6.35 | <span style="color:#3f0000"><b>red</b></style> | SLC44A5 | rs211787 | chr1 | 75992462 | A | G | A | 0.0097 | 0.0015 | 6.35 | 2.1e-10 | 0.99 |
-| YES | 6.34 | <span style="color:#3f0000"><b>red</b></style> | FCGR2B | rs6665610 | chr1 | 161641384 | G | A | G | -0.0068 | 0.0011 | -6.34 | 2.2e-10 | 0.99 |
-| NO | 6.32 | <span style="color:#3c0000"><b>red</b></style> | IFIH1 | rs17715343 | chr2 | 163167746 | C | G | C | -0.0099 | 0.0016 | 6.32 | 2.6e-10 | 0.99 |
-| YES | 6.32 | <span style="color:#3c0000"><b>red</b></style> | C1S | rs12146727 | chr12 | 7170336 | G | A | G | -0.0066 | 0.0011 | -6.32 | 2.7e-10 | 0.99 |
-| YES | 6.32 | <span style="color:#3c0000"><b>red</b></style> | NOX4 | rs491393 | chr11 | 89233544 | G | T | G | -0.0063 | 0.001 | 6.32 | 2.6e-10 | 0.99 |
-| YES | 8.6 | <span style="color:#c80000"><b>red</b></style> | KSR1 | rs8075695 | chr17 | 25867693 | A | G | A | -0.0081 | 0.0009 | 8.60 | 7.9e-18 | 0.99 |
-| YES | 6.3 | <span style="color:#3c0000"><b>red</b></style> | RIN3 | rs7146689 | chr14 | 93100024 | T | C | T | 0.0071 | 0.0011 | 6.30 | 3.0e-10 | 0.99 |
-| YES | 6.28 | <span style="color:#3a0000"><b>red</b></style> | ACAP1 | rs193159515 | chr17 | 7259087 | G | A | G | 0.0167 | 0.0027 | 6.28 | 3.5e-10 | 0.99 |
-| YES | 6.28 | <span style="color:#3a0000"><b>red</b></style> | PKD2L1 | rs603424 | chr10 | 102075479 | A | G | A | -0.0074 | 0.0012 | -6.28 | 3.4e-10 | 0.99 |
-| YES | 6.28 | <span style="color:#3c0000"><b>red</b></style> | RP11-114H7.2 | rs77865775 | chr5 | 130336133 | G | T | G | 0.0146 | 0.0023 | 6.28 | 3.4e-10 | 0.99 |
-| YES | 6.26 | <span style="color:#3a0000"><b>red</b></style> | ANXAQ | rs2902812 | chr1 | 150957658 | T | G | T | -0.0052 | 0.0008 | 6.26 | 3.9e-10 | 0.99 |
-| YES | 6.26 | <span style="color:#3a0000"><b>red</b></style> | RP11-83M16.6 | rs115354719 | chr5 | 67202832 | T | A | T | 0.0102 | 0.0016 | 6.26 | 3.9e-10 | 0.99 |
-| YES | 6.23 | <span style="color:#370000"><b>red</b></style> | DDAH1 | rs10873701 | chr1 | 85860374 | T | C | T | 0.0085 | 0.0014 | 6.23 | 4.7e-10 | 0.99 |
-| YES | 6.23 | <span style="color:#370000"><b>red</b></style> | HLA-F | rs1611349 | chr6 | 29698661 | G | A | G | -0.009 | 0.0014 | -6.23 | 4.8e-10 | 0.99 |
-| YES | 6.23 | <span style="color:#370000"><b>red</b></style> | PSMB8 | rs79142022 | chr6 | 32806673 | G | C | G | 0.0277 | 0.0044 | 6.23 | 4.7e-10 | 0.99 |
-| NO | 6.21 | <span style="color:#370000"><b>red</b></style> | CAMTA1 | rs17441830 | chr1 | 6921578 | A | G | A | 0.0082 | 0.0013 | 6.21 | 5.3e-10 | 0.99 |
-| YES | 6.21 | <span style="color:#370000"><b>red</b></style> | FAIM2 | rs1027711 | chr12 | 50288032 | A | G | A | 0.0082 | 0.0013 | 6.21 | 5.2e-10 | 0.99 |
-| YES | 6.2 | <span style="color:#370000"><b>red</b></style> | CASS4 | rs6069740 | chr20 | 55005002 | G | A | G | -0.0176 | 0.0028 | 6.20 | 5.6e-10 | 0.99 |
-| YES | 6.2 | <span style="color:#370000"><b>red</b></style> | RP11-345M22.1 | rs6564702 | chr16 | 79795641 | A | T | A | -0.0057 | 0.0009 | -6.20 | 5.6e-10 | 0.99 |
-| YES | 6.2 | <span style="color:#370000"><b>red</b></style> | SDHAF2 | rs55951851 | chr11 | 61200387 | A | G | A | -0.009 | 0.0014 | 6.20 | 5.8e-10 | 0.99 |
-| YES | 6.19 | <span style="color:#350000"><b>red</b></style> | CTC-490E21.10 | rs2258380 | chr19 | 41338988 | . | G | . | 0.0074 | 0.0012 | 6.19 | 6.1e-10 | 0.99 |
-| YES | 6.19 | <span style="color:#350000"><b>red</b></style> | YEATS4 | rs11561378 | chr12 | 69767949 | G | A | G | -0.0052 | 0.0008 | 6.19 | 5.9e-10 | 0.99 |
-| YES | 6.18 | <span style="color:#350000"><b>red</b></style> | CCDC63 | rs11065744 | chr12 | 111323418 | G | A | G | -0.0056 | 0.0009 | -6.18 | 6.4e-10 | 0.99 |
-| YES | 6.17 | <span style="color:#350000"><b>red</b></style> | CANX | rs7713126 | chr5 | 179144756 | G | A | G | 0.0134 | 0.0022 | 6.17 | 6.7e-10 | 0.99 |
-| YES | 6.17 | <span style="color:#350000"><b>red</b></style> | PPP1R16B | rs12625702 | chr20 | 37441935 | C | G | C | 0.0053 | 0.0009 | 6.17 | 6.8e-10 | 0.99 |
-| YES | 6.17 | <span style="color:#350000"><b>red</b></style> | TNFSF12 | rs9907657 | chr17 | 7460957 | G | T | G | 0.0084 | 0.0014 | 6.17 | 6.8e-10 | 0.99 |
-| YES | 6.16 | <span style="color:#350000"><b>red</b></style> | FAM114A1 | rs139780865 | chr4 | 38943545 | C | A | C | -0.0119 | 0.0019 | 6.16 | 7.3e-10 | 0.99 |
-| YES | 6.16 | <span style="color:#350000"><b>red</b></style> | TLR6 | rs114478048 | chr4 | 38824255 | A | G | A | -0.013 | 0.0021 | -6.16 | 7.4e-10 | 0.99 |
-| YES | 6.13 | <span style="color:#320000"><b>red</b></style> | ATF6B | rs144595899 | chr6 | 32088602 | C | A | C | -0.019 | 0.0031 | -6.13 | 8.6e-10 | 0.99 |
-| YES | 6.13 | <span style="color:#320000"><b>red</b></style> | RPP25 | rs187200896 | chr15 | 75246105 | G | A | G | 0.0088 | 0.0014 | 6.13 | 9.0e-10 | 0.99 |
-| YES | 6.12 | <span style="color:#320000"><b>red</b></style> | SNX29 | rs72771556 | chr16 | 12502038 | A | C | A | 0.0048 | 0.0008 | 6.12 | 9.3e-10 | 0.99 |
-| NO | 6.11 | <span style="color:#320000"><b>red</b></style> | ETV5 | rs61587156 | chr3 | 185831583 | T | G | T | 0.0072 | 0.0012 | 6.11 | 9.7e-10 | 0.99 |
-| YES | 6.11 | <span style="color:#2f0000"><b>red</b></style> | TMPRSS4 | rs1941635 | chr11 | 117982495 | G | T | G | -0.0092 | 0.0015 | -6.11 | 1.0e-09 | 0.99 |
-| YES | 6.1 | <span style="color:#2f0000"><b>red</b></style> | AC008834.1 | rs112166539 | chr5 | 97421151 | G | A | G | 0.0194 | 0.0032 | 6.10 | 1.0e-09 | 0.99 |
-| YES | 6.09 | <span style="color:#2f0000"><b>red</b></style> | BEND4 | rs35741556 | chr4 | 42123515 | T | C | T | -0.0052 | 0.0009 | -6.09 | 1.1e-09 | 0.99 |
-| YES | 6.09 | <span style="color:#2f0000"><b>red</b></style> | CTD-2130013.1 | rs12955529 | chr18 | 44935775 | A | G | A | 0.0057 | 0.0009 | 6.09 | 1.2e-09 | 0.99 |
-| YES | 6.07 | <span style="color:#2f0000"><b>red</b></style> | CDK5RAP3 | rs72823513 | chr17 | 46048920 | A | G | A | 0.0071 | 0.0012 | 6.07 | 1.3e-09 | 0.99 |
-| YES | 6.06 | <span style="color:#2d0000"><b>red</b></style> | OCA2 | rs62007493 | chr15 | 28346024 | T | C | T | 0.0099 | 0.0016 | 6.06 | 1.4e-09 | 0.99 |
-| NO | 6.05 | <span style="color:#2d0000"><b>red</b></style> | CEP85 | rs61777792 | chr1 | 26590122 | A | G | A | 0.0086 | 0.0014 | 6.05 | 1.5e-09 | 0.99 |
-| YES | 6.05 | <span style="color:#2d0000"><b>red</b></style> | BRD1 | rs9616751 | chr22 | 50222236 | N | G | N | -0.0055 | 0.0009 | -6.05 | 1.4e-09 | 0.99
-| YES | 6.05 | <span style="color:#2d0000"><b>red</b></style> | DEF6 | rs6907573 | chr6 | 35282463 | G | C | G | 0.0075 | 0.0012 | 6.05 | 1.4e-09 | 0.99 |
-| YES | 6.05 | <span style="color:#2d0000"><b>red</b></style> | DZANK1 | rs73123161 | chr20 | 18441988 | A | G | A | -0.0111 | 0.0018 | 6.05 | 1.4e-09 | 0.99 |
-| YES | 6.04 | <span style="color:#2d0000"><b>red</b></style> | B9D1 | rs55885404 | chr17 | 19243632 | C | T | C | 0.0057 | 0.0009 | 6.04 | 1.5e-09 | 0.99 |
-| YES | 6.04 | <span style="color:#2d0000"><b>red</b></style> | RP11-731C17.1 | rs34645606 | chr3 | 136530102 | G | C | G | 0.0082 | 0.0014 | 6.04 | 1.6e-09 | 0.99 |
-| YES | 6.03 | <span style="color:#2d0000"><b>red</b></style> | AF213884.1 | rs6849365 | chr4 | 103384995 | - | T | - | -0.0057 | 0.001 | -6.03 | 1.6e-09 | 0.99 |
-| YES | 6.03 | <span style="color:#2d0000"><b>red</b></style> | CTD-2089N3.2 | rs77087867 | chr5 | 50264239 | T | A | T | -0.0111 | 0.0018 | -6.03 | 1.6e-09 | 0.99 |
-| YES | 6.03 | <span style="color:#2d0000"><b>red</b></style> | FOXP1 | rs9859579 | chr3 | 71559289 | G | A | G | 0.0134 | 0.0022 | 6.03 | 1.6e-09 | 0.99 |
-| YES | 6.03 | <span style="color:#2d0000"><b>red</b></style> | IL12A-AS1 | rs17810546 | chr3 | 159665050 | A | G | A | 0.0113 | 0.0019 | 6.03 | 1.7e-09 | 0.99 |
-| YES | 6.03 | <span style="color:#2d0000"><b>red</b></style> | RP11-408A13.2 | rs34361301 | chr9 | 14535119 | C | T | C | -0.0058 | 0.001 | -6.03 | 1.7e-09 | 0.99 |
-| YES | 6.02 | <span style="color:#2d0000"><b>red</b></style> | HLA-DQB2 | rs4947347 | chr6 | 32729359 | G | A | G | -0.0129 | 0.0021 | -6.02 | 1.7e-09 | 0.99 |
-| YES | 6.02 | <span style="color:#2d0000"><b>red</b></style> | MIA3 | rs17163313 | chr1 | 222799625 | T | G | T | 0.005 | 0.0008 | 6.02 | 1.7e-09 | 0.99 |
-| YES | 6.02 | <span style="color:#2d0000"><b>red</b></style> | PLEKHG3 | rs229644 | chr14 | 65195794 | C | T | C | 0.0052 | 0.0009 | 6.02 | 1.7e-09 | 0.99 |
-| YES | 6.01 | <span style="color:#2a0000"><b>red</b></style> | LINC00243 | rs78868683 | chr6 | 30798277 | C | G | C | -0.0129 | 0.0021 | -6.01 | 1.9e-09 | 0.99 |
-| YES | 6 | <span style="color:#2a0000"><b>red</b></style> | HIST1H2BD | rs191668974 | chr6 | 26167113 | G | C | G | 0.0281 | 0.0047 | 6.00 | 1.9e-09 | 0.99 |
-| YES | 6 | <span style="color:#2a0000"><b>red</b></style> | RP1-101G11.2 | rs73162515 | chr22 | 34989220 | A | C | A | 0.0175 | 0.0029 | 6.00 | 2.0e-09 | 0.99 |
-| YES | 5.99 | <span style="color:#2a0000"><b>red</b></style> | LILRB5 | rs6509859 | chr19 | 54762408 | . | T | . | -0.0061 | 0.001 | 5.99 | 2.1e-09 | 0.99 |
-| YES | 5.99 | <span style="color:#2a0000"><b>red</b></style> | RBM6 | rs2240328 | chr3 | 50113004 | C | T | C | -0.0059 | 0.001 | -5.99 | 2.1e-09 | 0.99 |
-| YES | 5.99 | <span style="color:#2a0000"><b>red</b></style> | ST18 | rs62501020 | chr8 | 53120685 | G | A | G | 0.0072 | 0.0012 | 5.99 | 2.1e-09 | 0.99 |
-| YES | 5.98 | <span style="color:#2a0000"><b>red</b></style> | PAH | rs142755724 | chr12 | 103328243 | A | C | A | -0.0401 | 0.0067 | 5.98 | 2.2e-09 | 0.99 |
-| YES | 5.98 | <span style="color:#2a0000"><b>red</b></style> | SETBP1 | rs72896886 | chr18 | 42632652 | G | C | G | 0.0074 | 0.0012 | 5.98 | 2.2e-09 | 0.99 |
-| YES | 5.97 | <span style="color:#270000"><b>red</b></style> | EGLN3 | rs1244349 | chr14 | 34672770 | T | C | T | -0.0063 | 0.0011 | -5.97 | 2.4e-09 | 0.99 |
-| YES | 5.97 | <span style="color:#270000"><b>red</b></style> | HELZ2 | rs117265989 | chr20 | 62210244 | T | C | T | 0.0178 | 0.003 | 5.97 | 2.4e-09 | 0.99 |
-| YES | 5.97 | <span style="color:#270000"><b>red</b></style> | IL1RAP | rs4687148 | chr3 | 190264270 | T | G | T | 0.01 | 0.0017 | 5.97 | 2.3e-09 | 0.99 |
-| YES | 5.97 | <span style="color:#270000"><b>red</b></style> | RP11-336N8.2 | rs113686375 | chr9 | 80796464 | N | C | N | -0.0063 | 0.0011 | 5.97 | 2.4e-09 | 0.99 |
-| YES | 5.97 | <span style="color:#270000"><b>red</b></style> | SENP7 | rs10511190 | chr3 | 101226952 | C | G | C | 0.0117 | 0.002 | 5.97 | 2.4e-09 | 0.99 |
-| YES | 5.97 | <span style="color:#270000"><b>red</b></style> | SLC39A8 | rs7681171 | chr4 | 103179275 | T | G | T | -0.0066 | 0.0011 | -5.97 | 2.3e-09 | 0.99 |
-| YES | 5.96 | <span style="color:#270000"><b>red</b></style> | MYO16 | rs72656280 | chr13 | 109796714 | G | A | G | -0.0152 | 0.0025 | 5.96 | 2.5e-09 | 0.99 |
-| YES | 5.96 | <span style="color:#270000"><b>red</b></style> | NT5C2 | rs72843998 | chr10 | 104855261 | T | C | T | -0.0104 | 0.0017 | 5.96 | 2.5e-09 | 0.99 |
-| YES | 5.95 | <span style="color:#270000"><b>red</b></style> | MAPRE1 | rs147297128 | chr20 | 31414185 | G | A | G | 0.0217 | 0.0036 | 5.95 | 2.6e-09 | 0.99 |
-| YES | 5.94 | <span style="color:#270000"><b>red</b></style> | ABCG2 | rs1481012 | chr4 | 89039082 | A | G | A | 0.0094 | 0.0016 | 5.94 | 2.9e-09 | 0.99 |
-| YES | 5.94 | <span style="color:#270000"><b>red</b></style> | MYH10 | rs9890899 | chr17 | 8477548 | A | G | A | 0.0206 | 0.0035 | 5.94 | 2.8e-09 | 0.99 |
-| YES | 5.94 | <span style="color:#270000"><b>red</b></style> | RP11-438N16.1 | rs67585720 | chr12 | 114117839 | T | C | T | 0.0082 | 0.0014 | 5.94 | 2.9e-09 | 0.99 |
-| YES | 5.93 | <span style="color:#250000"><b>red</b></style> | WNT3 | rs141994164 | chr17 | 44912736 | C | T | C | -0.0105 | 0.0018 | 5.93 | 3.1e-09 | 0.99 |
-| YES | 5.92 | <span style="color:#250000"><b>red</b></style> | REXO2 | rs477238 | chr11 | 114324026 | G | A | G | -0.0047 | 0.0008 | -5.92 | 3.2e-09 | 0.99 |
-| YES | 5.91 | <span style="color:#250000"><b>red</b></style> | SMIM14 | rs73240607 | chr4 | 39548117 | T | G | T | 0.0077 | 0.0013 | 5.91 | 3.5e-09 | 0.99 |
-| YES | 5.9 | <span style="color:#250000"><b>red</b></style> | ERI1 | rs79007531 | chr8 | 8869604 | C | G | C | -0.0132 | 0.0022 | 5.90 | 3.7e-09 | 0.99 |
-| YES | 5.9 | <span style="color:#250000"><b>red</b></style> | MANBA | rs62327215 | chr4 | 103603833 | G | C | G | -0.0122 | 0.0021 | 5.90 | 3.6e-09 | 0.99 |
-| YES | 5.9 | <span style="color:#250000"><b>red</b></style> | SRD5A3 | rs10024928 | chr4 | 56242054 | C | T | C | 0.0051 | 0.0009 | 5.90 | 3.6e-09 | 0.99 |
-| YES | 5.9 | <span style="color:#250000"><b>red</b></style> | TMEM163 | rs637855 | chr2 | 135212242 | G | C | G | -0.005 | 0.0008 | -5.90 | 3.7e-09 | 0.99 |
-| YES | 5.88 | <span style="color:#220000"><b>red</b></style> | RP11-397A16.1 | rs784235 | chr18 | 53423144 | G | A | G | 0.0067 | 0.0011 | 5.88 | 4.0e-09 | 0.99 |
-| YES | 5.86 | <span style="color:#220000"><b>red</b></style> | GATA3 | rs2388486 | chr10 | 8099021 | T | C | T | 0.0059 | 0.001 | 5.86 | 4.7e-09 | 0.99 |
-| YES | 5.86 | <span style="color:#220000"><b>red</b></style> | HIPIR | rs73228032 | chr12 | 123322415 | C | A | C | -0.0111 | 0.0019 | 5.86 | 4.6e-09 | 0.99 |
-| YES | 5.86 | <span style="color:#220000"><b>red</b></style> | JAG1 | rs6074164 | chr20 | 10621305 | A | C | A | 0.0074 | 0.0013 | 5.86 | 4.6e-09 | 0.99 |
-| YES | 5.86 | <span style="color:#220000"><b>red</b></style> | MME | rs2196521 | chr3 | 154812638 | A | G | A | -0.0087 | 0.0015 | 5.86 | 4.7e-09 | 0.99 |
-| NO | 5.85 | <span style="color:#220000"><b>red</b></style> | CASP8 | rs76313353 | chr2 | 202112133 | T | C | T | 0.0181 | 0.0031 | 5.85 | 4.9e-09 | 0.99 |
-| YES | 5.85 | <span style="color:#220000"><b>red</b></style> | KIAA0319 | rs9461038 | chr6 | 24586105 | T | C | T | 0.03 | 0.0051 | 5.85 | 4.8e-09 | 0.99 |
-| YES | 5.85 | <span style="color:#220000"><b>red</b></style> | MYL2 | rs11065776 | chr12 | 111361909 | G | C | G | 0.0235 | 0.004 | 5.85 | 4.8e-09 | 0.99 |
-| YES | 5.85 | <span style="color:#220000"><b>red</b></style> | TRPV4 | rs117187014 | chr12 | 110261767 | C | T | C | -0.0067 | 0.0012 | -5.85 | 5.0e-09 | 0.99 |
-| YES | 5.84 | <span style="color:#200000"><b>red</b></style> | BRINP1 | rs1332455 | chr9 | 121970419 | C | T | C | -0.0057 | 0.001 | -5.84 | 5.2e-09 | 0.99 |
-| YES | 5.83 | <span style="color:#200000"><b>red</b></style> | MROH1 | rs111281369 | chr8 | 145265892 | C | T | C | -0.0113 | 0.0019 | 5.83 | 5.4e-09 | 0.99 |
-| YES | 5.83 | <span style="color:#200000"><b>red</b></style> | ZZEF1 | rs16953649 | chr17 | 3928080 | G | A | G | 0.0131 | 0.0022 | 5.83 | 5.7e-09 | 0.99 |
-| YES | 5.82 | <span style="color:#200000"><b>red</b></style> | DYNLL2 | rs2585846 | chr17 | 56160571 | C | A | C | 0.01 | 0.0017 | 5.82 | 6.0e-09 | 0.99 |
-| YES | 5.82 | <span style="color:#200000"><b>red</b></style> | PITPNM1 | rs11604662 | chr11 | 67268048 | G | A | G | 0.0053 | 0.0009 | 5.82 | 5.7e-09 | 0.99 |
-| YES | 5.81 | <span style="color:#200000"><b>red</b></style> | CUX2 | rs4766544 | chr12 | 111593734 | A | T | A | -0.0062 | 0.0011 | -5.81 | 6.1e-09 | 0.99 |
-| YES | 5.81 | <span style="color:#200000"><b>red</b></style> | FAIM2 | rs2655060 | chr12 | 50298535 | C | T | C | -0.0048 | 0.0008 | -5.81 | 6.1e-09 | 0.99 |
-| YES | 5.8 | <span style="color:#1d0000"><b>red</b></style> | TAP2 | rs1800454 | chr6 | 32800412 | C | T | C | -0.0057 | 0.001 | -5.80 | 6.6e-09 | 0.99 |
-| YES | 5.8 | <span style="color:#1d0000"><b>red</b></style> | TUFM | rs11643278 | chr16 | 28852584 | G | A | G | 0.0075 | 0.0013 | 5.80 | 6.6e-09 | 0.99 |
-| YES | 5.8 | <span style="color:#1d0000"><b>red</b></style> | UNC13D | rs3744026 | chr17 | 73831900 | C | T | C | -0.0097 | 0.0017 | -5.80 | 6.6e-09 | 0.99 |
-| YES | 5.79 | <span style="color:#1d0000"><b>red</b></style> | RP11-459C13.1 | rs7215084 | chr17 | 3880148 | T | C | T | 0.0046 | 0.0008 | 5.79 | 7.0e-09 | 0.99 |
-| YES | 5.79 | <span style="color:#1d0000"><b>red</b></style> | SKAP2 | rs10271306 | chr7 | 26907114 | C | T | C | 0.0081 | 0.0014 | 5.79 | 7.1e-09 | 0.99 |
-| YES | 5.79 | <span style="color:#1d0000"><b>red</b></style> | TRIM77 | rs144824231 | chr11 | 89452445 | T | A | T | 0.007 | 0.0012 | 5.79 | 7.2e-09 | 0.99 |
-| YES | 5.78 | <span style="color:#1d0000"><b>red</b></style> | MAP3K14 | rs17686001 | chr17 | 43388413 | G | A | G | 0.0084 | 0.0015 | 5.78 | 7.4e-09 | 0.99 |
-| YES | 5.78 | <span style="color:#1d0000"><b>red</b></style> | MIR31HG | rs1332183 | chr9 | 21506986 | A | C | A | 0.0163 | 0.0028 | 5.78 | 7.4e-09 | 0.99 |
-| YES | 5.77 | <span style="color:#1d0000"><b>red</b></style> | CEACAM19 | rs2965152 | chr19 | 45189000 | G | A | G | -0.0047 | 0.0008 | 5.77 | 7.7e-09 | 0.99 |
-| YES | 5.77 | <span style="color:#1d0000"><b>red</b></style> | RNU1-119P | rs143076799 | chr15 | 45178802 | C | T | C | -0.0128 | 0.0022 | -5.77 | 8.0e-09 | 0.99 |
-| YES | 5.76 | <span style="color:#1a0000"><b>red</b></style> | C8orf74 | rs4840504 | chr8 | 10531677 | T | A | T | -0.0083 | 0.0014 | -5.76 | 8.5e-09 | 0.99 |
-| YES | 5.76 | <span style="color:#1a0000"><b>red</b></style> | PTRF | rs709631 | chr17 | 40555939 | A | T | A | 0.0047 | 0.0008 | 5.76 | 8.6e-09 | 0.99 |
-| YES | 5.76 | <span style="color:#1a0000"><b>red</b></style> | STRN | rs72785099 | chr2 | 37178739 | T | C | T | 0.0155 | 0.0027 | 5.76 | 8.4e-09 | 0.99 |
-| YES | 5.76 | <span style="color:#1d0000"><b>red</b></style> | ESR2 | rs143296028 | chr14 | 64778199 | A | G | A | 0.0117 | 0.002 | 5.76 | 8.2e-09 | 0.99 |
-| YES | 5.75 | <span style="color:#1a0000"><b>red</b></style> | KLRC2 | rs34448065 | chr12 | 10592785 | G | C | G | -0.0075 | 0.0013 | 5.75 | 8.8e-09 | 0.99 |
-| YES | 5.75 | <span style="color:#1a0000"><b>red</b></style> | SGK223 | rs13273716 | chr8 | 8237848 | C | T | C | -0.0064 | 0.0011 | -5.75 | 8.7e-09 | 0.99 |
-| NO | 5.74 | <span style="color:#1a0000"><b>red</b></style> | ARHGEF26-AS1 | rs1713799 | chr3 | 153804975 | C | T | C | -0.0058 | 0.001 | -5.74 | 9.6e-09 | 0.99 |
-| YES | 5.74 | <span style="color:#1a0000"><b>red</b></style> | CTSH | rs11638844 | chr15 | 79231518 | A | G | A | 0.0047 | 0.0008 | 5.74 | 9.5e-09 | 0.99 |
-| YES | 5.74 | <span style="color:#1a0000"><b>red</b></style> | TRERNAIL | rs62208255 | chr20 | 48654983 | C | G | C | 0.0179 | 0.0031 | 5.74 | 9.5e-09 | 0.99 |
-| NO | 5.73 | <span style="color:#1a0000"><b>red</b></style> | AGRN | rs4275402 | chr1 | 990280 | C | T | C | 0.0047 | 0.0008 | 5.73 | 9.9e-09 | 0.99 |
-| YES | 5.73 | <span style="color:#1a0000"><b>red</b></style> | MAS1LP1 | rs1362076 | chr6 | 29441169 | G | T | G | -0.0275 | 0.0048 | 5.73 | 1.0e-08 | 0.99 |
-| YES | 5.73 | <span style="color:#1a0000"><b>red</b></style> | RPS9 | rs3865476 | chr19 | 54714057 | . | G | . | -0.0131 | 0.0023 | 5.73 | 1.0e-08 | 0.99 |
-| YES | 5.72 | <span style="color:#180000"><b>red</b></style> | SEMAG6D | rs11630467 | chr15 | 47573957 | A | C | A | 0.0106 | 0.0019 | 5.72 | 1.1e-08 | 0.99 |
-| YES | 5.72 | <span style="color:#180000"><b>red</b></style> | TNXB | rs147994562 | chr6 | 32071112 | C | T | C | -0.012 | 0.0021 | -5.72 | 1.1e-08 | 0.99 |
-| YES | 5.72 | <span style="color:#1a0000"><b>red</b></style> | GRM5 | rs11021133 | chr11 | 88472922 | A | G | A | -0.0073 | 0.0013 | 5.72 | 1.1e-08 | 0.99 |
-| YES | 5.72 | <span style="color:#1a0000"><b>red</b></style> | HSPA1A | rs7757496 | chr6 | 31780235 | C | A | C | -0.0077 | 0.0013 | -5.72 | 1.0e-08 | 0.99 |
-| YES | 5.71 | <span style="color:#180000"><b>red</b></style> | IL17RE | rs279580 | chr3 | 9948241 | G | A | G | -0.0046 | 0.0008 | -5.71 | 1.2e-08 | 0.99 |
-| YES | 5.71 | <span style="color:#180000"><b>red</b></style> | LIMA1 | rs12816797 | chr12 | 50587780 | N | T | N | -0.008 | 0.0014 | -5.71 | 1.1e-08 | 0.99 |
-| YES | 5.7 | <span style="color:#180000"><b>red</b></style> | CHCHD2P8 | rs9554263 | chr13 | 28681228 | G | C | G | -0.0056 | 0.001 | -5.70 | 1.2e-08 | 0.99 |
-| YES | 5.69 | <span style="color:#180000"><b>red</b></style> | CCRQ | rs3774641 | chr3 | 45937833 | T | G | T | -0.0062 | 0.0011 | -5.69 | 1.2e-08 | 0.99 |
-| YES | 5.69 | <span style="color:#180000"><b>red</b></style> | DNAH10 | rs79478560 | chr12 | 124399155 | A | G | A | -0.0047 | 0.0008 | 5.69 | 1.3e-08 | 0.99 |
-| YES | 5.69 | <span style="color:#180000"><b>red</b></style> | MECOM | rs1522278 | chr3 | 169075078 | A | G | A | 0.0047 | 0.0008 | 5.69 | 1.3e-08 | 0.99 |
-| YES | 5.69 | <span style="color:#180000"><b>red</b></style> | RP11-383H13.1 | rs7844616 | chr8 | 72736574 | C | A | C | 0.0082 | 0.0014 | 5.69 | 1.3e-08 | 0.99 |
-| YES | 5.69 | <span style="color:#180000"><b>red</b></style> | SH2B3 | rs111442488 | chr12 | 111877302 | C | A | C | -0.0086 | 0.0015 | -5.69 | 1.3e-08 | 0.99 |
-| YES | 5.68 | <span style="color:#180000"><b>red</b></style> | IL21-AS1 | rs4833253 | chr4 | 123578850 | G | A | G | -0.0077 | 0.0014 | -5.68 | 1.3e-08 | 0.99 |
-| YES | 5.68 | <span style="color:#180000"><b>red</b></style> | OAS2 | rs12814926 | chr12 | 113424475 | G | A | G | -0.005 | 0.0009 | -5.68 | 1.4e-08 | 0.99 |
-| YES | 5.68 | <span style="color:#180000"><b>red</b></style> | RPTOR | rs112228018 | chr17 | 78778404 | C | A | C | 0.0157 | 0.0028 | 5.68 | 1.3e-08 | 0.99 |
-| YES | 5.68 | <span style="color:#180000"><b>red</b></style> | ZNF277 | rs76274372 | chr7 | 111909855 | A | C | A | 0.0118 | 0.0021 | 5.68 | 1.3e-08 | 0.99 |
-| NO | 5.67 | <span style="color:#150000"><b>red</b></style> | KRT8P21 | rs4382661 | chr1 | 73573648 | A | G | A | 0.0121 | 0.0021 | 5.67 | 1.4e-08 | 0.99 |
-| NO | 5.67 | <span style="color:#150000"><b>red</b></style> | PDE4B | rs7533686 | chr1 | 66803433 | G | C | G | 0.0077 | 0.0014 | 5.67 | 1.5e-08 | 0.99 |
-| YES | 5.67 | <span style="color:#150000"><b>red</b></style> | GRM5 | rs11607200 | chr11 | 88257930 | T | C | T | 0.0069 | 0.0012 | 5.67 | 1.4e-08 | 0.99 |
-| YES | 5.67 | <span style="color:#150000"><b>red</b></style> | SLC38A4 | rs11183617 | chr12 | 47195289 | C | T | C | -0.0065 | 0.0012 | -5.67 | 1.5e-08 | 0.99 |
-| YES | 5.67 | <span style="color:#150000"><b>red</b></style> | TANGOG | rs186956666 | chr16 | 69002561 | C | A | C | 0.0122 | 0.0021 | 5.67 | 1.4e-08 | 0.99 |
-| YES | 5.67 | <span style="color:#150000"><b>red</b></style> | THSD7B | rs77353796 | chr2 | 138120869 | C | T | C | -0.0051 | 0.0009 | -5.67 | 1.5e-08 | 0.99 |
-| YES | 5.66 | <span style="color:#150000"><b>red</b></style> | CLEC12A | rs113177067 | chr12 | 10118009 | - | G | - | 0.0057 | 0.001 | 5.66 | 1.5e-08 | 0.99 |
-| YES | 5.66 | <span style="color:#150000"><b>red</b></style> | LINC01122 | rs76654204 | chr2 | 58724823 | G | A | G | 0.0123 | 0.0022 | 5.66 | 1.5e-08 | 0.99 |
-| YES | 5.66 | <span style="color:#150000"><b>red</b></style> | ZC3H7A | rs11861698 | chr16 | 11856138 | T | C | T | -0.013 | 0.0023 | 5.66 | 1.5e-08 | 0.99 |
-| YES | 5.65 | <span style="color:#150000"><b>red</b></style> | A4GNT | rs2622694 | chr3 | 137848869 | C | T | C | -0.005 | 0.0009 | -5.65 | 1.6e-08 | 0.99 |
-| YES | 5.65 | <span style="color:#150000"><b>red</b></style> | GPR128 | rs6788891 | chr3 | 100417574 | G | A | G | 0.0054 | 0.001 | 5.65 | 1.6e-08 | 0.99 |
-| YES | 5.65 | <span style="color:#150000"><b>red</b></style> | HNF1A-AS1 | rs10774579 | chr12 | 121405210 | T | C | T | -0.0047 | 0.0008 | 5.65 | 1.6e-08 | 0.99 |
-| YES | 5.64 | <span style="color:#150000"><b>red</b></style> | DOK2 | rs12543924 | chr8 | 21764743 | G | C | G | -0.0046 | 0.0008 | -5.64 | 1.7e-08 | 0.99 |
-| YES | 5.64 | <span style="color:#150000"><b>red</b></style> | MRPS22 | rs13087765 | chr3 | 138985983 | G | T | G | 0.0048 | 0.0009 | 5.64 | 1.7e-08 | 0.99 |
-| YES | 5.64 | <span style="color:#150000"><b>red</b></style> | NFE2 | rs35979828 | chr12 | 54685880 | C | T | C | 0.0099 | 0.0017 | 5.64 | 1.7e-08 | 0.99 |
-| YES | 5.63 | <span style="color:#120000"><b>red</b></style> | NOTCH4 | rs2854049 | chr6 | 32190871 | T | A | T | 0.0121 | 0.0021 | 5.63 | 1.8e-08 | 0.99 |
-| YES | 5.63 | <span style="color:#120000"><b>red</b></style> | SIGLEC5 | rs11084096 | chr19 | 52128795 | G | A | G | -0.0052 | 0.0009 | 5.63 | 1.8e-08 | 0.99 |
-| YES | 5.63 | <span style="color:#120000"><b>red</b></style> | WWP1 | rs80131731 | chr8 | 87370710 | T | G | T | -0.0047 | 0.0008 | 5.63 | 1.8e-08 | 0.99 |
-| YES | 5.63 | <span style="color:#150000"><b>red</b></style> | IP6K1 | rs189267161 | chr3 | 49776818 | G | A | G | 0.0199 | 0.0035 | 5.63 | 1.8e-08 | 0.99 |
-| YES | 5.63 | <span style="color:#150000"><b>red</b></style> | TRIMI6L | rs141037074 | chr17 | 18605727 | C | T | C | 0.017 | 0.003 | 5.63 | 1.8e-08 | 0.99 |
-| YES | 5.62 | <span style="color:#120000"><b>red</b></style> | ERICH1-AS1 | rs76613515 | chr8 | 1004014 | C | A | C | 0.025 | 0.0045 | 5.62 | 1.9e-08 | 0.99 |
-| YES | 5.62 | <span style="color:#120000"><b>red</b></style> | TCF7L2 | rs112802057 | chr10 | 114892604 | A | G | A | 0.0156 | 0.0028 | 5.62 | 2.0e-08 | 0.99 |
-| YES | 5.62 | <span style="color:#120000"><b>red</b></style> | TCHHL1 | rs7549007 | chr1 | 152056368 | T | C | T | 0.025 | 0.0045 | 5.62 | 1.9e-08 | 0.99 |
-| YES | 5.61 | <span style="color:#120000"><b>red</b></style> | RP11-486013.2 | rs72731889 | chr14 | 70685658 | G | A | G | 0.0124 | 0.0022 | 5.61 | 2.1e-08 | 0.99 |
-| YES | 5.6 | <span style="color:#120000"><b>red</b></style> | GSTCD | rs2553450 | chr4 | 106683451 | C | T | C | 0.0112 | 0.002 | 5.60 | 2.1e-08 | 0.99 |
-| YES | 5.6 | <span style="color:#120000"><b>red</b></style> | HIST1H2BD | rs9379831 | chr6 | 26175852 | A | C | A | 0.0051 | 0.0009 | 5.60 | 2.1e-08 | 0.99 |
-| YES | 5.6 | <span style="color:#120000"><b>red</b></style> | PRKCH | rs17098279 | chr14 | 61831910 | A | G | A | -0.0085 | 0.0015 | -5.60 | 2.2e-08 | 0.99 |
-| YES | 5.6 | <span style="color:#120000"><b>red</b></style> | SPEF2 | rs148936287 | chr5 | 35775524 | T | C | T | 0.0212 | 0.0038 | 5.60 | 2.2e-08 | 0.99 |
-| YES | 5.6 | <span style="color:#120000"><b>red</b></style> | TCF4 | rs12956276 | chr18 | 53175966 | G | A | G | -0.0047 | 0.0008 | -5.60 | 2.1e-08 | 0.99 |
-| YES | 5.59 | <span style="color:#100000"><b>red</b></style> | LEF1 | rs80302162 | chr4 | 109063784 | G | A | G | -0.0176 | 0.0031 | 5.59 | 2.3e-08 | 0.99 |
-| YES | 5.59 | <span style="color:#100000"><b>red</b></style> | LINC00521 | rs145496844 | chr14 | 94472733 | C | G | C | 0.0258 | 0.0046 | 5.59 | 2.3e-08 | 0.99 |
-| YES | 5.59 | <span style="color:#120000"><b>red</b></style> | CTDSPL | rs62239982 | chr3 | 37962879 | C | G | C | -0.011 | 0.002 | 5.59 | 2.2e-08 | 0.99 |
-| YES | 5.59 | <span style="color:#120000"><b>red</b></style> | MDM1 | rs1038165 | chr12 | 68665940 | C | T | C | 0.0048 | 0.0009 | 5.59 | 2.3e-08 | 0.99 |
-| YES | 5.59 | <span style="color:#120000"><b>red</b></style> | PTPN13 | rs546483712 | chr4 | 87559088 | C | G | C | 0.0089 | 0.0016 | 5.59 | 2.2e-08 | 0.99 |
-| YES | 5.58 | <span style="color:#100000"><b>red</b></style> | HLA-DOA | rs1075893 | chr6 | 32976540 | A | C | A | 0.0269 | 0.0048 | 5.58 | 2.4e-08 | 0.99 |
-| YES | 5.58 | <span style="color:#100000"><b>red</b></style> | RP11-3L8.3 | rs1326798 | chr9 | 12722227 | C | G | C | 0.0047 | 0.0008 | 5.58 | 2.4e-08 | 0.99 |
-| YES | 5.57 | <span style="color:#100000"><b>red</b></style> | HLA-W | rs9260474 | chr6 | 29920119 | G | A | G | 0.0091 | 0.0016 | 5.57 | 2.6e-08 | 0.99 |
-| YES | 5.57 | <span style="color:#100000"><b>red</b></style> | SPRED1 | rs36094528 | chr15 | 38572035 | C | T | C | 0.0168 | 0.003 | 5.57 | 2.6e-08 | 0.99 |
-| YES | 5.56 | <span style="color:#100000"><b>red</b></style> | MAPT | rs2471739 | chr17 | 44080354 | T | C | T | -0.0057 | 0.001 | -5.56 | 2.8e-08 | 0.99 |
-| YES | 5.56 | <span style="color:#100000"><b>red</b></style> | NRM | rs6457256 | chr6 | 30661007 | T | C | T | 0.0143 | 0.0026 | 5.56 | 2.8e-08 | 0.99 |
-| YES | 5.56 | <span style="color:#100000"><b>red</b></style> | UVSSA | rs12512607 | chr4 | 1348248 | C | T | C | -0.0045 | 0.0008 | -5.56 | 2.7e-08 | 0.99 |
-| YES | 5.55 | <span style="color:#100000"><b>red</b></style> | FBXO10 | rs11795400 | chr9 | 37553063 | G | A | G | 0.0082 | 0.0015 | 5.55 | 2.8e-08 | 0.99 |
-| YES | 5.55 | <span style="color:#100000"><b>red</b></style> | NTM | rs73040262 | chr11 | 132099379 | A | G | A | 0.015 | 0.0027 | 5.55 | 2.9e-08 | 0.99 |
-| YES | 5.55 | <span style="color:#100000"><b>red</b></style> | SCTR | rs2579643 | chr2 | 120217456 | C | T | C | 0.0117 | 0.0021 | 5.55 | 2.9e-08 | 0.99 |
-| YES | 5.55 | <span style="color:#100000"><b>red</b></style> | USP22 | rs113799755 | chr17 | 20942135 | A | G | A | 0.0156 | 0.0028 | 5.55 | 2.8e-08 | 0.99 |
-| YES | 5.54 | <span style="color:#0d0000"><b>red</b></style> | DPCR1 | rs9391637 | chr6 | 30912907 | G | A | G | -0.0144 | 0.0026 | -5.54 | 3.1e-08 | 0.99 |
-| YES | 5.54 | <span style="color:#0d0000"><b>red</b></style> | GABBRI | rs411666 | chr6 | 29535190 | C | T | C | -0.0051 | 0.0009 | -5.54 | 3.1e-08 | 0.99 |
-| YES | 5.54 | <span style="color:#0d0000"><b>red</b></style> | HTATSF1P | rs9277952 | chr6 | 33204274 | G | A | G | -0.0057 | 0.001 | -5.54 | 3.0e-08 | 0.99 |
-| YES | 5.54 | <span style="color:#0d0000"><b>red</b></style> | SLC6A4 | rs56124265 | chr17 | 28535939 | C | T | C | 0.0201 | 0.0036 | 5.54 | 3.0e-08 | 0.99 |
-| YES | 5.54 | <span style="color:#0d0000"><b>red</b></style> | TNIP1 | rs6579837 | chr5 | 150434894 | G | T | G | -0.006 | 0.0011 | -5.54 | 3.0e-08 | 0.99 |
-| NO | 5.53 | <span style="color:#0d0000"><b>red</b></style> | AC092578.1 | rs35499598 | chr2 | 143306253 | A | G | A | 0.0096 | 0.0017 | 5.53 | 3.3e-08 | 0.99 |
-| YES | 5.53 | <span style="color:#0d0000"><b>red</b></style> | DTD1 | rs6081278 | chr20 | 18630223 | C | T | C | 0.0044 | 0.0008 | 5.53 | 3.2e-08 | 0.99 |
-| YES | 5.53 | <span style="color:#0d0000"><b>red</b></style> | EPS8 | rs34737513 | chr12 | 16016453 | A | G | A | 0.0116 | 0.0021 | 5.53 | 3.2e-08 | 0.99 |
-| YES | 5.53 | <span style="color:#0d0000"><b>red</b></style> | ZC3H13 | rs34976194 | chr13 | 46568370 | C | A | C | 0.0102 | 0.0018 | 5.53 | 3.1e-08 | 0.99 |
-| YES | 5.52 | <span style="color:#0d0000"><b>red</b></style> | MSRA | rs814418 | chr8 | 9936753 | C | T | C | -0.0062 | 0.0011 | -5.52 | 3.4e-08 | 0.99 |
-| YES | 5.52 | <span style="color:#0d0000"><b>red</b></style> | SGCZ | rs146987041 | chr8 | 14315486 | G | A | G | 0.0198 | 0.0036 | 5.52 | 3.3e-08 | 0.99 |
-| YES | 5.51 | <span style="color:#0d0000"><b>red</b></style> | UQCR11 | rs61759525 | chr19 | 1602299 | C | G | C | 0.0146 | 0.0026 | 5.51 | 3.5e-08 | 0.99 |
-| YES | 5.51 | <span style="color:#0d0000"><b>red</b></style> | AP2A2 | rs7112359 | chr11 | 997733 | C | T | C | -0.0056 | 0.001 | 5.51 | 3.6e-08 | 0.99 |
-| YES | 5.51 | <span style="color:#0d0000"><b>red</b></style> | IL34 | rs62050284 | chr16 | 70696815 | T | A | T | 0.0151 | 0.0027 | 5.51 | 3.6e-08 | 0.99 |
-| YES | 5.51 | <span style="color:#0d0000"><b>red</b></style> | ITPKA | rs1757459 | chr15 | 41790987 | C | T | C | -0.0049 | 0.0009 | -5.51 | 3.5e-08 | 0.99 |
-| YES | 5.5 | <span style="color:#0b0000"><b>red</b></style> | RANBP17 | rs62392980 | chr5 | 170520932 | G | T | G | 0.0076 | 0.0014 | 5.50 | 3.9e-08 | 0.99 |
-| YES | 5.5 | <span style="color:#0d0000"><b>red</b></style> | KIR3DL2 | rs17814543 | chr19 | 55372375 | . | G | . | 0.0058 | 0.0011 | 5.50 | 3.7e-08 | 0.99 |
-| YES | 5.5 | <span style="color:#0d0000"><b>red</b></style> | MICC | rs117084278 | chr6 | 30382443 | G | A | G | -0.0116 | 0.0021 | -5.50 | 3.7e-08 | 0.99 |
-| YES | 5.49 | <span style="color:#0b0000"><b>red</b></style> | AC005042.5 | rs6437198 | chr2 | 159613196 | T | C | T | -0.0047 | 0.0009 | 5.49 | 4.1e-08 | 0.99 |
-| YES | 5.49 | <span style="color:#0b0000"><b>red</b></style> | ENPP6 | rs74320175 | chr4 | 185007893 | A | G | A | 0.0105 | 0.0019 | 5.49 | 4.1e-08 | 0.99 |
-| YES | 5.49 | <span style="color:#0b0000"><b>red</b></style> | KIAA1239 | rs73242340 | chr4 | 37360616 | G | A | G | 0.014 | 0.0025 | 5.49 | 4.0e-08 | 0.99 |
-| YES | 5.49 | <span style="color:#0b0000"><b>red</b></style> | PAXS | rs57172187 | chr9 | 37016502 | G | C | G | -0.0098 | 0.0018 | 5.49 | 4.0e-08 | 0.99 |
-| YES | 5.49 | <span style="color:#0b0000"><b>red</b></style> | SCRN3 | rs719161 | chr2 | 175260355 | G | T | G | 0.0114 | 0.0021 | 5.49 | 4.0e-08 | 0.99 |
-| YES | 5.49 | <span style="color:#0b0000"><b>red</b></style> | ZDHHC20P2 | rs9295987 | chr6 | 31349844 | . | G | . | 0.0103 | 0.0019 | 5.49 | 4.0e-08 | 0.99 |
-| YES | 5.48 | <span style="color:#0b0000"><b>red</b></style> | EIF4B | rs112919378 | chr12 | 53406676 | C | T | C | 0.0178 | 0.0032 | 5.48 | 4.2e-08 | 0.99 |
-| YES | 5.48 | <span style="color:#0b0000"><b>red</b></style> | HLA-DPB1 | rs78857802 | chr6 | 33049924 | . | T | . | -0.0104 | 0.0019 | -5.48 | 4.3e-08 | 0.99 |
-| YES | 5.48 | <span style="color:#0b0000"><b>red</b></style> | RMDN2 | rs1800440 | chr2 | 38298139 | T | C | T | -0.0067 | 0.0012 | 5.48 | 4.1e-08 | 0.99 |
-| YES | 5.47 | <span style="color:#0b0000"><b>red</b></style> | ADAR | rs12059682 | chr1 | 154579585 | T | C | T | 0.0057 | 0.001 | 5.47 | 4.4e-08 | 0.99 |
-| YES | 5.47 | <span style="color:#0b0000"><b>red</b></style> | IRF8 | rs13338943 | chr16 | 85952951 | G | T | G | -0.0058 | 0.0011 | -5.47 | 4.5e-08 | 0.99 |
-| YES | 5.47 | <span style="color:#0b0000"><b>red</b></style> | MSRA | rs57737477 | chr8 | 10180328 | G | A | G | -0.0057 | 0.001 | -5.47 | 4.5e-08 | 0.99 |
-| YES | 5.47 | <span style="color:#0b0000"><b>red</b></style> | SV2C | rs12153255 | chr5 | 75642536 | A | G | A | 0.0167 | 0.003 | 5.47 | 4.4e-08 | 0.99 |
-| YES | 5.47 | <span style="color:#0b0000"><b>red</b></style> | TLR3 | rs35103715 | chr4 | 187009014 | G | C | G | -0.0045 | 0.0008 | -5.47 | 4.6e-08 | 0.99 |
-| YES | 5.47 | <span style="color:#0b0000"><b>red</b></style> | U3 | rs117467721 | chr17 | 42099990 | C | T | C | 0.0162 | 0.003 | 5.47 | 4.4e-08 | 0.99 |
-| YES | 5.46 | <span style="color:#0b0000"><b>red</b></style> | ADCY5 | rs200439755 | chr3 | 123109371 | A | C | A | -0.0043 | 0.0008 | -5.46 | 4.7e-08 | 0.99 |
-| YES | 5.46 | <span style="color:#0b0000"><b>red</b></style> | MYO18A | rs9903048 | chr17 | 27485517 | T | C | T | 0.0066 | 0.0012 | 5.46 | 4.8e-08 | 0.99 |
-| YES | 5.46 | <span style="color:#0b0000"><b>red</b></style> | POU6F2 | rs10085472 | chr7 | 39086869 | G | A | G | -0.0056 | 0.001 | 5.46 | 4.6e-08 | 0.99 |
+| gene | chr | pos | s | s_se | X | P_X |
+|:---|:---|:---|:---|:---|:---|:---|
+| SLC22A4 | chr5 | 131640536 | 0.0171 | 0.001 | -16.53 | 2.2e-61 |
+| MCM6 | chr2 | 136608646 | 0.0421 | 0.0025 | 16.52 | 2.5e-61 |
+| FADS2 | chr11 | 61603510 | 0.0154 | 0.001 | 16.15 | 1.1e-58 |
+| ATXN2 | chr12 | 112007756 | 0.0188 | 0.0012 | 15.60 | 7.7e-55 |
+| OAS1 | chr12 | 113357193 | 0.0151 | 0.001 | -15.14 | 8.6e-52 |
+| HSPA1A | chr6 | 31783863 | 0.0368 | 0.0027 | 13.83 | 1.6e-43 |
+| TYR | chr11 | 88911696 | 0.0169 | 0.0013 | 13.37 | 8.6e-41 |
+| SLC45A2 | chr5 | 33951693 | 0.0236 | 0.0018 | 13.15 | 1.7e-39 |
+| XXbac-BPG181B23.7 | chr6 | 31361110 | 0.0419 | 0.0034 | 12.42 | 2.1e-35 |
+| HLA-B | chr6 | 31320578 | 0.0144 | 0.0012 | -12.14 | 6.7e-34 |
+| DUOX2 | chr15 | 45397566 | 0.0147 | 0.0012 | 12.09 | 1.2e-33 |
+| TRIM15 | chr6 | 30129676 | 0.0246 | 0.0021 | 11.79 | 4.6e-32 |
+| TLRI1 | chr4 | 38798648 | 0.0197 | 0.0017 | 11.64 | 2.4e-31 |
+| HLA-DRB3Q | chr6 | 32443804 | 0.0358 | 0.0032 | -11.22 | 3.2e-29 |
+| FUT3 | chr19 | 5848000 | 0.009 | 0.0008 | 10.96 | 5.8e-28 |
+| HCG24 | chr6 | 33108015 | 0.01 | 0.0009 | -10.82 | 2.7e-27 |
+| GYPB | chr4 | 145041345 | 0.0093 | 0.0009 | 10.79 | 3.8e-27 |
+| ASZ1 | chr7 | 117065618 | 0.0087 | 0.0008 | -10.69 | 1.1e-26 |
+| ABO | chr9 | 136128000 | 0.027 | 0.0026 | 10.57 | 4.2e-26 |
+| NSF| chr17 | 44738865 | 0.0205 | 0.002 | 10.51 | 7.7e-26 |
+| CYP1A2 | chr15 | 75044238 | 0.0105 | 0.001 | 10.41 | 2.2e-25 |
+| ADHI1C | chr4 | 100258717 | 0.0094 | 0.0009 | -10.21 | 1.7e-24 |
+| SHISA8 | chr22 | 42313995 | 0.0119 | 0.0012 | -10.16 | 2.9e-24 |
+| HCG27 | chr6 | 31170227 | 0.0108 | 0.0011 | -10.10 | 5.8e-24 |
+| DHCR7 | chr11 | 71154204 | 0.0096 | 0.001 | -10.04 | 1.0e-23 |
+| TMIGD1 | chr17 | 28646057 | 0.0079 | 0.0008 | 9.89 | 4.8e-23 |
+| TCHHL1 | chr1 | 152062767 | -0.0084 | 0.0009 | -9.68 | 3.8e-22 |
+| CYP21A1P | chr6 | 31975110 | 0.0217 | 0.0022 | 9.67 | 3.9e-22 |
+| TLR1 | chr4 | 38795152 | -0.018 | 0.0019 | -9.48 | 2.6e-21 |
+| HLA-DQB1 | chr6 | 32626484 | 0.0582 | 0.0063 | 9.28 | 1.8e-20 |
+| HCP5 | chr6 | 31430359 | 0.018 | 0.002 | 9.21 | 3.4e-20 |
+| TYR | chr11 | 88979491 | -0.0112 | 0.0012 | -9.09 | 9.7e-20 |
+| POU2F3 | chr11 | 120111041 | -0.0102 | 0.0011 | -9.07 | 1.2e-19 |
+| DEF8 | chr16 | 90024202 | -0.0178 | 0.002 | -8.94 | 3.9e-19 |
+| HLA-DPB1 | chr6 | 33049881 | -0.0172 | 0.002 | 8.83 | 1.1e-18 |
+| MUC4 | chr3 | 195533332 | -0.0124 | 0.0014 | -8.73 | 2.5e-18 |
+| GRM5 | chr11 | 88420837 | 0.0096 | 0.0011 | 8.72 | 2.8e-18 |
+| UQCRHP1 | chr6 | 31577283 | -0.0082 | 0.0009 | -8.69 | 3.6e-18 |
+| CHMP1A | chr16 | 89709664 | -0.0073 | 0.0009 | -8.56 | 1.2e-17 |
+| NOTCH4 | chr6 | 32173800 | -0.0251 | 0.0029 | 8.54 | 1.3e-17 |
+| SLC9A4 | chr2 | 103092513 | 0.007 | 0.0008 | 8.54 | 1.4e-17 |
+| PSORS1C1 | chr6 | 31099113 | 0.0302 | 0.0036 | 8.47 | 2.4e-17 |
+| FCGR2B | chr1 | 161565381 | 0.0113 | 0.0013 | 8.46 | 2.7e-17 |
+| PPARD | chr6 | 35375526 | -0.0193 | 0.0023 | -8.45 | 3.0e-17 |
+| CDHR3 | chr7 | 105677675 | 0.0075 | 0.0009 | 8.40 | 4.5e-17 |
+| PAH | chr12 | 103277165 | 0.0092 | 0.0011 | 8.39 | 4.7e-17 |
+| BTN3A3 | chr6 | 26451888 | 0.0429 | 0.0051 | 8.35 | 6.7e-17 |
+| C5orf56 | chr5 | 131796922 | -0.0067 | 0.0008 | -8.32 | 8.5e-17 |
+| TRIM26 | chr6 | 30179268 | -0.0127 | 0.0015 | -8.32 | 8.6e-17 |
+| MIR4456 | chr5 | 540731 | 0.0096 | 0.0012 | 8.25 | 1.6e-16 |
+| TUBB3 | chr16 | 89985844 | 0.0128 | 0.0016 | 8.18 | 2.9e-16 |
+| HAL | chr12 | 96374057 | 0.0065 | 0.0008 | 8.18 | 2.7e-16 |
+| ASXL1 | chr20 | 30964673 | -0.0068 | 0.0008 | 8.03 | 1.0e-15 |
+| TAP2 | chr6 | 32785284 | -0.0091 | 0.0011 | -8.03 | 9.7e-16 |
+| TAP1 | chr6 | 32823567 | -0.0097 | 0.0012 | -8.00 | 1.2e-15 |
+| CRYLI | chr13 | 21060942 | -0.0068 | 0.0008 | -7.96 | 1.7e-15 |
+| IGF2 | chr11 | 2165576 | 0.0084 | 0.0011 | 7.95 | 1.9e-15 |
+| NFKB1 | chr4 | 103540762 | -0.0065 | 0.0008 | -7.94 | 2.0e-15 |
+| CMAHP | chr6 | 25147518 | 0.0368 | 0.0046 | 7.92 | 2.3e-15 |
+| MARCI | chr1 | 220970028 | -0.0064 | 0.0008 | -7.84 | 4.4e-15 |
+| IL7R | chr5 | 35852923 | 0.0074 | 0.001 | 7.78 | 7.4e-15 |
+| NAALAD2 | chr11 | 89864492 | 0.0116 | 0.0015 | 7.77 | 7.9e-15 |
+| HLA-L | chr6 | 30227206 | -0.0109 | 0.0014 | -7.76 | 8.8e-15 |
+| PCBP1-AS1 | chr2 | 70294260 | -0.0099 | 0.0013 | -7.76 | 8.6e-15 |
+| NSMCEZ2 | chr8 | 126356449 | -0.0076 | 0.001 | -7.75 | 9.4e-15 |
+| SLC17A1 | chr6 | 25803235 | 0.0226 | 0.0029 | 7.69 | 1.5e-14 |
+| TCF25 | chr16 | 89967514 | 0.0234 | 0.0031 | 7.68 | 1.6e-14 |
+| DSTYK | chr1 | 205181062 | 0.0134 | 0.0018 | 7.63 | 2.4e-14 |
+| GONAL | chr1 | 155822629 | 0.0122 | 0.0016 | 7.58 | 3.4e-14 |
+| LST1 | chr6 | 31556922 | 0.0204 | 0.0027 | 7.55 | 4.3e-14 |
+| HCARI | chr12 | 123177108 | -0.0066 | 0.0009 | 7.51 | 6.1e-14 |
+| CDC42SE2 | chr5 | 130687137 | 0.0064 | 0.0009 | 7.47 | 8.2e-14 |
+| HLA-B | chr6 | 31329245 | -0.0085 | 0.0011 | -7.45 | 9.6e-14 |
+| GARNL3 | chr9 | 130156103 | 0.014 | 0.0019 | 7.45 | 9.2e-14 |
+| ACO020601.1 | chr2 | 138633330 | 0.0254 | 0.0034 | 7.44 | 1.0e-13 |
+| GRK6 | chr5 | 176842474 | -0.0072 | 0.001 | -7.39 | 1.5e-13 |
+| LRRC16A | chr6 | 25466589 | 0.0167 | 0.0023 | 7.35 | 2.0e-13 |
+| AFG3L1P | chr16 | 90064140 | 0.0257 | 0.0035 | 7.33 | 2.2e-13 |
+| GRM5 | chr11 | 88798054 | 0.008 | 0.0011 | 7.26 | 3.8e-13 |
+| MAPKAPK2 | chr1 | 206890449 | 0.0067 | 0.0009 | 7.22 | 5.4e-13 |
+| GRB2 | chr17 | 73333951 | -0.0071 | 0.001 | -7.21 | 5.5e-13 |
+| MED12L | chr3 | 151069951 | -0.0058 | 0.0008 | -7.18 | 6.8e-13 |
+| ARHGAP23 | chr17 | 36594211 | 0.0061 | 0.0008 | -7.17 | 7.4e-13 |
+| LRRC36 | chr16 | 67381383 | 0.0134 | 0.0019 | 7.14 | 9.4e-13 |
+| NCOR2 | chr12 | 124836115 | -0.0086 | 0.0012 | 7.12 | 1.1e-12 |
+| MICB | chr6 | 31471205 | 0.0115 | 0.0016 | -7.08 | 1.5e-12 |
+| PLA2G2A | chr1 | 20307563 | -0.0058 | 0.0008 | -7.07 | 1.6e-12 |
+| NOL3 | chr16 | 67213923 | 0.0091 | 0.0013 | 7.05 | 1.7e-12 |
+| KLB | chr4 | 39404306 | -0.0059 | 0.0008 | -7.30 | 2.9e-13 |
+| IGF1 | chr12 | 102846504 | -0.0071 | 0.001 | -7.01 | 2.4e-12 |
+| TMEM231 | chr16 | 75570162 | -0.0059 | 0.0008 | 7.01 | 2.3e-12 |
+| INPPL1 | chr11 | 71947822 | -0.0063 | 0.0009 | 6.98 | 2.9e-12 |
+| KANSL3 | chr2 | 97284917 | -0.0062 | 0.0009 | 6.98 | 2.9e-12 |
+| THEMS | chr1 | 151822003 | 0.0082 | 0.0012 | 6.98 | 3.0e-12 |
+| IFNGR1 | chr6 | 137529772 | -0.0056 | 0.0008 | -6.97 | 3.3e-12 |
+| SDC1 | chr2 | 20410480 | 0.0055 | 0.0008 | 6.97 | 3.2e-12 |
+| TNFSF13B | chr13 | 108914496 | -0.0116 | 0.0017 | 6.97 | 3.2e-12 |
+| BNC2 | chr9 | 16795783 | 0.0064 | 0.0009 | 6.91 | 4.8e-12 |
+| TBX21 | chr17 | 45811354 | -0.0155 | 0.0022 | 6.91 | 5.0e-12 |
+| HCG20 | chr6 | 30748297 | 0.0154 | 0.0022 | 6.88 | 5.9e-12 |
+| EBF1 | chr5 | 158279638 | 0.0077 | 0.0011 | 6.87 | 6.3e-12 |
+| UBE2Z | chr17 | 46995304 | -0.0102 | 0.0015 | 6.86 | 7.0e-12 |
+| AC021860.1 | chr4 | 38659457 | -0.0078 | 0.0011 | -6.84 | 8.0e-12 |
+| BPIFB9P | chr20 | 31938106 | 0.0214 | 0.0031 | 6.84 | 8.0e-12 |
+| TLR1O | chr4 | 38769487 | 0.0178 | 0.0026 | 6.80 | 1.1e-11 |
+| THSD7B | chr2 | 137704248 | 0.0265 | 0.0039 | 6.80 | 1.0e-11 |
+| FAM26F | chr6 | 116783330 | -0.0058 | 0.0008 | -6.78 | 1.2e-11 |
+| FMNL3 | chr12 | 50064928 | -0.0062 | 0.0009 | 6.78 | 1.2e-11 |
+| AFF4 | chr5 | 132244521 | -0.0109 | 0.0016 | 6.76 | 1.3e-11 |
+| HCP5 | chr6 | 31412513 | 0.0092 | 0.0014 | 6.76 | 1.4e-11 |
+| GSDMB | chr17 | 38063381 | 0.0056 | 0.0008 | 6.74 | 1.6e-11 |
+| FUT2 | chr19 | 49201217 | -0.0069 | 0.001 | -6.72 | 1.8e-11 |
+| LINC00243 | chr6 | 30771612 | -0.0066 | 0.001 | -6.70 | 2.1e-11 |
+| CFTR | chr7 | 117181152 | 0.0132 | 0.002 | 6.69 | 2.2e-11 |
+| FAM114A1 | chr4 | 38875713 | -0.0131 | 0.002 | -6.69 | 2.3e-11 |
+| MYO9B | chr19 | 17219105 | -0.0065 | 0.001 | 6.68 | 2.4e-11 |
+| SORD | chr15 | 45327845 | -0.0149 | 0.0022 | -6.68 | 2.4e-11 |
+| FOXRED1 | chr11 | 126145931 | 0.0054 | 0.0008 | 6.67 | 2.5e-11 |
+| HLA-W | chr6 | 29924496 | 0.0203 | 0.003 | 6.66 | 2.7e-11 |
+| PDGFA | chr7 | 561838 | -0.0132 | 0.002 | 6.63 | 3.3e-11 |
+| RREB1 | chr6 | 7247344 | -0.0107 | 0.0016 | 6.59 | 4.5e-11 |
+| TNXB | chr6 | 32011714 | -0.0068 | 0.001 | -6.59 | 4.5e-11 |
+| B3GALTS | chr21 | 41026510 | -0.0061 | 0.0009 | 6.58 | 4.6e-11 |
+| LPA | chr6 | 161005389 | 0.0141 | 0.0022 | 6.58 | 4.7e-11 |
+| FAM114A1 | chr4 | 38937372 | 0.0055 | 0.0008 | 6.57 | 5.0e-11 |
+| BNC2 | chr9 | 16456965 | 0.007 | 0.0011 | 6.56 | 5.5e-11 |
+| TNFRSF13B | chr17 | 16864419 | -0.0056 | 0.0009 | -6.56 | 5.5e-11 |
+| THSD7B | chr2 | 138347431 | 0.0152 | 0.0023 | 6.55 | 5.9e-11 |
+| BRD2 | chr6 | 32948721 | -0.0086 | 0.0013 | -6.55 | 5.8e-11 |
+| SEMA3G | chr3 | 52482851 | -0.0061 | 0.0009 | -6.54 | 6.2e-11 |
+| FAM114A1 | chr4 | 38949451 | -0.0186 | 0.0028 | 6.53 | 6.4e-11 |
+| LTBR | chr12 | 6493351 | -0.0056 | 0.0009 | -6.52 | 6.9e-11 |
+| MIR1275 | chr6 | 33965787 | -0.0206 | 0.0032 | -6.52 | 7.2e-11 |
+| ZRANB3 | chr2 | 136289565 | -0.008 | 0.0012 | -6.51 | 7.5e-11 |
+| C1QTNF3 | chr5 | 34016554 | -0.0054 | 0.0008 | -6.50 | 7.8e-11 |
+| EHF | chr11 | 34680853 | -0.0056 | 0.0009 | -6.49 | 8.9e-11 |
+| FLG | chr1 | 152280265 | -0.0074 | 0.0011 | 6.49 | 8.4e-11 |
+| HLA-C | chr6 | 31243604 | -0.0096 | 0.0015 | -6.47 | 1.0e-10 |
+| LINC00184 | chr1 | 234764423 | 0.0137 | 0.0021 | 6.47 | 9.8e-11 |
+| RAB44 | chr6 | 36700468 | -0.0058 | 0.0009 | 6.47 | 1.0e-10 |
+| ZSWIM6 | chr5 | 60771688 | 0.0052 | 0.0008 | 6.47 | 9.8e-11 |
+| CCDC132 | chr7 | 92977414 | 0.0073 | 0.0011 | 6.46 | 1.0e-10 |
+| PKHD1 | chr6 | 51553252 | 0.0144 | 0.0022 | 6.46 | 1.1e-10 |
+| STARD4-AS1 | chr5 | 110979116 | -0.0058 | 0.0009 | 6.45 | 1.1e-10 |
+| LSMD1 | chr17 | 7781019 | 0.0097 | 0.0015 | 6.42 | 1.4e-10 |
+| TLR3 | chr4 | 186990948 | -0.0113 | 0.0018 | 6.40 | 1.6e-10 |
+| UQCRC1 | chr3 | 48633245 | 0.0209 | 0.0033 | 6.39 | 1.6e-10 |
+| VARS2 | chr6 | 30895306 | 0.0323 | 0.0051 | 6.37 | 1.9e-10 |
+| OR2W1 | chr6 | 29015126 | 0.038 | 0.006 | 6.36 | 2.1e-10 |
+| SLC44A5 | chr1 | 75992462 | 0.0097 | 0.0015 | 6.35 | 2.1e-10 |
+| FCGR2B | chr1 | 161641384 | -0.0068 | 0.0011 | -6.34 | 2.2e-10 |
+| IFIH1 | chr2 | 163167746 | -0.0099 | 0.0016 | 6.32 | 2.6e-10 |
+| C1S | chr12 | 7170336 | -0.0066 | 0.0011 | -6.32 | 2.7e-10 |
+| NOX4 | chr11 | 89233544 | -0.0063 | 0.001 | 6.32 | 2.6e-10 |
+| KSR1 | chr17 | 25867693 | -0.0081 | 0.0009 | 8.60 | 7.9e-18 |
+| RIN3 | chr14 | 93100024 | 0.0071 | 0.0011 | 6.30 | 3.0e-10 |
+| ACAP1 | chr17 | 7259087 | 0.0167 | 0.0027 | 6.28 | 3.5e-10 |
+| PKD2L1 | chr10 | 102075479 | -0.0074 | 0.0012 | -6.28 | 3.4e-10 |
+| RP11-114H7.2 | chr5 | 130336133 | 0.0146 | 0.0023 | 6.28 | 3.4e-10 |
+| ANXAQ | chr1 | 150957658 | -0.0052 | 0.0008 | 6.26 | 3.9e-10 |
+| RP11-83M16.6 | chr5 | 67202832 | 0.0102 | 0.0016 | 6.26 | 3.9e-10 |
+| DDAH1 | chr1 | 85860374 | 0.0085 | 0.0014 | 6.23 | 4.7e-10 |
+| HLA-F | chr6 | 29698661 | -0.009 | 0.0014 | -6.23 | 4.8e-10 |
+| PSMB8 | chr6 | 32806673 | 0.0277 | 0.0044 | 6.23 | 4.7e-10 |
+| CAMTA1 | chr1 | 6921578 | 0.0082 | 0.0013 | 6.21 | 5.3e-10 |
+| FAIM2 | chr12 | 50288032 | 0.0082 | 0.0013 | 6.21 | 5.2e-10 |
+| CASS4 | chr20 | 55005002 | -0.0176 | 0.0028 | 6.20 | 5.6e-10 |
+| RP11-345M22.1 | chr16 | 79795641 | -0.0057 | 0.0009 | -6.20 | 5.6e-10 |
+| SDHAF2 | chr11 | 61200387 | -0.009 | 0.0014 | 6.20 | 5.8e-10 |
+| CTC-490E21.10 | chr19 | 41338988 | 0.0074 | 0.0012 | 6.19 | 6.1e-10 |
+| YEATS4 | chr12 | 69767949 | -0.0052 | 0.0008 | 6.19 | 5.9e-10 |
+| CCDC63 | chr12 | 111323418 | -0.0056 | 0.0009 | -6.18 | 6.4e-10 |
+| CANX | chr5 | 179144756 | 0.0134 | 0.0022 | 6.17 | 6.7e-10 |
+| PPP1R16B | chr20 | 37441935 | 0.0053 | 0.0009 | 6.17 | 6.8e-10 |
+| TNFSF12 | chr17 | 7460957 | 0.0084 | 0.0014 | 6.17 | 6.8e-10 |
+| FAM114A1 | chr4 | 38943545 | -0.0119 | 0.0019 | 6.16 | 7.3e-10 |
+| TLR6 | chr4 | 38824255 | -0.013 | 0.0021 | -6.16 | 7.4e-10 |
+| ATF6B | chr6 | 32088602 | -0.019 | 0.0031 | -6.13 | 8.6e-10 |
+| RPP25 | chr15 | 75246105 | 0.0088 | 0.0014 | 6.13 | 9.0e-10 |
+| SNX29 | chr16 | 12502038 | 0.0048 | 0.0008 | 6.12 | 9.3e-10 |
+| ETV5 | chr3 | 185831583 | 0.0072 | 0.0012 | 6.11 | 9.7e-10 |
+| TMPRSS4 | chr11 | 117982495 | -0.0092 | 0.0015 | -6.11 | 1.0e-09 |
+| AC008834.1 | chr5 | 97421151 | 0.0194 | 0.0032 | 6.10 | 1.0e-09 |
+| BEND4 | chr4 | 42123515 | -0.0052 | 0.0009 | -6.09 | 1.1e-09 |
+| CTD-2130013.1 | chr18 | 44935775 | 0.0057 | 0.0009 | 6.09 | 1.2e-09 |
+| CDK5RAP3 | chr17 | 46048920 | 0.0071 | 0.0012 | 6.07 | 1.3e-09 |
+| OCA2 | chr15 | 28346024 | 0.0099 | 0.0016 | 6.06 | 1.4e-09 |
+| CEP85 | chr1 | 26590122 | 0.0086 | 0.0014 | 6.05 | 1.5e-09 |
+| BRD1 | chr22 | 50222236 | -0.0055 | 0.0009 | -6.05 | 1.4e-09 | 0.99
+| DEF6 | chr6 | 35282463 | 0.0075 | 0.0012 | 6.05 | 1.4e-09 |
+| DZANK1 | chr20 | 18441988 | -0.0111 | 0.0018 | 6.05 | 1.4e-09 |
+| B9D1 | chr17 | 19243632 | 0.0057 | 0.0009 | 6.04 | 1.5e-09 |
+| RP11-731C17.1 | chr3 | 136530102 | 0.0082 | 0.0014 | 6.04 | 1.6e-09 |
+| AF213884.1 | chr4 | 103384995 | -0.0057 | 0.001 | -6.03 | 1.6e-09 |
+| CTD-2089N3.2 | chr5 | 50264239 | -0.0111 | 0.0018 | -6.03 | 1.6e-09 |
+| FOXP1 | chr3 | 71559289 | 0.0134 | 0.0022 | 6.03 | 1.6e-09 |
+| IL12A-AS1 | chr3 | 159665050 | 0.0113 | 0.0019 | 6.03 | 1.7e-09 |
+| RP11-408A13.2 | chr9 | 14535119 | -0.0058 | 0.001 | -6.03 | 1.7e-09 |
+| HLA-DQB2 | chr6 | 32729359 | -0.0129 | 0.0021 | -6.02 | 1.7e-09 |
+| MIA3 | chr1 | 222799625 | 0.005 | 0.0008 | 6.02 | 1.7e-09 |
+| PLEKHG3 | chr14 | 65195794 | 0.0052 | 0.0009 | 6.02 | 1.7e-09 |
+| LINC00243 | chr6 | 30798277 | -0.0129 | 0.0021 | -6.01 | 1.9e-09 |
+| HIST1H2BD | chr6 | 26167113 | 0.0281 | 0.0047 | 6.00 | 1.9e-09 |
+| RP1-101G11.2 | chr22 | 34989220 | 0.0175 | 0.0029 | 6.00 | 2.0e-09 |
+| LILRB5 | chr19 | 54762408 | -0.0061 | 0.001 | 5.99 | 2.1e-09 |
+| RBM6 | chr3 | 50113004 | -0.0059 | 0.001 | -5.99 | 2.1e-09 |
+| ST18 | chr8 | 53120685 | 0.0072 | 0.0012 | 5.99 | 2.1e-09 |
+| PAH | chr12 | 103328243 | -0.0401 | 0.0067 | 5.98 | 2.2e-09 |
+| SETBP1 | chr18 | 42632652 | 0.0074 | 0.0012 | 5.98 | 2.2e-09 |
+| EGLN3 | chr14 | 34672770 | -0.0063 | 0.0011 | -5.97 | 2.4e-09 |
+| HELZ2 | chr20 | 62210244 | 0.0178 | 0.003 | 5.97 | 2.4e-09 |
+| IL1RAP | chr3 | 190264270 | 0.01 | 0.0017 | 5.97 | 2.3e-09 |
+| RP11-336N8.2 | chr9 | 80796464 | -0.0063 | 0.0011 | 5.97 | 2.4e-09 |
+| SENP7 | chr3 | 101226952 | 0.0117 | 0.002 | 5.97 | 2.4e-09 |
+| SLC39A8 | chr4 | 103179275 | -0.0066 | 0.0011 | -5.97 | 2.3e-09 |
+| MYO16 | chr13 | 109796714 | -0.0152 | 0.0025 | 5.96 | 2.5e-09 |
+| NT5C2 | chr10 | 104855261 | -0.0104 | 0.0017 | 5.96 | 2.5e-09 |
+| MAPRE1 | chr20 | 31414185 | 0.0217 | 0.0036 | 5.95 | 2.6e-09 |
+| ABCG2 | chr4 | 89039082 | 0.0094 | 0.0016 | 5.94 | 2.9e-09 |
+| MYH10 | chr17 | 8477548 | 0.0206 | 0.0035 | 5.94 | 2.8e-09 |
+| RP11-438N16.1 | chr12 | 114117839 | 0.0082 | 0.0014 | 5.94 | 2.9e-09 |
+| WNT3 | chr17 | 44912736 | -0.0105 | 0.0018 | 5.93 | 3.1e-09 |
+| REXO2 | chr11 | 114324026 | -0.0047 | 0.0008 | -5.92 | 3.2e-09 |
+| SMIM14 | chr4 | 39548117 | 0.0077 | 0.0013 | 5.91 | 3.5e-09 |
+| ERI1 | chr8 | 8869604 | -0.0132 | 0.0022 | 5.90 | 3.7e-09 |
+| MANBA | chr4 | 103603833 | -0.0122 | 0.0021 | 5.90 | 3.6e-09 |
+| SRD5A3 | chr4 | 56242054 | 0.0051 | 0.0009 | 5.90 | 3.6e-09 |
+| TMEM163 | chr2 | 135212242 | -0.005 | 0.0008 | -5.90 | 3.7e-09 |
+| RP11-397A16.1 | chr18 | 53423144 | 0.0067 | 0.0011 | 5.88 | 4.0e-09 |
+| GATA3 | chr10 | 8099021 | 0.0059 | 0.001 | 5.86 | 4.7e-09 |
+| HIPIR | chr12 | 123322415 | -0.0111 | 0.0019 | 5.86 | 4.6e-09 |
+| JAG1 | chr20 | 10621305 | 0.0074 | 0.0013 | 5.86 | 4.6e-09 |
+| MME | chr3 | 154812638 | -0.0087 | 0.0015 | 5.86 | 4.7e-09 |
+| CASP8 | chr2 | 202112133 | 0.0181 | 0.0031 | 5.85 | 4.9e-09 |
+| KIAA0319 | chr6 | 24586105 | 0.03 | 0.0051 | 5.85 | 4.8e-09 |
+| MYL2 | chr12 | 111361909 | 0.0235 | 0.004 | 5.85 | 4.8e-09 |
+| TRPV4 | chr12 | 110261767 | -0.0067 | 0.0012 | -5.85 | 5.0e-09 |
+| BRINP1 | chr9 | 121970419 | -0.0057 | 0.001 | -5.84 | 5.2e-09 |
+| MROH1 | chr8 | 145265892 | -0.0113 | 0.0019 | 5.83 | 5.4e-09 |
+| ZZEF1 | chr17 | 3928080 | 0.0131 | 0.0022 | 5.83 | 5.7e-09 |
+| DYNLL2 | chr17 | 56160571 | 0.01 | 0.0017 | 5.82 | 6.0e-09 |
+| PITPNM1 | chr11 | 67268048 | 0.0053 | 0.0009 | 5.82 | 5.7e-09 |
+| CUX2 | chr12 | 111593734 | -0.0062 | 0.0011 | -5.81 | 6.1e-09 |
+| FAIM2 | chr12 | 50298535 | -0.0048 | 0.0008 | -5.81 | 6.1e-09 |
+| TAP2 | chr6 | 32800412 | -0.0057 | 0.001 | -5.80 | 6.6e-09 |
+| TUFM | chr16 | 28852584 | 0.0075 | 0.0013 | 5.80 | 6.6e-09 |
+| UNC13D | chr17 | 73831900 | -0.0097 | 0.0017 | -5.80 | 6.6e-09 |
+| RP11-459C13.1 | chr17 | 3880148 | 0.0046 | 0.0008 | 5.79 | 7.0e-09 |
+| SKAP2 | chr7 | 26907114 | 0.0081 | 0.0014 | 5.79 | 7.1e-09 |
+| TRIM77 | chr11 | 89452445 | 0.007 | 0.0012 | 5.79 | 7.2e-09 |
+| MAP3K14 | chr17 | 43388413 | 0.0084 | 0.0015 | 5.78 | 7.4e-09 |
+| MIR31HG | chr9 | 21506986 | 0.0163 | 0.0028 | 5.78 | 7.4e-09 |
+| CEACAM19 | chr19 | 45189000 | -0.0047 | 0.0008 | 5.77 | 7.7e-09 |
+| RNU1-119P | chr15 | 45178802 | -0.0128 | 0.0022 | -5.77 | 8.0e-09 |
+| C8orf74 | chr8 | 10531677 | -0.0083 | 0.0014 | -5.76 | 8.5e-09 |
+| PTRF | chr17 | 40555939 | 0.0047 | 0.0008 | 5.76 | 8.6e-09 |
+| STRN | chr2 | 37178739 | 0.0155 | 0.0027 | 5.76 | 8.4e-09 |
+| ESR2 | chr14 | 64778199 | 0.0117 | 0.002 | 5.76 | 8.2e-09 |
+| KLRC2 | chr12 | 10592785 | -0.0075 | 0.0013 | 5.75 | 8.8e-09 |
+| SGK223 | chr8 | 8237848 | -0.0064 | 0.0011 | -5.75 | 8.7e-09 |
+| ARHGEF26-AS1 | chr3 | 153804975 | -0.0058 | 0.001 | -5.74 | 9.6e-09 |
+| CTSH | chr15 | 79231518 | 0.0047 | 0.0008 | 5.74 | 9.5e-09 |
+| TRERNAIL | chr20 | 48654983 | 0.0179 | 0.0031 | 5.74 | 9.5e-09 |
+| AGRN | chr1 | 990280 | 0.0047 | 0.0008 | 5.73 | 9.9e-09 |
+| MAS1LP1 | chr6 | 29441169 | -0.0275 | 0.0048 | 5.73 | 1.0e-08 |
+| RPS9 | chr19 | 54714057 | -0.0131 | 0.0023 | 5.73 | 1.0e-08 |
+| SEMAG6D | chr15 | 47573957 | 0.0106 | 0.0019 | 5.72 | 1.1e-08 |
+| TNXB | chr6 | 32071112 | -0.012 | 0.0021 | -5.72 | 1.1e-08 |
+| GRM5 | chr11 | 88472922 | -0.0073 | 0.0013 | 5.72 | 1.1e-08 |
+| HSPA1A | chr6 | 31780235 | -0.0077 | 0.0013 | -5.72 | 1.0e-08 |
+| IL17RE | chr3 | 9948241 | -0.0046 | 0.0008 | -5.71 | 1.2e-08 |
+| LIMA1 | chr12 | 50587780 | -0.008 | 0.0014 | -5.71 | 1.1e-08 |
+| CHCHD2P8 | chr13 | 28681228 | -0.0056 | 0.001 | -5.70 | 1.2e-08 |
+| CCRQ | chr3 | 45937833 | -0.0062 | 0.0011 | -5.69 | 1.2e-08 |
+| DNAH10 | chr12 | 124399155 | -0.0047 | 0.0008 | 5.69 | 1.3e-08 |
+| MECOM | chr3 | 169075078 | 0.0047 | 0.0008 | 5.69 | 1.3e-08 |
+| RP11-383H13.1 | chr8 | 72736574 | 0.0082 | 0.0014 | 5.69 | 1.3e-08 |
+| SH2B3 | chr12 | 111877302 | -0.0086 | 0.0015 | -5.69 | 1.3e-08 |
+| IL21-AS1 | chr4 | 123578850 | -0.0077 | 0.0014 | -5.68 | 1.3e-08 |
+| OAS2 | chr12 | 113424475 | -0.005 | 0.0009 | -5.68 | 1.4e-08 |
+| RPTOR | chr17 | 78778404 | 0.0157 | 0.0028 | 5.68 | 1.3e-08 |
+| ZNF277 | chr7 | 111909855 | 0.0118 | 0.0021 | 5.68 | 1.3e-08 |
+| KRT8P21 | chr1 | 73573648 | 0.0121 | 0.0021 | 5.67 | 1.4e-08 |
+| PDE4B | chr1 | 66803433 | 0.0077 | 0.0014 | 5.67 | 1.5e-08 |
+| GRM5 | chr11 | 88257930 | 0.0069 | 0.0012 | 5.67 | 1.4e-08 |
+| SLC38A4 | chr12 | 47195289 | -0.0065 | 0.0012 | -5.67 | 1.5e-08 |
+| TANGOG | chr16 | 69002561 | 0.0122 | 0.0021 | 5.67 | 1.4e-08 |
+| THSD7B | chr2 | 138120869 | -0.0051 | 0.0009 | -5.67 | 1.5e-08 |
+| CLEC12A | chr12 | 10118009 | 0.0057 | 0.001 | 5.66 | 1.5e-08 |
+| LINC01122 | chr2 | 58724823 | 0.0123 | 0.0022 | 5.66 | 1.5e-08 |
+| ZC3H7A | chr16 | 11856138 | -0.013 | 0.0023 | 5.66 | 1.5e-08 |
+| A4GNT | chr3 | 137848869 | -0.005 | 0.0009 | -5.65 | 1.6e-08 |
+| GPR128 | chr3 | 100417574 | 0.0054 | 0.001 | 5.65 | 1.6e-08 |
+| HNF1A-AS1 | chr12 | 121405210 | -0.0047 | 0.0008 | 5.65 | 1.6e-08 |
+| DOK2 | chr8 | 21764743 | -0.0046 | 0.0008 | -5.64 | 1.7e-08 |
+| MRPS22 | chr3 | 138985983 | 0.0048 | 0.0009 | 5.64 | 1.7e-08 |
+| NFE2 | chr12 | 54685880 | 0.0099 | 0.0017 | 5.64 | 1.7e-08 |
+| NOTCH4 | chr6 | 32190871 | 0.0121 | 0.0021 | 5.63 | 1.8e-08 |
+| SIGLEC5 | chr19 | 52128795 | -0.0052 | 0.0009 | 5.63 | 1.8e-08 |
+| WWP1 | chr8 | 87370710 | -0.0047 | 0.0008 | 5.63 | 1.8e-08 |
+| IP6K1 | chr3 | 49776818 | 0.0199 | 0.0035 | 5.63 | 1.8e-08 |
+| TRIMI6L | chr17 | 18605727 | 0.017 | 0.003 | 5.63 | 1.8e-08 |
+| ERICH1-AS1 | chr8 | 1004014 | 0.025 | 0.0045 | 5.62 | 1.9e-08 |
+| TCF7L2 | chr10 | 114892604 | 0.0156 | 0.0028 | 5.62 | 2.0e-08 |
+| TCHHL1 | chr1 | 152056368 | 0.025 | 0.0045 | 5.62 | 1.9e-08 |
+| RP11-486013.2 | chr14 | 70685658 | 0.0124 | 0.0022 | 5.61 | 2.1e-08 |
+| GSTCD | chr4 | 106683451 | 0.0112 | 0.002 | 5.60 | 2.1e-08 |
+| HIST1H2BD | chr6 | 26175852 | 0.0051 | 0.0009 | 5.60 | 2.1e-08 |
+| PRKCH | chr14 | 61831910 | -0.0085 | 0.0015 | -5.60 | 2.2e-08 |
+| SPEF2 | chr5 | 35775524 | 0.0212 | 0.0038 | 5.60 | 2.2e-08 |
+| TCF4 | chr18 | 53175966 | -0.0047 | 0.0008 | -5.60 | 2.1e-08 |
+| LEF1 | chr4 | 109063784 | -0.0176 | 0.0031 | 5.59 | 2.3e-08 |
+| LINC00521 | chr14 | 94472733 | 0.0258 | 0.0046 | 5.59 | 2.3e-08 |
+| CTDSPL | chr3 | 37962879 | -0.011 | 0.002 | 5.59 | 2.2e-08 |
+| MDM1 | chr12 | 68665940 | 0.0048 | 0.0009 | 5.59 | 2.3e-08 |
+| PTPN13 | chr4 | 87559088 | 0.0089 | 0.0016 | 5.59 | 2.2e-08 |
+| HLA-DOA | chr6 | 32976540 | 0.0269 | 0.0048 | 5.58 | 2.4e-08 |
+| RP11-3L8.3 | chr9 | 12722227 | 0.0047 | 0.0008 | 5.58 | 2.4e-08 |
+| HLA-W | chr6 | 29920119 | 0.0091 | 0.0016 | 5.57 | 2.6e-08 |
+| SPRED1 | chr15 | 38572035 | 0.0168 | 0.003 | 5.57 | 2.6e-08 |
+| MAPT | chr17 | 44080354 | -0.0057 | 0.001 | -5.56 | 2.8e-08 |
+| NRM | chr6 | 30661007 | 0.0143 | 0.0026 | 5.56 | 2.8e-08 |
+| UVSSA | chr4 | 1348248 | -0.0045 | 0.0008 | -5.56 | 2.7e-08 |
+| FBXO10 | chr9 | 37553063 | 0.0082 | 0.0015 | 5.55 | 2.8e-08 |
+| NTM | chr11 | 132099379 | 0.015 | 0.0027 | 5.55 | 2.9e-08 |
+| SCTR | chr2 | 120217456 | 0.0117 | 0.0021 | 5.55 | 2.9e-08 |
+| USP22 | chr17 | 20942135 | 0.0156 | 0.0028 | 5.55 | 2.8e-08 |
+| DPCR1 | chr6 | 30912907 | -0.0144 | 0.0026 | -5.54 | 3.1e-08 |
+| GABBRI | chr6 | 29535190 | -0.0051 | 0.0009 | -5.54 | 3.1e-08 |
+| HTATSF1P | chr6 | 33204274 | -0.0057 | 0.001 | -5.54 | 3.0e-08 |
+| SLC6A4 | chr17 | 28535939 | 0.0201 | 0.0036 | 5.54 | 3.0e-08 |
+| TNIP1 | chr5 | 150434894 | -0.006 | 0.0011 | -5.54 | 3.0e-08 |
+| AC092578.1 | chr2 | 143306253 | 0.0096 | 0.0017 | 5.53 | 3.3e-08 |
+| DTD1 | chr20 | 18630223 | 0.0044 | 0.0008 | 5.53 | 3.2e-08 |
+| EPS8 | chr12 | 16016453 | 0.0116 | 0.0021 | 5.53 | 3.2e-08 |
+| ZC3H13 | chr13 | 46568370 | 0.0102 | 0.0018 | 5.53 | 3.1e-08 |
+| MSRA | chr8 | 9936753 | -0.0062 | 0.0011 | -5.52 | 3.4e-08 |
+| SGCZ | chr8 | 14315486 | 0.0198 | 0.0036 | 5.52 | 3.3e-08 |
+| UQCR11 | chr19 | 1602299 | 0.0146 | 0.0026 | 5.51 | 3.5e-08 |
+| AP2A2 | chr11 | 997733 | -0.0056 | 0.001 | 5.51 | 3.6e-08 |
+| IL34 | chr16 | 70696815 | 0.0151 | 0.0027 | 5.51 | 3.6e-08 |
+| ITPKA | chr15 | 41790987 | -0.0049 | 0.0009 | -5.51 | 3.5e-08 |
+| RANBP17 | chr5 | 170520932 | 0.0076 | 0.0014 | 5.50 | 3.9e-08 |
+| KIR3DL2 | chr19 | 55372375 | 0.0058 | 0.0011 | 5.50 | 3.7e-08 |
+| MICC | chr6 | 30382443 | -0.0116 | 0.0021 | -5.50 | 3.7e-08 |
+| AC005042.5 | chr2 | 159613196 | -0.0047 | 0.0009 | 5.49 | 4.1e-08 |
+| ENPP6 | chr4 | 185007893 | 0.0105 | 0.0019 | 5.49 | 4.1e-08 |
+| KIAA1239 | chr4 | 37360616 | 0.014 | 0.0025 | 5.49 | 4.0e-08 |
+| PAXS | chr9 | 37016502 | -0.0098 | 0.0018 | 5.49 | 4.0e-08 |
+| SCRN3 | chr2 | 175260355 | 0.0114 | 0.0021 | 5.49 | 4.0e-08 |
+| ZDHHC20P2 | chr6 | 31349844 | 0.0103 | 0.0019 | 5.49 | 4.0e-08 |
+| EIF4B | chr12 | 53406676 | 0.0178 | 0.0032 | 5.48 | 4.2e-08 |
+| HLA-DPB1 | chr6 | 33049924 | -0.0104 | 0.0019 | -5.48 | 4.3e-08 |
+| RMDN2 | chr2 | 38298139 | -0.0067 | 0.0012 | 5.48 | 4.1e-08 |
+| ADAR | chr1 | 154579585 | 0.0057 | 0.001 | 5.47 | 4.4e-08 |
+| IRF8 | chr16 | 85952951 | -0.0058 | 0.0011 | -5.47 | 4.5e-08 |
+| MSRA | chr8 | 10180328 | -0.0057 | 0.001 | -5.47 | 4.5e-08 |
+| SV2C | chr5 | 75642536 | 0.0167 | 0.003 | 5.47 | 4.4e-08 |
+| TLR3 | chr4 | 187009014 | -0.0045 | 0.0008 | -5.47 | 4.6e-08 |
+| U3 | chr17 | 42099990 | 0.0162 | 0.003 | 5.47 | 4.4e-08 |
+| ADCY5 | chr3 | 123109371 | -0.0043 | 0.0008 | -5.46 | 4.7e-08 |
+| MYO18A | chr17 | 27485517 | 0.0066 | 0.0012 | 5.46 | 4.8e-08 |
+| POU6F2 | chr7 | 39086869 | -0.0056 | 0.001 | 5.46 | 4.6e-08 |
 

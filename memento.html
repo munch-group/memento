@@ -90,7 +90,7 @@ a { color: inherit; }
 .card-title-text { font-size: 13px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .card-date { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; opacity: 0.45; }
 .card-id { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
-.card-content { font-size: 13px; line-height: 1.65; color: var(--text); font-family: var(--font); word-break: break-word; margin-top: 8px; }
+.card-content { font-size: 13px; line-height: 1.65; color: var(--text); font-family: var(--font); word-break: break-word; margin-top: 8px; container-type: inline-size; }
 .card-content.clamped { white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text3); }
 .card-content p { margin: 0 0 0.5em; }
 .card-content p:last-child { margin-bottom: 0; }
@@ -104,7 +104,8 @@ a { color: inherit; }
 .card-content a { color: var(--tc, var(--text2)); text-decoration: underline; }
 .card-content blockquote { border-left: 2px solid var(--border2); padding-left: 10px; color: var(--text2); margin: 0.5em 0; }
 .card-content h1, .card-content h2, .card-content h3 { font-size: 13px; font-weight: 600; margin: 0.5em 0 0.3em; }
-.card-content img { max-width: 100%; height: auto; border-radius: var(--r); margin: 0.5em 0; }
+/* max-width/max-height (not width/height) + auto sizing: images shrink to fit but never upscale past their natural size */
+.card-content img { max-width: 100%; max-height: 50cqw; height: auto; width: auto; border-radius: var(--r); margin: 0.5em 0; }
 .card-content table, .digest-card table { border-collapse: collapse; margin: 0.5em 0; font-size: 13px; }
 .card-content th, .card-content td, .digest-card th, .digest-card td { border: 1px solid var(--border2); padding: 4px 10px; text-align: left; vertical-align: top; }
 .card-content th, .digest-card th { background: var(--bg2); font-weight: 600; }
@@ -1484,6 +1485,11 @@ function updateCardInPlace(id){
 }
 function toggleCard(id,e){
   if(e&&e.target.closest('a[href]'))return;
+  // Cmd/Ctrl-click opens the edit view instead of expanding the card.
+  if(e&&(e.metaKey||e.ctrlKey)&&!readOnly&&!linkMode&&items.find(i=>i.id===id)){
+    editItem(e,id);
+    return;
+  }
   if(linkMode){
     e&&e.stopPropagation();
     insertCardRef(id);

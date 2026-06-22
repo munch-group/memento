@@ -1,0 +1,3 @@
+GWAS hits in "The Neanderthal population history and the introgression landscape inferred from the UK Biobank"
+
+Also a hit on the chr17 inversion...

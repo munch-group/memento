@@ -1,0 +1,24 @@
+{
+  "id": "mqp4jlmchszj",
+  "type": "fact",
+  "title": "",
+  "genes": [
+    "FOXN2",
+    "PRDM5",
+    "DAAM1",
+    "JUN",
+    "GMNC",
+    "MAP3K1",
+    "TSTD3",
+    "EYA",
+    "SLC13A3"
+  ],
+  "tags": [],
+  "source": "https://doi.org/10.64898/2026.04.03.716297",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-22T11:21:01.609Z",
+  "synced": false,
+  "_sortTag": ""
+}

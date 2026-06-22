@@ -104,7 +104,7 @@ a { color: inherit; }
 .card-content a { color: var(--tc, var(--text2)); text-decoration: underline; }
 .card-content blockquote { border-left: 2px solid var(--border2); padding-left: 10px; color: var(--text2); margin: 0.5em 0; }
 .card-content h1, .card-content h2, .card-content h3 { font-size: 13px; font-weight: 600; margin: 0.5em 0 0.3em; }
-/* max-width/max-height (not width/height) + auto sizing: images shrink to fit but never upscale past their natural size */
+/* Shrink-to-fit, never upscale. resolveImages() tightens max-width to the DPR-adjusted natural size so hi-DPI screenshots show at actual (1:1 device-pixel) size, not 2x. */
 .card-content img { max-width: 100%; max-height: 50cqw; height: auto; width: auto; border-radius: var(--r); margin: 0.5em 0; }
 .card-content table, .digest-card table { border-collapse: collapse; margin: 0.5em 0; font-size: 13px; }
 .card-content th, .card-content td, .digest-card th, .digest-card td { border: 1px solid var(--border2); padding: 4px 10px; text-align: left; vertical-align: top; }
@@ -361,7 +361,7 @@ a { color: inherit; }
         </div>
       </div>
       <div class="searchbar">
-        <input type="search" id="search-input" placeholder="space = AND · , = OR · @gene · #tag · /type · /type1,type2 = OR" oninput="renderList()" />
+        <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR" oninput="renderList()" />
         <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
         <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
       </div>
@@ -1016,21 +1016,33 @@ function getVisibleItems() {
   function parseGroup(str) {
     const tokens = str.match(/[@#][^\s]+|\S+/g) || [];
     const geneLists = [], tagAnd = [], tagOr = [], typeOr = [], freeTerms = [];
+    const notGenes = [], notTags = [], notTypes = [], notTerms = [];   // ! = NOT, AND'd within the group
     tokens.forEach(tok => {
+      let neg = false;
+      if (tok.length > 1 && tok[0] === '!') { neg = true; tok = tok.slice(1); }   // only a leading '!' negates
       if (tok.startsWith('@')) {
         const names = tok.slice(1).split(/[,/]/).filter(Boolean).map(n => resolveGene(n));
-        if (names.length) geneLists.push(names);   // each @token is its own OR-list; multiple @tokens are AND'd
+        if (names.length) { if (neg) notGenes.push(...names); else geneLists.push(names); }   // each @token is its own OR-list; multiple @tokens are AND'd
       } else if (tok.startsWith('#')) {
-        const names = tok.slice(1).split(',').filter(Boolean);
-        if (names.length > 1) names.forEach(n => tagOr.push(resolveTag(n)));
-        else if (names.length === 1) tagAnd.push(resolveTag(names[0]));
+        const names = tok.slice(1).split(',').filter(Boolean).map(resolveTag);
+        if (neg) notTags.push(...names);
+        else if (names.length > 1) names.forEach(n => tagOr.push(n));
+        else if (names.length === 1) tagAnd.push(names[0]);
       } else if (tok.startsWith('/')) {
-        tok.slice(1).split(',').filter(Boolean).forEach(n => typeOr.push(resolveType(n)));
-      } else {
-        freeTerms.push(tok.toLowerCase());
+        const types = tok.slice(1).split(',').filter(Boolean).map(resolveType);
+        if (neg) notTypes.push(...types); else types.forEach(n => typeOr.push(n));
+      } else if (tok) {
+        (neg ? notTerms : freeTerms).push(tok.toLowerCase());
       }
     });
-    return { geneLists, tagAnd, tagOr, typeOr, q: freeTerms.join(' ') };
+    return { geneLists, tagAnd, tagOr, typeOr, q: freeTerms.join(' '), notGenes, notTags, notTypes, notTerms };
+  }
+  function itemHasText(i, term) {
+    return (i.content||'').toLowerCase().includes(term)
+      || (i.title||'').toLowerCase().includes(term)
+      || (i.tags||[]).some(t=>t.toLowerCase().includes(term))
+      || (i.genes||[]).some(gn=>gn.toLowerCase().includes(term))
+      || (i.source||'').toLowerCase().includes(term);
   }
   function matchesGroup(i, g) {
     // every @-list must be satisfied (AND across tokens), with OR within each list
@@ -1038,7 +1050,12 @@ function getVisibleItems() {
     if (g.tagAnd.length && !g.tagAnd.every(t=>(i.tags||[]).some(it=>it.toLowerCase()===t))) return false;
     if (g.tagOr.length && !g.tagOr.some(t=>(i.tags||[]).some(it=>it.toLowerCase()===t))) return false;
     if (g.typeOr.length && !g.typeOr.includes(i.type)) return false;
-    if (g.q && !(i.content.toLowerCase().includes(g.q)||(i.title||'').toLowerCase().includes(g.q)||(i.tags||[]).some(t=>t.toLowerCase().includes(g.q))||(i.genes||[]).some(gn=>gn.toLowerCase().includes(g.q))||(i.source||'').toLowerCase().includes(g.q))) return false;
+    if (g.q && !itemHasText(i, g.q)) return false;
+    // NOT (!) constraints — exclude the item if it matches any negated token
+    if (g.notGenes.length && (i.genes||[]).some(ig=>geneAliasesU(ig).some(a=>g.notGenes.includes(a)))) return false;
+    if (g.notTags.length && (i.tags||[]).some(it=>g.notTags.includes(it.toLowerCase()))) return false;
+    if (g.notTypes.length && g.notTypes.includes(i.type)) return false;
+    if (g.notTerms.length && g.notTerms.some(t=>itemHasText(i, t))) return false;
     return true;
   }
   const orGroups = raw ? raw.split(/\s*,\s+|\s+,\s*/).map(s=>s.trim()).filter(Boolean).map(parseGroup) : [];
@@ -2193,18 +2210,32 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 // --- Image blob resolution ---
 const _blobCache = {};
 
+// Cap an image at its "actual" size: natural pixels / devicePixelRatio, so a 2x
+// retina screenshot renders 1:1 with device pixels (the size it was captured at)
+// instead of twice as large. min(100%, …) keeps the card-width cap intact, and
+// the proportional width limit also keeps the height within actual size.
+function capImageToActualSize(img) {
+  const apply = () => {
+    const nw = img.naturalWidth;
+    if (nw) img.style.maxWidth = `min(100%, ${nw / (window.devicePixelRatio || 1)}px)`;
+  };
+  if (img.complete && img.naturalWidth) apply();
+  else img.addEventListener('load', apply, { once: true });
+}
+
 async function resolveImages() {
   const imgs = document.querySelectorAll('.card-content img');
   for (const img of imgs) {
     const src = img.getAttribute('src');
     if (!src || !src.startsWith('images/')) continue;
-    if (_blobCache[src]) { img.src = _blobCache[src]; continue; }
+    if (_blobCache[src]) { img.src = _blobCache[src]; capImageToActualSize(img); continue; }
     if (ghRepoMode) {
       // Resolve via GitHub raw URL
       const fileName = src.slice('images/'.length);
       const rawUrl = `https://raw.githubusercontent.com/${GH_REPO}/main/knowledge-base/${src}`;
       _blobCache[src] = rawUrl;
       img.src = rawUrl;
+      capImageToActualSize(img);
     } else {
       if (!dirHandle) continue;
       try {
@@ -2215,6 +2246,7 @@ async function resolveImages() {
         const url = URL.createObjectURL(file);
         _blobCache[src] = url;
         img.src = url;
+        capImageToActualSize(img);
       } catch(e) { /* image not found — leave alt text */ }
     }
   }

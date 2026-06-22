@@ -73,6 +73,7 @@ a { color: inherit; }
 .field label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text2); display: block; margin-bottom: 4px; }
 .field textarea { width: 100%; min-height: 90px; resize: vertical; font-family: var(--font); font-size: 14px; line-height: 1.6; padding: 8px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .field textarea:focus { border-color: var(--accent); }
+.field textarea.drag-over { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.25); background: #fff7f4; }
 .field input[type=text] { width: 100%; font-family: var(--font); font-size: 13px; padding: 6px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .field input[type=text]:focus { border-color: var(--accent); }
 .type-picker { display: flex; gap: 5px; flex-wrap: wrap; }
@@ -320,7 +321,7 @@ a { color: inherit; }
         </div>
         <div class="field field-full" id="field-content">
           <label>Content</label>
-          <textarea id="f-content" rows="5" placeholder="Paste a paragraph, write an idea, note a fact…"></textarea>
+          <textarea id="f-content" rows="5" placeholder="Paste a paragraph, write an idea, note a fact…" ondragover="contentDragOver(event)" ondragleave="contentDragLeave(event)" ondrop="contentDrop(event)"></textarea>
         </div>
         <div class="field field-full" id="field-title">
           <label>Title <span style="font-weight:400;opacity:0.5">(optional)</span></label>
@@ -2258,7 +2259,7 @@ function observeLazyCards(){
   observeLazyEls(list);
 }
 
-// --- Image drop on cards ---
+// --- Image drop on cards & in the editor ---
 function hasImageFile(e) {
   if (e.dataTransfer.types.includes('Files')) {
     const items = e.dataTransfer.items;
@@ -2267,6 +2268,20 @@ function hasImageFile(e) {
     }
   }
   return false;
+}
+
+// Copy a dropped image into the images/ folder, returning its markdown reference.
+async function saveImageFile(file) {
+  const imgDir = await dirHandle.getDirectoryHandle('images', {create: true});
+  // Unique filename: timestamp+rand_originalname (rand avoids same-ms collisions on multi-drop)
+  const ts = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const fileName = ts + '_' + safeName;
+  const fh = await imgDir.getFileHandle(fileName, {create: true});
+  const writable = await fh.createWritable();
+  await writable.write(file);
+  await writable.close();
+  return `\n\n![${file.name}](images/${fileName})`;
 }
 
 function cardDragOver(e) {
@@ -2294,26 +2309,54 @@ async function cardDrop(e, id) {
   if (!item) return;
 
   try {
-    const imgDir = await dirHandle.getDirectoryHandle('images', {create: true});
     for (const file of files) {
-      // Generate unique filename: timestamp_originalname
-      const ts = Date.now().toString(36);
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-      const fileName = ts + '_' + safeName;
-
-      const fh = await imgDir.getFileHandle(fileName, {create: true});
-      const writable = await fh.createWritable();
-      await writable.write(file);
-      await writable.close();
-
-      // Append markdown image reference to card content
-      const ref = `\n\n![${file.name}](images/${fileName})`;
-      item.content = (item.content || '') + ref;
+      item.content = (item.content || '') + await saveImageFile(file);
     }
     item.date = new Date().toISOString();
     item.synced = false;
     await saveEntryToFile(item);
     renderList();
+    showToast(`${files.length} image${files.length > 1 ? 's' : ''} added`);
+  } catch(err) {
+    showToast('Image save failed: ' + err.message);
+  }
+}
+
+// Editor textarea: intercept image drops so the browser inserts markdown + copies
+// the file instead of navigating away to open the image in a new tab.
+function contentDragOver(e) {
+  if (readOnly || !hasImageFile(e)) return;  // let native text drag/drop proceed
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.add('drag-over');
+}
+
+function contentDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+async function contentDrop(e) {
+  const ta = e.currentTarget;
+  const files = [...e.dataTransfer.files].filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;  // not an image — let native drop happen
+  e.preventDefault();
+  e.stopPropagation();
+  ta.classList.remove('drag-over');
+
+  if (readOnly) return;
+  if (!dirHandle) { showToast('Connect a folder first to enable image drop'); return; }
+
+  try {
+    let refs = '';
+    for (const file of files) refs += await saveImageFile(file);
+    // Insert at the caret if the field is focused, otherwise append to the end.
+    const focused = document.activeElement === ta;
+    const start = focused ? ta.selectionStart : ta.value.length;
+    const end = focused ? ta.selectionEnd : ta.value.length;
+    ta.value = ta.value.slice(0, start) + refs + ta.value.slice(end);
+    const pos = start + refs.length;
+    ta.focus();
+    ta.selectionStart = ta.selectionEnd = pos;
     showToast(`${files.length} image${files.length > 1 ? 's' : ''} added`);
   } catch(err) {
     showToast('Image save failed: ' + err.message);

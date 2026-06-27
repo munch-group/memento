@@ -84,6 +84,9 @@ a { color: inherit; }
 .card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1rem 1.1rem; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 1px 3px var(--shadow); }
 .card:hover { border-color: var(--border2); box-shadow: 0 4px 12px var(--shadow-hover); }
 .card.drop-over { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.25); }
+.md-drop-overlay { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; background: rgba(217,119,87,0.10); pointer-events: none; }
+.md-drop-overlay.show { display: flex; }
+.md-drop-msg { background: var(--accent); color: #fff; font-weight: 600; font-size: 15px; padding: 14px 22px; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); border: 2px dashed rgba(255,255,255,0.6); }
 .card.pinned { outline: 1.5px solid rgba(217,119,87,0.55); outline-offset: -1px; }
 .card-top { display: flex; align-items: center; gap: 8px; }
 .type-badge { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--text2); opacity: 0.7; }
@@ -379,6 +382,7 @@ a { color: inherit; }
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="md-drop-overlay" id="md-drop-overlay"><div class="md-drop-msg">Drop markdown to create a card</div></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -2045,6 +2049,11 @@ document.getElementById('f-content').addEventListener('keydown', e=>{
   }
 });
 window.addEventListener('focus', ()=>{ if(dirHandle) loadFromFile(); });
+// Drop a markdown/text file anywhere in the app to create a card (images keep their own handlers).
+window.addEventListener('dragenter', mdDragEnter);
+window.addEventListener('dragover', mdDragOver);
+window.addEventListener('dragleave', mdDragLeave);
+window.addEventListener('drop', mdDrop);
 let _resizeTimer;
 window.addEventListener('resize', ()=>{ clearTimeout(_resizeTimer); _resizeTimer = setTimeout(renderList, 150); });
 
@@ -2334,12 +2343,12 @@ function cardDragLeave(e) {
 }
 
 async function cardDrop(e, id) {
+  const files = [...e.dataTransfer.files].filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;  // non-image (e.g. markdown) — let it bubble to the app-level handler
+
   e.preventDefault();
   e.stopPropagation();
   e.currentTarget.classList.remove('drop-over');
-
-  const files = [...e.dataTransfer.files].filter(f => f.type.startsWith('image/'));
-  if (!files.length) return;
 
   if (!dirHandle) { showToast('Connect a folder first to enable image drop'); return; }
 
@@ -2398,6 +2407,149 @@ async function contentDrop(e) {
     showToast(`${files.length} image${files.length > 1 ? 's' : ''} added`);
   } catch(err) {
     showToast('Image save failed: ' + err.message);
+  }
+}
+
+// --- Markdown file drop → new card ---
+// Card types that can be safely created from an imported file (excludes 'view'/'github',
+// which need a captured view object / GitHub metadata to render).
+const IMPORTABLE_TYPES = ['fact','reference','observation','hypothesis','idea','note','people'];
+
+function isMarkdownFile(f) {
+  return /\.(md|markdown|mdown|mkd|txt|text)$/i.test(f.name)
+      || ['text/markdown','text/x-markdown','text/plain'].includes(f.type);
+}
+
+// True if the drag carries at least one file that is not an image. Images are handled by the
+// card/editor drop handlers (which stop propagation), so anything reaching here is a candidate.
+function dragHasNonImageFile(e) {
+  const dt = e.dataTransfer;
+  if (!dt || !dt.types || !dt.types.includes('Files')) return false;
+  const items = dt.items;
+  if (items && items.length) {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].kind === 'file' && !(items[i].type || '').startsWith('image/')) return true;
+    }
+    return false;  // every dragged file is an image — not ours
+  }
+  return true;  // 'Files' present but items unavailable — assume a candidate
+}
+
+function stripQuotes(s) {
+  s = s.trim();
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) return s.slice(1, -1);
+  return s;
+}
+
+// Minimal YAML front-matter parser: `key: value`, inline `[a, b]` lists, and `- item` blocks.
+// Enough for notes exported by Obsidian/Logseq/etc.; not a full YAML implementation.
+function parseYamlish(block) {
+  const out = {};
+  let key = null;
+  for (const raw of block.split('\n')) {
+    const line = raw.replace(/\s+$/, '');
+    if (!line.trim()) continue;
+    const listM = line.match(/^\s*-\s+(.*)$/);
+    if (listM && key) {
+      if (!Array.isArray(out[key])) out[key] = [];
+      out[key].push(stripQuotes(listM[1]));
+      continue;
+    }
+    const kvM = line.match(/^([A-Za-z0-9_ -]+?):\s*(.*)$/);
+    if (kvM) {
+      key = kvM[1].trim().toLowerCase();
+      const val = kvM[2].trim();
+      if (val === '') out[key] = '';
+      else if (/^\[.*\]$/.test(val)) out[key] = val.slice(1, -1).split(',').map(s => stripQuotes(s)).filter(Boolean);
+      else out[key] = stripQuotes(val);
+    }
+  }
+  return out;
+}
+
+// Split optional `---`-delimited front matter from the markdown body.
+function parseFrontMatter(text) {
+  const t = text.replace(/\r\n?/g, '\n');
+  const m = t.match(/^---\n([\s\S]*?)\n---[ \t]*(?:\n([\s\S]*))?$/);
+  if (!m) return { meta: {}, body: text };
+  return { meta: parseYamlish(m[1]), body: (m[2] || '').replace(/^\n+/, '') };
+}
+
+async function createCardFromMarkdown(file) {
+  const { meta, body } = parseFrontMatter(await file.text());
+  const baseName = file.name.replace(/\.(md|markdown|mdown|mkd|txt|text)$/i, '');
+  const asList = v => Array.isArray(v) ? v.map(s => String(s).trim()).filter(Boolean)
+    : (typeof v === 'string' && v.trim() ? v.split(/[\s,]+/).filter(Boolean) : []);
+  const asStr = v => (typeof v === 'string' ? v.trim() : '');
+  const metaType = asStr(meta.type).toLowerCase();
+  const type = IMPORTABLE_TYPES.includes(metaType) ? metaType : (IMPORTABLE_TYPES.includes(lastType) ? lastType : 'note');
+  const item = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    type,
+    content: (body || '').trim(),
+    title: asStr(meta.title) || baseName,
+    genes: asList(meta.genes),
+    tags: asList(meta.tags),
+    source: asStr(meta.source),
+    connection: false,
+    archived: false,
+    due: asStr(meta.due),
+    date: new Date().toISOString(),
+    synced: false,
+  };
+  items.push(item);
+  lastType = type;
+  await saveEntryToFile(item);
+  return item;
+}
+
+let _mdDragDepth = 0;
+function showMdOverlay(show) {
+  const o = document.getElementById('md-drop-overlay');
+  if (o) o.classList.toggle('show', show);
+}
+function mdDragEnter(e) {
+  if (readOnly || !dragHasNonImageFile(e)) return;
+  _mdDragDepth++;
+  showMdOverlay(true);
+}
+function mdDragOver(e) {
+  if (readOnly || !dragHasNonImageFile(e)) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+}
+function mdDragLeave(e) {
+  if (readOnly || !dragHasNonImageFile(e)) return;
+  _mdDragDepth = Math.max(0, _mdDragDepth - 1);
+  if (_mdDragDepth === 0) showMdOverlay(false);
+}
+async function mdDrop(e) {
+  if (readOnly || !dragHasNonImageFile(e)) return;
+  e.preventDefault();
+  e.stopPropagation();
+  _mdDragDepth = 0;
+  showMdOverlay(false);
+
+  const mdFiles = [...e.dataTransfer.files].filter(isMarkdownFile);
+  if (!mdFiles.length) { showToast('Drop a .md or .txt file to create a card'); return; }
+  if (!dirHandle) { showToast('Connect a folder first to create cards'); return; }
+
+  let created = 0, firstId = null;
+  for (const f of mdFiles) {
+    try {
+      const it = await createCardFromMarkdown(f);
+      created++;
+      firstId = firstId || it.id;
+    } catch (err) {
+      showToast('Import failed (' + f.name + '): ' + err.message);
+    }
+  }
+  if (created) {
+    // Leave the Dashboard (which shows only pinned cards) so the new cards are actually visible.
+    if (digestVisible) { digestVisible = false; document.getElementById('digest-toggle')?.classList.toggle('active', false); }
+    renderList();
+    showToast(created === 1 ? 'Card created from ' + mdFiles[0].name : created + ' cards created');
+    if (firstId) { const el = document.querySelector(`.card[data-id="${firstId}"]`); if (el) el.scrollIntoView({behavior:'smooth', block:'center'}); }
   }
 }
 

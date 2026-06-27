@@ -726,7 +726,7 @@ function cleanupMemory() {
 }
 
 // --- Sort ---
-const SORTS = [{key:'date',label:'Modified'},{key:'due',label:'Due'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'},{key:'connection',label:'Connection'}];
+const SORTS = [{key:'date',label:'Modified'},{key:'due',label:'Due'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'},{key:'connection',label:'Connection'},{key:'alpha',label:'Alphabetic'}];
 function renderSortList() {
   const arrows = {true:'↑', false:'↓'};
   const el = document.getElementById('sort-list');
@@ -738,8 +738,15 @@ function renderSortList() {
 }
 function setSort(key) {
   if (sortKey === key) sortAsc = !sortAsc;
-  else { sortKey = key; sortAsc = false; }
+  else { sortKey = key; sortAsc = (key === 'alpha'); }   // alpha defaults to A→Z; others to descending
   renderSortList(); renderList();
+}
+// Effective heading shown on a card: explicit title, else its first non-empty content line.
+function cardSortLabel(item){
+  const t = (item.title || '').trim();
+  if (t) return t;
+  const first = (item.content || '').split('\n').find(l => l.trim()) || '';
+  return first.replace(/^[#>\s-]+/, '').replace(/[*_`~]/g, '').trim();
 }
 function sortItems(arr) {
   // dir: 1 = ascending, -1 = descending (default for date = newest first)
@@ -792,6 +799,14 @@ function sortItems(arr) {
     if (sortKey === 'connection') {
       const ca = a.connection ? 1 : 0, cb = b.connection ? 1 : 0;
       if (ca !== cb) return dir * (ca - cb);
+      return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
+    }
+    if (sortKey === 'alpha') {
+      const la = cardSortLabel(a), lb = cardSortLabel(b);
+      if (la && !lb) return -1;   // unlabeled cards sink to the bottom
+      if (!la && lb) return 1;
+      const c = la.localeCompare(lb, undefined, {sensitivity:'base', numeric:true});
+      if (c !== 0) return dir * c;
       return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
     }
     return 0;

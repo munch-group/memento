@@ -1,0 +1,24 @@
+{
+  "id": "mqxzmbs7ic4c",
+  "type": "view",
+  "title": "",
+  "genes": [],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "date": "2026-06-28T16:12:42.919Z",
+  "synced": false,
+  "view": {
+    "q": "#SMBE26 June 29",
+    "type": "all",
+    "tag": null,
+    "gene": null,
+    "genes": [],
+    "sortKey": "date",
+    "sortAsc": false,
+    "conn": "all",
+    "archive": "active"
+  }
+}

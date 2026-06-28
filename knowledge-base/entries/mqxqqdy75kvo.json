@@ -3,12 +3,14 @@
   "type": "note",
   "title": "SMBE26 - Monday",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "SMB#26"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-28T12:12:04.702Z",
+  "date": "2026-06-28T16:10:11.224Z",
   "synced": false,
   "_sortTag": "",
   "pinned": true

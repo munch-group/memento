@@ -1290,7 +1290,7 @@ function renderCard(item, forceExpand, eagerBody) {
   const isDueSoon = item.due && !isOverdue && !isDueToday && item.due <= soon3;
   const dueClass = isOverdue ? ' overdue' : isDueToday ? ' due-today' : isDueSoon ? ' due-soon' : '';
   const dueHtml = item.due ? `<span class="card-due${dueClass}" title="Due ${item.due}">${fmtDue(item.due)}</span>` : '';
-  return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
+  return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" oncontextmenu="cardContextMenu(event,'${item.id}')" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text"><span onclick="${item.type==='github'&&item._ghFullName?`ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\\\'")}')`:`editItem(event,'${item.id}')`}" style="cursor:${item.type==='github'?'pointer':'text'}">${esc(title)}</span></span>
@@ -1413,6 +1413,14 @@ function backFromFocus() {
   expandedId = null;
   renderFilters(); renderList();
 }
+// On macOS a Ctrl-click is delivered as a context-menu event; use it to open the full-width view.
+// A plain right-click (no Ctrl) still gets the normal browser menu.
+function cardContextMenu(e, id) {
+  if (!e.ctrlKey) return;
+  if (e.target.closest('a[href]')) return;
+  e.preventDefault();
+  focusCard(e, id);
+}
 function linkifyDigestRepos(html) {
   const ghCards = items.filter(i => i.type === 'github');
   if (!ghCards.length) return html;
@@ -1521,9 +1529,13 @@ function updateCardInPlace(id){
 }
 function toggleCard(id,e){
   if(e&&e.target.closest('a[href]'))return;
-  // Cmd/Ctrl-click opens the edit view instead of expanding the card.
-  if(e&&(e.metaKey||e.ctrlKey)&&!readOnly&&!linkMode&&items.find(i=>i.id===id)){
+  // Cmd-click opens the edit view; Ctrl-click shows the card full-width.
+  if(e&&e.metaKey&&!readOnly&&!linkMode&&items.find(i=>i.id===id)){
     editItem(e,id);
+    return;
+  }
+  if(e&&e.ctrlKey&&items.find(i=>i.id===id)){
+    focusCard(e,id);
     return;
   }
   if(linkMode){

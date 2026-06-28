@@ -7,4 +7,30 @@
 - Emilia
 - Rasmus about meiotic drive
 
+## Speakers i know
+- Aida Andres
+- Amy Goldberg
+- Daniel Falush
+- Donate Weghorn
+- Eline Lorenzen
+- Evan Forsythe
+- Fernando Racimo
+- Iker Rivas-González
+- Joanna Kelley
+- John Huelsenbeck
+- John Pool
+- Jonathan Holmes
+- Julien Dutheil
+- Kateryna Makova
+- Laurie Stevison
+- Linda Odenthal-Hesse
+- Martin Kuhlwilm
+- Mateja Hajdinjak
+- Moisès Coll Macià
+- Nathan Schaefer
+- Nicolas Galtier
+- Paul Saunders
+- Rebekah Rogers
+- Regina Fairbanks
+- Yun Song
 

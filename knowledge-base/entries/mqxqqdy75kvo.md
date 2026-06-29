@@ -4,6 +4,20 @@
 - **Location:** Main
 - **Talks:** 1
 
+- Hundreds of small genomes, fully assembled high quatlity. 
+- TRAILS on all of it
+- Ptd.
+- Phylogeny of the "large low-recombination ragion" on X reproduce the cannonical phylogeny.
+- Myotis bats live longer:
+  - DREAM master regularr of DNA repiar genes and cell cycle genes
+  - What genes (~250) genes does DREAM regulate (cell cycle regulation)
+  - Myotis bats have the DREAM proteins, but they don't down-regulate their target genes to the same extent
+  - Ancestral branch show strong enrichmnet of immune related genes (Morales 2005)
+  - Teeling thinks it has to do with the high metabolism (high cytokine levels) that would other wise produce permanent inflamation.
+  - **Do bats die of old age or by accident/predation like naked molerats?**
+
+
+
 ### S19 Causes and consequences of mutation rate variation
 - **Date:** Monday, June 29, 2026
 - **Time:** 1020 – 1220

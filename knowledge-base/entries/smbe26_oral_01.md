@@ -91,5 +91,9 @@ Brewing yeast diversity declined sharply after 1883, when Carlsberg’s pure-cul
 
 Sperm is a nearly universal cell type among animals, yet its evolutionary origins remain unclear. Using comparative proteomics and phylogenomics across 32 species, we reconstruct sperm evolution across more than 700 million years of animal history to define the Last Universal Common Sperm (LUCS), a conserved core of 301 gene families enriched in motility and energy metabolism. By tracing ancestral duplication events, we show that the LUCS toolkit was mostly assembled through concerted gene family expansions at least ~400 million years before the origin of Metazoa, revealing sperm as a reconfigured legacy from our unicellular past rather than an invention of multicellularity. Sperm shows a within-cell evolutionary gradient, both spatial and temporal, where ancient proteins dominate the tail, while younger innovations concentrate in the head. The oldest sperm components are disproportionately associated with human infertility, establishing an empirical bridge between evolutionary depth and clinical relevance. Together, our findings show how evolutionary history is inscribed within a single cell and can guide clinical insights.
 
+### Notes
+- 
+
+
 ---
 

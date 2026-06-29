@@ -1,0 +1,1 @@
+> Type II topoisomerases (TOP2) are conserved regulators of chromatin topology that catalyze reversible DNA double-strand breaks (DSBs) and are essential for maintaining genomic integrity in diverse dynamic processes such as transcription, replication, and cell division.

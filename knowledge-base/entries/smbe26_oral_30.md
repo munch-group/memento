@@ -30,10 +30,11 @@ A fundamental driver of biological diversification is the evolution of reproduct
 - Apparently Top2 is under selection in mammals( or primates) too. **Sounds like autosomal compensation**
 - **Poster B 373**
 - **The big question is why males are infertile. That would provide hints about why 359 was fixed in the first place**
+- The human TOP2 (DNA topoisomerase II) gene does not have "top two orthologs"; rather, humans possess two distinct paralogs: TOP2A and TOP2B
 
 ---
 
-## The tdk family: an evolutionarily persistent single-gene killer meiotic driver family employing a toxin–antidote strategy
+## ~The tdk family: an evolutionarily persistent single-gene killer meiotic driver family employing a toxin–antidote strategy~
 
 **Presenter:** Yu Hua, Zhejiang University-University of Edinburgh Institute, Zhejiang University
 
@@ -51,9 +52,21 @@ Killer meiotic drivers (KMDs) are selfish genetic elements that bias their trans
 
 In Drosophila simulans, X-linked meiotic drivers disrupt Y-chromosome segregation during male meiosis, producing a strongly female-biased sex ratio. This segregation distortion is caused by two X-linked elements acting together. The first is a dysfunctional allele of HP1D2, a young and rapidly evolving member of the heterochromatin protein 1 family. HP1D2 originated from a duplication of HP1D/Rhino and accumulates on the heterochromatic Y chromosome in spermatogonia. The second driver maps within a tandem duplication (DPSR) encompassing six genes and a junction region. Preliminary evidence indicates that the driver embedded within DPSR corresponds to Trf2. Trf2 produces two main protein isoforms: a long and a short form. Within the DPSR, the distal copy (Trf2d) appears wild type, while the proximal copy (Trf2p) is 5′-truncated and may therefore encode a truncated version of the long isoform. We designed four shRNAs to target both Trf2 copies and their isoforms. Preliminary RNAi experiments show that knockdown of the truncated long isoform from Trf2p restores a balanced sex ratio, supporting the hypothesis that Trf2p is the DPSR-embedded driver. We propose that Trf2p produces a dominant-negative Trf2 isoform that competes with the functional Trf2d product. Notably, in D. melanogaster, Trf2 interacts with Rhino to regulate transposable elements through the transcription of heterochromatic small RNA source loci. This suggests that HP1D2SR, together with Trf2p, mis-regulate Y heterochromatin, thereby causing Y nondisjunction during meiosis II. The Paris SR system constitutes an ideal model to investigate the regulation of heterochromatin during spermatogenesis and how its mis-regulation leads to meiotic failure. 
 
+### Notes
+- Two X linked genes required to act as drivers HD1D2, and DP
+- Need DP (six gene) duplication AND HD1D2 (disfunctional)
+- HD1D2 expressed before meiosis
+- The functionsl for HD1D2 (non driver) targets the heterochrom on Y (The driver version does not)
+- The DP duplication
+  - Trf2 (the second copy is truncated and cannot produce the genes longest isoform) The intermediate isoform (acrive in bboth copies)
+- Trf2 targets satelites on Y that differs on Y sensive and resistant Y chromosomes
+
+- Y controls its Trf2 sensitivity through satelite content..
+- GP6 is the human ortholog of HD1D2, TERF2 is the human ortholog of Trf2
+
 ---
 
-## To purge or not to purge? How mating systems shape transposable element dynamics in Mimulus (monkeyflowers)
+## ~To purge or not to purge? How mating systems shape transposable element dynamics in Mimulus (monkeyflowers)~
 
 **Presenter:** Eleanore Ritter, University Of Georgia
 
@@ -63,7 +76,7 @@ The shift to self-fertilization (selfing) is one of the most common evolutionary
 
 ---
 
-## An ancient allele directs epigenetic suppression of a selfish reproductive barrier in maize
+## ~An ancient allele directs epigenetic suppression of a selfish reproductive barrier in maize~
 
 **Presenter:** Elli Cryan, University Of California, Irvine
 

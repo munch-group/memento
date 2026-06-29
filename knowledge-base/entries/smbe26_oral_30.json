@@ -6,9 +6,17 @@
     "SMBE26"
   ],
   "source": "",
-  "date": "2026-06-29T08:56:25.011Z",
+  "date": "2026-06-29T09:46:00.864Z",
   "synced": false,
-  "genes": [],
+  "genes": [
+    "GP6/GPVI",
+    "HD1D2",
+    "TERF2",
+    "TRF2",
+    "TOP2",
+    "TOP2A",
+    "TOP2B"
+  ],
   "connection": false,
   "archived": false,
   "due": "",

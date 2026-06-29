@@ -1,5 +1,10 @@
 ## Sessions
 
+---
+SUNDAY
+
+---
+
 ### Opening with Local Chair Tom Gilbert
 - **Date:** Sunday, June 28, 2026
 - **Time:** 1700 – 1715
@@ -12,11 +17,18 @@
 - **Location:** Main
 - **Talks:** 1
 
+---
+MONDAY
+
+---
+
 ### Plenary Talk with Emma Teeling
 - **Date:** Monday, June 29, 2026
 - **Time:** 0900 – 0950
 - **Location:** Main
 - **Talks:** 1
+
+---
 
 ### S19 Causes and consequences of mutation rate variation
 - **Date:** Monday, June 29, 2026
@@ -48,11 +60,15 @@
 - **Location:** Vandsalen
 - **Talks:** 11
 
+---
+
 ### Grad student award symposia
 - **Date:** Monday, June 29, 2026
 - **Time:** 1320 – 1520
 - **Location:** Main
 - **Talks:** 8
+
+---
 
 ### S14 Evolution of Host-Pathogen Interactions in the Genomic Age
 - **Date:** Monday, June 29, 2026
@@ -83,6 +99,11 @@
 - **Time:** 1550 – 1750
 - **Location:** Lumbye (lower level)
 - **Talks:** 11
+
+---
+TUESDAY
+
+---
 
 ### Plenary Talk with Mehmet Somel
 - **Date:** Tuesday, June 30, 2026
@@ -126,6 +147,8 @@
 - **Location:** Lumbye (lower level)
 - **Talks:** 11
 
+---
+
 ### S10 Learning from Evolution: AI Models for Genomic Function
 - **Date:** Tuesday, June 30, 2026
 - **Time:** 1320 – 1520
@@ -161,6 +184,8 @@
 - **Time:** 1320 – 1520
 - **Location:** Akvariet 4+5
 - **Talks:** 9
+
+---
 
 ### S11 The evolution of recombination landscapes
 - **Date:** Tuesday, June 30, 2026
@@ -198,11 +223,18 @@
 - **Location:** Lumbye (lower level)
 - **Talks:** 16
 
+---
+WEDNESDAY
+
+---
+
 ### Plenary Talk with Nandita Garud
 - **Date:** Wednesday, July 1, 2026
 - **Time:** 0900 – 0950
 - **Location:** Main
 - **Talks:** 1
+
+---
 
 ### S21 From genomic graphs to evolutionary insights: standardising pangenomes for population inference
 - **Date:** Wednesday, July 1, 2026
@@ -240,11 +272,7 @@
 - **Location:** Akvariet 4+5
 - **Talks:** 10
 
-### SMBE Business Meeting
-- **Date:** Wednesday, July 1, 2026
-- **Time:** 1220 – 1320
-- **Location:** Carstensen (lower level)
-- **Talks:** 1
+---
 
 ### Open 8: Molecular and genome evolution 3
 - **Date:** Wednesday, July 1, 2026
@@ -288,6 +316,8 @@
 - **Location:** Vandsalen
 - **Talks:** 1
 
+---
+
 ### Editor Symposium MBE
 - **Date:** Wednesday, July 1, 2026
 - **Time:** 1550 – 1750
@@ -330,11 +360,18 @@
 - **Location:** Akvariet 4+5
 - **Talks:** 5
 
+---
+THURSDAY
+
+---
+
 ### Plenary talk with Moises Expositi-Alonso
 - **Date:** Thursday, July 2, 2026
 - **Time:** 0910 – 1000
 - **Location:** Main
 - **Talks:** 1
+
+---
 
 ### L05 The role and responsibilities of the SMBE community in facing the polycrisis
 - **Date:** Thursday, July 2, 2026

@@ -34,6 +34,13 @@ Epistasis is the phenomenon in which the phenotypic effect of a mutation depends
 
 Meiotic drivers are selfish genetic elements that bias gametogenesis to enhance their own transmission, cheating Mendelian segregation. When located on a sex chromosome, such drivers can skew progeny sex ratios, create a female-biased population and diminish average population fitness. In Drosophila affinis, two distinct X-linked meiotic drivers segregate at ~10% frequency in wild populations and are associated with diagnostic chromosomal inversions. The X chromosome of D. affinis is a neo-sex chromosome formed by the fusion of the ancestral X with a former autosome, placing ~40% of the genome under the potential influence of meiotic drive. Using whole-genome sequencing of wild-caught males with and without meiotic drive, we show that inversion polymorphisms linked to meiotic drive suppress recombination across the entire neo-X, leading to long-term divergence between the three X haplotypes (two driving and one non-driving).<br />D. affinis also harbors extensive Y chromosome polymorphism, including multiple morphologically distinct Y variants and fertile XO males. The two drivers differ in their resistance profiles in XO males, and resistance may trade off among Y morphs. Consistent with this, we find that polymorphic Y chromosomes are highly differentiated from one another, including genic content. Together, these analyses leverage a rare natural system with two distinct X-linked drivers and polymorphic Y chromosomes to test how meiotic drive shapes recombination, genomic divergence, and fitness across a newly formed sex chromosome.<br />
 
+### Notes
+- D. afinis
+- Woods hole and Lincoln inversions/drivers
+- chrX W, L and standard haplotypes seperate in PCA
+- short, medium, and large Y chromosome haplotypes segretagete 
+- XO males are sterile or 100% female offspring
+
 ---
 
 ## Extensive Reorganization of the Escherichia coli Chromosome Over 75,000 Generations of Laboratory Evolution

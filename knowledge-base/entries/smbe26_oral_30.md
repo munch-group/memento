@@ -67,6 +67,7 @@ In Drosophila simulans, X-linked meiotic drivers disrupt Y-chromosome segregatio
 - Satellite abundance is associate to the resistance ability of the Y chromosome
 - GP6 is the human ortholog of HD1D2, TERF2 is the human ortholog of Trf2
 
+
 ![Screenshot 2026-06-29 at 12.10.47.png](images/mqz283zm02za_Screenshot_2026-06-29_at_12.10.47.png)
 
 ![Screenshot 2026-06-29 at 12.12.06.png](images/mqz28f15suhj_Screenshot_2026-06-29_at_12.12.06.png)

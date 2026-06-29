@@ -60,9 +60,18 @@ In Drosophila simulans, X-linked meiotic drivers disrupt Y-chromosome segregatio
 - The DP duplication
   - Trf2 (the second copy is truncated and cannot produce the genes longest isoform) The intermediate isoform (acrive in bboth copies)
 - Trf2 targets satelites on Y that differs on Y sensive and resistant Y chromosomes
-
 - Y controls its Trf2 sensitivity through satelite content..
+- Nondisjunction of the Y chromatid during melosis Il
+- The 1st driver is a dysfunctional allele of the heterochromatin protein HD1D2 
+- The 2na driver is a Trf2, involved in the piRNA production
+- Satellite abundance is associate to the resistance ability of the Y chromosome
 - GP6 is the human ortholog of HD1D2, TERF2 is the human ortholog of Trf2
+
+![Screenshot 2026-06-29 at 12.10.47.png](images/mqz283zm02za_Screenshot_2026-06-29_at_12.10.47.png)
+
+![Screenshot 2026-06-29 at 12.12.06.png](images/mqz28f15suhj_Screenshot_2026-06-29_at_12.12.06.png)
+
+![Screenshot 2026-06-29 at 12.12.58.png](images/mqz28ni1xqws_Screenshot_2026-06-29_at_12.12.58.png)
 
 ---
 
@@ -96,7 +105,7 @@ Mitochondrial DNA (mtDNA) molecules are found in multiple copies, replicate and 
 
 ---
 
-## Nondisjunction and fitness costs in a selfish X chromosome that causes meiotic drive in both sexes in Drosophila testacea
+## ~Nondisjunction and fitness costs in a selfish X chromosome that causes meiotic drive in both sexes in Drosophila testacea~
 
 **Presenter:** Steve Perlman, University Of Victoria
 
@@ -106,7 +115,7 @@ Meiotic drivers are selfish genetic elements that manipulate the process of meio
 
 ---
 
-## Natural variation in sex chromosome drive enables the discovery of a neo-X meiotic drive gene family
+## ~Natural variation in sex chromosome drive enables the discovery of a neo-X meiotic drive gene family~
 
 **Presenter:** Jeffrey Vedanayagam, University Of Texas At San Antonio
 

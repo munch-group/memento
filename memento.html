@@ -2068,11 +2068,83 @@ function moveTextareaLines(ta, dir){
   }
   ta.dispatchEvent(new Event('input', {bubbles:true}));
 }
+// Insert text over the current selection, preserving the native undo stack where possible.
+function insertAtSelection(ta, text){
+  if (document.execCommand && document.execCommand('insertText', false, text)) return;
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  ta.setRangeText(text, s, e, 'end');
+  ta.dispatchEvent(new Event('input', {bubbles:true}));
+}
+// Cmd-B / Cmd-I: wrap the selection in a markdown marker, or unwrap it if already wrapped.
+function wrapSelectionMarkdown(ta, marker){
+  const val = ta.value, M = marker, L = M.length;
+  const s = ta.selectionStart, e = ta.selectionEnd, sel = val.slice(s, e);
+  // toggle off: markers sit immediately outside the selection
+  // (the L===1 guard keeps a lone '*' from matching one half of a '**' boundary)
+  if (val.slice(s - L, s) === M && val.slice(e, e + L) === M &&
+      (L === 2 || (val[s - L - 1] !== '*' && val[e + L] !== '*'))){
+    ta.setSelectionRange(s - L, e + L);
+    insertAtSelection(ta, sel);
+    ta.setSelectionRange(s - L, e - L);
+    return;
+  }
+  // toggle off: the selection itself is exactly wrapped
+  if (sel.length >= 2 * L && sel.slice(0, L) === M && sel.slice(-L) === M &&
+      (L === 2 || (sel[L] !== '*' && sel[sel.length - L - 1] !== '*'))){
+    insertAtSelection(ta, sel.slice(L, sel.length - L));
+    ta.setSelectionRange(s, e - 2 * L);
+    return;
+  }
+  // wrap
+  insertAtSelection(ta, M + sel + M);
+  if (sel.length === 0) ta.setSelectionRange(s + L, s + L);     // empty: drop the caret between the markers
+  else ta.setSelectionRange(s + L, s + L + sel.length);          // keep the inner text selected
+}
+// Enter on a markdown list line (-, *, +, 1., 1)) continues the list onto the next line.
+// On an empty item it clears the marker and drops out of the list. Returns true if it handled Enter.
+function continueMarkdownList(ta){
+  if (ta.selectionStart !== ta.selectionEnd) return false;        // only a collapsed caret
+  const val = ta.value, pos = ta.selectionStart;
+  const lineStart = val.lastIndexOf('\n', pos - 1) + 1;
+  let lineEnd = val.indexOf('\n', pos);
+  if (lineEnd === -1) lineEnd = val.length;
+  const line = val.slice(lineStart, lineEnd);
+  const m = line.match(/^(\s*)([-*+]|\d+[.)])(\s+)(\[[ xX]\]\s+)?/);
+  if (!m) return false;
+  const prefix = m[0], indent = m[1], bullet = m[2], space = m[3], checkbox = m[4];
+  // Empty item (nothing after the marker) -> remove the marker and end the list.
+  if (line.slice(prefix.length).trim() === ''){
+    ta.setSelectionRange(lineStart, lineEnd);
+    if (!(document.execCommand && document.execCommand('delete'))){
+      ta.setRangeText('', lineStart, lineEnd, 'end');
+      ta.dispatchEvent(new Event('input', {bubbles:true}));
+    }
+    return true;
+  }
+  // Continue: same marker, numbers increment, checkboxes reset to unchecked.
+  const num = bullet.match(/^(\d+)([.)])$/);
+  const nextBullet = num ? (parseInt(num[1], 10) + 1) + num[2] : bullet;
+  const nextBox = checkbox ? checkbox.replace(/\[[ xX]\]/, '[ ]') : '';
+  insertAtSelection(ta, '\n' + indent + nextBullet + space + nextBox);
+  return true;
+}
 document.getElementById('f-content').addEventListener('keydown', e=>{
   if(e.altKey && !e.metaKey && !e.ctrlKey && !e.shiftKey &&
      (e.key==='ArrowUp' || e.key==='ArrowDown')){
     e.preventDefault();
     moveTextareaLines(e.currentTarget, e.key==='ArrowUp' ? -1 : 1);
+  }
+  // Cmd-B / Cmd-I wrap the selection in markdown bold / italic.
+  if(e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey){
+    const k = e.key.toLowerCase();
+    if(k==='b' || k==='i'){
+      e.preventDefault();
+      wrapSelectionMarkdown(e.currentTarget, k==='b' ? '**' : '*');
+    }
+  }
+  // Enter continues a markdown list; Shift/Cmd-Enter stay as plain-newline / save.
+  if(e.key==='Enter' && !e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey && !e.isComposing){
+    if(continueMarkdownList(e.currentTarget)) e.preventDefault();
   }
 });
 window.addEventListener('focus', ()=>{ if(dirHandle) loadFromFile(); });

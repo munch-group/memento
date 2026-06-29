@@ -14,6 +14,23 @@
 
 A fundamental driver of biological diversification is the evolution of reproductive barriers between species. Instability and mis-regulation of repetitive DNA underlie numerous post-zygotic reproductive barriers, yet the molecular mechanisms are unknown. A long-studied genetic incompatibility between Drosophila melanogaster and D. simulans arises from mis-segregation of the D. melanogaster-specific 359bp DNA satellite in hybrid embryos. Here we report that the D. simulans version of the essential enzyme Topoisomerase II/Top2 causes this lethal incompatibility. Combining interspecies gene swaps with cell biology and genetics revealed that D. simulans-specific adaptive divergence of Top2 DNA-interacting domains prevents the resolution of 359bp-induced topological stress. Our findings demonstrate that species-specific DNA satellite topology requires species-specific molecular machinery and that even vital housekeeping genes can underlie reproductive isolation between closely related species.
 
+### Notes:
+- Interspecies mouse hybrids have perturbed repetitive DNA
+- Has to do with chromosome clusters
+ - centromeres? CENHAPs?
+- Fly cross has sterile males and no females (dies in early emprios) 359bp repeat region on chromosome X
+- Topoisomerase II (Topw) (model is that topII help dis-entangle chromosomes and that the repeat is cocupled to species specifc versions of Top2)
+- Adding only 359 to the other species make the females sterile
+- 359bp repeat region induces entanglement that is rescued by the Top2 from the species that has it.
+- Only important in early emprionic devellopment because cell cycle speed is high
+- Top2 domains that contact DNA evolve adaptively
+- **Maybe the 359 was initially an X driver?**
+- She thinks Top2 is/was the driver
+- Toplogical structures 
+- Apparently Top2 is under selection in mammals( or primates) too. **Sounds like autosomal compensation**
+- **Poster B 373**
+- **The big question is why males are infertile. That would provide hints about why 359 was fixed in the first place**
+
 ---
 
 ## The tdk family: an evolutionarily persistent single-gene killer meiotic driver family employing a toxin–antidote strategy

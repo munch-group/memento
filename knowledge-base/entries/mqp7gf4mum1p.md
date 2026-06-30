@@ -1,10 +1,11 @@
 - [x] **Rasmus** about meiotic drive
-- [ ] Talk to **Linda Odenthal-Hesse** about mouse T-haplotype with PRDM9 on it
 - [ ] **Laurent** + **Julien** about PRDM9
+- [ ] Talk to **Linda Odenthal-Hesse** about mouse T-haplotype with PRDM9 on it
 - [ ] **John** about hybrid incompatibility and XY haplotype driver pairs
 - [ ] **Yun** about phase-type distributions
-- [ ] **Anjali Gupta** (Kansas) about simulations and her autosome paper
+- [ ] ** Yan** about tspaint
 - [ ] **Martin Kuhlwilm** about Ghost models
+- [ ] **Anjali Gupta** (Kansas) about simulations and her autosome paper
 - [ ] **Iker** about HMM
 - [ ] **Mateja** about new aDNA 30-60 bp
 - [ ] Julien Dutheil

@@ -1,9 +1,10 @@
 - [x] **Rasmus** about meiotic drive
+- [ ] **Aida Andres / Debora Brandt** about balancing selection candidates and share ideas about stats non-independence
 - [ ] **Laurent** + **Julien** about PRDM9
 - [ ] Talk to **Linda Odenthal-Hesse** about mouse T-haplotype with PRDM9 on it
 - [ ] **John** about hybrid incompatibility and XY haplotype driver pairs
 - [ ] **Yun** about phase-type distributions
-- [ ] ** Yan** about tspaint
+- [ ] **Yan** about tspaint
 - [ ] **Martin Kuhlwilm** about Ghost models
 - [ ] **Anjali Gupta** (Kansas) about simulations and her autosome paper
 - [ ] **Iker** about HMM
@@ -12,7 +13,6 @@
 - [ ] Eline Lorenzen
 - [ ] Moisès Coll Macià
 - [ ] Jonathan Holmes
-- [ ] Aida Andres
 - [ ] Amy Goldberg
 - [ ] Daniel Falush
 - [ ] Donate Weghorn

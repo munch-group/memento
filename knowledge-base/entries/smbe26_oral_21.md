@@ -24,6 +24,12 @@ Hybridization and introgression generate reticulate evolutionary histories that 
 
 Bayesian phylogenetic inference relies on Markov chain Monte Carlo (MCMC) to approximate posterior probabilities of trees. The efficiency of an MCMC analysis depends critically on the proposal mechanisms used to explore tree space. In phylogenetics, proposals must modify not only tree topology but also branch lengths, because these parameters are strongly coupled through the likelihood function. As a consequence, promising topological proposals are often rejected because they are accompanied by unfavorable branch-length values.<br /><br />We investigate an alternative framework based on the profile likelihood, in which branch lengths are replaced by their maximum-likelihood estimates rather than being integrated over a prior distribution. This approach isolates the effects of topological proposals from those of branch-length proposals and provides a simplified setting for studying MCMC behavior in tree space.<br /><br />For small phylogenetic problems under simple substitution models, the exact posterior distribution over all tree topologies can be computed without resorting to MCMC. This allows us to evaluate the performance of different tree-perturbation strategies against known posterior probabilities and to quantify their ability to discover and traverse high-probability regions of tree space. In addition, because the complete state space is known, the transition kernel of the Markov chain can be calculated explicitly. This enables the application of analytical tools from Markov chain theory to characterize mixing behavior, identify bottlenecks and metastable regions, and compare the effectiveness of alternative tree-rearrangement operators.<br /><br />Our results provide new insight into the relationship between tree-space geometry, proposal design, and MCMC performance, with implications for the development of more efficient algorithms for Bayesian phylogenetic inference.
 
+### Notes
+- branch Likelihood vs branch prior
+- Tree topology space
+- Proposal distribution using neighbors of neighbors
+- If second eigenval of transition matrix is the spectral gap quatifying mixing behaviour, maybe I can use it to 
+
 ---
 
 ## Detecting balancing selection using ancestral recombination graphs 
@@ -33,6 +39,9 @@ Bayesian phylogenetic inference relies on Markov chain Monte Carlo (MCMC) to app
 **Abstract:**
 
 Balancing selection maintains polymorphism within populations and, by definition, contributes to genetic variance in fitness. Identifying its genomic targets is therefore central to understanding the genetic basis of evolutionarily relevant phenotypic variation. Genome-wide scans can detect balancing selection through its signature of excess polymorphism at linked sites; however, existing methods are generally conservative and likely miss many biologically relevant targets. Here, we show that leveraging ancestral recombination graphs (ARGs) substantially improves power to detect balancing selection relative to current state-of-the-art approaches. We evaluate several ARG-based summary statistics, some of which have higher power than existing methods for the scenarios we simulated. Applying this framework to ARGs inferred from human genomic data identified candidates with properties that strongly suggest that they are true targets of balancing selection, rather than the consequence of complex demographic processes. We identify well known-targets of balancing selection as well as novel candidate targets. More broadly, our results demonstrate that ARG-based approaches provide a powerful framework for detecting balancing selection, with great promise for non-model species, where traditional methods (largely developed with a focus on humans) may be especially underpowered. 
+
+### Notes
+- Ask about balancing selection candidates and share ideas about stats non-independence
 
 ---
 

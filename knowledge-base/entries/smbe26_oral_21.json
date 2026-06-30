@@ -1,16 +1,17 @@
 {
   "id": "smbe26_oral_21",
   "type": "note",
-  "title": "S07 From Trees to Graphs: Methodological Advances and Innovative Applications of Graphs in Evolutionary Analysis",
+  "title": "Attending: S07 From Trees to Graphs: Methodological Advances and Innovative Applications of Graphs in Evolutionary Analysis",
   "tags": [
     "SMBE26"
   ],
   "source": "",
-  "date": "2026-06-28T09:00:20.000Z",
+  "date": "2026-06-30T07:25:39.608Z",
   "synced": false,
   "genes": [],
   "connection": false,
   "archived": false,
   "due": "",
-  "_sortTag": "SMBE26"
+  "_sortTag": "SMBE26",
+  "pinned": true
 }

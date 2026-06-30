@@ -1,7 +1,9 @@
 ## Sessions
 
+![Screenshot 2026-06-30 at 09.32.00.png](images/mr0bww9glsla_Screenshot_2026-06-30_at_09.32.00.png)
+
 ---
-SUNDAY
+# SUNDAY
 
 ---
 
@@ -18,7 +20,7 @@ SUNDAY
 - **Talks:** 1
 
 ---
-MONDAY
+# MONDAY
 
 ---
 
@@ -101,7 +103,7 @@ MONDAY
 - **Talks:** 11
 
 ---
-TUESDAY
+# TUESDAY
 
 ---
 
@@ -224,7 +226,7 @@ TUESDAY
 - **Talks:** 16
 
 ---
-WEDNESDAY
+# WEDNESDAY
 
 ---
 
@@ -361,7 +363,7 @@ WEDNESDAY
 - **Talks:** 5
 
 ---
-THURSDAY
+# THURSDAY
 
 ---
 
@@ -396,4 +398,3 @@ THURSDAY
 - **Time:** 1130 – 1300
 - **Location:** Main
 - **Talks:** 3
-

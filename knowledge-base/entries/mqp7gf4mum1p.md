@@ -1,36 +1,19 @@
-- Talk to Linda Odenthal-Hesse about mouse T-haplotype with PRDM9 on it
-- Laurent Duret
-- Sriram (if he is there)
-- Tomi
-- Davide Marreno
-- Davide Castellano
-- Emilia
-- Rasmus about meiotic drive
-
-## Speakers i know
-- Aida Andres
-- Amy Goldberg
-- Daniel Falush
-- Donate Weghorn
-- Eline Lorenzen
-- Evan Forsythe
-- Fernando Racimo
-- Iker Rivas-González
-- Joanna Kelley
-- John Huelsenbeck
-- John Pool
-- Jonathan Holmes
-- Julien Dutheil
-- Kateryna Makova
-- Laurie Stevison
-- Linda Odenthal-Hesse
-- Martin Kuhlwilm
-- Mateja Hajdinjak
-- Moisès Coll Macià
-- Nathan Schaefer
-- Nicolas Galtier
-- Paul Saunders
-- Rebekah Rogers
-- Regina Fairbanks
-- Yun Song
+- [x] **Rasmus** about meiotic drive
+- [ ] Talk to **Linda Odenthal-Hesse** about mouse T-haplotype with PRDM9 on it
+- [ ] **Laurent** + **Julien** about PRDM9
+- [ ] **John** about hybrid incompatibility and XY haplotype driver pairs
+- [ ] **Yun** about phase-type distributions
+- [ ] **Anjali Gupta** (Kansas) about simulations and her autosome paper
+- [ ] **Martin Kuhlwilm** about Ghost models
+- [ ] **Iker** about HMM
+- [ ] **Mateja** about new aDNA 30-60 bp
+- [ ] Julien Dutheil
+- [ ] Eline Lorenzen
+- [ ] Moisès Coll Macià
+- [ ] Jonathan Holmes
+- [ ] Aida Andres
+- [ ] Amy Goldberg
+- [ ] Daniel Falush
+- [ ] Donate Weghorn
+- [ ] Joanna Kelley
 

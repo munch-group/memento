@@ -12,5 +12,6 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "_sortTag": "SMBE26"
+  "_sortTag": "SMBE26",
+  "pinned": true
 }

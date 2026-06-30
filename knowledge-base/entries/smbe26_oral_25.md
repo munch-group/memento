@@ -12,6 +12,10 @@
 
 **Abstract:** Meiotic recombination is a fundamental process for sexual reproduction and a major source of genetic diversity. Understanding the mechanisms by which genetic variation is generated and maintained across phylogenetic groups is central to biodiversity and evolution. In this talk, I will synthesize key aspects of meiotic recombination, from chromosome organization to the molecular and evolutionary forces shaping recombination landscapes. I will present an integrated view of genome architecture and the mechanisms underlying the establishment, regulation, and genomic distribution of recombination hotspots, with particular emphasis on the factors that govern the formation and repair of the large number of programmed DNA double-strand breaks generated during early meiosis. In parallel, I will discuss the genetic, mechanistic, and evolutionary determinants of recombination landscapes across taxa, illustrating how multiple layers of regulation converge to shape crossover patterns. These layers include selective forces acting on DNA sequence composition, modulated by genome reshuffling and lineage-specific evolutionary histories, as well as constraints imposed by higher-order chromosome organization during meiosis. Together, these factors highlight meiotic recombination as a dynamic and versatile toolbox driving genome evolution.
 
+### Notes
+- Shorter synaptonemal axis -> longer chromatin loops
+- 
+
 ---
 
 ## Rapidly Evolving Epigenetic Controlling Factors of Meiotic Recombination
@@ -19,6 +23,9 @@
 **Presenter:** Linda Odenthal-Hesse, *Max Planck Institute For Evolutionary Biology*
 
 **Abstract:** Meiotic recombination is essential for gamete formation, with errors leading to miscarriage and infertility. In most vertebrates, recombination is non-random and specified by the rapidly evolving histone methyltransferase PRDM9, which marks chromatin accessibility and defines recombination hotspots. Here, we present a second rapidly evolving epigenetic control system that acts with PRDM9 to regulate meiotic recombination and fertility.<br />By isolating Prdm9 alleles from hundreds of wild mouse samples worldwide, we identified over 40 novel alleles. We integrated alleles reported in GenBank and characterized more than 250 distinct Prdm9 alleles using phylogenetic reconstruction methods tailored to the Prdm9 coding minisatellite. We observed lineage-specific evolutionary dynamics across mice.<br />Prdm9 is also a hybrid sterility gene that acts together with the Hstx2 locus. In collaboration with the Forejt laboratory, we resolved the Hstx2 locus and revealed a microRNA-mediated pachytene checkpoint in which copy-number variation modulates fertility and genome-wide recombination rates. Comparative genomics across sterile and fertile mouse strains has now revealed those mature miRNAs that are functionally divergent between the sterility and fertility alleles of Hstx2. Targets were in silico predicted and validated by differential expression levels in testicular cells of sterile and fertile mice.<br />Finally, we show that Prdm9 and Hstx2 alleles both affect crossover frequency and fine-scale recombination resolution across intersubspecific and intrasubspecific hotspots in fertile mice. We tested three hotspots activated by different Prdm9 alleles, including a human transgene. Together, our results link these two rapidly evolving loci to their roles in recombination, reproductive isolation, and infertility.
+
+### Notes
+- More mir copies -> more strict checkpoint
 
 ---
 

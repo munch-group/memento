@@ -3,13 +3,15 @@
   "type": "note",
   "title": "SMBE26 - Wednesday",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "SMBE26"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-28T12:07:22.924Z",
+  "date": "2026-07-01T08:20:19.306Z",
   "synced": false,
   "_sortTag": "",
-  "pinned": false
+  "pinned": true
 }

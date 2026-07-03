@@ -1,11 +1,13 @@
 ## Today todo
 - Email
 - SMBE follow-up / Desktop / Browser clean up
+- Tidy up chr3 notebook in geneinfo repo
 - Erik status
 - Shannon status
 - Phasic code review with Fable
 
 ## Week run
+- Eriks respons to reviews
 - Get back to Sriram
 - Check up on SMBE receipt
 - PsychENCODE access request

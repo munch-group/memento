@@ -1,20 +1,8 @@
-- [x] **Rasmus** about meiotic drive
-- [ ] **Aida Andres / Debora Brandt** about balancing selection candidates and share ideas about stats non-independence
-- [ ] **Laurent** + **Julien** about PRDM9
-- [ ] Talk to **Linda Odenthal-Hesse** about mouse T-haplotype with PRDM9 on it
-- [ ] **John** about hybrid incompatibility and XY haplotype driver pairs
-- [ ] **Yun** about phase-type distributions
-- [ ] **Yan** about tspaint
-- [ ] **Martin Kuhlwilm** about Ghost models
-- [ ] **Anjali Gupta** (Kansas) about simulations and her autosome paper
-- [ ] **Iker** about HMM
-- [ ] **Mateja** about new aDNA 30-60 bp
-- [ ] Julien Dutheil
-- [ ] Eline Lorenzen
-- [ ] Moisès Coll Macià
-- [ ] Jonathan Holmes
-- [ ] Amy Goldberg
-- [ ] Daniel Falush
-- [ ] Donate Weghorn
-- [ ] Joanna Kelley
+- **Laurent** about PRDM9
+- **Linda** about mouse mir and circRNA / human ortholog and / check my own mir target list and circRNA list
+- **John** about hybrid incompatibility and XY haplotype driver pairs
+- **Leo** about GhostBuster
+- **Anjali Gupta** (Kansas) about simulations and her autosome paper
+- ILS LoF variants. "Ultra ILS" across more than one trio.
+- **Kalle / Charlotte** about ABC bears.
 

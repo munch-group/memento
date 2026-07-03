@@ -1,13 +1,11 @@
 ## Today todo
-- Email/admin back on track.
-- Phasic code review with Fable
-- SMBE follow-up
+- Email
+- SMBE follow-up / Desktop / Browser clean up
 - Erik status
 - Shannon status
+- Phasic code review with Fable
 
 ## Week run
-- Sync ferie med resten af BiRC
-- BP reexam evaluation
 - Get back to Sriram
 - Check up on SMBE receipt
 - PsychENCODE access request

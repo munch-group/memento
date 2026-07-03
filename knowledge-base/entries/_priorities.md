@@ -1,6 +1,9 @@
 ## Today todo
 - Email/admin back on track.
-- Prepare GT exam
+- Phasic code review with Fable
+- SMBE follow-up
+- Erik status
+- Shannon status
 
 ## Week run
 - Sync ferie med resten af BiRC

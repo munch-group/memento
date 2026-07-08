@@ -1,12 +1,12 @@
 ## Today todo
 - Email
 - TA work
-- Tidy up chr3 notebook in geneinfo repo and make (non-rendered) notebooks ECH regions, xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
-- Organize how data produced by different projects/repos are stored for use in other projects (close down git-lfs and use my new "lfs" library)
+- Eriks respons to reviews
 
 ## Week run
-- Eriks respons to reviews
 - Shannon y-strat-gwas
+- Tidy up chr3 notebook in geneinfo repo and make (non-rendered) notebooks ECH regions, xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
+- Organize how data produced by different projects/repos are stored for use in other projects (close down git-lfs and use my new "lfs" library)
 - New controller about Lundbeck Experiment wrap-up
 - Watch talks I missed
 - Funding plan

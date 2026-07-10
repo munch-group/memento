@@ -1,0 +1,1 @@
+I wonder if it is possible to use BFFG in the MCMC proposal of SINGER to allow population structure?

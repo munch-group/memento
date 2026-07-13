@@ -299,6 +299,7 @@ a { color: inherit; }
       <div id="file-row"></div>
       <div id="gh-row"></div>
       <div id="vscode-row"></div>
+      <div id="build-row" style="font-size:10px;color:var(--text3);font-family:var(--mono);padding:6px 1.25rem 0"></div>
     </div>
   </div>
   <div class="sb-overlay" onclick="document.querySelector('.sidebar').classList.remove('open')"></div>
@@ -427,6 +428,10 @@ const GH_REPO = 'munch-group/memento';
 const GH_KB_PATH = 'knowledge-base';
 const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
+// Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
+// tell whether a device is running the build you just pushed. Bump it on every meaningful change.
+const APP_BUILD = '2026-07-13.3';
+let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';
 let activeTag = null;
@@ -644,7 +649,26 @@ function showApp() {
   document.getElementById('app-area').style.display='';
   updateWriteUI();
   updateVSCodeRow();
+  renderBuildRow();
   applyClipParams();
+}
+
+// A missing markdown engine used to be invisible: md() caught the error and returned escaped
+// text, so every card quietly showed raw markdown with nothing anywhere saying why. Say it.
+function renderBuildRow() {
+  const row = document.getElementById('build-row');
+  if (!row) return;
+  const missing = [];
+  if (typeof marked === 'undefined') missing.push('marked');
+  if (typeof katex === 'undefined') missing.push('katex');
+  const build = `build ${APP_BUILD}`;
+  if (missing.length) {
+    row.innerHTML = `<span style="color:var(--accent)" title="Could not load vendor/${missing[0]}.min.js — cards fall back to raw markdown. Reload; if it persists the vendor/ files aren't reachable from this device.">⚠ ${esc(missing.join(' + '))} failed to load</span><br>${build}`;
+  } else if (_mdFailed) {
+    row.innerHTML = `<span style="color:var(--accent)" title="${esc(_mdFailed)}">⚠ render error</span><br>${build}`;
+  } else {
+    row.textContent = build;
+  }
 }
 
 // Show or hide everything that mutates. Re-run whenever `readOnly` changes — on the GitHub
@@ -2311,7 +2335,7 @@ function md(s){
     // Wrap purely numeric reference links as superscripts (from clipped footnotes)
     h = h.replace(/<a ([^>]*)>([\d]+)<\/a>/g, '<sup><a $1>$2</a></sup>');
     out = h;
-  } catch(e) { out = esc(s); }
+  } catch(e) { _mdFailed = e.message; out = esc(s); }   // raw text — surfaced by renderBuildRow()
   if(_mdCache.size > 1200) _mdCache.clear();   // soft cap so a long edit-heavy session can't grow it unbounded
   _mdCache.set(key, out);
   return out;
@@ -2462,7 +2486,7 @@ function drainLazyQueue(){
     const el = lazyQueue.shift();
     if(el.isConnected && el.dataset.lazy){ upgradeLazyCard(el); did = true; }
   }
-  if(did) resolveImages();
+  if(did) { resolveImages(); renderBuildRow(); }   // surface any md() failure the batch hit
   if(lazyQueue.length && !lazyRaf) lazyRaf = requestAnimationFrame(drainLazyQueue);
 }
 function ensureLazyObserver(){
@@ -3404,6 +3428,7 @@ document.getElementById('sidebar').addEventListener('click', e => {
   }
 });
 renderGhControls();
+renderBuildRow();
 // iOS evicts script-writable storage from web apps left unused; here that costs the cached
 // entries and the saved token, but never the data itself, which lives in the repo.
 if (navigator.storage?.persist) navigator.storage.persist().catch(()=>{});

@@ -2,8 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Memento</title>
+<!-- Add to Home Screen on iOS / Add to Dock on macOS: runs standalone, no browser chrome. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Memento">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F5F4EF">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,7 +30,9 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 html { overflow: hidden; overscroll-behavior-x: none; height: 100%; }
 ::placeholder { color: var(--text3); opacity: 0.4; }
 a { color: inherit; }
-.layout { display: flex; height: 100vh; overflow-x: hidden; }
+/* dvh + safe-area insets: installed to the iOS home screen the app runs fullscreen, so without
+   these the header would sit under the status bar. Both are no-ops on the desktop. */
+.layout { display: flex; height: 100vh; height: 100dvh; overflow-x: hidden; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
 .sidebar { width: 200px; flex-shrink: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1.25rem 0; background: var(--bg2); overflow: hidden; }
 .main { flex: 1; min-width: 0; overflow-x: hidden; overflow-y: auto; padding: 1.5rem 2rem 4rem; }
 .sb-title { font-size: 14px; font-weight: 600; padding: 0 1.25rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem; }
@@ -302,10 +311,10 @@ a { color: inherit; }
         <p style="font-size:12px;color:var(--text3);margin-top:0.5rem">Works in Chrome and Edge. You can drag images onto cards.</p>
       </div>
       <div id="connect-gh" style="display:none">
-        <h2>Memento <span style="font-size:14px;color:var(--text3);font-weight:400">read-only</span></h2>
-        <p>Load your knowledge base from GitHub. Entries are cached locally for fast repeat visits.</p>
+        <h2>Memento <span style="font-size:14px;color:var(--text3);font-weight:400">via GitHub</span></h2>
+        <p>Load your knowledge base from GitHub. Entries are cached locally for fast repeat visits, and edits are committed straight back to the repo.</p>
         <button class="btn btn-primary" onclick="ghLoadEntries()">Load from GitHub</button>
-        <p style="font-size:12px;color:var(--text3);margin-top:0.5rem">Requires a GitHub Personal Access Token with repo read access.</p>
+        <p style="font-size:12px;color:var(--text3);margin-top:0.5rem">Needs a fine-grained Personal Access Token with <b>Contents: Read and write</b> on the repo. A read-only token still works — the app just stays read-only.</p>
       </div>
     </div>
     <div id="app-area" style="display:none">
@@ -411,7 +420,9 @@ const TYPE_ICONS = {
   view: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg>',
 };
 const GH_REPO = 'munch-group/memento';
-const GH_ENTRIES_PATH = 'knowledge-base/entries';
+const GH_KB_PATH = 'knowledge-base';
+const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
+const GH_BRANCH = 'main';
 let items = [];
 let activeType = 'all';
 let activeTag = null;
@@ -432,8 +443,11 @@ let archiveFilter = 'active'; // 'active' | 'archived'
 let entriesHandle = null; // DirectoryHandle for entries/
 let basePath = '';         // absolute path to knowledge-base folder (for vscode:// links)
 const hasFSAccess = typeof window.showDirectoryPicker === 'function';
-const readOnly = !hasFSAccess;
+// Writable via the local filesystem (Chrome/Edge) or, failing that, via the GitHub API once a
+// token with push access is known. Set by ghApplyWritePermission() during the GitHub load.
+let readOnly = !hasFSAccess;
 let ghRepoMode = false;    // true when entries loaded from GitHub API
+let ghCanWrite = false;    // true when the stored PAT has push access to GH_REPO
 let highlightGenes = new Set();      // combined: highlight-input genes ∪ @genes in the search bar
 let highlightInputGenes = new Set(); // genes typed into the "Highlight genes" input
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
@@ -481,7 +495,63 @@ async function connectFolder() {
   }
 }
 
+// --- Storage seam ---------------------------------------------------------
+// Both backends honour the same contract, which kb_io.py also depends on:
+// metadata -> entries/<id>.json, body -> sibling entries/<id>.md.
+//   fsa*  File System Access API — Chrome/Edge on the desktop, writing the folder directly.
+//   gh*   GitHub Git Data API    — iOS/Safari, committing to GH_REPO (see "GitHub write backend").
+// Every read and mutation routes through the dispatchers below.
+
+function storageReady() { return !!dirHandle || ghRepoMode; }
+
+// The metadata/body split the .json/.md pair contract is built on. _digest keeps its body
+// in `markdown` rather than `content`.
+function splitEntry(entry) {
+  const meta = Object.assign({}, entry);
+  let mdText;
+  if (meta.type === '_digest') {
+    mdText = meta.markdown || '';
+    delete meta.markdown;
+  } else {
+    mdText = meta.content || '';
+    delete meta.content;
+  }
+  return { meta, mdText };
+}
+
 async function loadFromFile() {
+  if (ghRepoMode) return ghLoadEntries();
+  return fsaLoadEntries();
+}
+
+async function saveEntryToFile(entry) {
+  if (readOnly) return;
+  if (ghRepoMode) { ghEnqueueEntry(entry); return ghScheduleFlush(); }
+  return fsaSaveEntry(entry);
+}
+
+async function deleteEntryFile(eid) {
+  if (readOnly) return;
+  if (ghRepoMode) { ghEnqueueDelete(eid); return ghScheduleFlush(); }
+  return fsaDeleteEntry(eid);
+}
+
+// Bulk save. On GitHub every entry lands in one commit, not one commit each.
+async function saveToFile() {
+  if (readOnly) return;
+  const toSave = window._kbDigest ? [...items, window._kbDigest] : items;
+  if (ghRepoMode) {
+    for (const entry of toSave) ghEnqueueEntry(entry);
+    return ghScheduleFlush();
+  }
+  if (!dirHandle) return;
+  try {
+    for (const entry of toSave) await fsaSaveEntry(entry);
+  } catch(e) { showToast('Save error: '+e.message); }
+}
+
+// --- File System Access backend (desktop) ---
+async function fsaLoadEntries() {
   if (!dirHandle) return;
   try {
     if (!entriesHandle) entriesHandle = await dirHandle.getDirectoryHandle('entries', {create: true});
@@ -520,21 +590,12 @@ async function loadFromFile() {
   } catch(e) { showToast('Read error: '+e.message); }
 }
 
-async function saveEntryToFile(entry) {
-  if (readOnly || !dirHandle) return;
+async function fsaSaveEntry(entry) {
+  if (!dirHandle) return;
   try {
     if (!entriesHandle) entriesHandle = await dirHandle.getDirectoryHandle('entries', {create: true});
     const eid = entry.id;
-    // Separate content from metadata
-    const meta = Object.assign({}, entry);
-    let mdText;
-    if (meta.type === '_digest') {
-      mdText = meta.markdown || '';
-      delete meta.markdown;
-    } else {
-      mdText = meta.content || '';
-      delete meta.content;
-    }
+    const { meta, mdText } = splitEntry(entry);
     // Write .json
     const jh = await entriesHandle.getFileHandle(eid + '.json', {create: true});
     const jw = await jh.createWritable();
@@ -548,20 +609,10 @@ async function saveEntryToFile(entry) {
   } catch(e) { showToast('Save error: '+e.message); }
 }
 
-async function deleteEntryFile(eid) {
-  if (readOnly || !entriesHandle) return;
+async function fsaDeleteEntry(eid) {
+  if (!entriesHandle) return;
   try { await entriesHandle.removeEntry(eid + '.json'); } catch(_) {}
   try { await entriesHandle.removeEntry(eid + '.md'); } catch(_) {}
-}
-
-async function saveToFile() {
-  if (readOnly || !dirHandle) return;
-  try {
-    const toSave = window._kbDigest ? [...items, window._kbDigest] : items;
-    for (const entry of toSave) {
-      await saveEntryToFile(entry);
-    }
-  } catch(e) { showToast('Save error: '+e.message); }
 }
 
 async function tryRestoreHandle() {
@@ -587,18 +638,21 @@ async function tryRestoreHandle() {
 function showApp() {
   document.getElementById('connect-screen').style.display='none';
   document.getElementById('app-area').style.display='';
-  if (readOnly) {
-    document.getElementById('btn-add-toggle').style.display='none';
-    document.getElementById('btn-sync-all').style.display='none';
-    document.getElementById('btn-reload').style.display='none';
-    const cleanup = document.querySelector('[onclick="cleanupMemory()"]');
-    if (cleanup) cleanup.style.display='none';
-    updateFileStatus('GitHub (read-only)');
-  } else {
-    updateFileStatus(dirHandle?.name || '');
-  }
+  updateWriteUI();
   updateVSCodeRow();
   applyClipParams();
+}
+
+// Show or hide everything that mutates. Re-run whenever `readOnly` changes — on the GitHub
+// backend that is only known once the token's push access has been checked.
+function updateWriteUI() {
+  const vis = readOnly ? 'none' : '';
+  document.getElementById('btn-add-toggle').style.display = vis;
+  document.getElementById('btn-sync-all').style.display = vis;
+  document.getElementById('btn-reload').style.display = vis;
+  const cleanup = document.querySelector('[onclick="cleanupMemory()"]');
+  if (cleanup) cleanup.style.display = vis;
+  updateFileStatus(dirHandle?.name || '');
 }
 
 function applyClipParams() {
@@ -621,7 +675,19 @@ function applyClipParams() {
 function updateFileStatus(name) {
   const row = document.getElementById('file-row');
   if (ghRepoMode) {
-    row.innerHTML = `<div class="sb-row"><span class="sb-row-label" title="Read-only via GitHub">GitHub ↓</span><button class="sb-action" onclick="ghLoadEntries()" title="Refresh from GitHub">↻</button></div>`;
+    let label, title;
+    if (_ghError) {
+      label = `GitHub ⚠ ${_ghQueue.size}`;
+      title = _ghError + ' — click ⤴ to retry';
+    } else if (_ghQueue.size || _ghFlushing) {
+      label = 'GitHub ⤴…';
+      title = 'Committing ' + _ghQueue.size + ' pending file(s)';
+    } else {
+      label = ghCanWrite ? 'GitHub ⇅' : 'GitHub ↓';
+      title = ghCanWrite ? 'Read/write via GitHub' : 'Read-only via GitHub (token has no push access)';
+    }
+    const retry = (_ghError || _ghQueue.size) ? `<button class="sb-action" onclick="ghFlush()" title="Commit pending changes now">⤴</button>` : '';
+    row.innerHTML = `<div class="sb-row"><span class="sb-row-label" title="${esc(title)}">${label}</span>${retry}<button class="sb-action" onclick="ghLoadEntries()" title="Refresh from GitHub">↻</button></div>`;
   } else if (name) {
     const dirName = dirHandle ? dirHandle.name + '/' : '';
     row.innerHTML = `<div class="sb-row"><span class="sb-row-label" title="${dirName}${name}">${dirName}${name}</span><button class="sb-action" onclick="connectFolder()" title="Switch folder">⇄</button></div>`;
@@ -1477,7 +1543,12 @@ function editInbox(e) {
 async function saveInbox() {
   const content = document.getElementById('f-content').value;
   window._kbInbox = content;
-  if (dirHandle) {
+  if (readOnly) {
+    // fall through: form still closes, nothing persisted
+  } else if (ghRepoMode) {
+    ghEnqueueInbox(content);
+    ghScheduleFlush();
+  } else if (dirHandle) {
     try {
       const fh = await dirHandle.getFileHandle('INBOX.md', {create: true});
       const w = await fh.createWritable();
@@ -2418,16 +2489,24 @@ function hasImageFile(e) {
 
 // Copy a dropped image into the images/ folder, returning its markdown reference.
 async function saveImageFile(file) {
-  const imgDir = await dirHandle.getDirectoryHandle('images', {create: true});
   // Unique filename: timestamp+rand_originalname (rand avoids same-ms collisions on multi-drop)
   const ts = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const fileName = ts + '_' + safeName;
-  const fh = await imgDir.getFileHandle(fileName, {create: true});
-  const writable = await fh.createWritable();
-  await writable.write(file);
-  await writable.close();
-  return `\n\n![${file.name}](images/${fileName})`;
+  const src = `images/${fileName}`;
+  if (ghRepoMode) {
+    ghEnqueueImage(fileName, await fileToBase64(file));
+    ghScheduleFlush();
+    // Show it straight away — the raw.githubusercontent URL only exists once the commit lands.
+    _blobCache[src] = URL.createObjectURL(file);
+  } else {
+    const imgDir = await dirHandle.getDirectoryHandle('images', {create: true});
+    const fh = await imgDir.getFileHandle(fileName, {create: true});
+    const writable = await fh.createWritable();
+    await writable.write(file);
+    await writable.close();
+  }
+  return `\n\n![${file.name}](${src})`;
 }
 
 function cardDragOver(e) {
@@ -2449,7 +2528,7 @@ async function cardDrop(e, id) {
   e.stopPropagation();
   e.currentTarget.classList.remove('drop-over');
 
-  if (!dirHandle) { showToast('Connect a folder first to enable image drop'); return; }
+  if (!storageReady()) { showToast('Connect a folder first to enable image drop'); return; }
 
   const item = items.find(i => i.id === id);
   if (!item) return;
@@ -2490,7 +2569,7 @@ async function contentDrop(e) {
   ta.classList.remove('drag-over');
 
   if (readOnly) return;
-  if (!dirHandle) { showToast('Connect a folder first to enable image drop'); return; }
+  if (!storageReady()) { showToast('Connect a folder first to enable image drop'); return; }
 
   try {
     let refs = '';
@@ -2631,7 +2710,7 @@ async function mdDrop(e) {
 
   const mdFiles = [...e.dataTransfer.files].filter(isMarkdownFile);
   if (!mdFiles.length) { showToast('Drop a .md or .txt file to create a card'); return; }
-  if (!dirHandle) { showToast('Connect a folder first to create cards'); return; }
+  if (!storageReady()) { showToast('Connect a folder first to create cards'); return; }
 
   let created = 0, firstId = null;
   for (const f of mdFiles) {
@@ -2971,22 +3050,254 @@ function ghBackFromIssues() {
   renderFilters(); renderList();
 }
 
-// --- GitHub read-only mode (for iOS / browsers without File System Access API) ---
+// --- GitHub write backend (iOS / any browser without File System Access) ------------------
+//
+// A card is two files (<id>.json + <id>.md), so the Contents API is the wrong tool: it commits
+// one file per call, which would split a card across two commits, and saveToFile() — which
+// rewrites every entry — would need 1000+ of them, blowing GitHub's secondary limit of 500
+// content-generating requests/hour. The Git Data API commits any set of paths as ONE commit:
+//
+//     blobs -> tree (on base_tree) -> commit (parent = head) -> fast-forward refs/heads/main
+//
+// Updating the ref without `force` is refused if main moved under us, so an edit from the phone
+// can never silently clobber a push from the Mac; we rebuild on the new head and retry.
+
+const GH_FLUSH_DELAY = 2000;      // coalesce bursts (pin/archive/connection toggles) into one commit
+const GH_TREE_CHUNK_FILES = 200;  // keep one tree request from carrying a huge body
+const GH_TREE_CHUNK_BYTES = 2e6;
+const _ghQueue = new Map();       // repo path -> {text} | {b64} | {delete: true}
+let _ghFlushTimer = null;
+let _ghFlushing = null;           // in-flight flush, so two flushes never overlap
+let _ghHeadSha = null;            // cached tip of refs/heads/main
+let _ghError = null;              // last failure; queue is retained for a manual retry
+
+async function fileToBase64(file) {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  let bin = '';
+  const CHUNK = 0x8000;   // chunked: String.fromCharCode blows the stack on a whole image
+  for (let i = 0; i < bytes.length; i += CHUNK) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+  return btoa(bin);
+}
+
+function ghEnqueueEntry(entry) {
+  const { meta, mdText } = splitEntry(entry);
+  _ghQueue.set(`${GH_ENTRIES_PATH}/${entry.id}.json`, { text: JSON.stringify(meta, null, 2) });
+  _ghQueue.set(`${GH_ENTRIES_PATH}/${entry.id}.md`,   { text: mdText });
+}
+function ghEnqueueDelete(eid) {
+  _ghQueue.set(`${GH_ENTRIES_PATH}/${eid}.json`, { delete: true });
+  _ghQueue.set(`${GH_ENTRIES_PATH}/${eid}.md`,   { delete: true });
+}
+function ghEnqueueInbox(text) {
+  _ghQueue.set(`${GH_KB_PATH}/INBOX.md`, { text });
+}
+function ghEnqueueImage(fileName, base64) {
+  _ghQueue.set(`${GH_KB_PATH}/images/${fileName}`, { b64: base64 });
+}
+
+function ghScheduleFlush() {
+  _ghError = null;
+  updateFileStatus();
+  clearTimeout(_ghFlushTimer);
+  _ghFlushTimer = setTimeout(ghFlush, GH_FLUSH_DELAY);
+}
+
+async function ghApi(path, opts = {}) {
+  return fetch(`https://api.github.com/repos/${GH_REPO}${path}`, {
+    ...opts,
+    headers: { ...ghHeaders(), 'Content-Type': 'application/json', ...(opts.headers || {}) },
+  });
+}
+async function ghApiJson(path, opts) {
+  const resp = await ghApi(path, opts);
+  if (!resp.ok) throw await ghError(resp);
+  return resp.json();
+}
+async function ghError(resp) {
+  if (resp.status === 401 || resp.status === 403) {
+    return new Error(`token needs "Contents: Read and write" on ${GH_REPO}`);
+  }
+  const body = await resp.text().catch(() => '');
+  let msg = '';
+  try { msg = JSON.parse(body).message || ''; } catch(_) { msg = body.slice(0, 120); }
+  return new Error(`GitHub ${resp.status}${msg ? ': ' + msg : ''}`);
+}
+
+// Commit everything queued, as one commit. Never runs concurrently with itself.
+async function ghFlush() {
+  clearTimeout(_ghFlushTimer);
+  if (_ghFlushing) return _ghFlushing;
+  if (!_ghQueue.size) return;
+  const run = (async () => {
+    while (_ghQueue.size) {
+      const batch = new Map(_ghQueue);
+      _ghQueue.clear();
+      try {
+        await ghCommitBatch(batch);
+        _ghError = null;
+      } catch (e) {
+        // Keep the work: re-queue anything not superseded by a newer edit, and stop. The user's
+        // in-memory state is intact and the sidebar offers a retry.
+        for (const [path, v] of batch) if (!_ghQueue.has(path)) _ghQueue.set(path, v);
+        _ghError = e.message;
+        showToast('GitHub save failed: ' + e.message);
+        break;
+      }
+    }
+  })();
+  _ghFlushing = run;
+  try { await run; }
+  finally {
+    _ghFlushing = null;
+    updateFileStatus();
+    if (_ghQueue.size && !_ghError) ghScheduleFlush();   // work that arrived mid-flush
+  }
+}
+
+// Split a tree into request-sized chunks. Chaining base_tree across them still yields one commit.
+function* ghChunkTree(entries) {
+  let chunk = [], bytes = 0;
+  for (const e of entries) {
+    const size = (e.content ? e.content.length : 0) + e.path.length + 64;
+    if (chunk.length && (chunk.length >= GH_TREE_CHUNK_FILES || bytes + size > GH_TREE_CHUNK_BYTES)) {
+      yield chunk; chunk = []; bytes = 0;
+    }
+    chunk.push(e); bytes += size;
+  }
+  if (chunk.length) yield chunk;
+}
+
+async function ghCommitBatch(batch) {
+  // Text files inline their content into the tree and let GitHub write the blob. That is what
+  // keeps a bulk save affordable: creating a blob is itself a content-generating request, so
+  // uploading 1052 of them would exceed the 500/hour limit in a single action — whereas inlining
+  // costs only the handful of tree requests below. Images can't do this (a tree's `content` is
+  // UTF-8 text, not binary), so they alone go through /git/blobs as base64.
+  const treeEntries = [];
+  for (const [path, v] of batch) {
+    if (v.delete) {
+      treeEntries.push({ path, mode: '100644', type: 'blob', sha: null });
+    } else if (v.b64 !== undefined) {
+      const blob = await ghApiJson('/git/blobs', {
+        method: 'POST',
+        body: JSON.stringify({ content: v.b64, encoding: 'base64' }),
+      });
+      treeEntries.push({ path, mode: '100644', type: 'blob', sha: blob.sha });
+    } else {
+      treeEntries.push({ path, mode: '100644', type: 'blob', content: v.text });
+    }
+  }
+
+  const message = ghCommitMessage(batch);
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (!_ghHeadSha) _ghHeadSha = (await ghApiJson(`/git/ref/heads/${GH_BRANCH}`)).object.sha;
+    const head = await ghApiJson(`/git/commits/${_ghHeadSha}`);
+
+    // Layer the entries onto the current tree. sha:null removes a path.
+    let treeSha = head.tree.sha;
+    for (const chunk of ghChunkTree(treeEntries)) {
+      treeSha = (await ghApiJson('/git/trees', {
+        method: 'POST',
+        body: JSON.stringify({ base_tree: treeSha, tree: chunk }),
+      })).sha;
+    }
+
+    const commit = await ghApiJson('/git/commits', {
+      method: 'POST',
+      body: JSON.stringify({ message, tree: treeSha, parents: [_ghHeadSha] }),
+    });
+
+    // Fast-forward main. A 422 means it moved (a push from the Mac landed) — rebuild on the new
+    // head and retry. Without `force`, GitHub will not let us discard that commit.
+    const resp = await ghApi(`/git/refs/heads/${GH_BRANCH}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ sha: commit.sha }),
+    });
+    if (resp.ok) {
+      _ghHeadSha = commit.sha;
+      await ghUpdateCache(commit.sha);
+      showToast(batch.size <= 2 ? 'Saved to GitHub' : `Saved ${batch.size} files to GitHub`);
+      return;
+    }
+    if (resp.status === 422) { _ghHeadSha = null; continue; }
+    throw await ghError(resp);
+  }
+  throw new Error('main kept moving — reload and retry');
+}
+
+function ghCommitMessage(batch) {
+  const ids = new Set();
+  let images = 0, inbox = false;
+  for (const path of batch.keys()) {
+    if (path.startsWith(GH_ENTRIES_PATH + '/')) ids.add(path.slice(GH_ENTRIES_PATH.length + 1).replace(/\.(json|md)$/, ''));
+    else if (path.endsWith('/INBOX.md')) inbox = true;
+    else images++;
+  }
+  const parts = [];
+  if (ids.size === 1) parts.push('update ' + [...ids][0]);
+  else if (ids.size > 1) parts.push(`update ${ids.size} entries`);
+  if (images) parts.push(`${images} image${images > 1 ? 's' : ''}`);
+  if (inbox) parts.push('inbox');
+  return (parts.join(', ') || 'update') + '\n\nvia memento on iOS';
+}
+
+// Keep the IndexedDB cache in step with what we just committed, so the next load is a cache hit
+// rather than a re-fetch of 1000+ files.
+async function ghUpdateCache(commitSha) {
+  try {
+    const all = window._kbDigest ? [...items, window._kbDigest] : items;
+    await idbPut('gh_entries', JSON.parse(JSON.stringify(all)));
+    await idbPut('gh_inbox', window._kbInbox || '');
+    await idbPut('gh_tree_sha', commitSha);
+  } catch(_) {}
+}
+
+// Whether the token can actually push decides if this app is editable — not feature detection.
+async function ghApplyWritePermission() {
+  try {
+    const repo = await ghApiJson('');
+    // If GitHub doesn't report a permissions block at all, don't guess "read-only" and hide the
+    // edit buttons — assume writable and let an actual write surface the real error.
+    ghCanWrite = repo.permissions ? repo.permissions.push === true : true;
+  } catch(_) {
+    ghCanWrite = false;
+  }
+  readOnly = !ghCanWrite;
+  try { await idbPut('gh_can_write', ghCanWrite); } catch(_) {}
+  return ghCanWrite;
+}
+
+// Don't let a queued commit die with the tab.
+window.addEventListener('beforeunload', e => {
+  if (_ghQueue.size || _ghFlushing) { e.preventDefault(); e.returnValue = ''; }
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && _ghQueue.size && !_ghError) ghFlush();
+});
+
+// --- GitHub read mode (for iOS / browsers without File System Access API) ---
 
 async function ghLoadEntries() {
-  const pat = ghPat();
-  if (!pat) {
-    ghPromptPat();
+  if (!ghPat()) {
+    await ghPromptPat();
     if (!ghPat()) return;
+  }
+  // Never reload over work that hasn't been committed yet.
+  if (_ghQueue.size) {
+    await ghFlush();
+    if (_ghQueue.size) { showToast('Pending changes not saved — resolve before reloading'); return; }
   }
   showToast('Loading from GitHub…');
   try {
+    await ghApplyWritePermission();
     // Check if cache is still valid
     const cachedSha = await idbGet('gh_tree_sha');
-    const headResp = await fetch(`https://api.github.com/repos/${GH_REPO}/commits/main`, { headers: ghHeaders() });
+    const headResp = await fetch(`https://api.github.com/repos/${GH_REPO}/commits/${GH_BRANCH}`, { headers: ghHeaders() });
     if (!headResp.ok) throw new Error(`GitHub API ${headResp.status}: ${headResp.statusText}`);
     const headData = await headResp.json();
     const currentSha = headData.sha;
+    _ghHeadSha = currentSha;
 
     if (cachedSha === currentSha) {
       const cached = await idbGet('gh_entries');
@@ -3063,6 +3374,10 @@ async function tryLoadFromGitHubCache() {
       window._kbInbox = await idbGet('gh_inbox') || '';
       items = cached.filter(i => i.id !== '_digest');
       ghRepoMode = true;
+      // Trust the last known answer so the cards render editable immediately; the boot path
+      // re-checks against GitHub straight after.
+      ghCanWrite = (await idbGet('gh_can_write')) === true;
+      readOnly = !ghCanWrite;
       computeSortTags(); renderFilters(); renderList();
       return true;
     }
@@ -3078,15 +3393,20 @@ document.getElementById('sidebar').addEventListener('click', e => {
   }
 });
 renderGhControls();
+// iOS evicts script-writable storage from web apps left unused; here that costs the cached
+// entries and the saved token, but never the data itself, which lives in the repo.
+if (navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
 if (hasFSAccess) {
   tryRestoreHandle();
 } else {
   // iOS / Safari: show GitHub connect screen, try cache first
   document.getElementById('connect-fs').style.display = 'none';
   document.getElementById('connect-gh').style.display = '';
-  tryLoadFromGitHubCache().then(loaded => {
+  tryLoadFromGitHubCache().then(async loaded => {
     if (loaded) {
       showApp();
+      // Confirm push access against GitHub — it decides whether editing is offered at all.
+      if (ghPat()) { await ghApplyWritePermission(); updateWriteUI(); renderList(); }
     } else if (ghPat()) {
       ghLoadEntries();
     }

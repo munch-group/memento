@@ -1,24 +1,24 @@
 ## Today todo
 - Email
-- TA work
-- Eriks respons to reviews
+- SMBE follow-up / Desktop / Browser clean up
+- Erik status
+- Shannon status
+- Phasic code review with Fable
 
 ## Week run
-- Shannon y-strat-gwas
-- Tidy up chr3 notebook in geneinfo repo and make (non-rendered) notebooks ECH regions, xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
-- Organize how data produced by different projects/repos are stored for use in other projects (close down git-lfs and use my new "lfs" library)
-- New controller about Lundbeck Experiment wrap-up
-- Watch talks I missed
-- Funding plan
-- SMBE follow-up / Laurent / Linda / John H / John P / Kalle & Charlotte Lindqvist
-- Get back to Sriram, Ana, Simon and Yan
+- Get back to Sriram
+- Check up on SMBE receipt
 - PsychENCODE access request
+- Review phasic issues
+- Funding application overview/plan
+- New controller about Lundbeck Experiment wrap-up
 - Flesh out the phasic-popgen repo (Coal. Sel. / PSMC / Ghost model / sticcs tool)
-- `tsinfer` benchmarking
+- Plan what to do with VEP / long-read / TTLL10 project
+- Widget ideogram with gene list highlights, ECH regions, xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
+- Organize how data produced by different projects/repos are stored for use in other projects (close down git-lfs and use my new "lfs" library)
+- Get back to Ana, Simon and "Jan"
 
 ## Month tactic
-- Plan what to do with VEP / long-read / TTLL10 project
-- Baboon download / calling
 - Time Machine on office machine
 - Bioinformatics course.  
 - Plan for exploiting UKbiobank

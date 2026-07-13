@@ -17,6 +17,26 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "9dd0b28",
+      "msg": "patch  version bump",
+      "date": "2026-07-01T15:00:41Z"
+    },
+    {
+      "sha": "ced198f",
+      "msg": "patch  version bump",
+      "date": "2026-07-01T15:00:33Z"
+    },
+    {
+      "sha": "aa64d65",
+      "msg": "updated tracks widget",
+      "date": "2026-07-01T15:00:11Z"
+    },
+    {
+      "sha": "279ef8a",
+      "msg": "update",
+      "date": "2026-06-30T21:10:51Z"
+    },
+    {
       "sha": "f9ddf87",
       "msg": "new chr3 notebook",
       "date": "2026-05-31T11:05:15Z"
@@ -45,26 +65,6 @@
       "sha": "9ec3b8b",
       "msg": "Addded fallback to US mirror of UCSC API",
       "date": "2026-05-29T14:08:05Z"
-    },
-    {
-      "sha": "bc0ccc0",
-      "msg": "notebook updates",
-      "date": "2026-05-22T11:25:33Z"
-    },
-    {
-      "sha": "2100d2c",
-      "msg": "patch  version bump",
-      "date": "2026-05-11T06:35:05Z"
-    },
-    {
-      "sha": "efc28f3",
-      "msg": "patch  version bump",
-      "date": "2026-05-11T06:35:00Z"
-    },
-    {
-      "sha": "b64e9b5",
-      "msg": "small theme mods",
-      "date": "2026-05-11T06:34:50Z"
     }
   ],
   "_ghIssuesRecent": [
@@ -147,6 +147,30 @@
       "date": "2024-07-30T08:08:34Z",
       "labels": [],
       "url": "https://github.com/munch-group/geneinfo/issues/5"
+    },
+    {
+      "number": 1,
+      "title": "clear_cache method",
+      "state": "open",
+      "date": "2024-03-05T07:45:52Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/1"
+    },
+    {
+      "number": 4,
+      "title": "Make test to see if a gene set is less evenly distributed across the genome than a background set",
+      "state": "open",
+      "date": "2024-03-05T07:41:07Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/4"
+    },
+    {
+      "number": 3,
+      "title": "Have a nice weekend",
+      "state": "open",
+      "date": "2024-01-19T09:20:15Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/3"
     }
   ],
   "_ghDigest": {

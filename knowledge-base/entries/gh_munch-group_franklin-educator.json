@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/franklin-educator",
-  "date": "2025-09-21T08:38:34Z",
+  "date": "2026-06-13T10:10:53Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/franklin-educator",
@@ -68,6 +68,16 @@
     }
   ],
   "_ghIssuesRecent": [
+    {
+      "number": 4,
+      "title": "Crash: 'franklin'",
+      "state": "open",
+      "date": "2026-06-13T10:10:53Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/munch-group/franklin-educator/issues/4"
+    },
     {
       "number": 3,
       "title": "Make sure the right jupyter kernel name is in the docs (is it prod or franklin?).",

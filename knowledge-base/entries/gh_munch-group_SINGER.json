@@ -13,5 +13,59 @@
   "_ghForks": 0,
   "_ghLang": null,
   "_ghOpenIssues": 0,
-  "_ghPrivate": false
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "f88d687",
+      "msg": "version 0.1.9",
+      "date": "2026-04-10T22:02:48Z"
+    },
+    {
+      "sha": "5d73d6b",
+      "msg": "add version 0.1.9",
+      "date": "2026-04-10T22:00:09Z"
+    },
+    {
+      "sha": "51cbfbc",
+      "msg": "changed singer_master",
+      "date": "2026-03-20T00:32:47Z"
+    },
+    {
+      "sha": "3f4c5a1",
+      "msg": "Update README.md",
+      "date": "2026-03-16T00:40:54Z"
+    },
+    {
+      "sha": "2a5490f",
+      "msg": "handle haploid vcf",
+      "date": "2026-03-16T00:09:31Z"
+    },
+    {
+      "sha": "577c5f5",
+      "msg": "add customized ARG parallelization converter",
+      "date": "2026-03-15T22:52:10Z"
+    },
+    {
+      "sha": "d368527",
+      "msg": "fix convert_to_tskit",
+      "date": "2026-03-15T18:36:52Z"
+    },
+    {
+      "sha": "013fe1b",
+      "msg": "remove assertion line",
+      "date": "2025-06-05T01:45:50Z"
+    },
+    {
+      "sha": "a214631",
+      "msg": "add pairwise coalescence times",
+      "date": "2024-09-24T23:40:54Z"
+    },
+    {
+      "sha": "d290cb8",
+      "msg": "turn off printings",
+      "date": "2024-09-10T23:41:35Z"
+    }
+  ],
+  "_ghIssuesRecent": []
 }

@@ -17,6 +17,21 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "fe73c71",
+      "msg": "patch  version bump",
+      "date": "2026-06-15T14:11:34Z"
+    },
+    {
+      "sha": "4727833",
+      "msg": "patch  version bump",
+      "date": "2026-06-15T14:11:29Z"
+    },
+    {
+      "sha": "703a0f4",
+      "msg": "Added monospace numeric style to set_vscode_theme and removed it from __init__",
+      "date": "2026-06-15T14:10:40Z"
+    },
+    {
       "sha": "d16d8c4",
       "msg": "patch  version bump",
       "date": "2026-06-08T04:20:38Z"
@@ -50,24 +65,17 @@
       "sha": "c98dfd5",
       "msg": "patch  version bump",
       "date": "2026-05-10T08:14:35Z"
-    },
-    {
-      "sha": "3ef8683",
-      "msg": "patch  version bump",
-      "date": "2026-05-10T08:14:35Z"
-    },
-    {
-      "sha": "6123e7d",
-      "msg": "update",
-      "date": "2026-05-10T08:14:27Z"
-    },
-    {
-      "sha": "a3b8016",
-      "msg": "patch  version bump",
-      "date": "2026-05-04T13:45:53Z"
     }
   ],
   "_ghIssuesRecent": [
+    {
+      "number": 2,
+      "title": "The monospaced table numbers does not seem to propagate the notebook vscodenb is imported from when __init__ is loaded",
+      "state": "open",
+      "date": "2026-06-15T11:15:06Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/vscodenb/issues/2"
+    },
     {
       "number": 1,
       "title": "vscodenb should detect and set the default background color rather than inferring it from the two themes hardcoded in",

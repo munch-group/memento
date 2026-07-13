@@ -21,54 +21,54 @@
   "due": "",
   "_ghCommits": [
     {
-      "sha": "de99cc6",
-      "msg": "docs update",
-      "date": "2026-06-10T10:57:01Z"
+      "sha": "0754c66",
+      "msg": "Added converage config",
+      "date": "2026-07-09T15:14:24Z"
     },
     {
-      "sha": "90f0677",
-      "msg": "method_of_moments: same per-mode theta_dim resolution as svgd (shared helper)",
-      "date": "2026-06-10T09:37:20Z"
+      "sha": "57f2f74",
+      "msg": "added deferred fix file",
+      "date": "2026-07-09T08:50:55Z"
     },
     {
-      "sha": "d4e2398",
-      "msg": "svgd: resolve/validate theta_dim by weight mode (callback requires it; formula infers n_theta)",
-      "date": "2026-06-10T09:23:18Z"
+      "sha": "9de5d61",
+      "msg": "Merge Stage-3 refactoring execution into master",
+      "date": "2026-07-09T07:33:49Z"
     },
     {
-      "sha": "e2eaca6",
-      "msg": "docs update",
-      "date": "2026-06-10T06:26:33Z"
+      "sha": "6292671",
+      "msg": "docs: Stage-3 execution hand-off note + plan",
+      "date": "2026-07-09T07:33:49Z"
     },
     {
-      "sha": "637bc78",
-      "msg": "patch  version bump",
-      "date": "2026-06-09T19:25:53Z"
+      "sha": "98deb4d",
+      "msg": "refactor(WS-C): extract Graph.serialize/from_serialized to _graph_serialize.py",
+      "date": "2026-07-07T21:34:57Z"
     },
     {
-      "sha": "a9988de",
-      "msg": "docs update",
-      "date": "2026-06-09T19:25:40Z"
+      "sha": "a6df2be",
+      "msg": "refactor(WS-C): extract Graph reward-validation helpers to _graph_reward_validation.py",
+      "date": "2026-07-07T09:48:56Z"
     },
     {
-      "sha": "9cd8f5b",
-      "msg": "weight_formula: per-edge constant folding so complex formulas ~= inner product",
-      "date": "2026-06-09T07:00:31Z"
+      "sha": "0d9ab96",
+      "msg": "refactor(WS-C): extract Graph.clear_from_cache/prewarm_cache to _graph_cache_mgmt.py",
+      "date": "2026-07-07T08:12:35Z"
     },
     {
-      "sha": "91e30a8",
-      "msg": "docs: weight_formula theta_dim<coeff now works on joint paths + graph_cache",
-      "date": "2026-06-08T17:32:37Z"
+      "sha": "1cd75c2",
+      "msg": "refactor(WS-C): extract Graph.pull_cache/push_cache to _graph_cache_transfer.py",
+      "date": "2026-07-07T08:07:49Z"
     },
     {
-      "sha": "4315450",
-      "msg": "B2: theta_dim < coeff_length through joint_prob_graph + graph_cache theta_dim fix",
-      "date": "2026-06-08T17:31:22Z"
+      "sha": "5873749",
+      "msg": "chore: add notebook-safety PreToolUse hook",
+      "date": "2026-07-07T07:06:00Z"
     },
     {
-      "sha": "a3372c9",
-      "msg": "Verify + document weight_formula on the joint_index and epoch_starts SVGD paths",
-      "date": "2026-06-08T16:49:33Z"
+      "sha": "de774f8",
+      "msg": "refactor(WS-C): extract Graph.plot/plot_scc_decomp to _graph_plotting.py",
+      "date": "2026-07-07T07:06:00Z"
     }
   ],
   "_ghIssuesRecent": [

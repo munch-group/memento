@@ -149,6 +149,337 @@
         "bug"
       ],
       "url": "https://github.com/munch-group/franklin-cli/issues/42"
+    },
+    {
+      "number": 41,
+      "title": "Forget key presses",
+      "state": "open",
+      "date": "2025-07-23T08:58:08Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/41"
+    },
+    {
+      "number": 40,
+      "title": "WSL issues",
+      "state": "open",
+      "date": "2025-07-04T09:02:23Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/40"
+    },
+    {
+      "number": 39,
+      "title": "Possible chrome improvements",
+      "state": "open",
+      "date": "2025-07-04T09:01:21Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/39"
+    },
+    {
+      "number": 38,
+      "title": "Franklin in container",
+      "state": "open",
+      "date": "2025-07-01T21:51:38Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/38"
+    },
+    {
+      "number": 37,
+      "title": "Update crash",
+      "state": "open",
+      "date": "2025-07-01T20:33:24Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/37"
+    },
+    {
+      "number": 36,
+      "title": "Move exercise template to its own repo",
+      "state": "open",
+      "date": "2025-06-17T07:37:26Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/36"
+    },
+    {
+      "number": 35,
+      "title": "Consider refactoring to separate the part of modules only used by the plugins into those plugins",
+      "state": "open",
+      "date": "2025-06-16T09:31:46Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/35"
+    },
+    {
+      "number": 34,
+      "title": "Pis også",
+      "state": "open",
+      "date": "2025-06-16T07:38:40Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/34"
+    },
+    {
+      "number": 33,
+      "title": "Make --version also report versions of educator and admin plugins",
+      "state": "open",
+      "date": "2025-06-16T06:12:34Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/33"
+    },
+    {
+      "number": 32,
+      "title": "Add franklin-magic to docker image to make %franklin magic available",
+      "state": "open",
+      "date": "2025-06-14T10:08:56Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/32"
+    },
+    {
+      "number": 31,
+      "title": "Add julia support",
+      "state": "open",
+      "date": "2025-06-14T10:05:58Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/31"
+    },
+    {
+      "number": 30,
+      "title": "Make sure docker images for devcontainers are also cleanup by franklins cleanup",
+      "state": "open",
+      "date": "2025-06-13T14:49:16Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/30"
+    },
+    {
+      "number": 29,
+      "title": "Add a message to let the user know when he/she is waiting for franklin updating",
+      "state": "open",
+      "date": "2025-06-13T10:35:15Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/29"
+    },
+    {
+      "number": 28,
+      "title": "Set up pagination for requests",
+      "state": "open",
+      "date": "2025-06-12T12:49:30Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/28"
+    },
+    {
+      "number": 27,
+      "title": "Check the users gitlab access level at the first theing when creating a new exercise",
+      "state": "closed",
+      "date": "2025-06-12T10:05:55Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/27"
+    },
+    {
+      "number": 6,
+      "title": "Images are not removed if container is running",
+      "state": "closed",
+      "date": "2025-06-12T10:05:55Z",
+      "labels": [
+        "bug",
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/6"
+    },
+    {
+      "number": 19,
+      "title": "Says docker needs an update every time I run franklin exercise edit",
+      "state": "closed",
+      "date": "2025-06-12T10:04:12Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/19"
+    },
+    {
+      "number": 18,
+      "title": "Franklin exercise and Franklin show does not list commands",
+      "state": "closed",
+      "date": "2025-06-12T10:04:12Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/18"
+    },
+    {
+      "number": 17,
+      "title": "Franklin cleanup does not work",
+      "state": "closed",
+      "date": "2025-06-12T10:04:11Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/17"
+    },
+    {
+      "number": 12,
+      "title": "Figure out how to automate repo creation from course template",
+      "state": "closed",
+      "date": "2025-06-12T10:04:11Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/12"
+    },
+    {
+      "number": 11,
+      "title": "Set up permission structure system with tokens",
+      "state": "closed",
+      "date": "2025-06-12T10:04:11Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/11"
+    },
+    {
+      "number": 26,
+      "title": "Make franklin cleanup report how much space it freed up",
+      "state": "open",
+      "date": "2025-06-09T13:29:57Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/26"
+    },
+    {
+      "number": 25,
+      "title": "Make major version change trigger uninstall and reinstall to accommodate new data or plugins",
+      "state": "open",
+      "date": "2025-06-09T13:09:10Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/25"
+    },
+    {
+      "number": 24,
+      "title": "Selenium prints error msg on windows",
+      "state": "open",
+      "date": "2025-06-09T11:17:38Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/24"
+    },
+    {
+      "number": 23,
+      "title": "Prompt user to overwrite if downloaded exercise exists",
+      "state": "open",
+      "date": "2025-06-09T11:05:07Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/23"
+    },
+    {
+      "number": 22,
+      "title": "Monitor when docker is up, rather than wait with dummy pgbar",
+      "state": "open",
+      "date": "2025-06-08T10:30:27Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/22"
+    },
+    {
+      "number": 4,
+      "title": "Make sure the users version of the operating system is updated",
+      "state": "open",
+      "date": "2025-06-06T10:24:44Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/4"
+    },
+    {
+      "number": 3,
+      "title": "Make sure mounting folders on OneDrive does not create problems",
+      "state": "open",
+      "date": "2025-06-06T10:24:44Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/3"
+    },
+    {
+      "number": 9,
+      "title": "Add CI action testing notebook on push",
+      "state": "closed",
+      "date": "2025-06-06T10:24:10Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/9"
+    },
+    {
+      "number": 8,
+      "title": "VIP as maintainer",
+      "state": "closed",
+      "date": "2025-06-06T10:24:10Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/8"
+    },
+    {
+      "number": 5,
+      "title": "Limit resources on windows (maybe if running as administrator?)",
+      "state": "closed",
+      "date": "2025-06-06T10:24:10Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/5"
+    },
+    {
+      "number": 21,
+      "title": "Clean up unused hanging ports before assigning port to jupyter",
+      "state": "open",
+      "date": "2025-06-06T10:23:23Z",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/21"
+    },
+    {
+      "number": 2,
+      "title": "Add pyproject.toml",
+      "state": "closed",
+      "date": "2025-06-06T07:54:05Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/2"
+    },
+    {
+      "number": 1,
+      "title": "Thread cleanup",
+      "state": "closed",
+      "date": "2025-06-06T07:54:05Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/1"
+    },
+    {
+      "number": 10,
+      "title": "wsl --shutdown on Docker crash",
+      "state": "open",
+      "date": "2025-06-06T07:53:04Z",
+      "labels": [
+        "bug"
+      ],
+      "url": "https://github.com/munch-group/franklin-cli/issues/10"
+    },
+    {
+      "number": 13,
+      "title": "ADD minimal “builtin” image to franklin that it build locally and uses for testing and as backup",
+      "state": "closed",
+      "date": "2025-06-06T07:52:08Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/13"
+    },
+    {
+      "number": 7,
+      "title": "Image structure",
+      "state": "closed",
+      "date": "2025-06-06T07:52:08Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/7"
+    },
+    {
+      "number": 14,
+      "title": "Extra packages as yaml file",
+      "state": "closed",
+      "date": "2025-06-06T07:51:11Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/franklin-cli/issues/14"
     }
   ]
 }

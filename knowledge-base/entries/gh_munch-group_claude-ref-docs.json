@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_claude-ref-docs",
+  "type": "github",
+  "title": "claude-ref-docs",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/claude-ref-docs",
+  "date": "2026-06-28T22:20:15Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/claude-ref-docs",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "aa1124f",
+      "msg": "Added gwf doc",
+      "date": "2026-06-28T22:20:02Z"
+    },
+    {
+      "sha": "22823c9",
+      "msg": "Added files",
+      "date": "2026-06-25T06:52:50Z"
+    },
+    {
+      "sha": "a77b39a",
+      "msg": "Initial commit",
+      "date": "2026-06-25T06:42:12Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

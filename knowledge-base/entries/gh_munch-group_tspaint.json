@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_tspaint",
+  "type": "github",
+  "title": "tspaint",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/tspaint",
+  "date": "2026-07-12T21:09:06Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/tspaint",
+  "_ghStars": 1,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "32a12b2",
+      "msg": "update",
+      "date": "2026-07-12T21:08:48Z"
+    },
+    {
+      "sha": "0a70d26",
+      "msg": "Fix 17 correctness findings from adversarial review",
+      "date": "2026-07-11T21:06:22Z"
+    },
+    {
+      "sha": "cae51cf",
+      "msg": "updated docs",
+      "date": "2026-07-11T08:43:22Z"
+    },
+    {
+      "sha": "7eb6adc",
+      "msg": "Update",
+      "date": "2026-07-10T18:37:20Z"
+    },
+    {
+      "sha": "e9913ba",
+      "msg": "update",
+      "date": "2026-07-09T07:07:05Z"
+    },
+    {
+      "sha": "576ab4c",
+      "msg": "update",
+      "date": "2026-07-08T00:06:05Z"
+    },
+    {
+      "sha": "81184b0",
+      "msg": "Updated notebooks and api docs",
+      "date": "2026-07-07T08:03:46Z"
+    },
+    {
+      "sha": "7f9b241",
+      "msg": "update",
+      "date": "2026-07-06T20:18:04Z"
+    },
+    {
+      "sha": "4404d86",
+      "msg": "Lots of updates",
+      "date": "2026-07-06T20:03:27Z"
+    },
+    {
+      "sha": "8759ed9",
+      "msg": "Add ARGweaver as an alternative posterior-ARG ensemble front end",
+      "date": "2026-07-03T19:06:40Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

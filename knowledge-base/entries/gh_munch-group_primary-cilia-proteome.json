@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_primary-cilia-proteome",
+  "type": "github",
+  "title": "primary-cilia-proteome",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/primary-cilia-proteome",
+  "date": "2026-06-13T14:21:18Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/primary-cilia-proteome",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "2cb9e41",
+      "msg": "update",
+      "date": "2026-06-13T14:21:12Z"
+    },
+    {
+      "sha": "ce5b0d7",
+      "msg": "Added files",
+      "date": "2026-06-13T14:04:06Z"
+    },
+    {
+      "sha": "91eead1",
+      "msg": "Initial commit",
+      "date": "2026-06-13T14:02:40Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

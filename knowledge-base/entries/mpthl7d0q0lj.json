@@ -5,9 +5,7 @@
   "genes": [
     "IHO1"
   ],
-  "tags": [
-    "chr3"
-  ],
+  "tags": [],
   "source": "https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641",
   "connection": false,
   "archived": false,

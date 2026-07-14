@@ -135,34 +135,28 @@ a { color: inherit; }
 .gene-alias.highlighted { color: var(--accent); font-weight: 600; }
 .gene-alias.highlighted:hover { background: rgba(217,119,87,0.08); }
 .gene-sep { color: var(--text3); opacity: 0.45; padding: 0 1px; cursor: default; user-select: none; }
-.highlight-bar { margin-bottom: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
-.preview-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
-.preview-toggle:hover { color: var(--text2); }
-.preview-toggle .preview-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
-.preview-toggle.active .preview-dot { background: var(--accent); border-color: var(--accent); }
-.preview-toggle.active { color: var(--text2); }
-.preview-toggle.half .preview-dot { border-color: var(--accent); }
-.preview-toggle.half { color: var(--text2); }
-.preview-toggle.rendered .preview-dot { background: linear-gradient(to right, var(--accent) 75%, transparent 75%); border-color: var(--accent); }
-.preview-toggle.rendered { color: var(--text2); }
-.preview-toggle.full .preview-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.35); }
-.preview-toggle.full { color: var(--text2); }
+/* 1fr auto 1fr: the middle switch is genuinely centred, whatever the flanking widths do. */
+.control-bar { margin-bottom: 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.control-bar > :last-child { justify-self: end; }
+/* An inline switch: every option is shown, the current one is in accent. State is legible without
+   decoding a dot, and any option is one click away — no cycling blind. (The keyboard still cycles.) */
+.seg { font-family: var(--mono); font-size: 11px; color: var(--text3); display: flex; align-items: center; }
+.seg-opt { cursor: pointer; padding: 1px 0; border-bottom: 1.5px solid transparent; white-space: nowrap; }
+.seg-opt:hover { color: var(--text2); }
+.seg-opt.active { color: var(--accent); border-bottom-color: var(--accent); }
+.seg-sep { padding: 0 6px; opacity: 0.4; user-select: none; }
+.seg-label { display: inline-flex; align-items: center; padding-right: 7px; opacity: 0.55; }
+#archive-seg .seg { padding-bottom: 2px; }
 .hide-previews .card-content.clamped { display: none; }
 .hide-meta .card-content.clamped { display: none; }
 .hide-meta .card:not(.expanded) .card-meta { display: none; }
-.highlight-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
-.highlight-toggle:hover { color: var(--text2); }
-.highlight-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
-.highlight-bar.active .highlight-dot { background: var(--accent); border-color: var(--accent); }
-.highlight-bar.active .highlight-toggle { color: var(--text2); }
-.highlight-input-wrap { display: flex; gap: 8px; margin-top: 6px; flex-basis: 100%; }
+/* Gene highlighting belongs to the query, so it lives with the search box, not the card controls. */
+.highlight-btn { display: flex; align-items: center; justify-content: center; padding: 0 8px; background: none; border: none; color: var(--text3); cursor: pointer; font-size: 13px; line-height: 1; }
+.highlight-btn:hover { color: var(--text2); }
+.highlight-btn.active { color: var(--accent); }
+.highlight-input-wrap { display: flex; gap: 8px; margin: -0.5rem 0 1rem; }
 .highlight-input-wrap input { flex: 1; font-family: var(--font); font-size: 13px; padding: 5px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .highlight-input-wrap input:focus { border-color: var(--accent); }
-.digest-toggle { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; display: flex; align-items: center; gap: 5px; }
-.digest-toggle:hover { color: var(--text2); }
-.digest-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--text3); }
-.digest-toggle.active .digest-dot { background: var(--accent); border-color: var(--accent); }
-.digest-toggle.active { color: var(--text2); }
 .digest-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .digest-stacked { display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 0; }
 .digest-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1.5rem 1.5rem; font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); box-shadow: 0 1px 3px var(--shadow); }
@@ -290,6 +284,9 @@ a { color: inherit; }
   .card-content { overflow-x: auto; }
   .page-header { flex-wrap: wrap; gap: 8px; }
   .header-actions { flex-wrap: wrap; }
+  /* Three switches can't fit a phone's width (~429px of text vs ~358px available), so let them
+     wrap: view + detail on the first row, connections on the second. */
+  .control-bar { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 4px; }
 }
 /* iOS zooms the whole page when you focus a field whose font-size is under 16px — that's what made
    tapping the search bar, or opening the Add form (which focuses the textarea), "zoom in". 16px is
@@ -304,6 +301,10 @@ a { color: inherit; }
   textarea, select {
     font-size: 16px !important;   /* !important: #f-due carries an inline font-size */
   }
+  /* Fingers, not cursors: give the switch options a real tap target. */
+  .seg-opt { padding: 9px 0; }
+  .seg-sep { padding: 0 8px; }
+  .highlight-btn { padding: 0 12px; }
 }
 </style>
 </head>
@@ -313,8 +314,6 @@ a { color: inherit; }
   <div class="sidebar" id="sidebar">
     <div class="sb-title">Memento</div>
     <div class="sb-scroll">
-      <div id="archive-filter"></div>
-      <div id="conn-filter"></div>
       <div class="sb-section collapsed" id="sb-sort" style="margin-top:1rem" onclick="toggleSection('sb-sort','sort-list')"><span>Sort</span><span class="sb-arrow">▾</span></div>
       <div id="sort-list" style="display:none"></div>
       <div class="sb-section collapsed" id="sb-type" style="margin-top:1rem" onclick="toggleSection('sb-type','filter-list')"><span>Type</span><span class="sb-arrow">▾</span></div>
@@ -322,6 +321,9 @@ a { color: inherit; }
       <div id="tag-filter-list"></div>
     </div>
     <div class="sb-bottom">
+      <!-- Rare and deliberate, so it lives down here rather than at the top of the sidebar. It can
+           afford to hide because the page title announces the archived scope when it's on. -->
+      <div id="archive-seg"></div>
       <div id="file-row"></div>
       <div id="gh-row"></div>
       <div id="vscode-row"></div>
@@ -402,16 +404,23 @@ a { color: inherit; }
       <div class="searchbar">
         <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR" oninput="renderList()" />
         <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
+        <button class="highlight-btn" id="highlight-btn" onclick="toggleHighlightInput()" title="Highlight genes without filtering (H)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></button>
         <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
       </div>
-      <div class="highlight-bar" id="highlight-bar">
-        <div class="digest-toggle active" id="digest-toggle" onclick="toggleDigest()"><span class="digest-dot"></span> Dashboard</div>
-        <div class="preview-toggle half" id="preview-toggle" onclick="togglePreviews()"><span class="preview-dot"></span> Card previews</div>
-        <div class="highlight-toggle" onclick="toggleHighlightInput()"><span class="highlight-dot"></span> Highlight genes</div>
-        <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
-          <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6" oninput="updateHighlightSet()" />
-          <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
+      <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
+        <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6 — highlights without filtering" oninput="updateHighlightSet()" />
+        <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
+      </div>
+      <div class="control-bar">
+        <div class="seg" id="view-seg">
+          <span class="seg-opt" data-val="dash" onclick="setDashboard(true)">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setDashboard(false)">All entries</span>
         </div>
+        <div class="seg" id="detail-seg">
+          <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
+        </div>
+        <!-- Connections. Always on screen, so it can never narrow the list from behind the ☰.
+             Populated by renderFilters() only when connection cards exist. -->
+        <div class="seg" id="conn-seg"></div>
       </div>
       <div id="item-list" class="hide-previews"></div>
     </div>
@@ -459,13 +468,16 @@ const SPECIAL_CARDS = [
 ];
 const SPECIAL_IDS = new Set([...SPECIAL_CARDS.map(s => s.id), '_digest']);
 
+// The same chain the cards carry, so the filter reads as "the thing that icon marks".
+const CONN_ICON = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>';
+
 const GH_REPO = 'munch-group/memento';
 const GH_KB_PATH = 'knowledge-base';
 const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.3';
+const APP_BUILD = '2026-07-14.5';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';
@@ -955,23 +967,20 @@ function computeSortTags() {
 // --- Filters ---
 function renderFilters() {
   renderSortList();
-  // Archive filter
+  // The two scope filters. Unlike Type/Tag/Gene — which are facets that replace each other — these
+  // AND with everything else, so they get the switch vocabulary rather than the radio-chip one.
+  // Both are rendered only when they'd have anything to act on.
   const nArchived = items.filter(i => i.archived).length;
-  if (nArchived > 0) {
-    document.getElementById('archive-filter').innerHTML =
-      `<button class="filter-chip ${archiveFilter==='archived'?'active':''}" onclick="setArchiveFilter()">Archived <span class="sb-count">${nArchived}</span></button>`;
-  } else {
-    document.getElementById('archive-filter').innerHTML = '';
-  }
-  // Connection filter
+  document.getElementById('archive-seg').innerHTML = nArchived === 0 ? '' :
+    `<div class="seg" id="archive-opts">
+       <span class="seg-opt" data-val="active" onclick="setArchiveFilter('active')">Active</span><span class="seg-sep">·</span><span class="seg-opt" data-val="archived" onclick="setArchiveFilter('archived')">Archived ${nArchived}</span>
+     </div>`;
+
   const nConn = items.filter(i => i.connection).length;
-  if (nConn > 0) {
-    const connLabels = {all:'Connections incl.', conn:'Connections only', noconn:'Connections excl.'};
-    document.getElementById('conn-filter').innerHTML =
-      `<button class="filter-chip ${connFilter!=='all'?'active':''}" onclick="cycleConnFilter()">${connLabels[connFilter]} <span class="sb-count">${nConn}</span></button>`;
-  } else {
-    document.getElementById('conn-filter').innerHTML = '';
-  }
+  document.getElementById('conn-seg').innerHTML = nConn === 0 ? '' :
+    `<span class="seg-label" title="Connection cards (${nConn})">${CONN_ICON}</span>
+     <span class="seg-opt" data-val="all" onclick="setConnFilter('all')" title="Connections included">Any</span><span class="seg-sep">·</span><span class="seg-opt" data-val="conn" onclick="setConnFilter('conn')" title="Connection cards only">Only</span><span class="seg-sep">·</span><span class="seg-opt" data-val="noconn" onclick="setConnFilter('noconn')" title="Connection cards excluded">None</span>`;
+  applyControlBar();
   const used = [...new Set(items.map(i=>i.type))];
   let html = `<button class="filter-chip ${activeType==='all'&&!activeTag?'active':''}" onclick="setFilter('all')">All <span class="sb-count">${items.length}</span></button>`;
   TYPES.filter(t=>used.includes(t.key)).forEach(t=>{
@@ -1024,8 +1033,15 @@ function renderFilters() {
       return;
     }
   }
-  const hasFilter = activeGene || activeTag || activeType !== 'all';
-  const title = activeGene ? `@${activeGene}` : activeTag ? `#${activeTag}` : activeType==='all' ? `All entries (${items.length})` : (TYPES.find(t=>t.key===activeType)?.label||activeType);
+  const archived = archiveFilter === 'archived';
+  const hasFilter = activeGene || activeTag || activeType !== 'all' || archived;
+  // The title names the view you're actually in. The archived scope *replaces* the list rather than
+  // narrowing it, so it must be announced here — that's what lets its switch hide in the sidebar
+  // bottom without you ever wondering why every card looks unfamiliar.
+  const plain = archived ? `Archived (${items.filter(i=>i.archived).length})`
+    : digestVisible ? 'Dashboard'
+    : `All entries (${items.length})`;
+  const title = activeGene ? `@${activeGene}` : activeTag ? `#${activeTag}` : activeType==='all' ? plain : (TYPES.find(t=>t.key===activeType)?.label||activeType);
   el.innerHTML = hasFilter ? `<span style="cursor:pointer" onclick="clearAllFilters()" title="Back to all entries">← ${esc(title)}</span>` : esc(title);
 }
 
@@ -1036,8 +1052,18 @@ function toggleSection(headerId, contentId) {
   header.classList.toggle('collapsed');
   content.style.display = header.classList.contains('collapsed') ? 'none' : '';
 }
-function cycleConnFilter() { connFilter = connFilter==='all' ? 'conn' : connFilter==='conn' ? 'noconn' : 'all'; renderFilters(); renderList(); }
-function setArchiveFilter() { archiveFilter = archiveFilter==='archived' ? 'active' : 'archived'; renderFilters(); renderList(); }
+// Scope filters. Like setDashboard/setPreviewMode: one setter per control, so the switch, the page
+// title and the list can never disagree about what's being filtered.
+function setConnFilter(v) {
+  if (connFilter === v) return;
+  connFilter = v;
+  applyControlBar(); renderList();
+}
+function setArchiveFilter(v) {
+  if (archiveFilter === v) return;
+  archiveFilter = v;
+  applyControlBar(); renderFilters(); renderList();   // renderFilters: the title names the archived scope
+}
 function clearAllFilters() {
   activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active';
   ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; focusedCardId=null;
@@ -1045,7 +1071,7 @@ function clearAllFilters() {
   highlightInputGenes=new Set(); const hi=document.getElementById('highlight-input'); if (hi) hi.value='';
   if (activeViewId) {
     activeViewId=null; expandedId=null;
-    if (window._viewPrevDigest!==undefined) { digestVisible=window._viewPrevDigest; document.getElementById('digest-toggle')?.classList.toggle('active', digestVisible); }
+    if (window._viewPrevDigest!==undefined) { digestVisible=window._viewPrevDigest; applyControlBar(); }
     window._viewPrevDigest=undefined;
   }
   renderFilters(); renderList();
@@ -1132,7 +1158,7 @@ function applyView(item) {
   focusedCardId = null; digestFocusCardId = null; ghIssuesRepo = null;
   if (window._viewPrevDigest === undefined) window._viewPrevDigest = digestVisible;
   digestVisible = false;
-  document.getElementById('digest-toggle')?.classList.toggle('active', false);
+  applyControlBar();
   renderFilters(); renderList();
 }
 // Exit a running view: restore the dashboard and a clean, unfiltered list.
@@ -1217,7 +1243,7 @@ function getVisibleItems() {
     return [...inter, ...required];
   });
   highlightGenes = new Set([...highlightInputGenes, ...searchGenes]);
-  document.getElementById('highlight-bar')?.classList.toggle('active', highlightGenes.size > 0);
+  document.getElementById('highlight-btn')?.classList.toggle('active', highlightGenes.size > 0);
   const _vs = document.getElementById('view-save'); if (_vs) _vs.style.display = (hasActiveView() && !activeViewId) ? '' : 'none';
   let vis=sortItems(items);
   if(archiveFilter==='archived') vis=vis.filter(i=>i.archived);
@@ -1566,41 +1592,55 @@ function geneClick(e, gene) {
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
   setGeneFilter(gene);
 }
+// Card detail, shown in the bar as Title · Tags · Body. Cumulative: title only -> + tags/genes
+// -> + rendered body. ('full' is still disabled — see togglePreviews.)
 let previewMode = 'compact'; // 'minimal' | 'compact' | 'rendered' | 'full'
-function togglePreviews() {
+function setPreviewMode(mode) {
   // 'rendered' and 'full' render markdown into the card HTML; the others only toggle CSS.
   const heavy = m => m === 'full' || m === 'rendered';
   const was = previewMode;
-  previewMode = previewMode === 'minimal' ? 'compact'
-    : previewMode === 'compact' ? 'rendered'
-    // : previewMode === 'rendered' ? 'full'   // 'full' (fully rendered cards) disabled — uncomment to restore
-    : previewMode === 'rendered' ? 'minimal'
-    : 'minimal';
+  if (mode === previewMode) return;
+  previewMode = mode;
   applyPreviewMode();
   if (heavy(previewMode) || heavy(was)) renderList(); // these modes change card HTML, not just CSS
 }
+// Keyboard (C) cycles; clicking the bar picks a mode outright.
+function togglePreviews() {
+  setPreviewMode(previewMode === 'minimal' ? 'compact'
+    : previewMode === 'compact' ? 'rendered'
+    // : previewMode === 'rendered' ? 'full'   // 'full' (fully rendered cards) disabled — uncomment to restore
+    : 'minimal');
+}
 function applyPreviewMode() {
   const list = document.getElementById('item-list');
-  const toggle = document.getElementById('preview-toggle');
   list.classList.remove('hide-previews', 'hide-meta');
-  toggle.classList.remove('active', 'half', 'rendered', 'full');
-  if (previewMode === 'full') {
-    toggle.classList.add('full');
-  } else if (previewMode === 'rendered') {
-    toggle.classList.add('rendered');
-  } else if (previewMode === 'compact') {
-    list.classList.add('hide-previews');
-    toggle.classList.add('half');
-  } else {
-    list.classList.add('hide-meta');
-  }
+  if (previewMode === 'compact')      list.classList.add('hide-previews');
+  else if (previewMode === 'minimal') list.classList.add('hide-meta');
+  applyControlBar();
+}
+// Light the current option in each switch. Single source of truth for both bars, so the UI can't
+// drift out of step with digestVisible / previewMode.
+function applyControlBar() {
+  const mark = (segId, val) => {
+    document.querySelectorAll(`#${segId} .seg-opt`).forEach(el =>
+      el.classList.toggle('active', el.dataset.val === val));
+  };
+  mark('view-seg', digestVisible ? 'dash' : 'list');
+  mark('detail-seg', previewMode);
+  mark('conn-seg', connFilter);
+  mark('archive-opts', archiveFilter);
 }
 let digestVisible = true;
-function toggleDigest() {
-  digestVisible = !digestVisible;
-  document.getElementById('digest-toggle').classList.toggle('active', digestVisible);
+// The one place digestVisible changes, so the switch, the page title and the list can never
+// disagree about which view you're in.
+function setDashboard(v) {
+  if (digestVisible === v) return;
+  digestVisible = v;
+  applyControlBar();
+  renderFilters();   // the page title says Dashboard / All entries (N)
   renderList();
 }
+function toggleDigest() { setDashboard(!digestVisible); }   // keyboard (D)
 let digestFocusCardId = null;
 function navigateToRepoCard(cardId) {
   const item = items.find(i => i.id === cardId);
@@ -1728,7 +1768,6 @@ async function saveInbox() {
 }
 function toggleHighlightInput() {
   const wrap = document.getElementById('highlight-input-wrap');
-  const bar = document.getElementById('highlight-bar');
   const visible = wrap.style.display !== 'none';
   wrap.style.display = visible ? 'none' : 'flex';
   if (!visible) document.getElementById('highlight-input').focus();
@@ -2894,7 +2933,7 @@ async function mdDrop(e) {
   }
   if (created) {
     // Leave the Dashboard (which shows only pinned cards) so the new cards are actually visible.
-    if (digestVisible) { digestVisible = false; document.getElementById('digest-toggle')?.classList.toggle('active', false); }
+    if (digestVisible) { digestVisible = false; applyControlBar(); }
     renderList();
     showToast(created === 1 ? 'Card created from ' + mdFiles[0].name : created + ' cards created');
     if (firstId) { const el = document.querySelector(`.card[data-id="${firstId}"]`); if (el) el.scrollIntoView({behavior:'smooth', block:'center'}); }
@@ -3564,6 +3603,7 @@ document.getElementById('sidebar').addEventListener('click', e => {
 });
 renderGhControls();
 renderBuildRow();
+applyPreviewMode();   // light the current option in both switches (and sync #item-list's classes)
 // iOS evicts script-writable storage from web apps left unused; here that costs the cached
 // entries and the saved token, but never the data itself, which lives in the repo.
 if (navigator.storage?.persist) navigator.storage.persist().catch(()=>{});

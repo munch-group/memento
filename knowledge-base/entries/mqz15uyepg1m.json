@@ -2,16 +2,16 @@
   "id": "mqz15uyepg1m",
   "type": "reference",
   "title": "Untangling the roles of TOP2A and TOP2B in transcription and cancer | Science Advances",
-  "genes": [],
-  "tags": [
+  "genes": [
     "TOP2A",
     "TOP2B"
   ],
+  "tags": [],
   "source": "https://www.science.org/doi/10.1126/sciadv.add4920",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-29T09:43:40.022Z",
+  "date": "2026-07-14T08:39:50.172Z",
   "synced": false,
   "_sortTag": "TOP2A"
 }

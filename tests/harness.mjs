@@ -19,12 +19,24 @@ function extractInlineJs(full = false) {
 }
 
 function fakeEl() {
+  const classes = new Set();   // a real classList: the preview modes are expressed as classes on #item-list
   const el = {
     // renderList() derives its column count from offsetWidth; without a number it computes NaN.
     offsetWidth: 1200, offsetHeight: 800, offsetParent: null,
     getBoundingClientRect: () => ({ top: 0, left: 0, right: 0, bottom: 0, width: 0, height: 0 }),
     style: {}, innerHTML: '', textContent: '', value: '', dataset: {},
-    classList: { add(){}, remove(){}, toggle(){}, contains(){ return false; } },
+    classList: {
+      add(...c) { c.forEach(x => classes.add(x)); },
+      remove(...c) { c.forEach(x => classes.delete(x)); },
+      contains(c) { return classes.has(c); },
+      toggle(c, force) {
+        const on = force === undefined ? !classes.has(c) : !!force;
+        on ? classes.add(c) : classes.delete(c);
+        return on;
+      },
+    },
+    get className() { return [...classes].join(' '); },
+    childNodes: [], children: [], firstChild: null, nodeType: 1,   // truncateRendered() walks these
     addEventListener(){}, removeEventListener(){}, appendChild(){}, remove(){},
     scrollIntoView(){}, focus(){}, blur(){}, click(){},
     querySelector(){ return fakeEl(); }, querySelectorAll(){ return []; },
@@ -133,10 +145,15 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       openTagEditor, toggleCardTag, closeTagEditor, renderTagEditor,
       get tagUniverse(){ return _tagUniverse; },
       get tagEditorId(){ return _tagEditorId; },
-      digestHeads, createSpecialCard, taggable, renderList,
+      digestHeads, createSpecialCard, taggable, renderList, renderFilters,
       SPECIAL_CARDS, SPECIAL_IDS,
       set digestVisible(v){ digestVisible = v; },
       get digestVisible(){ return digestVisible; },
+      setDashboard, toggleDigest, setPreviewMode, togglePreviews, applyPreviewMode,
+      setConnFilter, setArchiveFilter, clearAllFilters, setFilter,
+      get previewMode(){ return previewMode; },
+      get connFilter(){ return connFilter; },
+      get archiveFilter(){ return archiveFilter; },
       GH_FLUSH_DELAY,
     };
     globalThis.__setHandles = (dh, eh) => { dirHandle = dh; entriesHandle = eh; };

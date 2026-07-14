@@ -2,16 +2,13 @@
   "id": "person_kyung_min_noh",
   "type": "people",
   "title": "Kyung Min Noh",
-  "tags": [
-    "XYbrain",
-    "Chromatin"
-  ],
+  "tags": [],
   "genes": [],
   "source": "",
   "date": "2026-06-16T16:05:41.247Z",
   "synced": false,
   "connection": false,
-  "_sortTag": "XYbrain",
+  "_sortTag": "Chromatin",
   "archived": false,
   "due": ""
 }

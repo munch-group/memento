@@ -110,6 +110,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       removeItem: k => store.delete(k),
     },
     indexedDB: fakeIndexedDB(),
+    // Removing a timeline row clears the entry's due date, so it asks first. Tests flip this to
+    // false to prove the refusal is honoured.
+    confirm: () => true,
     fetch: fetchImpl,
     marked: { parse: s => s, setOptions() {}, use() {} },
     katex: { renderToString: () => '', render: () => {} },
@@ -147,8 +150,22 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get tagEditorId(){ return _tagEditorId; },
       digestHeads, createSpecialCard, taggable, renderList, renderFilters,
       SPECIAL_CARDS, SPECIAL_IDS,
-      set digestVisible(v){ digestVisible = v; },
-      get digestVisible(){ return digestVisible; },
+      // digestVisible became the tri-state mainView when the timeline arrived; kept here as a
+      // derived view so the existing control-bar tests still speak in booleans.
+      set digestVisible(v){ mainView = v ? 'dash' : 'list'; },
+      get digestVisible(){ return mainView === 'dash'; },
+      get mainView(){ return mainView; },
+      set mainView(v){ mainView = v; },
+      setView, toggleTimelineView,
+      // Timeline
+      dayFromISO, isoFromDay, todayISO, addDaysISO, daysBetween,
+      tlOnTimeline, tlRows, tlSubs, tlAnchor, tlWindow, tlSeed, tlBarGeom, tlDragTarget,
+      renderTimeline, tlAddBar, tlRemoveBar, tlRemoveRow, tlSetBarTitle, tlSetSort, tlSetZoom,
+      tlShowPop, tlHidePop,
+      cardToTimeline, tlOpenCard,
+      get tlSort(){ return tlSort; },
+      get tlPxPerDay(){ return tlPxPerDay; },
+      get tlFocusId(){ return tlFocusId; },
       setDashboard, toggleDigest, setPreviewMode, togglePreviews, applyPreviewMode,
       setConnFilter, setArchiveFilter, clearAllFilters, setFilter, setTagFilter, scopedItems,
       get activeTag(){ return activeTag; },

@@ -91,6 +91,15 @@ try:
     eq(m.get_entry("_digest")["content"].startswith("Digest"), True, "the digest is fetchable by id even though search hides it")
     eq("error" in m.get_entry("nope"), True, "an unknown id returns an error, not a crash")
 
+    # The app's timeline writes `schedule` onto the entry. get_entry builds its result field by
+    # field, so a new field reaches Claude only if it is named here — it does not ride along.
+    sched = {"order": 0, "subtasks": [{"id": "s1", "title": "figures", "start": "2026-07-12", "end": "2026-07-17"}]}
+    write_entry(kb, "a4", "scheduled card", title="Paper", due="2026-08-07", schedule=sched)
+    scheduled = m.get_entry("a4")
+    eq(scheduled["schedule"], sched, "a scheduled entry reports its timeline bars")
+    eq(scheduled["due"], "2026-08-07", "...and its due date")
+    eq(m.get_entry("a1")["schedule"], {}, "an unscheduled one reports an empty schedule, not a missing key")
+
     print("\nlist_tags / list_genes")
     eq([t["tag"] for t in m.list_tags()["tags"]], ["Baboons", "LoF"], "tags exclude archived-only vocabulary")
     genes = [g["gene"] for g in m.list_genes()["genes"]]

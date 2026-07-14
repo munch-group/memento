@@ -292,8 +292,12 @@ a { color: inherit; }
 .gr-node.conn { background: #fdf3ef; border-color: rgba(217,119,87,0.28); color: var(--accent-hover); font-family: var(--mono); font-size: 10.5px; }
 .gr-node.conn .gr-dot { display: none; }
 .gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
-.gr-relayout { position: absolute; right: 12px; top: 10px; font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; padding: 3px 8px; border-radius: var(--r); background: rgba(255,255,255,0.75); }
-.gr-relayout:hover { color: var(--text2); background: #fff; }
+.gr-tools { position: absolute; right: 12px; top: 10px; display: flex; align-items: center; gap: 16px; padding: 4px 10px; border-radius: var(--r); background: rgba(255,255,255,0.78); }
+.gr-relayout { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
+.gr-relayout:hover { color: var(--text2); }
+/* Highlighted by the gene input: the named cards come forward, the rest fall back. Neither moves. */
+.gr-node.gr-hi { box-shadow: 0 0 0 2px var(--accent), 0 1px 3px rgba(20,20,19,0.12); z-index: 4; }
+.gr-node.gr-dim { opacity: 0.25; }
 .gr-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text3); }
 .gr-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
 .gr-empty small { font-family: var(--mono); font-size: 11px; }
@@ -356,6 +360,14 @@ a { color: inherit; }
 .pop-act:hover { color: var(--bg); }
 .pop-act.del:hover { color: #e88; }
 .pop-arrow { position: absolute; top: 100%; left: 15px; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--text); }
+/* Card mode: the tooltip IS a card, so it brings its own background, border and shadow — the dark
+   bubble would only be a box around a box. */
+#app-pop.cardmode .pop { background: transparent; color: inherit; padding: 0; box-shadow: none; white-space: normal; }
+.pop-card { width: 420px; max-width: calc(100vw - 24px); max-height: 60vh; overflow-y: auto; cursor: pointer; }
+.pop-card .card { cursor: pointer; }
+/* The card is a preview: its own tags, icons and buttons must not fire — a click anywhere on it
+   means "open this card", nothing else. */
+.pop-card .card * { pointer-events: none; }
 .tl-empty { flex: 1; padding: 3.5rem 1rem; text-align: center; color: var(--text3); }
 .tl-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
 .tl-empty small { font-family: var(--mono); font-size: 11px; }
@@ -592,7 +604,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.13';
+const APP_BUILD = '2026-07-14.17';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';
@@ -1784,10 +1796,13 @@ function popEl(){
   return el;
 }
 // `rect` is the thing being described — the popover sits above it, or below when there is no room.
-function popShow(html, rect){
+// opts.card drops the dark chrome: the content is already a card and brings its own.
+function popShow(html, rect, opts){
   const pop = popEl();
-  pop.innerHTML = `<div class="pop">${html}<div class="pop-arrow"></div></div>`;
+  const card = !!(opts && opts.card);
+  pop.innerHTML = `<div class="pop">${html}${card ? '' : '<div class="pop-arrow"></div>'}</div>`;
   pop.style.display = 'block';
+  if (pop.classList) pop.classList.toggle('cardmode', card);   // NOT 'card' — that is the app's own card class
   const h = pop.offsetHeight || 92;
   const above = rect.top - 8 - h >= 8;
   if (pop.classList) pop.classList.toggle('below', !above);
@@ -2135,7 +2150,13 @@ let _grHW = {};               // id -> half the pill's width, for the collision 
 let _grSig = '';              // which cards the drawn map is of — filtering must not change it
 let _grBuilt = false;
 let _grTotal = 0;
+// What counts as a link between two cards. Tags and genes say different things — a tag is a topic
+// you chose, a gene is a fact about the card — and which of them you want the map built out of
+// depends on what you are looking for.
+let grLinkBy = 'both';        // 'tags' | 'genes' | 'both'
 let _grFixed = {};            // id -> true once you have dragged it somewhere
+let _grHome = {};             // id -> where the card belongs, and springs back to
+let _grRelaxRaf = 0;
 let _grAlpha = 0;
 let _grRaf = 0;
 let _grW = 800, _grH = 520;
@@ -2169,7 +2190,9 @@ function grNodes(){
       if (byId.has(t) && t !== e.id) { linked.add(e.id); linked.add(t); }
     }
   }
-  return cards.filter(e => (e.tags || []).length || (e.genes || []).length || linked.has(e.id));
+  // Under "Tags" a gene-only card has nothing to place it, so it drops out — exactly as a card
+  // with neither always has.
+  return cards.filter(e => grTerms(e).size > 0 || linked.has(e.id));
 }
 function grEdges(nodes){
   const ids = new Set(nodes.map(n => n.id));
@@ -2191,10 +2214,18 @@ function grShownCount(){
   return grNodes().reduce((n, e) => n + (vis.has(e.id) ? 1 : 0), 0);
 }
 function grTerms(e){
-  return new Set([
-    ...(e.tags || []).map(x => 't:' + String(x).toLowerCase()),
-    ...(e.genes || []).flatMap(g => geneAliasesU(g)).map(g => 'g:' + g),
-  ]);
+  const out = new Set();
+  if (grLinkBy !== 'genes') for (const t of (e.tags || [])) out.add('t:' + String(t).toLowerCase());
+  if (grLinkBy !== 'tags') for (const g of (e.genes || [])) for (const a of geneAliasesU(g)) out.add('g:' + a);
+  return out;
+}
+// Changing what links the cards changes what the graph IS, so it is laid out afresh. This is the
+// one thing other than ↻ Relayout that legitimately moves everything.
+function setGrLinkBy(v){
+  if (grLinkBy === v) return;
+  grLinkBy = v;
+  applyControlBar();
+  grRelayout();
 }
 // The attracting pairs, precomputed once per layout: for every two cards sharing a tag or a gene,
 // one spring whose strength is the summed rarity of everything they share. Also hands back a seed
@@ -2263,9 +2294,11 @@ function grInitPositions(keep){
       y: cy + Math.sin(ang) * R + Math.sin(ang + 1.57) * off,
       vx: 0, vy: 0,
     };
+    _grHome[e.id] = { x: _grPos[e.id].x, y: _grPos[e.id].y };
   });
+  const live = new Set(_grNodes.map(n => n.id));
   for (const id of Object.keys(_grPos)) {
-    if (!_grNodes.some(n => n.id === id)) delete _grPos[id];   // dropped by a filter
+    if (!live.has(id)) { delete _grPos[id]; delete _grHome[id]; delete _grFixed[id]; }   // card is gone
   }
 }
 function grStep(a){
@@ -2319,6 +2352,14 @@ function grStep(a){
   }
   for (let k = 0; k < 3; k++) grCollide();   // one pass under-relaxes; three converges
   grClampAll();                              // the collision pass can shove a node off-scene
+  // Where each card belongs. The force layout decides that; a card you placed by hand keeps the
+  // home you gave it, which is why the fixed ones are skipped here.
+  for (const e of N) {
+    if (_grFixed[e.id]) continue;
+    const p = P[e.id];
+    const h = _grHome[e.id] || (_grHome[e.id] = { x: 0, y: 0 });
+    h.x = p.x; h.y = p.y;
+  }
 }
 function grClampAll(){
   for (const e of _grNodes) {
@@ -2328,18 +2369,71 @@ function grClampAll(){
     p.y = Math.max(24, Math.min(_grH - 24, p.y));
   }
 }
-// Dragging a card must not set the whole map swimming. The map holds still; the card goes where you
-// put it, and its neighbours move only as far as it takes to not be underneath it. No force step,
-// no re-heat — just the collision constraint.
-function grMoveNode(id, x, y){
+
+// --- Getting out of the way, and going back ---------------------------------------------------
+// Every card remembers where it belongs. While you drag one through a cloud, the cards it barges
+// into are pushed aside by the collision constraint — but each is on a spring back to its home, so
+// the moment the card you are holding is no longer on top of it, it slides straight back. Drag a
+// card clean through a group and the group closes up behind you, more or less as it was. Without
+// the springs the collision alone would leave a wake of permanently scattered cards.
+//
+// One relaxation step: pull everything home, then push apart whatever now overlaps. Returns how far
+// the furthest card moved, so the caller knows when it has settled (or is wedged and never will).
+function grRelaxStep(){
+  const P = _grPos;
+  const was = new Map();
+  for (const e of _grNodes) { const p = P[e.id]; if (p) was.set(e.id, [p.x, p.y]); }
+  for (const e of _grNodes) {
+    if (_grFixed[e.id]) continue;          // hand-placed cards stay where you put them
+    const p = P[e.id], h = _grHome[e.id];
+    if (!p || !h) continue;
+    p.x += (h.x - p.x) * 0.3;
+    p.y += (h.y - p.y) * 0.3;
+  }
+  for (let k = 0; k < 3; k++) grCollide(true);   // loose cards may pass; the held card may not
+  grClampAll();
+  let delta = 0;
+  for (const e of _grNodes) {
+    const p = P[e.id], b = was.get(e.id);
+    if (!p || !b) continue;
+    delta = Math.max(delta, Math.abs(p.x - b[0]), Math.abs(p.y - b[1]));
+  }
+  return delta;
+}
+function grRelaxTick(){
+  _grRelaxRaf = 0;
+  const delta = grRelaxStep();
+  grApplyDOM();
+  // Keep going while it is still moving, and for as long as a card is held (the cards under it have
+  // to keep getting out of the way as it travels).
+  if (delta > 0.2 || _grDrag) _grRelaxRaf = requestAnimationFrame(grRelaxTick);
+}
+function grRelaxStart(){
+  if (typeof requestAnimationFrame !== 'function') { grRelaxSettle(); return; }
+  if (!_grRelaxRaf) _grRelaxRaf = requestAnimationFrame(grRelaxTick);
+}
+// 120 steps is far more than a 0.3 spring needs to converge; the cap is only there so a wedged card
+// (one whose home is buried under a card you have parked on it) cannot spin forever.
+function grRelaxSettle(){ for (let k = 0; k < 120 && grRelaxStep() > 0.2; k++); }
+function grStopRelax(){ if (_grRelaxRaf) { cancelAnimationFrame(_grRelaxRaf); _grRelaxRaf = 0; } }
+
+// Put a card somewhere. It lives there now — that becomes its home, so it is what it springs back
+// to if some LATER drag shoves it aside.
+function grPlaceNode(id, x, y){
   const p = _grPos[id];
   if (!p) return;
   p.x = Math.max(95, Math.min(_grW - 95, x));
   p.y = Math.max(24, Math.min(_grH - 24, y));
   p.vx = 0; p.vy = 0;
   _grFixed[id] = true;
-  for (let k = 0; k < 3; k++) grCollide();
-  grClampAll();
+  const h = _grHome[id] || (_grHome[id] = { x: 0, y: 0 });
+  h.x = p.x; h.y = p.y;
+}
+// Place it and let the map settle around it, all at once. The drag handler does the same thing one
+// frame at a time so you can watch it happen.
+function grMoveNode(id, x, y){
+  grPlaceNode(id, x, y);
+  grRelaxSettle();
 }
 function grApplyDOM(){
   const scene = document.getElementById('gr-scene');
@@ -2375,10 +2469,11 @@ function grTick(){
   grApplyDOM();
   if (_grAlpha > GR_MIN_ALPHA) _grRaf = requestAnimationFrame(grTick);
 }
-function grStop(){ if (_grRaf) { cancelAnimationFrame(_grRaf); _grRaf = 0; } _grAlpha = 0; }
+function grStop(){ if (_grRaf) { cancelAnimationFrame(_grRaf); _grRaf = 0; } _grAlpha = 0; grStopRelax(); }
 function grRelayout(){
   _grFixed = {};
   _grPos = {};
+  _grHome = {};
   _grSig = '';        // force a full rebuild, and a fresh zoom-to-fit
   renderGraph();
 }
@@ -2391,24 +2486,21 @@ function grNodeHtml(e){
     onpointerdown="grNodeDown(event,'${e.id}')" onpointerenter="popIn();grShowPop('${e.id}')" onpointerleave="popOut()"
     >${conn ? '◆' : '<span class="gr-dot"></span>'}<span class="gr-label">${esc(label)}</span></div>`;
 }
+// A node's tooltip is the card itself, drawn by the very same renderCard() the list uses — and
+// obeying the very same Title · Tags · Body switch, through the very same two CSS classes. So the
+// switch means one thing everywhere, and a card looks the same wherever you meet it.
 function grShowPop(id){
   if (_grDrag) return;
   const e = items.find(i => i.id === id);
   const el = document.getElementById('gr-n-' + id);
   if (!e || !el || !el.getBoundingClientRect) return;
-  const chips = [
-    ...(e.tags || []).slice(0, 6).map(t => `<span class="pop-tag">#${esc(t)}</span>`),
-    ...(e.genes || []).slice(0, 6).map(g => `<span class="pop-tag">${esc(g)}</span>`),
-  ].join('');
-  const links = grRefs(e).filter(t => items.some(i => i.id === t)).length;
-  const meta = [TYPES.find(t => t.key === e.type)?.label || e.type,
-                links ? `${links} link${links === 1 ? '' : 's'}` : ''].filter(Boolean).join(' · ');
-  popShow(`
-      <div class="pop-t">${esc(cardSortLabel(e) || '(untitled)')}</div>
-      <div class="pop-r">${esc(meta)}</div>
-      ${chips ? `<div class="pop-tags">${chips}</div>` : ''}
-      <div class="pop-acts"><span class="pop-act" onclick="openCardFocused('${e.id}')">Open card</span></div>`,
-    el.getBoundingClientRect());
+  const mode = previewMode === 'compact' ? ' hide-previews'
+             : previewMode === 'minimal' ? ' hide-meta' : '';
+  // eagerBody: the list can afford to render a body lazily when you scroll to it; a tooltip that
+  // only exists while you hover cannot.
+  popShow(`<div class="pop-card${mode}" onclick="openCardFocused('${e.id}')" title="Open this card">${renderCard(e, false, true)}</div>`,
+    el.getBoundingClientRect(), { card: true });
+  resolveImages();   // the body may carry images, and they are placeholders until this runs
 }
 function renderGraph(){
   const host = document.getElementById('graph-view');
@@ -2443,10 +2535,17 @@ function renderGraph(){
         <svg class="gr-edges">${_grEdges.map((c, i) => `<line id="gr-e${i}" stroke="#a3a19a" stroke-width="1.5"></line>`).join('')}</svg>
         ${_grNodes.map(grNodeHtml).join('')}
       </div>
-      <span class="gr-relayout" onclick="grRelayout()" title="Start the layout again from scratch">↻ Relayout</span>
+      <div class="gr-tools">
+        <div class="seg" id="gr-link-seg">
+          <span class="seg-label" title="What counts as a link between two cards">Link</span>
+          <span class="seg-opt" data-val="tags" onclick="setGrLinkBy('tags')" title="Shared tags only">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setGrLinkBy('genes')" title="Shared genes only">Genes</span><span class="seg-sep">·</span><span class="seg-opt" data-val="both" onclick="setGrLinkBy('both')" title="Shared tags and shared genes">Both</span>
+        </div>
+        <span class="gr-relayout" onclick="grRelayout()" title="Start the layout again from scratch">↻ Relayout</span>
+      </div>
       <span class="gr-caption" id="gr-caption"></span>
     </div>`;
   _grBuilt = true;
+  applyControlBar();   // light the current option in the Link switch
   const canvas = document.getElementById('gr-canvas');
   const cw = (canvas && canvas.clientWidth) || 900;
   const ch = (canvas && canvas.clientHeight) || 560;
@@ -2467,13 +2566,22 @@ function renderGraph(){
 // Filtering hides; it never moves. Nodes keep their places, so the gaps tell you where the cards
 // you filtered out were — and clearing the filter puts you back exactly where you were.
 function grApplyFilter(){
-  const vis = grVisibleIds();
+  const vis = grVisibleIds();   // this is also what recomputes highlightGenes, so it must come first
+  // The gene highlight input picks cards out of the map without narrowing it: the ones carrying a
+  // gene you named light up, the rest fade back. Same gene set the card list highlights by, so the
+  // two views agree about what you are looking for. Purely a repaint — nothing moves.
+  const lit = highlightGenes.size > 0;
+  const carries = e => (e.genes || []).some(g => geneAliasesU(g).some(a => highlightGenes.has(a)));
   let hidden = 0;
   for (const e of _grNodes) {
     const on = vis.has(e.id);
     if (!on) hidden++;
     const el = document.getElementById('gr-n-' + e.id);
-    if (el && el.classList) el.classList.toggle('gr-off', !on);
+    if (!el || !el.classList) continue;
+    el.classList.toggle('gr-off', !on);
+    const hi = lit && carries(e);
+    el.classList.toggle('gr-hi', hi);
+    el.classList.toggle('gr-dim', lit && !hi);
   }
   _grEdges.forEach((c, i) => {
     const line = document.getElementById('gr-e' + i);
@@ -2484,7 +2592,7 @@ function grApplyFilter(){
     const omitted = _grTotal - _grNodes.length;
     cap.textContent = hidden
       ? `${_grNodes.length - hidden} of ${_grNodes.length} nodes — the rest are filtered out, not moved`
-      : omitted > 0 ? `${_grNodes.length} of ${_grTotal} cards — the rest carry no tag, gene or link` : '';
+      : omitted > 0 ? `${_grNodes.length} of ${_grTotal} cards — the rest carry no ${grLinkBy === 'tags' ? 'tag' : grLinkBy === 'genes' ? 'gene' : 'tag, gene'} or link` : '';
   }
 }
 // Repulsion alone cannot keep these apart: a card in the core has twenty springs pulling it in and
@@ -2496,24 +2604,44 @@ function grHalfWidth(e){
   const label = cardSortLabel(e) || '';
   return Math.min(180, 37 + Math.min(label.length, 30) * 6.2) / 2;
 }
-function grCollide(){
+function grCollide(relax){
   const N = _grNodes, P = _grPos;
   for (let i = 0; i < N.length; i++) {
     const a = P[N[i].id], hwa = _grHW[N[i].id] || 45;
+    const af = !!_grFixed[N[i].id];
     for (let j = i + 1; j < N.length; j++) {
+      const bf = !!_grFixed[N[j].id];
+      if (af && bf) continue;                  // two immovable cards: nothing to resolve
+      // While relaxing, two LOOSE cards are allowed to slip past each other. Their homes do not
+      // overlap — the layout guarantees that — so the only thing a loose-loose collision achieves
+      // here is to wedge them behind one another on their way back, which is precisely the jam that
+      // left a wake of scattered cards behind every drag. The card in your hand is still solid.
+      if (relax && !af && !bf) continue;
       const b = P[N[j].id], hwb = _grHW[N[j].id] || 45;
       const mx = hwa + hwb + 8, my = 30;
       const dx = b.x - a.x, dy = b.y - a.y;
       const ox = mx - Math.abs(dx), oy = my - Math.abs(dy);
       if (ox <= 0 || oy <= 0) continue;
-      if (ox / mx < oy / my) {
-        const s = (dx >= 0 ? 1 : -1) * ox * 0.5;
-        if (!_grFixed[N[i].id]) a.x -= s;
-        if (!_grFixed[N[j].id]) b.x += s;
+      const share = af || bf ? 1 : 0.5;      // if one card is immovable the other yields all of it
+      // Laying the graph out, take whichever axis needs the smaller correction. But getting out of
+      // the way of a card in your HAND is different: a pill is 30px tall and up to 190px wide, so
+      // sideways is the expensive way out — and, being the direction you are dragging, it is also
+      // the way that ploughs the poor card along in front of you all the way across the map. Step
+      // aside vertically instead: it costs 30px and nothing gets bulldozed.
+      const vertical = relax || (ox / mx >= oy / my);
+      if (!vertical) {
+        const s = (dx >= 0 ? 1 : -1) * ox * share;
+        if (!af) a.x -= s;
+        if (!bf) b.x += s;
       } else {
-        const s = (dy >= 0 ? 1 : -1) * oy * 0.5;
-        if (!_grFixed[N[i].id]) a.y -= s;
-        if (!_grFixed[N[j].id]) b.y += s;
+        let sign = dy >= 0 ? 1 : -1;
+        if (Math.abs(dy) < 0.5) {            // dead-on: break the tie by where they each belong
+          const ha = _grHome[N[i].id], hb = _grHome[N[j].id];
+          sign = (hb && ha && hb.y < ha.y) ? -1 : 1;
+        }
+        const s = sign * oy * share;
+        if (!af) a.y -= s;
+        if (!bf) b.y += s;
       }
     }
   }
@@ -2562,9 +2690,10 @@ function _grMove(e){
   }
   if (!_grPos[d.id]) return;
   const s = grToScene(e.clientX, e.clientY);
-  grMoveNode(d.id, s.x, s.y);
+  grPlaceNode(d.id, s.x, s.y);
   const el = document.getElementById('gr-n-' + d.id);
   if (el && el.classList) el.classList.add('pinned');
+  grRelaxStart();   // neighbours give way as it passes, and close up again behind it
   grApplyDOM();
 }
 function _grUp(){
@@ -2575,6 +2704,7 @@ function _grUp(){
   document.body.style.userSelect = '';
   document.body.style.cursor = '';
   if (!d) return;
+  if (d.id && d.moved) grRelaxStart();     // the cards it passed are still springing back
   if (!d.moved && d.id) grShowPop(d.id);   // a tap, not a drag — touch has no hover, so show it
   if (!d.moved && d.id) popPin();
 }
@@ -2711,6 +2841,7 @@ function applyControlBar() {
   mark('detail-seg', previewMode);
   mark('conn-seg', connFilter);
   mark('archive-opts', archiveFilter);
+  mark('gr-link-seg', grLinkBy);
 }
 // Which of the three main views is on screen. This was a `digestVisible` boolean until the
 // timeline made it a third state; setView is the one place it changes, so the switch, the page

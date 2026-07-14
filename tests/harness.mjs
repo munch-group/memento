@@ -169,7 +169,11 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get tlFocusId(){ return tlFocusId; },
       // Graph
       renderGraph, grNodes, grEdges, grPairs, grRefs, grIsConn, grRelayout, grStop,
-      grVisibleIds, grShownCount, grApplyFilter, grMoveNode,
+      grVisibleIds, grShownCount, grApplyFilter, grMoveNode, grRelaxStep, grRelaxSettle, grShowPop,
+      setGrLinkBy, updateHighlightSet, grTerms,
+      get grLinkBy(){ return grLinkBy; },
+      get highlightGenes(){ return highlightGenes; },
+      get grHome(){ return _grHome; },
       get grPos(){ return _grPos; },
       get grW(){ return _grW; },
       get grH(){ return _grH; },

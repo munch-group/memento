@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "memento": {
+      "command": "pixi",
+      "args": ["run", "--manifest-path", "/Users/kmt/memento/pixi.toml",
+               "python", "/Users/kmt/memento/memento-mcp.py",
+               "/Users/kmt/memento/knowledge-base"],
+      "env": {}
+    }
+  }
+}

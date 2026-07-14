@@ -8,7 +8,7 @@ version = "0.1.0"
 [tasks]
 digest = "python kb-sync-and-digest.py knowledge-base/ --days 30"
 # Runs memento.html's own inline script against a mock GitHub API and a mock filesystem.
-test = "node tests/gh-backend.test.mjs && node tests/fsa-regression.test.mjs && node tests/boot.test.mjs && node tests/offline.test.mjs && node tests/tag-editor.test.mjs && node tests/dashboard.test.mjs && node tests/controls.test.mjs && node tests/timeline.test.mjs && python tests/mcp_test.py"
+test = "node tests/gh-backend.test.mjs && node tests/fsa-regression.test.mjs && node tests/boot.test.mjs && node tests/offline.test.mjs && node tests/tag-editor.test.mjs && node tests/dashboard.test.mjs && node tests/controls.test.mjs && node tests/timeline.test.mjs && node tests/graph.test.mjs && python tests/mcp_test.py"
 # Edits made on iOS commit straight to main via the GitHub API, so rebase onto them before
 # pushing — otherwise this push is rejected as non-fast-forward.
 push = "git add -u ; git add knowledge-base ; git commit -m 'update' ; git pull --rebase ; git push"

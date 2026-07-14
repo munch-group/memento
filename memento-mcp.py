@@ -177,8 +177,8 @@ def get_entry(entry_id: str) -> dict:
                 "source": e.get("source") or "",
                 "connection": bool(e.get("connection")),
                 "due": e.get("due") or "",
-                # Set by the app's timeline view: {"order": n, "subtasks": [{id, title, start, end}]},
-                # with start/end as inclusive "YYYY-MM-DD" days. Absent unless the entry is scheduled.
+                # Set by the app's timeline view: {"subtasks": [{id, title, start, end}]}, with
+                # start/end as inclusive "YYYY-MM-DD" days. Absent unless the entry is scheduled.
                 "schedule": e.get("schedule") or {},
             })
             return out

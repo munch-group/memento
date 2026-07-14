@@ -259,24 +259,48 @@ a { color: inherit; }
 .connect-screen code { font-family: var(--mono); font-size: 12px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; }
 .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 99; white-space: nowrap; box-shadow: 0 4px 20px rgba(20,20,19,0.15); }
 .toast.show { opacity: 1; }
-/* --- Timeline view -----------------------------------------------------------------------
-   Deliberately quiet: the bars are a single neutral, and the accent is reserved for the Today
-   line and the active switch options — the same rule the rest of the app follows. */
-#timeline-view { border: 1px solid var(--border); border-radius: var(--rl); background: #ffffff; overflow: hidden; }
-.tl-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 18px 20px 14px; }
-.tl-head-l { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.tl-title-row { display: flex; align-items: baseline; gap: 10px; }
-.tl-title { font-size: 15px; font-weight: 600; }
-.tl-count { font-family: var(--mono); font-size: 11px; color: var(--text3); white-space: nowrap; }
-.tl-head-r { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
-.tl-range { width: 84px; accent-color: var(--accent); }
-.tl-body { display: flex; border-top: 1px solid var(--border); }
+/* --- Timeline view ----------------------------------------------------------------------- */
+/* The panel fills the view rather than shrinking to fit its rows — a two-row timeline should still
+   read as a calendar, not as a stub floating in white space. Only the timeline needs this, so the
+   flex chain is switched on by a class (renderList sets it) and the card list is left alone. */
+.main.panel-mode { display: flex; flex-direction: column; padding-bottom: 1.5rem; }
+.main.panel-mode #app-area { flex: 1 0 auto; display: flex; flex-direction: column; }
+/* 1 0 auto, not 1 1 0: it grows into spare space but never shrinks below its rows, so a timeline
+   with more rows than fit still overflows into .main's scroll as it did before. */
+/* No header and no footer: the sidebar's Sort menu orders the rows exactly as it orders every other
+   view, and zoom/pan are the wheel and the drag. A strip of chrome restating either would be a
+   second control for something the app already has one of. */
+#timeline-view { flex: 1 0 auto; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--rl); background: #ffffff; overflow: hidden; }
+
+/* --- Graph view -----------------------------------------------------------------------------
+   Nodes are pills coloured by the [data-type] tokens the cards already carry — no second colour
+   table to drift out of step with the first. A connection card gets the accent instead: it is the
+   thing sitting on the line between the cards it links. */
+#graph-view { flex: 1 1 auto; min-height: 460px; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--rl); background: #ffffff; overflow: hidden; }
+.gr-canvas { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--bg2); cursor: grab; touch-action: none; }
+.gr-scene { position: absolute; inset: 0; transform-origin: 0 0; }
+.gr-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
+.gr-node { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 500; white-space: nowrap; cursor: grab; box-shadow: 0 1px 2px rgba(20,20,19,0.06); will-change: transform; z-index: 2; touch-action: none; max-width: 180px;
+  background: var(--tbg); border: 1px solid color-mix(in srgb, var(--tc) 32%, transparent); color: var(--tc); }
+.gr-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.gr-node.gr-off { display: none; }
+.gr-node.pinned { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(217,119,87,0.35); }
+.gr-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--tc); flex-shrink: 0; }
+/* A connection card: the design drew this as a label on the edge. Here it IS a node — draggable
+   and clickable like any other card — which is what lets a card linking one, two or five others
+   render with no special case. */
+.gr-node.conn { background: #fdf3ef; border-color: rgba(217,119,87,0.28); color: var(--accent-hover); font-family: var(--mono); font-size: 10.5px; }
+.gr-node.conn .gr-dot { display: none; }
+.gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
+.gr-relayout { position: absolute; right: 12px; top: 10px; font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; padding: 3px 8px; border-radius: var(--r); background: rgba(255,255,255,0.75); }
+.gr-relayout:hover { color: var(--text2); background: #fff; }
+.gr-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text3); }
+.gr-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
+.gr-empty small { font-family: var(--mono); font-size: 11px; }
+.tl-body { flex: 1 0 auto; display: flex; }
 .tl-left { width: 216px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--bg2); }
 .tl-left-head { height: 48px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); }
-.tl-rowhead { position: relative; height: 40px; border-bottom: 1px solid #efeee9; display: flex; align-items: center; gap: 9px; padding: 0 12px 0 10px; }
-.tl-grip { color: #b8b6ab; font-size: 12px; line-height: 1; user-select: none; padding: 3px 1px; flex-shrink: 0; touch-action: none; }
-.tl-grip.on { cursor: grab; }
-.tl-grip.off { opacity: 0.3; cursor: default; }
+.tl-rowhead { position: relative; height: 40px; border-bottom: 1px solid #efeee9; display: flex; align-items: center; gap: 9px; padding: 0 12px 0 14px; }
 .tl-dot { width: 8px; height: 8px; border-radius: 2px; background: #c4c2b8; flex-shrink: 0; }
 .tl-rowtitle { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; cursor: pointer; }
 .tl-rowtitle:hover { color: var(--accent); }
@@ -288,10 +312,12 @@ a { color: inherit; }
 .tl-rowact:hover { opacity: 1; }
 .tl-rowact.add { color: var(--text2); }
 .tl-rowact.del { color: #c44; }
-.tl-lanes { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; }
-.tl-inner { position: relative; }
+.tl-lanes { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; cursor: grab; }
+/* min-height so the grid, the weekend shading and the Today line run to the bottom of the panel
+   rather than stopping at the last row. */
+.tl-inner { position: relative; min-height: 100%; }
 .tl-grid { position: absolute; inset: 0; pointer-events: none; }
-.tl-shade { position: absolute; top: 0; bottom: 0; background: #f1f0ea; }
+.tl-shade { position: absolute; top: 0; bottom: 0; background: var(--bg2); }
 .tl-gline { position: absolute; top: 0; bottom: 0; width: 1px; }
 .tl-axis { position: relative; height: 48px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.82); }
 /* Ticks sit in the LOWER half of the axis and the Today pill in the upper: the pill is centred on
@@ -303,7 +329,8 @@ a { color: inherit; }
 .tl-today-pill { position: absolute; top: 2px; left: 1px; transform: translateX(-50%); background: var(--accent); color: #fff; font-family: var(--mono); font-size: 9px; font-weight: 600; line-height: 11px; padding: 2px 7px; border-radius: 999px; white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase; }
 .tl-row { position: relative; height: 40px; border-bottom: 1px solid #efeee9; }
 .tl-row.focus { background: rgba(217, 119, 87, 0.07); }
-.tl-bar { position: absolute; top: 7px; height: 26px; background: #e9e7df; border-radius: 6px; box-shadow: inset 0 0 0 1px #d9d7cd; display: flex; align-items: center; padding: 0 10px; cursor: grab; touch-action: none; }
+/* The same accent outline a pinned card carries, so a bar reads as the same kind of object. */
+.tl-bar { position: absolute; top: 7px; height: 26px; background: #e9e7df; border-radius: 6px; box-shadow: inset 0 0 0 1.5px rgba(217,119,87,0.55); display: flex; align-items: center; padding: 0 10px; cursor: grab; touch-action: none; }
 .tl-bar-label { font-size: 12px; color: #33322f; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
 .tl-bar-label.untitled { font-family: var(--mono); color: var(--text3); }
 .tl-grab { position: absolute; top: 0; height: 100%; width: 9px; cursor: ew-resize; touch-action: none; }
@@ -317,20 +344,18 @@ a { color: inherit; }
    horizontally, and a scroll container clips both axes — so a popover parented to a bar in the top
    row (or in a one-row timeline, where there is no room either way) would be cut in half. Fixed
    positioning is the only placement nothing can clip. tlShowPop() drives it. */
-#tl-pop { display: none; position: fixed; z-index: 60; }
-#tl-pop.below .tl-pop-arrow { top: auto; bottom: 100%; border-top: none; border-bottom: 6px solid var(--text); }
-.tl-pop { position: relative; background: var(--text); color: var(--bg); padding: 9px 12px; border-radius: 10px; box-shadow: 0 4px 20px rgba(20,20,19,0.2); white-space: nowrap; }
-.tl-pop-t { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-.tl-pop-r { font-family: var(--mono); font-size: 10px; color: #a3a29b; }
-.tl-pop-tags { display: flex; gap: 4px; margin-top: 7px; }
-.tl-pop-tag { font-family: var(--mono); font-size: 10px; background: rgba(255,255,255,0.1); color: #EDEBE3; padding: 2px 6px; border-radius: 3px; }
-.tl-pop-acts { display: flex; gap: 12px; margin-top: 8px; font-family: var(--mono); font-size: 10px; }
-.tl-pop-act { cursor: pointer; color: #a3a29b; }
-.tl-pop-act:hover { color: var(--bg); }
-.tl-pop-act.del:hover { color: #e88; }
-.tl-pop-arrow { position: absolute; top: 100%; left: 15px; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--text); }
-.tl-foot { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 11px 20px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 10.5px; color: var(--text3); }
-.tl-foot .sep { opacity: 0.4; }
+#app-pop { display: none; position: fixed; z-index: 60; }
+#app-pop.below .pop-arrow { top: auto; bottom: 100%; border-top: none; border-bottom: 6px solid var(--text); }
+.pop { position: relative; background: var(--text); color: var(--bg); padding: 9px 12px; border-radius: 10px; box-shadow: 0 4px 20px rgba(20,20,19,0.2); white-space: nowrap; }
+.pop-t { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.pop-r { font-family: var(--mono); font-size: 10px; color: #a3a29b; }
+.pop-tags { display: flex; gap: 4px; margin-top: 7px; flex-wrap: wrap; max-width: 320px; }
+.pop-tag { font-family: var(--mono); font-size: 10px; background: rgba(255,255,255,0.1); color: #EDEBE3; padding: 2px 6px; border-radius: 3px; }
+.pop-acts { display: flex; gap: 12px; margin-top: 8px; font-family: var(--mono); font-size: 10px; }
+.pop-act { cursor: pointer; color: #a3a29b; }
+.pop-act:hover { color: var(--bg); }
+.pop-act.del:hover { color: #e88; }
+.pop-arrow { position: absolute; top: 100%; left: 15px; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--text); }
 .tl-empty { flex: 1; padding: 3.5rem 1rem; text-align: center; color: var(--text3); }
 .tl-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
 .tl-empty small { font-family: var(--mono); font-size: 11px; }
@@ -493,7 +518,7 @@ a { color: inherit; }
       </div>
       <div class="control-bar">
         <div class="seg" id="view-seg">
-          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">All entries</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span>
+          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">All entries</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span>
         </div>
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
@@ -503,9 +528,10 @@ a { color: inherit; }
         <div class="seg" id="conn-seg"></div>
       </div>
       <div id="item-list" class="hide-previews"></div>
-      <!-- A sibling of #item-list rather than content inside it, so the timeline never has to fight
+      <!-- Siblings of #item-list rather than content inside it, so neither panel has to fight
            renderList()'s column distribution and progressive-insert streaming. -->
       <div id="timeline-view" style="display:none"></div>
+      <div id="graph-view" style="display:none"></div>
     </div>
   </div>
 </div>
@@ -566,7 +592,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.10';
+const APP_BUILD = '2026-07-14.13';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';
@@ -1060,13 +1086,13 @@ function renderFilters() {
   // archived cards, so it disagreed with both the list and the sidebar's own "All" count.
   // Always "← All", whichever view it returns you to: the link means "drop the filters", and
   // naming the destination differently each time would make it read like a different action.
-  // The timeline shows every scheduled entry regardless of the search box and sidebar facets, so
-  // it must not fly the filter pills — they'd claim a narrowing that isn't happening.
-  el.innerHTML = mainView === 'timeline'
-    ? 'Timeline'
-    : pills
+  // The panels have no chrome of their own, so their counts live here, the way every other view's does.
+  el.innerHTML = pills
     ? `<span class="title-back" onclick="clearAllFilters()" title="Clear filters">← All</span>${pills}`
-    : esc(mainView === 'dash' ? 'Dashboard' : `All entries (${scope.length})`);
+    : esc(mainView === 'dash' ? 'Dashboard'
+        : mainView === 'timeline' ? `Timeline (${tlRows().length})`
+        : mainView === 'graph' ? `Graph (${grShownCount()})`
+        : `All entries (${scope.length})`);
 }
 
 function toggleSection(headerId, contentId) {
@@ -1311,14 +1337,18 @@ function renderList() {
   // The timeline is a sibling container, not a card layout. Routing here rather than at every call
   // site means every existing renderList() caller repaints the right view for free.
   const tlEl = document.getElementById('timeline-view');
+  const grEl = document.getElementById('graph-view');
   const listEl = document.getElementById('item-list');
-  if (mainView === 'timeline') {
-    if (listEl) listEl.style.display = 'none';
-    if (tlEl) tlEl.style.display = '';
-    return renderTimeline();
-  }
-  if (tlEl) tlEl.style.display = 'none';
-  if (listEl) listEl.style.display = '';
+  const mainEl = document.getElementById('main-area');
+  const panel = mainView === 'timeline' || mainView === 'graph';
+  if (listEl) listEl.style.display = panel ? 'none' : '';
+  if (tlEl) tlEl.style.display = mainView === 'timeline' ? '' : 'none';
+  if (grEl) grEl.style.display = mainView === 'graph' ? '' : 'none';
+  // panel-mode gives the panel a flex chain from .main down, so it fills the view instead of
+  // shrinking to its content. The card list wants no part of that.
+  if (mainEl) mainEl.classList.toggle('panel-mode', panel);
+  if (mainView === 'timeline') return renderTimeline();
+  if (mainView === 'graph') return renderGraph();
   // Issues sub-view: render temporary issue cards instead of normal items
   if (ghIssuesRepo && ghIssuesItems.length >= 0) {
     return renderIssuesList();
@@ -1562,24 +1592,21 @@ function tagClick(e, tag) { e.stopPropagation(); setTagFilter(tag); }
 // date" and "put it on the timeline" the same act — and why letting a row go (tlRemoveRow) has to
 // let the due date go with it.
 //
-// Bars are a single quiet neutral on purpose: the accent belongs to the Today line and the active
-// switch options, as everywhere else in the app.
-const TL_ZOOMS = [{label:'Day', px:96}, {label:'Week', px:40}, {label:'Month', px:18}];
-const TL_SORTS = [{label:'Manual', key:'manual'}, {label:'Task', key:'task'}, {label:'Tag', key:'tag'}, {label:'Time', key:'time'}];
+// The rows ARE the card list, filtered to what is scheduled: tlRows() takes getVisibleItems()
+// wholesale — its search, its facets AND its order. So the sidebar's Sort menu sorts the timeline
+// exactly as it sorts every other view, and the panel needs no controls of its own: zoom is the
+// wheel, pan is a drag.
+const TL_PX_MIN = 3, TL_PX_MAX = 120;   // 3px/day fits a year across the lane; 120 fits a fortnight
 const TL_WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const TL_MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const TL_ROW_H = 40;   // must track .tl-row / .tl-rowhead in the CSS — the reorder drag divides by it
-const TL_HINTS = ['drag bar → reschedule', 'drag edge → resize', 'double-click a lane → add a bar',
-  'click a bar → rename / remove', 'drag the dashed line → due date', 'grip → reorder (Manual)']
-  .map((h, i) => `${i ? '<span class="sep">·</span>' : ''}<span>${h}</span>`).join('');
 
-let tlPxPerDay = 40;      // Week preset
-let tlSort = 'manual';
+let tlPxPerDay = 40;
 let tlFocusId = null;     // row to tint (set when you arrive from a card's timeline icon)
 let tlLo = null;          // ISO date of column 0 — the origin every x-coordinate is measured from
 let _tlDrag = null;
 let _tlScrollLeft = 0;
 let _tlFocusPending = false;
+let _tlLaneW = 0;         // measured width of the lane viewport; the window must be at least this wide
 
 function tlSubs(e){ return (e.schedule && e.schedule.subtasks) || []; }
 function tlOnTimeline(e){
@@ -1598,33 +1625,19 @@ function tlAnchor(e){
   return e.due || null;
 }
 
+// Everything — the search bar, the type/tag/gene facets, the archived scope AND the sidebar's Sort
+// menu — is already applied by getVisibleItems(). All the timeline adds is "and it has to be
+// scheduled". Deliberately no re-sort: that is what makes Sort mean one thing across the app.
 function tlRows(){
-  const rows = items.filter(tlOnTimeline);
-  // Mid-reorder the dragged order is the truth; it is written to the entries on pointerup.
-  if (_tlDrag && _tlDrag.kind === 'reorder') {
-    const pos = new Map(_tlDrag.order.map((id, i) => [id, i]));
-    return rows.slice().sort((a, b) => (pos.has(a.id) ? pos.get(a.id) : 1e9) - (pos.has(b.id) ? pos.get(b.id) : 1e9));
-  }
-  const label = e => cardSortLabel(e).toLowerCase();
-  const ord = e => (e.schedule && e.schedule.order != null ? e.schedule.order : 1e9);
-  const cmp = {
-    manual: (a, b) => (ord(a) - ord(b)) || label(a).localeCompare(label(b)),
-    task:   (a, b) => label(a).localeCompare(label(b)),
-    tag:    (a, b) => (a._sortTag || '￿').localeCompare(b._sortTag || '￿') || label(a).localeCompare(label(b)),
-    // Undated rows sink to the bottom — the same convention the card list's "Due" sort follows.
-    time:   (a, b) => {
-      const x = tlAnchor(a), y = tlAnchor(b);
-      if (x && !y) return -1;
-      if (!x && y) return 1;
-      if (!x && !y) return label(a).localeCompare(label(b));
-      return x.localeCompare(y) || label(a).localeCompare(label(b));
-    },
-  }[tlSort];
-  return rows.slice().sort(cmp || (() => 0));
+  const { vis } = getVisibleItems();
+  return vis.filter(tlOnTimeline);
 }
 
 // The span of days to draw: everything scheduled, always including today, with a little air either
-// side and a 45-day floor so a sparse timeline still reads as a calendar rather than a stub.
+// side. The floor is however many days it takes to FILL the lane at the current zoom — otherwise
+// zooming out to Year would just shrink three weeks of work into a sliver with white space beside
+// it, instead of showing you a year. Only `hi` ever moves, so the origin (and therefore every
+// x-coordinate) stays put as you zoom.
 function tlWindow(rows){
   const today = todayISO();
   let lo = today, hi = today;
@@ -1637,8 +1650,10 @@ function tlWindow(rows){
   }
   lo = addDaysISO(lo, -3);
   hi = addDaysISO(hi, 14);
+  const fill = Math.ceil((_tlLaneW || 1000) / tlPxPerDay) + 2;
+  const minDays = Math.max(45, fill);
   const span = daysBetween(lo, hi) + 1;
-  if (span < 45) hi = addDaysISO(hi, 45 - span);
+  if (span < minDays) hi = addDaysISO(hi, minDays - span);
   return { lo, days: daysBetween(lo, hi) + 1 };
 }
 
@@ -1656,78 +1671,58 @@ function tlSpanLabel(s){ return `${tlFmtDay(s.start)} – ${tlFmtDay(s.end)} · 
 function renderTimeline(){
   const host = document.getElementById('timeline-view');
   if (!host) return;
-  tlHidePop();   // it points at bar elements this render is about to throw away
-  const rows = tlRows();
-  const nBars = rows.reduce((n, e) => n + tlSubs(e).length, 0);
-  const zoom = TL_ZOOMS.map((z, i) =>
-    `${i ? '<span class="seg-sep">·</span>' : ''}<span class="seg-opt${tlPxPerDay === z.px ? ' active' : ''}" data-val="${z.px}" onclick="tlSetZoom(${z.px})">${z.label}</span>`).join('');
-  const sort = TL_SORTS.map((s, i) =>
-    `${i ? '<span class="seg-sep">·</span>' : ''}<span class="seg-opt${tlSort === s.key ? ' active' : ''}" data-val="${s.key}" onclick="tlSetSort('${s.key}')">${s.label}</span>`).join('');
-  host.innerHTML = `
-  <div class="tl-head">
-    <div class="tl-head-l">
-      <div class="tl-title-row">
-        <span class="tl-title">Timeline</span>
-        <span class="tl-count">${rows.length} ${rows.length === 1 ? 'entry' : 'entries'} · ${nBars} ${nBars === 1 ? 'bar' : 'bars'}</span>
-      </div>
-      <div class="seg" id="tl-sort-seg"><span class="seg-label">Sort</span>${sort}</div>
-    </div>
-    <div class="tl-head-r">
-      <div class="seg" id="tl-zoom-seg"><span class="seg-label">Zoom</span>${zoom}</div>
-      <input type="range" class="tl-range" id="tl-range" min="14" max="120" step="1" value="${tlPxPerDay}" oninput="tlSetZoom(this.value, true)">
-    </div>
-  </div>
-  <div class="tl-body" id="tl-body">${tlBodyHtml(rows)}</div>
-  <div class="tl-foot">${TL_HINTS}</div>`;
-  tlAfterRender();
-}
-
-// Zoom and sort repaint only the body: rebuilding the header would tear the range input out from
-// under the pointer half way through a slider drag.
-function tlRenderBody(){
-  const body = document.getElementById('tl-body');
-  if (!body) return;
-  tlHidePop();
+  popHide();   // it points at bar elements this render is about to throw away
   tlSaveScroll();
-  body.innerHTML = tlBodyHtml(tlRows());
+  host.innerHTML = `<div class="tl-body" id="tl-body">${tlBodyHtml(tlRows())}</div>`;
   tlAfterRender();
 }
 
 function tlBodyHtml(rows){
   if (!rows.length) {
-    return `<div class="tl-empty"><p>Nothing scheduled.</p><small>Give a card a due date, or click the timeline icon on any card.</small></div>`;
+    // An empty timeline and a timeline your search has emptied are different problems.
+    return items.some(tlOnTimeline)
+      ? `<div class="tl-empty"><p>No matches.</p><small>Nothing scheduled matches the current search or filters.</small></div>`
+      : `<div class="tl-empty"><p>Nothing scheduled.</p><small>Give a card a due date, or click the timeline icon on any card.</small></div>`;
   }
   const win = tlWindow(rows);
   tlLo = win.lo;
   const px = tlPxPerDay;
   const today = todayISO();
 
-  // Grid, weekend shading and axis ticks. Tick density follows the zoom: every day when there is
-  // room for it, otherwise Mondays only.
+  // Grid, weekend shading and axis ticks. Everything here thins out as you zoom out: at 3px/day a
+  // gridline per day would be a solid block and a label per Monday would be unreadable mush, so
+  // below 14px/day the calendar switches to months and the weekend shading (6px stripes at that
+  // scale — pure moiré) drops away entirely.
+  const perDayGrid = px >= 26;
+  const shadeWeekends = px >= 14;
   let shades = '', lines = '', ticks = '';
   for (let i = 0; i < win.days; i++) {
     const iso = addDaysISO(win.lo, i);
     const d = dayFromISO(iso);
-    const dow = d.getDay();
+    const dow = d.getDay(), dom = d.getDate(), mon = d.getMonth();
+    const monday = dow === 1, first = i === 0;
     const left = i * px;
-    if (dow === 0 || dow === 6) shades += `<div class="tl-shade" style="left:${left}px;width:${px}px"></div>`;
-    if (px >= 58) {
-      lines += `<div class="tl-gline" style="left:${left}px;background:${dow === 1 ? '#d5d4cf' : '#efeee9'}"></div>`;
-      ticks += `<div class="tl-tick" style="left:${left}px"><span class="tl-tick-t">${TL_WD[dow]}</span><span class="tl-tick-b">${d.getDate()}</span></div>`;
-    } else if (px >= 26) {
-      lines += `<div class="tl-gline" style="left:${left}px;background:${dow === 1 || i === 0 ? '#d5d4cf' : '#f1f0ea'}"></div>`;
-      if (dow === 1 || i === 0) ticks += `<div class="tl-tick" style="left:${left}px"><span class="tl-tick-t">${TL_MO[d.getMonth()]}</span><span class="tl-tick-b">${d.getDate()}</span></div>`;
-    } else if (dow === 1 || i === 0) {
-      lines += `<div class="tl-gline" style="left:${left}px;background:#d5d4cf"></div>`;
-      ticks += `<div class="tl-tick" style="left:${left}px"><span class="tl-tick-b">${TL_MO[d.getMonth()]} ${d.getDate()}</span></div>`;
+    if (shadeWeekends && (dow === 0 || dow === 6)) shades += `<div class="tl-shade" style="left:${left}px;width:${px}px"></div>`;
+    if (px >= 58) {                       // Day: a column per day, labelled by weekday
+      lines += `<div class="tl-gline" style="left:${left}px;background:${monday ? '#d5d4cf' : '#efeee9'}"></div>`;
+      ticks += `<div class="tl-tick" style="left:${left}px"><span class="tl-tick-t">${TL_WD[dow]}</span><span class="tl-tick-b">${dom}</span></div>`;
+    } else if (perDayGrid) {              // Week: still a column per day, but only Mondays are named
+      lines += `<div class="tl-gline" style="left:${left}px;background:${monday || first ? '#d5d4cf' : '#f1f0ea'}"></div>`;
+      if (monday || first) ticks += `<div class="tl-tick" style="left:${left}px"><span class="tl-tick-t">${TL_MO[mon]}</span><span class="tl-tick-b">${dom}</span></div>`;
+    } else if (px >= 14) {                // Month: a line per week
+      if (monday || first) {
+        lines += `<div class="tl-gline" style="left:${left}px;background:#d5d4cf"></div>`;
+        ticks += `<div class="tl-tick" style="left:${left}px"><span class="tl-tick-b">${TL_MO[mon]} ${dom}</span></div>`;
+      }
+    } else if (dom === 1 || first) {      // Quarter / Year: a line per month, the year marked in January
+      lines += `<div class="tl-gline" style="left:${left}px;background:${mon === 0 ? '#c9c8c2' : '#d5d4cf'}"></div>`;
+      ticks += `<div class="tl-tick" style="left:${left}px"><span class="tl-tick-t">${mon === 0 || first ? d.getFullYear() : ''}</span><span class="tl-tick-b">${TL_MO[mon]}</span></div>`;
     }
   }
 
-  const manual = tlSort === 'manual';
   const heads = rows.map(e => `<div class="tl-rowhead" data-eid="${e.id}">
-      <span class="tl-grip ${manual ? 'on' : 'off'}" title="${manual ? 'Drag to reorder' : 'Switch to Manual sort to reorder'}"${manual && !readOnly ? ` onpointerdown="tlGripDown(event,'${e.id}')"` : ''}>⠿</span>
       <span class="tl-dot"></span>
-      <span class="tl-rowtitle" title="Open the card" onclick="tlOpenCard('${e.id}')">${esc(cardSortLabel(e) || '(untitled)')}</span>
+      <span class="tl-rowtitle" title="Open the card" onclick="openCardFocused('${e.id}')">${esc(cardSortLabel(e) || '(untitled)')}</span>
       ${readOnly ? '' : `<span class="tl-rowacts"><span class="tl-rowact add" title="Add a bar" onclick="tlAddBar(event,'${e.id}')">＋</span><span class="tl-rowact del" title="Remove from the timeline" onclick="tlRemoveRow(event,'${e.id}')">✕</span></span>`}
     </div>`).join('');
 
@@ -1742,9 +1737,9 @@ function tlBodyHtml(rows){
   return `
   <div class="tl-left">
     <div class="tl-left-head">Task</div>
-    <div id="tl-heads">${heads}</div>
+    <div>${heads}</div>
   </div>
-  <div class="tl-lanes" id="tl-lanes" onscroll="tlHidePop()">
+  <div class="tl-lanes" id="tl-lanes" onscroll="popHide()" onwheel="tlWheel(event)" onpointerdown="tlPanDown(event)">
     <div class="tl-inner" style="width:${win.days * px}px">
       <div class="tl-grid">${shades}${lines}</div>
       <div class="tl-axis">${ticks}</div>
@@ -1766,80 +1761,87 @@ function tlBarHtml(e, s){
     ? `<span class="tl-bar-label">${esc(s.title)}</span>`
     : `<span class="tl-bar-label untitled">${daysBetween(s.start, s.end) + 1}d</span>`;
   return `<div class="tl-bar" data-eid="${e.id}" data-sid="${s.id}" style="left:${g.left}px;width:${g.width}px"${drag}
-    onpointerenter="tlPopIn();tlShowPop('${e.id}','${s.id}')" onpointerleave="tlPopOut(event)">${grabs}${label}</div>`;
+    onpointerenter="popIn();tlShowPop('${e.id}','${s.id}')" onpointerleave="popOut()">${grabs}${label}</div>`;
 }
 
-// --- The bar popover ------------------------------------------------------------------------
+// --- Popover (shared by the timeline and the graph) -------------------------------------------
+// It lives in a fixed layer on <body>, not inside the panel: both panels are scroll/overflow
+// containers, which clip on BOTH axes, so a popover parented to a bar or a node would be cut in
+// half near the panel's edge. Fixed positioning is the only placement nothing can clip.
 // Hover shows it; on touch, where there is no hover, a tap that never became a drag pins it open.
-// Either way it is the one place a bar can be renamed or removed.
-let _tlPopPinned = false;
-let _tlPopTimer = null;
-function tlPopEl(){
-  let el = document.getElementById('tl-pop');
+let _popPinned = false;
+let _popTimer = null;
+function popEl(){
+  let el = document.getElementById('app-pop');
   if (!el) {
     el = document.createElement('div');
-    el.id = 'tl-pop';
-    el.onpointerenter = tlPopIn;
-    el.onpointerleave = tlPopOut;
-    el.onpointerdown = ev => ev.stopPropagation();   // clicking Rename must not start a bar drag
+    el.id = 'app-pop';
+    el.onpointerenter = popIn;
+    el.onpointerleave = popOut;
+    el.onpointerdown = ev => ev.stopPropagation();   // clicking Rename must not start a drag
     if (document.body.appendChild) document.body.appendChild(el);
   }
   return el;
 }
+// `rect` is the thing being described — the popover sits above it, or below when there is no room.
+function popShow(html, rect){
+  const pop = popEl();
+  pop.innerHTML = `<div class="pop">${html}<div class="pop-arrow"></div></div>`;
+  pop.style.display = 'block';
+  const h = pop.offsetHeight || 92;
+  const above = rect.top - 8 - h >= 8;
+  if (pop.classList) pop.classList.toggle('below', !above);
+  pop.style.top = (above ? rect.top - 8 - h : rect.bottom + 8) + 'px';
+  pop.style.left = Math.max(8, rect.left) + 'px';
+}
+function popHide(){
+  _popPinned = false;
+  const el = document.getElementById('app-pop');
+  if (el) el.style.display = 'none';
+}
+function popIn(){ if (_popTimer) { clearTimeout(_popTimer); _popTimer = null; } }
+// A short grace period so the pointer can cross the 8px gap into the popover.
+function popOut(){
+  if (_popPinned) return;
+  if (_popTimer) clearTimeout(_popTimer);
+  _popTimer = setTimeout(popHide, 130);
+}
+function popPin(){
+  _popPinned = true;
+  setTimeout(() => document.addEventListener('pointerdown', popUnpin, { once: true, capture: true }), 0);
+}
+function popUnpin(e){
+  // Clicks inside the popover are the entire point of pinning it — this listener is on the capture
+  // phase, so the popover cannot stop it itself and has to be excused here.
+  if (e && e.target && e.target.closest && e.target.closest('#app-pop')) {
+    document.addEventListener('pointerdown', popUnpin, { once: true, capture: true });
+    return;
+  }
+  popHide();
+}
+
+// The timeline's bar popover: what the bar is, when it runs, and the only place to rename or
+// remove it.
 function tlShowPop(eid, sid){
   if (_tlDrag) return;
   const bar = document.querySelector(`.tl-bar[data-eid="${eid}"][data-sid="${sid}"]`);
   const e = items.find(i => i.id === eid);
   const s = e && tlSubs(e).find(x => x.id === sid);
   if (!bar || !s || !bar.getBoundingClientRect) return;
-  const pop = tlPopEl();
-  const tags = (e.tags || []).slice(0, 4).map(t => `<span class="tl-pop-tag">#${esc(t)}</span>`).join('');
-  pop.innerHTML = `<div class="tl-pop">
-      <div class="tl-pop-t">${esc(s.title || cardSortLabel(e) || 'Untitled')}</div>
-      <div class="tl-pop-r">${esc(tlSpanLabel(s))}</div>
-      ${tags ? `<div class="tl-pop-tags">${tags}</div>` : ''}
-      ${readOnly ? '' : `<div class="tl-pop-acts">
-        <span class="tl-pop-act" onclick="tlRenameBar(event,'${eid}','${sid}')">Rename</span>
-        <span class="tl-pop-act del" onclick="tlRemoveBar(event,'${eid}','${sid}')">Remove</span>
-      </div>`}
-      <div class="tl-pop-arrow"></div>
-    </div>`;
-  pop.style.display = 'block';
-  const r = bar.getBoundingClientRect();
-  const h = pop.offsetHeight || 92;
-  const above = r.top - 8 - h >= 8;          // flip below when the bar is near the top of the window
-  if (pop.classList) pop.classList.toggle('below', !above);
-  pop.style.top = (above ? r.top - 8 - h : r.bottom + 8) + 'px';
-  pop.style.left = Math.max(8, r.left) + 'px';
+  const tags = (e.tags || []).slice(0, 4).map(t => `<span class="pop-tag">#${esc(t)}</span>`).join('');
+  popShow(`
+      <div class="pop-t">${esc(s.title || cardSortLabel(e) || 'Untitled')}</div>
+      <div class="pop-r">${esc(tlSpanLabel(s))}</div>
+      ${tags ? `<div class="pop-tags">${tags}</div>` : ''}
+      ${readOnly ? '' : `<div class="pop-acts">
+        <span class="pop-act" onclick="tlRenameBar(event,'${eid}','${sid}')">Rename</span>
+        <span class="pop-act del" onclick="tlRemoveBar(event,'${eid}','${sid}')">Remove</span>
+      </div>`}`, bar.getBoundingClientRect());
 }
-function tlHidePop(){
-  _tlPopPinned = false;
-  const el = document.getElementById('tl-pop');
-  if (el) el.style.display = 'none';
-}
-function tlPopIn(){ if (_tlPopTimer) { clearTimeout(_tlPopTimer); _tlPopTimer = null; } }
-// A short grace period so the pointer can cross the 8px gap from the bar into the popover.
-function tlPopOut(){
-  if (_tlPopPinned) return;
-  if (_tlPopTimer) clearTimeout(_tlPopTimer);
-  _tlPopTimer = setTimeout(tlHidePop, 130);
-}
-// Touch (and a plain click): keep it open until you tap somewhere else, so Rename/Remove are
-// reachable without a hover to hold it there.
 function tlPinBar(eid, sid){
-  tlPopIn();
+  popIn();
   tlShowPop(eid, sid);
-  _tlPopPinned = true;
-  setTimeout(() => document.addEventListener('pointerdown', tlUnpin, { once: true, capture: true }), 0);
-}
-function tlUnpin(e){
-  // Clicks inside the popover are the entire point of pinning it — this listener is on the capture
-  // phase, so the popover cannot stop it itself and has to be excused here.
-  if (e && e.target && e.target.closest && e.target.closest('#tl-pop')) {
-    document.addEventListener('pointerdown', tlUnpin, { once: true, capture: true });
-    return;
-  }
-  tlHidePop();
+  popPin();
 }
 
 function tlSaveScroll(){
@@ -1849,6 +1851,7 @@ function tlSaveScroll(){
 function tlAfterRender(){
   const lanes = document.getElementById('tl-lanes');
   if (!lanes) return;
+  if (lanes.clientWidth) _tlLaneW = lanes.clientWidth;   // tlWindow needs it to know what "full" is
   if (_tlFocusPending && tlFocusId) {
     const e = items.find(i => i.id === tlFocusId);
     const a = e && tlAnchor(e);
@@ -1860,33 +1863,41 @@ function tlAfterRender(){
   lanes.scrollLeft = _tlScrollLeft;
 }
 
-function tlMarkSegs(){
-  document.querySelectorAll('#tl-sort-seg .seg-opt').forEach(el => el.classList.toggle('active', el.dataset.val === tlSort));
-  document.querySelectorAll('#tl-zoom-seg .seg-opt').forEach(el => el.classList.toggle('active', Number(el.dataset.val) === tlPxPerDay));
+function tlClampZoom(px){
+  const n = Number(px);
+  return Math.min(TL_PX_MAX, Math.max(TL_PX_MIN, Math.round((isFinite(n) ? n : 40) * 10) / 10));
 }
-function tlSetZoom(px, fromSlider){
+// opts.anchorDay + opts.anchorOffset hold one day still at a fixed offset from the lane's left edge
+// — that is what makes wheel-zoom track the cursor. With neither, the leftmost day stays put.
+function tlSetZoom(px, opts){
+  const o = opts || {};
   const lanes = document.getElementById('tl-lanes');
   const sl = lanes && typeof lanes.scrollLeft === 'number' ? lanes.scrollLeft : 0;
-  const dayAtLeft = sl / tlPxPerDay;
-  tlPxPerDay = Math.max(14, Math.min(120, Math.round(Number(px) || 40)));
-  _tlScrollLeft = Math.round(dayAtLeft * tlPxPerDay);   // keep the same day pinned to the left edge
+  const anchorDay = o.anchorDay != null ? o.anchorDay : sl / tlPxPerDay;
+  const anchorOffset = o.anchorOffset || 0;
+  tlPxPerDay = tlClampZoom(px);
+  _tlScrollLeft = Math.max(0, Math.round(anchorDay * tlPxPerDay - anchorOffset));
   const body = document.getElementById('tl-body');
-  if (body) body.innerHTML = tlBodyHtml(tlRows());
-  tlMarkSegs();
-  if (!fromSlider) { const r = document.getElementById('tl-range'); if (r) r.value = tlPxPerDay; }
+  if (body) { popHide(); body.innerHTML = tlBodyHtml(tlRows()); }
   tlAfterRender();
 }
-function tlSetSort(key){
-  tlSort = key;
-  tlRenderBody();
-  tlMarkSegs();
+// Wheel over the lanes zooms about the cursor. A horizontal swipe is left alone — that is a pan,
+// and the lane scrolls natively.
+function tlWheel(e){
+  if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+  e.preventDefault();
+  const lanes = document.getElementById('tl-lanes');
+  if (!lanes || !lanes.getBoundingClientRect) return;
+  const offset = e.clientX - lanes.getBoundingClientRect().left;
+  const anchorDay = ((lanes.scrollLeft || 0) + offset) / tlPxPerDay;   // the day under the pointer
+  const dy = e.deltaY * (e.deltaMode === 1 ? 16 : 1);                   // deltaMode 1 = lines
+  tlSetZoom(tlPxPerDay * Math.exp(-dy * 0.002), { anchorDay, anchorOffset: offset });
 }
-
 // --- Timeline drags -------------------------------------------------------------------------
 // All of them are delta-based and snap to whole days. The entry is written ONCE, on pointerup —
 // pointermove only moves pixels, so one drag is one save (and on iOS, one commit).
 function tlAttach(cursor){
-  tlHidePop();                      // it is anchored to a bar that is about to move
+  popHide();                      // it is anchored to a bar that is about to move
   document.addEventListener('pointermove', _tlMove);
   document.addEventListener('pointerup', _tlUp);
   document.body.style.userSelect = 'none';
@@ -1915,12 +1926,14 @@ function tlDueDown(e, eid){
   _tlDrag = { kind: 'due', eid, x0: e.clientX, y0: e.clientY, due0: it.due, dd: 0, moved: false };
   tlAttach('ew-resize');
 }
-function tlGripDown(e, eid){
-  if (readOnly || tlSort !== 'manual') return;
-  e.preventDefault(); e.stopPropagation();
-  const heads = document.getElementById('tl-heads');
-  const top = heads && heads.getBoundingClientRect ? heads.getBoundingClientRect().top : 0;
-  _tlDrag = { kind: 'reorder', eid, x0: e.clientX, y0: e.clientY, top, moved: false, order: tlRows().map(r => r.id) };
+// Grab the empty calendar and drag to pan. Bars, edges, due markers and grips all stopPropagation,
+// so this only ever fires on the background. Touch is left out on purpose: the lane already pans
+// natively there, and handling it here too would scroll it at double speed.
+function tlPanDown(e){
+  if (e.pointerType === 'touch' || e.button) return;
+  const lanes = document.getElementById('tl-lanes');
+  if (!lanes) return;
+  _tlDrag = { kind: 'pan', x0: e.clientX, y0: e.clientY, sl0: lanes.scrollLeft || 0, moved: false };
   tlAttach('grabbing');
 }
 // Where a bar drag has got to, clamped. Shared by the live preview and the commit so the two can
@@ -1935,13 +1948,9 @@ function _tlMove(e){
   const d = _tlDrag;
   if (!d) return;
   if (!d.moved && (Math.abs(e.clientX - d.x0) > 3 || Math.abs(e.clientY - d.y0) > 3)) d.moved = true;
-  if (d.kind === 'reorder') {
-    if (!d.moved) return;
-    const idx = Math.max(0, Math.min(d.order.length - 1, Math.round((e.clientY - d.top) / TL_ROW_H)));
-    const cur = d.order.indexOf(d.eid);
-    if (cur < 0 || cur === idx) return;
-    d.order.splice(idx, 0, d.order.splice(cur, 1)[0]);
-    tlRenderBody();
+  if (d.kind === 'pan') {
+    const lanes = document.getElementById('tl-lanes');
+    if (lanes) lanes.scrollLeft = Math.max(0, d.sl0 - (e.clientX - d.x0));
     return;
   }
   const dd = Math.round((e.clientX - d.x0) / tlPxPerDay);
@@ -1965,14 +1974,9 @@ async function _tlUp(){
   _tlDrag = null;
   tlDetach();
   if (!d) return;
+  if (d.kind === 'pan') { tlSaveScroll(); return; }   // nothing to persist; panning is view state
   if (!d.moved) {                       // a click, not a drag — on touch that is how you open a bar
     if (d.kind === 'bar') tlPinBar(d.eid, d.sid);
-    return;
-  }
-  if (d.kind === 'reorder') {
-    d.order.forEach((id, i) => { const e = items.find(x => x.id === id); if (e) tlEnsureSchedule(e).order = i; });
-    renderTimeline();
-    for (const id of d.order) { const e = items.find(x => x.id === id); if (e) await saveEntryToFile(e); }
     return;
   }
   const it = items.find(i => i.id === d.eid);
@@ -2060,7 +2064,7 @@ async function tlRemoveBar(e, eid, sid){
   const i = subs.findIndex(x => x.id === sid);
   if (i < 0) return;
   subs.splice(i, 1);
-  if (!subs.length && it.schedule.order == null) delete it.schedule;   // don't leave an empty husk behind
+  if (!subs.length) delete it.schedule;   // don't leave an empty husk behind in the JSON
   renderTimeline();
   await saveEntryToFile(it);
   // Its last bar and no due date means the entry has left the timeline altogether — its row just
@@ -2084,8 +2088,8 @@ async function tlRemoveRow(e, eid){
   await saveEntryToFile(it);
   showToast('Removed from timeline');
 }
-// The row title is a way back to the card it stands for.
-function tlOpenCard(eid){
+// A timeline row, or a graph node, is a way back to the card it stands for.
+function openCardFocused(eid){
   tlFocusId = null;
   mainView = 'list';
   applyControlBar();
@@ -2107,6 +2111,484 @@ async function cardToTimeline(e, id){
   tlFocusId = id;
   _tlFocusPending = true;
   setView('timeline');
+}
+
+// --- Graph -----------------------------------------------------------------------------------
+// A force layout of the cards. What holds it together is what the cards already share:
+//
+//   * shared tags and genes ATTRACT (an invisible pull, not a drawn line), weighted by how rare
+//     the term is. Sharing "SMBE26" with 33 other cards says almost nothing; sharing "ARHGAP5"
+//     with two says a great deal — so a rare term pulls far harder than a common one.
+//   * a [[ref]] in a card's `source` is a drawn EDGE. A connection card is therefore just a node
+//     that happens to sit between the cards it links, drawn as an accent pill. The design drew it
+//     as a label ON the line, but as a node it needs no special case for the connection cards that
+//     link one card, or three, or a card that has since been deleted.
+//
+// A card with no tag, no gene and no link is left out: nothing would position it, and it would only
+// pad an outer ring. grCaption() says how many were left out rather than hiding it.
+const GR_REF_RE = /\[\[([^\]|]+)(?:\|[^\]]*)?\]\]/g;
+const GR_MIN_ALPHA = 0.02;
+
+let _grNodes = [], _grEdges = [], _grPairs = [], _grKey = new Map();
+let _grPos = {};              // id -> {x, y, vx, vy}
+let _grHW = {};               // id -> half the pill's width, for the collision pass
+let _grSig = '';              // which cards the drawn map is of — filtering must not change it
+let _grBuilt = false;
+let _grTotal = 0;
+let _grFixed = {};            // id -> true once you have dragged it somewhere
+let _grAlpha = 0;
+let _grRaf = 0;
+let _grW = 800, _grH = 520;
+let _grDrag = null;
+let _grPan = { x: 0, y: 0 }, _grZoom = 1;
+
+// The [[id|title]] refs in a card's source — the same syntax insertCardRef() writes.
+function grRefs(e){
+  const out = [];
+  const src = e.source || '';
+  GR_REF_RE.lastIndex = 0;
+  let m;
+  while ((m = GR_REF_RE.exec(src))) out.push(m[1]);
+  return out;
+}
+function grIsConn(e){ return grRefs(e).length > 0; }
+
+// Nodes: every card the layout has any reason to place — a tag, a gene, or a link. A link endpoint
+// counts even with no tags of its own, or a connection card would vanish and take its edges with it.
+//
+// Note what is NOT here: the search bar and the facets. The graph is a MAP, and a map that redraws
+// itself every time you search is not a map — you would lose the very thing you had learned where
+// to find. Every qualifying card is always a node, always in the same place; filtering only HIDES
+// nodes (grApplyFilter), it never moves them.
+function grNodes(){
+  const cards = items.filter(e => !e.archived && !SPECIAL_IDS.has(e.id));
+  const byId = new Map(cards.map(e => [e.id, e]));
+  const linked = new Set();
+  for (const e of cards) {
+    for (const t of grRefs(e)) {
+      if (byId.has(t) && t !== e.id) { linked.add(e.id); linked.add(t); }
+    }
+  }
+  return cards.filter(e => (e.tags || []).length || (e.genes || []).length || linked.has(e.id));
+}
+function grEdges(nodes){
+  const ids = new Set(nodes.map(n => n.id));
+  const edges = [];
+  for (const e of nodes) {
+    for (const t of grRefs(e)) {
+      if (ids.has(t) && t !== e.id) edges.push({ a: e.id, b: t });
+    }
+  }
+  return edges;
+}
+// Which nodes the search bar and the facets leave standing. The only thing filtering decides.
+function grVisibleIds(){
+  const { vis } = getVisibleItems();
+  return new Set(vis.map(e => e.id));
+}
+function grShownCount(){
+  const vis = grVisibleIds();
+  return grNodes().reduce((n, e) => n + (vis.has(e.id) ? 1 : 0), 0);
+}
+function grTerms(e){
+  return new Set([
+    ...(e.tags || []).map(x => 't:' + String(x).toLowerCase()),
+    ...(e.genes || []).flatMap(g => geneAliasesU(g)).map(g => 'g:' + g),
+  ]);
+}
+// The attracting pairs, precomputed once per layout: for every two cards sharing a tag or a gene,
+// one spring whose strength is the summed rarity of everything they share. Also hands back a seed
+// key per card (see grInitPositions).
+function grIndex(nodes){
+  const terms = new Map();          // id -> Set of terms
+  const freq = new Map();           // term -> how many cards carry it
+  for (const e of nodes) {
+    const t = grTerms(e);
+    terms.set(e.id, t);
+    for (const x of t) freq.set(x, (freq.get(x) || 0) + 1);
+  }
+  // Inverse document frequency: log2(nodes / cards-carrying-it). A term EVERY card carries scores 0
+  // — it distinguishes nothing, so it must not pull. A gene on 2 cards of 200 scores ~6.6, a tag on
+  // 34 scores ~2.5. The floor stops a universal term from switching attraction off altogether.
+  const N = Math.max(2, nodes.length);
+  const weight = x => Math.max(0.2, Math.log2(N / (freq.get(x) || 1)));
+  const pairs = [];
+  for (let i = 0; i < nodes.length; i++) {
+    const ti = terms.get(nodes[i].id);
+    if (!ti.size) continue;
+    for (let j = i + 1; j < nodes.length; j++) {
+      const tj = terms.get(nodes[j].id);
+      let w = 0;
+      for (const x of ti) if (tj.has(x)) w += weight(x);
+      if (w > 0) pairs.push({ a: nodes[i].id, b: nodes[j].id, w: Math.min(3, w) });
+    }
+  }
+  // Seed key: the RAREST term a card carries — the one that says most about where it belongs.
+  const key = new Map();
+  for (const e of nodes) {
+    let best = null, bf = Infinity;
+    for (const t of terms.get(e.id)) { const f = freq.get(t) || 1; if (f < bf) { bf = f; best = t; } }
+    key.set(e.id, best || 'id:' + e.id);
+  }
+  return { pairs, key };
+}
+function grPairs(nodes){ return grIndex(nodes).pairs; }
+// A stable hash, so a term always seeds the same angle: the layout must not reshuffle on re-render.
+function grHash(s){
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0) / 4294967296;
+}
+
+// --- The simulation -------------------------------------------------------------------------
+// Where the nodes START matters more than it looks. A blind spiral interleaves the clusters around
+// a ring, and the forces then CANNOT unpick it: nodes repel, so they can never cross each other to
+// swap places, and the layout sets in that local minimum looking like a hairball. Seeding each card
+// at an angle hashed from its rarest term puts cards that share something next to each other from
+// the first frame, and the simulation only has to tidy up. It is also deterministic — the same
+// knowledge base lays out the same way twice, so an edit doesn't reshuffle the whole picture.
+function grInitPositions(keep){
+  const cx = _grW / 2, cy = _grH / 2;
+  const R = 0.34 * Math.min(_grW, _grH);
+  const seen = {};
+  _grNodes.forEach((e) => {
+    const k = _grKey.get(e.id) || ('id:' + e.id);
+    const n = (seen[k] = (seen[k] || 0) + 1);      // how many of this cluster are already placed
+    if (keep && _grPos[e.id]) return;
+    const ang = grHash(k) * Math.PI * 2;
+    const spread = 40 * Math.sqrt(n);              // fan the cluster out a little around its angle
+    const off = (n % 2 ? 1 : -1) * spread;
+    _grPos[e.id] = {
+      x: cx + Math.cos(ang) * R + Math.cos(ang + 1.57) * off,
+      y: cy + Math.sin(ang) * R + Math.sin(ang + 1.57) * off,
+      vx: 0, vy: 0,
+    };
+  });
+  for (const id of Object.keys(_grPos)) {
+    if (!_grNodes.some(n => n.id === id)) delete _grPos[id];   // dropped by a filter
+  }
+}
+function grStep(a){
+  const REP = 45000, L = 165, KA = 0.03, LC = 200, KC = 0.03, KG = 0.01;
+  const cx = _grW / 2, cy = _grH / 2;
+  const N = _grNodes, P = _grPos;
+  const fx = {}, fy = {};
+  for (const e of N) { fx[e.id] = 0; fy[e.id] = 0; }
+  // Repulsion: everything pushes everything apart.
+  for (let i = 0; i < N.length; i++) {
+    const pi = P[N[i].id];
+    for (let j = i + 1; j < N.length; j++) {
+      const pj = P[N[j].id];
+      let dx = pj.x - pi.x, dy = pj.y - pi.y;
+      let d2 = dx * dx + dy * dy;
+      if (d2 < 1) { d2 = 1; dx = 0.5; dy = 0.5; }
+      const d = Math.sqrt(d2), ux = dx / d, uy = dy / d, rep = REP / d2;
+      fx[N[i].id] -= ux * rep; fy[N[i].id] -= uy * rep;
+      fx[N[j].id] += ux * rep; fy[N[j].id] += uy * rep;
+    }
+  }
+  // Shared tags/genes pull together, by rarity.
+  for (const p of _grPairs) {
+    const pa = P[p.a], pb = P[p.b];
+    if (!pa || !pb) continue;
+    const dx = pb.x - pa.x, dy = pb.y - pa.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const ux = dx / d, uy = dy / d, att = KA * p.w * (d - L);
+    fx[p.a] += ux * att; fy[p.a] += uy * att;
+    fx[p.b] -= ux * att; fy[p.b] -= uy * att;
+  }
+  // Links are springs.
+  for (const c of _grEdges) {
+    const pa = P[c.a], pb = P[c.b];
+    if (!pa || !pb) continue;
+    const dx = pb.x - pa.x, dy = pb.y - pa.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const ux = dx / d, uy = dy / d, att = KC * (d - LC);
+    fx[c.a] += ux * att; fy[c.a] += uy * att;
+    fx[c.b] -= ux * att; fy[c.b] -= uy * att;
+  }
+  for (const e of N) {
+    const p = P[e.id];
+    if (_grFixed[e.id]) { p.vx = 0; p.vy = 0; continue; }   // you put it there; it stays there
+    fx[e.id] += (cx - p.x) * KG;
+    fy[e.id] += (cy - p.y) * KG;
+    p.vx = (p.vx + fx[e.id] * a) * 0.82;
+    p.vy = (p.vy + fy[e.id] * a) * 0.82;
+    p.x = Math.max(95, Math.min(_grW - 95, p.x + p.vx));
+    p.y = Math.max(24, Math.min(_grH - 24, p.y + p.vy));
+  }
+  for (let k = 0; k < 3; k++) grCollide();   // one pass under-relaxes; three converges
+  grClampAll();                              // the collision pass can shove a node off-scene
+}
+function grClampAll(){
+  for (const e of _grNodes) {
+    const p = _grPos[e.id];
+    if (!p) continue;
+    p.x = Math.max(95, Math.min(_grW - 95, p.x));
+    p.y = Math.max(24, Math.min(_grH - 24, p.y));
+  }
+}
+// Dragging a card must not set the whole map swimming. The map holds still; the card goes where you
+// put it, and its neighbours move only as far as it takes to not be underneath it. No force step,
+// no re-heat — just the collision constraint.
+function grMoveNode(id, x, y){
+  const p = _grPos[id];
+  if (!p) return;
+  p.x = Math.max(95, Math.min(_grW - 95, x));
+  p.y = Math.max(24, Math.min(_grH - 24, y));
+  p.vx = 0; p.vy = 0;
+  _grFixed[id] = true;
+  for (let k = 0; k < 3; k++) grCollide();
+  grClampAll();
+}
+function grApplyDOM(){
+  const scene = document.getElementById('gr-scene');
+  if (scene) scene.style.transform = `translate(${_grPan.x}px, ${_grPan.y}px) scale(${_grZoom})`;
+  for (const e of _grNodes) {
+    const el = document.getElementById('gr-n-' + e.id);
+    const p = _grPos[e.id];
+    if (el && p) el.style.transform = `translate(${p.x}px, ${p.y}px) translate(-50%, -50%)`;
+  }
+  _grEdges.forEach((c, i) => {
+    const line = document.getElementById('gr-e' + i);
+    const pa = _grPos[c.a], pb = _grPos[c.b];
+    if (!line || !pa || !pb || !line.setAttribute) return;
+    line.setAttribute('x1', pa.x); line.setAttribute('y1', pa.y);
+    line.setAttribute('x2', pb.x); line.setAttribute('y2', pb.y);
+  });
+}
+// Animate the settle rather than solving it in one blocking burst — a few hundred iterations over
+// several hundred nodes would drop frames, and watching it fall into place tells you which clusters
+// are tight. Where there is no rAF (the test sandbox), solve synchronously instead.
+function grRun(alpha){
+  _grAlpha = alpha;
+  if (typeof requestAnimationFrame !== 'function') {
+    while (_grAlpha > GR_MIN_ALPHA) { grStep(_grAlpha); _grAlpha *= 0.98; }
+    grApplyDOM();
+    return;
+  }
+  if (!_grRaf) _grRaf = requestAnimationFrame(grTick);
+}
+function grTick(){
+  _grRaf = 0;
+  for (let k = 0; k < 2 && _grAlpha > GR_MIN_ALPHA; k++) { grStep(_grAlpha); _grAlpha *= 0.98; }
+  grApplyDOM();
+  if (_grAlpha > GR_MIN_ALPHA) _grRaf = requestAnimationFrame(grTick);
+}
+function grStop(){ if (_grRaf) { cancelAnimationFrame(_grRaf); _grRaf = 0; } _grAlpha = 0; }
+function grRelayout(){
+  _grFixed = {};
+  _grPos = {};
+  _grSig = '';        // force a full rebuild, and a fresh zoom-to-fit
+  renderGraph();
+}
+
+// --- Render ----------------------------------------------------------------------------------
+function grNodeHtml(e){
+  const conn = grIsConn(e);
+  const label = cardSortLabel(e) || '(untitled)';
+  return `<div class="gr-node${conn ? ' conn' : ''}" id="gr-n-${e.id}" data-type="${esc(e.type)}" data-id="${e.id}"
+    onpointerdown="grNodeDown(event,'${e.id}')" onpointerenter="popIn();grShowPop('${e.id}')" onpointerleave="popOut()"
+    >${conn ? '◆' : '<span class="gr-dot"></span>'}<span class="gr-label">${esc(label)}</span></div>`;
+}
+function grShowPop(id){
+  if (_grDrag) return;
+  const e = items.find(i => i.id === id);
+  const el = document.getElementById('gr-n-' + id);
+  if (!e || !el || !el.getBoundingClientRect) return;
+  const chips = [
+    ...(e.tags || []).slice(0, 6).map(t => `<span class="pop-tag">#${esc(t)}</span>`),
+    ...(e.genes || []).slice(0, 6).map(g => `<span class="pop-tag">${esc(g)}</span>`),
+  ].join('');
+  const links = grRefs(e).filter(t => items.some(i => i.id === t)).length;
+  const meta = [TYPES.find(t => t.key === e.type)?.label || e.type,
+                links ? `${links} link${links === 1 ? '' : 's'}` : ''].filter(Boolean).join(' · ');
+  popShow(`
+      <div class="pop-t">${esc(cardSortLabel(e) || '(untitled)')}</div>
+      <div class="pop-r">${esc(meta)}</div>
+      ${chips ? `<div class="pop-tags">${chips}</div>` : ''}
+      <div class="pop-acts"><span class="pop-act" onclick="openCardFocused('${e.id}')">Open card</span></div>`,
+    el.getBoundingClientRect());
+}
+function renderGraph(){
+  const host = document.getElementById('graph-view');
+  if (!host) return;
+  popHide();
+  const nodes = grNodes();
+  const sig = nodes.map(e => e.id).join(',');
+  // renderList() — and so renderGraph() — runs on every keystroke in the search box and every facet
+  // click. If the CARDS have not changed, none of the layout may: filtering is a mask over a map
+  // that is already drawn, so all that happens here is that some nodes stop being painted.
+  if (_grBuilt && sig === _grSig) {
+    grApplyFilter();
+    return;
+  }
+  grStop();
+  _grSig = sig;
+  _grBuilt = false;
+  _grNodes = nodes;
+  _grEdges = grEdges(_grNodes);
+  const idx = grIndex(_grNodes);
+  _grPairs = idx.pairs; _grKey = idx.key;
+  _grHW = {};
+  for (const e of _grNodes) _grHW[e.id] = grHalfWidth(e);
+  if (!_grNodes.length) {
+    host.innerHTML = `<div class="gr-empty"><p>Nothing to graph.</p><small>A card needs a tag, a gene, or a link to appear here.</small></div>`;
+    return;
+  }
+  _grTotal = items.filter(e => !e.archived && !SPECIAL_IDS.has(e.id)).length;
+  host.innerHTML = `
+    <div class="gr-canvas" id="gr-canvas" onwheel="grWheel(event)" onpointerdown="grPanDown(event)">
+      <div class="gr-scene" id="gr-scene">
+        <svg class="gr-edges">${_grEdges.map((c, i) => `<line id="gr-e${i}" stroke="#a3a19a" stroke-width="1.5"></line>`).join('')}</svg>
+        ${_grNodes.map(grNodeHtml).join('')}
+      </div>
+      <span class="gr-relayout" onclick="grRelayout()" title="Start the layout again from scratch">↻ Relayout</span>
+      <span class="gr-caption" id="gr-caption"></span>
+    </div>`;
+  _grBuilt = true;
+  const canvas = document.getElementById('gr-canvas');
+  const cw = (canvas && canvas.clientWidth) || 900;
+  const ch = (canvas && canvas.clientHeight) || 560;
+  // The layout space grows with the node count rather than being the viewport: 200 cards crammed
+  // into one screen is a hairball whatever the forces do. They get room to spread, and you pan and
+  // zoom over them — which is why the view opens zoomed to fit.
+  const n = _grNodes.length;
+  _grW = Math.max(cw, Math.round(Math.sqrt(n) * 210));
+  _grH = Math.max(ch, Math.round(Math.sqrt(n) * 145));
+  const fresh = !Object.keys(_grPos).length;
+  grInitPositions(true);   // cards you have already placed keep the place you put them
+  if (fresh) grFit(cw, ch);
+  grApplyFilter();
+  // A card was added, edited or deleted — the map genuinely changed, so let it settle. But gently,
+  // and from where it already is, rather than throwing the whole thing back in the air.
+  grRun(fresh ? 1 : 0.3);
+}
+// Filtering hides; it never moves. Nodes keep their places, so the gaps tell you where the cards
+// you filtered out were — and clearing the filter puts you back exactly where you were.
+function grApplyFilter(){
+  const vis = grVisibleIds();
+  let hidden = 0;
+  for (const e of _grNodes) {
+    const on = vis.has(e.id);
+    if (!on) hidden++;
+    const el = document.getElementById('gr-n-' + e.id);
+    if (el && el.classList) el.classList.toggle('gr-off', !on);
+  }
+  _grEdges.forEach((c, i) => {
+    const line = document.getElementById('gr-e' + i);
+    if (line && line.setAttribute) line.setAttribute('opacity', vis.has(c.a) && vis.has(c.b) ? '1' : '0');
+  });
+  const cap = document.getElementById('gr-caption');
+  if (cap) {
+    const omitted = _grTotal - _grNodes.length;
+    cap.textContent = hidden
+      ? `${_grNodes.length - hidden} of ${_grNodes.length} nodes — the rest are filtered out, not moved`
+      : omitted > 0 ? `${_grNodes.length} of ${_grTotal} cards — the rest carry no tag, gene or link` : '';
+  }
+}
+// Repulsion alone cannot keep these apart: a card in the core has twenty springs pulling it in and
+// only a 1/d² push holding it off, so the middle collapses into a solid block of overlapping pills.
+// A hard collision constraint is what actually guarantees legibility. The pills are wide and short,
+// so a circular radius would either still overlap sideways or waste vertical space — separate on
+// whichever axis needs the smaller correction instead.
+function grHalfWidth(e){
+  const label = cardSortLabel(e) || '';
+  return Math.min(180, 37 + Math.min(label.length, 30) * 6.2) / 2;
+}
+function grCollide(){
+  const N = _grNodes, P = _grPos;
+  for (let i = 0; i < N.length; i++) {
+    const a = P[N[i].id], hwa = _grHW[N[i].id] || 45;
+    for (let j = i + 1; j < N.length; j++) {
+      const b = P[N[j].id], hwb = _grHW[N[j].id] || 45;
+      const mx = hwa + hwb + 8, my = 30;
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const ox = mx - Math.abs(dx), oy = my - Math.abs(dy);
+      if (ox <= 0 || oy <= 0) continue;
+      if (ox / mx < oy / my) {
+        const s = (dx >= 0 ? 1 : -1) * ox * 0.5;
+        if (!_grFixed[N[i].id]) a.x -= s;
+        if (!_grFixed[N[j].id]) b.x += s;
+      } else {
+        const s = (dy >= 0 ? 1 : -1) * oy * 0.5;
+        if (!_grFixed[N[i].id]) a.y -= s;
+        if (!_grFixed[N[j].id]) b.y += s;
+      }
+    }
+  }
+}
+function grFit(cw, ch){
+  _grZoom = Math.max(0.2, Math.min(1, Math.min(cw / _grW, ch / _grH)));
+  _grPan = { x: (cw - _grW * _grZoom) / 2, y: (ch - _grH * _grZoom) / 2 };
+}
+
+// --- Graph interaction ----------------------------------------------------------------------
+// Client coords -> the scene's own coordinate space, which pan and zoom have moved out from under
+// the pointer.
+function grToScene(clientX, clientY){
+  const canvas = document.getElementById('gr-canvas');
+  const r = canvas && canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : { left: 0, top: 0 };
+  return { x: (clientX - r.left - _grPan.x) / _grZoom, y: (clientY - r.top - _grPan.y) / _grZoom };
+}
+function grNodeDown(e, id){
+  e.preventDefault(); e.stopPropagation();     // not a pan: this grabs one node
+  popHide();
+  grStop();                                    // grabbing a card freezes the map under your hand
+  _grDrag = { id, x0: e.clientX, y0: e.clientY, moved: false };
+  document.addEventListener('pointermove', _grMove);
+  document.addEventListener('pointerup', _grUp);
+  document.body.style.userSelect = 'none';
+  document.body.style.cursor = 'grabbing';
+}
+function grPanDown(e){
+  if (e.button) return;
+  const canvas = document.getElementById('gr-canvas');
+  if (!canvas) return;
+  _grDrag = { pan: true, x0: e.clientX, y0: e.clientY, px: _grPan.x, py: _grPan.y, moved: false };
+  document.addEventListener('pointermove', _grMove);
+  document.addEventListener('pointerup', _grUp);
+  document.body.style.userSelect = 'none';
+  document.body.style.cursor = 'grabbing';
+}
+function _grMove(e){
+  const d = _grDrag;
+  if (!d) return;
+  if (!d.moved && (Math.abs(e.clientX - d.x0) > 3 || Math.abs(e.clientY - d.y0) > 3)) d.moved = true;
+  if (d.pan) {
+    _grPan = { x: d.px + (e.clientX - d.x0), y: d.py + (e.clientY - d.y0) };
+    grApplyDOM();
+    return;
+  }
+  if (!_grPos[d.id]) return;
+  const s = grToScene(e.clientX, e.clientY);
+  grMoveNode(d.id, s.x, s.y);
+  const el = document.getElementById('gr-n-' + d.id);
+  if (el && el.classList) el.classList.add('pinned');
+  grApplyDOM();
+}
+function _grUp(){
+  const d = _grDrag;
+  _grDrag = null;
+  document.removeEventListener('pointermove', _grMove);
+  document.removeEventListener('pointerup', _grUp);
+  document.body.style.userSelect = '';
+  document.body.style.cursor = '';
+  if (!d) return;
+  if (!d.moved && d.id) grShowPop(d.id);   // a tap, not a drag — touch has no hover, so show it
+  if (!d.moved && d.id) popPin();
+}
+function grWheel(e){
+  e.preventDefault();
+  const canvas = document.getElementById('gr-canvas');
+  if (!canvas || !canvas.getBoundingClientRect) return;
+  const r = canvas.getBoundingClientRect();
+  const ox = e.clientX - r.left, oy = e.clientY - r.top;
+  const before = { x: (ox - _grPan.x) / _grZoom, y: (oy - _grPan.y) / _grZoom };
+  const dy = e.deltaY * (e.deltaMode === 1 ? 16 : 1);
+  _grZoom = Math.max(0.25, Math.min(3, _grZoom * Math.exp(-dy * 0.002)));
+  _grPan = { x: ox - before.x * _grZoom, y: oy - before.y * _grZoom };   // hold the point under the cursor
+  grApplyDOM();
 }
 
 // --- Quick tag editor -----------------------------------------------------
@@ -2241,13 +2723,15 @@ function setView(v) {
   }
   mainView = v;
   if (v !== 'timeline') tlFocusId = null;
+  if (v !== 'graph') grStop();   // don't leave a force simulation running behind another view
   applyControlBar();
-  renderFilters();   // the page title says Dashboard / All entries (N) / Timeline
+  renderFilters();   // the page title says Dashboard / All entries (N) / Timeline / Graph
   renderList();
 }
 function setDashboard(v) { setView(v ? 'dash' : 'list'); }   // kept: the D key and callers still speak in booleans
 function toggleDigest() { setDashboard(mainView !== 'dash'); }              // keyboard (D)
 function toggleTimelineView() { setView(mainView === 'timeline' ? 'list' : 'timeline'); }   // keyboard (T)
+function toggleGraphView() { setView(mainView === 'graph' ? 'list' : 'graph'); }            // keyboard (G)
 let digestFocusCardId = null;
 function navigateToRepoCard(cardId) {
   const item = items.find(i => i.id === cardId);
@@ -2873,6 +3357,7 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyC'){ e.preventDefault(); togglePreviews(); return; }
       if(code==='KeyH'){ e.preventDefault(); toggleHighlightInput(); return; }
       if(code==='KeyT'){ e.preventDefault(); toggleTimelineView(); return; }
+      if(code==='KeyG'){ e.preventDefault(); toggleGraphView(); return; }
     }
   }
   if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){

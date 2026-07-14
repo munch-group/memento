@@ -93,7 +93,7 @@ try:
 
     # The app's timeline writes `schedule` onto the entry. get_entry builds its result field by
     # field, so a new field reaches Claude only if it is named here — it does not ride along.
-    sched = {"order": 0, "subtasks": [{"id": "s1", "title": "figures", "start": "2026-07-12", "end": "2026-07-17"}]}
+    sched = {"subtasks": [{"id": "s1", "title": "figures", "start": "2026-07-12", "end": "2026-07-17"}]}
     write_entry(kb, "a4", "scheduled card", title="Paper", due="2026-08-07", schedule=sched)
     scheduled = m.get_entry("a4")
     eq(scheduled["schedule"], sched, "a scheduled entry reports its timeline bars")

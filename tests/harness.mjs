@@ -24,7 +24,7 @@ function fakeEl() {
     // renderList() derives its column count from offsetWidth; without a number it computes NaN.
     offsetWidth: 1200, offsetHeight: 800, offsetParent: null,
     getBoundingClientRect: () => ({ top: 0, left: 0, right: 0, bottom: 0, width: 0, height: 0 }),
-    style: {}, innerHTML: '', textContent: '', value: '', dataset: {},
+    style: {}, innerHTML: '', textContent: '', value: '', dataset: {}, attrs: {},
     classList: {
       add(...c) { c.forEach(x => classes.add(x)); },
       remove(...c) { c.forEach(x => classes.delete(x)); },
@@ -40,7 +40,9 @@ function fakeEl() {
     addEventListener(){}, removeEventListener(){}, appendChild(){}, remove(){},
     scrollIntoView(){}, focus(){}, blur(){}, click(){},
     querySelector(){ return fakeEl(); }, querySelectorAll(){ return []; },
-    getAttribute(){ return null; }, setAttribute(){}, closest(){ return null; },
+    getAttribute(k){ return k in this.attrs ? this.attrs[k] : null; },
+    setAttribute(k, v){ this.attrs[k] = String(v); },
+    closest(){ return null; },
 insertBefore(){}, contains(){ return false; },
   };
   return el;
@@ -156,16 +158,26 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get digestVisible(){ return mainView === 'dash'; },
       get mainView(){ return mainView; },
       set mainView(v){ mainView = v; },
-      setView, toggleTimelineView,
+      setView, toggleTimelineView, toggleGraphView,
       // Timeline
       dayFromISO, isoFromDay, todayISO, addDaysISO, daysBetween,
       tlOnTimeline, tlRows, tlSubs, tlAnchor, tlWindow, tlSeed, tlBarGeom, tlDragTarget,
-      renderTimeline, tlAddBar, tlRemoveBar, tlRemoveRow, tlSetBarTitle, tlSetSort, tlSetZoom,
-      tlShowPop, tlHidePop,
-      cardToTimeline, tlOpenCard,
-      get tlSort(){ return tlSort; },
+      renderTimeline, tlAddBar, tlRemoveBar, tlRemoveRow, tlSetBarTitle, tlSetZoom,
+      tlShowPop, popHide, tlClampZoom,
+      cardToTimeline, openCardFocused,
       get tlPxPerDay(){ return tlPxPerDay; },
       get tlFocusId(){ return tlFocusId; },
+      // Graph
+      renderGraph, grNodes, grEdges, grPairs, grRefs, grIsConn, grRelayout, grStop,
+      grVisibleIds, grShownCount, grApplyFilter, grMoveNode,
+      get grPos(){ return _grPos; },
+      get grW(){ return _grW; },
+      get grH(){ return _grH; },
+      get grAlpha(){ return _grAlpha; },
+      // The sidebar Sort menu drives the timeline's order too, so the tests reach for it directly.
+      setSort,
+      get sortKey(){ return sortKey; },
+      get sortAsc(){ return sortAsc; },
       setDashboard, toggleDigest, setPreviewMode, togglePreviews, applyPreviewMode,
       setConnFilter, setArchiveFilter, clearAllFilters, setFilter, setTagFilter, scopedItems,
       get activeTag(){ return activeTag; },

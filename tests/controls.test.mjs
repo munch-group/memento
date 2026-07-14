@@ -178,7 +178,7 @@ console.log('\nThe ← points where it GOES, not at the filter you are already i
   // destination differently would make it read like a different action.
   api.setDashboard(true);          // the tag filter is still on (setTagFilter toggles, so don't re-call it)
   api.renderFilters();
-  eq(api.activeTag, 'Baboons', 'the tag filter survives the view switch');
+  eq(api.activeTags, ['Baboons'], 'the tag filter survives the view switch');
   eq(/← All<\/span>/.test(el('page-title').innerHTML), true, 'still "← All" when it returns you to the dashboard');
   eq(/← Dashboard/.test(el('page-title').innerHTML), false, 'never "← Dashboard"');
 }
@@ -234,8 +234,13 @@ function facetSetup() {
   const el = id => sandbox.document.getElementById(id);
   const tags  = () => [...el('tag-filter-list').innerHTML.matchAll(/setTagFilter\('([^']+)'\)/g)].map(m => m[1]).sort();
   const types = () => [...el('filter-list').innerHTML.matchAll(/setFilter\('([^']+)'\)/g)].map(m => m[1]).sort();
-  const allCount = () => (el('filter-list').innerHTML.match(/All <span class="sb-count">(\d+)</) || [])[1];
-  return { api, tags, types, allCount };
+  // "How many cards am I looking at" — the title reports it, whichever scope you're in.
+  const count = () => {
+    const h = el('page-title').innerHTML;
+    const m = h.match(/All entries \((\d+)\)/) || h.match(/Archived (\d+)/);
+    return m ? Number(m[1]) : null;
+  };
+  return { api, tags, types, count, el };
 }
 
 console.log('\nTags listed in the sidebar follow the archive scope');
@@ -251,28 +256,52 @@ console.log('\nTags listed in the sidebar follow the archive scope');
   eq(tags(), ['Live', 'Shared'], 'and back');
 }
 
-console.log('\nTypes and the All count follow it too');
+console.log('\nTypes follow it too — and there is no "All" chip any more');
 {
-  const { api, types, allCount } = facetSetup();
+  // Selecting no type already means every type, so a chip for it would be a second way of saying
+  // the same thing, and one you could get into a fight with (is "All" on while "Fact" is?).
+  const { api, types, count } = facetSetup();
   api.renderFilters();
-  eq(types(), ['all', 'fact', 'idea'], 'Active  -> only the types active cards use');
-  eq(allCount(), '2', 'All counts the active cards');
+  eq(types(), ['fact', 'idea'], 'Active  -> only the types active cards use, and no "all"');
+  eq(count(), 2, 'the title counts the active cards');
 
   api.setArchiveFilter('archived');
-  eq(types(), ['all', 'note'], 'Archived -> only the types archived cards use');
-  eq(allCount(), '1', 'All counts the archived cards');
+  eq(types(), ['note'], 'Archived -> only the types archived cards use');
+  eq(count(), 1, 'and the title counts those');
 }
 
-console.log('\nTitle, sidebar count and list all agree');
+console.log('\nTitle count and the list agree');
 {
-  // Three places report "how many cards am I looking at". They must never disagree.
-  const { api, allCount } = facetSetup();
+  // Two places report "how many cards am I looking at". They must never disagree.
+  const { api, count } = facetSetup();
   for (const scope of ['active', 'archived']) {
     api.setArchiveFilter(scope);
     api.renderFilters(); api.renderList();
     const inScope = api.scopedItems().length;
-    eq(Number(allCount()), inScope, `${scope}: sidebar "All" count matches the cards in scope (${inScope})`);
+    eq(count(), inScope, `${scope}: the title's count matches the cards in scope (${inScope})`);
   }
+}
+
+console.log('\nType and Tag are multi-select: each chip is its own switch');
+{
+  const { api, el } = facetSetup();
+  eq([api.activeTypes, api.activeTags], [[], []], 'nothing selected to begin with — which means everything');
+
+  api.setFilter('fact');
+  eq(api.activeTypes, ['fact'], 'a click turns a type on');
+  api.setFilter('idea');
+  eq(api.activeTypes, ['fact', 'idea'], '...and another turns a SECOND one on rather than replacing it');
+  api.setFilter('fact');
+  eq(api.activeTypes, ['idea'], '...and clicking it again turns it back off');
+
+  // Selecting several types is an OR; a type and a tag together are an AND.
+  api.setFilter('fact');
+  eq(shown(api, el), ['a1', 'a2'], 'two types selected shows the cards of either');
+  api.setTagFilter('Live');
+  eq(api.activeTags, ['Live'], 'a tag can be on at the same time as a type...');
+  eq(api.activeTypes, ['fact', 'idea'], '...and does not wipe the types out, as it used to');
+  api.setTagFilter('Live');
+  eq(api.activeTags, [], 'and the tag toggles off again');
 }
 
 console.log('\nA facet that cannot survive the scope change is dropped');
@@ -281,14 +310,20 @@ console.log('\nA facet that cannot survive the scope change is dropped');
   // looks empty for no visible reason.
   const { api } = facetSetup();
   api.setTagFilter('Live');
-  eq(api.activeTag, 'Live', 'filtering by a tag only active cards have');
+  eq(api.activeTags, ['Live'], 'filtering by a tag only active cards have');
   api.setArchiveFilter('archived');
-  eq(api.activeTag, null, 'switching to Archived drops it (no archived card carries it)');
+  eq(api.activeTags, [], 'switching to Archived drops it (no archived card carries it)');
 
   api.setArchiveFilter('active');
   api.setTagFilter('Shared');
   api.setArchiveFilter('archived');
-  eq(api.activeTag, 'Shared', 'but a tag that exists in BOTH scopes survives the switch');
+  eq(api.activeTags, ['Shared'], 'but a tag that exists in BOTH scopes survives the switch');
+
+  api.setArchiveFilter('active');
+  api.setFilter('idea');
+  eq(api.activeTypes, ['idea'], 'the same goes for a type...');
+  api.setArchiveFilter('archived');
+  eq(api.activeTypes, [], '...no archived card is an idea, so it is dropped');
 }
 
 console.log('\nThe push-to-Claude machinery is gone');

@@ -281,22 +281,25 @@ a { color: inherit; }
 .gr-scene { position: absolute; inset: 0; transform-origin: 0 0; }
 .gr-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
 .gr-node { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 500; white-space: nowrap; cursor: grab; box-shadow: 0 1px 2px rgba(20,20,19,0.06); will-change: transform; z-index: 2; touch-action: none; max-width: 180px;
-  background: var(--tbg); border: 1px solid color-mix(in srgb, var(--tc) 32%, transparent); color: var(--tc); }
+  background: #ffffff; border: 1px solid var(--tc); color: var(--text); }
 .gr-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .gr-node.gr-off { display: none; }
 .gr-node.pinned { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(217,119,87,0.35); }
-.gr-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--tc); flex-shrink: 0; }
+.gr-icon { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--tc); }
+.gr-icon svg { display: block; width: 12px; height: 12px; }
 /* A connection card: the design drew this as a label on the edge. Here it IS a node — draggable
    and clickable like any other card — which is what lets a card linking one, two or five others
    render with no special case. */
-.gr-node.conn { background: #fdf3ef; border-color: rgba(217,119,87,0.28); color: var(--accent-hover); font-family: var(--mono); font-size: 10.5px; }
-.gr-node.conn .gr-dot { display: none; }
+.gr-node.conn { border-color: var(--accent); color: var(--accent-hover); font-family: var(--mono); font-size: 10.5px; }
+
 .gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
 .gr-tools { position: absolute; right: 12px; top: 10px; display: flex; align-items: center; gap: 16px; padding: 4px 10px; border-radius: var(--r); background: rgba(255,255,255,0.78); }
+.gr-space { display: flex; align-items: center; font-family: var(--mono); font-size: 11px; color: var(--text3); }
+.gr-range { width: 80px; accent-color: var(--accent); }
 .gr-relayout { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
 .gr-relayout:hover { color: var(--text2); }
 /* Highlighted by the gene input: the named cards come forward, the rest fall back. Neither moves. */
-.gr-node.gr-hi { box-shadow: 0 0 0 2px var(--accent), 0 1px 3px rgba(20,20,19,0.12); z-index: 4; }
+.gr-node.gr-hi { z-index: 4; }   /* it stands out by the others fading, not by a border of its own */
 .gr-node.gr-dim { opacity: 0.25; }
 .gr-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text3); }
 .gr-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
@@ -604,11 +607,14 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.17';
+const APP_BUILD = '2026-07-14.21';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
-let activeType = 'all';
-let activeTag = null;
+// Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
+// none is the same as selecting all — which is why there is no longer an "All" chip to click.
+// Within a facet the chips are an OR (pick two types, see both); across facets they AND.
+let activeTypes = new Set();   // empty = every type
+let activeTags = new Set();    // empty = every tag
 let activeGene = null;
 let sortKey = 'date';   // 'date' | 'due' | 'type' | 'tags' | 'connection' | 'alpha'
 let sortAsc = false;     // false = descending (newest first)
@@ -1029,10 +1035,12 @@ function renderFilters() {
   // can only ever return nothing.
   const scope = scopedItems();
   const used = [...new Set(scope.map(i=>i.type))];
-  let html = `<button class="filter-chip ${activeType==='all'&&!activeTag?'active':''}" onclick="setFilter('all')">All <span class="sb-count">${scope.length}</span></button>`;
+  // No "All" chip: selecting nothing already means everything, so a chip for it would be a second
+  // way to say the same thing — and one you could get into a fight with.
+  let html = '';
   TYPES.filter(t=>used.includes(t.key)).forEach(t=>{
     const n=scope.filter(i=>i.type===t.key).length;
-    html+=`<button class="filter-chip ${activeType===t.key&&!activeTag?'active':''}" data-type="${t.key}" onclick="setFilter('${t.key}')">${t.label} <span class="sb-count">${n}</span></button>`;
+    html+=`<button class="filter-chip ${activeTypes.has(t.key)?'active':''}" data-type="${t.key}" onclick="setFilter('${t.key}')">${t.label} <span class="sb-count">${n}</span></button>`;
   });
   const filterEl = document.getElementById('filter-list');
   filterEl.innerHTML=html;
@@ -1065,7 +1073,7 @@ function renderFilters() {
     allTags.forEach(tag => {
       const n = tagCounts[tag];
       const safe = tag.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-      tagHtml += `<button class="filter-chip ${activeTag===tag?'active':''}" onclick="setTagFilter('${safe}')">${esc(tag)} <span class="sb-count">${n}</span></button>`;
+      tagHtml += `<button class="filter-chip ${activeTags.has(tag)?'active':''}" onclick="setTagFilter('${safe}')">${esc(tag)} <span class="sb-count">${n}</span></button>`;
     });
     tagHtml += `</div>`;
   }
@@ -1085,12 +1093,11 @@ function renderFilters() {
   // looking at — "← #Baboons" read like a link *to* Baboons. Pills also mean two filters can be
   // shown at once: an archived scope used to be swallowed whenever a tag was also active.
   const archived = archiveFilter === 'archived';
-  const typeLabel = activeType !== 'all' ? (TYPES.find(t=>t.key===activeType)?.label || activeType) : null;
   const pill = (text, type) => `<span class="title-pill"${type?` data-type="${type}"`:''}>${esc(text)}</span>`;
   const pills = [
-    archived   ? pill(`Archived ${scope.length}`) : '',
-    typeLabel  ? pill(typeLabel, activeType) : '',
-    activeTag  ? pill(activeTag) : '',
+    archived ? pill(`Archived ${scope.length}`) : '',
+    ...[...activeTypes].map(k => pill(TYPES.find(t=>t.key===k)?.label || k, k)),
+    ...[...activeTags].map(t => pill(t)),
     activeGene ? pill('@' + activeGene) : '',
   ].join('');
 
@@ -1132,13 +1139,13 @@ function setArchiveFilter(v) {
   // A facet picked in the old scope may not exist in the new one. Drop it rather than leave a
   // filter that quietly matches nothing and looks like an empty knowledge base.
   const scope = scopedItems();
-  if (activeTag && !scope.some(i => (i.tags||[]).includes(activeTag))) activeTag = null;
-  if (activeType !== 'all' && !scope.some(i => i.type === activeType)) activeType = 'all';
+  for (const t of [...activeTags])  if (!scope.some(i => (i.tags||[]).includes(t))) activeTags.delete(t);
+  for (const k of [...activeTypes]) if (!scope.some(i => i.type === k)) activeTypes.delete(k);
   if (activeGene && !scope.some(i => (i.genes||[]).some(g => geneAliasesU(g).includes(activeGene.toUpperCase())))) activeGene = null;
   applyControlBar(); renderFilters(); renderList();   // renderFilters: the title names the archived scope
 }
 function clearAllFilters() {
-  activeType='all'; activeTag=null; activeGene=null; connFilter='all'; archiveFilter='active';
+  activeTypes.clear(); activeTags.clear(); activeGene=null; connFilter='all'; archiveFilter='active';
   ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; focusedCardId=null;
   const si=document.getElementById('search-input'); if (si) si.value='';
   highlightInputGenes=new Set(); const hi=document.getElementById('highlight-input'); if (hi) hi.value='';
@@ -1149,8 +1156,11 @@ function clearAllFilters() {
   }
   renderFilters(); renderList();
 }
-function setFilter(type) { activeType=type; activeTag=null; activeGene=null; renderFilters(); renderList(); }
-function setTagFilter(tag) { activeTag = activeTag===tag ? null : tag; activeType='all'; activeGene=null; renderFilters(); renderList(); }
+// Each chip is its own switch. They no longer wipe each other out: a Type and a Tag can both be on,
+// and they narrow together.
+function toggleIn(set, v) { if (set.has(v)) set.delete(v); else set.add(v); }
+function setFilter(type) { toggleIn(activeTypes, type); renderFilters(); renderList(); }
+function setTagFilter(tag) { toggleIn(activeTags, tag); renderFilters(); renderList(); }
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
 
 // --- Saved views ---
@@ -1158,7 +1168,7 @@ function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='coun
 function captureView() {
   return {
     q: (document.getElementById('search-input')?.value||'').trim(),
-    type: activeType, tag: activeTag, gene: activeGene,
+    types: [...activeTypes], tags: [...activeTags], gene: activeGene,
     genes: [...highlightInputGenes],
     sortKey, sortAsc, conn: connFilter, archive: archiveFilter
   };
@@ -1166,7 +1176,7 @@ function captureView() {
 // True when there is something worth saving as a view (any active search or filter).
 function hasActiveView() {
   const q = (document.getElementById('search-input')?.value||'').trim();
-  return !!(q || activeType!=='all' || activeTag || activeGene || highlightInputGenes.size);
+  return !!(q || activeTypes.size || activeTags.size || activeGene || highlightInputGenes.size);
 }
 // Short human summary of a captured view, e.g. `Obs · #circRNA · @ARHGAP5 · hl:MAPT · "drive"`.
 function describeView(v) {
@@ -1216,8 +1226,9 @@ function setViewFormMode(on) {
 function applyView(item) {
   const v = item.view || {};
   const si = document.getElementById('search-input'); if (si) si.value = v.q || '';
-  activeType = v.type || 'all';
-  activeTag = v.tag || null;
+  // Views saved before Type and Tag became multi-select carry a single `type`/`tag` — keep reading them.
+  activeTypes = new Set(v.types || (v.type && v.type !== 'all' ? [v.type] : []));
+  activeTags = new Set(v.tags || (v.tag ? [v.tag] : []));
   activeGene = v.gene || null;
   highlightInputGenes = new Set(v.genes || []);
   const hi = document.getElementById('highlight-input'); if (hi) hi.value = [...highlightInputGenes].join(' ');
@@ -1321,10 +1332,10 @@ function getVisibleItems() {
   let vis=sortItems(items);
   if(archiveFilter==='archived') vis=vis.filter(i=>i.archived);
   else vis=vis.filter(i=>!i.archived);
-  if(activeType!=='all') vis=vis.filter(i=>i.type===activeType);
+  if(activeTypes.size) vis=vis.filter(i=>activeTypes.has(i.type));
   if(connFilter==='conn') vis=vis.filter(i=>i.connection);
   if(connFilter==='noconn') vis=vis.filter(i=>!i.connection);
-  if(activeTag) vis=vis.filter(i=>(i.tags||[]).includes(activeTag));
+  if(activeTags.size) vis=vis.filter(i=>(i.tags||[]).some(t=>activeTags.has(t)));
   if(activeGene) vis=vis.filter(i=>(i.genes||[]).some(g=>geneAliasesU(g).includes(activeGene.toUpperCase())));
   if(orGroups.length) vis=vis.filter(i=>orGroups.some(g=>matchesGroup(i,g)));
   return { vis, orGroups };
@@ -2103,13 +2114,17 @@ async function tlRemoveRow(e, eid){
   await saveEntryToFile(it);
   showToast('Removed from timeline');
 }
-// A timeline row, or a graph node, is a way back to the card it stands for.
+// A timeline row, or a graph node, is a way back to the card it stands for. Remember which panel
+// you came from: the ← has to put you back there, on the map you had, and not dump you in the card
+// list — the layout you were reading is the whole point of the view.
 function openCardFocused(eid){
+  const from = mainView;
   tlFocusId = null;
+  grStop();                                  // freeze the graph exactly as you left it
   mainView = 'list';
   applyControlBar();
   renderFilters();
-  focusCard({ stopPropagation(){} }, eid);   // paints the single focused card and the ← title
+  focusCard({ stopPropagation(){} }, eid, from);   // paints the single focused card and the ← title
 }
 // The card's own timeline icon. Not a toggle: it schedules the entry if it isn't yet, then takes
 // you to its row. Removing lives on the row itself, where you can see what you're removing.
@@ -2154,6 +2169,12 @@ let _grTotal = 0;
 // you chose, a gene is a fact about the card — and which of them you want the map built out of
 // depends on what you are looking for.
 let grLinkBy = 'both';        // 'tags' | 'genes' | 'both'
+let grSpacing = 1;            // how much elbow room the cards get: 0.6 tight … 1.8 airy
+// The cards the physics acts on. With a filter in place that is the cards you can SEE — a Relayout
+// arranges what is in front of you, and the ones it hides take no part and do not move. The rest of
+// the map is not thrown away: hidden cards keep their places and are simply inert.
+let _grSim = [], _grSimIds = new Set();
+let _grRefit = false;         // reframe the view once the layout has settled
 let _grFixed = {};            // id -> true once you have dragged it somewhere
 let _grHome = {};             // id -> where the card belongs, and springs back to
 let _grRelaxRaf = 0;
@@ -2205,6 +2226,12 @@ function grEdges(nodes){
   return edges;
 }
 // Which nodes the search bar and the facets leave standing. The only thing filtering decides.
+function grSetScope(){
+  const vis = grVisibleIds();
+  const shown = _grNodes.filter(e => vis.has(e.id));
+  _grSim = shown.length ? shown : _grNodes;   // an empty filter result would freeze the map solid
+  _grSimIds = new Set(_grSim.map(e => e.id));
+}
 function grVisibleIds(){
   const { vis } = getVisibleItems();
   return new Set(vis.map(e => e.id));
@@ -2302,9 +2329,12 @@ function grInitPositions(keep){
   }
 }
 function grStep(a){
-  const REP = 45000, L = 165, KA = 0.03, LC = 200, KC = 0.03, KG = 0.01;
+  // Repulsion goes as the square of the spacing and the ideal distances go linearly, so the whole
+  // equilibrium scales with it rather than the layout just getting looser at the seams.
+  const S = grSpacing;
+  const REP = 45000 * S * S, L = 165 * S, KA = 0.03, LC = 200 * S, KC = 0.03, KG = 0.01;
   const cx = _grW / 2, cy = _grH / 2;
-  const N = _grNodes, P = _grPos;
+  const N = _grSim, P = _grPos;
   const fx = {}, fy = {};
   for (const e of N) { fx[e.id] = 0; fy[e.id] = 0; }
   // Repulsion: everything pushes everything apart.
@@ -2322,6 +2352,7 @@ function grStep(a){
   }
   // Shared tags/genes pull together, by rarity.
   for (const p of _grPairs) {
+    if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;   // a hidden card exerts no pull
     const pa = P[p.a], pb = P[p.b];
     if (!pa || !pb) continue;
     const dx = pb.x - pa.x, dy = pb.y - pa.y;
@@ -2332,6 +2363,7 @@ function grStep(a){
   }
   // Links are springs.
   for (const c of _grEdges) {
+    if (!_grSimIds.has(c.a) || !_grSimIds.has(c.b)) continue;
     const pa = P[c.a], pb = P[c.b];
     if (!pa || !pb) continue;
     const dx = pb.x - pa.x, dy = pb.y - pa.y;
@@ -2362,7 +2394,7 @@ function grStep(a){
   }
 }
 function grClampAll(){
-  for (const e of _grNodes) {
+  for (const e of _grSim) {
     const p = _grPos[e.id];
     if (!p) continue;
     p.x = Math.max(95, Math.min(_grW - 95, p.x));
@@ -2382,8 +2414,8 @@ function grClampAll(){
 function grRelaxStep(){
   const P = _grPos;
   const was = new Map();
-  for (const e of _grNodes) { const p = P[e.id]; if (p) was.set(e.id, [p.x, p.y]); }
-  for (const e of _grNodes) {
+  for (const e of _grSim) { const p = P[e.id]; if (p) was.set(e.id, [p.x, p.y]); }
+  for (const e of _grSim) {
     if (_grFixed[e.id]) continue;          // hand-placed cards stay where you put them
     const p = P[e.id], h = _grHome[e.id];
     if (!p || !h) continue;
@@ -2393,7 +2425,7 @@ function grRelaxStep(){
   for (let k = 0; k < 3; k++) grCollide(true);   // loose cards may pass; the held card may not
   grClampAll();
   let delta = 0;
-  for (const e of _grNodes) {
+  for (const e of _grSim) {
     const p = P[e.id], b = was.get(e.id);
     if (!p || !b) continue;
     delta = Math.max(delta, Math.abs(p.x - b[0]), Math.abs(p.y - b[1]));
@@ -2458,6 +2490,8 @@ function grRun(alpha){
   _grAlpha = alpha;
   if (typeof requestAnimationFrame !== 'function') {
     while (_grAlpha > GR_MIN_ALPHA) { grStep(_grAlpha); _grAlpha *= 0.98; }
+    grPolish();
+    grSettled();
     grApplyDOM();
     return;
   }
@@ -2466,16 +2500,46 @@ function grRun(alpha){
 function grTick(){
   _grRaf = 0;
   for (let k = 0; k < 2 && _grAlpha > GR_MIN_ALPHA; k++) { grStep(_grAlpha); _grAlpha *= 0.98; }
+  if (_grAlpha <= GR_MIN_ALPHA) { grPolish(); grSettled(); }   // the forces are spent; tidy up and reframe
   grApplyDOM();
   if (_grAlpha > GR_MIN_ALPHA) _grRaf = requestAnimationFrame(grTick);
 }
+// The layout has stopped moving. Reframe onto it — but only when the view asked to be reframed
+// (a fresh layout, a Relayout, a spacing change), never after the small settle that follows an edit,
+// which would jump the view out from under you.
+function grSettled(){
+  if (!_grRefit) return;
+  _grRefit = false;
+  const { cw, ch } = grCanvasSize();
+  grFit(cw, ch);
+}
 function grStop(){ if (_grRaf) { cancelAnimationFrame(_grRaf); _grRaf = 0; } _grAlpha = 0; grStopRelax(); }
+function grPolish(){
+  for (let k = 0; k < 24; k++) grCollide();
+  grClampAll();
+  for (const e of _grSim) {          // the polished spot is where each card now belongs
+    if (_grFixed[e.id]) continue;
+    const p = _grPos[e.id];
+    const h = _grHome[e.id] || (_grHome[e.id] = { x: 0, y: 0 });
+    h.x = p.x; h.y = p.y;
+  }
+}
+// Relayout arranges the cards you can SEE. With a filter on, the hidden ones take no part — they
+// are not repositioned, they simply keep their places and sit out. Nothing is rebuilt: the nodes and
+// edges are unchanged, so only the positions are thrown away and computed again.
 function grRelayout(){
-  _grFixed = {};
-  _grPos = {};
-  _grHome = {};
-  _grSig = '';        // force a full rebuild, and a fresh zoom-to-fit
-  renderGraph();
+  grStop();
+  grSetScope();
+  for (const e of _grSim) {
+    delete _grPos[e.id]; delete _grHome[e.id]; delete _grFixed[e.id];
+    const el = document.getElementById('gr-n-' + e.id);
+    if (el && el.classList) el.classList.remove('pinned');
+  }
+  const { cw, ch } = grCanvasSize();
+  grSizeLayout(cw, ch);
+  grInitPositions(true);   // seeds the ones just cleared; anything hidden keeps the place it had
+  _grRefit = true;
+  grRun(1);
 }
 
 // --- Render ----------------------------------------------------------------------------------
@@ -2484,7 +2548,7 @@ function grNodeHtml(e){
   const label = cardSortLabel(e) || '(untitled)';
   return `<div class="gr-node${conn ? ' conn' : ''}" id="gr-n-${e.id}" data-type="${esc(e.type)}" data-id="${e.id}"
     onpointerdown="grNodeDown(event,'${e.id}')" onpointerenter="popIn();grShowPop('${e.id}')" onpointerleave="popOut()"
-    >${conn ? '◆' : '<span class="gr-dot"></span>'}<span class="gr-label">${esc(label)}</span></div>`;
+    >${conn ? '◆' : `<span class="gr-icon">${TYPE_ICONS[e.type] || ''}</span>`}<span class="gr-label">${esc(label)}</span></div>`;
 }
 // A node's tooltip is the card itself, drawn by the very same renderCard() the list uses — and
 // obeying the very same Title · Tags · Body switch, through the very same two CSS classes. So the
@@ -2524,6 +2588,7 @@ function renderGraph(){
   _grPairs = idx.pairs; _grKey = idx.key;
   _grHW = {};
   for (const e of _grNodes) _grHW[e.id] = grHalfWidth(e);
+  grSetScope();
   if (!_grNodes.length) {
     host.innerHTML = `<div class="gr-empty"><p>Nothing to graph.</p><small>A card needs a tag, a gene, or a link to appear here.</small></div>`;
     return;
@@ -2540,6 +2605,10 @@ function renderGraph(){
           <span class="seg-label" title="What counts as a link between two cards">Link</span>
           <span class="seg-opt" data-val="tags" onclick="setGrLinkBy('tags')" title="Shared tags only">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setGrLinkBy('genes')" title="Shared genes only">Genes</span><span class="seg-sep">·</span><span class="seg-opt" data-val="both" onclick="setGrLinkBy('both')" title="Shared tags and shared genes">Both</span>
         </div>
+        <div class="gr-space">
+          <span class="seg-label" title="How much elbow room the cards get">Spacing</span>
+          <input type="range" class="gr-range" id="gr-space" min="0.6" max="1.8" step="0.05" value="${grSpacing}" oninput="setGrSpacing(this.value)">
+        </div>
         <span class="gr-relayout" onclick="grRelayout()" title="Start the layout again from scratch">↻ Relayout</span>
       </div>
       <span class="gr-caption" id="gr-caption"></span>
@@ -2552,12 +2621,10 @@ function renderGraph(){
   // The layout space grows with the node count rather than being the viewport: 200 cards crammed
   // into one screen is a hairball whatever the forces do. They get room to spread, and you pan and
   // zoom over them — which is why the view opens zoomed to fit.
-  const n = _grNodes.length;
-  _grW = Math.max(cw, Math.round(Math.sqrt(n) * 210));
-  _grH = Math.max(ch, Math.round(Math.sqrt(n) * 145));
+  grSizeLayout(cw, ch);
   const fresh = !Object.keys(_grPos).length;
   grInitPositions(true);   // cards you have already placed keep the place you put them
-  if (fresh) grFit(cw, ch);
+  if (fresh) { grFit(cw, ch); _grRefit = true; }   // frame it now, and again once it has settled
   grApplyFilter();
   // A card was added, edited or deleted — the map genuinely changed, so let it settle. But gently,
   // and from where it already is, rather than throwing the whole thing back in the air.
@@ -2567,6 +2634,7 @@ function renderGraph(){
 // you filtered out were — and clearing the filter puts you back exactly where you were.
 function grApplyFilter(){
   const vis = grVisibleIds();   // this is also what recomputes highlightGenes, so it must come first
+  grSetScope();                 // a card just hidden stops taking part in the physics
   // The gene highlight input picks cards out of the map without narrowing it: the ones carrying a
   // gene you named light up, the rest fade back. Same gene set the card list highlights by, so the
   // two views agree about what you are looking for. Purely a repaint — nothing moves.
@@ -2605,7 +2673,7 @@ function grHalfWidth(e){
   return Math.min(180, 37 + Math.min(label.length, 30) * 6.2) / 2;
 }
 function grCollide(relax){
-  const N = _grNodes, P = _grPos;
+  const N = _grSim, P = _grPos;
   for (let i = 0; i < N.length; i++) {
     const a = P[N[i].id], hwa = _grHW[N[i].id] || 45;
     const af = !!_grFixed[N[i].id];
@@ -2646,9 +2714,52 @@ function grCollide(relax){
     }
   }
 }
+function grCanvasSize(){
+  const c = document.getElementById('gr-canvas');
+  return { cw: (c && c.clientWidth) || 900, ch: (c && c.clientHeight) || 560 };
+}
+function grSizeLayout(cw, ch){
+  const n = _grNodes.length;
+  _grW = Math.max(cw, Math.round(Math.sqrt(n) * 210 * grSpacing));
+  _grH = Math.max(ch, Math.round(Math.sqrt(n) * 145 * grSpacing));
+}
+// Spacing is a dial on the physics, not a redraw: the map keeps its shape and breathes out (or in)
+// from where it already is, rather than being thrown back in the air.
+function setGrSpacing(v){
+  const n = Number(v);
+  grSpacing = Math.max(0.6, Math.min(1.8, isFinite(n) ? n : 1));
+  const { cw, ch } = grCanvasSize();
+  grSizeLayout(cw, ch);
+  for (const e of _grNodes) {   // a smaller space can leave a card — or its home — outside it
+    const h = _grHome[e.id];
+    if (h) { h.x = Math.max(95, Math.min(_grW - 95, h.x)); h.y = Math.max(24, Math.min(_grH - 24, h.y)); }
+  }
+  grClampAll();
+  grFit(cw, ch);     // re-frame at once so it does not lurch, and again once it has settled
+  _grRefit = true;
+  grRun(0.6);
+}
+// Frame the cards that are actually on screen, not the layout box they sit in. After a Relayout
+// under a filter that box is mostly empty — fitting to it would leave the handful of cards you are
+// looking at as a speck in the middle.
 function grFit(cw, ch){
-  _grZoom = Math.max(0.2, Math.min(1, Math.min(cw / _grW, ch / _grH)));
-  _grPan = { x: (cw - _grW * _grZoom) / 2, y: (ch - _grH * _grZoom) / 2 };
+  const N = _grSim.length ? _grSim : _grNodes;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const e of N) {
+    const p = _grPos[e.id];
+    if (!p) continue;
+    const hw = _grHW[e.id] || 45;
+    x0 = Math.min(x0, p.x - hw); x1 = Math.max(x1, p.x + hw);
+    y0 = Math.min(y0, p.y - 16); y1 = Math.max(y1, p.y + 16);
+  }
+  if (!isFinite(x0)) { x0 = 0; y0 = 0; x1 = _grW; y1 = _grH; }
+  const pad = 26;
+  const w = (x1 - x0) + pad * 2, h = (y1 - y0) + pad * 2;
+  _grZoom = Math.max(0.2, Math.min(1, Math.min(cw / w, ch / h)));
+  _grPan = {
+    x: (cw - w * _grZoom) / 2 - (x0 - pad) * _grZoom,
+    y: (ch - h * _grZoom) / 2 - (y0 - pad) * _grZoom,
+  };
 }
 
 // --- Graph interaction ----------------------------------------------------------------------
@@ -2879,21 +2990,32 @@ function backFromDigestFocus() {
   expandedId = null;
   renderFilters(); renderList();
 }
-function focusCard(e, id) {
+// The view a focused card was opened FROM, so the ← knows where to put you back. Null means the
+// card list itself, which is where focusing a card from the list should return you.
+let focusFrom = null;
+function focusCard(e, id, from) {
   e.stopPropagation();
   const item = items.find(i => i.id === id);
   if (!item) return;
+  focusFrom = from || null;    // no origin given: you focused it from the list, so ← goes back there
   focusedCardId = id;
   expandedId = id;
   renderList();
   const el = document.getElementById('page-title');
   const title = item.title || item.content.split('\n')[0].slice(0,80);
-  el.innerHTML = `<span style="cursor:pointer" onclick="backFromFocus()" title="Back to all entries">← ${esc(title)}</span>`;
+  const dest = focusFrom === 'graph' ? 'graph' : focusFrom === 'timeline' ? 'timeline' : 'all entries';
+  el.innerHTML = `<span style="cursor:pointer" onclick="backFromFocus()" title="Back to the ${dest}">← ${esc(title)}</span>`;
   if (item.type === 'github' && item._ghFullName) ghExpandCard(item);
 }
 function backFromFocus() {
   focusedCardId = null;
   expandedId = null;
+  const back = focusFrom;
+  focusFrom = null;
+  // Back to the panel you came from. The graph's positions and the timeline's scroll survive in
+  // memory, and renderGraph() repaints without re-laying anything out, so you land on the map you
+  // left rather than a freshly shuffled one.
+  if (back && back !== 'list') { setView(back); return; }
   renderFilters(); renderList();
 }
 // On macOS a Ctrl-click is delivered as a context-menu event; use it to open the full-width view.
@@ -3009,7 +3131,7 @@ function toggleHighlightGene(gene) {
   if (highlightInputGenes.size > 0 && wrap.style.display === 'none') wrap.style.display = 'flex';
   renderList(); // getVisibleItems() recomputes the combined highlightGenes and toggles the bar
 }
-function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTag=null; activeType='all'; renderFilters(); renderList(); }
+function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTags.clear(); activeTypes.clear(); renderFilters(); renderList(); }
 // Re-render one card in place (expand/collapse) without rebuilding the whole list.
 // Returns false if the card isn't currently in the DOM, so the caller can fall back to renderList().
 function updateCardInPlace(id){

@@ -20,6 +20,9 @@ function extractInlineJs(full = false) {
 
 function fakeEl() {
   const el = {
+    // renderList() derives its column count from offsetWidth; without a number it computes NaN.
+    offsetWidth: 1200, offsetHeight: 800, offsetParent: null,
+    getBoundingClientRect: () => ({ top: 0, left: 0, right: 0, bottom: 0, width: 0, height: 0 }),
     style: {}, innerHTML: '', textContent: '', value: '', dataset: {},
     classList: { add(){}, remove(){}, toggle(){}, contains(){ return false; } },
     addEventListener(){}, removeEventListener(){}, appendChild(){}, remove(){},
@@ -65,13 +68,16 @@ function fakeIndexedDB() {
 export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false }) {
   const store = new Map(pat ? [['gh_pat', pat]] : []);
   const toasts = [];
+  const created = [];        // every element the script builds, so tests can inspect popup markup
+  const byId = new Map();    // stable per id, so what the app renders into an element persists
   const doc = {
-    getElementById: () => fakeEl(),
+    getElementById: id => { if (!byId.has(id)) byId.set(id, fakeEl()); return byId.get(id); },
     querySelector: () => fakeEl(),
     querySelectorAll: () => [],
-    createElement: () => fakeEl(),
-    addEventListener() {}, body: fakeEl(), documentElement: fakeEl(),
+    createElement: () => { const el = fakeEl(); created.push(el); return el; },
+    addEventListener() {}, removeEventListener() {}, body: fakeEl(), documentElement: fakeEl(),
     visibilityState: 'visible',
+    __created: created,
   };
   const win = {
     addEventListener() {}, removeEventListener() {},
@@ -96,6 +102,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
     marked: { parse: s => s, setOptions() {}, use() {} },
     katex: { renderToString: () => '', render: () => {} },
     URL: { createObjectURL: () => 'blob:fake', revokeObjectURL() {} },
+    Event: class { constructor(type) { this.type = type; } stopPropagation() {} preventDefault() {} },
     setTimeout, clearTimeout, setInterval, clearInterval, queueMicrotask,
     console, TextEncoder, TextDecoder, btoa, atob, Date, Math, JSON, Promise, Map, Set,
     __toasts: toasts,
@@ -123,6 +130,13 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       ghEnqueueEntry, ghEnqueueImage, ghEnqueueInbox, splitEntry, ghApplyWritePermission,
       ghCommitMessage, fileToBase64, ghChunkTree,
       loadFromFile, storageReady,
+      openTagEditor, toggleCardTag, closeTagEditor, renderTagEditor,
+      get tagUniverse(){ return _tagUniverse; },
+      get tagEditorId(){ return _tagEditorId; },
+      digestHeads, createSpecialCard, taggable, renderList,
+      SPECIAL_CARDS, SPECIAL_IDS,
+      set digestVisible(v){ digestVisible = v; },
+      get digestVisible(){ return digestVisible; },
       GH_FLUSH_DELAY,
     };
     globalThis.__setHandles = (dh, eh) => { dirHandle = dh; entriesHandle = eh; };

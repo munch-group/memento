@@ -2,13 +2,13 @@
   "id": "person_tomas_marques_bonet",
   "type": "people",
   "title": "Tomas Marques-Bonet",
-  "tags": [
-    "Primates"
-  ],
+  "tags": [],
   "genes": [],
   "source": "",
-  "date": "2026-04-04T08:13:09.030859+00:00",
+  "date": "2026-07-14T07:20:48.007Z",
   "synced": false,
   "connection": false,
-  "_sortTag": "Primates"
+  "_sortTag": "Primates",
+  "archived": false,
+  "due": ""
 }

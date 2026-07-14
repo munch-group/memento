@@ -181,13 +181,25 @@ a { color: inherit; }
 .digest-card blockquote { border-left: 2px solid var(--border2); padding-left: 10px; color: var(--text2); margin: 0.5em 0; }
 .digest-card { position: relative; }
 .digest-date { font-family: var(--mono); font-size: 11px; color: var(--text3); float: right; line-height: 15px; margin-top: 2px; }
-.priorities-card { cursor: pointer; }
+.special-card { cursor: pointer; }
 .inbox-card { cursor: pointer; }
-.priorities-card:hover { border-color: var(--border2); }
+.special-card:hover { border-color: var(--border2); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 .tag-suggest { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; max-height: 96px; overflow-y: auto; }
 .tag-suggest .tag.added { opacity: 0.4; }
+/* Quick tag editing straight from a card, without opening the edit form. */
+.tag-edit { opacity: 0.35; font-weight: 600; }
+.tag-edit:hover { opacity: 1; background: var(--bg3); }
+.tag-editor-overlay { position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.tag-editor { display: flex; flex-direction: column; width: 100%; max-width: 420px; max-height: 82vh; padding: 1rem; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--rl); box-shadow: 0 8px 40px rgba(0,0,0,0.18); }
+.te-head { font-size: 14px; font-weight: 600; }
+.te-label { display: flex; justify-content: space-between; align-items: baseline; margin: 10px 0 4px; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
+.te-hint { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text3); }
+.te-box { display: flex; flex-wrap: wrap; gap: 5px; align-content: flex-start; min-height: 46px; max-height: 28vh; overflow-y: auto; padding: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); }
+.te-box .tag { font-size: 12px; padding: 5px 9px; }   /* bigger tap targets than the 10px card chips */
+.te-empty { padding: 3px 2px; font-size: 11px; font-style: italic; color: var(--text3); }
+.te-actions { display: flex; justify-content: flex-end; margin-top: 12px; }
 .gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
 .gene:hover { background: rgba(0,0,0,0.04); }
 .gene-more { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 7px; border-radius: 3px; cursor: default; }
@@ -438,13 +450,22 @@ const TYPE_ICONS = {
   github: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>',
   view: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg>',
 };
+// Cards that live only on the dashboard, never in the list. Each is an ordinary note entry
+// (so the CLI and digest tooling need no special-casing) with a reserved id. Order here is the
+// order they appear on the dashboard.
+const SPECIAL_CARDS = [
+  { id: '_priorities', title: 'Priorities', staleDays: 4 },
+  { id: '_strategy',   title: 'Strategy',   staleDays: 30 },
+];
+const SPECIAL_IDS = new Set([...SPECIAL_CARDS.map(s => s.id), '_digest']);
+
 const GH_REPO = 'munch-group/memento';
 const GH_KB_PATH = 'knowledge-base';
 const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-13.4';
+const APP_BUILD = '2026-07-14.3';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';
@@ -1214,15 +1235,15 @@ let _streamRaf = 0, _streamGen = 0;
 function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
-// Dashboard "head" cards (Dashboard digest, Priorities, Inbox) — each sits atop a column in digest view.
+// Dashboard "head" cards — each sits atop a column in digest view, in this order:
+// the special cards (Priorities, Strategy), then the generated Dashboard digest, then Inbox.
 function digestHeads(){
   const d = window._kbDigest;
   const digestHtml = (!d || !d.markdown)
     ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
     : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
-  const pCard = items.find(i => i.id === '_priorities');
-  const pH = pCard ? renderPrioritiesCard(pCard) : '<div class="digest-card priorities-card" style="border-style:dashed;color:var(--text3);text-align:center;cursor:pointer" onclick="createPrioritiesCard()"><p>Click to create a priorities card</p></div>';
-  return [digestHtml, pH, renderInboxCard()].filter(Boolean);
+  const specials = SPECIAL_CARDS.map(spec => renderSpecialCard(spec, items.find(i => i.id === spec.id)));
+  return [...specials, digestHtml, renderInboxCard()].filter(Boolean);
 }
 function renderList() {
   _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
@@ -1253,10 +1274,9 @@ function renderList() {
   }
   let { vis } = getVisibleItems();
   if (digestVisible) {
-    vis = vis.filter(i => i.pinned && i.id !== '_priorities');   // dashboard: only pinned cards (plus the heads)
+    vis = vis.filter(i => i.pinned && !SPECIAL_IDS.has(i.id));   // dashboard: only pinned cards (plus the heads)
   } else {
-    const pIdx = vis.findIndex(i => i.id === '_priorities');     // priorities card lives only on the dashboard
-    if (pIdx >= 0) vis.splice(pIdx, 1);
+    vis = vis.filter(i => !SPECIAL_IDS.has(i.id));               // special cards live only on the dashboard
   }
   if (activeViewId) {
     const vIdx = vis.findIndex(i => i.id === activeViewId);
@@ -1367,7 +1387,14 @@ function renderCard(item, forceExpand, eagerBody) {
   const eagerExp = forceExpand||expandedId===item.id;   // the one card the user opened/focused
   const expChrome = eagerExp||previewMode==='full';      // show expanded chrome (icons/meta/actions)
   const title=item.title||item.content.split('\n')[0].slice(0,80)+(item.content.length>80?'…':'');
-  const tags=(item.tags||[]).map(t=>`<span class="tag" onclick="tagClick(event,'${t.replace(/'/g,"\\'")}') ">${esc(t)}</span>`).join('');
+  // A card's tags open the quick editor rather than filtering by themselves — filtering still lives
+  // in the sidebar and in `#tag` search. Read-only devices keep the old filter behaviour, since
+  // there is nothing there to edit.
+  const tags=(item.tags||[]).map(t=>{
+    const safe=t.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const act = taggable(item) ? `openTagEditor(event,'${item.id}')` : `tagClick(event,'${safe}')`;
+    return `<span class="tag" onclick="${act}">${esc(t)}</span>`;
+  }).join('');
   const allGenes = item.genes||[];
   // Always alphabetical; when highlighting is active, highlighted genes float to the top (each group alphabetical).
   const tokenHasHl = g => geneAliasesU(g).some(al=>highlightGenes.has(al));
@@ -1406,7 +1433,7 @@ function renderCard(item, forceExpand, eagerBody) {
     <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'}</span>
     ${item.type==='github'&&item._ghOpenIssues?`<span class="gh-issues-icon" title="View open issues" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="gh-issues-count">${item._ghOpenIssues}</span></span>`:''}
     <span class="card-date">${fmtDate(item.date)}</span>
-    ${item.id!=='_priorities'&&item.id!=='_digest'?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
+    ${!SPECIAL_IDS.has(item.id)?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
     ${allGenes.length?`<span class="gene-search-icon" title="Add genes to search bar" onclick="appendGenesToSearch(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>`:''}
     <span class="focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
   </div>
@@ -1432,7 +1459,14 @@ function renderCard(item, forceExpand, eagerBody) {
     return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
   })()}
   ${(expChrome&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
-  ${(()=>{ const meta=`${tags}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}`; if(meta) return `<div class="card-meta">${meta}</div>`; return (item.type==='view'||item.type==='github')?'':`<div class="card-meta">&nbsp;</div>`; })()}
+  ${(()=>{
+    // Only an untagged card needs a separate affordance — once it has tags, the tags are the button.
+    const tagEdit = (taggable(item) && !(item.tags||[]).length)
+      ? `<span class="tag tag-edit" title="Add tags" onclick="openTagEditor(event,'${item.id}')">＋</span>` : '';
+    const meta=`${tags}${tagEdit}${genes}${dueHtml?'<span class="spacer"></span>'+dueHtml:''}`;
+    if(meta) return `<div class="card-meta">${meta}</div>`;
+    return (item.type==='view'||item.type==='github')?'':`<div class="card-meta">&nbsp;</div>`;
+  })()}
   ${expChrome?`<div class="card-bottom">
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
@@ -1448,6 +1482,85 @@ function renderCard(item, forceExpand, eagerBody) {
 }
 
 function tagClick(e, tag) { e.stopPropagation(); setTagFilter(tag); }
+
+// --- Quick tag editor -----------------------------------------------------
+// Add/remove a card's tags from the card itself. Deliberately has no text input: you can only
+// move existing tags between the two boxes, so this can never coin a new tag (or a typo'd
+// near-duplicate of one). Creating tags stays in the edit form, where it's a considered act.
+let _tagEditorId = null;
+let _tagUniverse = [];   // snapshot taken when the popup opens
+
+// The dashboard's special cards carry no tags of their own.
+function taggable(item) { return !readOnly && !SPECIAL_IDS.has(item.id); }
+
+function openTagEditor(e, id) {
+  e.stopPropagation();
+  if (readOnly) return;
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  _tagEditorId = id;
+  // Snapshot the universe at open time as (every tag in use) ∪ (this card's tags). Recomputing it
+  // live would make a tag vanish from the picker the moment you removed its last use — leaving no
+  // way to put it back in the same session.
+  _tagUniverse = [...new Set([...items.flatMap(i => i.tags || []), ...(item.tags || [])])]
+    .sort((a, b) => a.localeCompare(b));
+
+  const overlay = document.createElement('div');
+  overlay.className = 'tag-editor-overlay';
+  overlay.innerHTML = `
+    <div class="tag-editor">
+      <div class="te-head">Tags</div>
+      <div class="te-label"><span>On this card</span><span class="te-hint">tap to remove</span></div>
+      <div class="te-box" id="te-on"></div>
+      <div class="te-label"><span>Available</span><span class="te-hint">tap to add</span></div>
+      <div class="te-box" id="te-off"></div>
+      <div class="te-actions"><button class="btn btn-sm btn-primary" id="te-done">Done</button></div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  // Delegated, so tag names never have to survive a trip through an inline onclick string.
+  overlay.addEventListener('click', ev => {
+    const chip = ev.target.closest('.te-box .tag');
+    if (chip) { toggleCardTag(chip.dataset.tag); return; }
+    if (ev.target === overlay || ev.target.id === 'te-done') closeTagEditor();
+  });
+  document.addEventListener('keydown', tagEditorKey, true);
+  renderTagEditor();
+}
+
+// Capture phase: the app's single-letter shortcuts must not fire behind the modal.
+function tagEditorKey(ev) {
+  if (ev.key === 'Escape') { ev.preventDefault(); closeTagEditor(); }
+  ev.stopPropagation();
+}
+
+function renderTagEditor() {
+  const item = items.find(i => i.id === _tagEditorId);
+  if (!item) return closeTagEditor();
+  const on = (item.tags || []).slice().sort((a, b) => a.localeCompare(b));
+  const onSet = new Set(on);
+  const off = _tagUniverse.filter(t => !onSet.has(t));
+  const chips = list => list.map(t => `<span class="tag" data-tag="${esc(t)}">${esc(t)}</span>`).join('');
+  document.getElementById('te-on').innerHTML  = on.length  ? chips(on)  : '<span class="te-empty">no tags yet</span>';
+  document.getElementById('te-off').innerHTML = off.length ? chips(off) : '<span class="te-empty">all tags are on this card</span>';
+}
+
+async function toggleCardTag(tag) {
+  const item = items.find(i => i.id === _tagEditorId);
+  if (!item) return;
+  if (!item.tags) item.tags = [];
+  const i = item.tags.indexOf(tag);
+  if (i === -1) item.tags.push(tag); else item.tags.splice(i, 1);
+  renderTagEditor();
+  await saveEntryToFile(item);   // on GitHub a burst of these coalesces into a single commit
+}
+
+function closeTagEditor() {
+  document.removeEventListener('keydown', tagEditorKey, true);
+  document.querySelector('.tag-editor-overlay')?.remove();
+  _tagEditorId = null;
+  computeSortTags(); renderFilters(); renderList();   // refresh sidebar tag counts and the card
+}
 function geneClick(e, gene) {
   e.stopPropagation();
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
@@ -1540,23 +1653,31 @@ function linkifyDigestRepos(html) {
     return `<strong><a href="#" onclick="navigateToRepoCard('${id}');return false" style="text-decoration:none;color:inherit">${esc(name)}</a></strong>`;
   });
 }
-async function createPrioritiesCard() {
+async function createSpecialCard(id) {
+  const spec = SPECIAL_CARDS.find(s => s.id === id);
+  if (!spec) return;
   items.push({
-    id: '_priorities', type: 'note',
-    title: 'Priorities',
+    id: spec.id, type: 'note',
+    title: spec.title,
     content: '- \n',
     tags: [], genes: [], source: '',
     date: new Date().toISOString(),
     synced: false, connection: false, archived: false, due: '',
   });
   await saveEntryToFile(items[items.length - 1]);
-  editItem(new Event('click'), '_priorities');
+  editItem(new Event('click'), spec.id);
   renderList();
 }
-function renderPrioritiesCard(item) {
+// A special card is a plain note entry that happens to live on the dashboard instead of in the
+// list. `staleDays` is when its "Edited …" line turns red, i.e. how long it can go unrevisited
+// before that should nag you.
+function renderSpecialCard(spec, item) {
+  if (!item) {
+    return `<div class="digest-card special-card" style="border-style:dashed;color:var(--text3);text-align:center" onclick="createSpecialCard('${spec.id}')"><p>Click to create a ${esc(spec.title.toLowerCase())} card</p></div>`;
+  }
   const dateStr = item.date ? fmtDateAgo(item.date) : '';
-  const stale = item.date && (new Date() - new Date(item.date)) > 4*86400000;
-  return `<div class="digest-card priorities-card" onclick="editItem(event,'_priorities')">${dateStr ? '<div class="digest-date"' + (stale ? ' style="color:#c44"' : '') + '>Edited ' + esc(dateStr) + '</div>' : ''}<h2>Priorities</h2>${md(item.content)}</div>`;
+  const stale = item.date && (new Date() - new Date(item.date)) > spec.staleDays*86400000;
+  return `<div class="digest-card special-card" onclick="editItem(event,'${spec.id}')">${dateStr ? '<div class="digest-date"' + (stale ? ' style="color:#c44"' : '') + '>Edited ' + esc(dateStr) + '</div>' : ''}<h2>${esc(spec.title)}</h2>${md(item.content)}</div>`;
 }
 function renderInboxCard() {
   const text = window._kbInbox;

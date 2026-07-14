@@ -279,6 +279,20 @@ a { color: inherit; }
   .page-header { flex-wrap: wrap; gap: 8px; }
   .header-actions { flex-wrap: wrap; }
 }
+/* iOS zooms the whole page when you focus a field whose font-size is under 16px — that's what made
+   tapping the search bar, or opening the Add form (which focuses the textarea), "zoom in". 16px is
+   the threshold and the only thing that suppresses it: Safari ignores user-scalable=no, and using
+   it would disable pinch-zoom anyway. Touch-only, so the desktop keeps its 13/14px fields. */
+@media (hover: none) and (pointer: coarse) {
+  .searchbar input,
+  .field input,
+  .field textarea,
+  .highlight-input-wrap input,
+  input[type="text"], input[type="date"], input[type="password"], input[type="search"],
+  textarea, select {
+    font-size: 16px !important;   /* !important: #f-due carries an inline font-size */
+  }
+}
 </style>
 </head>
 <body>
@@ -430,7 +444,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-13.3';
+const APP_BUILD = '2026-07-13.4';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';

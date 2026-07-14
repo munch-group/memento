@@ -74,14 +74,36 @@ function makeGitHub({ pushAccess = true } = {}) {
     log.push({ method, url });
     const body = opts.body ? JSON.parse(opts.body) : null;
     const base = `https://api.github.com/repos/${REPO}`;
+
+    // Raw file fetches — the read path downloads each entry via its download_url.
+    if (url.startsWith('https://raw.test/')) {
+      const body = gh.fileAt(url.slice('https://raw.test/'.length));
+      if (body === undefined) return json(404, { message: 'no such file' });
+      return { ok: true, status: 200, statusText: '', text: async () => body, json: async () => JSON.parse(body) };
+    }
+
     const path = url.startsWith(base) ? url.slice(base.length) : null;
     if (path === null) return json(404, { message: 'no route ' + url });
+
+    // Directory listing + INBOX, as the read path expects them.
+    if (method === 'GET' && path.startsWith('/contents/')) {
+      const target = decodeURIComponent(path.slice('/contents/'.length).split('?')[0]);
+      const tree = gh.tipTree();
+      if (tree.has(target)) return { ok: true, status: 200, statusText: '', text: async () => gh.fileAt(target), json: async () => JSON.parse(gh.fileAt(target)) };
+      const kids = [...tree.keys()].filter(p => p.startsWith(target + '/') && !p.slice(target.length + 1).includes('/'));
+      if (!kids.length) return json(404, { message: 'not found: ' + target });
+      return json(200, kids.map(p => ({ name: p.split('/').pop(), download_url: 'https://raw.test/' + p })));
+    }
 
     if (method === 'GET' && path === '') return json(200, { permissions: { push: pushAccess } });
 
     let m;
     if (method === 'GET' && (m = path.match(/^\/git\/ref\/heads\/(.+)$/))) {
       return json(200, { object: { sha: refs[m[1]] } });
+    }
+    // The read path and the staleness check both ask for the branch tip this way.
+    if (method === 'GET' && (m = path.match(/^\/commits\/([^/?]+)$/))) {
+      return refs[m[1]] ? json(200, { sha: refs[m[1]] }) : json(404, { message: 'no such ref' });
     }
     if (method === 'GET' && (m = path.match(/^\/git\/commits\/(.+)$/))) {
       const c = commits.get(m[1]);
@@ -276,6 +298,41 @@ console.log('\n8. UTF-8 (Danish/greek/emoji) survives the base64 round-trip');
   await api.saveEntryToFile(api.items[0]);
   await api.ghFlush();
   eq(gh.fileAt(`${ENTRIES}/utf.md`), text, 'content byte-identical after encode/decode');
+}
+
+console.log('\n9. auto-refresh on returning to the app (this is what replaced the Reload button)');
+{
+  const { gh, api } = await setup();
+  api.items = [card('a', 'here')];
+  await api.saveEntryToFile(api.items[0]);   // actually commit it, so a reload can find it
+  await api.ghFlush();
+
+  // Nothing changed since -> no reload, and no wasted work.
+  const before = gh.log.length;
+  await api.ghRefreshIfStale();
+  eq(gh.log.length, before + 1, 'costs exactly one request when main has not moved');
+  eq(api.items.map(i => i.id), ['a'], 'and does not reload');
+
+  // The Mac pushes -> the phone picks it up by itself, with no button and no tap.
+  gh.externalCommit(`${ENTRIES}/mac.json`, JSON.stringify({ id: 'mac', type: 'note', title: 'from mac', tags: [], genes: [], date: '2026-07-14T00:00:00Z' }));
+  gh.externalCommit(`${ENTRIES}/mac.md`, 'body from the mac');
+  await api.ghRefreshIfStale();
+  eq(api.items.map(i => i.id).sort(), ['a', 'mac'], 'a push from the Mac is pulled in automatically');
+  eq(api.items.find(i => i.id === 'mac').content, 'body from the mac', 'with its body rehydrated from the sibling .md');
+}
+
+console.log('\n10. auto-refresh must never discard unsaved work');
+{
+  const { gh, api } = await setup();
+  api.items = [card('p', 'typed on the phone, not yet committed')];
+  await api.saveEntryToFile(api.items[0]);        // queued, still inside the 2s debounce
+  eq(api.queue.size > 0, true, 'an edit is pending');
+
+  gh.externalCommit(`${ENTRIES}/mac.md`, 'meanwhile, the mac pushed');
+  const before = gh.log.length;
+  await api.ghRefreshIfStale();
+  eq(gh.log.length, before, 'refresh is skipped entirely while a write is pending');
+  eq(api.queue.size > 0, true, 'the pending edit survives — it is not reloaded away');
 }
 
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);

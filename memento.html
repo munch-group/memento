@@ -61,8 +61,6 @@ a { color: inherit; }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
 .btn-danger { color: #c00; border-color: rgba(200,0,0,0.3); }
 .btn-danger:hover { background: rgba(200,0,0,0.05); }
-.btn-sync { color: var(--accent); border-color: rgba(217,119,87,0.3); }
-.btn-sync:hover { background: rgba(217,119,87,0.05); }
 .view-bookmark { display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; background: none; border: none; color: #6E56CF; cursor: pointer; opacity: 0.75; transition: opacity 0.15s; }
 .view-bookmark:hover { opacity: 1; }
 .view-capture-summary { font-family: var(--mono); font-size: 12px; color: var(--text2); background: var(--bg2); padding: 7px 10px; border-radius: var(--r); border: 1px solid var(--border); }
@@ -245,7 +243,6 @@ a { color: inherit; }
 .card-bottom-actions .icon-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; opacity: 0.45; transition: opacity 0.15s; }
 .card-bottom-actions .icon-btn:hover { opacity: 0.85; }
 .card-bottom-actions .icon-btn.edit { color: var(--text); }
-.card-bottom-actions .icon-btn.sync-bottom { color: var(--text3); }
 .card-bottom-actions .icon-btn.delete { color: #c44; }
 .spacer { flex: 1; }
 #item-list { display: flex; gap: 8px; align-items: flex-start; min-width: 0; max-width: 100%; }
@@ -355,10 +352,10 @@ a { color: inherit; }
     <div id="app-area" style="display:none">
       <div class="page-header">
         <span class="page-title" id="page-title">All entries</span>
+        <!-- Reload, Export and Cleanup are gone. Reload: both platforms now refresh themselves.
+             Export/Cleanup: Claude reads the knowledge base live through memento-mcp.py, so there
+             is nothing to push into its memory and nothing to reap afterwards. -->
         <div class="header-actions">
-          <button class="btn btn-sm" id="btn-reload" onclick="loadFromFile()" title="Reload from disk">↺ Reload</button>
-          <button class="btn btn-sm" id="btn-sync-all" onclick="syncAll()" title="Copy currently visible cards to clipboard">↗ Export</button>
-          <button class="btn btn-sm" onclick="cleanupMemory()" title="Copy cleanup prompt — removes deleted entries from Claude memory">✕ Cleanup</button>
           <button class="btn btn-sm btn-primary" id="btn-add-toggle" onclick="toggleForm()">+ Add</button>
         </div>
       </div>
@@ -403,7 +400,6 @@ a { color: inherit; }
           <button class="btn btn-primary" onclick="saveItem()">Save</button>
           <button class="btn" onclick="cancelEdit()">Cancel</button>
           <span class="spacer"></span>
-          <button class="btn btn-sm btn-sync" id="btn-form-sync" onclick="syncEditingItem()" style="display:none">Sync ↗</button>
           <button class="btn btn-sm btn-danger" id="btn-form-delete" onclick="deleteEditingItem()" style="display:none">Delete</button>
         </div>
       </div>
@@ -443,9 +439,12 @@ a { color: inherit; }
 <script src="vendor/marked.min.js"></script>
 <script>
 // ============================================================
-// Knowledge Base — local Chrome/Edge app
-//   Uses File System Access API for reading/writing knowledge-base.json
-//   Clipboard-based sync prompts for Claude memory integration
+// Memento — knowledge base app
+//   Desktop: File System Access API, reading/writing entries/<id>.{json,md} directly.
+//   iOS:     the same entries, via the GitHub Git Data API.
+//   Claude reads the knowledge base live through memento-mcp.py — there is no "sync to Claude"
+//   step any more. Entries still carry a `synced` field only because kb-manage.py's schema
+//   validation requires it; nothing in this app reads it.
 // ============================================================
 
 const TYPES = [
@@ -483,14 +482,14 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.8';
+const APP_BUILD = '2026-07-14.9';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';
 let activeTag = null;
 let activeGene = null;
-let sortKey = 'date';   // 'date' | 'synced' | 'type'
-let sortAsc = false;     // false = descending (newest/unsynced first)
+let sortKey = 'date';   // 'date' | 'due' | 'type' | 'tags' | 'connection' | 'alpha'
+let sortAsc = false;     // false = descending (newest first)
 let tagSort = 'count';
 let selectedType = 'note';
 let lastType = 'note';   // last real card type used; reused for new cards (never 'view'/'github')
@@ -729,10 +728,6 @@ function renderBuildRow() {
 function updateWriteUI() {
   const vis = readOnly ? 'none' : '';
   document.getElementById('btn-add-toggle').style.display = vis;
-  document.getElementById('btn-sync-all').style.display = vis;
-  document.getElementById('btn-reload').style.display = vis;
-  const cleanup = document.querySelector('[onclick="cleanupMemory()"]');
-  if (cleanup) cleanup.style.display = vis;
   updateFileStatus(dirHandle?.name || '');
 }
 
@@ -798,82 +793,8 @@ function openInVSCode(id) {
   window.open(`vscode://file/${basePath}/entries/${id}.md`, '_blank');
 }
 
-// --- Strip image markdown for sync (Claude can't see local images) ---
-function stripImageMd(text) {
-  if (!text) return text;
-  return text.replace(/\n*!\[[^\]]*\]\(images\/[^)]+\)/g, '').trim();
-}
-
-// --- Format source for sync: expand [[id|title]] to "title (id: xyz)" ---
-function formatSourceForSync(s) {
-  if (!s) return '';
-  return s.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, (_, id, title) => `${title} (id: ${id})`).replace(/\[\[([^\]]+)\]\]/g, (_, id) => {
-    const item = items.find(i => i.id === id);
-    const title = item ? (item.title || 'untitled') : 'unknown';
-    return `${title} (id: ${id})`;
-  });
-}
-
-// --- Clipboard sync: single entry ---
-function syncItem(e, id) {
-  e.stopPropagation();
-  const item = items.find(i => i.id === id);
-  if (!item) return;
-  const typePrefix = item.connection ? 'Connection · ' : '';
-  const typeName = TYPES.find(t=>t.key===item.type)?.label || item.type;
-  const title = item.title ? ` — ${item.title}` : '';
-  const genes = (item.genes||[]).length ? `\nGenes: ${item.genes.join(', ')}` : '';
-  const tags = (item.tags||[]).length ? `\nTags: ${item.tags.join(', ')}` : '';
-  const source = item.source ? `\nSource: ${formatSourceForSync(item.source)}` : '';
-  const cleanContent = stripImageMd(item.content);
-  const prompt = `Please update your memory with this knowledge base entry (id: ${item.id}). If an entry with this id already exists in your memory, replace it entirely with this version. If it does not exist, add it.\n\n[${typePrefix}${typeName}${title}] (id: ${item.id})\n${cleanContent}${genes}${tags}${source}`;
-  navigator.clipboard.writeText(prompt).then(() => {
-    item.synced = true;
-    saveEntryToFile(item);
-    renderList();
-    showToast('Sync prompt copied — paste in any Claude chat');
-  }).catch(() => {
-    showToast('Clipboard blocked — could not copy');
-  });
-}
-
-// --- Clipboard sync: all entries (full replace) ---
-function syncAll() {
-  const { vis } = getVisibleItems();
-  if (vis.length === 0) { showToast('No visible cards to export'); return; }
-  const parts = vis.map(item => {
-    const typePrefix = item.connection ? 'Connection · ' : '';
-    const typeName = TYPES.find(t=>t.key===item.type)?.label || item.type;
-    const title = item.title ? ` — ${item.title}` : '';
-    const genes = (item.genes||[]).length ? `\nGenes: ${item.genes.join(', ')}` : '';
-    const tags = (item.tags||[]).length ? `\nTags: ${item.tags.join(', ')}` : '';
-    const source = item.source ? `\nSource: ${formatSourceForSync(item.source)}` : '';
-    const cleanContent = stripImageMd(item.content);
-    return `[${typePrefix}${typeName}${title}] (id: ${item.id})\n${cleanContent}${genes}${tags}${source}`;
-  });
-  const preamble = `The entries below are knowledge-base entries from my personal knowledge base. Please treat them as authoritative context about my work, projects, and notes, and use them to inform your responses. Each entry has a type, optional title, id, content, and optional genes/tags/source.`;
-  const text = `${preamble}\n\n---\n\n${parts.join('\n\n---\n\n')}`;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast(`Exported ${vis.length} card${vis.length === 1 ? '' : 's'} to clipboard`);
-  }).catch(() => {
-    showToast('Clipboard blocked — could not copy');
-  });
-}
-
-// --- Clipboard cleanup: delete removed entries from Claude memory ---
-function cleanupMemory() {
-  if (items.length === 0) { showToast('No entries — nothing to reference'); return; }
-  const ids = items.map(i => i.id);
-  const prompt = `Please check your memory for knowledge base entries. The following is the complete list of valid entry ids:\n\n${ids.join(', ')}\n\nAny knowledge base entry in your memory whose id is NOT in this list has been deleted from my knowledge base. Please remove those entries from your memory. Do not modify entries that are in this list.`;
-  navigator.clipboard.writeText(prompt).then(() => {
-    showToast('Cleanup prompt copied — paste in any Claude chat');
-  }).catch(() => {
-    showToast('Clipboard blocked — could not copy');
-  });
-}
-
 // --- Sort ---
-const SORTS = [{key:'date',label:'Modified'},{key:'due',label:'Due'},{key:'synced',label:'Synced'},{key:'type',label:'Type'},{key:'tags',label:'Tags'},{key:'connection',label:'Connection'},{key:'alpha',label:'Alphabetic'}];
+const SORTS = [{key:'date',label:'Modified'},{key:'due',label:'Due'},{key:'type',label:'Type'},{key:'tags',label:'Tags'},{key:'connection',label:'Connection'},{key:'alpha',label:'Alphabetic'}];
 function renderSortList() {
   const arrows = {true:'↑', false:'↓'};
   const el = document.getElementById('sort-list');
@@ -925,12 +846,6 @@ function sortItems(arr) {
       if (!ad && bd) return 1;
       if (!ad && !bd) return -((a.date||'').localeCompare(b.date||''));
       return dir * ad.localeCompare(bd);
-    }
-    if (sortKey === 'synced') {
-      // ascending: synced first; descending (default): unsynced first
-      const sa = a.synced ? 1 : 0, sb = b.synced ? 1 : 0;
-      if (sa !== sb) return dir * (sa - sb);
-      return -((a.date||'').localeCompare(b.date||'')); // secondary: newest first
     }
     if (sortKey === 'type') {
       const ta = TYPES.findIndex(t=>t.key===a.type), tb = TYPES.findIndex(t=>t.key===b.type);
@@ -1532,7 +1447,6 @@ function renderCard(item, forceExpand, eagerBody) {
       ${basePath?`<button class="icon-btn" onclick="event.stopPropagation();openInVSCode('${item.id}')" title="Open in VS Code" style="font-size:11px;font-weight:600">VS</button>`:''}
       <button class="icon-btn" onclick="copyCardMarkdown(event,'${item.id}')" title="Copy as Markdown" style="display:inline-flex;align-items:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
       ${readOnly?'':`<button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>`}
-      ${readOnly?'':`<span class="icon-btn sync-bottom" onclick="syncItem(event,'${item.id}')" title="${item.synced?'Re-sync to Claude':'Sync to Claude'}">${item.synced?'✓':'⊘'}</span>`}
       ${readOnly?'':`<button class="icon-btn delete" onclick="deleteFromCard(event,'${item.id}')" title="Delete">✕</button>`}
     </span>
   </div>`:''}
@@ -1966,17 +1880,8 @@ function addTagToInput(tag){
   input.focus();
 }
 
-function showFormEditButtons(show, item) {
-  document.getElementById('btn-form-sync').style.display = show ? '' : 'none';
+function showFormEditButtons(show) {
   document.getElementById('btn-form-delete').style.display = show ? '' : 'none';
-  if (show && item) {
-    document.getElementById('btn-form-sync').textContent = item.synced ? 'Re-sync ↗' : 'Sync ↗';
-  }
-}
-
-function syncEditingItem() {
-  if (!editingId) return;
-  syncItem({stopPropagation(){}}, editingId);
 }
 
 async function deleteEditingItem() {
@@ -3514,8 +3419,24 @@ window.addEventListener('beforeunload', e => {
   if (_ghQueue.size || _ghFlushing) { e.preventDefault(); e.returnValue = ''; }
 });
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden' && _ghQueue.size && !_ghError) ghFlush();
+  if (document.visibilityState === 'hidden') {
+    if (_ghQueue.size && !_ghError) ghFlush();
+  } else {
+    ghRefreshIfStale();
+  }
 });
+
+// The desktop already reloads itself on window focus (see the 'focus' listener). This is the
+// same courtesy for the GitHub backend, which had none — which is why iOS needed a Reload button
+// at all. One cheap request on returning to the app: only reload if main actually moved.
+async function ghRefreshIfStale() {
+  if (!ghRepoMode || !ghPat()) return;
+  if (_ghQueue.size || _ghFlushing || _ghError) return;   // never reload over unsaved work
+  try {
+    const head = await ghApiJson(`/commits/${GH_BRANCH}`);
+    if (head.sha && head.sha !== _ghHeadSha) await ghLoadEntries();
+  } catch(_) { /* offline or rate-limited: stay on what we have */ }
+}
 
 // --- GitHub read mode (for iOS / browsers without File System Access API) ---
 

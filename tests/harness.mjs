@@ -165,6 +165,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       renderTimeline, tlAddBar, tlRemoveBar, tlRemoveRow, tlSetBarTitle, tlSetZoom,
       tlShowPop, popHide, tlClampZoom,
       cardToTimeline, openCardFocused, backFromFocus, focusCard,
+      toggleLinkMode, exitLinkMode, insertCardRef, grNodeDown, renderLinkBanner,
+      get linkMode(){ return linkMode; },
+      set editingId(v){ editingId = v; },
       get tlPxPerDay(){ return tlPxPerDay; },
       get tlFocusId(){ return tlFocusId; },
       // Graph

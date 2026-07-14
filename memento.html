@@ -304,6 +304,8 @@ a { color: inherit; }
 .gr-relayout:hover { color: var(--text2); }
 /* Highlighted by the gene input: the named cards come forward, the rest fall back. Neither moves. */
 .gr-node.gr-hi { z-index: 4; }   /* it stands out by the others fading, not by a border of its own */
+.gr-node.link-target { cursor: pointer; }
+.gr-node.link-target:hover { border-color: var(--accent); box-shadow: 0 0 0 1.5px rgba(217,119,87,0.25); }
 .gr-node.gr-dim { opacity: 0.25; }
 .gr-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text3); }
 .gr-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
@@ -546,6 +548,7 @@ a { color: inherit; }
              Populated by renderFilters() only when connection cards exist. -->
         <div class="seg" id="conn-seg"></div>
       </div>
+      <div id="link-banner"></div>
       <div id="item-list" class="hide-previews"></div>
       <!-- Siblings of #item-list rather than content inside it, so neither panel has to fight
            renderList()'s column distribution and progressive-insert streaming. -->
@@ -611,7 +614,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.23';
+const APP_BUILD = '2026-07-15.1';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1359,8 +1362,16 @@ function digestHeads(){
   const specials = SPECIAL_CARDS.map(spec => renderSpecialCard(spec, items.find(i => i.id === spec.id)));
   return [...specials, digestHtml, renderInboxCard()].filter(Boolean);
 }
+function renderLinkBanner() {
+  const el = document.getElementById('link-banner');
+  if (!el) return;
+  el.innerHTML = linkMode
+    ? '<div class="link-mode-banner">Link mode — click a card to insert a reference · <a href="#" onclick="toggleLinkMode();return false">Done</a></div>'
+    : '';
+}
 function renderList() {
   _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
+  renderLinkBanner();   // link mode is a mode of the app, so it must announce itself in every view
   // The timeline is a sibling container, not a card layout. Routing here rather than at every call
   // site means every existing renderList() caller repaints the right view for free.
   const tlEl = document.getElementById('timeline-view');
@@ -1444,14 +1455,13 @@ function renderList() {
     heads.forEach((h, i) => headCols[i % nCols].push(h));
     for (let c = 0; c < nCols; c++) cols[c] = headCols[c].concat(cols[c]);
   }
-  const banner = linkMode ? '<div class="link-mode-banner">Link mode — click a card to insert a reference · <a href="#" onclick="toggleLinkMode();return false">Done</a></div>' : '';
   list.style.flexDirection = '';
   // Progressive insert: paint the first FIRST cards per column now, then stream the rest over later
   // frames so a large list never builds its whole DOM synchronously. All cards still end up present.
   const FIRST = 18, BATCH = 24;
   const colDiv = arr => `<div class="item-col">${arr.join('')}</div>`;
   const firstHtml = cols.map(c => colDiv(c.slice(0, FIRST))).join('');
-  list.innerHTML = banner + firstHtml;
+  list.innerHTML = firstHtml;
   resolveImages();
   observeLazyCards();
   geneOverflowPass();
@@ -2582,7 +2592,7 @@ function grNodeHtml(e){
 // obeying the very same Title · Tags · Body switch, through the very same two CSS classes. So the
 // switch means one thing everywhere, and a card looks the same wherever you meet it.
 function grShowPop(id){
-  if (_grDrag) return;
+  if (_grDrag || linkMode) return;   // in link mode the node is a button, not something to inspect
   const e = items.find(i => i.id === id);
   const el = document.getElementById('gr-n-' + id);
   if (!e || !el || !el.getBoundingClientRect) return;
@@ -2678,6 +2688,7 @@ function grApplyFilter(){
     const el = document.getElementById('gr-n-' + e.id);
     if (!el || !el.classList) continue;
     el.classList.toggle('gr-off', !on);
+    el.classList.toggle('link-target', linkMode && e.id !== editingId);
     const hi = lit && carries(e);
     el.classList.toggle('gr-hi', hi);
     el.classList.toggle('gr-dim', lit && !hi);
@@ -2805,6 +2816,10 @@ function grToScene(clientX, clientY){
 function grNodeDown(e, id){
   e.preventDefault(); e.stopPropagation();     // not a pan: this grabs one node
   popHide();
+  if (linkMode) {                              // the node is a link target, not something to drag
+    if (id !== editingId) insertCardRef(id);
+    return;
+  }
   grStop();                                    // grabbing a card freezes the map under your hand
   _grDrag = { id, x0: e.clientX, y0: e.clientY, moved: false };
   document.addEventListener('pointermove', _grMove);

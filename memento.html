@@ -73,7 +73,6 @@ a { color: inherit; }
 /* Sized to sit level with the title rather than shrunk to the 10px card-tag size. Mono reads a
    touch larger than Inter at the same px, so 14 is the optical match for the title's 15. */
 .title-pill { margin-left: 9px; padding: 1px 9px; border-radius: 5px; font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--text2); background: var(--bg3); }
-.title-pill[data-type] { color: var(--tc); background: var(--tbg); }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 .searchbar { width: 100%; margin-bottom: 1rem; display: flex; gap: 8px; }
 .searchbar input { flex: 1; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
@@ -294,6 +293,11 @@ a { color: inherit; }
 
 .gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
 .gr-tools { position: absolute; right: 12px; top: 10px; display: flex; align-items: center; gap: 16px; padding: 4px 10px; border-radius: var(--r); background: rgba(255,255,255,0.78); }
+.gr-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
+.gr-check input { margin: 0; accent-color: var(--accent); cursor: pointer; }
+/* Thin and quiet: with a couple of thousand of them the web has to read as texture behind the
+   cards, not as a drawing in its own right. */
+.gr-web { stroke: #d3d1c8; stroke-width: 0.6; }
 .gr-space { display: flex; align-items: center; font-family: var(--mono); font-size: 11px; color: var(--text3); }
 .gr-range { width: 80px; accent-color: var(--accent); }
 .gr-relayout { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
@@ -607,7 +611,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.21';
+const APP_BUILD = '2026-07-14.23';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1093,10 +1097,10 @@ function renderFilters() {
   // looking at — "← #Baboons" read like a link *to* Baboons. Pills also mean two filters can be
   // shown at once: an archived scope used to be swallowed whenever a tag was also active.
   const archived = archiveFilter === 'archived';
-  const pill = (text, type) => `<span class="title-pill"${type?` data-type="${type}"`:''}>${esc(text)}</span>`;
+  const pill = text => `<span class="title-pill">${esc(text)}</span>`;
   const pills = [
     archived ? pill(`Archived ${scope.length}`) : '',
-    ...[...activeTypes].map(k => pill(TYPES.find(t=>t.key===k)?.label || k, k)),
+    ...[...activeTypes].map(k => pill(TYPES.find(t=>t.key===k)?.label || k)),
     ...[...activeTags].map(t => pill(t)),
     activeGene ? pill('@' + activeGene) : '',
   ].join('');
@@ -2170,6 +2174,7 @@ let _grTotal = 0;
 // depends on what you are looking for.
 let grLinkBy = 'both';        // 'tags' | 'genes' | 'both'
 let grSpacing = 1;            // how much elbow room the cards get: 0.6 tight … 1.8 airy
+let grWeb = false;            // draw the shared-tag/gene links, not just leave them felt as a pull
 // The cards the physics acts on. With a filter in place that is the cards you can SEE — a Relayout
 // arranges what is in front of you, and the ones it hides take no part and do not move. The rest of
 // the map is not thrown away: hidden cards keep their places and are simply inert.
@@ -2252,7 +2257,10 @@ function setGrLinkBy(v){
   if (grLinkBy === v) return;
   grLinkBy = v;
   applyControlBar();
-  grRelayout();
+  grStop();
+  _grPos = {}; _grHome = {}; _grFixed = {};
+  _grSig = '';   // a different graph entirely: rebuild the nodes, the links and the layout
+  renderGraph();
 }
 // The attracting pairs, precomputed once per layout: for every two cards sharing a tag or a gene,
 // one spring whose strength is the summed rarity of everything they share. Also hands back a seed
@@ -2467,9 +2475,29 @@ function grMoveNode(id, x, y){
   grPlaceNode(id, x, y);
   grRelaxSettle();
 }
+// The web of shared tags and genes. It is always what holds the layout together; this just makes it
+// visible. Only pairs whose BOTH ends are on screen are drawn — a line to a filtered-out card would
+// point at nothing.
+function grWebPath(){
+  if (!grWeb) return '';
+  const seg = [];
+  for (const p of _grPairs) {
+    if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;
+    const a = _grPos[p.a], b = _grPos[p.b];
+    if (!a || !b) continue;
+    seg.push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
+  }
+  return seg.join('');
+}
+function setGrWeb(on){
+  grWeb = !!on;
+  grApplyDOM();
+}
 function grApplyDOM(){
   const scene = document.getElementById('gr-scene');
   if (scene) scene.style.transform = `translate(${_grPan.x}px, ${_grPan.y}px) scale(${_grZoom})`;
+  const web = document.getElementById('gr-web');
+  if (web && web.setAttribute) web.setAttribute('d', grWebPath());
   for (const e of _grNodes) {
     const el = document.getElementById('gr-n-' + e.id);
     const p = _grPos[e.id];
@@ -2597,7 +2625,7 @@ function renderGraph(){
   host.innerHTML = `
     <div class="gr-canvas" id="gr-canvas" onwheel="grWheel(event)" onpointerdown="grPanDown(event)">
       <div class="gr-scene" id="gr-scene">
-        <svg class="gr-edges">${_grEdges.map((c, i) => `<line id="gr-e${i}" stroke="#a3a19a" stroke-width="1.5"></line>`).join('')}</svg>
+        <svg class="gr-edges"><path id="gr-web" class="gr-web" fill="none"></path>${_grEdges.map((c, i) => `<line id="gr-e${i}" stroke="#a3a19a" stroke-width="1.5"></line>`).join('')}</svg>
         ${_grNodes.map(grNodeHtml).join('')}
       </div>
       <div class="gr-tools">
@@ -2605,6 +2633,9 @@ function renderGraph(){
           <span class="seg-label" title="What counts as a link between two cards">Link</span>
           <span class="seg-opt" data-val="tags" onclick="setGrLinkBy('tags')" title="Shared tags only">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setGrLinkBy('genes')" title="Shared genes only">Genes</span><span class="seg-sep">·</span><span class="seg-opt" data-val="both" onclick="setGrLinkBy('both')" title="Shared tags and shared genes">Both</span>
         </div>
+        <label class="gr-check" title="Draw a line between every pair of cards that share a tag or a gene">
+          <input type="checkbox" id="gr-web-on" ${grWeb ? 'checked' : ''} onchange="setGrWeb(this.checked)"> draw
+        </label>
         <div class="gr-space">
           <span class="seg-label" title="How much elbow room the cards get">Spacing</span>
           <input type="range" class="gr-range" id="gr-space" min="0.6" max="1.8" step="0.05" value="${grSpacing}" oninput="setGrSpacing(this.value)">
@@ -2655,6 +2686,7 @@ function grApplyFilter(){
     const line = document.getElementById('gr-e' + i);
     if (line && line.setAttribute) line.setAttribute('opacity', vis.has(c.a) && vis.has(c.b) ? '1' : '0');
   });
+  grApplyDOM();   // the web drops any line whose far end has just been filtered away
   const cap = document.getElementById('gr-caption');
   if (cap) {
     const omitted = _grTotal - _grNodes.length;

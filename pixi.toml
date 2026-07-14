@@ -17,3 +17,8 @@ pull = "git pull --rebase"
 [dependencies]
 click = ">=8.3.1,<9"
 anthropic = ">=0.50,<1"
+
+# Pinned to the 1.x stable line on purpose: the SDK's README on main documents the 2.0 beta
+# (`from mcp.server import MCPServer`), which is not what `pip install mcp` gives you.
+[pypi-dependencies]
+mcp = ">=1.28,<2"

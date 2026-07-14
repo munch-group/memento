@@ -69,7 +69,13 @@ a { color: inherit; }
 .card.view-active { border-color: var(--tc); box-shadow: 0 0 0 1px var(--tc); }
 .btn-wide { width: 100%; }
 .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
-.page-title { font-size: 15px; font-weight: 500; }
+.page-title { font-size: 15px; font-weight: 500; display: flex; align-items: center; flex-wrap: wrap; }
+.title-back { cursor: pointer; }
+.title-back:hover { color: var(--text2); }
+/* Sized to sit level with the title rather than shrunk to the 10px card-tag size. Mono reads a
+   touch larger than Inter at the same px, so 14 is the optical match for the title's 15. */
+.title-pill { margin-left: 9px; padding: 1px 9px; border-radius: 5px; font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--text2); background: var(--bg3); }
+.title-pill[data-type] { color: var(--tc); background: var(--tbg); }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 .searchbar { width: 100%; margin-bottom: 1rem; display: flex; gap: 8px; }
 .searchbar input { flex: 1; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
@@ -477,7 +483,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-14.5';
+const APP_BUILD = '2026-07-14.8';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 let activeType = 'all';
@@ -981,22 +987,26 @@ function renderFilters() {
     `<span class="seg-label" title="Connection cards (${nConn})">${CONN_ICON}</span>
      <span class="seg-opt" data-val="all" onclick="setConnFilter('all')" title="Connections included">Any</span><span class="seg-sep">·</span><span class="seg-opt" data-val="conn" onclick="setConnFilter('conn')" title="Connection cards only">Only</span><span class="seg-sep">·</span><span class="seg-opt" data-val="noconn" onclick="setConnFilter('noconn')" title="Connection cards excluded">None</span>`;
   applyControlBar();
-  const used = [...new Set(items.map(i=>i.type))];
-  let html = `<button class="filter-chip ${activeType==='all'&&!activeTag?'active':''}" onclick="setFilter('all')">All <span class="sb-count">${items.length}</span></button>`;
+  // The facet lists describe the scope you're actually in: under Archived they list the archived
+  // cards' types and tags, not the active ones'. Otherwise the sidebar offers you filters that
+  // can only ever return nothing.
+  const scope = scopedItems();
+  const used = [...new Set(scope.map(i=>i.type))];
+  let html = `<button class="filter-chip ${activeType==='all'&&!activeTag?'active':''}" onclick="setFilter('all')">All <span class="sb-count">${scope.length}</span></button>`;
   TYPES.filter(t=>used.includes(t.key)).forEach(t=>{
-    const n=items.filter(i=>i.type===t.key).length;
+    const n=scope.filter(i=>i.type===t.key).length;
     html+=`<button class="filter-chip ${activeType===t.key&&!activeTag?'active':''}" data-type="${t.key}" onclick="setFilter('${t.key}')">${t.label} <span class="sb-count">${n}</span></button>`;
   });
   const filterEl = document.getElementById('filter-list');
   filterEl.innerHTML=html;
   if (document.getElementById('sb-type')?.classList.contains('collapsed')) filterEl.style.display = 'none';
 
-  const allTagsRaw = [...new Set(items.flatMap(i=>i.tags||[]))];
+  const allTagsRaw = [...new Set(scope.flatMap(i=>i.tags||[]))];
   const tagCounts = {};
   const tagLatest = {};
   allTagsRaw.forEach(tag => {
-    tagCounts[tag] = items.filter(i=>(i.tags||[]).includes(tag)).length;
-    const dates = items.filter(i=>(i.tags||[]).includes(tag)).map(i=>i.date||'').sort();
+    tagCounts[tag] = scope.filter(i=>(i.tags||[]).includes(tag)).length;
+    const dates = scope.filter(i=>(i.tags||[]).includes(tag)).map(i=>i.date||'').sort();
     tagLatest[tag] = dates[dates.length-1] || '';
   });
   let allTags = [...allTagsRaw];
@@ -1033,16 +1043,27 @@ function renderFilters() {
       return;
     }
   }
+  // The title names the view you're in, and each active filter gets its own pill beside it. The ←
+  // therefore points at where it takes you ("All entries"), not at the filter you're already
+  // looking at — "← #Baboons" read like a link *to* Baboons. Pills also mean two filters can be
+  // shown at once: an archived scope used to be swallowed whenever a tag was also active.
   const archived = archiveFilter === 'archived';
-  const hasFilter = activeGene || activeTag || activeType !== 'all' || archived;
-  // The title names the view you're actually in. The archived scope *replaces* the list rather than
-  // narrowing it, so it must be announced here — that's what lets its switch hide in the sidebar
-  // bottom without you ever wondering why every card looks unfamiliar.
-  const plain = archived ? `Archived (${items.filter(i=>i.archived).length})`
-    : digestVisible ? 'Dashboard'
-    : `All entries (${items.length})`;
-  const title = activeGene ? `@${activeGene}` : activeTag ? `#${activeTag}` : activeType==='all' ? plain : (TYPES.find(t=>t.key===activeType)?.label||activeType);
-  el.innerHTML = hasFilter ? `<span style="cursor:pointer" onclick="clearAllFilters()" title="Back to all entries">← ${esc(title)}</span>` : esc(title);
+  const typeLabel = activeType !== 'all' ? (TYPES.find(t=>t.key===activeType)?.label || activeType) : null;
+  const pill = (text, type) => `<span class="title-pill"${type?` data-type="${type}"`:''}>${esc(text)}</span>`;
+  const pills = [
+    archived   ? pill(`Archived ${scope.length}`) : '',
+    typeLabel  ? pill(typeLabel, activeType) : '',
+    activeTag  ? pill(activeTag) : '',
+    activeGene ? pill('@' + activeGene) : '',
+  ].join('');
+
+  // Unfiltered, the title counts what you can actually see — `items.length` used to include
+  // archived cards, so it disagreed with both the list and the sidebar's own "All" count.
+  // Always "← All", whichever view it returns you to: the link means "drop the filters", and
+  // naming the destination differently each time would make it read like a different action.
+  el.innerHTML = pills
+    ? `<span class="title-back" onclick="clearAllFilters()" title="Clear filters">← All</span>${pills}`
+    : esc(digestVisible ? 'Dashboard' : `All entries (${scope.length})`);
 }
 
 function toggleSection(headerId, contentId) {
@@ -1059,9 +1080,20 @@ function setConnFilter(v) {
   connFilter = v;
   applyControlBar(); renderList();
 }
+// Active and archived cards are two separate universes: the sidebar's facets describe whichever
+// one you're in.
+function scopedItems() {
+  return archiveFilter === 'archived' ? items.filter(i => i.archived) : items.filter(i => !i.archived);
+}
 function setArchiveFilter(v) {
   if (archiveFilter === v) return;
   archiveFilter = v;
+  // A facet picked in the old scope may not exist in the new one. Drop it rather than leave a
+  // filter that quietly matches nothing and looks like an empty knowledge base.
+  const scope = scopedItems();
+  if (activeTag && !scope.some(i => (i.tags||[]).includes(activeTag))) activeTag = null;
+  if (activeType !== 'all' && !scope.some(i => i.type === activeType)) activeType = 'all';
+  if (activeGene && !scope.some(i => (i.genes||[]).some(g => geneAliasesU(g).includes(activeGene.toUpperCase())))) activeGene = null;
   applyControlBar(); renderFilters(); renderList();   // renderFilters: the title names the archived scope
 }
 function clearAllFilters() {

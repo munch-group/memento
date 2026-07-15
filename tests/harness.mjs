@@ -182,6 +182,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get grWeb(){ return grWeb; },
       get grSpacing(){ return grSpacing; },
       get grLinkBy(){ return grLinkBy; },
+      set grLinkBy(v){ grLinkBy = v; },   // plain set, no rebuild — tests pick the mode they need
       get highlightGenes(){ return highlightGenes; },
       get grHome(){ return _grHome; },
       get grPos(){ return _grPos; },

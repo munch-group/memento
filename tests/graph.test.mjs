@@ -27,6 +27,7 @@ function setup(itemsList) {
   const { api, sandbox } = load({ fetchImpl: noop });
   api.ghRepoMode = true; api.canWrite = true; api.readOnly = false;
   api.items = itemsList || [];
+  api.grLinkBy = 'both';   // consider tags AND genes in tests; the app's own default ('tags') is checked separately
   sandbox.window._kbInbox = '';
   sandbox.window._kbDigest = null;
   return { api, sandbox, el: id => sandbox.document.getElementById(id) };
@@ -378,9 +379,9 @@ console.log('\nLink: Tags · Genes · Both decides what the map is built out of'
   ]);
   const pairOf = (api, a, b) => api.grPairs(api.grNodes()).some(p => [p.a, p.b].sort().join() === [a, b].sort().join());
 
-  const both = mk().api;
+  eq(load({ fetchImpl: noop }).api.grLinkBy, 'tags', 'Tags is the default in a freshly loaded app');
+  const both = mk().api;   // the test setup uses Both so tags and genes both count
   both.setView('graph');
-  eq(both.grLinkBy, 'both', 'Both is the default');
   eq(ids(both.grNodes()), ['g1', 'g2', 't1', 't2', 'tg'], 'Both  → every card with a tag OR a gene is on the map');
   eq([pairOf(both, 't1', 't2'), pairOf(both, 'g1', 'g2')], [true, true], '...and both kinds of sharing link cards');
 
@@ -418,11 +419,8 @@ console.log('\n"draw" makes the invisible web of shared tags and genes visible')
   api.setView('graph');
   const segs = () => (sandbox.document.getElementById('gr-web').getAttribute('d') || '').split('M').filter(Boolean).length;
 
-  eq(api.grWeb, false, 'off by default — the pull is felt, not drawn');
-  eq(segs(), 0, 'and nothing is drawn');
-
-  api.setGrWeb(true);
-  eq(segs(), 2, 'on, every pair that shares something gets a line (a–b and c–d, but nobody to lone)');
+  eq(api.grWeb, true, 'on by default — the shared-tag/gene web is drawn');
+  eq(segs(), 2, 'every pair that shares something gets a line (a–b and c–d, but nobody to lone)');
 
   // A line to a card that has been filtered away would point at nothing.
   el('search-input').value = '#drive';

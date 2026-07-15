@@ -653,7 +653,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.18';
+const APP_BUILD = '2026-07-15.20';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -2358,9 +2358,9 @@ let _grTotal = 0;
 // What counts as a link between two cards. Tags and genes say different things — a tag is a topic
 // you chose, a gene is a fact about the card — and which of them you want the map built out of
 // depends on what you are looking for.
-let grLinkBy = 'both';        // 'tags' | 'genes' | 'both'
+let grLinkBy = 'tags';        // 'tags' | 'genes' | 'both'
 let grSpacing = 1;            // how much elbow room the cards get: 0.6 tight … 1.8 airy
-let grWeb = false;            // draw the shared-tag/gene links, not just leave them felt as a pull
+let grWeb = true;             // draw the shared-tag/gene links, not just leave them felt as a pull
 // The cards the physics acts on. With a filter in place that is the cards you can SEE — a Relayout
 // arranges what is in front of you, and the ones it hides take no part and do not move. The rest of
 // the map is not thrown away: hidden cards keep their places and are simply inert.

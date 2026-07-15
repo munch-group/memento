@@ -374,6 +374,16 @@ a { color: inherit; }
 #app-pop.cardmode .pop { background: transparent; color: inherit; padding: 0; box-shadow: none; white-space: normal; }
 .pop-card { width: 420px; max-width: calc(100vw - 24px); max-height: 60vh; overflow-y: auto; cursor: pointer; }
 .pop-card .card { cursor: pointer; }
+/* The top-right action icons are all buttons, and the card in a tooltip is a preview you cannot act
+   on — so hide them and let the title have the room. The type badge (before the title) and the date
+   stay: those are information, not controls. */
+.pop-card .card-top .archive-icon,
+.pop-card .card-top .conn-icon,
+.pop-card .card-top .pin-icon,
+.pop-card .card-top .focus-icon,
+.pop-card .card-top .tl-icon,
+.pop-card .card-top .gene-search-icon,
+.pop-card .card-top .gh-issues-icon { display: none; }
 /* The card is a preview: its own tags, icons and buttons must not fire — a click anywhere on it
    means "open this card", nothing else. */
 .pop-card .card * { pointer-events: none; }
@@ -614,7 +624,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.1';
+const APP_BUILD = '2026-07-15.2';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting

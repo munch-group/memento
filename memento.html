@@ -123,6 +123,11 @@ a { color: inherit; }
 .card-content a { color: var(--tc, var(--text2)); text-decoration: underline; }
 .card-content blockquote { border-left: 2px solid var(--border2); padding-left: 10px; color: var(--text2); margin: 0.5em 0; }
 .card-content h1, .card-content h2, .card-content h3 { font-size: 13px; font-weight: 600; margin: 0.5em 0 0.3em; }
+/* The derived timeline read-out at the foot of an expanded card, set off from the body above it. */
+.card-schedule { margin-top: 0.7em; padding-top: 0.6em; border-top: 1px solid var(--border); }
+.card-schedule h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text3); margin: 0 0 0.3em; }
+.card-schedule ul { list-style: none; margin: 0; padding: 0; }
+.card-schedule li { font-family: var(--mono); font-size: 11px; color: var(--text2); margin: 1px 0; }
 /* Shrink-to-fit, never upscale. resolveImages() tightens max-width to the DPR-adjusted natural size so hi-DPI screenshots show at actual (1:1 device-pixel) size, not 2x. */
 .card-content img { max-width: 100%; max-height: 50cqw; height: auto; width: auto; border-radius: var(--r); margin: 0.5em 0; }
 .card-content table, .digest-card table { border-collapse: collapse; margin: 0.5em 0; font-size: 13px; }
@@ -622,7 +627,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.6';
+const APP_BUILD = '2026-07-15.7';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1536,6 +1541,23 @@ function cardBodyText(item){
   return item.title ? item.content
     : item.content.replace(/^[^\n]*(\n|$)/,'').replace(/^\n+/,'');
 }
+// A card's timeline data, written as a small markdown section shown at the foot of the expanded
+// card. It is DERIVED from schedule/due, never stored — the timeline is the source of truth, this
+// is just a read-out. Empty (no section) when the card carries neither a bar nor a due date.
+function fmtSchedDay(iso){
+  if (!iso) return '';
+  return dayFromISO(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+function scheduleMd(item){
+  const subs = tlSubs(item).slice().sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+  if (!subs.length && !item.due) return '';
+  const lines = subs.map(s => {
+    const label = s.title ? ', ' + s.title : '';
+    return `- ${fmtSchedDay(s.start)}, ${fmtSchedDay(s.end)}${label}`;
+  });
+  if (item.due) lines.push(`- Deadline: ${fmtSchedDay(item.due)}`);
+  return `## Schedule\n${lines.join('\n')}`;
+}
 function renderCard(item, forceExpand, eagerBody) {
   const eagerExp = forceExpand||expandedId===item.id;   // the one card the user opened/focused
   const expChrome = eagerExp||previewMode==='full';      // show expanded chrome (icons/meta/actions)
@@ -1604,6 +1626,7 @@ function renderCard(item, forceExpand, eagerBody) {
     }
     return `<div class="card-content clamped" id="cc-${item.id}">${esc(bodyText)}</div>`;
   })()}
+  ${expChrome ? (()=>{ const sm = scheduleMd(item); return sm ? `<div class="card-content card-schedule">${md(sm)}</div>` : ''; })() : ''}
   ${(expChrome&&item.type==='github')?`<div class="gh-meta">${item._ghLang?'<span>'+esc(item._ghLang)+'</span>':''}${item._ghStars?'<span>★ '+item._ghStars+'</span>':''}${item._ghForks?'<span>⑂ '+item._ghForks+'</span>':''}${item._ghPrivate?'<span>private</span>':''}</div>`:''}
   ${(()=>{
     // Only an untagged card needs a separate affordance — once it has tags, the tags are the button.

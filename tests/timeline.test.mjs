@@ -326,6 +326,41 @@ console.log('\nThe view switch now has three positions');
   eq(api.mainView, 'list', '...and T again leaves it');
 }
 
+console.log('\nA card shows its timeline data as a Schedule read-out at its foot');
+{
+  const { api, el } = setup([
+    note('a', 'Paper', {
+      due: '2026-08-07',
+      schedule: sched(bar('s2', '2026-07-20', '2026-07-22', 'submit'), bar('s1', '2026-07-12', '2026-07-17', 'figures')),
+    }),
+  ]);
+
+  const md = api.scheduleMd(api.items.find(i => i.id === 'a'));
+  const lines = md.split('\n');
+  eq(lines[0], '## Schedule', 'it is a "## Schedule" section');
+  eq(lines[1], '- 12 Jul 2026, 17 Jul 2026, figures', 'bars are listed start, end, label — earliest first');
+  eq(lines[2], '- 20 Jul 2026, 22 Jul 2026, submit', '...in date order, not the order they were stored');
+  eq(lines[3], '- Deadline: 7 Aug 2026', 'and the due date is the Deadline line, last');
+
+  // A bar with no label drops the trailing label, not leaving a dangling comma.
+  eq(api.scheduleMd({ schedule: sched(bar('x', '2026-07-01', '2026-07-03')) }),
+     '## Schedule\n- 1 Jul 2026, 3 Jul 2026', 'an unnamed bar shows just its two dates');
+
+  // Due date only — still a Schedule section, just the Deadline.
+  eq(api.scheduleMd({ due: '2026-09-01' }), '## Schedule\n- Deadline: 1 Sept 2026', 'a card with only a due date shows just the deadline');
+  // Nothing scheduled — no section at all.
+  eq(api.scheduleMd({ id: 'z' }), '', 'a card with neither a bar nor a due date has no Schedule section');
+
+  // It rides the body: shown on an expanded card, absent on a collapsed one.
+  api.setView('list');
+  api.renderList();
+  eq(/## Schedule/.test(el('item-list').innerHTML), false, 'a collapsed card does not carry the Schedule section');
+  api.expandedId = 'a';
+  api.renderList();
+  eq(/card-schedule/.test(el('item-list').innerHTML), true, '...but an expanded one does');
+  eq(/Deadline: 7 Aug 2026/.test(el('item-list').innerHTML), true, '...with the deadline in it');
+}
+
 console.log('\nThe card icon schedules the entry and takes you to its row');
 {
   const { api, el } = setup([note('a', 'A')]);

@@ -412,6 +412,44 @@ console.log('\nRead-only devices can look, but every mutation is a no-op');
   eq(api.tlRows().length, 1, 'but the timeline still renders');
 }
 
+console.log('\nOn a phone the Task column is a drawer: pan left shuts it, pan right opens it');
+{
+  const { api, el, sandbox } = setup([note('a', 'A', { due: '2026-07-20' })]);
+  sandbox.window.innerWidth = 400;          // a phone-width window
+  api.setView('timeline');
+  const lanes = el('tl-lanes');
+  const shut = () => el('tl-left').classList.contains('tl-left-shut');
+  const scrollTo = x => { lanes.scrollLeft = x; api.tlScroll(); };
+
+  scrollTo(lanes.scrollLeft || 0);          // establish the reference
+  eq(shut(), false, 'the drawer starts open');
+
+  scrollTo((lanes.scrollLeft || 0) + 60);   // pan left past the threshold
+  eq(shut(), true, 'panning left past the threshold slides it shut');
+  eq(api.tlDrawerShut, true, '...and the state agrees');
+
+  scrollTo((lanes.scrollLeft || 0) - 60);   // pan back right
+  eq(shut(), false, 'panning right slides it back open');
+
+  // A jitter under the threshold must not toggle it.
+  const base = lanes.scrollLeft || 0;
+  scrollTo(base + 20); scrollTo(base + 5);
+  eq(shut(), false, 'a small back-and-forth jitter does not flip it');
+}
+
+console.log('\nOn the desktop the Task column is fixed — panning never hides it');
+{
+  const { api, el, sandbox } = setup([note('a', 'A', { due: '2026-07-20' })]);
+  sandbox.window.innerWidth = 1200;         // desktop width
+  // matchMedia isn't defined in the sandbox, and 1200 > 640, so the drawer is inactive.
+  eq(api.tlDrawerActive(), false, 'the drawer is inactive on a wide screen');
+  api.setView('timeline');
+  const lanes = el('tl-lanes');
+  lanes.scrollLeft = 0; api.tlScroll();
+  lanes.scrollLeft = 200; api.tlScroll();   // a big pan left
+  eq(el('tl-left').classList.contains('tl-left-shut'), false, 'the column stays put on the desktop');
+}
+
 console.log('\nScrolling pans; only a pinch zooms (this is what stopped the jerkiness)');
 {
   const { api } = setup([note('a', 'A', { due: '2026-07-20' })]);

@@ -322,7 +322,12 @@ a { color: inherit; }
 .gr-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
 .gr-empty small { font-family: var(--mono); font-size: 11px; }
 .tl-body { flex: 1 0 auto; display: flex; }
-.tl-left { width: 216px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--bg2); }
+/* On a phone the Task column is a drawer: panning left slides it shut (freeing the whole width for
+   the canvas), panning right slides it back. The inner is a fixed 216px so the labels hold their
+   layout and the outer simply clips them away, rather than re-ellipsizing as it narrows. */
+.tl-left { width: 216px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--bg2); overflow: hidden; transition: width 0.2s ease; }
+.tl-left.tl-left-shut { width: 0; border-right-color: transparent; }
+.tl-left-inner { width: 216px; }
 .tl-left-head { height: 48px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); }
 .tl-rowhead { position: relative; height: 40px; border-bottom: 1px solid #efeee9; display: flex; align-items: center; gap: 9px; padding: 0 12px 0 14px; }
 .tl-dot { width: 8px; height: 8px; border-radius: 2px; background: #c4c2b8; flex-shrink: 0; }
@@ -627,7 +632,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.7';
+const APP_BUILD = '2026-07-15.8';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1810,11 +1815,13 @@ function tlBodyHtml(rows){
   }).join('');
 
   return `
-  <div class="tl-left">
-    <div class="tl-left-head">Task</div>
-    <div>${heads}</div>
+  <div class="tl-left" id="tl-left">
+    <div class="tl-left-inner">
+      <div class="tl-left-head">Task</div>
+      <div>${heads}</div>
+    </div>
   </div>
-  <div class="tl-lanes" id="tl-lanes" onscroll="popHide()" onwheel="tlWheel(event)" onpointerdown="tlPanDown(event)">
+  <div class="tl-lanes" id="tl-lanes" onscroll="tlScroll()" onwheel="tlWheel(event)" onpointerdown="tlPanDown(event)">
     <div class="tl-inner" style="width:${win.days * px}px">
       <div class="tl-grid">${shades}${lines}</div>
       <div class="tl-axis">${ticks}</div>
@@ -1942,6 +1949,11 @@ function tlAfterRender(){
   // "today". Open on today (a little in from the edge) rather than a month in the past.
   if (_tlScrollLeft == null) _tlScrollLeft = Math.max(0, tlX(todayISO()) - 80);
   lanes.scrollLeft = _tlScrollLeft;
+  // This programmatic restore fires a scroll; sync the reference so it isn't read as a pan, and
+  // re-apply the drawer state to the freshly built column (persists across zoom/sort re-renders).
+  _tlLastSL = lanes.scrollLeft; _tlPanAccum = 0;
+  const left = document.getElementById('tl-left');
+  if (left && left.classList) left.classList.toggle('tl-left-shut', _tlDrawerShut && tlDrawerActive());
 }
 
 function tlClampZoom(px){
@@ -1962,6 +1974,41 @@ function tlSetZoom(px, opts){
   if (body) { popHide(); body.innerHTML = tlBodyHtml(tlRows()); }
   tlAfterRender();
 }
+// --- Task column drawer (phones only) -------------------------------------------------------
+// The Task column slides shut when you pan left and back open when you pan right — trading the task
+// names for canvas on a screen where 216px is most of the width. It is driven entirely off the
+// lanes' scrollLeft, which BOTH touch (native scroll) and mouse-drag panning change, so one handler
+// covers both without intercepting — and touch panning stays as smooth as native scroll.
+let _tlDrawerShut = false;   // open by default
+let _tlLastSL = null;        // last scrollLeft seen, for direction
+let _tlPanAccum = 0;         // signed run in the current direction, for hysteresis
+// Only where the column is a problem: coarse pointers (a phone) or a narrow window. Desktop keeps
+// the column fixed, so a trackpad's horizontal scroll never collapses it out from under you.
+function tlDrawerActive(){
+  return (typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches)
+      || (!!window.innerWidth && window.innerWidth <= 640);
+}
+function tlSetDrawer(shut){
+  if (_tlDrawerShut === shut) return;
+  _tlDrawerShut = shut;
+  const el = document.getElementById('tl-left');
+  if (el && el.classList) el.classList.toggle('tl-left-shut', shut);
+}
+function tlScroll(){
+  popHide();                               // the bar popover is anchored to the moving canvas
+  if (!tlDrawerActive()) return;
+  const lanes = document.getElementById('tl-lanes');
+  if (!lanes) return;
+  const sl = lanes.scrollLeft || 0;
+  const delta = _tlLastSL == null ? 0 : sl - _tlLastSL;
+  _tlLastSL = sl;
+  if (!delta) return;
+  if ((delta > 0) !== (_tlPanAccum > 0)) _tlPanAccum = 0;   // direction reversed → start the run over
+  _tlPanAccum += delta;
+  if (_tlPanAccum > 48) tlSetDrawer(true);                  // panned left (forward) → shut
+  else if (_tlPanAccum < -48) tlSetDrawer(false);           // panned right (back) → open
+}
+
 // Wheel over the lanes zooms about the cursor. A horizontal swipe is left alone — that is a pan,
 // and the lane scrolls natively.
 // Scrolling pans; only a pinch (or ctrl+wheel) zooms. Conflating the two was what made panning

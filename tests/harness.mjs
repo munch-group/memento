@@ -164,6 +164,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       tlOnTimeline, tlRows, tlSubs, tlAnchor, tlWindow, tlSeed, tlBarGeom, tlDragTarget,
       renderTimeline, tlAddBar, tlRemoveBar, tlRemoveRow, tlSetBarTitle, tlSetZoom,
       tlShowPop, popHide, tlClampZoom, tlWheel, tlWindow, scheduleMd, fmtSchedDay,
+      tlScroll, tlDrawerActive,
+      get tlDrawerShut(){ return _tlDrawerShut; },
       cardToTimeline, openCardFocused, backFromFocus, focusCard,
       toggleLinkMode, exitLinkMode, insertCardRef, grNodeDown, renderLinkBanner,
       get linkMode(){ return linkMode; },

@@ -150,7 +150,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       openTagEditor, toggleCardTag, closeTagEditor, renderTagEditor,
       get tagUniverse(){ return _tagUniverse; },
       get tagEditorId(){ return _tagEditorId; },
-      digestHeads, createSpecialCard, taggable, renderList, renderFilters,
+      digestHeads, createSpecialCard, taggable, renderList, renderFilters, dueSoon,
       SPECIAL_CARDS, SPECIAL_IDS,
       // digestVisible became the tri-state mainView when the timeline arrived; kept here as a
       // derived view so the existing control-bar tests still speak in booleans.
@@ -163,11 +163,12 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       dayFromISO, isoFromDay, todayISO, addDaysISO, daysBetween,
       tlOnTimeline, tlRows, tlSubs, tlAnchor, tlWindow, tlSeed, tlBarGeom, tlDragTarget,
       renderTimeline, tlAddBar, tlRemoveBar, tlRemoveRow, tlSetBarTitle, tlSetZoom,
-      tlShowPop, popHide, tlClampZoom,
+      tlShowPop, popHide, tlClampZoom, tlWheel, tlWindow,
       cardToTimeline, openCardFocused, backFromFocus, focusCard,
       toggleLinkMode, exitLinkMode, insertCardRef, grNodeDown, renderLinkBanner,
       get linkMode(){ return linkMode; },
       set editingId(v){ editingId = v; },
+      set expandedId(v){ expandedId = v; },
       get tlPxPerDay(){ return tlPxPerDay; },
       get tlFocusId(){ return tlFocusId; },
       // Graph

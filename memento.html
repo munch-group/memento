@@ -100,10 +100,14 @@ a { color: inherit; }
 .md-drop-overlay.show { display: flex; }
 .md-drop-msg { background: var(--accent); color: #fff; font-weight: 600; font-size: 15px; padding: 14px 22px; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); border: 2px dashed rgba(255,255,255,0.6); }
 .card.pinned { outline: 1.5px solid rgba(217,119,87,0.55); outline-offset: -1px; }
-.card-top { display: flex; align-items: center; gap: 8px; }
+.card-top { display: flex; align-items: flex-start; gap: 8px; }
 .type-badge { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--text2); opacity: 0.7; }
-.card-title-text { font-size: 13px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.card-date { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; opacity: 0.45; }
+/* The title wraps to show in full rather than truncating to one line — the same treatment the graph
+   tooltip uses (which is the same renderCard()), so both read the same. min-width:0 lets a flex item
+   wrap instead of overflowing; the type badge nudges down a touch to sit on the first line. */
+.card-title-text { font-size: 13px; font-weight: 500; flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.card-top .type-badge { margin-top: 1px; }
+.card-date { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; opacity: 0.55; }
 .card-id { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
 .card-content { font-size: 13px; line-height: 1.65; color: var(--text); font-family: var(--font); word-break: break-word; margin-top: 8px; container-type: inline-size; }
 .card-content.clamped { white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text3); }
@@ -241,7 +245,9 @@ a { color: inherit; }
 .card.link-target:hover { border-color: var(--accent); box-shadow: 0 0 0 1.5px rgba(217,119,87,0.2); }
 .card-ref { display: inline-block; font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(217,119,87,0.08); padding: 1px 6px; border-radius: 3px; cursor: pointer; margin-right: 3px; }
 .card-ref:hover { background: rgba(217,119,87,0.15); text-decoration: underline; }
-.card-bottom-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.card-bottom-actions { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+/* The date leads the row, a little set off from the buttons that follow it. */
+.card-bottom-actions .card-date { margin-right: 3px; }
 .card-bottom-actions .icon-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; opacity: 0.45; transition: opacity 0.15s; }
 .card-bottom-actions .icon-btn:hover { opacity: 0.85; }
 .card-bottom-actions .icon-btn.edit { color: var(--text); }
@@ -374,18 +380,10 @@ a { color: inherit; }
 #app-pop.cardmode .pop { background: transparent; color: inherit; padding: 0; box-shadow: none; white-space: normal; }
 .pop-card { width: 420px; max-width: calc(100vw - 24px); max-height: 60vh; overflow-y: auto; cursor: pointer; }
 .pop-card .card { cursor: pointer; }
-/* The top-right action icons are all buttons, and the card in a tooltip is a preview you cannot act
-   on — so hide them and let the title have the room. The type badge (before the title) and the date
-   stay: those are information, not controls. */
-.pop-card .card-top .archive-icon,
-.pop-card .card-top .conn-icon,
-.pop-card .card-top .pin-icon,
-.pop-card .card-top .focus-icon,
-.pop-card .card-top .tl-icon,
-.pop-card .card-top .gene-search-icon,
-.pop-card .card-top .gh-issues-icon { display: none; }
-/* The card is a preview: its own tags, icons and buttons must not fire — a click anywhere on it
-   means "open this card", nothing else. */
+/* A tooltip renders a COLLAPSED card, so it has no bottom action row to begin with — the icons and
+   date now live there, and the title wraps by default, so the tooltip needs no special-casing for
+   any of that any more. All it still needs: a preview must not act on itself — a click anywhere on
+   it means "open this card", nothing else. */
 .pop-card .card * { pointer-events: none; }
 .tl-empty { flex: 1; padding: 3.5rem 1rem; text-align: center; color: var(--text3); }
 .tl-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
@@ -624,7 +622,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.2';
+const APP_BUILD = '2026-07-15.6';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1379,6 +1377,9 @@ function renderLinkBanner() {
     ? '<div class="link-mode-banner">Link mode — click a card to insert a reference · <a href="#" onclick="toggleLinkMode();return false">Done</a></div>'
     : '';
 }
+// Due inside the next two weeks — the test the dashboard uses to decide a card needs attention.
+// Overdue counts (its date is behind today, which is less than two weeks ahead), so those show too.
+function dueSoon(item){ return !!(item && item.due) && daysBetween(todayISO(), item.due) < 14; }
 function renderList() {
   _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
   renderLinkBanner();   // link mode is a mode of the app, so it must announce itself in every view
@@ -1424,7 +1425,10 @@ function renderList() {
   }
   let { vis } = getVisibleItems();
   if (mainView === 'dash') {
-    vis = vis.filter(i => i.pinned && !SPECIAL_IDS.has(i.id));   // dashboard: only pinned cards (plus the heads)
+    // The dashboard is what-needs-attention: the cards you pinned, plus anything coming due inside
+    // two weeks (overdue included — that needs attention most of all). A due-soon card shows here
+    // exactly like a pinned one, minus the pinned outline; its own due-state border is enough.
+    vis = vis.filter(i => !SPECIAL_IDS.has(i.id) && (i.pinned || dueSoon(i)));
   } else {
     vis = vis.filter(i => !SPECIAL_IDS.has(i.id));               // special cards live only on the dashboard
   }
@@ -1578,14 +1582,6 @@ function renderCard(item, forceExpand, eagerBody) {
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text"><span onclick="${item.type==='github'&&item._ghFullName?`ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\\\'")}')`:`editItem(event,'${item.id}')`}" style="cursor:${item.type==='github'?'pointer':'text'}">${esc(title)}</span></span>
-    <span class="archive-icon${item.archived?' active':''}" title="${item.archived?'Unarchive':'Archive'}" onclick="toggleArchived(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
-    <span class="conn-icon${item.connection?' active':''}" title="${item.connection?'Connection (click to unset)':'Not a connection (click to set)'}" onclick="toggleConnection(event,'${item.id}')">${item.connection?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'}</span>
-    ${item.type==='github'&&item._ghOpenIssues?`<span class="gh-issues-icon" title="View open issues" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="gh-issues-count">${item._ghOpenIssues}</span></span>`:''}
-    <span class="card-date">${fmtDate(item.date)}</span>
-    ${!SPECIAL_IDS.has(item.id)?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
-    ${allGenes.length?`<span class="gene-search-icon" title="Add genes to search bar" onclick="appendGenesToSearch(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>`:''}
-    <span class="focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
-    ${!SPECIAL_IDS.has(item.id)?`<span class="tl-icon${tlOnTimeline(item)?' active':''}" title="${tlOnTimeline(item)?'On the timeline — open it':'Put on the timeline'}" onclick="cardToTimeline(event,'${item.id}')">${TL_ICON}</span>`:''}
   </div>
   ${(()=>{
     const noTitle = !item.title;
@@ -1620,7 +1616,13 @@ function renderCard(item, forceExpand, eagerBody) {
   ${expChrome?`<div class="card-bottom">
     <span class="card-source">${item.source ? formatSource(item.source) : ''}</span>
     <span class="card-bottom-actions">
-      ${item.type==='github'?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Issues" style="color:var(--accent)">⊙</button>`:''}
+      <span class="card-date" title="Modified">${fmtDate(item.date)}</span>
+      <span class="archive-icon${item.archived?' active':''}" title="${item.archived?'Unarchive':'Archive'}" onclick="toggleArchived(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span>
+      ${!SPECIAL_IDS.has(item.id)?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
+      <span class="focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+      ${!SPECIAL_IDS.has(item.id)?`<span class="tl-icon${tlOnTimeline(item)?' active':''}" title="${tlOnTimeline(item)?'On the timeline — open it':'Put on the timeline'}" onclick="cardToTimeline(event,'${item.id}')">${TL_ICON}</span>`:''}
+      ${allGenes.length?`<span class="gene-search-icon" title="Add genes to search bar" onclick="appendGenesToSearch(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>`:''}
+      ${item.type==='github'&&item._ghOpenIssues?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Open issues (${item._ghOpenIssues})" style="color:var(--accent)">⊙</button>`:''}
       ${basePath?`<button class="icon-btn" onclick="event.stopPropagation();openInVSCode('${item.id}')" title="Open in VS Code" style="font-size:11px;font-weight:600">VS</button>`:''}
       <button class="icon-btn" onclick="copyCardMarkdown(event,'${item.id}')" title="Copy as Markdown" style="display:inline-flex;align-items:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
       ${readOnly?'':`<button class="icon-btn edit" onclick="editItem(event,'${item.id}')" title="Edit">✎</button>`}
@@ -1651,7 +1653,7 @@ let tlPxPerDay = 40;
 let tlFocusId = null;     // row to tint (set when you arrive from a card's timeline icon)
 let tlLo = null;          // ISO date of column 0 — the origin every x-coordinate is measured from
 let _tlDrag = null;
-let _tlScrollLeft = 0;
+let _tlScrollLeft = null;   // null until first paint, which positions the view on today
 let _tlFocusPending = false;
 let _tlLaneW = 0;         // measured width of the lane viewport; the window must be at least this wide
 
@@ -1695,10 +1697,13 @@ function tlWindow(rows){
       if (s.end > hi) hi = s.end;
     }
   }
-  lo = addDaysISO(lo, -3);
-  hi = addDaysISO(hi, 14);
+  // Room to roam. A little before the earliest thing, and at least a year past both today AND the
+  // last scheduled item — so you can always pan a year into the future, at every zoom. Panning is
+  // native scroll and off-screen days cost nothing to paint, so a wide window is cheap.
+  lo = addDaysISO(lo, -30);
+  hi = addDaysISO(hi, 400);
   const fill = Math.ceil((_tlLaneW || 1000) / tlPxPerDay) + 2;
-  const minDays = Math.max(45, fill);
+  const minDays = Math.max(60, fill);
   const span = daysBetween(lo, hi) + 1;
   if (span < minDays) hi = addDaysISO(hi, minDays - span);
   return { lo, days: daysBetween(lo, hi) + 1 };
@@ -1910,6 +1915,9 @@ function tlAfterRender(){
     if (a) _tlScrollLeft = Math.max(0, tlX(a) - 120);
     _tlFocusPending = false;
   }
+  // The window now reaches a month back and a year forward, so the far-left edge is no longer
+  // "today". Open on today (a little in from the edge) rather than a month in the past.
+  if (_tlScrollLeft == null) _tlScrollLeft = Math.max(0, tlX(todayISO()) - 80);
   lanes.scrollLeft = _tlScrollLeft;
 }
 
@@ -1933,15 +1941,26 @@ function tlSetZoom(px, opts){
 }
 // Wheel over the lanes zooms about the cursor. A horizontal swipe is left alone — that is a pan,
 // and the lane scrolls natively.
+// Scrolling pans; only a pinch (or ctrl+wheel) zooms. Conflating the two was what made panning
+// jerky: a two-finger swipe jitters between axes, and every frame where the vertical component won
+// used to fire a zoom — a full re-render — mid-pan.
 function tlWheel(e){
-  if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-  e.preventDefault();
   const lanes = document.getElementById('tl-lanes');
-  if (!lanes || !lanes.getBoundingClientRect) return;
-  const offset = e.clientX - lanes.getBoundingClientRect().left;
-  const anchorDay = ((lanes.scrollLeft || 0) + offset) / tlPxPerDay;   // the day under the pointer
-  const dy = e.deltaY * (e.deltaMode === 1 ? 16 : 1);                   // deltaMode 1 = lines
-  tlSetZoom(tlPxPerDay * Math.exp(-dy * 0.002), { anchorDay, anchorOffset: offset });
+  if (!lanes) return;
+  if (e.ctrlKey) {                        // trackpad pinch, or ctrl+wheel on a mouse
+    e.preventDefault();
+    if (!lanes.getBoundingClientRect) return;
+    const offset = e.clientX - lanes.getBoundingClientRect().left;
+    const anchorDay = ((lanes.scrollLeft || 0) + offset) / tlPxPerDay;   // the day under the pointer
+    const dy = e.deltaY * (e.deltaMode === 1 ? 16 : 1);                   // deltaMode 1 = lines
+    tlSetZoom(tlPxPerDay * Math.exp(-dy * 0.002), { anchorDay, anchorOffset: offset });
+    return;
+  }
+  // A horizontal swipe scrolls natively — the smoothest possible pan. A vertical wheel (a mouse)
+  // has nowhere to go on a horizontal lane, so turn it into a horizontal pan.
+  if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+  lanes.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 16 : 1);
+  e.preventDefault();
 }
 // --- Timeline drags -------------------------------------------------------------------------
 // All of them are delta-based and snap to whole days. The entry is written ONCE, on pointerup —

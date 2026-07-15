@@ -91,6 +91,43 @@ console.log('\nSpecial cards never appear in the normal list');
   eq(/<h2>Strategy<\/h2>/.test(dash), true, 'the Strategy head is rendered');
 }
 
+console.log('\nThe dashboard also surfaces cards coming due within two weeks');
+{
+  // The dashboard is "what needs attention": pinned cards, plus anything due soon — with overdue
+  // counting most of all. A due-soon card is not pinned, so it shows without the pinned outline.
+  const { api, sandbox } = setup([]);
+  const T = api.todayISO(), at = n => api.addDaysISO(T, n);
+  api.items = [
+    note('_priorities', 'Priorities'),
+    note('pin',   'Pinned',        { pinned: true }),
+    note('over',  'Overdue',       { due: at(-3) }),
+    note('soon',  'Due in a week', { due: at(7) }),
+    note('edge',  'Due in 13 days',{ due: at(13) }),
+    note('far',   'Due in 20 days',{ due: at(20) }),
+    note('plain', 'No due date'),
+  ];
+  const dashIds = () => {
+    api.digestVisible = true; api.renderList();
+    return [...sandbox.document.getElementById('item-list').innerHTML.matchAll(/data-id="([^"]+)"/g)]
+      .map(m => m[1]).filter(id => !id.startsWith('_')).sort();
+  };
+
+  eq(api.dueSoon(api.items.find(i => i.id === 'soon')), true, 'due in a week counts as due-soon');
+  eq(api.dueSoon(api.items.find(i => i.id === 'over')), true, 'so does overdue — it needs attention most');
+  eq(api.dueSoon(api.items.find(i => i.id === 'edge')), true, '...and due in 13 days (inside two weeks)');
+  eq(api.dueSoon(api.items.find(i => i.id === 'far')), false, 'but due in 20 days does not');
+  eq(api.dueSoon(api.items.find(i => i.id === 'plain')), false, 'and a card with no due date never does');
+
+  eq(dashIds(), ['edge', 'over', 'pin', 'soon'], 'the dashboard shows pinned AND due-within-two-weeks cards, nothing else');
+
+  // The due-soon cards appear without the pinned outline — that class is only for actually-pinned cards.
+  api.digestVisible = true; api.renderList();
+  const html = sandbox.document.getElementById('item-list').innerHTML;
+  const cardClass = id => (html.match(new RegExp(`class="(card[^"]*)"[^>]*data-id="${id}"`)) || [])[1] || '';
+  eq(/\bpinned\b/.test(cardClass('pin')), true, 'the pinned card carries the pinned class (its orange edge)');
+  eq(/\bpinned\b/.test(cardClass('soon')), false, 'a due-soon card does NOT — it appears without the orange edge');
+}
+
 console.log('\nSpecial cards are not taggable or pinnable');
 {
   const { api } = setup([note('_priorities', 'Priorities'), note('_strategy', 'Strategy'), note('n1', 'Normal')]);

@@ -571,6 +571,49 @@ console.log('\nA node\'s tooltip IS the card, and Title · Tags · Body says how
      'the tooltip carries no action icons — they belong to the expanded card, giving the title the room');
 }
 
+console.log('\nTwo fingers pinch-zoom the canvas (iOS sends no wheel event for pinch)');
+{
+  const { api } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const z0 = api.grZoom;
+
+  // Two fingers land 100px apart, then spread to 200px — that is a zoom-in of ~2x.
+  api.grPanDown({ pointerId: 1, clientX: 100, clientY: 100, button: 0 });
+  api.grPanDown({ pointerId: 2, clientX: 200, clientY: 100, button: 0 });   // second finger → pinch
+  api.grMove({ pointerId: 2, clientX: 300, clientY: 100 });                 // spread to 200px apart
+  eq(api.grZoom > z0 * 1.5, true, `spreading the fingers zooms in (${z0.toFixed(2)} → ${api.grZoom.toFixed(2)})`);
+
+  // Pinching back together zooms out.
+  const zIn = api.grZoom;
+  api.grMove({ pointerId: 2, clientX: 150, clientY: 100 });                 // now 50px apart
+  eq(api.grZoom < zIn, true, 'pinching them together zooms back out');
+
+  // Lifting a finger ends the gesture cleanly.
+  api.grUp({ pointerId: 2 });
+  api.grUp({ pointerId: 1 });
+  const zEnd = api.grZoom;
+  api.grMove({ pointerId: 3, clientX: 400, clientY: 100 });                 // a stray move after release
+  eq(api.grZoom, zEnd, 'once the fingers are up, nothing keeps zooming');
+
+  // Clamped to the same rails the wheel zoom uses.
+  api.grPanDown({ pointerId: 1, clientX: 100, clientY: 100, button: 0 });
+  api.grPanDown({ pointerId: 2, clientX: 110, clientY: 100, button: 0 });   // 10px apart
+  api.grMove({ pointerId: 2, clientX: 5000, clientY: 100 });                // fling far apart
+  eq(api.grZoom <= 3.0001, true, 'zoom cannot exceed the maximum');
+  api.grUp({ pointerId: 1 }); api.grUp({ pointerId: 2 });
+
+  // One finger still pans (the multi-touch rework must not have broken the single-pointer path).
+  const pan0 = { ...api.grPan };
+  api.grPanDown({ pointerId: 1, clientX: 100, clientY: 100, button: 0 });
+  api.grMove({ pointerId: 1, clientX: 160, clientY: 130 });
+  eq(api.grPan.x - pan0.x, 60, 'one finger drags the canvas horizontally...');
+  eq(api.grPan.y - pan0.y, 30, '...and vertically');
+  api.grUp({ pointerId: 1 });
+  const held = { ...api.grPan };
+  api.grMove({ pointerId: 1, clientX: 400, clientY: 400 });   // a move after release
+  eq(api.grPan.x, held.x, 'and stops when the finger lifts');
+}
+
 console.log('\nThe ← puts you back on the map you left, not in the card list');
 {
   // Clicking a node's tooltip opens the card full-width. The ← then has to return you to the GRAPH,

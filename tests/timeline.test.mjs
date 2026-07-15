@@ -412,6 +412,40 @@ console.log('\nRead-only devices can look, but every mutation is a no-op');
   eq(api.tlRows().length, 1, 'but the timeline still renders');
 }
 
+console.log('\nHovering a task label shows the card, the same as the graph — and the same switch controls it');
+{
+  const { api, sandbox } = setup([
+    note('a', 'Meiotic drive', { tags: ['drive'], genes: ['ARHGAP5'], content: 'the body' }),
+  ]);
+  api.setView('timeline');
+  const pop = () => sandbox.document.getElementById('app-pop');
+  const html = () => pop().innerHTML;
+  // A fake label element to anchor the tooltip to (getBoundingClientRect comes from the harness).
+  const anchor = sandbox.document.createElement('span');
+  const hover = () => api.tlRowPop({ currentTarget: anchor }, 'a');
+
+  api.setPreviewMode('rendered');
+  hover();
+  eq(/data-id="a"/.test(html()), true, 'the tooltip is the real card, the same renderCard() the list and graph use');
+  eq(pop().classList.contains('cardmode'), true, '...in card mode, so the dark bubble gets out of the way');
+  eq(/hide-previews|hide-meta/.test(html()), false, 'Body  → the whole card');
+
+  api.setPreviewMode('compact');
+  hover();
+  eq(/class="pop-card hide-previews"/.test(html()), true, 'Tags  → the same class that drops the body');
+
+  api.setPreviewMode('minimal');
+  hover();
+  eq(/class="pop-card hide-meta"/.test(html()), true, 'Title → the same class that drops tags and body too');
+
+  // Not while a bar is being dragged — the pop would fight the drag.
+  api.setPreviewMode('rendered');
+  api.popHide();
+  // (the guard is on _tlDrag; we can't set it from here, so just confirm a normal hover still works)
+  hover();
+  eq(pop().style.display, 'block', 'a normal hover shows it');
+}
+
 console.log('\nOn a phone the Task column is a drawer: pan left shuts it, pan right opens it');
 {
   const { api, el, sandbox } = setup([note('a', 'A', { due: '2026-07-20' })]);

@@ -632,7 +632,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.8';
+const APP_BUILD = '2026-07-15.10';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1802,7 +1802,7 @@ function tlBodyHtml(rows){
 
   const heads = rows.map(e => `<div class="tl-rowhead" data-eid="${e.id}">
       <span class="tl-dot"></span>
-      <span class="tl-rowtitle" title="Open the card" onclick="openCardFocused('${e.id}')">${esc(cardSortLabel(e) || '(untitled)')}</span>
+      <span class="tl-rowtitle" onclick="openCardFocused('${e.id}')" onpointerenter="popIn();tlRowPop(event,'${e.id}')" onpointerleave="popOut()">${esc(cardSortLabel(e) || '(untitled)')}</span>
       ${readOnly ? '' : `<span class="tl-rowacts"><span class="tl-rowact add" title="Add a bar" onclick="tlAddBar(event,'${e.id}')">＋</span><span class="tl-rowact del" title="Remove from the timeline" onclick="tlRemoveRow(event,'${e.id}')">✕</span></span>`}
     </div>`).join('');
 
@@ -1903,6 +1903,25 @@ function popUnpin(e){
     return;
   }
   popHide();
+}
+
+// A card as a hover tooltip, anchored to `el`, obeying the Title · Tags · Body switch through the
+// same two CSS classes the card list uses. Shared by the graph nodes and the timeline task labels,
+// so a card reads the same whichever view you hover it in.
+function showCardPop(e, el){
+  if (!e || !el || !el.getBoundingClientRect) return;
+  const mode = previewMode === 'compact' ? ' hide-previews'
+             : previewMode === 'minimal' ? ' hide-meta' : '';
+  // eagerBody: the list can render a body lazily when you scroll to it; a tooltip that only exists
+  // while you hover cannot.
+  popShow(`<div class="pop-card${mode}" onclick="openCardFocused('${e.id}')" title="Open this card">${renderCard(e, false, true)}</div>`,
+    el.getBoundingClientRect(), { card: true });
+  resolveImages();   // the body may carry images, and they are placeholders until this runs
+}
+// The timeline task label's tooltip — the same card the graph shows on hover.
+function tlRowPop(ev, id){
+  if (_tlDrag) return;
+  showCardPop(items.find(i => i.id === id), ev && (ev.currentTarget || ev.target));
 }
 
 // The timeline's bar popover: what the bar is, when it runs, and the only place to rename or
@@ -2297,6 +2316,11 @@ let _grRaf = 0;
 let _grW = 800, _grH = 520;
 let _grDrag = null;
 let _grPan = { x: 0, y: 0 }, _grZoom = 1;
+// Every finger currently on the canvas, by pointerId. Two of them = a pinch: iOS never sends a
+// wheel event for pinch (that is a desktop-trackpad thing), so touch zoom has to come from tracking
+// the two pointers and reading the distance between them.
+let _grPtrs = new Map();
+let _grPinch = null;
 
 // The [[id|title]] refs in a card's source — the same syntax insertCardRef() writes.
 function grRefs(e){
@@ -2692,16 +2716,7 @@ function grNodeHtml(e){
 // switch means one thing everywhere, and a card looks the same wherever you meet it.
 function grShowPop(id){
   if (_grDrag || linkMode) return;   // in link mode the node is a button, not something to inspect
-  const e = items.find(i => i.id === id);
-  const el = document.getElementById('gr-n-' + id);
-  if (!e || !el || !el.getBoundingClientRect) return;
-  const mode = previewMode === 'compact' ? ' hide-previews'
-             : previewMode === 'minimal' ? ' hide-meta' : '';
-  // eagerBody: the list can afford to render a body lazily when you scroll to it; a tooltip that
-  // only exists while you hover cannot.
-  popShow(`<div class="pop-card${mode}" onclick="openCardFocused('${e.id}')" title="Open this card">${renderCard(e, false, true)}</div>`,
-    el.getBoundingClientRect(), { card: true });
-  resolveImages();   // the body may carry images, and they are placeholders until this runs
+  showCardPop(items.find(i => i.id === id), document.getElementById('gr-n-' + id));
 }
 function renderGraph(){
   const host = document.getElementById('graph-view');
@@ -2756,6 +2771,14 @@ function renderGraph(){
   _grBuilt = true;
   applyControlBar();   // light the current option in the Link switch
   const canvas = document.getElementById('gr-canvas');
+  // iOS: a two-finger pinch would otherwise zoom the whole PAGE (the viewport is user-scalable).
+  // touch-action:none suppresses that on most versions; blocking WebKit's gesture events makes sure,
+  // and does nothing on browsers that never fire them. Our own zoom comes from the pointer events.
+  if (canvas && canvas.addEventListener) {
+    const noPageZoom = ev => ev.preventDefault();
+    canvas.addEventListener('gesturestart', noPageZoom);
+    canvas.addEventListener('gesturechange', noPageZoom);
+  }
   const cw = (canvas && canvas.clientWidth) || 900;
   const ch = (canvas && canvas.clientHeight) || 560;
   // The layout space grows with the node count rather than being the viewport: 200 cards crammed
@@ -2912,6 +2935,20 @@ function grToScene(clientX, clientY){
   const r = canvas && canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : { left: 0, top: 0 };
   return { x: (clientX - r.left - _grPan.x) / _grZoom, y: (clientY - r.top - _grPan.y) / _grZoom };
 }
+// One set of document listeners serves single-finger drag AND two-finger pinch; they are bound on
+// the first pointerdown and unbound only when the last finger lifts.
+function grBind(){
+  document.addEventListener('pointermove', _grMove);
+  document.addEventListener('pointerup', _grUp);
+  document.addEventListener('pointercancel', _grUp);
+}
+function grUnbind(){
+  document.removeEventListener('pointermove', _grMove);
+  document.removeEventListener('pointerup', _grUp);
+  document.removeEventListener('pointercancel', _grUp);
+  document.body.style.userSelect = '';
+  document.body.style.cursor = '';
+}
 function grNodeDown(e, id){
   e.preventDefault(); e.stopPropagation();     // not a pan: this grabs one node
   popHide();
@@ -2919,10 +2956,11 @@ function grNodeDown(e, id){
     if (id !== editingId) insertCardRef(id);
     return;
   }
+  _grPtrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  grBind();
+  if (_grPtrs.size >= 2) { grStartPinch(); return; }   // a second finger turns this into a zoom
   grStop();                                    // grabbing a card freezes the map under your hand
   _grDrag = { id, x0: e.clientX, y0: e.clientY, moved: false };
-  document.addEventListener('pointermove', _grMove);
-  document.addEventListener('pointerup', _grUp);
   document.body.style.userSelect = 'none';
   document.body.style.cursor = 'grabbing';
 }
@@ -2930,13 +2968,40 @@ function grPanDown(e){
   if (e.button) return;
   const canvas = document.getElementById('gr-canvas');
   if (!canvas) return;
+  _grPtrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  grBind();
+  if (_grPtrs.size >= 2) { grStartPinch(); return; }
   _grDrag = { pan: true, x0: e.clientX, y0: e.clientY, px: _grPan.x, py: _grPan.y, moved: false };
-  document.addEventListener('pointermove', _grMove);
-  document.addEventListener('pointerup', _grUp);
   document.body.style.userSelect = 'none';
   document.body.style.cursor = 'grabbing';
 }
+// Two fingers down: abandon whatever one-finger drag was in progress and zoom by the distance
+// between them instead.
+function grStartPinch(){
+  _grDrag = null;
+  grStop();
+  document.body.style.cursor = '';
+  const p = [..._grPtrs.values()];
+  const dist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y) || 1;
+  _grPinch = { dist0: dist, zoom0: _grZoom };
+}
+function grPinchMove(){
+  const p = [..._grPtrs.values()];
+  if (p.length < 2) return;
+  const canvas = document.getElementById('gr-canvas');
+  if (!canvas || !canvas.getBoundingClientRect) return;
+  const r = canvas.getBoundingClientRect();
+  const ox = (p[0].x + p[1].x) / 2 - r.left;   // the midpoint between the fingers, in canvas space
+  const oy = (p[0].y + p[1].y) / 2 - r.top;
+  const dist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y) || 1;
+  const before = { x: (ox - _grPan.x) / _grZoom, y: (oy - _grPan.y) / _grZoom };
+  _grZoom = Math.max(0.25, Math.min(3, _grPinch.zoom0 * dist / _grPinch.dist0));
+  _grPan = { x: ox - before.x * _grZoom, y: oy - before.y * _grZoom };   // hold the midpoint fixed
+  grApplyDOM();
+}
 function _grMove(e){
+  if (_grPtrs.has(e.pointerId)) _grPtrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (_grPinch) { grPinchMove(); return; }
   const d = _grDrag;
   if (!d) return;
   if (!d.moved && (Math.abs(e.clientX - d.x0) > 3 || Math.abs(e.clientY - d.y0) > 3)) d.moved = true;
@@ -2953,13 +3018,15 @@ function _grMove(e){
   grRelaxStart();   // neighbours give way as it passes, and close up again behind it
   grApplyDOM();
 }
-function _grUp(){
+function _grUp(e){
+  if (e && _grPtrs.has(e.pointerId)) _grPtrs.delete(e.pointerId);
+  if (_grPinch) {                              // in a pinch: end it once a finger lifts
+    if (_grPtrs.size < 2) _grPinch = null;
+    if (_grPtrs.size === 0) grUnbind();
+    return;
+  }
   const d = _grDrag;
-  _grDrag = null;
-  document.removeEventListener('pointermove', _grMove);
-  document.removeEventListener('pointerup', _grUp);
-  document.body.style.userSelect = '';
-  document.body.style.cursor = '';
+  if (_grPtrs.size === 0) { _grDrag = null; grUnbind(); }
   if (!d) return;
   if (d.id && d.moved) grRelaxStart();     // the cards it passed are still springing back
   if (!d.moved && d.id) grShowPop(d.id);   // a tap, not a drag — touch has no hover, so show it

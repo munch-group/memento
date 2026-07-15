@@ -187,6 +187,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get grPos(){ return _grPos; },
       get grW(){ return _grW; },
       get grHW(){ return _grHW; },
+      get grHH(){ return _grHH; },
+      grNodeDims,
       get grSim(){ return _grSim; },
       get grPan(){ return _grPan; },
       get grZoom(){ return _grZoom; },

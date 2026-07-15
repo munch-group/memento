@@ -290,22 +290,34 @@ a { color: inherit; }
 .gr-canvas { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--bg2); cursor: grab; touch-action: none; }
 .gr-scene { position: absolute; inset: 0; transform-origin: 0 0; }
 .gr-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
-.gr-node { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 500; white-space: nowrap; cursor: grab; box-shadow: 0 1px 2px rgba(20,20,19,0.06); will-change: transform; z-index: 2; touch-action: none; max-width: 180px;
+/* A node is a small card, not a long pill: the title wraps to up to 3 lines so the node is roughly
+   square, which lets the force layout pack them in BOTH dimensions rather than fanning wide pills
+   across the x-axis. border-radius drops from a pill to a card corner to match. */
+.gr-node { position: absolute; left: 0; top: 0; display: inline-flex; align-items: flex-start; gap: 5px; padding: 4px 9px 5px 7px; border-radius: 9px; font-size: 12px; font-weight: 500; line-height: 1.25; cursor: grab; box-shadow: 0 1px 2px rgba(20,20,19,0.06); will-change: transform; z-index: 2; touch-action: none; max-width: 130px;
   background: #ffffff; border: 1px solid var(--tc); color: var(--text); }
-.gr-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+/* The whole title is in the DOM; this clips it to 3 lines. Zooming in caps the font (below), which
+   fits more per line and drops the clamp's ellipsis — that is how zoom "reveals more". */
+.gr-label { min-width: 0; overflow-wrap: anywhere; white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+  font-size: min(1em, calc(var(--gr-cap, 14px) / var(--gr-zoom, 1))); }
 .gr-node.gr-off { display: none; }
 .gr-node.pinned { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(217,119,87,0.35); }
-.gr-icon { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--tc); }
+.gr-icon { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--tc); margin-top: 1px; }
 .gr-icon svg { display: block; width: 12px; height: 12px; }
 /* A connection card: the design drew this as a label on the edge. Here it IS a node — draggable
    and clickable like any other card — which is what lets a card linking one, two or five others
    render with no special case. */
-.gr-node.conn { border-color: var(--accent); color: var(--accent-hover); font-family: var(--mono); font-size: 10.5px; }
+/* A connection card reads like any other card — same font, same text colour — and is marked instead
+   by an orange border and an orange ◆ icon. */
+.gr-node.conn { border-color: var(--accent); }
+/* The ◆ is a text glyph, so its font-size must counter-scale with zoom exactly as the label does —
+   otherwise, zoomed in, it stays large and floats to the middle of its oversized line box instead of
+   sitting by the first line. line-height:1 keeps its box the height of the glyph so it top-aligns. */
+.gr-node.conn .gr-icon { color: var(--accent); line-height: 1; margin-top: 1px; font-size: min(13px, calc(14px / var(--gr-zoom, 1))); }
 /* Monochrome mode (GR_MONO): neutralise the type/connection colours. Interaction feedback — the
    pinned outline, the highlight, the link-target hover — stays accent, since that is action, not
    data. Remove this block's effect by setting GR_MONO=false; the coloured rules above return. */
 .gr-mono .gr-node { border-color: #cdccc4; }
-.gr-mono .gr-node.conn { border-color: #b3b1a7; color: var(--text2); }
+.gr-mono .gr-node.conn { border-color: var(--accent); }
 .gr-mono .gr-icon { color: var(--text3); }
 
 .gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
@@ -315,6 +327,9 @@ a { color: inherit; }
 /* Thin and quiet: with a couple of thousand of them the web has to read as texture behind the
    cards, not as a drawing in its own right. */
 .gr-web { stroke: #d3d1c8; stroke-width: 0.6; }
+/* A drawn edge is a connection card's [[ref]] to another card — the one relationship the user
+   authored by hand, so it gets the accent even in monochrome mode. */
+.gr-edge { stroke: var(--accent); stroke-width: 1.5; }
 .gr-space { display: flex; align-items: center; font-family: var(--mono); font-size: 11px; color: var(--text3); }
 .gr-range { width: 80px; accent-color: var(--accent); }
 .gr-relayout { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
@@ -638,7 +653,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.12';
+const APP_BUILD = '2026-07-15.18';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -2335,7 +2350,8 @@ const GR_MONO = true;
 
 let _grNodes = [], _grEdges = [], _grPairs = [], _grKey = new Map();
 let _grPos = {};              // id -> {x, y, vx, vy}
-let _grHW = {};               // id -> half the pill's width, for the collision pass
+let _grHW = {};               // id -> half the node's width, for the collision pass
+let _grHH = {};               // id -> half the node's height (wrapped nodes vary), for 2D packing
 let _grSig = '';              // which cards the drawn map is of — filtering must not change it
 let _grBuilt = false;
 let _grTotal = 0;
@@ -2515,7 +2531,7 @@ function grStep(a){
   // Repulsion goes as the square of the spacing and the ideal distances go linearly, so the whole
   // equilibrium scales with it rather than the layout just getting looser at the seams.
   const S = grSpacing;
-  const REP = 45000 * S * S, L = 165 * S, KA = 0.03, LC = 200 * S, KC = 0.03, KG = 0.01;
+  const REP = 34000 * S * S, L = 120 * S, KA = 0.03, LC = 150 * S, KC = 0.03, KG = 0.01;
   const cx = _grW / 2, cy = _grH / 2;
   const N = _grSim, P = _grPos;
   const fx = {}, fy = {};
@@ -2554,6 +2570,35 @@ function grStep(a){
     const ux = dx / d, uy = dy / d, att = KC * (d - LC);
     fx[c.a] += ux * att; fy[c.a] += uy * att;
     fx[c.b] -= ux * att; fy[c.b] -= uy * att;
+  }
+  // Keep cards off the connection edges they are not part of — a card sitting on an orange line is
+  // the eyesore. There are only a handful of edges, so testing every card against each is cheap.
+  // Push the card perpendicular to the line by however much its box overhangs it, and let the line's
+  // endpoints give a little the other way (weighted so the nearer end yields more).
+  const KE = 0.09, EDGE_MARGIN = 5;
+  for (const c of _grEdges) {
+    if (!_grSimIds.has(c.a) || !_grSimIds.has(c.b)) continue;
+    const pa = P[c.a], pb = P[c.b];
+    if (!pa || !pb) continue;
+    const abx = pb.x - pa.x, aby = pb.y - pa.y;
+    const abLen2 = abx * abx + aby * aby || 1;
+    for (const e of N) {
+      if (e.id === c.a || e.id === c.b) continue;
+      const p = P[e.id];
+      let t = ((p.x - pa.x) * abx + (p.y - pa.y) * aby) / abLen2;
+      t = Math.max(0, Math.min(1, t));
+      const qx = pa.x + t * abx, qy = pa.y + t * aby;   // closest point on the segment
+      let dx = p.x - qx, dy = p.y - qy;
+      const d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      const ux = dx / d, uy = dy / d;
+      // how far the card's box reaches toward the line, along that direction, plus a margin
+      const reach = Math.abs(ux) * (_grHW[e.id] || 55) + Math.abs(uy) * (_grHH[e.id] || 14) + EDGE_MARGIN;
+      if (d >= reach) continue;
+      const push = KE * (reach - d);
+      fx[e.id] += ux * push; fy[e.id] += uy * push;
+      fx[c.a] -= ux * push * (1 - t); fy[c.a] -= uy * push * (1 - t);
+      fx[c.b] -= ux * push * t;       fy[c.b] -= uy * push * t;
+    }
   }
   for (const e of N) {
     const p = P[e.id];
@@ -2671,6 +2716,9 @@ function setGrWeb(on){
 function grApplyDOM(){
   const scene = document.getElementById('gr-scene');
   if (scene) scene.style.transform = `translate(${_grPan.x}px, ${_grPan.y}px) scale(${_grZoom})`;
+  // Publish the zoom so the label font can counter-scale (cap its on-screen size). Guarded because
+  // the test harness's style is a plain object; a same-value set during a sim tick is a no-op.
+  if (scene && scene.style.setProperty) scene.style.setProperty('--gr-zoom', _grZoom);
   const web = document.getElementById('gr-web');
   if (web && web.setAttribute) web.setAttribute('d', grWebPath());
   for (const e of _grNodes) {
@@ -2717,8 +2765,38 @@ function grSettled(){
   grFit(cw, ch);
 }
 function grStop(){ if (_grRaf) { cancelAnimationFrame(_grRaf); _grRaf = 0; } _grAlpha = 0; grStopRelax(); }
+// A hard version of the node-edge repulsion for the polish: move a card that sits on a connection
+// line clear of it (position correction, not a force), nudging the line's endpoints a touch too.
+// Interleaved with the node-node collision so the two constraints settle together.
+function grEdgeClear(){
+  const P = _grPos;
+  for (const c of _grEdges) {
+    if (!_grSimIds.has(c.a) || !_grSimIds.has(c.b)) continue;
+    const pa = P[c.a], pb = P[c.b];
+    if (!pa || !pb) continue;
+    const abx = pb.x - pa.x, aby = pb.y - pa.y;
+    const abLen2 = abx * abx + aby * aby || 1;
+    for (const e of _grSim) {
+      if (e.id === c.a || e.id === c.b || _grFixed[e.id]) continue;
+      const p = P[e.id];
+      let t = ((p.x - pa.x) * abx + (p.y - pa.y) * aby) / abLen2;
+      t = Math.max(0, Math.min(1, t));
+      let dx = p.x - (pa.x + t * abx), dy = p.y - (pa.y + t * aby);
+      let d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 0.01) { dx = -aby; dy = abx; d = Math.sqrt(dx * dx + dy * dy) || 1; }   // dead on the line
+      const ux = dx / d, uy = dy / d;
+      const reach = Math.abs(ux) * (_grHW[e.id] || 55) + Math.abs(uy) * (_grHH[e.id] || 14) + 7;
+      if (d >= reach) continue;
+      const gap = reach - d;
+      p.x += ux * gap * 0.9; p.y += uy * gap * 0.9;
+      if (!_grFixed[c.a]) { pa.x -= ux * gap * 0.1 * (1 - t); pa.y -= uy * gap * 0.1 * (1 - t); }
+      if (!_grFixed[c.b]) { pb.x -= ux * gap * 0.1 * t;       pb.y -= uy * gap * 0.1 * t; }
+    }
+  }
+}
 function grPolish(){
-  for (let k = 0; k < 24; k++) grCollide();
+  for (let k = 0; k < 45; k++) { grCollide(); grEdgeClear(); }   // settle both constraints together
+  for (let k = 0; k < 5; k++) grCollide();                       // finish clean on node-node
   grClampAll();
   for (const e of _grSim) {          // the polished spot is where each card now belongs
     if (_grFixed[e.id]) continue;
@@ -2751,7 +2829,7 @@ function grNodeHtml(e){
   const label = cardSortLabel(e) || '(untitled)';
   return `<div class="gr-node${conn ? ' conn' : ''}" id="gr-n-${e.id}" data-type="${esc(e.type)}" data-id="${e.id}"
     onpointerdown="grNodeDown(event,'${e.id}')" onpointerenter="popIn();grShowPop('${e.id}')" onpointerleave="popOut()"
-    >${conn ? '◆' : `<span class="gr-icon">${TYPE_ICONS[e.type] || ''}</span>`}<span class="gr-label">${esc(label)}</span></div>`;
+    ><span class="gr-icon">${conn ? '◆' : (TYPE_ICONS[e.type] || '')}</span><span class="gr-label">${esc(label)}</span></div>`;
 }
 // A node's tooltip is the card itself, drawn by the very same renderCard() the list uses — and
 // obeying the very same Title · Tags · Body switch, through the very same two CSS classes. So the
@@ -2781,7 +2859,8 @@ function renderGraph(){
   const idx = grIndex(_grNodes);
   _grPairs = idx.pairs; _grKey = idx.key;
   _grHW = {};
-  for (const e of _grNodes) _grHW[e.id] = grHalfWidth(e);
+  _grHH = {};
+  for (const e of _grNodes) { const d = grNodeDims(e); _grHW[e.id] = d.hw; _grHH[e.id] = d.hh; }
   grSetScope();
   if (!_grNodes.length) {
     host.innerHTML = `<div class="gr-empty"><p>Nothing to graph.</p><small>A card needs a tag, a gene, or a link to appear here.</small></div>`;
@@ -2791,7 +2870,7 @@ function renderGraph(){
   host.innerHTML = `
     <div class="gr-canvas${GR_MONO ? ' gr-mono' : ''}" id="gr-canvas" onwheel="grWheel(event)" onpointerdown="grPanDown(event)">
       <div class="gr-scene" id="gr-scene">
-        <svg class="gr-edges"><path id="gr-web" class="gr-web" fill="none"></path>${_grEdges.map((c, i) => `<line id="gr-e${i}" stroke="#a3a19a" stroke-width="1.5"></line>`).join('')}</svg>
+        <svg class="gr-edges"><path id="gr-web" class="gr-web" fill="none"></path>${_grEdges.map((c, i) => `<line id="gr-e${i}" class="gr-edge"></line>`).join('')}</svg>
         ${_grNodes.map(grNodeHtml).join('')}
       </div>
       <div class="gr-tools">
@@ -2875,9 +2954,17 @@ function grApplyFilter(){
 // A hard collision constraint is what actually guarantees legibility. The pills are wide and short,
 // so a circular radius would either still overlap sideways or waste vertical space — separate on
 // whichever axis needs the smaller correction instead.
-function grHalfWidth(e){
-  const label = cardSortLabel(e) || '';
-  return Math.min(180, 37 + Math.min(label.length, 30) * 6.2) / 2;
+// The node's box at 1× (the largest it ever is — zooming only shrinks the font, hence the box). The
+// collision packs the 2D box, so both dimensions matter now. Estimated from the label length, no DOM
+// measurement, so the layout stays pure and deterministic.
+const GR_MAXW = 130, GR_CHARPX = 6.2, GR_ICON = 18, GR_LINE = 15, GR_MAXLINES = 3;
+function grNodeDims(e){
+  const len = (cardSortLabel(e) || '').length;
+  const perLine = Math.max(6, Math.floor((GR_MAXW - GR_ICON) / GR_CHARPX));   // ~14 chars a line
+  const lines = Math.max(1, Math.min(GR_MAXLINES, Math.ceil(len / perLine)));
+  const w = Math.min(GR_MAXW, GR_ICON + Math.min(len, perLine) * GR_CHARPX);   // short titles stay narrow
+  const h = lines * GR_LINE + 12;                                              // + vertical padding
+  return { hw: w / 2, hh: h / 2, lines };
 }
 function grCollide(relax){
   const N = _grSim, P = _grPos;
@@ -2893,16 +2980,16 @@ function grCollide(relax){
       // left a wake of scattered cards behind every drag. The card in your hand is still solid.
       if (relax && !af && !bf) continue;
       const b = P[N[j].id], hwb = _grHW[N[j].id] || 45;
-      const mx = hwa + hwb + 8, my = 30;
+      const mx = hwa + hwb + 8, my = (_grHH[N[i].id] || 12) + (_grHH[N[j].id] || 12) + 8;
       const dx = b.x - a.x, dy = b.y - a.y;
       const ox = mx - Math.abs(dx), oy = my - Math.abs(dy);
       if (ox <= 0 || oy <= 0) continue;
       const share = af || bf ? 1 : 0.5;      // if one card is immovable the other yields all of it
       // Laying the graph out, take whichever axis needs the smaller correction. But getting out of
-      // the way of a card in your HAND is different: a pill is 30px tall and up to 190px wide, so
-      // sideways is the expensive way out — and, being the direction you are dragging, it is also
-      // the way that ploughs the poor card along in front of you all the way across the map. Step
-      // aside vertically instead: it costs 30px and nothing gets bulldozed.
+      // the way of a card in your HAND is different: nodes are wider than tall, so sideways is the
+      // expensive way out — and, being the direction you are dragging, it is also the way that
+      // ploughs the poor card along in front of you across the map. Step aside vertically instead:
+      // it is the cheaper move and nothing gets bulldozed.
       const vertical = relax || (ox / mx >= oy / my);
       if (!vertical) {
         const s = (dx >= 0 ? 1 : -1) * ox * share;
@@ -2955,9 +3042,9 @@ function grFit(cw, ch){
   for (const e of N) {
     const p = _grPos[e.id];
     if (!p) continue;
-    const hw = _grHW[e.id] || 45;
+    const hw = _grHW[e.id] || 45, hh = _grHH[e.id] || 16;
     x0 = Math.min(x0, p.x - hw); x1 = Math.max(x1, p.x + hw);
-    y0 = Math.min(y0, p.y - 16); y1 = Math.max(y1, p.y + 16);
+    y0 = Math.min(y0, p.y - hh); y1 = Math.max(y1, p.y + hh);
   }
   if (!isFinite(x0)) { x0 = 0; y0 = 0; x1 = _grW; y1 = _grH; }
   const pad = 26;

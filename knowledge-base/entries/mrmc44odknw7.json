@@ -1,5 +1,5 @@
 {
-  "id": "mrma9fvk3v68",
+  "id": "mrmc44odknw7",
   "type": "note",
   "title": "",
   "genes": [],
@@ -8,22 +8,15 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-15T17:10:11.569Z",
+  "date": "2026-07-15T17:08:57.133Z",
   "synced": false,
-  "_sortTag": "",
   "schedule": {
     "subtasks": [
       {
-        "id": "smrma9pem2vc",
+        "id": "smrmc44odzix",
         "title": "",
         "start": "2026-07-15",
-        "end": "2026-07-19"
-      },
-      {
-        "id": "smrmaatokzs3",
-        "title": "",
-        "start": "2026-07-21",
-        "end": "2026-07-22"
+        "end": "2026-07-17"
       }
     ]
   }

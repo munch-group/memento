@@ -1,1 +1,1 @@
-Phasic planning
+Phasic plan

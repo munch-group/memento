@@ -1,1 +1,1 @@
-Bioinformatics course
+Bioinformatics course plan

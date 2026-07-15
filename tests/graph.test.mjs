@@ -32,6 +32,19 @@ function setup(itemsList) {
   return { api, sandbox, el: id => sandbox.document.getElementById(id) };
 }
 const ids = ns => ns.map(n => n.id).sort();
+// Overlapping node pairs, using each node's OWN half-width and half-height — nodes are boxes now
+// (wrapped titles), not a uniform pill, so the box test must read the real per-node dimensions.
+const clashCount = (api) => {
+  const P = api.grPos, N = api.grNodes();
+  let n = 0;
+  for (let i = 0; i < N.length; i++)
+    for (let j = i + 1; j < N.length; j++) {
+      const a = P[N[i].id], b = P[N[j].id];
+      if (Math.abs(a.x - b.x) < api.grHW[N[i].id] + api.grHW[N[j].id]
+       && Math.abs(a.y - b.y) < api.grHH[N[i].id] + api.grHH[N[j].id]) n++;
+    }
+  return n;
+};
 
 // ---------------------------------------------------------------------------------------------
 console.log('\nLinks are the [[refs]] in a card\'s source — the syntax insertCardRef() writes');
@@ -154,15 +167,54 @@ console.log('\nPills do not end up sitting on top of one another');
     card('n' + i, { genes: ['SHARED'], title: 'A card with a fairly long title ' + i }));
   const { api } = setup(many);
   api.setView('graph');
-  const P = api.grPos, N = api.grNodes();
-  let clash = 0;
-  for (let i = 0; i < N.length; i++) {
-    for (let j = i + 1; j < N.length; j++) {
-      const a = P[N[i].id], b = P[N[j].id];
-      if (Math.abs(a.x - b.x) < 170 && Math.abs(a.y - b.y) < 26) clash++;   // inside the pill boxes
+  eq(clashCount(api), 0, '24 cards all pulled together by one shared gene still land clear of each other');
+}
+
+console.log('\nCards keep off the connection edges they are not part of');
+{
+  // A connection card links A and B, so the drawn edges are conn–A and conn–B. Some unrelated cards
+  // share a gene so they cluster near the middle where an edge runs. After layout, none of them
+  // should sit on a connection line.
+  const { api } = setup([
+    card('a', { genes: ['G'], title: 'Alpha end' }),
+    card('b', { genes: ['G'], title: 'Beta end' }),
+    card('conn', { source: `${ref('a')} ${ref('b')}`, title: 'links A and B' }),
+    ...Array.from({ length: 6 }, (_, i) => card('m' + i, { genes: ['G'], title: 'middle card ' + i })),
+  ]);
+  api.setView('graph');
+  const P = api.grPos, nodes = api.grNodes(), edges = api.grEdges(nodes);
+  // How far a connection line penetrates a card box (0 = clear), using each card's own dimensions.
+  const worst = () => {
+    let w = 0;
+    for (const c of edges) {
+      const A = P[c.a], B = P[c.b]; if (!A || !B) continue;
+      const abx = B.x - A.x, aby = B.y - A.y, L2 = abx * abx + aby * aby || 1;
+      for (const n of nodes) {
+        if (n.id === c.a || n.id === c.b) continue;
+        const p = P[n.id];
+        const t = Math.max(0, Math.min(1, ((p.x - A.x) * abx + (p.y - A.y) * aby) / L2));
+        const dx = p.x - (A.x + t * abx), dy = p.y - (A.y + t * aby), d = Math.hypot(dx, dy) || 0.01;
+        const reach = Math.abs(dx / d) * api.grHW[n.id] + Math.abs(dy / d) * api.grHH[n.id];
+        w = Math.max(w, reach - d);   // positive means the line reaches into the box
+      }
     }
-  }
-  eq(clash, 0, '24 cards all pulled together by one shared gene still land clear of each other');
+    return w;
+  };
+  eq(edges.length, 2, 'the connection card draws two edges (to A and to B)');
+  eq(worst() < 3, true, `no card ends up sitting on a connection line (deepest reach ${worst().toFixed(1)}px)`);
+}
+
+console.log('\nNodes are boxes: long titles wrap and go roughly square');
+{
+  const { api } = setup();
+  const shortD = api.grNodeDims({ title: 'Xi' });
+  const longD = api.grNodeDims({ title: 'Meiotic drive on the X in baboons and the machinery behind it' });
+  eq(shortD.lines, 1, 'a short title is one line...');
+  eq(shortD.hw < 30, true, '...and a narrow node');
+  eq(longD.lines, 3, 'a long title wraps to the 3-line cap');
+  eq(longD.hw / longD.hh < 2.5, true, `...making the node card-shaped, not a long pill (${(longD.hw*2).toFixed(0)}×${(longD.hh*2).toFixed(0)}, was 180×26)`);
+  // The layout must reserve that 2D footprint, so the collision separates on height too.
+  eq(longD.hh > shortD.hh, true, 'a wrapped node reserves more vertical room than a one-liner');
 }
 
 console.log('\nThe layout space grows with the graph');
@@ -417,26 +469,13 @@ console.log('\nSpacing is a dial on the physics, not a redraw');
   eq(tight < normal, true, `turned down, they close up (${tight.toFixed(0)}px apart)`);
 
   // Still a map, not a pile: the collision constraint holds whatever the spacing.
-  let clash = 0;
-  for (let i = 0; i < N.length; i++)
-    for (let j = i + 1; j < N.length; j++) {
-      const a = P[N[i].id], b = P[N[j].id];
-      if (Math.abs(a.x - b.x) < 170 && Math.abs(a.y - b.y) < 26) clash++;   // inside the pill boxes
-    }
-  eq(clash, 0, '...but never onto one another — collision still holds at the tightest setting');
+  eq(clashCount(api), 0, '...but never onto one another — collision still holds at the tightest setting');
 
   // The polish pass is what makes that true. While the forces are running, the springs pull cards
   // back together faster than the collision passes can separate them; once the forces are spent,
   // nothing is fighting the constraint any more and it can be run to convergence for almost free.
-  // On the real knowledge base it takes the default layout from 34 overlapping pairs to none.
   api.setGrSpacing(1);
-  let after = 0;
-  for (let i = 0; i < N.length; i++)
-    for (let j = i + 1; j < N.length; j++) {
-      const a = P[N[i].id], b = P[N[j].id];
-      if (Math.abs(a.x - b.x) < 170 && Math.abs(a.y - b.y) < 26) after++;
-    }
-  eq(after, 0, 'and back at the default the layout is clean too');
+  eq(clashCount(api), 0, 'and back at the default the layout is clean too');
 
   // The layout space grows under the viewport, so unless the view is re-framed the map simply walks
   // off the screen as you turn the dial up.
@@ -446,9 +485,9 @@ console.log('\nSpacing is a dial on the physics, not a redraw');
     const cw = 900, ch = 560;                           // the sandbox canvas has no measurable size
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     for (const e of api.grNodes()) {
-      const p = api.grPos[e.id], hw = api.grHW[e.id];
+      const p = api.grPos[e.id], hw = api.grHW[e.id], hh = api.grHH[e.id];
       x0 = Math.min(x0, p.x - hw); x1 = Math.max(x1, p.x + hw);
-      y0 = Math.min(y0, p.y - 16); y1 = Math.max(y1, p.y + 16);
+      y0 = Math.min(y0, p.y - hh); y1 = Math.max(y1, p.y + hh);
     }
     const mx = api.grPan.x + api.grZoom * (x0 + x1) / 2;   // where the middle of the map lands on screen
     const my = api.grPan.y + api.grZoom * (y0 + y1) / 2;

@@ -1,5 +1,5 @@
 {
-  "id": "mrlt4woiopao",
+  "id": "mrma9fvk3v68",
   "type": "note",
   "title": "",
   "genes": [],
@@ -7,23 +7,23 @@
   "source": "",
   "connection": false,
   "archived": false,
-  "due": "2026-07-22",
-  "date": "2026-07-15T08:17:40.722Z",
+  "due": "",
+  "date": "2026-07-15T16:17:05.696Z",
   "synced": false,
   "_sortTag": "",
   "schedule": {
     "subtasks": [
       {
-        "id": "smrltcd3t1cd",
-        "title": "Do something",
-        "start": "2026-07-16",
+        "id": "smrma9pem2vc",
+        "title": "",
+        "start": "2026-07-15",
         "end": "2026-07-19"
       },
       {
-        "id": "smrma7ehby3b",
+        "id": "smrmaatokzs3",
         "title": "",
-        "start": "2026-07-13",
-        "end": "2026-07-13"
+        "start": "2026-07-21",
+        "end": "2026-07-22"
       }
     ]
   }

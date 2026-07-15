@@ -630,7 +630,7 @@ console.log('\nThe ← puts you back on the map you left, not in the card list')
   eq(/Back to the graph/.test(el('page-title').innerHTML), true, '...and the ← says where it goes');
 
   api.backFromFocus();
-  eq(api.mainView, 'graph', 'the ← goes back to the graph, not to All entries');
+  eq(api.mainView, 'graph', 'the ← goes back to the graph, not to the card list');
   eq(JSON.stringify(api.grPos), layout, '...with the layout exactly as it was left');
 
   // A card you dragged must still be where you put it after the round trip.
@@ -695,7 +695,7 @@ console.log('\nLink mode reaches the graph, as it does the card list');
   eq(JSON.stringify(api.grPos), before, 'and none of it moved the layout');
 }
 
-console.log('\nThe view sits alongside Dashboard, All entries and Timeline');
+console.log('\nThe view sits alongside Dashboard, Cards and Timeline');
 {
   const { api, el } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
 

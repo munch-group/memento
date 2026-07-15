@@ -161,7 +161,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       setView, toggleTimelineView, toggleGraphView,
       // Timeline
       dayFromISO, isoFromDay, todayISO, addDaysISO, daysBetween,
-      tlOnTimeline, tlRows, tlSubs, tlAnchor, tlWindow, tlSeed, tlBarGeom, tlDragTarget,
+      tlOnTimeline, tlRows, tlSubs, tlAnchor, tlWindow, tlSeed, tlBarGeom, tlDragTarget, tlRowLayout,
+      saveItem, selType,
       renderTimeline, tlAddBar, tlRemoveBar, tlRemoveRow, tlSetBarTitle, tlSetZoom,
       tlShowPop, tlRowPop, popHide, tlClampZoom, tlWheel, tlWindow, scheduleMd, fmtSchedDay,
       tlScroll, tlDrawerActive,

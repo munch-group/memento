@@ -301,6 +301,12 @@ a { color: inherit; }
    and clickable like any other card — which is what lets a card linking one, two or five others
    render with no special case. */
 .gr-node.conn { border-color: var(--accent); color: var(--accent-hover); font-family: var(--mono); font-size: 10.5px; }
+/* Monochrome mode (GR_MONO): neutralise the type/connection colours. Interaction feedback — the
+   pinned outline, the highlight, the link-target hover — stays accent, since that is action, not
+   data. Remove this block's effect by setting GR_MONO=false; the coloured rules above return. */
+.gr-mono .gr-node { border-color: #cdccc4; }
+.gr-mono .gr-node.conn { border-color: #b3b1a7; color: var(--text2); }
+.gr-mono .gr-icon { color: var(--text3); }
 
 .gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
 .gr-tools { position: absolute; right: 12px; top: 10px; display: flex; align-items: center; gap: 16px; padding: 4px 10px; border-radius: var(--r); background: rgba(255,255,255,0.78); }
@@ -493,7 +499,7 @@ a { color: inherit; }
     </div>
     <div id="app-area" style="display:none">
       <div class="page-header">
-        <span class="page-title" id="page-title">All entries</span>
+        <span class="page-title" id="page-title">Cards</span>
         <!-- Reload, Export and Cleanup are gone. Reload: both platforms now refresh themselves.
              Export/Cleanup: Claude reads the knowledge base live through memento-mcp.py, so there
              is nothing to push into its memory and nothing to reap afterwards. -->
@@ -557,7 +563,7 @@ a { color: inherit; }
       </div>
       <div class="control-bar">
         <div class="seg" id="view-seg">
-          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">All entries</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span>
+          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Cards</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span>
         </div>
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
@@ -567,7 +573,7 @@ a { color: inherit; }
         <div class="seg" id="conn-seg"></div>
       </div>
       <div id="link-banner"></div>
-      <div id="item-list" class="hide-previews"></div>
+      <div id="item-list" class="hide-meta"></div>
       <!-- Siblings of #item-list rather than content inside it, so neither panel has to fight
            renderList()'s column distribution and progressive-insert streaming. -->
       <div id="timeline-view" style="display:none"></div>
@@ -632,7 +638,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.10';
+const APP_BUILD = '2026-07-15.12';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1114,7 +1120,7 @@ function renderFilters() {
     }
   }
   // The title names the view you're in, and each active filter gets its own pill beside it. The ←
-  // therefore points at where it takes you ("All entries"), not at the filter you're already
+  // therefore points at where it takes you ("Cards"), not at the filter you're already
   // looking at — "← #Baboons" read like a link *to* Baboons. Pills also mean two filters can be
   // shown at once: an archived scope used to be swallowed whenever a tag was also active.
   const archived = archiveFilter === 'archived';
@@ -1136,7 +1142,7 @@ function renderFilters() {
     : esc(mainView === 'dash' ? 'Dashboard'
         : mainView === 'timeline' ? `Timeline (${tlRows().length})`
         : mainView === 'graph' ? `Graph (${grShownCount()})`
-        : `All entries (${scope.length})`);
+        : `Cards (${scope.length})`);
 }
 
 function toggleSection(headerId, contentId) {
@@ -2073,7 +2079,13 @@ function tlBarDown(e, eid, sid, mode){
   const it = items.find(i => i.id === eid);
   const s = it && tlSubs(it).find(x => x.id === sid);
   if (!s) return;
-  _tlDrag = { kind: 'bar', eid, sid, mode, x0: e.clientX, y0: e.clientY, start0: s.start, end0: s.end, dd: 0, moved: false };
+  // The bars that sit after this one, earliest first. Moving or expanding this bar into them pushes
+  // them forward so nothing ever overlaps; each remembers its home (start0) so it slides back the
+  // moment the anchor recedes.
+  const after = tlSubs(it).filter(x => x.id !== sid && x.start >= s.start)
+    .sort((a, b) => a.start.localeCompare(b.start))
+    .map(x => ({ id: x.id, start0: x.start, dur: daysBetween(x.start, x.end) }));
+  _tlDrag = { kind: 'bar', eid, sid, mode, x0: e.clientX, y0: e.clientY, start0: s.start, end0: s.end, after, dd: 0, moved: false };
   tlAttach(mode === 'move' ? 'grabbing' : 'ew-resize');
 }
 function tlDueDown(e, eid){
@@ -2102,6 +2114,22 @@ function tlDragTarget(d, dd){
   if (d.mode === 'resize-r') return { start: d.start0, end: addDaysISO(d.start0, Math.max(0, len + dd)) };
   return { start: addDaysISO(d.start0, Math.min(dd, len)), end: d.end0 };   // resize-l: never past its own end
 }
+// The whole row's geometry for a given drag: where the anchor lands, and where each following bar
+// gets pushed to so none overlap. A bar stays at its home until the bar before it reaches it, then
+// slides forward keeping its duration — and slides back home when the anchor recedes. Shared by the
+// live preview and the commit so they can never disagree.
+function tlRowLayout(d, dd){
+  const anchor = tlDragTarget(d, dd);
+  const pushed = [];
+  let prevEnd = anchor.end;
+  for (const b of (d.after || [])) {
+    const start = b.start0 <= prevEnd ? addDaysISO(prevEnd, 1) : b.start0;
+    const end = addDaysISO(start, b.dur);
+    pushed.push({ id: b.id, start, end });
+    prevEnd = end;
+  }
+  return { anchor, pushed };
+}
 function _tlMove(e){
   const d = _tlDrag;
   if (!d) return;
@@ -2123,9 +2151,15 @@ function _tlMove(e){
     if (pill) pill.textContent = tlFmtDay(iso);
     return;
   }
-  const g = tlBarGeom(tlDragTarget(d, dd));
-  const bar = document.querySelector(`.tl-bar[data-eid="${d.eid}"][data-sid="${d.sid}"]`);
-  if (bar) { bar.style.left = g.left + 'px'; bar.style.width = g.width + 'px'; }
+  const { anchor, pushed } = tlRowLayout(d, dd);
+  const place = (sid, seg) => {
+    const bar = document.querySelector(`.tl-bar[data-eid="${d.eid}"][data-sid="${sid}"]`);
+    if (!bar) return;
+    const g = tlBarGeom(seg);
+    bar.style.left = g.left + 'px'; bar.style.width = g.width + 'px';
+  };
+  place(d.sid, anchor);
+  for (const p of pushed) place(p.id, p);   // the followers give way as the anchor advances
 }
 async function _tlUp(){
   const d = _tlDrag;
@@ -2144,8 +2178,12 @@ async function _tlUp(){
   } else {
     const s = tlSubs(it).find(x => x.id === d.sid);
     if (!s) return;
-    const t = tlDragTarget(d, d.dd);
-    s.start = t.start; s.end = t.end;
+    const { anchor, pushed } = tlRowLayout(d, d.dd);
+    s.start = anchor.start; s.end = anchor.end;
+    for (const p of pushed) {
+      const b = tlSubs(it).find(x => x.id === p.id);
+      if (b) { b.start = p.start; b.end = p.end; }
+    }
   }
   renderTimeline();
   await saveEntryToFile(it);
@@ -2290,6 +2328,10 @@ async function cardToTimeline(e, id){
 // pad an outer ring. grCaption() says how many were left out rather than hiding it.
 const GR_REF_RE = /\[\[([^\]|]+)(?:\|[^\]]*)?\]\]/g;
 const GR_MIN_ALPHA = 0.02;
+// The graph is monochrome for now. Flip this to false to bring the type colours back — the coloured
+// rules are still in place (node border = its type token, connection cards = accent); `gr-mono`
+// just overrides them with neutrals. Nothing else to change.
+const GR_MONO = true;
 
 let _grNodes = [], _grEdges = [], _grPairs = [], _grKey = new Map();
 let _grPos = {};              // id -> {x, y, vx, vy}
@@ -2747,7 +2789,7 @@ function renderGraph(){
   }
   _grTotal = items.filter(e => !e.archived && !SPECIAL_IDS.has(e.id)).length;
   host.innerHTML = `
-    <div class="gr-canvas" id="gr-canvas" onwheel="grWheel(event)" onpointerdown="grPanDown(event)">
+    <div class="gr-canvas${GR_MONO ? ' gr-mono' : ''}" id="gr-canvas" onwheel="grWheel(event)" onpointerdown="grPanDown(event)">
       <div class="gr-scene" id="gr-scene">
         <svg class="gr-edges"><path id="gr-web" class="gr-web" fill="none"></path>${_grEdges.map((c, i) => `<line id="gr-e${i}" stroke="#a3a19a" stroke-width="1.5"></line>`).join('')}</svg>
         ${_grNodes.map(grNodeHtml).join('')}
@@ -3130,7 +3172,7 @@ function geneClick(e, gene) {
 }
 // Card detail, shown in the bar as Title · Tags · Body. Cumulative: title only -> + tags/genes
 // -> + rendered body. ('full' is still disabled — see togglePreviews.)
-let previewMode = 'compact'; // 'minimal' | 'compact' | 'rendered' | 'full'
+let previewMode = 'minimal'; // 'minimal' | 'compact' | 'rendered' | 'full' — default Title-only
 function setPreviewMode(mode) {
   // 'rendered' and 'full' render markdown into the card HTML; the others only toggle CSS.
   const heavy = m => m === 'full' || m === 'rendered';
@@ -3180,7 +3222,7 @@ function setView(v) {
   if (v !== 'timeline') tlFocusId = null;
   if (v !== 'graph') grStop();   // don't leave a force simulation running behind another view
   applyControlBar();
-  renderFilters();   // the page title says Dashboard / All entries (N) / Timeline / Graph
+  renderFilters();   // the page title says Dashboard / Cards (N) / Graph / Timeline
   renderList();
 }
 function setDashboard(v) { setView(v ? 'dash' : 'list'); }   // kept: the D key and callers still speak in booleans
@@ -3575,6 +3617,14 @@ async function saveItem(){
   const savedItem = wasEdit ? items.find(i=>i.id===editingId) : items[items.length - 1];
   const wasNewView = !wasEdit && savedItem && savedItem.type==='view';
   if (savedItem && savedItem.type!=='view' && savedItem.type!=='github') lastType = savedItem.type;
+  // A card made with +Add while the timeline is open belongs on the timeline — seed it a bar (today
+  // → its due date, or a 3-day block) so it shows up as a row, and scroll to it.
+  if (!wasEdit && mainView === 'timeline' && savedItem && !savedItem.archived
+      && savedItem.type !== 'view' && savedItem.type !== 'github' && !tlOnTimeline(savedItem)) {
+    tlSeed(savedItem);
+    tlFocusId = savedItem.id;
+    _tlFocusPending = true;
+  }
   editingId = null;
   ghEditMode = false;
   inboxEditMode = false;

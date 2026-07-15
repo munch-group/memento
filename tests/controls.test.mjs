@@ -1,4 +1,4 @@
-// The control bar: a view switch (Dashboard · All entries) and a card-detail switch
+// The control bar: a view switch (Dashboard · Cards · Graph · Timeline) and a card-detail switch
 // (Title · Tags · Body). Both used to be dot-toggles whose state you had to decode; the point of
 // the rework is that state is now explicit and every option is one click away.
 import { load } from './harness.mjs';
@@ -30,12 +30,13 @@ console.log('\nCard detail: Title / Tags / Body');
   const { api, el } = setup();
   const cls = () => ['hide-meta', 'hide-previews'].filter(c => el('item-list').classList.contains(c));
 
-  api.setPreviewMode('minimal');
-  eq(cls(), ['hide-meta'], 'Title  -> hide-meta (no tags, no body)');
-  api.setPreviewMode('compact');
-  eq(cls(), ['hide-previews'], 'Tags   -> hide-previews (tags shown, body hidden)');
+  // 'minimal' (Title) is the default, so reach it from another mode to see the class actually change.
   api.setPreviewMode('rendered');
   eq(cls(), [], 'Body   -> neither (tags and rendered body shown)');
+  api.setPreviewMode('compact');
+  eq(cls(), ['hide-previews'], 'Tags   -> hide-previews (tags shown, body hidden)');
+  api.setPreviewMode('minimal');
+  eq(cls(), ['hide-meta'], 'Title  -> hide-meta (no tags, no body)');
 }
 
 console.log('\nClicking an option goes straight there (no cycling)');
@@ -57,7 +58,7 @@ console.log('\nThe C key still cycles (must not regress)');
   eq(seen, ['minimal', 'compact', 'rendered', 'minimal'], 'minimal -> compact -> rendered -> minimal');
 }
 
-console.log('\nView switch: Dashboard / All entries');
+console.log('\nView switch: Dashboard / Cards');
 {
   const { api, el } = setup();
   const listHtml = () => el('item-list').innerHTML;
@@ -70,14 +71,14 @@ console.log('\nView switch: Dashboard / All entries');
      'dashboard shows its head cards');
 
   api.setDashboard(false);
-  eq(api.digestVisible, false, 'All entries selected');
+  eq(api.digestVisible, false, 'Cards selected');
   eq(/data-id="n1"/.test(listHtml()), true, 'the list shows unpinned cards');
   eq(/Click to create a priorities card/.test(listHtml()), false, 'and no dashboard heads');
 }
 
 console.log('\nThe page title names the view you are actually in');
 {
-  // This was the other half of the confusion: the title read "All entries" while the dashboard
+  // This was the other half of the confusion: the title read "Cards" while the dashboard
   // was on screen, contradicting the control.
   const { api, el } = setup();
   api.setDashboard(true);
@@ -86,7 +87,7 @@ console.log('\nThe page title names the view you are actually in');
 
   api.setDashboard(false);
   api.renderFilters();
-  eq(el('page-title').innerHTML, `All entries (${api.items.length})`, 'off it, the title counts the entries');
+  eq(el('page-title').innerHTML, `Cards (${api.items.length})`, 'off it, the title counts the entries');
 }
 
 console.log('\nD still toggles the view');
@@ -151,7 +152,7 @@ console.log('\nThe title announces the archived scope — which is what lets its
   const { api, el } = scopeSetup();
   api.renderFilters();
   // 5 entries, 2 of them archived — the title counts the 3 you can actually see, not all 5.
-  eq(el('page-title').innerHTML, 'All entries (3)', 'the title counts the entries in scope, not the archived ones too');
+  eq(el('page-title').innerHTML, 'Cards (3)', 'the title counts the entries in scope, not the archived ones too');
 
   api.setArchiveFilter('archived');
   api.renderFilters();
@@ -237,7 +238,7 @@ function facetSetup() {
   // "How many cards am I looking at" — the title reports it, whichever scope you're in.
   const count = () => {
     const h = el('page-title').innerHTML;
-    const m = h.match(/All entries \((\d+)\)/) || h.match(/Archived (\d+)/);
+    const m = h.match(/Cards \((\d+)\)/) || h.match(/Archived (\d+)/);
     return m ? Number(m[1]) : null;
   };
   return { api, tags, types, count, el };

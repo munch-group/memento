@@ -113,6 +113,52 @@ console.log('\nDrag maths: move, resize, and the clamps');
      { start: '2026-07-16', end: '2026-07-16' }, '...but can never push the start past the end (min 1 day)');
 }
 
+console.log('\nDragging a bar into later ones pushes them forward — bars never overlap');
+{
+  const { api } = setup();
+  // Three bars, back to back-ish. Drag/resize the first; the followers give way.
+  const drag = (mode, start0, end0, after, dd) =>
+    api.tlRowLayout({ mode, start0, end0, after }, dd);
+  const after = [
+    { id: 'b', start0: '2026-07-10', dur: 2 },   // 10–12
+    { id: 'c', start0: '2026-07-20', dur: 1 },   // 20–21
+  ];
+
+  // Expand the anchor's right edge from (1–3) out to (1–11): it runs into b, which slides forward,
+  // but c is far enough away to stay home.
+  let r = drag('resize-r', '2026-07-01', '2026-07-03', after, 8);   // end → Jul 11
+  eq(r.anchor.end, '2026-07-11', 'the anchor expands as dragged');
+  eq(r.pushed.find(p => p.id === 'b'), { id: 'b', start: '2026-07-12', end: '2026-07-14' },
+     'the bar it runs into is pushed just past it, keeping its 3-day span');
+  eq(r.pushed.find(p => p.id === 'c'), { id: 'c', start: '2026-07-20', end: '2026-07-21' },
+     'a bar still clear of the pile stays exactly where it was');
+
+  // Expand further so the cascade reaches c too: anchor end → Jul 25 shoves b, and b shoves c.
+  r = drag('resize-r', '2026-07-01', '2026-07-03', after, 22);     // end → Jul 25
+  eq(r.pushed.find(p => p.id === 'b'), { id: 'b', start: '2026-07-26', end: '2026-07-28' }, 'b is pushed past the anchor');
+  eq(r.pushed.find(p => p.id === 'c'), { id: 'c', start: '2026-07-29', end: '2026-07-30' }, '...and c is pushed past b — the shove cascades');
+  // No overlaps: each starts after the previous ends.
+  const segs = [r.anchor, ...r.pushed].sort((a, b) => a.start.localeCompare(b.start));
+  let ok = true;
+  for (let i = 1; i < segs.length; i++) if (segs[i].start <= segs[i - 1].end) ok = false;
+  eq(ok, true, 'nothing overlaps');
+
+  // Recede: pull the anchor back and the pushed bars return to their homes.
+  r = drag('resize-r', '2026-07-01', '2026-07-03', after, 0);      // back to 1–3
+  eq(r.pushed.find(p => p.id === 'b').start, '2026-07-10', 'when the anchor recedes, b slides back home');
+  eq(r.pushed.find(p => p.id === 'c').start, '2026-07-20', '...and so does c');
+
+  // Moving the whole bar right pushes too (not just resizing).
+  r = drag('move', '2026-07-08', '2026-07-09', after, 3);          // move to 11–12, into b (10–12)
+  eq(r.anchor, { start: '2026-07-11', end: '2026-07-12' }, 'the moved bar goes where you put it');
+  eq(r.pushed.find(p => p.id === 'b').start, '2026-07-13', '...and the bar under it is pushed forward');
+
+  // Moving LEFT never pushes the followers — they only move to get out of the way, forward.
+  r = drag('move', '2026-07-08', '2026-07-09', after, -4);
+  eq(r.pushed.every(p => p.start === after.find(a => a.id === p.id).start0), true,
+     'dragging away from them leaves the followers untouched');
+}
+
 console.log('\nThe window reaches a year into the future — at every zoom');
 {
   const { api } = setup([]);
@@ -359,6 +405,39 @@ console.log('\nA card shows its timeline data as a Schedule read-out at its foot
   api.renderList();
   eq(/card-schedule/.test(el('item-list').innerHTML), true, '...but an expanded one does');
   eq(/Deadline: 7 Aug 2026/.test(el('item-list').innerHTML), true, '...with the deadline in it');
+}
+
+console.log('\n+Add while the timeline is open puts the new card straight onto it');
+{
+  const { api, el } = setup([]);
+  api.setView('timeline');
+  api.selType('note');
+  el('f-content').value = 'a fresh idea';
+  el('f-title').value = 'New task';
+  ['f-genes', 'f-tags', 'f-source', 'f-due'].forEach(id => { el(id).value = ''; });
+  el('f-connection').checked = false;
+  el('f-archived').checked = false;
+  await api.saveItem();
+  const made = api.items.find(i => i.title === 'New task');
+  eq(!!made, true, 'the card is created');
+  eq(api.tlOnTimeline(made), true, '...and lands on the timeline even with no due date (a bar was seeded)');
+  eq(api.tlSubs(made).length, 1, 'exactly one bar');
+  eq(api.tlFocusId, made.id, 'and the timeline focuses it, so you see where it went');
+}
+
+console.log('\n+Add from the card list does NOT schedule the card');
+{
+  const { api, el } = setup([]);
+  api.setView('list');
+  api.selType('note');
+  el('f-content').value = 'x';
+  el('f-title').value = 'Listed';
+  ['f-genes', 'f-tags', 'f-source', 'f-due'].forEach(id => { el(id).value = ''; });
+  el('f-connection').checked = false;
+  el('f-archived').checked = false;
+  await api.saveItem();
+  const made = api.items.find(i => i.title === 'Listed');
+  eq(api.tlOnTimeline(made), false, 'a card added from the list stays off the timeline (only +Add in the timeline seeds one)');
 }
 
 console.log('\nThe card icon schedules the entry and takes you to its row');

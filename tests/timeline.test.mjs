@@ -670,6 +670,38 @@ console.log('\nSideways pans, up/down zooms, and the axis latches for the whole 
   eq(api.tlPxPerDay > 40, true, 'with no frames to wait for, a zoom is spent on the spot');
 }
 
+// The scale is multiplicative, so its resolution has to be a fraction of the value. Rounded to a
+// flat 0.1px/day it was fine at Day scale and useless at Year scale, where 0.1px is a 3% lurch and
+// anything smaller rounded back to where it started — so a gentle zoom, all the way out, moved not
+// at all until it moved 3% at once. Zoomed out is exactly where the wheel gets used most.
+console.log('\nThe zoom answers a gentle gesture at every scale, not just near the default');
+{
+  const { api, flushFrames } = setup([note('a', 'A', { due: '2026-07-20' })], { frames: true });
+  api.setView('timeline');
+  const gentle = () => {
+    api.tlWheel({ deltaX: 0, deltaY: -6, clientX: 200, deltaMode: 0, preventDefault(){} });
+    flushFrames();
+  };
+  // A frame that moves the scale not at all is a frame the zoom appears stuck for.
+  const deadFrames = (from) => {
+    api.tlSetZoom(from);
+    let dead = 0, px = api.tlPxPerDay;
+    for (let f = 0; f < 10; f++) { gentle(); if (api.tlPxPerDay === px) dead++; px = api.tlPxPerDay; }
+    return dead;
+  };
+  eq(deadFrames(3), 0, 'all the way out, a gentle drag moves the scale every frame');
+  eq(deadFrames(8), 0, '...and at Quarter scale');
+  eq(deadFrames(40), 0, '...and at the default, where it always did');
+
+  // Not just moving, but moving EVENLY: the eye reads a 3% jump as a lurch.
+  api.tlSetZoom(3);
+  const steps = [];
+  let px = api.tlPxPerDay;
+  for (let f = 0; f < 8; f++) { gentle(); steps.push(api.tlPxPerDay / px); px = api.tlPxPerDay; }
+  const worst = Math.max(...steps) - 1;
+  eq(worst < 0.02, true, `...and in steps too fine to see, not lurches (worst ${(worst * 100).toFixed(1)}%)`);
+}
+
 console.log('\nZoom stays inside its rails');
 {
   const { api } = setup([note('a', 'A', { due: '2026-07-20' })]);

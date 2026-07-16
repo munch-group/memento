@@ -2061,9 +2061,15 @@ function tlAfterRender(){
   if (left && left.classList) left.classList.toggle('tl-min', _tlMin);
 }
 
+// Two decimals, not one: zoom is multiplicative, so the scale's resolution has to be a fraction of
+// the value rather than a fixed number of pixels. A tenth of a px/day is a quarter of a percent at
+// Day scale but a 3% lurch at Year scale — and a step that lands inside the rounding disappears
+// altogether, which froze a gentle zoom solid at 3px/day (it took ~8px of travel to move at all,
+// then moved 3% at once). At two decimals the smallest step is 0.3% at the far end and finer
+// everywhere else, so the scale answers every frame at every zoom.
 function tlClampZoom(px){
   const n = Number(px);
-  return Math.min(TL_PX_MAX, Math.max(TL_PX_MIN, Math.round((isFinite(n) ? n : 40) * 10) / 10));
+  return Math.min(TL_PX_MAX, Math.max(TL_PX_MIN, Math.round((isFinite(n) ? n : 40) * 100) / 100));
 }
 // opts.anchorDay + opts.anchorOffset hold one day still at a fixed offset from the lane's left edge
 // — that is what makes wheel-zoom track the cursor. With neither, the leftmost day stays put.

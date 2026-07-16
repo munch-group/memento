@@ -3,7 +3,7 @@
 - SMBE follow-up / Desktop / Browser clean up
 - Erik status
 - Shannon status
-- Phasic code review with Fable
+- Make graph gene edges alpha 1/-log(intersect/union)
 
 ## Week run
 - Get back to Sriram

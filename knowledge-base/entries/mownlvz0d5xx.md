@@ -1,1 +1,0 @@
-Novo Nordisk Interdisciplinary Synergy

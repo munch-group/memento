@@ -1,1 +1,1 @@
-NNF Project plan
+- Some parts of NERD application (split with AUFF NOVA)

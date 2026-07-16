@@ -1,7 +1,7 @@
 {
   "id": "mrn1a0yjanez",
   "type": "note",
-  "title": "",
+  "title": "AUFF NOVA plan",
   "genes": [],
   "tags": [
     "Funding"
@@ -10,16 +10,16 @@
   "connection": false,
   "archived": false,
   "due": "2026-09-10",
-  "date": "2026-07-16T04:53:22.651Z",
+  "date": "2026-07-16T09:50:01.495Z",
   "synced": false,
   "_sortTag": "Funding",
   "schedule": {
     "subtasks": [
       {
         "id": "smrn7wzk549m",
-        "title": "",
-        "start": "2026-07-23",
-        "end": "2026-07-31"
+        "title": "Subset NERD application -> AUFF NOVA",
+        "start": "2026-07-24",
+        "end": "2026-08-01"
       }
     ]
   }

@@ -1,0 +1,26 @@
+{
+  "id": "mrnb2b8552aj",
+  "type": "note",
+  "title": "JSPS (short-term) Invitational Fellowship (14-60 days)",
+  "genes": [],
+  "tags": [
+    "Funding"
+  ],
+  "source": "https://www.jsps.go.jp/english/e-inv/application/guideline.html",
+  "connection": false,
+  "archived": false,
+  "due": "2026-08-27",
+  "date": "2026-07-16T09:33:47.780Z",
+  "synced": false,
+  "_sortTag": "Funding",
+  "schedule": {
+    "subtasks": [
+      {
+        "id": "smrnb2uwrzqq",
+        "title": "Shape project with Leo",
+        "start": "2026-07-17",
+        "end": "2026-07-20"
+      }
+    ]
+  }
+}

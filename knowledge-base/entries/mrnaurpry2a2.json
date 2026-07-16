@@ -1,0 +1,26 @@
+{
+  "id": "mrnaurpry2a2",
+  "type": "note",
+  "title": "NNF Expl. Synergy plan",
+  "genes": [],
+  "tags": [
+    "Funding"
+  ],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "2026-09-03",
+  "date": "2026-07-16T09:22:18.304Z",
+  "synced": false,
+  "_sortTag": "Funding",
+  "schedule": {
+    "subtasks": [
+      {
+        "id": "smrnbfxjdch0",
+        "title": "Find collaborators and shape project",
+        "start": "2026-07-18",
+        "end": "2026-07-23"
+      }
+    ]
+  }
+}

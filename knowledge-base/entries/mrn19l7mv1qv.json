@@ -1,7 +1,7 @@
 {
   "id": "mrn19l7mv1qv",
   "type": "note",
-  "title": "",
+  "title": "NNF Research Project plan",
   "genes": [],
   "tags": [
     "Funding"
@@ -10,16 +10,16 @@
   "connection": false,
   "archived": false,
   "due": "2026-09-01",
-  "date": "2026-07-16T04:53:02.242Z",
+  "date": "2026-07-16T09:49:35.114Z",
   "synced": false,
   "_sortTag": "Funding",
   "schedule": {
     "subtasks": [
       {
         "id": "smrn7wwq2duy",
-        "title": "",
-        "start": "2026-07-22",
-        "end": "2026-07-29"
+        "title": "Subset NERD application -> NNF Research Proj.",
+        "start": "2026-07-24",
+        "end": "2026-08-01"
       }
     ]
   }

@@ -347,6 +347,10 @@ a { color: inherit; }
 /* Thin and quiet: with a couple of thousand of them the web has to read as texture behind the
    cards, not as a drawing in its own right. */
 .gr-web { stroke: #d3d1c8; stroke-width: 0.6; }
+/* Gene-layout web edges are drawn dark and let their per-band opacity do the fading, so a full gene
+   overlap reads as a solid #3B3B3B line and a sparse one fades toward the background. Their width
+   matches the orange connection edges (.gr-edge, 1.5). */
+.gr-web-band { stroke: #3B3B3B; stroke-width: 1.5; }
 /* A drawn edge is a connection card's [[ref]] to another card — the one relationship the user
    authored by hand, so it gets the accent even in monochrome mode. */
 .gr-edge { stroke: var(--accent); stroke-width: 1.5; }
@@ -691,7 +695,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-16.5';
+const APP_BUILD = '2026-07-16.9';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -2382,11 +2386,10 @@ async function cardToTimeline(e, id){
 const GR_REF_RE = /\[\[([^\]|]+)(?:\|[^\]]*)?\]\]/g;
 const GR_MIN_ALPHA = 0.02;
 // Gene-layout web: an edge's opacity encodes how much the two cards' gene lists overlap, so the
-// strongest gene relationships read boldest and incidental one-gene links fade back. Drawing each
-// edge as its own element would be hundreds of DOM nodes; instead the edges are split into a few
-// opacity bands (one <path> each). GR_EDGE_ALPHA_MIN is the faintest a band fades to.
+// strongest gene relationships read boldest and incidental one-gene links fade to nothing. Drawing
+// each edge as its own element would be hundreds of DOM nodes; instead the edges are split into a
+// few opacity bands (one <path> each), and edges too faint to fall in any band are simply not drawn.
 const GR_WEB_BUCKETS = 6;
-const GR_EDGE_ALPHA_MIN = 0.1;
 // The graph is monochrome for now. Flip this to false to bring the type colours back — the coloured
 // rules are still in place (node border = its type token, connection cards = accent); `gr-mono`
 // just overrides them with neutrals. Nothing else to change.
@@ -2598,14 +2601,19 @@ function grStep(a){
       fx[N[j].id] += ux * rep; fy[N[j].id] += uy * rep;
     }
   }
-  // Shared tags/genes pull together, by rarity.
+  // Shared tags/genes pull together. In gene layout the pull follows the same gene-overlap formula
+  // that sets the edge opacity (grEdgeAlpha), scaled to the old rarity cap of 3 — so a full overlap
+  // pulls as hard as before but partial overlaps pull proportionally less (and a sub-0.1 overlap not
+  // at all), clustering cards by how much their gene lists actually share. Otherwise it's by rarity.
+  const geneAtt = grLinkBy === 'genes';
   for (const p of _grPairs) {
     if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;   // a hidden card exerts no pull
     const pa = P[p.a], pb = P[p.b];
     if (!pa || !pb) continue;
     const dx = pb.x - pa.x, dy = pb.y - pa.y;
     const d = Math.sqrt(dx * dx + dy * dy) || 1;
-    const ux = dx / d, uy = dy / d, att = KA * p.w * (d - L);
+    const w = geneAtt ? 3 * grEdgeAlpha(p.jac || 0) : p.w;
+    const ux = dx / d, uy = dy / d, att = KA * w * (d - L);
     fx[p.a] += ux * att; fy[p.a] += uy * att;
     fx[p.b] -= ux * att; fy[p.b] -= uy * att;
   }
@@ -2758,18 +2766,20 @@ function grWebPath(){
   }
   return seg.join('');
 }
-// Opacity for a gene edge from the Jaccard overlap of the two cards' gene lists. 1/(-ln jac): a
-// full overlap (jac→1) is opaque, a sliver (jac→0) fades toward GR_EDGE_ALPHA_MIN, and the log
-// spreads the typically-small overlaps across a usable range instead of bunching them near 1.
+// Opacity for a gene edge from the Jaccard overlap of the two cards' gene lists:
+// alpha = 1 − log10(1/jac). Only a full overlap (jac→1) is opaque; from there it falls off in
+// log-space — a tenfold-sparser overlap loses one unit of alpha — reaching 0 at jac ≈ 0.1. No floor:
+// a fainter overlap than that simply isn't drawn.
 function grEdgeAlpha(jac){
-  if (!(jac > 0)) return GR_EDGE_ALPHA_MIN;
+  if (!(jac > 0)) return 0;
   if (jac >= 1) return 1;
-  return Math.max(GR_EDGE_ALPHA_MIN, Math.min(1, 1 / -Math.log(jac)));
+  return Math.max(0, Math.min(1, 1 - Math.log10(1 / jac)));
 }
-// Representative opacity of band k (its midpoint), never fainter than the floor.
-function grWebBandAlpha(k){ return Math.max(GR_EDGE_ALPHA_MIN, (k + 0.5) / GR_WEB_BUCKETS); }
-// Gene layout only: the same segments as grWebPath, but split into GR_WEB_BUCKETS opacity bands by
-// each edge's gene overlap. Returns one path string per band (index = band).
+// Opacity drawn for band i (0-based): (i+1)/N, so the top band is fully opaque (a solid #3B3B3B line).
+function grWebBandAlpha(i){ return (i + 1) / GR_WEB_BUCKETS; }
+// Gene layout only: the same segments as grWebPath, split into GR_WEB_BUCKETS opacity bands by each
+// edge's gene overlap. An alpha rounding to the zero band is dropped (no floor). Returns one path
+// string per band (index = band).
 function grWebBuckets(){
   const bands = Array.from({ length: GR_WEB_BUCKETS }, () => []);
   if (!grWeb) return bands.map(() => '');
@@ -2777,10 +2787,10 @@ function grWebBuckets(){
     if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;
     const a = _grPos[p.a], b = _grPos[p.b];
     if (!a || !b) continue;
-    let k = Math.floor(grEdgeAlpha(p.jac || 0) * GR_WEB_BUCKETS);
-    if (k >= GR_WEB_BUCKETS) k = GR_WEB_BUCKETS - 1;
-    if (k < 0) k = 0;
-    bands[k].push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
+    let k = Math.round(grEdgeAlpha(p.jac || 0) * GR_WEB_BUCKETS);
+    if (k <= 0) continue;                          // faded to nothing → not drawn
+    if (k > GR_WEB_BUCKETS) k = GR_WEB_BUCKETS;
+    bands[k - 1].push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
   }
   return bands.map(s => s.join(''));
 }
@@ -2953,7 +2963,7 @@ function renderGraph(){
   host.innerHTML = `
     <div class="gr-canvas${GR_MONO ? ' gr-mono' : ''}" id="gr-canvas" onwheel="grWheel(event)" onpointerdown="grPanDown(event)">
       <div class="gr-scene" id="gr-scene">
-        <svg class="gr-edges"><path id="gr-web" class="gr-web" fill="none"></path>${Array.from({ length: GR_WEB_BUCKETS }, (_, k) => `<path id="gr-web-b${k}" class="gr-web" fill="none" stroke-opacity="${grWebBandAlpha(k).toFixed(3)}"></path>`).join('')}${_grEdges.map((c, i) => `<line id="gr-e${i}" class="gr-edge"></line>`).join('')}</svg>
+        <svg class="gr-edges"><path id="gr-web" class="gr-web" fill="none"></path>${Array.from({ length: GR_WEB_BUCKETS }, (_, k) => `<path id="gr-web-b${k}" class="gr-web gr-web-band" fill="none" stroke-opacity="${grWebBandAlpha(k).toFixed(3)}"></path>`).join('')}${_grEdges.map((c, i) => `<line id="gr-e${i}" class="gr-edge"></line>`).join('')}</svg>
         ${_grNodes.map(grNodeHtml).join('')}
       </div>
       <div class="gr-tools">

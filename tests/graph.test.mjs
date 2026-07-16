@@ -447,20 +447,21 @@ console.log('\n"draw" makes the invisible web of shared tags and genes visible')
 
 console.log('\nUnder Link=Genes, an edge fades with how little the two gene lists overlap');
 {
-  // Two isolated pairs with disjoint gene namespaces: one shares everything, one barely overlaps.
+  // Two isolated pairs with disjoint gene namespaces: one shares everything, one only partly.
   const { api, sandbox } = setup([
     card('x', { genes: ['A1', 'A2', 'A3'] }),
-    card('y', { genes: ['A1', 'A2', 'A3'] }),                                  // full overlap with x → opaque
-    card('r', { genes: ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'] }),
-    card('s', { genes: ['B1', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6'] }),          // shares only B1 with r → faint
+    card('y', { genes: ['A1', 'A2', 'A3'] }),          // full overlap with x → opaque
+    card('r', { genes: ['B1', 'B2'] }),
+    card('s', { genes: ['B1', 'B3'] }),                // shares 1 of 3 (jac 1/3) with r → mid band
   ]);
 
-  // grEdgeAlpha maps gene-list Jaccard → opacity: a full overlap is opaque, a sliver fades. Above
-  // ~0.37 overlap it saturates at 1 (a strong relationship is simply bold); below that it spreads out.
+  // grEdgeAlpha maps gene-list Jaccard → opacity as alpha = 1 − log10(1/jac): only a full overlap is
+  // opaque, then it falls off in log-space, reaching 0 at jac ≈ 0.1. No floor — it goes to nothing.
   eq(api.grEdgeAlpha(1), 1, 'identical gene lists → fully opaque');
-  eq(api.grEdgeAlpha(0.5), 1, 'a half overlap already reads as a strong (opaque) link');
-  eq(api.grEdgeAlpha(0.2) < 1 && api.grEdgeAlpha(0.2) > api.grEdgeAlpha(0.05), true, 'below saturation, more overlap → more opaque');
-  eq(api.grEdgeAlpha(0) > 0 && api.grEdgeAlpha(0) < 0.2, true, 'a vanishing overlap fades to the faint floor, never to nothing');
+  eq(Math.abs(api.grEdgeAlpha(0.5) - 0.699) < 0.01, true, 'a half overlap sits partway down (≈0.70), not saturated');
+  eq(api.grEdgeAlpha(0.5) < 1 && api.grEdgeAlpha(0.5) > api.grEdgeAlpha(0.2), true, 'more overlap → more opaque');
+  eq(api.grEdgeAlpha(0.1), 0, 'a tenth overlap has faded exactly to nothing (no floor)');
+  eq(api.grEdgeAlpha(0.05), 0, '...and a sparser one stays at nothing');
 
   api.setView('graph');
   api.setGrLinkBy('genes');
@@ -468,7 +469,23 @@ console.log('\nUnder Link=Genes, an edge fades with how little the two gene list
     .map(k => ({ k, n: (sandbox.document.getElementById('gr-web-b' + k).getAttribute('d') || '').split('M').filter(Boolean).length }))
     .filter(b => b.n > 0);
   eq(occupied.length, 2, 'the two overlap levels fall into two different opacity bands');
-  eq(occupied[occupied.length - 1].k > occupied[0].k, true, 'the full-overlap edge sits in a higher (more opaque) band than the sliver');
+  eq(occupied[occupied.length - 1].k > occupied[0].k, true, 'the full-overlap edge sits in a higher (more opaque) band than the partial one');
+}
+
+console.log('\nUnder Link=Genes, the attraction follows the overlap too, not a flat pull');
+{
+  // Two isolated gene pairs: one shares its whole list, one shares a third. The full-overlap pair
+  // must settle closer, because in gene layout the spring strength is 3·grEdgeAlpha(overlap), not a
+  // flat per-edge pull. Disjoint gene namespaces so the two pairs never tug on each other.
+  const { api } = setup([
+    card('h1', { genes: ['G1', 'G2'] }), card('h2', { genes: ['G1', 'G2'] }),   // jac 1   → strong pull
+    card('l1', { genes: ['K1', 'K2', 'K3'] }), card('l2', { genes: ['K1', 'K4', 'K5'] }), // jac 1/5 → weak pull
+  ]);
+  api.setView('graph');
+  api.setGrLinkBy('genes');                    // re-solves synchronously (no rAF in the sandbox)
+  const P = api.grPos, d = (a, b) => Math.hypot(P[a].x - P[b].x, P[a].y - P[b].y);
+  eq(d('h1', 'h2') < d('l1', 'l2'), true,
+     `the fuller overlap clusters tighter (${d('h1','h2').toFixed(0)}px vs ${d('l1','l2').toFixed(0)}px)`);
 }
 
 console.log('\nSpacing is a dial on the physics, not a redraw');

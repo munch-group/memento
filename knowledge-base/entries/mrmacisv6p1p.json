@@ -12,14 +12,14 @@
   "due": "",
   "date": "2026-07-16T04:56:57.295Z",
   "synced": false,
-  "_sortTag": "",
+  "_sortTag": "Teaching",
   "schedule": {
     "subtasks": [
       {
         "id": "smrmc3e6tn46",
-        "title": "",
+        "title": "Week plan",
         "start": "2026-07-15",
-        "end": "2026-07-17"
+        "end": "2026-07-18"
       },
       {
         "id": "smrmc9ynjl87",

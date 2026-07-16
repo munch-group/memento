@@ -12,5 +12,15 @@
   "due": "2026-08-20",
   "date": "2026-07-16T04:52:18.219Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "Funding",
+  "schedule": {
+    "subtasks": [
+      {
+        "id": "smrn7wt4fd92",
+        "title": "",
+        "start": "2026-07-17",
+        "end": "2026-07-26"
+      }
+    ]
+  }
 }

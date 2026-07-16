@@ -16,11 +16,17 @@
     "subtasks": [
       {
         "id": "smrmc44odzix",
-        "title": "",
+        "title": "XWAS paper",
         "start": "2026-07-15",
-        "end": "2026-07-17"
+        "end": "2026-07-24"
+      },
+      {
+        "id": "smrn7p6za06x",
+        "title": "Y-strat paper",
+        "start": "2026-07-29",
+        "end": "2026-08-06"
       }
     ]
   },
-  "_sortTag": ""
+  "_sortTag": "ASD"
 }

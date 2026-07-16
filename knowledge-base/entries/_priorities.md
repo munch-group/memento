@@ -3,7 +3,9 @@
 - SMBE follow-up / Desktop / Browser clean up
 - Erik status
 - Shannon status
-- Phasic code review with Fable
+- Memento:
+  - "Drawer effect for side bar in timeline does not work well as UI. Instead, clicking Task sidebar header should show/hide it.
+  - In Graph view gene edges should have alpha: 1/-log(intersect/union) -> or something meaningful.
 
 ## Week run
 - Get back to Sriram

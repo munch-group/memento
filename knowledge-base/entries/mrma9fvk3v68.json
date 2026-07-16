@@ -12,20 +12,26 @@
   "due": "",
   "date": "2026-07-15T17:10:11.569Z",
   "synced": false,
-  "_sortTag": "",
+  "_sortTag": "Phasic",
   "schedule": {
     "subtasks": [
       {
-        "id": "smrma9pem2vc",
-        "title": "",
-        "start": "2026-07-15",
-        "end": "2026-07-19"
+        "id": "smrn7nqex4ex",
+        "title": "1.0 version",
+        "start": "2026-07-16",
+        "end": "2026-07-20"
       },
       {
-        "id": "smrmaatokzs3",
-        "title": "",
-        "start": "2026-07-21",
-        "end": "2026-07-22"
+        "id": "smrn7pzrhuly",
+        "title": "Applied prob. paper",
+        "start": "2026-07-24",
+        "end": "2026-07-28"
+      },
+      {
+        "id": "smrn7qknpc1y",
+        "title": "Selection paper",
+        "start": "2026-08-01",
+        "end": "2026-08-06"
       }
     ]
   }

@@ -1,5 +1,0 @@
-- S11 The evolution of recombination landscapes
-- S09 New frontiers in sex evolution: evolutionary patterns and innovations
-- S07 From Trees to Graphs: Methodological Advances and Innovative Applications of Graphs in Evolutionary Analysis
-- S19 Causes and consequences of mutation rate variation
-- S10 Learning from Evolution: AI Models for Genomic Function

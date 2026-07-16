@@ -3,7 +3,8 @@
   "type": "github",
   "title": "SINGER",
   "tags": [
-    "LAI"
+    "LAI",
+    "tspaint"
   ],
   "genes": [],
   "source": "https://github.com/munch-group/SINGER",
@@ -16,7 +17,7 @@
   "_ghLang": null,
   "_ghOpenIssues": 0,
   "_ghPrivate": false,
-  "_sortTag": "",
+  "_sortTag": "LAI",
   "_ghCommits": [
     {
       "sha": "f88d687",

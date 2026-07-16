@@ -1,17 +1,17 @@
 {
-  "id": "mqxqutrghmde",
+  "id": "mrnfkhbc3h18",
   "type": "note",
-  "title": "SMBE26 - Wednesday",
+  "title": "SMBE26 notes",
   "genes": [],
   "tags": [
     "SMBE26"
   ],
-  "source": "",
+  "source": "https://smbe2026.org/virtual-streaming/",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-01T08:20:19.306Z",
+  "date": "2026-07-16T11:35:00.398Z",
   "synced": false,
   "_sortTag": "SMBE26",
-  "pinned": false
+  "pinned": true
 }

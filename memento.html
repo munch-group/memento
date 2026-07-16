@@ -235,6 +235,9 @@ a { color: inherit; }
 .card.overdue { border-color: rgba(200, 0, 0, 0.5); }
 .card.due-today { border-color: rgba(200,0,0,0.8); }
 .card.due-soon { border-color: rgba(200, 0, 0, 0.3); }
+/* On the dashboard, an upcoming-deadline card is marked blue (and sorted ahead of the pinned ones).
+   Declared after the red due-state rules so it wins for those cards here. */
+.card.dash-deadline { border-color: #185FA5; }
 .card-due { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
 .card-due.overdue { color: #c44; }
 .card-due.due-today { color: #c44; }
@@ -653,7 +656,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-15.20';
+const APP_BUILD = '2026-07-16.1';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1457,9 +1460,16 @@ function renderList() {
   let { vis } = getVisibleItems();
   if (mainView === 'dash') {
     // The dashboard is what-needs-attention: the cards you pinned, plus anything coming due inside
-    // two weeks (overdue included — that needs attention most of all). A due-soon card shows here
-    // exactly like a pinned one, minus the pinned outline; its own due-state border is enough.
+    // two weeks (overdue included — that needs attention most of all). The deadline cards come first,
+    // soonest due first, then the pinned ones; a deadline card is marked with a blue border here
+    // (see renderCard) rather than its usual red due-state one.
     vis = vis.filter(i => !SPECIAL_IDS.has(i.id) && (i.pinned || dueSoon(i)));
+    vis = vis.slice().sort((a, b) => {
+      const da = dueSoon(a), db = dueSoon(b);
+      if (da !== db) return da ? -1 : 1;                        // deadline cards before pinned ones
+      if (da && db) return (a.due || '').localeCompare(b.due || '');   // soonest deadline first
+      return 0;                                                 // pinned: keep the current sort order
+    });
   } else {
     vis = vis.filter(i => !SPECIAL_IDS.has(i.id));               // special cards live only on the dashboard
   }
@@ -1626,7 +1636,8 @@ function renderCard(item, forceExpand, eagerBody) {
   const isDueSoon = item.due && !isOverdue && !isDueToday && item.due <= soon3;
   const dueClass = isOverdue ? ' overdue' : isDueToday ? ' due-today' : isDueSoon ? ' due-soon' : '';
   const dueHtml = item.due ? `<span class="card-due${dueClass}" title="Due ${item.due}">${fmtDue(item.due)}</span>` : '';
-  return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" oncontextmenu="cardContextMenu(event,'${item.id}')" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
+  const dashDeadline = mainView === 'dash' && dueSoon(item) ? ' dash-deadline' : '';   // blue border on the dashboard
+  return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${dashDeadline}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" oncontextmenu="cardContextMenu(event,'${item.id}')" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   <div class="card-top">
     ${typeLabel}
     <span class="card-title-text"><span onclick="${item.type==='github'&&item._ghFullName?`ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\\\'")}')`:`editItem(event,'${item.id}')`}" style="cursor:${item.type==='github'?'pointer':'text'}">${esc(title)}</span></span>

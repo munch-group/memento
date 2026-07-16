@@ -93,8 +93,8 @@ console.log('\nSpecial cards never appear in the normal list');
 
 console.log('\nThe dashboard also surfaces cards coming due within two weeks');
 {
-  // The dashboard is "what needs attention": pinned cards, plus anything due soon — with overdue
-  // counting most of all. A due-soon card is not pinned, so it shows without the pinned outline.
+  // The dashboard is "what needs attention": the deadline cards (due within two weeks, overdue
+  // included) come first with a blue border, then the pinned cards.
   const { api, sandbox } = setup([]);
   const T = api.todayISO(), at = n => api.addDaysISO(T, n);
   api.items = [
@@ -120,12 +120,23 @@ console.log('\nThe dashboard also surfaces cards coming due within two weeks');
 
   eq(dashIds(), ['edge', 'over', 'pin', 'soon'], 'the dashboard shows pinned AND due-within-two-weeks cards, nothing else');
 
-  // The due-soon cards appear without the pinned outline — that class is only for actually-pinned cards.
   api.digestVisible = true; api.renderList();
   const html = sandbox.document.getElementById('item-list').innerHTML;
   const cardClass = id => (html.match(new RegExp(`class="(card[^"]*)"[^>]*data-id="${id}"`)) || [])[1] || '';
-  eq(/\bpinned\b/.test(cardClass('pin')), true, 'the pinned card carries the pinned class (its orange edge)');
-  eq(/\bpinned\b/.test(cardClass('soon')), false, 'a due-soon card does NOT — it appears without the orange edge');
+
+  // A deadline card is marked with the blue dash-deadline border here — including overdue, which
+  // would otherwise be red — while a plain pinned card is not.
+  eq(/\bdash-deadline\b/.test(cardClass('soon')), true, 'an upcoming-deadline card gets the blue border');
+  eq(/\bdash-deadline\b/.test(cardClass('over')), true, '...and so does an overdue one (blue wins over its red)');
+  eq(/\bdash-deadline\b/.test(cardClass('pin')), false, 'a plain pinned card does not');
+  eq(/\bpinned\b/.test(cardClass('pin')), true, 'the pinned card still carries the pinned class (its orange edge)');
+  eq(/\bpinned\b/.test(cardClass('soon')), false, 'and a due-soon card does not get the pinned outline');
+
+  // Deadline cards are ordered ahead of the pinned ones.
+  const order = [...html.matchAll(/data-id="([^"]+)"/g)].map(m => m[1]).filter(id => !id.startsWith('_'));
+  const pinIdx = order.indexOf('pin');
+  eq(['over', 'soon', 'edge'].every(id => order.indexOf(id) < pinIdx), true,
+     'every deadline card comes before the pinned card');
 }
 
 console.log('\nSpecial cards are not taggable or pinnable');

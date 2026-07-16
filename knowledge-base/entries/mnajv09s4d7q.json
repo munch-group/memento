@@ -3,7 +3,10 @@
   "type": "idea",
   "title": "Tree stats idea",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "LoF",
+    "Drive"
+  ],
   "source": "",
   "date": "2026-04-02T18:00:30.933Z",
   "synced": false,

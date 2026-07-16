@@ -3,7 +3,9 @@
   "type": "note",
   "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

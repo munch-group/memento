@@ -3,12 +3,15 @@
   "type": "note",
   "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Archaic",
+    "MT"
+  ],
   "source": "[[mnkci1az643g|MT-Auto coevolving genes]] [[mnalzvyg8m1u|Human-Nean admixture]]",
   "connection": true,
   "archived": false,
   "due": "",
-  "date": "2026-04-08T11:54:01.509Z",
+  "date": "2026-07-16T06:00:30.651Z",
   "synced": false,
   "_sortTag": ""
 }

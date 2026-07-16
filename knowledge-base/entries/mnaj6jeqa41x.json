@@ -3,7 +3,9 @@
   "type": "idea",
   "title": "PtD using PyMC",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "source": "",
   "date": "2026-03-28T16:14:43.394Z",
   "synced": false,

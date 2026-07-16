@@ -90,7 +90,9 @@
     "ZFX",
     "ZRSR2"
   ],
-  "tags": [],
+  "tags": [
+    "Xi"
+  ],
   "source": "Roman et al. 2023 / https://10.1016/j.xgen.2023.100259",
   "connection": false,
   "archived": false,

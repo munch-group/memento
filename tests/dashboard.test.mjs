@@ -99,12 +99,13 @@ console.log('\nThe dashboard also surfaces cards coming due within two weeks');
   const T = api.todayISO(), at = n => api.addDaysISO(T, n);
   api.items = [
     note('_priorities', 'Priorities'),
-    note('pin',   'Pinned',        { pinned: true }),
-    note('over',  'Overdue',       { due: at(-3) }),
-    note('soon',  'Due in a week', { due: at(7) }),
-    note('edge',  'Due in 13 days',{ due: at(13) }),
-    note('far',   'Due in 20 days',{ due: at(20) }),
-    note('plain', 'No due date'),
+    note('pin',    'Pinned',         { pinned: true }),
+    note('over',   'Overdue',        { due: at(-3) }),
+    note('urgent', 'Due in 2 days',  { due: at(2) }),
+    note('soon',   'Due in a week',  { due: at(7) }),
+    note('edge',   'Due in 13 days', { due: at(13) }),
+    note('far',    'Due in 20 days', { due: at(20) }),
+    note('plain',  'No due date'),
   ];
   const dashIds = () => {
     api.digestVisible = true; api.renderList();
@@ -118,25 +119,36 @@ console.log('\nThe dashboard also surfaces cards coming due within two weeks');
   eq(api.dueSoon(api.items.find(i => i.id === 'far')), false, 'but due in 20 days does not');
   eq(api.dueSoon(api.items.find(i => i.id === 'plain')), false, 'and a card with no due date never does');
 
-  eq(dashIds(), ['edge', 'over', 'pin', 'soon'], 'the dashboard shows pinned AND due-within-two-weeks cards, nothing else');
+  eq(dashIds(), ['edge', 'over', 'pin', 'soon', 'urgent'], 'the dashboard shows pinned AND due-within-two-weeks cards, nothing else');
 
   api.digestVisible = true; api.renderList();
-  const html = sandbox.document.getElementById('item-list').innerHTML;
+  const list = sandbox.document.getElementById('item-list');
+  const html = list.innerHTML;
   const cardClass = id => (html.match(new RegExp(`class="(card[^"]*)"[^>]*data-id="${id}"`)) || [])[1] || '';
 
-  // A deadline card is marked with the blue dash-deadline border here — including overdue, which
-  // would otherwise be red — while a plain pinned card is not.
-  eq(/\bdash-deadline\b/.test(cardClass('soon')), true, 'an upcoming-deadline card gets the blue border');
-  eq(/\bdash-deadline\b/.test(cardClass('over')), true, '...and so does an overdue one (blue wins over its red)');
-  eq(/\bdash-deadline\b/.test(cardClass('pin')), false, 'a plain pinned card does not');
-  eq(/\bpinned\b/.test(cardClass('pin')), true, 'the pinned card still carries the pinned class (its orange edge)');
-  eq(/\bpinned\b/.test(cardClass('soon')), false, 'and a due-soon card does not get the pinned outline');
+  // The dashboard container carries dash-view, which is what the quiet-border CSS keys off.
+  eq(list.classList.contains('dash-view'), true, 'the dashboard list is marked dash-view');
 
-  // Deadline cards are ordered ahead of the pinned ones.
-  const order = [...html.matchAll(/data-id="([^"]+)"/g)].map(m => m[1]).filter(id => !id.startsWith('_'));
-  const pinIdx = order.indexOf('pin');
-  eq(['over', 'soon', 'edge'].every(id => order.indexOf(id) < pinIdx), true,
-     'every deadline card comes before the pinned card');
+  // Only a deadline under four days out gets the red deadline-urgent border — overdue included.
+  eq(/\bdeadline-urgent\b/.test(cardClass('urgent')), true, 'a deadline 2 days out is urgent → red border');
+  eq(/\bdeadline-urgent\b/.test(cardClass('over')), true, '...and so is an overdue one');
+  eq(/\bdeadline-urgent\b/.test(cardClass('soon')), false, 'a deadline a week out is not — no coloured border');
+  eq(/\bdeadline-urgent\b/.test(cardClass('edge')), false, 'nor one 13 days out');
+  eq(/\bdeadline-urgent\b/.test(cardClass('pin')), false, 'and a plain pinned card never is');
+  // The pinned outline is dropped on the dashboard by the .dash-view CSS, not by removing the class.
+  eq(/\bpinned\b/.test(cardClass('pin')), true, 'the pinned card keeps its pinned class (the outline is hidden via CSS)');
+
+  // Deadline cards are ordered ahead of the pinned ones. The dashboard distributes cards round-robin
+  // across columns, so this stacks per column: in whichever column the pinned card lands, every card
+  // above it is a deadline card.
+  const deadlineIds = new Set(['over', 'urgent', 'soon', 'edge']);
+  const cols = html.split('class="item-col"').slice(1);
+  const abovePinAllDeadlines = cols.every(colHtml => {
+    const colIds = [...colHtml.matchAll(/data-id="([^"]+)"/g)].map(m => m[1]).filter(id => !id.startsWith('_'));
+    const pinPos = colIds.indexOf('pin');
+    return pinPos === -1 || colIds.slice(0, pinPos).every(id => deadlineIds.has(id));
+  });
+  eq(abovePinAllDeadlines, true, 'in its column, every card above the pinned one is a deadline card');
 }
 
 console.log('\nSpecial cards are not taggable or pinnable');

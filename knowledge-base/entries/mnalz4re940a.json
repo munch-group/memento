@@ -3,7 +3,10 @@
   "type": "idea",
   "title": "X/Y DEG",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Drive",
+    "Chromatin"
+  ],
   "source": "",
   "date": "2026-03-28T17:32:56.665Z",
   "synced": false,

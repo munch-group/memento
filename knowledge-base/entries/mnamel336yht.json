@@ -3,7 +3,10 @@
   "type": "idea",
   "title": "Chromatin loops chrX",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "X",
+    "Chromatin"
+  ],
   "source": "",
   "date": "2026-03-28T17:45:20.143Z",
   "synced": false,

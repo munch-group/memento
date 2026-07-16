@@ -3,7 +3,9 @@
   "type": "idea",
   "title": "Within individual ancestry het and BDMI",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "BDMI"
+  ],
   "source": "",
   "date": "2026-03-28T17:20:47.185Z",
   "synced": false,

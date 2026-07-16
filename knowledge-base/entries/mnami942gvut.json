@@ -3,7 +3,9 @@
   "type": "idea",
   "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "source": "",
   "date": "2026-03-28T17:47:48.770Z",
   "synced": false,

@@ -3,7 +3,10 @@
   "type": "idea",
   "title": "Diamond SMC tree stat",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "LoF",
+    "Drive"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

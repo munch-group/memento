@@ -1,1 +1,0 @@
-Review Claude and Notion subscriptions

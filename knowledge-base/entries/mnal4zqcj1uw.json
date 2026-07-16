@@ -3,7 +3,10 @@
   "type": "hypothesis",
   "title": "MT and BDMI",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "BDMI",
+    "MT"
+  ],
   "source": "",
   "date": "2026-03-28T17:09:49.383Z",
   "synced": false,

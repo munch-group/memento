@@ -3,7 +3,12 @@
   "type": "hypothesis",
   "title": "Recombination about A/B borders",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "BDMI",
+    "Chromatin",
+    "Drive",
+    "X"
+  ],
   "source": "",
   "date": "2026-03-28T17:17:34.277Z",
   "synced": false,

@@ -3,7 +3,10 @@
   "type": "hypothesis",
   "title": "ECH and BDMI",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "BDMI",
+    "Drive"
+  ],
   "source": "",
   "date": "2026-03-28T17:29:30.738Z",
   "synced": false,

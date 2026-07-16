@@ -3,7 +3,10 @@
   "type": "hypothesis",
   "title": "Chromatin looping and BDMI",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Chromatin",
+    "BDMI"
+  ],
   "source": "",
   "date": "2026-03-28T17:10:41.673Z",
   "synced": false,

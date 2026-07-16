@@ -3,7 +3,10 @@
   "type": "hypothesis",
   "title": "Y and MT in swamping",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Y",
+    "MT"
+  ],
   "source": "",
   "date": "2026-03-28T16:52:20.753Z",
   "synced": false,

@@ -21,13 +21,13 @@ const note = (id, title, extra = {}) =>
 const bar = (id, start, end, title = '') => ({ id, title, start, end });
 const sched = (...subtasks) => ({ subtasks });
 
-function setup(itemsList) {
-  const { api, sandbox, toasts } = load({ fetchImpl: noop });
+function setup(itemsList, opts = {}) {
+  const { api, sandbox, toasts, flushFrames } = load({ fetchImpl: noop, ...opts });
   api.ghRepoMode = true; api.canWrite = true; api.readOnly = false;
   api.items = itemsList || [];
   sandbox.window._kbInbox = '';
   sandbox.window._kbDigest = null;
-  return { api, sandbox, toasts, el: id => sandbox.document.getElementById(id) };
+  return { api, sandbox, toasts, flushFrames, el: id => sandbox.document.getElementById(id) };
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -565,22 +565,109 @@ console.log('\nThe Task column minimises to a markers-only strip on click, and r
   eq(el('tl-left').classList.contains('tl-min'), true, 'the minimised state persists across a re-render');
 }
 
-console.log('\nScrolling pans; only a pinch zooms (this is what stopped the jerkiness)');
+// Sideways pans, up/down zooms, a pinch zooms — the graph view's gestures, so the trackpad means
+// one thing in both. Up/down zoomed here once before and was taken out again for making panning
+// jerky: two fingers never run straight, and back then every frame whose vertical component won
+// fired a zoom — a full re-render — in the middle of a pan. The axis latch is what makes it safe to
+// bring back, so most of what is pinned here is the latch.
+console.log('\nSideways pans, up/down zooms, and the axis latches for the whole gesture');
 {
-  const { api } = setup([note('a', 'A', { due: '2026-07-20' })]);
+  // A zoom is coalesced onto a frame, so this is one of the few blocks that wants frames to exist.
+  const { api, flushFrames } = setup([note('a', 'A', { due: '2026-07-20' })], { frames: true });
   api.setView('timeline');
-  const wheel = (o) => api.tlWheel({ deltaX: 0, deltaY: 0, clientX: 200, deltaMode: 0, preventDefault(){}, ...o });
+  const send  = (o) => api.tlWheel({ deltaX: 0, deltaY: 0, clientX: 200, deltaMode: 0, preventDefault(){}, ...o });
+  const wheel = (o) => { send(o); flushFrames(); };        // one event, then the frame it lands on
+  const pause = () => new Promise(r => setTimeout(r, 160));   // longer than TL_WHEEL_GAP: a new gesture
 
   const px0 = api.tlPxPerDay;
-  wheel({ deltaY: 120 });                 // a plain vertical wheel — used to zoom, mid-pan
-  eq(api.tlPxPerDay, px0, 'a plain wheel does NOT zoom any more — it pans');
-  wheel({ deltaX: 200 });                 // a horizontal swipe
-  eq(api.tlPxPerDay, px0, '...and neither does a horizontal swipe');
+  wheel({ deltaY: -120 });                // two fingers up the trackpad
+  eq(api.tlPxPerDay > px0, true, 'an up/down drag zooms, the way a pinch does');
+  await pause();
+  wheel({ deltaY: 120 });
+  eq(api.tlPxPerDay <= px0 + 0.001, true, '...and the other way zooms back out');
 
-  wheel({ deltaY: -120, ctrlKey: true }); // a pinch
-  eq(api.tlPxPerDay > px0, true, 'a pinch (ctrl+wheel) zooms in');
-  wheel({ deltaY: 120, ctrlKey: true });
-  eq(api.tlPxPerDay <= px0 + 0.001, true, '...and back out');
+  await pause();
+  const px1 = api.tlPxPerDay;
+  wheel({ deltaX: 200 });                 // a sideways swipe: the lane scrolls natively
+  eq(api.tlPxPerDay, px1, 'a sideways drag pans — it does not zoom');
+
+  // The jerkiness guard.
+  wheel({ deltaY: 120 });                 // the same gesture, wobbling off its axis
+  eq(api.tlPxPerDay, px1, 'a vertical wobble mid-pan stays a pan — the axis is latched');
+
+  await pause();
+  const px2 = api.tlPxPerDay;
+  wheel({ deltaY: -120 });
+  const px3 = api.tlPxPerDay;
+  eq(px3 > px2, true, 'a vertical gesture latches the other way');
+  wheel({ deltaX: 200 });                 // ...and wobbles sideways
+  eq(api.tlPxPerDay, px3, '...so a sideways wobble mid-zoom does nothing at all');
+
+  await pause();
+  const px4 = api.tlPxPerDay;
+  wheel({ deltaY: -120 });
+  eq(api.tlPxPerDay > px4, true, 'a pause ends the gesture, so the next one picks its axis afresh');
+
+  // A pinch is its own gesture and must never be filtered by a latch left over from a pan.
+  await pause();
+  wheel({ deltaX: 200 });                 // latch to panning...
+  const px5 = api.tlPxPerDay;
+  wheel({ deltaY: -120, ctrlKey: true }); // ...then pinch anyway
+  eq(api.tlPxPerDay > px5, true, 'a pinch zooms whatever the latch says');
+
+  // A zoom re-renders the lane and the trackpad outruns the frame rate, so a gesture's deltas are
+  // summed and spent once per frame rather than per event.
+  await pause();
+  api.tlSetZoom(40);
+  send({ deltaY: -40 }); send({ deltaY: -40 }); send({ deltaY: -40 });
+  eq(api.tlPxPerDay, 40, 'three wheel events inside one frame have not re-rendered yet');
+  eq(flushFrames(), 1, '...they asked for one frame between them, not three');
+  const coalesced = api.tlPxPerDay;
+  eq(coalesced > 40, true, '...and the frame spends them');
+
+  await pause();
+  api.tlSetZoom(40);
+  wheel({ deltaY: -120 });
+  eq(api.tlPxPerDay, coalesced, '...summed, so three 40s land exactly where one 120 does');
+}
+{
+  // The gesture that caused the original jerkiness, replayed: a real two-finger swipe opens with a
+  // few noisy pixels, wanders off its axis under the fingers, and then coasts. Not one frame of it
+  // may zoom.
+  const { api, flushFrames } = setup([note('a', 'A', { due: '2026-07-20' })], { frames: true });
+  api.setView('timeline');
+  const swipe = [
+    { dx:  1, dy:  2 }, { dx:  3, dy: -1 }, { dx:  9, dy:  4 },   // opening: small, and dy leads it
+    { dx: 17, dy: -3 }, { dx: 22, dy:  6 }, { dx: 19, dy: -8 },   // under way, wobbling
+    { dx: 11, dy:  9 }, { dx:  6, dy: -2 }, { dx:  3, dy:  5 },   // momentum, decaying and noisy
+    { dx:  1, dy:  3 }, { dx:  1, dy: -4 },                       // the tail: dy now leads again
+  ];
+  api.tlSetZoom(40);
+  for (const s of swipe) {
+    api.tlWheel({ deltaX: s.dx, deltaY: s.dy, clientX: 200, deltaMode: 0, preventDefault(){} });
+    flushFrames();
+  }
+  eq(api.tlPxPerDay, 40, 'a whole noisy swipe, opening and tail included, never once zooms');
+}
+{
+  // ...and the same wobble the other way round: a deliberate vertical drag whose fingers drift
+  // sideways is a zoom throughout, and must not leak into a pan.
+  const { api, flushFrames } = setup([note('a', 'A', { due: '2026-07-20' })], { frames: true });
+  api.setView('timeline');
+  api.tlSetZoom(40);
+  for (const s of [{ dx: 1, dy: -2 }, { dx: -2, dy: -9 }, { dx: 4, dy: -18 }, { dx: -3, dy: -12 }]) {
+    api.tlWheel({ deltaX: s.dx, deltaY: s.dy, clientX: 200, deltaMode: 0, preventDefault(){} });
+    flushFrames();
+  }
+  eq(api.tlPxPerDay > 40, true, 'a vertical drag that drifts sideways still zooms all the way');
+}
+{
+  // Where there are no frames to coalesce onto, the zoom still has to land.
+  const { api } = setup([note('a', 'A', { due: '2026-07-20' })]);
+  api.setView('timeline');
+  api.tlSetZoom(40);
+  api.tlWheel({ deltaX: 0, deltaY: -120, clientX: 200, deltaMode: 0, preventDefault(){} });
+  eq(api.tlPxPerDay > 40, true, 'with no frames to wait for, a zoom is spent on the spot');
 }
 
 console.log('\nZoom stays inside its rails');

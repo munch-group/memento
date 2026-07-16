@@ -2091,28 +2091,76 @@ function tlToggleDrawer(){
 }
 function tlScroll(){ popHide(); }   // the bar popover is anchored to the moving canvas
 
-// Wheel over the lanes zooms about the cursor. A horizontal swipe is left alone — that is a pan,
-// and the lane scrolls natively.
-// Scrolling pans; only a pinch (or ctrl+wheel) zooms. Conflating the two was what made panning
-// jerky: a two-finger swipe jitters between axes, and every frame where the vertical component won
-// used to fire a zoom — a full re-render — mid-pan.
+// Wheel over the lanes: sideways pans, up/down zooms about the cursor, and a pinch zooms too.
+// Up/down and pinch meaning the one thing is the graph view's bargain, borrowed so the trackpad
+// reads the same in both. The sideways pan is this view's own — the graph pans by drag, but a lane
+// only runs one way, so its swipe has somewhere obvious to go.
+//
+// The axis latches once the gesture is decisive, and holds until the stream goes quiet.
+// That latch is the whole trick: two fingers never run perfectly straight, and letting every frame
+// re-pick its axis is what made panning jerky back when up/down zoomed — each frame the vertical
+// component happened to win fired a zoom, and a zoom is a full re-render, mid-pan. One decision per
+// gesture instead, so a wobble stays a pan. Momentum inherits the latch: a flick coasts in the axis
+// it was thrown along, and can't cross over into the other one as it decays.
+const TL_WHEEL_GAP = 120;     // ms of quiet that ends a gesture — trackpad events run ~8-16ms apart
+const TL_WHEEL_LATCH = 6;     // px of travel before the axis is called
+let _tlWheelAxis = null;      // 'x' = pan, 'y' = zoom; null until the gesture commits to one
+let _tlWheelDx = 0, _tlWheelDy = 0;   // travel so far, while the gesture is still too small to call
+let _tlWheelAt = 0;
+let _tlZoomReq = null;        // {dy, offset} awaiting a frame
+
+// A zoom rebuilds the lane, and the trackpad outruns the frame rate, so the deltas are summed and
+// spent once per frame rather than re-rendering per event. The pinch comes through here as well and
+// is smoother for it.
+function tlZoomSpend(req){
+  const lanes = document.getElementById('tl-lanes');
+  if (!lanes || !req) return;
+  const next = tlClampZoom(tlPxPerDay * Math.exp(-req.dy * 0.002));
+  if (next === tlPxPerDay) return;   // already there, or parked against a stop — don't re-render
+  const anchorDay = ((lanes.scrollLeft || 0) + req.offset) / tlPxPerDay;   // the day under the pointer
+  tlSetZoom(next, { anchorDay, anchorOffset: req.offset });
+}
+function tlZoomBy(dy, offset){
+  // No frames to wait for (tests) — there is nothing to coalesce against, so spend it now.
+  if (typeof requestAnimationFrame !== 'function') { tlZoomSpend({ dy, offset }); return; }
+  if (_tlZoomReq) { _tlZoomReq.dy += dy; _tlZoomReq.offset = offset; return; }
+  _tlZoomReq = { dy, offset };
+  requestAnimationFrame(() => {
+    const req = _tlZoomReq;
+    _tlZoomReq = null;
+    tlZoomSpend(req);
+  });
+}
+function tlWheelReset(){ _tlWheelAxis = null; _tlWheelDx = 0; _tlWheelDy = 0; }
 function tlWheel(e){
   const lanes = document.getElementById('tl-lanes');
-  if (!lanes) return;
-  if (e.ctrlKey) {                        // trackpad pinch, or ctrl+wheel on a mouse
+  if (!lanes || !lanes.getBoundingClientRect) return;
+  const k = e.deltaMode === 1 ? 16 : 1;                   // deltaMode 1 = lines
+  const dx = e.deltaX * k, dy = e.deltaY * k;
+  if (!dx && !dy) return;
+  const offset = e.clientX - lanes.getBoundingClientRect().left;
+
+  if (e.ctrlKey) {                    // trackpad pinch, or ctrl+wheel on a mouse
     e.preventDefault();
-    if (!lanes.getBoundingClientRect) return;
-    const offset = e.clientX - lanes.getBoundingClientRect().left;
-    const anchorDay = ((lanes.scrollLeft || 0) + offset) / tlPxPerDay;   // the day under the pointer
-    const dy = e.deltaY * (e.deltaMode === 1 ? 16 : 1);                   // deltaMode 1 = lines
-    tlSetZoom(tlPxPerDay * Math.exp(-dy * 0.002), { anchorDay, anchorOffset: offset });
+    tlWheelReset();                   // a pinch is its own gesture; leave no latch behind it
+    tlZoomBy(dy, offset);
     return;
   }
-  // A horizontal swipe scrolls natively — the smoothest possible pan. A vertical wheel (a mouse)
-  // has nowhere to go on a horizontal lane, so turn it into a horizontal pan.
-  if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
-  lanes.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 16 : 1);
-  e.preventDefault();
+  const now = Date.now();
+  if (now - _tlWheelAt > TL_WHEEL_GAP) tlWheelReset();   // a pause ends the gesture
+  _tlWheelAt = now;
+
+  if (!_tlWheelAxis) {
+    // Don't call the axis off the opening event: a swipe starts small and noisy, and one stray
+    // pixel of lift the wrong way would turn the whole pan into a zoom. Gather a few px of travel
+    // first, and swallow them meanwhile — an unspent 6px would otherwise scroll the page behind us.
+    _tlWheelDx += Math.abs(dx); _tlWheelDy += Math.abs(dy);
+    if (Math.max(_tlWheelDx, _tlWheelDy) < TL_WHEEL_LATCH) { e.preventDefault(); return; }
+    _tlWheelAxis = _tlWheelDx > _tlWheelDy ? 'x' : 'y';
+  }
+  if (_tlWheelAxis === 'x') return;   // sideways: the lane scrolls natively — the smoothest pan
+  e.preventDefault();                 // up/down: zoom about the cursor, exactly as the pinch does
+  tlZoomBy(dy, offset);
 }
 // --- Timeline drags -------------------------------------------------------------------------
 // All of them are delta-based and snap to whole days. The entry is written ONCE, on pointerup —

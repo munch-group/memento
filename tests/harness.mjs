@@ -79,7 +79,7 @@ function fakeIndexedDB() {
   };
 }
 
-export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false }) {
+export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false, frames = false }) {
   const store = new Map(pat ? [['gh_pat', pat]] : []);
   const toasts = [];
   const created = [];        // every element the script builds, so tests can inspect popup markup
@@ -123,6 +123,23 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
     setTimeout, clearTimeout, setInterval, clearInterval, queueMicrotask,
     console, TextEncoder, TextDecoder, btoa, atob, Date, Math, JSON, Promise, Map, Set,
     __toasts: toasts,
+  };
+  // Frames are opt-in, and default to absent on purpose: the view code treats a frameless world as
+  // "no animation is possible, so land on the final state now" (see grRelax / grTick / tlZoomBy),
+  // and that is exactly what most tests want — the settled layout, no pumping. Ask for frames only
+  // to assert on what happens BETWEEN them; then nothing runs until flushFrames() says so, since
+  // nothing here paints to schedule it.
+  let rafId = 0;
+  const framesDue = new Map();
+  if (frames) {
+    sandbox.requestAnimationFrame = fn => { framesDue.set(++rafId, fn); return rafId; };
+    sandbox.cancelAnimationFrame = id => framesDue.delete(id);
+  }
+  const flushFrames = () => {
+    const due = [...framesDue.values()];
+    framesDue.clear();
+    for (const fn of due) fn(Date.now());
+    return due.length;
   };
   sandbox.globalThis = sandbox;
   win.document = doc;
@@ -217,5 +234,5 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
   );
   vm.createContext(sandbox);
   vm.runInContext(patched + epilogue, sandbox, { filename: 'memento-inline.js' });
-  return { api: sandbox.__api, toasts, sandbox, persistCalls };
+  return { api: sandbox.__api, toasts, sandbox, persistCalls, flushFrames };
 }

@@ -417,7 +417,13 @@ console.log('\n"draw" makes the invisible web of shared tags and genes visible')
     card('lone', { tags: ['solo'] }),        // shares nothing with anyone
   ]);
   api.setView('graph');
-  const segs = () => (sandbox.document.getElementById('gr-web').getAttribute('d') || '').split('M').filter(Boolean).length;
+  // Gene layout splits the web across opacity bands (gr-web-b0…), every other layout uses the one
+  // gr-web path; count segments across all of them so the assertions don't care which is in play.
+  const segs = () => {
+    const ids = ['gr-web', ...Array.from({ length: api.GR_WEB_BUCKETS }, (_, k) => 'gr-web-b' + k)];
+    return ids.reduce((n, id) =>
+      n + (sandbox.document.getElementById(id).getAttribute('d') || '').split('M').filter(Boolean).length, 0);
+  };
 
   eq(api.grWeb, true, 'on by default — the shared-tag/gene web is drawn');
   eq(segs(), 2, 'every pair that shares something gets a line (a–b and c–d, but nobody to lone)');
@@ -437,6 +443,32 @@ console.log('\n"draw" makes the invisible web of shared tags and genes visible')
 
   api.setGrWeb(false);
   eq(segs(), 0, 'and unchecking puts it away again');
+}
+
+console.log('\nUnder Link=Genes, an edge fades with how little the two gene lists overlap');
+{
+  // Two isolated pairs with disjoint gene namespaces: one shares everything, one barely overlaps.
+  const { api, sandbox } = setup([
+    card('x', { genes: ['A1', 'A2', 'A3'] }),
+    card('y', { genes: ['A1', 'A2', 'A3'] }),                                  // full overlap with x → opaque
+    card('r', { genes: ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'] }),
+    card('s', { genes: ['B1', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6'] }),          // shares only B1 with r → faint
+  ]);
+
+  // grEdgeAlpha maps gene-list Jaccard → opacity: a full overlap is opaque, a sliver fades. Above
+  // ~0.37 overlap it saturates at 1 (a strong relationship is simply bold); below that it spreads out.
+  eq(api.grEdgeAlpha(1), 1, 'identical gene lists → fully opaque');
+  eq(api.grEdgeAlpha(0.5), 1, 'a half overlap already reads as a strong (opaque) link');
+  eq(api.grEdgeAlpha(0.2) < 1 && api.grEdgeAlpha(0.2) > api.grEdgeAlpha(0.05), true, 'below saturation, more overlap → more opaque');
+  eq(api.grEdgeAlpha(0) > 0 && api.grEdgeAlpha(0) < 0.2, true, 'a vanishing overlap fades to the faint floor, never to nothing');
+
+  api.setView('graph');
+  api.setGrLinkBy('genes');
+  const occupied = Array.from({ length: api.GR_WEB_BUCKETS }, (_, k) => k)
+    .map(k => ({ k, n: (sandbox.document.getElementById('gr-web-b' + k).getAttribute('d') || '').split('M').filter(Boolean).length }))
+    .filter(b => b.n > 0);
+  eq(occupied.length, 2, 'the two overlap levels fall into two different opacity bands');
+  eq(occupied[occupied.length - 1].k > occupied[0].k, true, 'the full-overlap edge sits in a higher (more opaque) band than the sliver');
 }
 
 console.log('\nSpacing is a dial on the physics, not a redraw');

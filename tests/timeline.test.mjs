@@ -440,6 +440,24 @@ console.log('\n+Add from the card list does NOT schedule the card');
   eq(api.tlOnTimeline(made), false, 'a card added from the list stays off the timeline (only +Add in the timeline seeds one)');
 }
 
+console.log('\nTicking the Timeline box on +Add schedules the card even from the list; Pin pins it');
+{
+  const { api, el } = setup([]);
+  api.setView('list');
+  api.selType('note');
+  el('f-content').value = 'y';
+  el('f-title').value = 'Boxed';
+  ['f-genes', 'f-tags', 'f-source', 'f-due'].forEach(id => { el(id).value = ''; });
+  el('f-connection').checked = false;
+  el('f-archived').checked = false;
+  el('f-timeline').checked = true;           // the new Timeline tickbox
+  el('f-pin').checked = true;                // the new Pin tickbox
+  await api.saveItem();
+  const made = api.items.find(i => i.title === 'Boxed');
+  eq(api.tlOnTimeline(made), true, 'ticking Timeline seeds a bar even though the list view is open');
+  eq(made.pinned, true, 'and ticking Pin pins the card');
+}
+
 console.log('\nThe card icon schedules the entry and takes you to its row');
 {
   const { api, el } = setup([note('a', 'A')]);
@@ -525,42 +543,26 @@ console.log('\nHovering a task label shows the card, the same as the graph — a
   eq(pop().style.display, 'block', 'a normal hover shows it');
 }
 
-console.log('\nOn a phone the Task column is a drawer: pan left shuts it, pan right opens it');
+console.log('\nThe Task column minimises to a markers-only strip on click, and restores on click');
 {
-  const { api, el, sandbox } = setup([note('a', 'A', { due: '2026-07-20' })]);
-  sandbox.window.innerWidth = 400;          // a phone-width window
+  const { api, el } = setup([note('a', 'A', { due: '2026-07-20' })]);
   api.setView('timeline');
-  const lanes = el('tl-lanes');
-  const shut = () => el('tl-left').classList.contains('tl-left-shut');
-  const scrollTo = x => { lanes.scrollLeft = x; api.tlScroll(); };
+  const min = () => el('tl-left').classList.contains('tl-min');
 
-  scrollTo(lanes.scrollLeft || 0);          // establish the reference
-  eq(shut(), false, 'the drawer starts open');
+  eq(min(), false, 'the column starts full-width');
+  eq(api.tlMin, false, '...and the state agrees');
 
-  scrollTo((lanes.scrollLeft || 0) + 60);   // pan left past the threshold
-  eq(shut(), true, 'panning left past the threshold slides it shut');
-  eq(api.tlDrawerShut, true, '...and the state agrees');
+  api.tlToggleDrawer();                      // click the header / empty area
+  eq(min(), true, 'clicking minimises it to the marker strip');
+  eq(api.tlMin, true, '...and the state agrees');
 
-  scrollTo((lanes.scrollLeft || 0) - 60);   // pan back right
-  eq(shut(), false, 'panning right slides it back open');
+  api.tlToggleDrawer();                      // click again
+  eq(min(), false, 'clicking again restores the full column');
 
-  // A jitter under the threshold must not toggle it.
-  const base = lanes.scrollLeft || 0;
-  scrollTo(base + 20); scrollTo(base + 5);
-  eq(shut(), false, 'a small back-and-forth jitter does not flip it');
-}
-
-console.log('\nOn the desktop the Task column is fixed — panning never hides it');
-{
-  const { api, el, sandbox } = setup([note('a', 'A', { due: '2026-07-20' })]);
-  sandbox.window.innerWidth = 1200;         // desktop width
-  // matchMedia isn't defined in the sandbox, and 1200 > 640, so the drawer is inactive.
-  eq(api.tlDrawerActive(), false, 'the drawer is inactive on a wide screen');
-  api.setView('timeline');
-  const lanes = el('tl-lanes');
-  lanes.scrollLeft = 0; api.tlScroll();
-  lanes.scrollLeft = 200; api.tlScroll();   // a big pan left
-  eq(el('tl-left').classList.contains('tl-left-shut'), false, 'the column stays put on the desktop');
+  // The minimised state must survive a rebuild — zoom and sort re-render the column.
+  api.tlToggleDrawer();                      // minimise
+  api.renderTimeline();
+  eq(el('tl-left').classList.contains('tl-min'), true, 'the minimised state persists across a re-render');
 }
 
 console.log('\nScrolling pans; only a pinch zooms (this is what stopped the jerkiness)');

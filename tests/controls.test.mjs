@@ -90,14 +90,18 @@ console.log('\nThe page title names the view you are actually in');
   eq(el('page-title').innerHTML, `Cards (${api.items.length})`, 'off it, the title counts the entries');
 }
 
-console.log('\nD still toggles the view');
+console.log('\nd / c / g / t jump straight to their views (no toggle)');
 {
+  // The keys map one-to-one onto views now: pressing d always shows the Dashboard, it never toggles
+  // back off it. setView is exactly what the d/c/g/t handlers call.
   const { api } = setup();
-  api.setDashboard(true);
-  api.toggleDigest();
-  eq(api.digestVisible, false, 'D leaves the dashboard');
-  api.toggleDigest();
-  eq(api.digestVisible, true, 'D returns to it');
+  api.setView('dash');
+  api.setView('dash');
+  eq(api.mainView, 'dash', 'd shows the Dashboard and pressing it again keeps you there');
+  api.setView('list');     eq(api.mainView, 'list', 'c shows Cards');
+  api.setView('graph');    eq(api.mainView, 'graph', 'g shows the Graph');
+  api.setView('timeline'); eq(api.mainView, 'timeline', 't shows the Timeline');
+  api.setView('dash');     eq(api.mainView, 'dash', 'd comes back to the Dashboard from anywhere');
 }
 
 // ---------------------------------------------------------------------------------------------

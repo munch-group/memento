@@ -1,0 +1,24 @@
+{
+  "id": "mrn9pbysp1ml",
+  "type": "note",
+  "title": "MBG seminar plan",
+  "genes": [],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "due": "2026-12-16",
+  "date": "2026-07-16T08:49:13.684Z",
+  "synced": false,
+  "_sortTag": "",
+  "schedule": {
+    "subtasks": [
+      {
+        "id": "smrn9pmst86v",
+        "title": "",
+        "start": "2026-11-14",
+        "end": "2026-11-24"
+      }
+    ]
+  }
+}

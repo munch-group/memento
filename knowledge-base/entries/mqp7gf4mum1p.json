@@ -9,19 +9,9 @@
   "source": "",
   "connection": false,
   "archived": false,
-  "due": "2026-07-17",
-  "date": "2026-07-16T04:41:53.989Z",
+  "due": "",
+  "date": "2026-07-16T08:21:10.355Z",
   "synced": false,
   "_sortTag": "SMBE26",
-  "pinned": false,
-  "schedule": {
-    "subtasks": [
-      {
-        "id": "smrkx44d13kw",
-        "title": "Watch talks",
-        "start": "2026-07-15",
-        "end": "2026-07-16"
-      }
-    ]
-  }
+  "pinned": true
 }

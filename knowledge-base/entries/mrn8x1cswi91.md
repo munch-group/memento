@@ -1,0 +1,2 @@
+- Widget ideogram with gene list highlights, ECH regions, xy-sperm A/B compartments, Ikers ILS, Relate scans etc.
+- Organize how data produced by different projects/repos are stored for use in other projects (close down git-lfs and use my new "lfs" library)

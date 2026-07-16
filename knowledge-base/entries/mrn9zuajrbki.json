@@ -1,26 +1,26 @@
 {
-  "id": "mrn1c4al2dxo",
+  "id": "mrn9zuajrbki",
   "type": "note",
   "title": "",
   "genes": [],
   "tags": [
-    "Funding"
+    "Teaching"
   ],
   "source": "",
   "connection": false,
   "archived": false,
-  "due": "2026-10-07",
-  "date": "2026-07-16T04:55:44.359Z",
+  "due": "",
+  "date": "2026-07-16T08:57:23.995Z",
   "synced": false,
-  "_sortTag": "Funding",
   "schedule": {
     "subtasks": [
       {
-        "id": "smrn92jyj2an",
+        "id": "smrn9zuaji7y",
         "title": "",
-        "start": "2026-07-26",
-        "end": "2026-08-02"
+        "start": "2026-07-16",
+        "end": "2026-08-04"
       }
     ]
-  }
+  },
+  "_sortTag": "Teaching"
 }

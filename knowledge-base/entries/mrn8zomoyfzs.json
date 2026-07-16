@@ -1,26 +1,24 @@
 {
-  "id": "mrn16oodkri8",
+  "id": "mrn8zomoyfzs",
   "type": "note",
   "title": "",
   "genes": [],
-  "tags": [
-    "Baboons"
-  ],
+  "tags": [],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-16T04:50:46.765Z",
+  "date": "2026-07-16T08:29:17.040Z",
   "synced": false,
   "schedule": {
     "subtasks": [
       {
-        "id": "smrn16oodjrb",
-        "title": "Download",
+        "id": "smrn8zomomp3",
+        "title": "",
         "start": "2026-07-16",
-        "end": "2026-07-16"
+        "end": "2026-07-22"
       }
     ]
   },
-  "_sortTag": "Baboons"
+  "_sortTag": ""
 }

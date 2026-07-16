@@ -2,7 +2,9 @@
   "id": "gh_munch-group_turtle-widget",
   "type": "github",
   "title": "turtle-widget",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/turtle-widget",
   "date": "2026-05-23T17:11:27Z",

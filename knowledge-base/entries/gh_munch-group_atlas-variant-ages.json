@@ -2,7 +2,11 @@
   "id": "gh_munch-group_atlas-variant-ages",
   "type": "github",
   "title": "atlas-variant-ages",
-  "tags": [],
+  "tags": [
+    "Drive",
+    "ASD",
+    "LoF"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/atlas-variant-ages",
   "date": "2026-04-24T10:30:57Z",

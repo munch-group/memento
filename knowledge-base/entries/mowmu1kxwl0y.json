@@ -3,7 +3,9 @@
   "type": "note",
   "title": "Funding overview",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Funding"
+  ],
   "source": "[[mownlvz0d5xx|Novo Nordisk Interdisciplinary Synergy]]",
   "connection": true,
   "archived": false,

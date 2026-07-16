@@ -59,7 +59,9 @@
     "RELA",
     "MAPK8"
   ],
-  "tags": [],
+  "tags": [
+    "Apoptosis"
+  ],
   "source": "https://www.mdpi.com/2073-4409/13/22/1838",
   "connection": false,
   "archived": false,

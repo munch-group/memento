@@ -2,7 +2,9 @@
   "id": "gh_munch-group_sticcs",
   "type": "github",
   "title": "sticcs",
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/sticcs",
   "date": "2026-06-03T15:02:54Z",

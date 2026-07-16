@@ -5,7 +5,10 @@
   "genes": [
     "CTCF"
   ],
-  "tags": [],
+  "tags": [
+    "Chromatin",
+    "Drive"
+  ],
   "source": "https://www.sciencedirect.com/science/article/pii/S1569199313002282",
   "connection": false,
   "archived": false,

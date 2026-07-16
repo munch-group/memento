@@ -41,7 +41,9 @@
     "WDFY4",
     "WWP2"
   ],
-  "tags": [],
+  "tags": [
+    "LoF"
+  ],
   "source": "Mathieson et al. 2015, Field et al. 2016, Le et al. 2022, Kerner et al. 2023, Irving-Pease et al. 2024",
   "connection": false,
   "archived": false,

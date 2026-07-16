@@ -2,7 +2,9 @@
   "id": "gh_munch-group_primate-prot-var",
   "type": "github",
   "title": "primate-prot-var",
-  "tags": [],
+  "tags": [
+    "LoF"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/primate-prot-var",
   "date": "2026-06-15T11:17:29Z",

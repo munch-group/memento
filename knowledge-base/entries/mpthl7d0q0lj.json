@@ -5,12 +5,16 @@
   "genes": [
     "IHO1"
   ],
-  "tags": [],
+  "tags": [
+    "chr3",
+    "BDMI",
+    "MT"
+  ],
   "source": "https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-05-31T07:57:10.404Z",
   "synced": false,
-  "_sortTag": "chr3"
+  "_sortTag": ""
 }

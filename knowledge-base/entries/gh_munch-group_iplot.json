@@ -2,7 +2,9 @@
   "id": "gh_munch-group_iplot",
   "type": "github",
   "title": "iplot",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/iplot",
   "date": "2026-04-29T18:35:16Z",

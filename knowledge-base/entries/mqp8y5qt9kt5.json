@@ -5,7 +5,10 @@
   "genes": [
     "PRDM9"
   ],
-  "tags": [],
+  "tags": [
+    "Recombination",
+    "BDMI"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

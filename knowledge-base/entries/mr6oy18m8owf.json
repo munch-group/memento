@@ -3,11 +3,14 @@
   "type": "note",
   "title": "Overview of meiosis",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Meiosis"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-04T18:23:48.934Z",
-  "synced": false
+  "date": "2026-07-16T05:37:02.859Z",
+  "synced": false,
+  "_sortTag": ""
 }

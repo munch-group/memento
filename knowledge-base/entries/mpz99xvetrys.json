@@ -2,17 +2,18 @@
   "id": "mpz99xvetrys",
   "type": "idea",
   "title": "",
-  "genes": [],
+  "genes": [
+    "PRDM9"
+  ],
   "tags": [
     "Baboons",
-    "MT",
-    "PRDM9"
+    "MT"
   ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-04T08:51:05.018Z",
+  "date": "2026-07-16T05:40:01.855Z",
   "synced": false,
   "_sortTag": "Baboons"
 }

@@ -153,7 +153,9 @@
     "HOP2",
     "RAD54B"
   ],
-  "tags": [],
+  "tags": [
+    "Recombination"
+  ],
   "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
   "connection": false,
   "archived": false,

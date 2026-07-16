@@ -3,7 +3,9 @@
   "type": "note",
   "title": "Emmas X chromosome synteny",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "X"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

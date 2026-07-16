@@ -3,7 +3,9 @@
   "type": "note",
   "title": "Moran coalescence rate with selection",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

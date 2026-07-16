@@ -2,7 +2,9 @@
   "id": "gh_munch-group_codelens-widget",
   "type": "github",
   "title": "codelens-widget",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/codelens-widget",
   "date": "2026-05-23T18:11:39Z",

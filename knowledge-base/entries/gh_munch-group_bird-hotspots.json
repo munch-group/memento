@@ -2,7 +2,9 @@
   "id": "gh_munch-group_bird-hotspots",
   "type": "github",
   "title": "bird-hotspots",
-  "tags": [],
+  "tags": [
+    "Recombination"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/bird-hotspots",
   "date": "2026-05-28T13:50:05Z",

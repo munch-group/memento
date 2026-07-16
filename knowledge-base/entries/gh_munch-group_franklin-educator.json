@@ -2,7 +2,9 @@
   "id": "gh_munch-group_franklin-educator",
   "type": "github",
   "title": "franklin-educator",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/franklin-educator",
   "date": "2026-06-13T10:10:53Z",

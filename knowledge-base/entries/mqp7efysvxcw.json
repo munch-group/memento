@@ -5,7 +5,10 @@
   "genes": [
     "PRDM9"
   ],
-  "tags": [],
+  "tags": [
+    "Apoptosis",
+    "circRNA"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

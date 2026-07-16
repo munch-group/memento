@@ -6,12 +6,14 @@
     "TOP2A",
     "TOP2B"
   ],
-  "tags": [],
+  "tags": [
+    "Chromatin"
+  ],
   "source": "https://www.science.org/doi/10.1126/sciadv.add4920",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-07-14T08:39:50.172Z",
   "synced": false,
-  "_sortTag": "TOP2A"
+  "_sortTag": ""
 }

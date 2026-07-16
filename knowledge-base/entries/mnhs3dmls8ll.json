@@ -5,7 +5,11 @@
   "genes": [
     "MAPT"
   ],
-  "tags": [],
+  "tags": [
+    "Apoptosis",
+    "Drive",
+    "LoF"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

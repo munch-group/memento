@@ -2,7 +2,14 @@
   "id": "gh_munch-group_interaction-store",
   "type": "github",
   "title": "interaction-store",
-  "tags": [],
+  "tags": [
+    "LoF",
+    "Baboons",
+    "chr3",
+    "ASD",
+    "Archaic",
+    "Apoptosis"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/interaction-store",
   "date": "2026-06-11T12:16:39Z",

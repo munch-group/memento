@@ -3,12 +3,15 @@
   "type": "note",
   "title": "Meiosis figure",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Meiosis",
+    "Recombination"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-30T12:16:28.910Z",
+  "date": "2026-07-16T05:36:32.299Z",
   "synced": false,
   "_sortTag": ""
 }

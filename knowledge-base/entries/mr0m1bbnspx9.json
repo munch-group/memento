@@ -3,7 +3,9 @@
   "type": "note",
   "title": "Recombination figure",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Meiosis"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

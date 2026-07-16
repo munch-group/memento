@@ -37,7 +37,10 @@
     "MAGEA12",
     "CSA"
   ],
-  "tags": [],
+  "tags": [
+    "X",
+    "BDMI"
+  ],
   "source": "https://doi.org/10.1371/journal.pgen.1002641",
   "connection": false,
   "archived": false,

@@ -2,7 +2,12 @@
   "id": "gh_munch-group_y-strat-gwas",
   "type": "github",
   "title": "y-strat-gwas",
-  "tags": [],
+  "tags": [
+    "ASD",
+    "X",
+    "Y",
+    "Xi"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/y-strat-gwas",
   "date": "2026-06-16T10:04:11Z",

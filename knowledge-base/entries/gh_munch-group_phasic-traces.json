@@ -2,7 +2,9 @@
   "id": "gh_munch-group_phasic-traces",
   "type": "github",
   "title": "phasic-traces",
-  "tags": [],
+  "tags": [
+    "Phasic"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/phasic-traces",
   "date": "2026-05-11T20:25:10Z",

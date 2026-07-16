@@ -3,7 +3,9 @@
   "type": "idea",
   "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Apoptosis"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

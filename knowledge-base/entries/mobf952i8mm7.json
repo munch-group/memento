@@ -2,13 +2,15 @@
   "id": "mobf952i8mm7",
   "type": "fact",
   "title": "",
-  "genes": [],
+  "genes": [
+    "KANSL1"
+  ],
   "tags": [],
   "source": "https://www.nature.com/articles/s41586-023-06705-1",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-04-23T11:53:22.227Z",
+  "date": "2026-07-16T05:55:27.341Z",
   "synced": false,
   "_sortTag": ""
 }

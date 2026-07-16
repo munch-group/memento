@@ -2,7 +2,9 @@
   "id": "gh_munch-group_SINGER",
   "type": "github",
   "title": "SINGER",
-  "tags": [],
+  "tags": [
+    "LAI"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/SINGER",
   "date": "2026-07-01T11:32:49Z",

@@ -10,7 +10,9 @@
     "MAPKAPK3",
     "DOCK3"
   ],
-  "tags": [],
+  "tags": [
+    "ASD"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

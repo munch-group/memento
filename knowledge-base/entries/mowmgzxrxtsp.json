@@ -3,7 +3,9 @@
   "type": "note",
   "title": "Funding",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Funding"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

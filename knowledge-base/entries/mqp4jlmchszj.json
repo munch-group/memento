@@ -13,7 +13,10 @@
     "EYA",
     "SLC13A3"
   ],
-  "tags": [],
+  "tags": [
+    "ASD",
+    "Archaic"
+  ],
   "source": "https://doi.org/10.64898/2026.04.03.716297",
   "connection": false,
   "archived": false,

@@ -2,7 +2,9 @@
   "id": "gh_munch-group_tspaint",
   "type": "github",
   "title": "tspaint",
-  "tags": [],
+  "tags": [
+    "LAI"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/tspaint",
   "date": "2026-07-12T21:09:06Z",

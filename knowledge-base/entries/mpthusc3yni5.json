@@ -3,7 +3,12 @@
   "type": "idea",
   "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "chr3",
+    "BDMI",
+    "Recombination",
+    "Apoptosis"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

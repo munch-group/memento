@@ -9,6 +9,10 @@
 //     a card with no tags and no genes still has to appear if something links it.
 //   * A card with no tag, no gene and no link is left out entirely: nothing would position it.
 import { load } from './harness.mjs';
+import fs from 'node:fs';
+
+// The node tints are a CSS invariant, so one test reads the stylesheet itself (see "opaque" below).
+const HTML = fs.readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
 
 let pass = 0, fail = 0;
 const eq = (a, b, msg) => {
@@ -914,9 +918,12 @@ console.log('\nThe click tint is opaque, or the web shows through the cards it p
     eq(new RegExp(`color-mix\\(in srgb, var\\(--accent\\) ${pct}%, var\\(--bg2\\)\\)`).test(bg), true,
        `...and it is still ${pct}% accent over the canvas, mixed rather than composited`);
   }
-  // The tint must keep following the accent rather than freezing a hex beside it.
-  eq(/#f5e7df|#edc8b9|#f5e6de|#eec7b9/i.test(css), false,
-     'and no flattened hex is left lying about to drift out of step with --accent');
+  // The tint must keep following the accent rather than freezing a hex beside it. Comments are
+  // stripped first: the flattened values are WRITTEN there on purpose, to say what the mix comes to.
+  const live = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  eq(/#f5e7df|#edc8b9|#f5e6de|#eec7b9/i.test(live), false,
+     'and no flattened hex is left lying about as a value, to drift out of step with --accent');
+  eq(/#f5e7df/i.test(css), true, '...though the comment still records what the mix comes to, for whoever reads it next');
 }
 
 // The map is dense enough that crossing it brushes a dozen cards on the way to the one you want, and

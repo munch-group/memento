@@ -503,11 +503,11 @@ console.log('\nUnder Link=Genes, an edge fades with how little the two gene list
     card('x', { genes: ['A1', 'A2', 'A3'] }),
     card('y', { genes: ['A1', 'A2', 'A3'] }),          // full overlap with x → opaque
     card('r', { genes: ['B1', 'B2'] }),
-    card('s', { genes: ['B1', 'B3'] }),                // shares 1 of 3 (jac 1/3) with r → mid band
+    card('s', { genes: ['B1', 'B3'] }),                // 1 shared of the shorter list's 2 (ov ½) → mid band
   ]);
 
-  // grEdgeAlpha maps gene-list Jaccard → opacity as alpha = 1 − log10(1/jac): only a full overlap is
-  // opaque, then it falls off in log-space, reaching 0 at jac ≈ 0.1. No floor — it goes to nothing.
+  // grEdgeAlpha maps gene-list overlap → opacity as alpha = 1 − log10(1/ov): only a full overlap is
+  // opaque, then it falls off in log-space, reaching 0 at ov ≈ 0.1. No floor — it goes to nothing.
   eq(api.grEdgeAlpha(1), 1, 'identical gene lists → fully opaque');
   eq(Math.abs(api.grEdgeAlpha(0.5) - 0.699) < 0.01, true, 'a half overlap sits partway down (≈0.70), not saturated');
   eq(api.grEdgeAlpha(0.5) < 1 && api.grEdgeAlpha(0.5) > api.grEdgeAlpha(0.2), true, 'more overlap → more opaque');
@@ -523,14 +523,37 @@ console.log('\nUnder Link=Genes, an edge fades with how little the two gene list
   eq(occupied[occupied.length - 1].k > occupied[0].k, true, 'the full-overlap edge sits in a higher (more opaque) band than the partial one');
 }
 
+// Gene overlap is shared/min(|A|,|B|) — containment — not shared/union. The two disagree exactly on
+// lopsided pairs, which is the whole reason for the change: a short gene list sitting entirely inside
+// a long one is ABOUT those genes, and dividing by the union docked it for the other card's breadth.
+// Jaccard scored the pair below the drawing floor and it vanished; containment calls it full.
+console.log('\nGene overlap is containment: a short list inside a long one counts as a full match');
+{
+  const { api } = setup([
+    card('big',   { genes: ['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10'] }),
+    card('small', { genes: ['G1', 'G2'] }),        // wholly inside big
+    card('half',  { genes: ['G1', 'X1'] }),        // half in, half out
+  ]);
+  const pairs = api.grPairs(api.grNodes());
+  const ovOf = (a, b) => (pairs.find(p => (p.a === a && p.b === b) || (p.a === b && p.b === a)) || {}).ov;
+
+  eq(ovOf('big', 'small'), 1, 'a list wholly inside another scores a full 1 — 2 shared of the shorter 2');
+  eq(ovOf('big', 'half'), 0.5, '...one half in, half out scores ½ — the long list\'s breadth is not held against it');
+  // Under Jaccard these were 2/10 = 0.2 and 1/11 ≈ 0.09: the first faint, the second not drawn at all.
+  eq(api.grEdgeAlpha(ovOf('big', 'small')) > api.grEdgeAlpha(0.2), true,
+     'the contained pair now reads far stronger than the 2/10 Jaccard would have made it');
+  eq(api.grEdgeAlpha(ovOf('big', 'half')) > 0, true,
+     '...and the half-in pair is drawn at all, where 1/11 by Jaccard fell under the floor');
+}
+
 console.log('\nUnder Link=Genes, the attraction follows the overlap too, not a flat pull');
 {
   // Two isolated gene pairs: one shares its whole list, one shares a third. The full-overlap pair
   // must settle closer, because in gene layout the spring strength is 3·grEdgeAlpha(overlap), not a
   // flat per-edge pull. Disjoint gene namespaces so the two pairs never tug on each other.
   const { api } = setup([
-    card('h1', { genes: ['G1', 'G2'] }), card('h2', { genes: ['G1', 'G2'] }),   // jac 1   → strong pull
-    card('l1', { genes: ['K1', 'K2', 'K3'] }), card('l2', { genes: ['K1', 'K4', 'K5'] }), // jac 1/5 → weak pull
+    card('h1', { genes: ['G1', 'G2'] }), card('h2', { genes: ['G1', 'G2'] }),   // ov 1   → strong pull
+    card('l1', { genes: ['K1', 'K2', 'K3'] }), card('l2', { genes: ['K1', 'K4', 'K5'] }), // ov 1/3 → weaker pull
   ]);
   api.setView('graph');
   api.setGrLinkBy('genes');                    // re-solves synchronously (no rAF in the sandbox)
@@ -692,7 +715,7 @@ console.log('\nThe drawn web is gene overlap and nothing else');
     api.grLinkBy = mode;
     api.setView('graph');
     return api.grPairs(api.grNodes())
-      .map(p => ({ p, k: Math.round(api.grEdgeAlpha(p.jac || 0) * api.GR_WEB_BUCKETS) }))
+      .map(p => ({ p, k: Math.round(api.grEdgeAlpha(p.ov || 0) * api.GR_WEB_BUCKETS) }))
       .filter(x => x.k > 0)                       // below the floor: not drawn
       .map(x => `${[x.p.a, x.p.b].sort().join('~')} band${Math.min(x.k, api.GR_WEB_BUCKETS)}`)
       .sort();

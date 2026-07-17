@@ -30,12 +30,14 @@
     "UPF3B",
     "VCX2"
   ],
-  "tags": [],
+  "tags": [
+    "Drive"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-12T12:04:43.702Z",
+  "date": "2026-07-17T07:30:17.056Z",
   "synced": false,
   "_sortTag": "",
   "pinned": false

@@ -2586,13 +2586,24 @@ function setGrLinkBy(v){
 // The attracting pairs, precomputed once per layout: for every two cards sharing a tag or a gene,
 // one spring whose strength is simply how many terms they share. Also hands back a seed key per
 // card (see grInitPositions).
-// Jaccard overlap of two term sets: how much of what the two carry between them they carry both.
-function grJac(a, b){
+// How much two cards' gene lists overlap, 0..1. There are two ways to ask, and they part company on
+// lopsided pairs — a card listing 20 genes against one listing 2 of them, both of which the long one
+// has:
+//
+//   shared / (union)          — Jaccard:   2/20 = 0.10, "these two have little in common"
+//   shared / min(|A|, |B|)    — this one:  2/2  = 1.00, "the short list sits wholly inside the long"
+//
+// Containment is the reading worth having: the two-gene card IS about those genes, and Jaccard was
+// docking it for the OTHER card's breadth, which says nothing about the pair. The cost is that the
+// measure stops being symmetric in meaning — a small card inside a large one now scores as high as
+// two identical cards, so "1.0" no longer means "the same genes", only "no genes outside the other".
+// TO ROLL BACK: make the denominator `a.size + b.size - shared`. Nothing else changes.
+function grGeneOverlap(a, b){
   if (!a.size || !b.size) return 0;
   let shared = 0;
   for (const x of a) if (b.has(x)) shared++;
-  const uni = a.size + b.size - shared;
-  return uni > 0 ? shared / uni : 0;
+  if (!shared) return 0;
+  return shared / Math.min(a.size, b.size);
 }
 function grIndex(nodes){
   const terms = new Map();          // id -> Set of terms, whatever the layout counts as one
@@ -2623,7 +2634,7 @@ function grIndex(nodes){
         // never their tags. So Genes and Both draw one and the same web; what Both adds is tag pull,
         // which moves the cards without drawing anything. A pair sharing only tags scores 0 here and
         // is not drawn at all — it is a pull, not a claim about genes.
-        pairs.push({ a: nodes[i].id, b: nodes[j].id, w: shared, jac: grJac(gterms.get(nodes[i].id), gterms.get(nodes[j].id)) });
+        pairs.push({ a: nodes[i].id, b: nodes[j].id, w: shared, ov: grGeneOverlap(gterms.get(nodes[i].id), gterms.get(nodes[j].id)) });
       }
     }
   }
@@ -2715,7 +2726,7 @@ function grStep(a){
     if (!pa || !pb) continue;
     const dx = pb.x - pa.x, dy = pb.y - pa.y;
     const d = Math.sqrt(dx * dx + dy * dy) || 1;
-    const w = geneAtt ? 3 * grEdgeAlpha(p.jac || 0) : p.w;
+    const w = geneAtt ? 3 * grEdgeAlpha(p.ov || 0) : p.w;
     const ux = dx / d, uy = dy / d, att = KA * w * (d - L);
     fx[p.a] += ux * att; fy[p.a] += uy * att;
     fx[p.b] -= ux * att; fy[p.b] -= uy * att;
@@ -2879,15 +2890,14 @@ function grWebPaths(){
   }
   return { lit: lit.join(''), dim: dim.join('') };
 }
-// Opacity for a banded web edge from the Jaccard overlap of the two cards' term lists — gene lists
-// under Genes, tags and genes together under Both, whatever the layout counts as a term:
-// alpha = 1 − log10(1/jac). Only a full overlap (jac→1) is opaque; from there it falls off in
-// log-space — a tenfold-sparser overlap loses one unit of alpha — reaching 0 at jac ≈ 0.1. No floor:
+// Opacity for a banded web edge, from how much the two cards' gene lists overlap (grGeneOverlap):
+// alpha = 1 − log10(1/ov). Only a full overlap (ov→1) is opaque; from there it falls off in
+// log-space — a tenfold-sparser overlap loses one unit of alpha — reaching 0 at ov ≈ 0.1. No floor:
 // a fainter overlap than that simply isn't drawn.
-function grEdgeAlpha(jac){
-  if (!(jac > 0)) return 0;
-  if (jac >= 1) return 1;
-  return Math.max(0, Math.min(1, 1 - Math.log10(1 / jac)));
+function grEdgeAlpha(ov){
+  if (!(ov > 0)) return 0;
+  if (ov >= 1) return 1;
+  return Math.max(0, Math.min(1, 1 - Math.log10(1 / ov)));
 }
 // Opacity drawn for band i (0-based): (i+1)/N, so the top band is fully opaque (a solid #3B3B3B line).
 function grWebBandAlpha(i){ return (i + 1) / GR_WEB_BUCKETS; }
@@ -2909,7 +2919,7 @@ function grWebBuckets(){
     if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;
     const a = _grPos[p.a], b = _grPos[p.b];
     if (!a || !b) continue;
-    let k = Math.round(grEdgeAlpha(p.jac || 0) * GR_WEB_BUCKETS);
+    let k = Math.round(grEdgeAlpha(p.ov || 0) * GR_WEB_BUCKETS);
     if (k <= 0) continue;                          // faded to nothing → not drawn
     if (k > GR_WEB_BUCKETS) k = GR_WEB_BUCKETS;
     (grWebLit(p) ? lit : dim)[k - 1].push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);

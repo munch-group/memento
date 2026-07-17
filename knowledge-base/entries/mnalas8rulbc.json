@@ -1,7 +1,7 @@
 {
   "id": "mnalas8rulbc",
   "type": "note",
-  "title": "Baboon swamping, Y, and MY",
+  "title": "Baboon swamping, Y, and MT",
   "genes": [],
   "tags": [
     "Baboons",
@@ -11,10 +11,11 @@
     "LAI"
   ],
   "source": "Cohen et al. / https://doi.org/10.1371/journal.pgen.1006407",
-  "date": "2026-05-08T10:49:43.275Z",
+  "date": "2026-07-17T07:31:27.112Z",
   "synced": false,
-  "_sortTag": "Baboons",
+  "_sortTag": "X",
   "connection": false,
   "archived": false,
-  "due": ""
+  "due": "",
+  "pinned": false
 }

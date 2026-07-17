@@ -897,6 +897,28 @@ console.log('\nClicking a card tints it and its web neighbourhood, until clicked
   eq([tinted(), clicked()], [['A', 'mid', 'n1'], ['A', 'n1']], 'and both strengths survive a re-render');
 }
 
+// A node's background is the ONLY thing hiding the web that runs beneath it (edges are z-index 1,
+// nodes 2), and these rules replace .gr-node's opaque white rather than layering over it. As washes
+// they let the lines through the very cards they were picking out. This is CSS, so it is asserted as
+// CSS: the fake DOM has no engine to compute a colour with.
+console.log('\nThe click tint is opaque, or the web shows through the cards it picks out');
+{
+  const css = HTML.slice(HTML.indexOf('<style'), HTML.indexOf('</style>'));
+  const decl = n => ((css.match(new RegExp(`\\.gr-node\\.${n}\\s*\\{([^}]*)\\}`)) || [])[1] || '').trim();
+
+  for (const [n, pct] of [['gr-tint', 14], ['gr-sel', 38]]) {
+    const bg = decl(n);
+    eq(bg.length > 0, true, `.gr-node.${n} sets a background`);
+    eq(/rgba\(|\/\s*0?\.\d/.test(bg), false, `...with no alpha in it — a see-through node is the whole bug`);
+    // Same two colours as the washes they replace: that strength of accent over the canvas behind it.
+    eq(new RegExp(`color-mix\\(in srgb, var\\(--accent\\) ${pct}%, var\\(--bg2\\)\\)`).test(bg), true,
+       `...and it is still ${pct}% accent over the canvas, mixed rather than composited`);
+  }
+  // The tint must keep following the accent rather than freezing a hex beside it.
+  eq(/#f5e7df|#edc8b9|#f5e6de|#eec7b9/i.test(css), false,
+     'and no flattened hex is left lying about to drift out of step with --accent');
+}
+
 // The map is dense enough that crossing it brushes a dozen cards on the way to the one you want, and
 // opening each in passing turned the canvas into a flicker. The tooltip waits for the pointer to
 // rest. A tap does not wait: touch has no hover, so a delay there would be nothing but lag.
@@ -912,6 +934,7 @@ console.log('\nA node\'s tooltip waits half a second before opening');
   const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
   eq(api.GR_POP_DELAY, 500, 'half a second of rest before a node explains itself');
+  eq(api.grPopDelay, api.GR_POP_DELAY, '...which is where the Delay slider starts');
 
   api.grShowPop('a');
   eq(shown(), false, 'hovering a node does not open it at once — that is what made it flicker');
@@ -931,6 +954,80 @@ console.log('\nA node\'s tooltip waits half a second before opening');
   api.grShowPop('a', true);
   eq(shown(), true, 'a tap opens it at once — touch has no hover to rest');
   eq(/body of a/.test(sandbox.document.getElementById('app-pop').innerHTML), true, '...and it is the tapped card');
+}
+
+// How long a wait is too long depends on how well you know the map, so it is a dial in the tools bar
+// beside Spacing rather than a number baked into the source.
+console.log('\nThe Delay slider sets that rest, anywhere from half a second to none');
+{
+  const { api, sandbox, el } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const pop = () => sandbox.document.getElementById('app-pop');
+  const shown = () => pop().style.display === 'block';
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const slider = () => (el('graph-view').innerHTML.match(/<input[^>]*id="gr-delay"[^>]*>/) || [''])[0];
+
+  eq(/min="0"[^>]*max="1"[^>]*step="0.05"/.test(slider()), true, 'the slider runs from 0 to 1 second');
+  eq(/type="range"/.test(slider()), true, '...as a range, the same control Spacing uses');
+  eq(/value="0.5"/.test(slider()), true, '...and starts at the default half second');
+
+  // The slider talks seconds, the timer milliseconds.
+  api.setGrPopDelay(0.25);
+  eq(api.grPopDelay, 250, 'a quarter of a second on the slider is 250ms to the timer');
+  api.setGrPopDelay(1);
+  eq(api.grPopDelay, 1000, '...and a full second is 1000ms');
+
+  // A rebuild must show the setting, not snap the handle back to the default.
+  api.setGrPopDelay(0.25);
+  api.setGrLinkBy('tags');    // a different graph entirely (setup() opened on 'both'): rendered afresh
+  eq(/gr-node/.test(el('graph-view').innerHTML), true, 'the graph rebuilds — cards a and b still share tag x');
+  eq(/value="0.25"/.test(slider()), true, 'and the handle survives a rebuild where the user left it');
+
+  eq([api.setGrPopDelay(99), api.grPopDelay][1], 1000, 'the dial cannot be pushed past a second');
+  eq([api.setGrPopDelay(-5), api.grPopDelay][1], 0, '...or below nothing');
+  eq([api.setGrPopDelay('what'), api.grPopDelay][1], 500, '...and a value that is not a number falls back to the default');
+
+  // The dial is the whole point: a shorter rest has to actually open the card sooner.
+  api.setGrPopDelay(0.1);
+  api.grShowPop('a');
+  eq(shown(), false, 'a shortened rest is still a rest — it does not open on contact');
+  await wait(60);
+  eq(shown(), false, '...still waiting at 60ms');
+  await wait(120);
+  eq(shown(), true, '...and open by 180ms, long before the default would have fired');
+
+  // ...and the far end of the dial means what it says.
+  api.grPopCancel(); api.popHide();
+  api.setGrPopDelay(0);
+  api.grShowPop('b');
+  eq(shown(), true, 'at 0 the card opens on contact, with no wait at all — not even a tick');
+  eq(/body of b/.test(pop().innerHTML), true, '...and it is the card under the pointer');
+}
+
+// The 130ms grace that lets the pointer cross into the popover outlived the old half-second rest
+// every time, so the outgoing card was always long gone before the next arrived. Shorten the rest
+// past that grace and the order flips: the new card lands FIRST, and the hide still counting down
+// for the old one would sweep it away — a card that opens and vanishes, at exactly the settings
+// someone reaches for the slider to get.
+console.log('\nA short delay does not let the outgoing card take the incoming one with it');
+{
+  const { api, sandbox } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const pop = () => sandbox.document.getElementById('app-pop');
+  const shown = () => pop().style.display === 'block';
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  api.setGrPopDelay(0);
+  api.grShowPop('a', true);
+  eq(shown(), true, "node A's card is up");
+
+  api.grPopCancel(); api.popOut();   // the pointer leaves A: its hide is now counting down
+  api.grShowPop('b');                // ...and lands on B, whose card opens at once
+  eq(shown(), true, "node B's card opens immediately");
+
+  await wait(220);                   // A's hide comes due
+  eq(shown(), true, "and A's hide does not take B's card away with it");
+  eq(/body of b/.test(pop().innerHTML), true, '...B is still the card on screen');
 }
 
 console.log('\nA node\'s tooltip IS the card, and Title · Tags · Body says how much of it');
@@ -968,6 +1065,82 @@ console.log('\nA node\'s tooltip IS the card, and Title · Tags · Body says how
   // row — so the tooltip has none of them, which is exactly what frees the space for the title.
   eq(/tl-icon|archive-icon|pin-icon|focus-icon|card-bottom-actions/.test(html()), false,
      'the tooltip carries no action icons — they belong to the expanded card, giving the title the room');
+}
+
+// Clicking a node used to pin its tooltip, so the card sat there describing a node the pointer had
+// long since left, until you clicked something else to be rid of it. The pin is for TOUCH, which has
+// no hover to raise the card and no pointerleave to drop it again. A mouse has both, so a click has
+// no business touching the card at all: it selects the node, and that is the whole of it.
+console.log('\nThe tooltip answers to the pointer, not to clicks');
+{
+  const { api, sandbox } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const shown = () => sandbox.document.getElementById('app-pop').style.display === 'block';
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const ev = (o = {}) => ({ pointerId: 1, clientX: 0, clientY: 0, pointerType: 'mouse',
+                            preventDefault(){}, stopPropagation(){}, ...o });
+
+  api.grShowPop('a', true);                  // the pointer has rested on the node; the card is up
+  eq(shown(), true, 'hovering a node opens its card');
+
+  api.grNodeDown(ev(), 'a');
+  eq(shown(), true, 'pressing the node does not snatch the card away');
+  api.grUp(ev());
+  eq(shown(), true, '...and releasing leaves it exactly as the hover left it');
+  eq(api.popPinned, false, 'the click does NOT pin it — this is what made it outstay the pointer');
+  eq([...api.grSelIds], ['a'], 'what a click DOES do is select the node');
+
+  // The complaint itself: the card has to go when the pointer goes, click or no click.
+  api.popOut();                              // pointerleave
+  await wait(200);                           // ...plus the 130ms grace to cross into the popover
+  eq(shown(), false, 'and leaving the node takes the card away, exactly as if it had never been clicked');
+
+  // A click still selects when no card is up — selection and tooltip share nothing.
+  api.grNodeDown(ev(), 'b');
+  api.grUp(ev());
+  eq([...api.grSelIds].sort(), ['a', 'b'], 'a second click selects a second node');
+  eq(shown(), false, '...and raises no card of its own');
+}
+
+console.log('\n...but touch has no hover, so there a tap must still do both');
+{
+  const { api, sandbox } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const pop = () => sandbox.document.getElementById('app-pop');
+  const shown = () => pop().style.display === 'block';
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const tap = (o = {}) => ({ pointerId: 1, clientX: 0, clientY: 0, pointerType: 'touch',
+                             preventDefault(){}, stopPropagation(){}, ...o });
+
+  api.grNodeDown(tap(), 'a');
+  api.grUp(tap());
+  eq(shown(), true, 'a tap opens the card — there was no hover to do it');
+  eq(/body of a/.test(pop().innerHTML), true, '...and it is the tapped card');
+  eq(api.popPinned, true, '...and it is pinned: no pointerleave is coming to take it away');
+  eq([...api.grSelIds], ['a'], '...and the tap selects the node too');
+
+  // Touch fires pointerleave the moment the finger lifts. Unpinned, that would hide the card again
+  // before it could be read — which is the whole reason the tap pins it.
+  api.popOut();
+  await wait(200);
+  eq(shown(), true, 'the finger lifting does not take it away again');
+}
+
+console.log('\nDragging a node drops its card — it is anchored where the node no longer is');
+{
+  const { api, sandbox } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const shown = () => sandbox.document.getElementById('app-pop').style.display === 'block';
+  const ev = (o = {}) => ({ pointerId: 1, clientX: 0, clientY: 0, pointerType: 'mouse',
+                            preventDefault(){}, stopPropagation(){}, ...o });
+
+  api.grShowPop('a', true);
+  eq(shown(), true, 'the card is up');
+  api.grNodeDown(ev(), 'a');
+  api.grMove(ev({ clientX: 40, clientY: 40 }));
+  eq(shown(), false, 'the drag takes it away: the map has moved out from under it');
+  api.grUp(ev({ clientX: 40, clientY: 40 }));
+  eq([...api.grSelIds], [], 'and a drag is not a click, so it selects nothing');
 }
 
 console.log('\nTwo fingers pinch-zoom the canvas (iOS sends no wheel event for pinch)');

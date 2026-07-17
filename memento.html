@@ -326,9 +326,16 @@ a { color: inherit; }
    monochrome mode: this is action, not data.
    Two strengths, because they answer different questions. The pale one means "the web reaches this
    from something you clicked". The strong one means "you clicked THIS" — and so it is the one to
-   click again to put the neighbourhood away. Mutually exclusive: a card is one or the other. */
-.gr-node.gr-tint { background: rgba(217,119,87,0.14); }
-.gr-node.gr-sel { background: rgba(217,119,87,0.38); }
+   click again to put the neighbourhood away. Mutually exclusive: a card is one or the other.
+
+   Mixed SOLID, not laid on as a translucent wash. A node's background is the only thing hiding the
+   web that runs beneath it — these rules REPLACE the opaque .gr-node white rather than layering over
+   it, so as a wash they left the lines showing through the very cards the tint had picked out. Same
+   two colours to look at: each is its old wash over --bg2, the canvas the nodes sit on, worked out by
+   color-mix instead of by the compositor. Written as a mix rather than the flat #f5e7df / #edc8b9 so
+   the tint still follows --accent, and has no hex of its own to drift out of step with it. */
+.gr-node.gr-tint { background: color-mix(in srgb, var(--accent) 14%, var(--bg2)); }
+.gr-node.gr-sel { background: color-mix(in srgb, var(--accent) 38%, var(--bg2)); }
 .gr-icon { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--tc); margin-top: 1px; }
 .gr-icon svg { display: block; width: 12px; height: 12px; }
 /* A connection card: the design drew this as a label on the edge. Here it IS a node — draggable
@@ -375,7 +382,9 @@ a { color: inherit; }
 /* A drawn edge is a connection card's [[ref]] to another card — the one relationship the user
    authored by hand, so it gets the accent even in monochrome mode. */
 .gr-edge { stroke: var(--accent); stroke-width: 1.5; }
-.gr-space { display: flex; align-items: center; font-family: var(--mono); font-size: 11px; color: var(--text3); }
+/* A labelled slider in the tools bar. Two of them now — Spacing and Delay — so the wrapper is named
+   for what it is rather than for the first one that needed it. */
+.gr-slider { display: flex; align-items: center; font-family: var(--mono); font-size: 11px; color: var(--text3); }
 .gr-range { width: 80px; accent-color: var(--accent); }
 .gr-relayout { font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
 .gr-relayout:hover { color: var(--text2); }
@@ -1977,6 +1986,11 @@ function popEl(){
 // `rect` is the thing being described — the popover sits above it, or below when there is no room.
 // opts.card drops the dark chrome: the content is already a card and brings its own.
 function popShow(html, rect, opts){
+  // There is a card to put up NOW, so a hide still counting down from the last one must not be
+  // allowed to land on it. That hide was scheduled to clear the OUTGOING card, and at the default
+  // rest it always fired long before the next one arrived; a shorter Delay lands the new card first
+  // and the stale hide would take it straight back off again.
+  popIn();
   const pop = popEl();
   const card = !!(opts && opts.card);
   pop.innerHTML = `<div class="pop">${html}${card ? '' : '<div class="pop-arrow"></div>'}</div>`;
@@ -3098,24 +3112,35 @@ function grNodeHtml(e){
 // obeying the very same Title · Tags · Body switch, through the very same two CSS classes. So the
 // switch means one thing everywhere, and a card looks the same wherever you meet it.
 // The map is dense, so crossing it brushes a dozen cards on the way to the one you want; opening
-// each in passing turns the canvas into a flicker. Half a second of rest asks first.
+// each in passing turns the canvas into a flicker. A rest asks first — half a second by default,
+// and the Delay slider in the tools bar moves it anywhere from that to nothing, because how long is
+// too long depends on how well you know the map you are crossing.
 //
 // A tap passes `now`: touch has no hover to rest, so the delay would only be a lag. And the node's
 // pointerenter deliberately does NOT popIn() the way the timeline's does — cancelling the outgoing
-// card's hide would leave it on screen, describing the wrong node, for the whole half second before
-// this one arrives. Letting it go lets the popover clear between the two.
-const GR_POP_DELAY = 500;
+// card's hide would leave it on screen, describing the wrong node, for the whole delay before this
+// one arrives. Letting it go lets the popover clear between the two. (What DOES cancel that hide is
+// popShow, at the moment it has a new card to put there — see popIn there.)
+const GR_POP_DELAY = 500;      // the rest the graph opens with
+let grPopDelay = GR_POP_DELAY; // ...and what the slider has since made of it, in ms
 let _grPopTimer = null;
 function grPopCancel(){ if (_grPopTimer) { clearTimeout(_grPopTimer); _grPopTimer = null; } }
+// The slider is in seconds — the unit a wait is felt in — and the timer wants milliseconds.
+function setGrPopDelay(sec){
+  const n = Number(sec);
+  grPopDelay = Math.max(0, Math.min(1000, Math.round(isFinite(n) ? n * 1000 : GR_POP_DELAY)));
+  grPopCancel();   // whatever is waiting was promised the old delay; the next hover gets the new one
+}
 function grShowPop(id, now){
   grPopCancel();
   if (_grDrag || linkMode) return;   // in link mode the node is a button, not something to inspect
   const open = () => {
     _grPopTimer = null;
-    if (_grDrag || linkMode) return;   // half a second is long enough for either to have started
+    if (_grDrag || linkMode) return;   // the delay is long enough for either to have started
     showCardPop(items.find(i => i.id === id), document.getElementById('gr-n-' + id));
   };
-  if (now) open(); else _grPopTimer = setTimeout(open, GR_POP_DELAY);
+  // Slider at 0 means no wait, so open on the spot rather than a tick late.
+  if (now || !grPopDelay) open(); else _grPopTimer = setTimeout(open, grPopDelay);
 }
 function renderGraph(){
   const host = document.getElementById('graph-view');
@@ -3160,9 +3185,13 @@ function renderGraph(){
         <label class="gr-check" title="Draw a line between every pair of cards that share a tag or a gene">
           <input type="checkbox" id="gr-web-on" ${grWeb ? 'checked' : ''} onchange="setGrWeb(this.checked)"> draw
         </label>
-        <div class="gr-space">
+        <div class="gr-slider">
           <span class="seg-label" title="How much elbow room the cards get">Spacing</span>
           <input type="range" class="gr-range" id="gr-space" min="0.6" max="1.8" step="0.05" value="${grSpacing}" oninput="setGrSpacing(this.value)">
+        </div>
+        <div class="gr-slider">
+          <span class="seg-label" title="How long the pointer must rest on a card before its tooltip opens — all the way down for no wait at all">Delay</span>
+          <input type="range" class="gr-range" id="gr-delay" min="0" max="1" step="0.05" value="${grPopDelay / 1000}" oninput="setGrPopDelay(this.value)">
         </div>
         <span class="gr-relayout" onclick="grRelayout()" title="Start the layout again from scratch">↻ Relayout</span>
       </div>
@@ -3384,8 +3413,8 @@ function grUnbind(){
 }
 function grNodeDown(e, id){
   e.preventDefault(); e.stopPropagation();     // not a pan: this grabs one node
-  popHide();
   if (linkMode) {                              // the node is a link target, not something to drag
+    popHide();
     if (id !== editingId) insertCardRef(id);
     return;
   }
@@ -3393,7 +3422,9 @@ function grNodeDown(e, id){
   grBind();
   if (_grPtrs.size >= 2) { grStartPinch(); return; }   // a second finger turns this into a zoom
   grStop();                                    // grabbing a card freezes the map under your hand
-  _grDrag = { id, x0: e.clientX, y0: e.clientY, moved: false };
+  // Pressing a node is not a question about it: the card you are already hovering stays exactly as
+  // it is, and only an actual drag (below) takes it away.
+  _grDrag = { id, x0: e.clientX, y0: e.clientY, moved: false, touch: e.pointerType === 'touch' };
   document.body.style.userSelect = 'none';
   document.body.style.cursor = 'grabbing';
 }
@@ -3437,7 +3468,14 @@ function _grMove(e){
   if (_grPinch) { grPinchMove(); return; }
   const d = _grDrag;
   if (!d) return;
-  if (!d.moved && (Math.abs(e.clientX - d.x0) > 3 || Math.abs(e.clientY - d.y0) > 3)) d.moved = true;
+  // The gesture has become a drag. Now the card has to go: it is anchored where the node WAS, and
+  // the map is about to move out from under it. A card still waiting out its half second is called
+  // off for the same reason — it would arrive describing a node in flight.
+  if (!d.moved && (Math.abs(e.clientX - d.x0) > 3 || Math.abs(e.clientY - d.y0) > 3)) {
+    d.moved = true;
+    grPopCancel();
+    popHide();
+  }
   if (d.pan) {
     _grPan = { x: d.px + (e.clientX - d.x0), y: d.py + (e.clientY - d.y0) };
     grApplyDOM();
@@ -3462,9 +3500,17 @@ function _grUp(e){
   if (_grPtrs.size === 0) { _grDrag = null; grUnbind(); }
   if (!d) return;
   if (d.id && d.moved) grRelaxStart();     // the cards it passed are still springing back
-  if (!d.moved && d.id) grShowPop(d.id, true);   // a tap, not a drag — touch has no hover, so show it
-  if (!d.moved && d.id) popPin();
-  if (!d.moved && d.id) grToggleSelect(d.id);   // ...and tint its neighbourhood, until clicked again
+  if (!d.moved && d.id) {                  // a tap, not a drag
+    // Clicking a node selects it and tints its neighbourhood, until clicked again. That is ALL a
+    // click does: the card is the hover's business alone, and comes and goes on its own terms.
+    //
+    // Touch is the exception, and the only one. There is no hover to raise the card, so the tap has
+    // to stand in for it, and no pointerleave to take it away again, so it is pinned until the next
+    // tap lands somewhere else. Pinning a card the mouse can dismiss by simply leaving is what made
+    // it hang about, describing a node the pointer left long ago.
+    if (d.touch) { grShowPop(d.id, true); popPin(); }
+    grToggleSelect(d.id);
+  }
 }
 function grWheel(e){
   e.preventDefault();

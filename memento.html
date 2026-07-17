@@ -342,6 +342,19 @@ a { color: inherit; }
 
 .gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
 .gr-tools { position: absolute; right: 12px; top: 10px; display: flex; align-items: center; gap: 16px; padding: 4px 10px; border-radius: var(--r); background: rgba(255,255,255,0.78); }
+/* Where there is a cursor, the corner is a hover zone and the bar is transparent until you reach for
+   it — the collapsed card's icons do the same (see .card-quick). The bar keeps its box while hidden,
+   which is what there is to hover; only the paint goes. The children are pointer-events:none until
+   shown, so a drag begun in the corner pans the canvas rather than grabbing an invisible Spacing
+   slider. Gated on hover:hover deliberately: a touch screen has no hover to reveal it with, and
+   unlike the card's icons — which an expanded card repeats in its bottom row — these controls exist
+   nowhere else, so hiding them there would strand them for good. */
+@media (hover: hover) {
+  .gr-tools { background: transparent; transition: background 0.12s ease; }
+  .gr-tools > * { opacity: 0; pointer-events: none; transition: opacity 0.12s ease; }
+  .gr-tools:hover { background: rgba(255,255,255,0.78); }
+  .gr-tools:hover > * { opacity: 1; pointer-events: auto; }
+}
 .gr-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
 .gr-check input { margin: 0; accent-color: var(--accent); cursor: pointer; }
 /* Thin and quiet: with a couple of thousand of them the web has to read as texture behind the
@@ -2444,6 +2457,13 @@ const GR_MIN_ALPHA = 0.02;
 // each edge as its own element would be hundreds of DOM nodes; instead the edges are split into a
 // few opacity bands (one <path> each), and edges too faint to fall in any band are simply not drawn.
 const GR_WEB_BUCKETS = 6;
+// How hard the centring force leans on the canvas's aspect (see grStep). The theory says 1 — the
+// cloud would then settle at exactly the canvas's proportions. Measured, 1 overshoots: the cards are
+// wide and short, so the collision pass packs them into rows and spreads them sideways on its own,
+// the more so the more cards there are. This is the exponent that leaves the least screen unused
+// across the range of canvases and card counts actually seen; the reason it isn't 1 is that the
+// collision pass is already doing part of the job.
+const GR_AR_PULL = 0.8;
 // The graph is monochrome for now. Flip this to false to bring the type colours back — the coloured
 // rules are still in place (node border = its type token, connection cards = accent); `gr-mono`
 // just overrides them with neutrals. Nothing else to change.
@@ -2610,7 +2630,9 @@ function grHash(s){
 // knowledge base lays out the same way twice, so an edit doesn't reshuffle the whole picture.
 function grInitPositions(keep){
   const cx = _grW / 2, cy = _grH / 2;
-  const R = 0.34 * Math.min(_grW, _grH);
+  // An ellipse, not a circle: the seed starts out the shape the box is, so the sim settles into it
+  // rather than spending its alpha pushing a round cloud outwards into the corners.
+  const Rx = 0.34 * _grW, Ry = 0.34 * _grH;
   const seen = {};
   _grNodes.forEach((e) => {
     const k = _grKey.get(e.id) || ('id:' + e.id);
@@ -2620,8 +2642,8 @@ function grInitPositions(keep){
     const spread = 40 * Math.sqrt(n);              // fan the cluster out a little around its angle
     const off = (n % 2 ? 1 : -1) * spread;
     _grPos[e.id] = {
-      x: cx + Math.cos(ang) * R + Math.cos(ang + 1.57) * off,
-      y: cy + Math.sin(ang) * R + Math.sin(ang + 1.57) * off,
+      x: cx + Math.cos(ang) * Rx + Math.cos(ang + 1.57) * off,
+      y: cy + Math.sin(ang) * Ry + Math.sin(ang + 1.57) * off,
       vx: 0, vy: 0,
     };
     _grHome[e.id] = { x: _grPos[e.id].x, y: _grPos[e.id].y };
@@ -2637,6 +2659,12 @@ function grStep(a){
   const S = grSpacing;
   const REP = 34000 * S * S, L = 120 * S, KA = 0.03, LC = 150 * S, KC = 0.03, KG = 0.01;
   const cx = _grW / 2, cy = _grH / 2;
+  // Centring pulls harder along the short axis than the long one, and that — not the box, which only
+  // clamps — is what actually shapes the cloud. Repulsion pushing out against a harmonic pull settles
+  // where the two balance, which on each axis goes as 1/sqrt(k); so kx = KG/AR against ky = KG·AR
+  // leaves the cloud sqrt(ky/kx) = AR wide for every 1 tall, i.e. the canvas's own proportions. Their
+  // geometric mean is still KG, so the cloud is held exactly as firmly as before — only shaped.
+  const AR = Math.pow(_grW / _grH, GR_AR_PULL), KGX = KG / AR, KGY = KG * AR;
   const N = _grSim, P = _grPos;
   const fx = {}, fy = {};
   for (const e of N) { fx[e.id] = 0; fy[e.id] = 0; }
@@ -2712,8 +2740,8 @@ function grStep(a){
   for (const e of N) {
     const p = P[e.id];
     if (_grFixed[e.id]) { p.vx = 0; p.vy = 0; continue; }   // you put it there; it stays there
-    fx[e.id] += (cx - p.x) * KG;
-    fy[e.id] += (cy - p.y) * KG;
+    fx[e.id] += (cx - p.x) * KGX;
+    fy[e.id] += (cy - p.y) * KGY;
     p.vx = (p.vx + fx[e.id] * a) * 0.82;
     p.vy = (p.vy + fy[e.id] * a) * 0.82;
     p.x = Math.max(95, Math.min(_grW - 95, p.x + p.vx));
@@ -3157,10 +3185,21 @@ function grCanvasSize(){
   const c = document.getElementById('gr-canvas');
   return { cw: (c && c.clientWidth) || 900, ch: (c && c.clientHeight) || 560 };
 }
+// The box takes the canvas's proportions at the same area. Shape and size are separate questions:
+// how much room the cards need is a matter of how many there are, but what shape that room should
+// be is a matter of the screen it has to be looked at on. grFit scales the settled cloud to the
+// canvas by whichever axis binds first, so a round cloud on a wide canvas fits by height and leaves
+// the width empty — at a smaller zoom, and smaller cards, than it needed. Give the cloud the
+// canvas's aspect and both terms bind together.
+// The old sqrt(n)·210 × sqrt(n)·145 is exactly this at AR = 210/145, so a 1.45:1 canvas is unmoved.
 function grSizeLayout(cw, ch){
   const n = _grNodes.length;
-  _grW = Math.max(cw, Math.round(Math.sqrt(n) * 210 * grSpacing));
-  _grH = Math.max(ch, Math.round(Math.sqrt(n) * 145 * grSpacing));
+  // A canvas mid-transition (or display:none) can measure degenerate; an unclamped ratio from that
+  // would divide the layout out of existence.
+  const AR = Math.max(0.5, Math.min(3, (cw || 900) / (ch || 560)));
+  const area = n * 210 * 145 * grSpacing * grSpacing;   // the room the cards need — unchanged
+  _grW = Math.max(cw, Math.round(Math.sqrt(area * AR)));
+  _grH = Math.max(ch, Math.round(Math.sqrt(area / AR)));
 }
 // Spacing is a dial on the physics, not a redraw: the map keeps its shape and breathes out (or in)
 // from where it already is, rather than being thrown back in the air.

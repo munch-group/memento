@@ -154,6 +154,35 @@ console.log('\nGenes: an alias bundle counts as each of its aliases');
      'a card with an unrelated gene attracts nobody');
 }
 
+// grFit scales the settled cloud to the canvas by whichever axis binds first, so a round cloud on a
+// wide canvas fits by height and leaves the width empty — at a smaller zoom, and smaller cards, than
+// it needed. The cloud has to take the shape of the screen it is read on. What is pinned here is the
+// TRACKING, not the exact ratio: the exponent that sets how hard it leans is tuned by measurement.
+console.log('\nThe layout takes the shape of the canvas it is looked at on');
+{
+  const cloudAR = (cw, ch) => {
+    const { api, sandbox } = setup(Array.from({ length: 40 }, (_, i) => card('n' + i, { tags: ['g' + (i % 8)] })));
+    const c = sandbox.document.getElementById('gr-canvas');
+    if (c) { c.clientWidth = cw; c.clientHeight = ch; }
+    api.setView('graph');
+    const P = api.grPos;
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    for (const e of api.grNodes()) {
+      const p = P[e.id];
+      if (!p) continue;
+      x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x);
+      y0 = Math.min(y0, p.y); y1 = Math.max(y1, p.y);
+    }
+    return (x1 - x0) / (y1 - y0);
+  };
+  const square = cloudAR(700, 640), wide = cloudAR(1800, 620);
+  eq(wide > square * 1.5, true, `a wide canvas gets a wide cloud, a square one a square cloud (${wide.toFixed(2)} vs ${square.toFixed(2)})`);
+  eq(square < 1.45, true, '...so a squarish canvas is not handed a stretched layout either');
+  // The point of the exercise: the cloud fills the canvas rather than sitting round inside it.
+  const fill = Math.min(wide, 1800 / 620) / Math.max(wide, 1800 / 620);
+  eq(fill > 0.75, true, `...and the wide cloud is within a quarter of the canvas's own proportions (${(fill * 100).toFixed(0)}%)`);
+}
+
 console.log('\nThe layout actually clusters what shares something');
 {
   // The real test of a force layout: cards that share a gene must end up nearer each other than

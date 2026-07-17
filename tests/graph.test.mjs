@@ -706,6 +706,7 @@ console.log('\nThe gene highlight takes the lines with it, not just the cards');
     card('miss1', { genes: ['SMC1B'],   tags: ['x'] }),
     card('miss2', { genes: ['SMC1B'],   tags: ['x'] }),
   ]);
+  api.grLinkBy = 'tags';   // the uniform web is what splits here; the banded one is checked below
   api.setView('graph');
   const segs = (id) => {
     const e = sandbox.document.getElementById(id);

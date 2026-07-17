@@ -105,10 +105,11 @@ console.log('\nEdges: one per valid ref, and no phantoms');
   eq(nodes.some(n => n.id === 'dangling'), false, 'a card whose only ref is dangling drops out of the graph');
 }
 
-console.log('\nAttraction: rare terms pull harder than common ones');
+// Rarity used to weight the pull: a term on 34 cards said little, a term on two said a lot. It is
+// the plain count now — how many terms two cards share, and nothing else. The trade is deliberate
+// and worth naming: the crowd tag and the rare gene below now pull exactly alike.
+console.log('\nAttraction: the count of shared terms, and nothing else');
 {
-  // 6 cards share the common tag; 2 share the rare gene. If both pulled equally, the two would be
-  // no closer than any pair in the crowd — and the clusters would mean nothing.
   const common = Array.from({ length: 6 }, (_, i) => card('c' + i, { tags: ['SMBE26'] }));
   const { api } = setup([
     ...common,
@@ -120,8 +121,23 @@ console.log('\nAttraction: rare terms pull harder than common ones');
   const find = (a, b) => pairs.find(p => (p.a === a && p.b === b) || (p.a === b && p.b === a));
   const rare = find('r1', 'r2'), crowd = find('c0', 'c1');
   eq(!!rare && !!crowd, true, 'both pairs attract');
-  eq(rare.w > crowd.w, true, `a gene shared by 2 pulls harder than a tag shared by 6 (${rare.w.toFixed(2)} vs ${crowd.w.toFixed(2)})`);
+  eq(rare.w, crowd.w, 'one shared term pulls the same whether 2 cards carry it or 6 — rarity no longer weights it');
   eq(pairs.some(p => p.a === 'c0' && p.b === 'r1'), false, 'cards sharing nothing do not attract at all');
+}
+
+console.log('\nAttraction is linear in the number of shared tags');
+{
+  // Disjoint tag sets, so the only pair inside each group is the one being measured.
+  const { api } = setup([
+    card('one1',   { tags: ['a'] }),            card('one2',   { tags: ['a'] }),
+    card('two1',   { tags: ['b', 'c'] }),       card('two2',   { tags: ['b', 'c'] }),
+    card('three1', { tags: ['d', 'e', 'f'] }),  card('three2', { tags: ['d', 'e', 'f'] }),
+  ]);
+  const pairs = api.grPairs(api.grNodes());
+  const wOf = (a, b) => (pairs.find(p => (p.a === a && p.b === b) || (p.a === b && p.b === a)) || {}).w;
+  eq(wOf('one1', 'one2'), 1, 'one shared tag pulls 1');
+  eq(wOf('two1', 'two2'), 2, '...two shared tags pull exactly twice that');
+  eq(wOf('three1', 'three2'), 3, '...and three, three times — the pull IS the count');
 }
 
 console.log('\nGenes: an alias bundle counts as each of its aliases');

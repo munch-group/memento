@@ -1680,13 +1680,13 @@ function renderCard(item, forceExpand, eagerBody) {
   // On the dashboard, a deadline less than four days away (overdue included) gets a red border; the
   // .dash-view CSS quiets every other border there.
   const deadlineUrgent = mainView === 'dash' && item.due && daysBetween(todayISO(), item.due) < 4 ? ' deadline-urgent' : '';
-  // Collapsed cards carry a quick-action overlay in the top-right corner: pin, timeline, full-width.
+  // Collapsed cards carry a quick-action overlay in the top-right corner: full-width, timeline, pin.
   // The corner is a hover zone (transparent until hovered) so the icons stay out of the way but are
   // one reach away without expanding the card. Expanded cards already have these in the bottom row.
   const quick = (!expChrome && !_cardPreview && !SPECIAL_IDS.has(item.id)) ? `<div class="card-quick">
-    <span class="qicon pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>
-    <span class="qicon tl-icon${tlOnTimeline(item)?' active':''}" title="${tlOnTimeline(item)?'On the timeline — open it':'Put on the timeline'}" onclick="cardToTimeline(event,'${item.id}')">${TL_ICON}</span>
     <span class="qicon focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+    <span class="qicon tl-icon${tlOnTimeline(item)?' active':''}" title="${tlOnTimeline(item)?'On the timeline — open it':'Put on the timeline'}" onclick="cardToTimeline(event,'${item.id}')">${TL_ICON}</span>
+    <span class="qicon pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>
   </div>` : '';
   return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${deadlineUrgent}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" oncontextmenu="cardContextMenu(event,'${item.id}')" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   ${quick}
@@ -2555,8 +2555,8 @@ function setGrLinkBy(v){
   renderGraph();
 }
 // The attracting pairs, precomputed once per layout: for every two cards sharing a tag or a gene,
-// one spring whose strength is the summed rarity of everything they share. Also hands back a seed
-// key per card (see grInitPositions).
+// one spring whose strength is simply how many terms they share. Also hands back a seed key per
+// card (see grInitPositions).
 function grIndex(nodes){
   const terms = new Map();          // id -> Set of terms
   const freq = new Map();           // term -> how many cards carry it
@@ -2565,24 +2565,22 @@ function grIndex(nodes){
     terms.set(e.id, t);
     for (const x of t) freq.set(x, (freq.get(x) || 0) + 1);
   }
-  // Inverse document frequency: log2(nodes / cards-carrying-it). A term EVERY card carries scores 0
-  // — it distinguishes nothing, so it must not pull. A gene on 2 cards of 200 scores ~6.6, a tag on
-  // 34 scores ~2.5. The floor stops a universal term from switching attraction off altogether.
-  const N = Math.max(2, nodes.length);
-  const weight = x => Math.max(0.2, Math.log2(N / (freq.get(x) || 1)));
   const pairs = [];
   for (let i = 0; i < nodes.length; i++) {
     const ti = terms.get(nodes[i].id);
     if (!ti.size) continue;
     for (let j = i + 1; j < nodes.length; j++) {
       const tj = terms.get(nodes[j].id);
-      let w = 0, shared = 0;
-      for (const x of ti) if (tj.has(x)) { w += weight(x); shared++; }
-      if (w > 0) {
-        // Jaccard overlap of the two term sets. In gene layout the terms are gene aliases, so this
-        // is exactly the gene-list overlap the edge opacity encodes (see grEdgeAlpha).
+      let shared = 0;
+      for (const x of ti) if (tj.has(x)) shared++;
+      if (shared > 0) {
+        // The pull is the count, straight: two shared tags pull twice as hard as one. Rarity used to
+        // weight this (a tag on 34 cards saying less than a gene on two), and deliberately — but the
+        // count is what the eye can actually read back off the layout, so it is what the layout says.
+        // Jaccard rides along for gene layout, where the terms are gene aliases and this is exactly
+        // the gene-list overlap the edge opacity encodes (see grEdgeAlpha).
         const uni = ti.size + tj.size - shared;
-        pairs.push({ a: nodes[i].id, b: nodes[j].id, w: Math.min(3, w), jac: uni > 0 ? shared / uni : 0 });
+        pairs.push({ a: nodes[i].id, b: nodes[j].id, w: shared, jac: uni > 0 ? shared / uni : 0 });
       }
     }
   }
@@ -2656,9 +2654,9 @@ function grStep(a){
     }
   }
   // Shared tags/genes pull together. In gene layout the pull follows the same gene-overlap formula
-  // that sets the edge opacity (grEdgeAlpha), scaled to the old rarity cap of 3 — so a full overlap
-  // pulls as hard as before but partial overlaps pull proportionally less (and a sub-0.1 overlap not
-  // at all), clustering cards by how much their gene lists actually share. Otherwise it's by rarity.
+  // that sets the edge opacity (grEdgeAlpha), scaled to 3 — so a full overlap pulls hard and partial
+  // overlaps pull proportionally less (a sub-0.1 overlap not at all), clustering cards by how much
+  // their gene lists actually share. Otherwise it is the count of shared terms, straight.
   const geneAtt = grLinkBy === 'genes';
   for (const p of _grPairs) {
     if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;   // a hidden card exerts no pull

@@ -1,0 +1,25 @@
+{
+  "id": "mroi1j2s6jxk",
+  "type": "view",
+  "title": "",
+  "genes": [],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-07-17T05:30:25.875Z",
+  "synced": false,
+  "view": {
+    "q": "!/Person,View !#LoF,BDMI,Drive,X,MT,Baboons,Archaic,Chromatin,Recombination,Xi,Apoptosis,LAI,Y,chr3,Meiosis,circRNA",
+    "types": [],
+    "tags": [],
+    "gene": null,
+    "genes": [],
+    "sortKey": "date",
+    "sortAsc": false,
+    "conn": "all",
+    "archive": "active"
+  }
+}

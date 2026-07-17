@@ -376,6 +376,10 @@ a { color: inherit; }
 .gr-node.link-target { cursor: pointer; }
 .gr-node.link-target:hover { border-color: var(--accent); box-shadow: 0 0 0 1.5px rgba(217,119,87,0.25); }
 .gr-node.gr-dim { opacity: 0.25; }
+/* Web lines the highlight does not reach, faded to sit behind the ones it does. Multiplies with the
+   band's own stroke-opacity in gene layout, so a sparse overlap that was already faint goes fainter
+   still rather than being flattened to one grey. Same 0.25 as .gr-node.gr-dim and GR_DIM. */
+.gr-web-faded { opacity: 0.25; }
 .gr-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text3); }
 .gr-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
 .gr-empty small { font-family: var(--mono); font-size: 11px; }
@@ -2457,6 +2461,10 @@ const GR_MIN_ALPHA = 0.02;
 // each edge as its own element would be hundreds of DOM nodes; instead the edges are split into a
 // few opacity bands (one <path> each), and edges too faint to fall in any band are simply not drawn.
 const GR_WEB_BUCKETS = 6;
+// What the gene highlight fades everything it does not name down to. Nodes get there through CSS
+// (.gr-node.gr-dim) and lines through an opacity attribute, so the number lives in both places —
+// keep it in step with .gr-node.gr-dim and .gr-web-faded, or the canvas fades unevenly.
+const GR_DIM = 0.25;
 // How hard the centring force leans on the canvas's aspect (see grStep). The theory says 1 — the
 // cloud would then settle at exactly the canvas's proportions. Measured, 1 overshoots: the cards are
 // wide and short, so the collision pass packs them into rows and spreads them sideways on its own,
@@ -2486,6 +2494,7 @@ let grWeb = true;             // draw the shared-tag/gene links, not just leave 
 // arranges what is in front of you, and the ones it hides take no part and do not move. The rest of
 // the map is not thrown away: hidden cards keep their places and are simply inert.
 let _grSim = [], _grSimIds = new Set();
+let _grHiIds = new Set();     // the cards the gene highlight names; the lines follow them (grWebLit)
 let _grRefit = false;         // reframe the view once the layout has settled
 let _grFixed = {};            // id -> true once you have dragged it somewhere
 let _grHome = {};             // id -> where the card belongs, and springs back to
@@ -2835,18 +2844,29 @@ function grMoveNode(id, x, y){
 // The web of shared tags and genes. It is always what holds the layout together; this just makes it
 // visible. Only pairs whose BOTH ends are on screen are drawn — a line to a filtered-out card would
 // point at nothing.
-function grWebPath(){
-  if (!grWeb) return '';
-  const seg = [];
+// A line is lit if the highlight names either card it runs between. A highlight that names nothing
+// present dims everything, exactly as it already does to the nodes — the answer "none of these" reads
+// the same whichever way you draw it. With no highlight at all, every line is lit, which is the one
+// undivided web there has always been.
+function grWebLit(p){
+  if (!highlightGenes.size) return true;
+  return _grHiIds.has(p.a) || _grHiIds.has(p.b);
+}
+// The web, split in two so the half the highlight does not reach can be faded behind the half it
+// does. Without a highlight the dim half comes back empty and the lit half is the whole web.
+function grWebPaths(){
+  const lit = [], dim = [];
+  if (!grWeb) return { lit: '', dim: '' };
   for (const p of _grPairs) {
     if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;
     const a = _grPos[p.a], b = _grPos[p.b];
     if (!a || !b) continue;
-    seg.push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
+    (grWebLit(p) ? lit : dim).push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
   }
-  return seg.join('');
+  return { lit: lit.join(''), dim: dim.join('') };
 }
-// Opacity for a gene edge from the Jaccard overlap of the two cards' gene lists:
+// Opacity for a banded web edge from the Jaccard overlap of the two cards' term lists — gene lists
+// under Genes, tags and genes together under Both, whatever the layout counts as a term:
 // alpha = 1 − log10(1/jac). Only a full overlap (jac→1) is opaque; from there it falls off in
 // log-space — a tenfold-sparser overlap loses one unit of alpha — reaching 0 at jac ≈ 0.1. No floor:
 // a fainter overlap than that simply isn't drawn.
@@ -2857,12 +2877,20 @@ function grEdgeAlpha(jac){
 }
 // Opacity drawn for band i (0-based): (i+1)/N, so the top band is fully opaque (a solid #3B3B3B line).
 function grWebBandAlpha(i){ return (i + 1) / GR_WEB_BUCKETS; }
-// Gene layout only: the same segments as grWebPath, split into GR_WEB_BUCKETS opacity bands by each
+// One band per opacity bucket, twice over: the dim set is laid down first and the lit set drawn on
+// top of it, so what the highlight names is never sitting under what it doesn't.
+function grWebBandPaths(suffix, cls){
+  return Array.from({ length: GR_WEB_BUCKETS }, (_, k) =>
+    `<path id="gr-web-b${k}${suffix}" class="gr-web gr-web-band${cls}" fill="none" stroke-opacity="${grWebBandAlpha(k).toFixed(3)}"></path>`).join('');
+}
+// Gene layout only: the same segments as grWebPaths, split into GR_WEB_BUCKETS opacity bands by each
 // edge's gene overlap. An alpha rounding to the zero band is dropped (no floor). Returns one path
 // string per band (index = band).
 function grWebBuckets(){
-  const bands = Array.from({ length: GR_WEB_BUCKETS }, () => []);
-  if (!grWeb) return bands.map(() => '');
+  const lit = Array.from({ length: GR_WEB_BUCKETS }, () => []);
+  const dim = Array.from({ length: GR_WEB_BUCKETS }, () => []);
+  const out = () => ({ lit: lit.map(s => s.join('')), dim: dim.map(s => s.join('')) });
+  if (!grWeb) return out();
   for (const p of _grPairs) {
     if (!_grSimIds.has(p.a) || !_grSimIds.has(p.b)) continue;
     const a = _grPos[p.a], b = _grPos[p.b];
@@ -2870,9 +2898,9 @@ function grWebBuckets(){
     let k = Math.round(grEdgeAlpha(p.jac || 0) * GR_WEB_BUCKETS);
     if (k <= 0) continue;                          // faded to nothing → not drawn
     if (k > GR_WEB_BUCKETS) k = GR_WEB_BUCKETS;
-    bands[k - 1].push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
+    (grWebLit(p) ? lit : dim)[k - 1].push(`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
   }
-  return bands.map(s => s.join(''));
+  return out();
 }
 function setGrWeb(on){
   grWeb = !!on;
@@ -2884,15 +2912,19 @@ function grApplyDOM(){
   // Publish the zoom so the label font can counter-scale (cap its on-screen size). Guarded because
   // the test harness's style is a plain object; a same-value set during a sim tick is a no-op.
   if (scene && scene.style.setProperty) scene.style.setProperty('--gr-zoom', _grZoom);
-  // Gene layout draws the web in opacity bands (by gene overlap); every other layout draws the one
-  // uniform web path. Whichever is inactive is cleared so nothing lingers across a Link switch.
-  const geneWeb = grLinkBy === 'genes';
-  const web = document.getElementById('gr-web');
-  if (web && web.setAttribute) web.setAttribute('d', geneWeb ? '' : grWebPath());
+  // Wherever genes are in play — Genes or Both — the web is drawn in opacity bands, each edge shaded
+  // by how much of the two cards' term lists actually coincide. Tags alone keeps the one uniform
+  // path: a tag is shared or it isn't, and there is no degree in it worth shading. Whichever is
+  // inactive is cleared so nothing lingers across a Link switch.
+  const geneWeb = grLinkBy !== 'tags';
+  const setD = (id, d) => { const el = document.getElementById(id); if (el && el.setAttribute) el.setAttribute('d', d); };
+  const web = geneWeb ? null : grWebPaths();
+  setD('gr-web', web ? web.lit : '');
+  setD('gr-web-d', web ? web.dim : '');
   const bands = geneWeb ? grWebBuckets() : null;
   for (let k = 0; k < GR_WEB_BUCKETS; k++) {
-    const bp = document.getElementById('gr-web-b' + k);
-    if (bp && bp.setAttribute) bp.setAttribute('d', bands ? (bands[k] || '') : '');
+    setD('gr-web-b' + k, bands ? (bands.lit[k] || '') : '');
+    setD('gr-web-b' + k + '-d', bands ? (bands.dim[k] || '') : '');
   }
   for (const e of _grNodes) {
     const el = document.getElementById('gr-n-' + e.id);
@@ -3043,7 +3075,7 @@ function renderGraph(){
   host.innerHTML = `
     <div class="gr-canvas${GR_MONO ? ' gr-mono' : ''}" id="gr-canvas" onwheel="grWheel(event)" onpointerdown="grPanDown(event)">
       <div class="gr-scene" id="gr-scene">
-        <svg class="gr-edges"><path id="gr-web" class="gr-web" fill="none"></path>${Array.from({ length: GR_WEB_BUCKETS }, (_, k) => `<path id="gr-web-b${k}" class="gr-web gr-web-band" fill="none" stroke-opacity="${grWebBandAlpha(k).toFixed(3)}"></path>`).join('')}${_grEdges.map((c, i) => `<line id="gr-e${i}" class="gr-edge"></line>`).join('')}</svg>
+        <svg class="gr-edges"><path id="gr-web-d" class="gr-web gr-web-faded" fill="none"></path>${grWebBandPaths('-d', ' gr-web-faded')}<path id="gr-web" class="gr-web" fill="none"></path>${grWebBandPaths('', '')}${_grEdges.map((c, i) => `<line id="gr-e${i}" class="gr-edge"></line>`).join('')}</svg>
         ${_grNodes.map(grNodeHtml).join('')}
       </div>
       <div class="gr-tools">
@@ -3098,20 +3130,28 @@ function grApplyFilter(){
   const lit = highlightGenes.size > 0;
   const carries = e => (e.genes || []).some(g => geneAliasesU(g).some(a => highlightGenes.has(a)));
   let hidden = 0;
+  _grHiIds = new Set();
   for (const e of _grNodes) {
     const on = vis.has(e.id);
     if (!on) hidden++;
+    const hi = lit && carries(e);
+    if (hi) _grHiIds.add(e.id);
     const el = document.getElementById('gr-n-' + e.id);
     if (!el || !el.classList) continue;
     el.classList.toggle('gr-off', !on);
     el.classList.toggle('link-target', linkMode && e.id !== editingId);
-    const hi = lit && carries(e);
     el.classList.toggle('gr-hi', hi);
     el.classList.toggle('gr-dim', lit && !hi);
   }
+  // A connection line falls back with the cards it runs between: leaving it at full accent while both
+  // its ends fade is what made the highlight read as half-applied — the orange was the loudest thing
+  // left on the canvas, pointing at nothing you asked for.
   _grEdges.forEach((c, i) => {
     const line = document.getElementById('gr-e' + i);
-    if (line && line.setAttribute) line.setAttribute('opacity', vis.has(c.a) && vis.has(c.b) ? '1' : '0');
+    if (!line || !line.setAttribute) return;
+    const on = vis.has(c.a) && vis.has(c.b);
+    const touches = !lit || _grHiIds.has(c.a) || _grHiIds.has(c.b);
+    line.setAttribute('opacity', !on ? '0' : touches ? '1' : String(GR_DIM));
   });
   grApplyDOM();   // the web drops any line whose far end has just been filtered away
   const cap = document.getElementById('gr-caption');

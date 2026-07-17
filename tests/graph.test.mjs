@@ -665,6 +665,117 @@ console.log('\nThe gene highlight picks cards out of the map without narrowing i
   eq([cls('hit1', 'gr-hi'), cls('miss', 'gr-dim')], [false, false], 'clearing the field puts every card back to normal');
 }
 
+// Two ways to draw the web: the flat grey uniform path, or the dark bands shaded by how much of the
+// two cards' term lists coincide. Shading only says something where overlap HAS a degree — gene
+// lists do, so Genes bands. Both has gene lists in it too, so it bands the same way; Tags alone
+// doesn't (a tag is shared or it isn't) and keeps the flat texture.
+console.log('\nBoth draws its web the way Genes does — Tags alone keeps the flat one');
+{
+  const drawn = (mode) => {
+    const { api, sandbox } = setup([
+      card('a', { genes: ['GENEX'], tags: ['x'] }),
+      card('b', { genes: ['GENEX'], tags: ['x'] }),
+      card('c', { genes: ['GENEY'], tags: ['x'] }),
+    ]);
+    api.grLinkBy = mode;
+    api.setView('graph');
+    const segs = (id) => {
+      const e = sandbox.document.getElementById(id);
+      const d = e && e.getAttribute ? e.getAttribute('d') : '';
+      return ((d || '').match(/M/g) || []).length;
+    };
+    let banded = 0;
+    for (let k = 0; k < api.GR_WEB_BUCKETS; k++) banded += segs('gr-web-b' + k);
+    return { banded, uniform: segs('gr-web') };
+  };
+  const tags = drawn('tags'), genes = drawn('genes'), both = drawn('both');
+  eq([tags.uniform > 0, tags.banded], [true, 0], 'Tags draws the flat uniform web and nothing banded');
+  eq([genes.uniform, genes.banded > 0], [0, true], 'Genes draws only the shaded bands');
+  eq([both.uniform, both.banded > 0], [0, true], '...and Both draws them the same way, not the flat one');
+}
+
+// The highlight faded the cards and left every line at full strength. In gene layout the web bands
+// are drawn dark, and a connection edge is drawn in the accent — so the loudest marks on the canvas
+// went on pointing at cards you hadn't asked for, over the top of the ones you had. A line falls
+// back now unless the highlight names a card at one of its ends.
+console.log('\nThe gene highlight takes the lines with it, not just the cards');
+{
+  const { api, el, sandbox } = setup([
+    card('hit1',  { genes: ['ARHGAP5'], tags: ['x'] }),
+    card('hit2',  { genes: ['ARHGAP5'], tags: ['x'] }),
+    card('miss1', { genes: ['SMC1B'],   tags: ['x'] }),
+    card('miss2', { genes: ['SMC1B'],   tags: ['x'] }),
+  ]);
+  api.setView('graph');
+  const segs = (id) => {
+    const e = sandbox.document.getElementById(id);
+    const d = e && e.getAttribute ? e.getAttribute('d') : '';
+    return ((d || '').match(/M/g) || []).length;
+  };
+
+  const total = segs('gr-web');
+  eq(segs('gr-web-d'), 0, 'with nothing typed the web is undivided — no line is faded');
+  eq(total > 0, true, '...and it is drawn at all');
+
+  el('highlight-input').value = 'ARHGAP5';
+  api.updateHighlightSet();
+  // Of the six pairs among four cards, only miss1~miss2 has a highlighted card at neither end.
+  eq(segs('gr-web-d'), 1, 'the one line running between two cards the highlight never names falls back');
+  eq(segs('gr-web'), total - 1, '...and the rest stay lit: one named end is enough to keep a line');
+  eq(segs('gr-web') + segs('gr-web-d'), total, '...and none is lost — the web is split, not thinned');
+
+  el('highlight-input').value = '';
+  api.updateHighlightSet();
+  eq(segs('gr-web-d'), 0, 'clearing the field makes the web whole again');
+  eq(segs('gr-web'), total, '...exactly as it was');
+}
+{
+  // Gene layout draws its web dark and at connection-edge width, in opacity bands by overlap — so it
+  // is the layout where an unfaded web shouts loudest over the highlight. Each band splits too.
+  const { api, el, sandbox } = setup([
+    card('hit1',  { genes: ['ARHGAP5'] }), card('hit2',  { genes: ['ARHGAP5'] }),
+    card('miss1', { genes: ['SMC1B'] }),   card('miss2', { genes: ['SMC1B'] }),
+  ]);
+  api.setGrLinkBy('genes');
+  api.setView('graph');
+  const bandSegs = (suffix) => {
+    let n = 0;
+    for (let k = 0; k < api.GR_WEB_BUCKETS; k++) {
+      const e = sandbox.document.getElementById('gr-web-b' + k + suffix);
+      const d = e && e.getAttribute ? e.getAttribute('d') : '';
+      n += ((d || '').match(/M/g) || []).length;
+    }
+    return n;
+  };
+  eq([bandSegs(''), bandSegs('-d')], [2, 0], 'both gene-overlap bands are drawn, none faded, before anything is typed');
+  el('highlight-input').value = 'ARHGAP5';
+  api.updateHighlightSet();
+  eq([bandSegs(''), bandSegs('-d')], [1, 1], '...and naming a gene fades the dark band the highlight never reaches');
+}
+{
+  // The same for the accent connection lines, which are the loudest thing on the canvas.
+  const { api, el, sandbox } = setup([
+    card('lit',  { genes: ['ARHGAP5'], tags: ['x'] }),
+    card('dull', { genes: ['SMC1B'],   tags: ['x'] }),
+    card('cA', { source: ref('lit') }),    // a connection reaching a highlighted card
+    card('cB', { source: ref('dull') }),   // one reaching only cards the highlight never names
+  ]);
+  api.setView('graph');
+  const edges = api.grEdges(api.grNodes());
+  const opacityOf = (target) => {
+    const i = edges.findIndex(e => e.a === target || e.b === target);
+    const el2 = sandbox.document.getElementById('gr-e' + i);
+    return el2 && el2.getAttribute ? el2.getAttribute('opacity') : null;
+  };
+  el('highlight-input').value = 'ARHGAP5';
+  api.updateHighlightSet();
+  eq(opacityOf('lit'), '1', 'a connection line touching a highlighted card keeps its accent');
+  eq(opacityOf('dull'), '0.25', '...one touching none of them fades with the cards it runs between');
+  el('highlight-input').value = '';
+  api.updateHighlightSet();
+  eq([opacityOf('lit'), opacityOf('dull')], ['1', '1'], 'and with no highlight, every line is full strength');
+}
+
 console.log('\nA node\'s tooltip IS the card, and Title · Tags · Body says how much of it');
 {
   // The tooltip is drawn by the same renderCard() the list uses, and dressed by the same two CSS

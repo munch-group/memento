@@ -897,6 +897,42 @@ console.log('\nClicking a card tints it and its web neighbourhood, until clicked
   eq([tinted(), clicked()], [['A', 'mid', 'n1'], ['A', 'n1']], 'and both strengths survive a re-render');
 }
 
+// The map is dense enough that crossing it brushes a dozen cards on the way to the one you want, and
+// opening each in passing turned the canvas into a flicker. The tooltip waits for the pointer to
+// rest. A tap does not wait: touch has no hover, so a delay there would be nothing but lag.
+console.log('\nA node\'s tooltip waits half a second before opening');
+{
+  const { api, sandbox } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const shown = () => {
+    const el = sandbox.document.getElementById('app-pop');
+    return !!(el && el.style && el.style.display === 'block');
+  };
+  const hide = () => { sandbox.document.getElementById('app-pop').style.display = 'none'; };
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+  eq(api.GR_POP_DELAY, 500, 'half a second of rest before a node explains itself');
+
+  api.grShowPop('a');
+  eq(shown(), false, 'hovering a node does not open it at once — that is what made it flicker');
+  await wait(Math.round(api.GR_POP_DELAY * 0.6));
+  eq(shown(), false, '...still nothing while the pointer is only passing through');
+  await wait(api.GR_POP_DELAY);
+  eq(shown(), true, '...and it opens once the pointer has actually rested there');
+
+  // Leaving before it fires has to call it off, or it opens over an empty patch of canvas.
+  api.grPopCancel(); hide();
+  api.grShowPop('b');
+  api.grPopCancel();                       // the pointer left again straight away
+  await wait(api.GR_POP_DELAY * 1.5);
+  eq(shown(), false, 'leaving before it fires calls it off');
+
+  // A tap is not a hover.
+  api.grShowPop('a', true);
+  eq(shown(), true, 'a tap opens it at once — touch has no hover to rest');
+  eq(/body of a/.test(sandbox.document.getElementById('app-pop').innerHTML), true, '...and it is the tapped card');
+}
+
 console.log('\nA node\'s tooltip IS the card, and Title · Tags · Body says how much of it');
 {
   // The tooltip is drawn by the same renderCard() the list uses, and dressed by the same two CSS
@@ -910,18 +946,18 @@ console.log('\nA node\'s tooltip IS the card, and Title · Tags · Body says how
   const html = () => pop().innerHTML;
 
   api.setPreviewMode('rendered');
-  api.grShowPop('a');
+  api.grShowPop('a', true);   // content, not timing — take the tap path
   eq(/data-id="a"/.test(html()), true, 'the tooltip renders the real card, not a bespoke bubble of its own');
   eq(pop().classList.contains('cardmode'), true, '...so the dark chrome gets out of its way');
   eq(pop().classList.contains('card'), false, "...and the wrapper does NOT take the app's own .card class, which would frame the card in a second card");
   eq(/hide-previews|hide-meta/.test(html()), false, 'Body  → the whole card: tags, genes and body');
 
   api.setPreviewMode('compact');
-  api.grShowPop('a');
+  api.grShowPop('a', true);
   eq(/class="pop-card hide-previews"/.test(html()), true, 'Tags  → the same class the list uses to drop the body');
 
   api.setPreviewMode('minimal');
-  api.grShowPop('a');
+  api.grShowPop('a', true);
   eq(/class="pop-card hide-meta"/.test(html()), true, 'Title → the same class the list uses to drop tags and body too');
 
   // Whatever the mode, the card is a preview: clicking it means "open this card", and none of its

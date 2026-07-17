@@ -196,6 +196,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       renderGraph, grNodes, grEdges, grPairs, grRefs, grIsConn, grRelayout, grStop,
       grVisibleIds, grShownCount, grApplyFilter, grMoveNode, grRelaxStep, grRelaxSettle, grShowPop,
       grToggleSelect, grTinted, get grSelIds(){ return _grSelIds; },
+      grPopCancel, GR_POP_DELAY,
       setGrLinkBy, setGrSpacing, setGrWeb, grWebPaths, grWebBuckets, grEdgeAlpha, GR_WEB_BUCKETS, updateHighlightSet, grTerms,
       get grWeb(){ return grWeb; },
       get grSpacing(){ return grSpacing; },

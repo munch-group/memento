@@ -3091,15 +3091,31 @@ function grNodeHtml(e){
   const conn = grIsConn(e);
   const label = cardSortLabel(e) || '(untitled)';
   return `<div class="gr-node${conn ? ' conn' : ''}" id="gr-n-${e.id}" data-type="${esc(e.type)}" data-id="${e.id}"
-    onpointerdown="grNodeDown(event,'${e.id}')" onpointerenter="popIn();grShowPop('${e.id}')" onpointerleave="popOut()"
+    onpointerdown="grNodeDown(event,'${e.id}')" onpointerenter="grShowPop('${e.id}')" onpointerleave="grPopCancel();popOut()"
     ><span class="gr-icon">${conn ? '◆' : (TYPE_ICONS[e.type] || '')}</span><span class="gr-label">${esc(label)}</span></div>`;
 }
 // A node's tooltip is the card itself, drawn by the very same renderCard() the list uses — and
 // obeying the very same Title · Tags · Body switch, through the very same two CSS classes. So the
 // switch means one thing everywhere, and a card looks the same wherever you meet it.
-function grShowPop(id){
+// The map is dense, so crossing it brushes a dozen cards on the way to the one you want; opening
+// each in passing turns the canvas into a flicker. Half a second of rest asks first.
+//
+// A tap passes `now`: touch has no hover to rest, so the delay would only be a lag. And the node's
+// pointerenter deliberately does NOT popIn() the way the timeline's does — cancelling the outgoing
+// card's hide would leave it on screen, describing the wrong node, for the whole half second before
+// this one arrives. Letting it go lets the popover clear between the two.
+const GR_POP_DELAY = 500;
+let _grPopTimer = null;
+function grPopCancel(){ if (_grPopTimer) { clearTimeout(_grPopTimer); _grPopTimer = null; } }
+function grShowPop(id, now){
+  grPopCancel();
   if (_grDrag || linkMode) return;   // in link mode the node is a button, not something to inspect
-  showCardPop(items.find(i => i.id === id), document.getElementById('gr-n-' + id));
+  const open = () => {
+    _grPopTimer = null;
+    if (_grDrag || linkMode) return;   // half a second is long enough for either to have started
+    showCardPop(items.find(i => i.id === id), document.getElementById('gr-n-' + id));
+  };
+  if (now) open(); else _grPopTimer = setTimeout(open, GR_POP_DELAY);
 }
 function renderGraph(){
   const host = document.getElementById('graph-view');
@@ -3446,7 +3462,7 @@ function _grUp(e){
   if (_grPtrs.size === 0) { _grDrag = null; grUnbind(); }
   if (!d) return;
   if (d.id && d.moved) grRelaxStart();     // the cards it passed are still springing back
-  if (!d.moved && d.id) grShowPop(d.id);   // a tap, not a drag — touch has no hover, so show it
+  if (!d.moved && d.id) grShowPop(d.id, true);   // a tap, not a drag — touch has no hover, so show it
   if (!d.moved && d.id) popPin();
   if (!d.moved && d.id) grToggleSelect(d.id);   // ...and tint its neighbourhood, until clicked again
 }

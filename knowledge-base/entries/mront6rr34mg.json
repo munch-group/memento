@@ -1,26 +1,25 @@
 {
-  "id": "mrn16oodkri8",
+  "id": "mront6rr34mg",
   "type": "note",
   "title": "",
   "genes": [],
-  "tags": [
-    "Baboons"
-  ],
+  "tags": [],
   "source": "",
   "connection": false,
   "archived": false,
+  "pinned": false,
   "due": "",
-  "date": "2026-07-16T04:50:46.765Z",
+  "date": "2026-07-17T08:11:54.375Z",
   "synced": false,
   "schedule": {
     "subtasks": [
       {
-        "id": "smrn16oodjrb",
-        "title": "Download BAMs",
+        "id": "smront6rrypj",
+        "title": "",
         "start": "2026-07-17",
-        "end": "2026-07-17"
+        "end": "2026-07-23"
       }
     ]
   },
-  "_sortTag": "Baboons"
+  "_sortTag": ""
 }

@@ -841,6 +841,62 @@ console.log('\nThe gene highlight takes the lines with it, not just the cards');
   eq([opacityOf('lit'), opacityOf('dull')], ['1', '1'], 'and with no highlight, every line is full strength');
 }
 
+// Click a card and it tints, along with everything the web joins it to; click it again and the tint
+// goes. Several can be held at once, which is the point — you pick out neighbourhoods and compare
+// them. The tinted set is derived from the clicked ones on every pass, never stored, which is what
+// makes overlapping neighbourhoods come out right.
+console.log('\nClicking a card tints it and its web neighbourhood, until clicked again');
+{
+  const { api, sandbox } = setup([
+    card('A',   { tags: ['red'] }),
+    card('n1',  { tags: ['red'] }),           // A's neighbour
+    card('mid', { tags: ['red', 'blue'] }),   // neighbour of BOTH A and B
+    card('B',   { tags: ['blue'] }),
+    card('n2',  { tags: ['blue'] }),          // B's neighbour
+    card('far', { tags: ['green'] }),         // in a neighbourhood of its own
+    card('gap', { tags: ['green'] }),
+  ]);
+  api.grLinkBy = 'tags';
+  api.setView('graph');
+  const has = (id, c) => sandbox.document.getElementById('gr-n-' + id).classList.contains(c);
+  const ids = () => api.grNodes().map(n => n.id);
+  // Either strength: the whole tinted neighbourhood.
+  const tinted = () => ids().filter(id => has(id, 'gr-tint') || has(id, 'gr-sel')).sort();
+  const clicked = () => ids().filter(id => has(id, 'gr-sel')).sort();     // strong — click to remove
+  const reached = () => ids().filter(id => has(id, 'gr-tint')).sort();    // pale — pulled in by the web
+
+  eq(tinted(), [], 'nothing is tinted until something is clicked');
+  api.grToggleSelect('A');
+  eq(tinted(), ['A', 'mid', 'n1'], 'clicking a card tints it and everything the web joins it to');
+  eq(tinted().includes('n2'), false, '...and nothing further out — it is one hop, not the whole component');
+
+  // Which of them will answer to another click has to be visible, or you cannot undo what you did.
+  eq(clicked(), ['A'], 'the card you clicked wears the strong tint — it is the one that undoes this');
+  eq(reached(), ['mid', 'n1'], '...and the ones the web reached wear the pale one');
+
+  api.grToggleSelect('B');
+  eq(tinted(), ['A', 'B', 'mid', 'n1', 'n2'], 'a second click holds both neighbourhoods at once');
+  eq(clicked(), ['A', 'B'], '...with both clicked cards standing out from the five tinted');
+
+  // The case a stored set would get wrong.
+  api.grToggleSelect('A');
+  eq(tinted(), ['B', 'mid', 'n2'], 'un-clicking A drops its own, but mid stays — B still reaches it');
+  api.grToggleSelect('B');
+  eq(tinted(), [], '...and un-clicking the last one clears the lot');
+
+  // Clicking a card that is only PALE selects it, rather than undoing anything — and it goes strong,
+  // so the two clicks are told apart afterwards.
+  api.grToggleSelect('A');
+  api.grToggleSelect('n1');
+  eq(api.grSelIds.has('n1'), true, 'clicking a pale neighbour selects it in its own right');
+  eq(clicked(), ['A', 'n1'], '...and it goes strong, so you can see it now answers to a click of its own');
+  eq(tinted(), ['A', 'mid', 'n1'], '...while the neighbourhood itself is unchanged — it was already in A\'s reach');
+
+  // It survives a repaint — the classes are re-derived, not remembered by the DOM.
+  api.renderList();
+  eq([tinted(), clicked()], [['A', 'mid', 'n1'], ['A', 'n1']], 'and both strengths survive a re-render');
+}
+
 console.log('\nA node\'s tooltip IS the card, and Title · Tags · Body says how much of it');
 {
   // The tooltip is drawn by the same renderCard() the list uses, and dressed by the same two CSS

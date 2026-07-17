@@ -321,6 +321,14 @@ a { color: inherit; }
   font-size: min(1em, calc(var(--gr-cap, 14px) / var(--gr-zoom, 1))); }
 .gr-node.gr-off { display: none; }
 .gr-node.pinned { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(217,119,87,0.35); }
+/* Accent, like every other bit of interaction feedback here, and a wash rather than an outline so it
+   reads at a glance across a crowd without competing with the pinned ring next to it. Survives
+   monochrome mode: this is action, not data.
+   Two strengths, because they answer different questions. The pale one means "the web reaches this
+   from something you clicked". The strong one means "you clicked THIS" — and so it is the one to
+   click again to put the neighbourhood away. Mutually exclusive: a card is one or the other. */
+.gr-node.gr-tint { background: rgba(217,119,87,0.14); }
+.gr-node.gr-sel { background: rgba(217,119,87,0.38); }
 .gr-icon { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--tc); margin-top: 1px; }
 .gr-icon svg { display: block; width: 12px; height: 12px; }
 /* A connection card: the design drew this as a label on the edge. Here it IS a node — draggable
@@ -2495,6 +2503,7 @@ let grWeb = true;             // draw the shared-tag/gene links, not just leave 
 // the map is not thrown away: hidden cards keep their places and are simply inert.
 let _grSim = [], _grSimIds = new Set();
 let _grHiIds = new Set();     // the cards the gene highlight names; the lines follow them (grWebLit)
+let _grSelIds = new Set();    // cards you have clicked; they and their web neighbours take a tint
 let _grRefit = false;         // reframe the view once the layout has settled
 let _grFixed = {};            // id -> true once you have dragged it somewhere
 let _grHome = {};             // id -> where the card belongs, and springs back to
@@ -2877,6 +2886,30 @@ function grWebLit(p){
   if (!highlightGenes.size) return true;
   return _grHiIds.has(p.a) || _grHiIds.has(p.b);
 }
+// --- Click to tint a card and its neighbourhood -------------------------------------------------
+// Clicking a card tints it and everything the web joins it to, and it stays tinted until you click
+// it again — so you can pick out several neighbourhoods and hold them all on screen at once. The
+// web, not the [[links]]: this marks what the layout is clustering on, which is the question the
+// graph is there to answer.
+//
+// The tinted set is DERIVED from the clicked ones every time rather than stored. Two selections
+// often share a neighbour, and a stored set would have to work out whether un-clicking one of them
+// leaves the shared card tinted; recomputing the union never has to ask.
+function grTinted(){
+  if (!_grSelIds.size) return _grSelIds;   // empty: nothing to walk the pairs for
+  const out = new Set(_grSelIds);
+  for (const p of _grPairs) {
+    if (_grSelIds.has(p.a)) out.add(p.b);
+    if (_grSelIds.has(p.b)) out.add(p.a);
+  }
+  return out;
+}
+// Clicking a card that is tinted only BECAUSE a neighbour was clicked selects it in its own right —
+// it is not one of the clicked ones, so there is nothing there to undo.
+function grToggleSelect(id){
+  if (_grSelIds.has(id)) _grSelIds.delete(id); else _grSelIds.add(id);
+  grApplyFilter();
+}
 // The web, split in two so the half the highlight does not reach can be faded behind the half it
 // does. Without a highlight the dim half comes back empty and the lit half is the whole web.
 function grWebPaths(){
@@ -3156,6 +3189,7 @@ function grApplyFilter(){
   const carries = e => (e.genes || []).some(g => geneAliasesU(g).some(a => highlightGenes.has(a)));
   let hidden = 0;
   _grHiIds = new Set();
+  const tint = grTinted();
   for (const e of _grNodes) {
     const on = vis.has(e.id);
     if (!on) hidden++;
@@ -3167,6 +3201,11 @@ function grApplyFilter(){
     el.classList.toggle('link-target', linkMode && e.id !== editingId);
     el.classList.toggle('gr-hi', hi);
     el.classList.toggle('gr-dim', lit && !hi);
+    // The one you clicked wears the strong tint; the ones it reached wear the pale one. Only the
+    // strong ones answer to another click, so the two have to be told apart on sight.
+    const sel = _grSelIds.has(e.id);
+    el.classList.toggle('gr-sel', sel);
+    el.classList.toggle('gr-tint', !sel && tint.has(e.id));
   }
   // A connection line falls back with the cards it runs between: leaving it at full accent while both
   // its ends fade is what made the highlight read as half-applied — the orange was the loudest thing
@@ -3409,6 +3448,7 @@ function _grUp(e){
   if (d.id && d.moved) grRelaxStart();     // the cards it passed are still springing back
   if (!d.moved && d.id) grShowPop(d.id);   // a tap, not a drag — touch has no hover, so show it
   if (!d.moved && d.id) popPin();
+  if (!d.moved && d.id) grToggleSelect(d.id);   // ...and tint its neighbourhood, until clicked again
 }
 function grWheel(e){
   e.preventDefault();

@@ -15,9 +15,15 @@
     "subtasks": [
       {
         "id": "smrn91iejw2d",
-        "title": "",
-        "start": "2026-07-16",
-        "end": "2026-07-26"
+        "title": "git lfs -> pd-lfs",
+        "start": "2026-07-20",
+        "end": "2026-07-21"
+      },
+      {
+        "id": "smronpljzutb",
+        "title": "submodules / meta-repo",
+        "start": "2026-07-22",
+        "end": "2026-07-23"
       }
     ]
   }

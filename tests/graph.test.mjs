@@ -452,14 +452,18 @@ console.log('\nLink: Tags · Genes · Both decides what the map is built out of'
   eq(ids(linked.grNodes()), ['a', 'conn'], 'a linked card stays on the map under any Link setting');
 }
 
-console.log('\n"draw" makes the invisible web of shared tags and genes visible');
+// The web draws gene overlap only, so the cards that get a line here all carry genes; the tag-only
+// pair is here to prove it stays undrawn while still pulling.
+console.log('\n"draw" makes the invisible web of shared genes visible');
 {
   const { api, el, sandbox } = setup([
-    card('a', { tags: ['drive'] }),
-    card('b', { tags: ['drive'] }),          // shares a tag with a
+    card('a', { genes: ['GENEX'], tags: ['drive'] }),
+    card('b', { genes: ['GENEX'], tags: ['drive'] }),   // shares a gene with a
     card('c', { genes: ['ARHGAP5'] }),
-    card('d', { genes: ['ARHGAP5'] }),       // shares a gene with c
-    card('lone', { tags: ['solo'] }),        // shares nothing with anyone
+    card('d', { genes: ['ARHGAP5'] }),                  // shares a gene with c
+    card('t1', { tags: ['solo'] }),
+    card('t2', { tags: ['solo'] }),                     // share only a tag: a pull, not a line
+    card('lone', { tags: ['nobody'] }),                 // shares nothing with anyone
   ]);
   api.setView('graph');
   // Gene layout splits the web across opacity bands (gr-web-b0…), every other layout uses the one
@@ -470,8 +474,10 @@ console.log('\n"draw" makes the invisible web of shared tags and genes visible')
       n + (sandbox.document.getElementById(id).getAttribute('d') || '').split('M').filter(Boolean).length, 0);
   };
 
-  eq(api.grWeb, true, 'on by default — the shared-tag/gene web is drawn');
-  eq(segs(), 2, 'every pair that shares something gets a line (a–b and c–d, but nobody to lone)');
+  eq(api.grWeb, true, 'on by default — the shared-gene web is drawn');
+  eq(segs(), 2, 'a line for each shared-GENE pair (a–b and c–d, but nobody to lone)');
+  eq(api.grPairs(api.grNodes()).some(p => [p.a, p.b].sort().join('~') === 't1~t2' && p.w > 0), true,
+     '...while the tag-only pair pulls without drawing — in Both, tags move cards, they do not draw');
 
   // A line to a card that has been filtered away would point at nothing.
   el('search-input').value = '#drive';
@@ -482,9 +488,9 @@ console.log('\n"draw" makes the invisible web of shared tags and genes visible')
   api.renderList();
   eq(segs(), 2, 'and comes back when they are');
 
-  // It follows the Link switch: under Genes, a shared tag is not a link at all.
+  // The Link switch moves the cards, but the web is gene overlap in both modes — so it does not move.
   api.setGrLinkBy('genes');
-  eq(segs(), 1, 'under Link=Genes only the shared-gene pair is drawn');
+  eq(segs(), 2, 'Genes draws the very same two lines — the web was never about tags');
 
   api.setGrWeb(false);
   eq(segs(), 0, 'and unchecking puts it away again');
@@ -665,13 +671,48 @@ console.log('\nThe gene highlight picks cards out of the map without narrowing i
   eq([cls('hit1', 'gr-hi'), cls('miss', 'gr-dim')], [false, false], 'clearing the field puts every card back to normal');
 }
 
-// Two ways to draw the web: the flat grey uniform path, or the dark bands shaded by how much of the
-// two cards' term lists coincide. Shading only says something where overlap HAS a degree — gene
-// lists do, so Genes bands. Both has gene lists in it too, so it bands the same way; Tags alone
-// doesn't (a tag is shared or it isn't) and keeps the flat texture.
-console.log('\nBoth draws its web the way Genes does — Tags alone keeps the flat one');
+// A drawn web line makes one claim — this much of these two cards' GENE lists is the same — so it
+// must be read off the gene lists and nothing else. Genes and Both therefore draw one identical web;
+// what Both adds is tag pull, which moves cards without drawing anything. Let tags into the shading
+// and Both quietly asserts a gene relationship that isn't there, which is worse than useless in a KB
+// where the tags are things like SMBE26. Tags alone has no gene overlap to shade by and keeps the
+// flat uniform path.
+console.log('\nThe drawn web is gene overlap and nothing else');
 {
+  const mixed = [
+    card('a', { genes: ['GENEX', 'GENEY'], tags: ['t1', 't2', 't3'] }),
+    card('b', { genes: ['GENEX', 'GENEY'], tags: ['t1'] }),            // genes match fully, tags barely
+    card('c', { genes: ['GENEX'],          tags: ['t1', 't2', 't3'] }), // genes half, tags fully
+    card('d', {                            tags: ['t1', 't2', 't3'] }), // no genes at all
+    card('e', {                            tags: ['t1'] }),
+  ];
+  // Which pairs the web draws, and in which opacity band.
   const drawn = (mode) => {
+    const { api } = setup(mixed);
+    api.grLinkBy = mode;
+    api.setView('graph');
+    return api.grPairs(api.grNodes())
+      .map(p => ({ p, k: Math.round(api.grEdgeAlpha(p.jac || 0) * api.GR_WEB_BUCKETS) }))
+      .filter(x => x.k > 0)                       // below the floor: not drawn
+      .map(x => `${[x.p.a, x.p.b].sort().join('~')} band${Math.min(x.k, api.GR_WEB_BUCKETS)}`)
+      .sort();
+  };
+  const genes = drawn('genes'), both = drawn('both');
+  eq(genes.length > 0, true, 'Genes draws a web at all');
+  eq(both, genes, `Both draws exactly the edges Genes draws, in the same bands (${genes.join(', ') || 'none'})`);
+  // Read the pair back off the label, not by substring — "band6" contains a 'd'.
+  const touchesD = both.some(s => s.split(' ')[0].split('~').includes('d'));
+  eq(touchesD, false, 'a card carrying no genes gets no line, however many tags it shares');
+
+  // ...and yet those tags are still doing their work on the layout.
+  const { api } = setup(mixed);
+  api.grLinkBy = 'both';
+  const de = api.grPairs(api.grNodes()).find(p => [p.a, p.b].sort().join('~') === 'd~e');
+  eq(!!de && de.w > 0, true, 'the tag those two share still pulls them together — it just draws nothing');
+}
+{
+  // ...and structurally: Tags keeps the flat path, the other two use the shaded bands.
+  const shape = (mode) => {
     const { api, sandbox } = setup([
       card('a', { genes: ['GENEX'], tags: ['x'] }),
       card('b', { genes: ['GENEX'], tags: ['x'] }),
@@ -688,7 +729,7 @@ console.log('\nBoth draws its web the way Genes does — Tags alone keeps the fl
     for (let k = 0; k < api.GR_WEB_BUCKETS; k++) banded += segs('gr-web-b' + k);
     return { banded, uniform: segs('gr-web') };
   };
-  const tags = drawn('tags'), genes = drawn('genes'), both = drawn('both');
+  const tags = shape('tags'), genes = shape('genes'), both = shape('both');
   eq([tags.uniform > 0, tags.banded], [true, 0], 'Tags draws the flat uniform web and nothing banded');
   eq([genes.uniform, genes.banded > 0], [0, true], 'Genes draws only the shaded bands');
   eq([both.uniform, both.banded > 0], [0, true], '...and Both draws them the same way, not the flat one');

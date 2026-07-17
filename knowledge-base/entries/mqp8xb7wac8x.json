@@ -6,7 +6,8 @@
     "PRDM9"
   ],
   "tags": [
-    "chr3"
+    "chr3",
+    "BDMI"
   ],
   "source": "",
   "connection": false,
@@ -14,5 +15,5 @@
   "due": "",
   "date": "2026-07-16T05:38:49.342Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "chr3"
 }

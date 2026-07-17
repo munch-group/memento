@@ -2586,12 +2586,22 @@ function setGrLinkBy(v){
 // The attracting pairs, precomputed once per layout: for every two cards sharing a tag or a gene,
 // one spring whose strength is simply how many terms they share. Also hands back a seed key per
 // card (see grInitPositions).
+// Jaccard overlap of two term sets: how much of what the two carry between them they carry both.
+function grJac(a, b){
+  if (!a.size || !b.size) return 0;
+  let shared = 0;
+  for (const x of a) if (b.has(x)) shared++;
+  const uni = a.size + b.size - shared;
+  return uni > 0 ? shared / uni : 0;
+}
 function grIndex(nodes){
-  const terms = new Map();          // id -> Set of terms
+  const terms = new Map();          // id -> Set of terms, whatever the layout counts as one
+  const gterms = new Map();         // id -> just the gene ones
   const freq = new Map();           // term -> how many cards carry it
   for (const e of nodes) {
     const t = grTerms(e);
     terms.set(e.id, t);
+    gterms.set(e.id, new Set([...t].filter(x => x.startsWith('g:'))));
     for (const x of t) freq.set(x, (freq.get(x) || 0) + 1);
   }
   const pairs = [];
@@ -2603,13 +2613,17 @@ function grIndex(nodes){
       let shared = 0;
       for (const x of ti) if (tj.has(x)) shared++;
       if (shared > 0) {
-        // The pull is the count, straight: two shared tags pull twice as hard as one. Rarity used to
-        // weight this (a tag on 34 cards saying less than a gene on two), and deliberately — but the
-        // count is what the eye can actually read back off the layout, so it is what the layout says.
-        // Jaccard rides along for gene layout, where the terms are gene aliases and this is exactly
-        // the gene-list overlap the edge opacity encodes (see grEdgeAlpha).
-        const uni = ti.size + tj.size - shared;
-        pairs.push({ a: nodes[i].id, b: nodes[j].id, w: shared, jac: uni > 0 ? shared / uni : 0 });
+        // Two separate questions, deliberately answered from different terms.
+        //
+        // w is the pull, and counts every term the layout is set to consider: two shared tags pull
+        // twice as hard as one. (Rarity used to weight this — a tag on 34 cards saying less than a
+        // gene on two — but the count is what the eye can read back off the layout.)
+        //
+        // jac is what the drawn web says, and is ALWAYS the overlap of the two cards' gene lists,
+        // never their tags. So Genes and Both draw one and the same web; what Both adds is tag pull,
+        // which moves the cards without drawing anything. A pair sharing only tags scores 0 here and
+        // is not drawn at all — it is a pull, not a claim about genes.
+        pairs.push({ a: nodes[i].id, b: nodes[j].id, w: shared, jac: grJac(gterms.get(nodes[i].id), gterms.get(nodes[j].id)) });
       }
     }
   }
@@ -2912,10 +2926,11 @@ function grApplyDOM(){
   // Publish the zoom so the label font can counter-scale (cap its on-screen size). Guarded because
   // the test harness's style is a plain object; a same-value set during a sim tick is a no-op.
   if (scene && scene.style.setProperty) scene.style.setProperty('--gr-zoom', _grZoom);
-  // Wherever genes are in play — Genes or Both — the web is drawn in opacity bands, each edge shaded
-  // by how much of the two cards' term lists actually coincide. Tags alone keeps the one uniform
-  // path: a tag is shared or it isn't, and there is no degree in it worth shading. Whichever is
-  // inactive is cleared so nothing lingers across a Link switch.
+  // Wherever genes are in play — Genes or Both — the web is the same web: bands shaded by gene
+  // overlap alone (grIndex keeps jac to genes for exactly this). Both differs from Genes in where the
+  // cards SIT, not in what is drawn between them. Tags alone has no gene overlap to shade by and
+  // keeps the one uniform path: a tag is shared or it isn't, and there is no degree in it to show.
+  // Whichever is inactive is cleared so nothing lingers across a Link switch.
   const geneWeb = grLinkBy !== 'tags';
   const setD = (id, d) => { const el = document.getElementById(id); if (el && el.setAttribute) el.setAttribute('d', d); };
   const web = geneWeb ? null : grWebPaths();

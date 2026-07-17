@@ -4,7 +4,9 @@
   "title": "Emmas X chromosome synteny",
   "genes": [],
   "tags": [
-    "X"
+    "X",
+    "BDMI",
+    "Drive"
   ],
   "source": "",
   "connection": false,
@@ -12,5 +14,5 @@
   "due": "",
   "date": "2026-06-30T12:47:41.043Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "X"
 }

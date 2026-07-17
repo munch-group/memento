@@ -5,12 +5,14 @@
   "genes": [],
   "tags": [
     "Baboons",
-    "BDMI"
+    "BDMI",
+    "Y",
+    "X"
   ],
   "source": "",
   "date": "2026-05-08T10:50:17.455Z",
   "synced": false,
-  "_sortTag": "Baboons",
+  "_sortTag": "BDMI",
   "connection": false,
   "archived": false,
   "due": ""

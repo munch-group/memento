@@ -91,7 +91,8 @@
     "ZRSR2"
   ],
   "tags": [
-    "Xi"
+    "Xi",
+    "X"
   ],
   "source": "Roman et al. 2023 / https://10.1016/j.xgen.2023.100259",
   "connection": false,
@@ -99,5 +100,5 @@
   "due": "",
   "date": "2026-06-01T16:08:13.559Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "Xi"
 }

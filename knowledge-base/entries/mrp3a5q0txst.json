@@ -1,0 +1,22 @@
+{
+  "id": "mrp3a5q0txst",
+  "type": "reference",
+  "title": "Gene set: MT lattice/transport",
+  "genes": [
+    "DYNLT3",
+    "HDAC6",
+    "MAP7D3",
+    "MAPT"
+  ],
+  "tags": [
+    "MT_lattice_transport",
+    "gene-set"
+  ],
+  "source": "https://doi.org/10.1371/journal.pgen.1008895",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-07-17T15:25:00.000Z",
+  "synced": false
+}

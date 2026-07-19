@@ -1,0 +1,25 @@
+{
+  "id": "mrp3a5pzxavj",
+  "type": "reference",
+  "title": "Gene set: Xq27 miRNA cluster",
+  "genes": [
+    "MIR888",
+    "MIR890",
+    "MIR891A",
+    "MIR891B",
+    "MIR892A",
+    "MIR892B",
+    "MIR892C"
+  ],
+  "tags": [
+    "Xq27_miRNA_cluster",
+    "gene-set"
+  ],
+  "source": "https://doi.org/10.1371/journal.pgen.1008895",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-07-17T15:25:00.000Z",
+  "synced": false
+}

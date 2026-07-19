@@ -1,0 +1,21 @@
+{
+  "id": "mrp3a5q01i0u",
+  "type": "reference",
+  "title": "Gene set: NF-kB signalling",
+  "genes": [
+    "EDA",
+    "HIVEP3",
+    "NFKB1"
+  ],
+  "tags": [
+    "NF-kB_signalling",
+    "gene-set"
+  ],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-07-17T15:25:00.000Z",
+  "synced": false
+}

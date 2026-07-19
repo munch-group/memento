@@ -215,6 +215,28 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get grZoom(){ return _grZoom; },
       get grH(){ return _grH; },
       get grAlpha(){ return _grAlpha; },
+      // Genes view (M1)
+      renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown,
+      geShownCount, geComputeDrawn, geStep, geInitPositions, geSizeLayout,
+      setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, geSelect, geClearSelection, geApplyFilter, geRelayout,
+      set interactions(v){ interactions = v; }, get interactions(){ return interactions; },
+      get geNodes(){ return _geNodes; }, get geEdges(){ return _geEdges; }, get geDrawn(){ return _geDrawn; },
+      get geMechEdges(){ return _geMechEdges; }, get gePos(){ return _gePos; },
+      get geSelIds(){ return [..._geSelIds].sort(); }, get geLastSel(){ return _geLastSel; },
+      get geIsolated(){ return _geIsolated; },
+      get geNatures(){ return [...geNatures].sort(); }, get geMinBelief(){ return geMinBelief; },
+      get geMinEv(){ return geMinEv; }, get geShowComplex(){ return geShowComplex; },
+      set geSpacing(v){ geSpacing = v; },
+      // M2 live expansion
+      geExpand, geParseIndra, geStmtAgents, geThin, geGroundChrom, geMergeExpansion,
+      gePromoteGhost, geUpdateAction, geActionExpand, geActionAdd, geAddGene, geMergeAddGene, GE_GHOST_CAP,
+      get geExpanded(){ return [..._geExpanded].sort(); },
+      get geExpanding(){ return _geExpanding; },
+      geTestResetExpanded: () => { _geExpanded = new Set(); },
+      // M3 refresh-all + freeze
+      geRefreshAll, geMergeNodeEdges, geFreeze, geBuildFrozen, geWriteInteractions,
+      get geRefreshing(){ return _geRefreshing; },
+      set geRefreshCancel(v){ _geRefreshCancel = v; },
       // The sidebar Sort menu drives the timeline's order too, so the tests reach for it directly.
       setSort,
       get sortKey(){ return sortKey; },

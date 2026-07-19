@@ -1,4 +1,9 @@
 
+# Weeks
+1. bla
+2. bla
+3. bla
+
 # Topics
 - AI in VScode (matching the free AI)
 - Knowing what to ask for and how

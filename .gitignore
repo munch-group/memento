@@ -213,3 +213,7 @@ __marimo__/
 TASKS.md
 dashboard.html
 memory/
+
+# Local INDRA/MyGene response cache for kb-interactions.py.
+# The distillate (knowledge-base/interactions.json) IS tracked; this is not.
+.interactions-cache/

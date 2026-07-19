@@ -306,7 +306,7 @@ a { color: inherit; }
    Nodes are pills coloured by the [data-type] tokens the cards already carry — no second colour
    table to drift out of step with the first. A connection card gets the accent instead: it is the
    thing sitting on the line between the cards it links. */
-#graph-view { flex: 1 1 auto; min-height: 460px; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--rl); background: #ffffff; overflow: hidden; }
+#graph-view, #genes-view { flex: 1 1 auto; min-height: 460px; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--rl); background: #ffffff; overflow: hidden; }
 .gr-canvas { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--bg2); cursor: grab; touch-action: none; }
 .gr-scene { position: absolute; inset: 0; transform-origin: 0 0; }
 .gr-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
@@ -400,6 +400,71 @@ a { color: inherit; }
 .gr-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text3); }
 .gr-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
 .gr-empty small { font-family: var(--mono); font-size: 11px; }
+/* Genes view (M1). Gene nodes are uniform discs coloured by chromosome; edges are
+   INDRA interactions coloured by nature. Reuses .gr-tools / .gr-slider / .gr-caption. */
+.ge-canvas { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--bg2); cursor: grab; touch-action: none; }
+.ge-canvas:active { cursor: grabbing; }
+.ge-scene { position: absolute; inset: 0; transform-origin: 0 0; }
+.ge-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+/* Constant on-screen stroke width: the zoom is a CSS transform on the .ge-scene DIV (not an SVG
+   transform), so vector-effect:non-scaling-stroke does nothing here — counter-scale by --ge-zoom
+   instead, exactly like the node discs and labels, so width * scene-scale stays put. */
+.ge-edge { stroke-width: calc(1.4px / var(--ge-zoom, 1)); }
+.ge-nat-promote { stroke: #27AE60; } .ge-nat-suppress { stroke: #C0392B; } .ge-nat-modify { stroke: #2980B9; } .ge-nat-bind { stroke: #888; }
+/* stroke-opacity (not opacity): the dimming sets the `opacity` presentation ATTRIBUTE to 0, and a
+   CSS `opacity` rule would override that attribute so complex edges never hid. stroke-opacity is a
+   separate property that multiplies with the attribute instead. */
+.ge-complex { stroke-width: calc(1px / var(--ge-zoom, 1)); stroke-dasharray: calc(3px / var(--ge-zoom, 1)) calc(3px / var(--ge-zoom, 1)); stroke-opacity: 0.65; }
+/* The node box wraps ONLY the dot (the label is positioned absolutely below it), so the
+   translate(-50%,-50%) in geApplyDOM centres the DOT on the node's (x,y) — which is where edges
+   connect. If the label were in flow the box centre would sit between dot and label, and edges
+   would meet a point below the dot. */
+.ge-node { position: absolute; left: 0; top: 0; cursor: grab; z-index: 2; will-change: transform; touch-action: none; }
+/* Node discs counter-scale with zoom (via --ge-nodescale, set in geApplyDOM) so they hold a
+   constant on-screen size as you zoom in, the way the labels do. The scale is max(1, zoom): it
+   caps growth when zoomed IN (the case that obscured the map) but leaves the fit/overview view
+   untouched, so zooming out still shrinks the cloud to an overview. */
+.ge-dot { display: block; width: calc(var(--r, 12px) / var(--ge-nodescale, 1)); height: calc(var(--r, 12px) / var(--ge-nodescale, 1)); border-radius: 50%; border: calc(1.5px / var(--ge-nodescale, 1)) solid rgba(20,20,19,0.28); box-shadow: 0 1px 2px rgba(20,20,19,0.12); }
+/* Chromosome colours, from the theme palette: terracotta (the app accent) X, orange Y, a warm
+   grey for the autosome majority so X and Y pop, blue mitochondrial, white for unknown. Defined
+   once so a real node's fill and a ghost's dashed border always agree. */
+.ge-canvas { --chrom-X: var(--accent); --chrom-auto: #b9b7ae; --chrom-Y: #E8A020; --chrom-MT: #5B9BD5; --chrom-unknown: #ffffff; }
+.ge-c-X .ge-dot { background: var(--chrom-X); } .ge-c-auto .ge-dot { background: var(--chrom-auto); } .ge-c-Y .ge-dot { background: var(--chrom-Y); } .ge-c-MT .ge-dot { background: var(--chrom-MT); } .ge-c-unknown .ge-dot { background: var(--chrom-unknown); }
+.ge-label { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: calc(2px / var(--ge-zoom, 1));
+  font-size: calc(10px / var(--ge-zoom, 1)); font-weight: 500; color: var(--text2); white-space: nowrap; pointer-events: none; max-width: 140px; overflow: hidden; text-overflow: ellipsis;
+  /* A semi-transparent pill of the canvas colour behind the label, so names stay legible over
+     dense edges. Padding and radius counter-scale with zoom like the font, so the pill stays
+     proportional to the text; color-mix keeps it theme-aware (already used elsewhere in the app). */
+  padding: calc(0.5px / var(--ge-zoom, 1)) calc(3px / var(--ge-zoom, 1));
+  border-radius: calc(4px / var(--ge-zoom, 1));
+  background: color-mix(in srgb, var(--bg2) 82%, transparent); }
+.ge-node.ge-off { display: none; }   /* hidden by the search bar / facet filter (positions kept) */
+.ge-node.ge-dim { opacity: 0.16; }
+.ge-node.ge-sel { z-index: 5; }
+.ge-node.ge-sel .ge-dot { border-color: var(--accent); box-shadow: 0 0 0 calc(3px / var(--ge-nodescale, 1)) rgba(217,119,87,0.4); }
+.ge-tools { flex-wrap: wrap; max-width: min(92%, 760px); }
+.ge-filter-group { display: flex; gap: 10px; align-items: center; }
+.ge-chk { display: flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; }
+.ge-nat-lab-promote { color: #27AE60; } .ge-nat-lab-suppress { color: #C0392B; } .ge-nat-lab-modify { color: #2980B9; } .ge-nat-lab-bind { color: #7a7a7a; }
+/* Ghost nodes (M2): genes NOT in memento, surfaced by a live INDRA expansion.
+   Hollow, dashed, chromosome-tinted outline — clearly "not yours yet", promotable. */
+/* Off-card genes — ghosts from an expansion, or genes you added by name — are NOT listed on any
+   card. They keep their chromosome fill (so they're visible) with a dashed dark outline to mark
+   that they aren't in your cards. (Previously hollow, which made unknown-chromosome ghosts with a
+   white outline invisible.) */
+.ge-node.ge-offcard .ge-dot { border-style: dashed; border-color: rgba(20,20,19,0.55); border-width: calc(1.5px / var(--ge-nodescale, 1)); }
+.ge-node.ge-offcard .ge-label { font-style: italic; }
+.ge-node.ge-expanded .ge-dot { box-shadow: 0 0 0 calc(2px / var(--ge-nodescale, 1)) rgba(20,20,19,0.10), 0 1px 2px rgba(20,20,19,0.12); }
+/* Contextual action button, bottom-centre: expand a real node / add a ghost. */
+.ge-actions { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 6; display: flex; gap: 8px; }
+.ge-action { padding: 6px 15px; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent);
+  color: #fff; font-size: 12px; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(20,20,19,0.18); }
+.ge-action.ge-action-alt { background: #fff; color: var(--accent); }   /* the secondary "Add" button */
+.ge-action:disabled { opacity: 0.55; cursor: default; }
+.ge-addgene-input { font-size: 12px; padding: 3px 8px; border: 1px solid var(--border2); border-radius: var(--r); width: 130px; background: #fff; color: var(--text); }
+/* Refresh-all progress (M3), top-left of the canvas. */
+.ge-progress { position: absolute; left: 12px; top: 12px; z-index: 6; padding: 4px 10px; border-radius: var(--r);
+  background: rgba(255,255,255,0.9); font-family: var(--mono); font-size: 11px; color: var(--text2); box-shadow: 0 1px 4px rgba(20,20,19,0.12); }
 .tl-body { flex: 1 0 auto; display: flex; }
 /* The Task column is a drawer: click its header or empty space to minimise it to a thin strip of
    just the row markers (freeing width for the canvas), click again to restore. The inner is a fixed
@@ -654,7 +719,7 @@ a { color: inherit; }
       </div>
       <div class="control-bar">
         <div class="seg" id="view-seg">
-          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Cards</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span>
+          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Cards</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setView('genes')">Genes</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span>
         </div>
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
@@ -669,6 +734,7 @@ a { color: inherit; }
            renderList()'s column distribution and progressive-insert streaming. -->
       <div id="timeline-view" style="display:none"></div>
       <div id="graph-view" style="display:none"></div>
+      <div id="genes-view" style="display:none"></div>
     </div>
   </div>
 </div>
@@ -888,6 +954,7 @@ async function fsaLoadEntries() {
     }
     window._kbDigest = loaded.find(i => i.id === '_digest') || null;
     items = loaded.filter(i => i.id !== '_digest');
+    await loadInteractions();   // the gene sidecar, from the same folder
     // Read INBOX.md
     try {
       const inboxHandle = await dirHandle.getFileHandle('INBOX.md');
@@ -1233,6 +1300,7 @@ function renderFilters() {
     : esc(mainView === 'dash' ? 'Dashboard'
         : mainView === 'timeline' ? `Timeline (${tlRows().length})`
         : mainView === 'graph' ? `Graph (${grShownCount()})`
+        : mainView === 'genes' ? `Genes (${geShownCount()})`
         : `Cards (${scope.length})`);
 }
 
@@ -1493,17 +1561,20 @@ function renderList() {
   // site means every existing renderList() caller repaints the right view for free.
   const tlEl = document.getElementById('timeline-view');
   const grEl = document.getElementById('graph-view');
+  const geEl = document.getElementById('genes-view');
   const listEl = document.getElementById('item-list');
   const mainEl = document.getElementById('main-area');
-  const panel = mainView === 'timeline' || mainView === 'graph';
+  const panel = mainView === 'timeline' || mainView === 'graph' || mainView === 'genes';
   if (listEl) listEl.style.display = panel ? 'none' : '';
   if (tlEl) tlEl.style.display = mainView === 'timeline' ? '' : 'none';
   if (grEl) grEl.style.display = mainView === 'graph' ? '' : 'none';
+  if (geEl) geEl.style.display = mainView === 'genes' ? '' : 'none';
   // panel-mode gives the panel a flex chain from .main down, so it fills the view instead of
   // shrinking to its content. The card list wants no part of that.
   if (mainEl) mainEl.classList.toggle('panel-mode', panel);
   if (mainView === 'timeline') return renderTimeline();
   if (mainView === 'graph') return renderGraph();
+  if (mainView === 'genes') return renderGenes();
   // Issues sub-view: render temporary issue cards instead of normal items
   if (ghIssuesRepo && ghIssuesItems.length >= 0) {
     return renderIssuesList();
@@ -3177,7 +3248,7 @@ function renderGraph(){
         <svg class="gr-edges"><path id="gr-web-d" class="gr-web gr-web-faded" fill="none"></path>${grWebBandPaths('-d', ' gr-web-faded')}<path id="gr-web" class="gr-web" fill="none"></path>${grWebBandPaths('', '')}${_grEdges.map((c, i) => `<line id="gr-e${i}" class="gr-edge"></line>`).join('')}</svg>
         ${_grNodes.map(grNodeHtml).join('')}
       </div>
-      <div class="gr-tools">
+      <div class="gr-tools" onpointerdown="event.stopPropagation()">
         <div class="seg" id="gr-link-seg">
           <span class="seg-label" title="What counts as a link between two cards">Link</span>
           <span class="seg-opt" data-val="tags" onclick="setGrLinkBy('tags')" title="Shared tags only">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setGrLinkBy('genes')" title="Shared genes only">Genes</span><span class="seg-sep">·</span><span class="seg-opt" data-val="both" onclick="setGrLinkBy('both')" title="Shared tags and shared genes">Both</span>
@@ -3603,6 +3674,1003 @@ function closeTagEditor() {
   _tagEditorId = null;
   computeSortTags(); renderFilters(); renderList();   // refresh sidebar tag counts and the card
 }
+// ============================================================================
+// Genes view (M1: offline) — a gene-centric map. Nodes are GENES from the
+// interactions.json sidecar; edges are gene-gene interactions from INDRA. Where
+// the Graph view links CARDS by the genes you wrote, this links GENES by biology
+// you did not — the thing the card graph structurally cannot show.
+//
+// Deliberately self-contained (ge*), NOT folded into the card-graph solver: the
+// node model differs (uniform discs vs variable pills; interaction edges vs an
+// overlap web), and the tested graph must stay untouched. It does reuse the
+// proven force constants and grHash() seeding.
+//
+// Offline by design — reads only the frozen sidecar, no network. Live INDRA
+// expansion, ghost nodes and the freeze button are later phases (M2/M3).
+// ============================================================================
+let interactions = null;   // parsed interactions.json, or null until loaded
+
+// INDRA statement type -> the four "natures" the filter speaks in. Colours are
+// the domain-standard scheme carried from interaction-store's visualization.py:
+// green promote, red suppress, blue modify, grey bind.
+const GE_NATURE = {
+  Activation:'promote', IncreaseAmount:'promote',
+  Inhibition:'suppress', DecreaseAmount:'suppress',
+  Phosphorylation:'modify', Dephosphorylation:'modify', Ubiquitination:'modify',
+  Deubiquitination:'modify', Acetylation:'modify', Deacetylation:'modify',
+  Methylation:'modify', Demethylation:'modify', Sumoylation:'modify',
+  Desumoylation:'modify', Palmitoylation:'modify', Hydroxylation:'modify',
+  Glycosylation:'modify', Farnesylation:'modify', Ribosylation:'modify',
+  Translocation:'modify', Gef:'modify', Gap:'modify', Complex:'bind',
+};
+function geNature(t){ return GE_NATURE[t] || 'modify'; }
+// Node fill = chromosome. X vs autosome is the meaningful axis for the drive
+// work; same palette as interaction-store (X red, autosome blue).
+function geChromClass(chrom){
+  if (chrom === 'X') return 'X';
+  if (chrom === 'Y') return 'Y';
+  if (chrom === 'MT' || chrom === 'M') return 'MT';
+  return chrom ? 'auto' : 'unknown';
+}
+function geIdSafe(s){ return String(s).replace(/[^A-Za-z0-9_-]/g, '_'); }
+
+let _geNodes = [], _geEdges = [], _geMechEdges = [], _geDrawn = [], _geById = new Map();
+let _geByU = new Map();      // upper(sym) -> node, so live INDRA (which upper-cases) matches frozen nodes
+let _geFrozenU = new Map();  // upper(sym) -> canonical sym for every gene in the sidecar
+let _geIsolated = 0;
+// M2 (live INDRA expansion): genes expanded this session, and the in-flight guard.
+let _geExpanded = new Set(), _geExpanding = false, _geUnpinAfter = null;
+// M3 (refresh-all + freeze): the bulk-refresh flag and its cancel signal.
+let _geRefreshing = false, _geRefreshCancel = false;
+let _gePos = {}, _geHome = {}, _geFixed = {};
+let _geSim = [], _geSimIds = new Set();
+let _geSig = '', _geBuilt = false;
+// Multi-highlight, like the Graph view: clicked genes stay highlighted until clicked again.
+// _geLastSel is the most recent click — the one the action button expands.
+let _geSelIds = new Set(), _geLastSel = null;
+// When a Relayout narrows the map to its connected-visible subgraph, this holds the syms it kept;
+// nodes outside it are hidden. null = no focus (show everything the filters allow). Any filter
+// change or fresh render clears it.
+let _geLayoutIds = null;
+let _geW = 800, _geH = 520, _gePan = { x:0, y:0 }, _geZoom = 1;
+let _geRaf = 0, _geAlpha = 0, _geRefit = false;
+let _geDrag = null, _gePanning = null;
+// Property filters HIDE, they never relayout — the map stays a map. geNatures
+// empty is the sentinel for "all on".
+let geNatures = new Set();
+let geMinBelief = 0, geMinEv = 1, geShowComplex = false, geSpacing = 1;
+// Every node is the same size (radius, in scene units); the on-screen size is held
+// constant across zoom by --ge-nodescale, like the labels.
+const GE_NODE_R = 9;
+
+// The node universe and the layout are fixed by the MECHANISTIC edges only, laid
+// out once. Complex edges never spring the layout (they would knot it into a
+// hairball — 88% of all edges); toggling them on only DRAWS lines between nodes
+// already placed. A gene with no mechanistic edge is not drawn (it would only pad
+// an outer ring); the caption counts those.
+function geBuildModel(){
+  const gx = (interactions && interactions.genes) || {};
+  const all = Object.keys(gx).map(sym => {
+    const g = gx[sym];
+    return { sym, id: geIdSafe(sym), chrom: g.chrom, cclass: geChromClass(g.chrom),
+             cards: g.cards || [], groups: g.groups || [], deg: 0, r: GE_NODE_R, ghost: false };
+  });
+  _geFrozenU = new Map(all.map(n => [n.sym.toUpperCase(), n.sym]));
+  const byId = new Map(all.map(n => [n.sym, n]));
+  const mech = ((interactions && interactions.edges) || []).filter(e => byId.has(e.a) && byId.has(e.b));
+  const cplx = ((interactions && interactions.complex_edges) || []).filter(e => byId.has(e.a) && byId.has(e.b));
+  for (const e of mech) { byId.get(e.a).deg++; byId.get(e.b).deg++; }   // kept for the node tooltip
+  const wired = new Set();
+  for (const e of mech) { wired.add(e.a); wired.add(e.b); }
+  _geNodes = all.filter(n => wired.has(n.sym));
+  _geById = new Map(_geNodes.map(n => [n.sym, n]));
+  _geByU = new Map(_geNodes.map(n => [n.sym.toUpperCase(), n]));
+  _geMechEdges = mech;
+  _geEdges = mech.concat(cplx).map(e => ({ a:e.a, b:e.b, t:e.t, nat:geNature(e.t),
+    belief:e.belief, n:e.n, pmid:e.pmid, complex:e.t === 'Complex' }));
+  _geIsolated = all.length - _geNodes.length;
+}
+function geComputeDrawn(){ _geDrawn = _geEdges.filter(e => !e.complex || geShowComplex); }
+function geEdgeShown(e){
+  if (geNatures.size && !geNatures.has(e.nat)) return false;
+  if ((e.belief || 0) < geMinBelief) return false;
+  if ((e.n || 0) < geMinEv) return false;
+  return true;
+}
+function geShownCount(){
+  if (_geBuilt) return _geNodes.length;
+  if (!interactions || !interactions.genes) return 0;
+  const g = interactions.genes, wired = new Set();
+  for (const e of (interactions.edges || [])) if (g[e.a] && g[e.b]) { wired.add(e.a); wired.add(e.b); }
+  return wired.size;
+}
+
+function geNodeHtml(n){
+  const grp = n.groups.length ? ' · ' + n.groups.slice(0, 4).join(', ') : '';
+  const offcard = n.cards.length === 0;   // not listed on any card -> dashed outline
+  const tip = n.ghost
+    ? `${esc(n.sym)} · not in memento · chr ${esc(n.chrom || '?')} · double-click to expand`
+    : `${esc(n.sym)}${offcard ? ' · not on a card' : ''} · chr ${esc(n.chrom || '?')} · ${n.deg} interaction${n.deg === 1 ? '' : 's'}${esc(grp)} · double-click to expand`;
+  return `<div class="ge-node ge-c-${n.cclass}${offcard ? ' ge-offcard' : ''}${_geExpanded.has(n.sym) ? ' ge-expanded' : ''}" id="ge-n-${n.id}" data-sym="${esc(n.sym)}" style="--r:${Math.round(n.r * 2)}px"
+    title="${tip}" onpointerdown="geNodeDown(event,this)" ondblclick="geNodeDbl(event,this)"><span class="ge-dot"></span><span class="ge-label">${esc(n.sym)}</span></div>`;
+}
+function geEdgesHtml(){
+  return _geDrawn.map((e, i) => `<line id="ge-e${i}" class="ge-edge ge-nat-${e.nat}${e.complex?' ge-complex':''}"></line>`).join('');
+}
+
+function renderGenes(){
+  const host = document.getElementById('genes-view');
+  if (!host) return;
+  if (!interactions) {
+    host.innerHTML = `<div class="gr-empty"><p>No gene interaction data.</p><small>Run <code>python3 kb-interactions.py</code> to build knowledge-base/interactions.json, then reload the folder.</small></div>`;
+    return;
+  }
+  // Runs on every keystroke (via renderList). If the FROZEN gene set is
+  // unchanged, do not rebuild: rebuilding would drop live INDRA ghosts and
+  // expansions added this session. Just re-filter the map already drawn.
+  _geLayoutIds = null;   // a search/facet change (or a fresh build) drops any Relayout focus
+  const frozenSig = String(Object.keys(interactions.genes || {}).length);
+  if (_geBuilt && frozenSig === _geSig) { geApplyFilter(); return; }
+  geStop();
+  geBuildModel();
+  _geSig = frozenSig; _geBuilt = false;
+  if (!_geNodes.length) {
+    host.innerHTML = `<div class="gr-empty"><p>No connected genes.</p><small>No gene in your cards has a mechanistic interaction in the sidecar.</small></div>`;
+    return;
+  }
+  geComputeDrawn();
+  host.innerHTML = `
+    <div class="ge-canvas" id="ge-canvas" onwheel="geWheel(event)" onpointerdown="gePanDown(event)">
+      <div class="ge-scene" id="ge-scene">
+        <svg class="ge-edges" id="ge-edges">${geEdgesHtml()}</svg>
+        ${_geNodes.map(geNodeHtml).join('')}
+      </div>
+      <div class="gr-tools ge-tools" onpointerdown="event.stopPropagation()">
+        <div class="ge-filter-group" title="Nature of interaction">
+          ${['promote','suppress','modify','bind'].map(nat =>
+            `<label class="ge-chk ge-nat-lab-${nat}"><input type="checkbox" ${geNatures.size===0||geNatures.has(nat)?'checked':''} onchange="setGeNature('${nat}',this.checked)">${nat}</label>`).join('')}
+        </div>
+        <div class="gr-slider"><span class="seg-label" title="Minimum INDRA belief score">conf ≥ <span id="ge-belief-val">${geMinBelief.toFixed(2)}</span></span>
+          <input type="range" class="gr-range" min="0" max="1" step="0.05" value="${geMinBelief}" oninput="setGeMinBelief(this.value)"></div>
+        <div class="gr-slider"><span class="seg-label" title="Minimum independent evidence texts">ev ≥ <span id="ge-ev-val">${geMinEv}</span></span>
+          <input type="range" class="gr-range" min="1" max="5" step="1" value="${geMinEv}" oninput="setGeMinEv(this.value)"></div>
+        <label class="ge-chk" title="Protein-complex membership — 88% of edges, off by default"><input type="checkbox" ${geShowComplex?'checked':''} onchange="setGeShowComplex(this.checked)"> complexes</label>
+        <span class="gr-relayout" onclick="geRelayout()" title="Lay the map out again from scratch">↻ Relayout</span>
+        <span class="gr-relayout" id="ge-refresh" onclick="geRefreshAll()" title="Fetch INDRA for every gene in memento and add the interactions BETWEEN them — never genes outside memento. Isolated genes that interact get connected. Incremental and cached; press again to cancel.">↻ Refresh all</span>
+        <span class="gr-relayout" onclick="geFreeze()" title="Write the current interactions back to interactions.json (folder, or a GitHub commit)">⭳ Freeze</span>
+        <span class="gr-relayout" id="ge-addgene-btn" onclick="geToggleAddGene()" title="Add a gene by name: fetch it from INDRA and connect it to your memento genes only (no external genes are added)">＋ Add gene</span>
+        <input class="ge-addgene-input" id="ge-addgene" type="text" placeholder="gene symbol… ⏎" style="display:none" onkeydown="geAddGeneKey(event)">
+      </div>
+      <span class="ge-progress" id="ge-progress" style="display:none"></span>
+      <div class="ge-actions" id="ge-actions" style="display:none" onpointerdown="event.stopPropagation()">
+        <button class="ge-action" id="ge-action-expand" onclick="geActionExpand()"></button>
+        <button class="ge-action ge-action-alt" id="ge-action-add" style="display:none" onclick="geActionAdd()"></button>
+      </div>
+      <span class="gr-caption" id="ge-caption"></span>
+    </div>`;
+  _geBuilt = true;
+  const c = document.getElementById('ge-canvas');
+  const cw = (c && c.clientWidth) || 900, ch = (c && c.clientHeight) || 560;
+  _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
+  geSizeLayout(cw, ch);
+  const fresh = !Object.keys(_gePos).length;
+  geInitPositions(true);
+  if (fresh) { geFit(cw, ch); _geRefit = true; }
+  geApplyDOM();
+  geApplyFilter();
+  geRun(fresh ? 1 : 0.4);
+}
+
+// Filtering hides; it never moves. Selecting a node dims everything but it and
+// its (currently-shown) neighbours.
+// The visible-card set the search bar and facets leave standing, or null when no
+// filter is active. Same contract the card graph reads through grVisibleIds.
+function geCardScope(){
+  const raw = (document.getElementById('search-input')?.value || '').trim();
+  const facet = activeTypes.size || activeTags.size || activeGene || connFilter !== 'all' || archiveFilter !== 'active';
+  if (!raw && !facet) return null;
+  try { return new Set(getVisibleItems().vis.map(e => e.id)); }
+  catch(_) { return null; }
+}
+// Nodes hidden by the search bar / facets: a real node whose cards all fall outside the visible
+// set. Ghosts (no cards) are never card-scoped out.
+function geCardOff(){
+  const scope = geCardScope();
+  const off = new Set();
+  if (scope) for (const n of _geNodes) {
+    if (!n.ghost && n.cards.length && !n.cards.some(id => scope.has(id))) off.add(n.sym);
+  }
+  return off;
+}
+// The nodes a Relayout should pack: visible (not card-scoped out) AND with a visible edge to
+// another visible node. An edge is visible when it passes the property filters (geEdgeShown), is
+// currently drawn (complexes excluded from _geDrawn when off), and neither end is card-scoped out.
+function geConnectedVisible(){
+  const cardOff = geCardOff();
+  const connected = new Set();
+  for (const e of _geDrawn) {
+    if (!geEdgeShown(e) || cardOff.has(e.a) || cardOff.has(e.b)) continue;
+    connected.add(e.a); connected.add(e.b);
+  }
+  return connected;
+}
+function geApplyFilter(){
+  // Search bar / facet scope hides genes whose cards don't match; a Relayout focus additionally
+  // hides everything outside its connected-visible subgraph. Both only hide, never move.
+  const off = geCardOff();
+  if (_geLayoutIds) for (const n of _geNodes) if (!_geLayoutIds.has(n.sym)) off.add(n.sym);
+  // Highlighting focuses: every clicked gene AND its neighbours stay lit, the rest dim, and only
+  // edges touching a clicked gene are drawn — accumulated over all clicked genes.
+  const anySel = _geSelIds.size > 0;
+  const lit = new Set(_geSelIds);
+  if (anySel) for (const e of _geDrawn) {
+    if (!geEdgeShown(e) || off.has(e.a) || off.has(e.b)) continue;
+    if (_geSelIds.has(e.a)) lit.add(e.b);
+    if (_geSelIds.has(e.b)) lit.add(e.a);
+  }
+  let shown = 0;
+  _geDrawn.forEach((e, i) => {
+    const line = document.getElementById('ge-e' + i);
+    if (!line || !line.setAttribute) return;
+    let on = geEdgeShown(e) && !off.has(e.a) && !off.has(e.b);
+    if (on && anySel) on = _geSelIds.has(e.a) || _geSelIds.has(e.b);   // only edges touching a highlighted gene
+    line.setAttribute('opacity', on ? '1' : '0');
+    if (on) shown++;
+  });
+  for (const n of _geNodes) {
+    const el = document.getElementById('ge-n-' + n.id);
+    if (!el || !el.classList) continue;
+    el.classList.toggle('ge-off', off.has(n.sym));                    // hidden by the search filter
+    el.classList.toggle('ge-dim', !off.has(n.sym) && anySel && !lit.has(n.sym));   // dimmed: not a clicked gene or a neighbour
+    el.classList.toggle('ge-sel', _geSelIds.has(n.sym));              // clicked genes wear the ring
+  }
+  const offcards = _geNodes.reduce((k, n) => k + (n.cards.length === 0 ? 1 : 0), 0);
+  const realTotal = _geNodes.length - offcards;
+  const realShown = realTotal - _geNodes.reduce((k, n) => k + ((n.cards.length && off.has(n.sym)) ? 1 : 0), 0);
+  const cap = document.getElementById('ge-caption');
+  if (cap) cap.textContent = (realShown < realTotal ? `${realShown} of ${realTotal} genes` : `${realTotal} genes`)
+    + `${offcards ? ` · ${offcards} not on a card` : ''}`
+    + ` · ${shown} interaction${shown === 1 ? '' : 's'} shown`
+    + `${geShowComplex ? ' (incl. complexes)' : ''}`
+    + `${_geIsolated > 0 ? ` · ${_geIsolated} isolated hidden` : ''}`
+    + `${_geSelIds.size ? ` · ${_geSelIds.size} highlighted` : ''}`;
+  geUpdateAction();
+}
+// The contextual action bar (bottom-centre) acts on the LAST-clicked gene. Every node can be
+// EXPANDED (fetch its INDRA neighbourhood); a ghost (a gene not in memento) additionally gets an
+// ADD button to bring it into your cards.
+function geUpdateAction(){
+  const wrap = document.getElementById('ge-actions');
+  const exp = document.getElementById('ge-action-expand');
+  const add = document.getElementById('ge-action-add');
+  if (!wrap || !exp) return;
+  const n = _geLastSel ? _geById.get(_geLastSel) : null;
+  if (!n) { wrap.style.display = 'none'; return; }
+  wrap.style.display = '';
+  if (_geExpanded.has(n.sym)) { exp.textContent = '✓ ' + n.sym + ' expanded'; exp.disabled = true; }
+  else { exp.textContent = (_geExpanding ? '… expanding ' : '⤢ Expand ') + n.sym; exp.disabled = _geExpanding; }
+  if (add) {
+    if (n.ghost) { add.style.display = ''; add.textContent = '＋ Add ' + n.sym + ' to memento'; add.disabled = false; }
+    else { add.style.display = 'none'; }
+  }
+}
+function geActionExpand(){ const n = _geLastSel ? _geById.get(_geLastSel) : null; if (n) geExpand(n.sym); }
+function geActionAdd(){ const n = _geLastSel ? _geById.get(_geLastSel) : null; if (n) gePromoteGhost(n.sym); }
+function geNodeDbl(ev, el){
+  ev.preventDefault(); ev.stopPropagation();
+  const n = _geById.get(el.dataset.sym);
+  if (n) geExpand(n.sym);   // double-click always expands (ghosts included); the button also offers "add to memento"
+}
+function geApplyDOM(){
+  const scene = document.getElementById('ge-scene');
+  if (scene) scene.style.transform = `translate(${_gePan.x}px, ${_gePan.y}px) scale(${_geZoom})`;
+  if (scene && scene.style.setProperty) {
+    scene.style.setProperty('--ge-zoom', _geZoom);                        // labels: constant on-screen
+    scene.style.setProperty('--ge-nodescale', Math.max(1, _geZoom));      // discs: capped so they don't balloon when zoomed in
+  }
+  for (const n of _geNodes) {
+    const el = document.getElementById('ge-n-' + n.id), p = _gePos[n.sym];
+    if (el && p) el.style.transform = `translate(${p.x}px, ${p.y}px) translate(-50%, -50%)`;
+  }
+  _geDrawn.forEach((e, i) => {
+    const line = document.getElementById('ge-e' + i), pa = _gePos[e.a], pb = _gePos[e.b];
+    if (!line || !pa || !pb || !line.setAttribute) return;
+    line.setAttribute('x1', pa.x); line.setAttribute('y1', pa.y);
+    line.setAttribute('x2', pb.x); line.setAttribute('y2', pb.y);
+  });
+}
+
+// --- physics: grStep's constants, circular collision instead of pill packing ---
+// Seed on a phyllotaxis (sunflower) disk, not an ellipse ring. The card graph's
+// ring seed piles nodes at similar hashed angles; with only sparse springs to
+// pull them back, strong repulsion then blows that pile into the walls and the
+// layout settles diagonal and overlapping (measured r=0.59, 4473 overlaps). An
+// even disk starts every node clear of its neighbours, so the forces refine an
+// already-spread cloud instead of exploding a clump. Deterministic: index comes
+// from the sorted symbol order, so the same genes seed the same way every time.
+function geInitPositions(keep, nodes){
+  nodes = nodes || _geNodes;   // Relayout passes just the connected-visible subset to pack tightly
+  const cx = _geW / 2, cy = _geH / 2, Rx = 0.46 * _geW, Ry = 0.46 * _geH;
+  const order = nodes.map(n => n.sym).sort();
+  const rank = new Map(order.map((s, i) => [s, i]));
+  const N = order.length, GA = Math.PI * (3 - Math.sqrt(5));   // golden angle
+  for (const n of nodes) {
+    if (keep && _gePos[n.sym]) continue;
+    const i = rank.get(n.sym);
+    const t = Math.sqrt((i + 0.5) / N), ang = i * GA;
+    _gePos[n.sym] = { x: cx + Math.cos(ang) * t * Rx, y: cy + Math.sin(ang) * t * Ry, vx: 0, vy: 0 };
+    _geHome[n.sym] = { x: _gePos[n.sym].x, y: _gePos[n.sym].y };
+  }
+  const live = new Set(_geNodes.map(n => n.sym));
+  for (const k of Object.keys(_gePos)) if (!live.has(k)) { delete _gePos[k]; delete _geHome[k]; delete _geFixed[k]; }
+}
+function geStep(a){
+  // With the even disk seed the forces only need to refine, not explode a pile,
+  // so repulsion is moderate; collision guarantees legibility, gentle centring
+  // keeps loosely-tied genes from drifting off, and a velocity cap (below) stops
+  // any residual blow-up from slamming nodes into the walls.
+  const S = geSpacing;
+  const REP = 11000 * S * S, L = 70 * S, KC = 0.05, KG = 0.014, VMAX = 30;
+  const cx = _geW / 2, cy = _geH / 2;
+  const AR = Math.pow(_geW / _geH, GR_AR_PULL), KGX = KG / AR, KGY = KG * AR;
+  const N = _geSim, P = _gePos, fx = {}, fy = {};
+  for (const n of N) { fx[n.sym] = 0; fy[n.sym] = 0; }
+  for (let i = 0; i < N.length; i++) {
+    const pi = P[N[i].sym];
+    for (let j = i + 1; j < N.length; j++) {
+      const pj = P[N[j].sym];
+      let dx = pj.x - pi.x, dy = pj.y - pi.y, d2 = dx * dx + dy * dy;
+      if (d2 < 1) { d2 = 1; dx = 0.5; dy = 0.5; }
+      const d = Math.sqrt(d2), ux = dx / d, uy = dy / d, rep = REP / d2;
+      fx[N[i].sym] -= ux * rep; fy[N[i].sym] -= uy * rep;
+      fx[N[j].sym] += ux * rep; fy[N[j].sym] += uy * rep;
+    }
+  }
+  for (const e of _geMechEdges) {             // interactions are the springs
+    if (!_geSimIds.has(e.a) || !_geSimIds.has(e.b)) continue;
+    const pa = P[e.a], pb = P[e.b];
+    if (!pa || !pb) continue;
+    const dx = pb.x - pa.x, dy = pb.y - pa.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const ux = dx / d, uy = dy / d, att = KC * (d - L);
+    fx[e.a] += ux * att; fy[e.a] += uy * att;
+    fx[e.b] -= ux * att; fy[e.b] -= uy * att;
+  }
+  for (const n of N) {
+    const p = P[n.sym];
+    if (_geFixed[n.sym]) { p.vx = 0; p.vy = 0; continue; }
+    fx[n.sym] += (cx - p.x) * KGX; fy[n.sym] += (cy - p.y) * KGY;
+    p.vx = Math.max(-VMAX, Math.min(VMAX, (p.vx + fx[n.sym] * a) * 0.82));
+    p.vy = Math.max(-VMAX, Math.min(VMAX, (p.vy + fy[n.sym] * a) * 0.82));
+    p.x = Math.max(20, Math.min(_geW - 20, p.x + p.vx));
+    p.y = Math.max(20, Math.min(_geH - 20, p.y + p.vy));
+  }
+  for (let k = 0; k < 4; k++) geCollide();
+}
+function geCollide(){
+  const N = _geSim, P = _gePos;
+  for (let i = 0; i < N.length; i++) {
+    const a = P[N[i].sym], ra = N[i].r, af = !!_geFixed[N[i].sym];
+    for (let j = i + 1; j < N.length; j++) {
+      const bf = !!_geFixed[N[j].sym];
+      if (af && bf) continue;
+      const b = P[N[j].sym], rb = N[j].r;
+      const dx = b.x - a.x, dy = b.y - a.y, min = ra + rb + 6;
+      const d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      if (d >= min) continue;
+      const push = (min - d) * (af || bf ? 1 : 0.5), ux = dx / d, uy = dy / d;
+      if (!af) { a.x -= ux * push; a.y -= uy * push; }
+      if (!bf) { b.x += ux * push; b.y += uy * push; }
+    }
+  }
+}
+function geRun(alpha){
+  _geAlpha = alpha;
+  if (typeof requestAnimationFrame !== 'function') {   // test harness: settle synchronously
+    for (let k = 0; k < 500 && _geAlpha > 0.02; k++) { geStep(_geAlpha); _geAlpha *= 0.99; }
+    geApplyDOM(); geFinishFit();
+    return;
+  }
+  if (!_geRaf) _geRaf = requestAnimationFrame(geTick);
+}
+function geTick(){
+  _geRaf = 0;
+  geStep(_geAlpha); _geAlpha *= 0.99;
+  geApplyDOM();
+  if (_geAlpha > 0.02) _geRaf = requestAnimationFrame(geTick);
+  else geFinishFit();
+}
+function geStop(){ if (_geRaf) { cancelAnimationFrame(_geRaf); _geRaf = 0; } _geAlpha = 0; }
+function geFinishFit(){
+  // An expansion pins the existing nodes while the newcomers settle; release
+  // them once the sim comes to rest so later drags/relayouts behave normally.
+  if (_geUnpinAfter) { for (const s of _geUnpinAfter) delete _geFixed[s]; _geUnpinAfter = null; }
+  if (_geRefit) { _geRefit = false; const { cw, ch } = geCanvasSize(); geFit(cw, ch); geApplyDOM(); }
+}
+
+function geCanvasSize(){ const c = document.getElementById('ge-canvas'); return { cw: (c && c.clientWidth) || 900, ch: (c && c.clientHeight) || 560 }; }
+function geSizeLayout(cw, ch){
+  const n = _geSim.length || _geNodes.length;
+  // A rounder box than the raw canvas aspect: a 2.5:1 layout stretches the
+  // cloud into a diagonal band. Discs are small, so the cell is tight.
+  const AR = Math.max(0.6, Math.min(1.7, (cw || 900) / (ch || 560)));
+  const area = n * 82 * 72 * geSpacing * geSpacing;
+  _geW = Math.max(cw, Math.round(Math.sqrt(area * AR)));
+  _geH = Math.max(ch, Math.round(Math.sqrt(area / AR)));
+}
+function geFit(cw, ch){
+  const N = _geSim.length ? _geSim : _geNodes;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const n of N) {
+    const p = _gePos[n.sym]; if (!p) continue;
+    const r = n.r + 4;
+    x0 = Math.min(x0, p.x - r); x1 = Math.max(x1, p.x + r);
+    y0 = Math.min(y0, p.y - r); y1 = Math.max(y1, p.y + r);
+  }
+  if (!isFinite(x0)) { x0 = 0; y0 = 0; x1 = _geW; y1 = _geH; }
+  const pad = 30, w = (x1 - x0) + pad * 2, h = (y1 - y0) + pad * 2;
+  _geZoom = Math.max(0.15, Math.min(1.6, Math.min(cw / w, ch / h)));
+  _gePan = { x: (cw - w * _geZoom) / 2 - (x0 - pad) * _geZoom, y: (ch - h * _geZoom) / 2 - (y0 - pad) * _geZoom };
+}
+
+// --- interaction: pan, wheel-zoom, node drag, click-to-select ---------------
+function geToScene(cx, cy){
+  const c = document.getElementById('ge-canvas');
+  const r = c && c.getBoundingClientRect ? c.getBoundingClientRect() : { left:0, top:0 };
+  return { x: (cx - r.left - _gePan.x) / _geZoom, y: (cy - r.top - _gePan.y) / _geZoom };
+}
+function geBind(){ document.addEventListener('pointermove', _geMove); document.addEventListener('pointerup', _geUp); document.addEventListener('pointercancel', _geUp); }
+function geUnbind(){ document.removeEventListener('pointermove', _geMove); document.removeEventListener('pointerup', _geUp); document.removeEventListener('pointercancel', _geUp); }
+function gePanDown(ev){ _gePanning = { x: ev.clientX, y: ev.clientY, px: _gePan.x, py: _gePan.y, moved: false }; geBind(); }
+function geNodeDown(ev, el){
+  ev.preventDefault(); ev.stopPropagation();
+  _geDrag = { sym: el.dataset.sym, sx: ev.clientX, sy: ev.clientY, moved: false };
+  geBind();
+}
+function _geMove(ev){
+  if (_geDrag) {
+    if (Math.abs(ev.clientX - _geDrag.sx) > 3 || Math.abs(ev.clientY - _geDrag.sy) > 3) _geDrag.moved = true;
+    const s = geToScene(ev.clientX, ev.clientY), p = _gePos[_geDrag.sym];
+    if (p) { p.x = s.x; p.y = s.y; p.vx = 0; p.vy = 0; _geFixed[_geDrag.sym] = true; }
+    geApplyDOM();
+  } else if (_gePanning) {
+    _gePanning.moved = true;
+    _gePan.x = _gePanning.px + (ev.clientX - _gePanning.x);
+    _gePan.y = _gePanning.py + (ev.clientY - _gePanning.y);
+    geApplyDOM();
+  }
+}
+function _geUp(){
+  if (_geDrag && !_geDrag.moved) geSelect(_geDrag.sym);        // a tap on a node toggles its highlight
+  else if (_gePanning && !_gePanning.moved) geClearSelection();   // a tap on empty clears all highlights
+  _geDrag = null; _gePanning = null; geUnbind();
+}
+function geWheel(ev){
+  ev.preventDefault();
+  const c = document.getElementById('ge-canvas'); if (!c) return;
+  const r = c.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top;
+  const bx = (mx - _gePan.x) / _geZoom, by = (my - _gePan.y) / _geZoom;
+  _geZoom = Math.max(0.1, Math.min(4, _geZoom * Math.exp(-ev.deltaY * 0.0015)));
+  _gePan.x = mx - bx * _geZoom; _gePan.y = my - by * _geZoom;
+  geApplyDOM();
+}
+function geSelect(sym){
+  if (_geSelIds.has(sym)) {
+    _geSelIds.delete(sym);
+    if (_geLastSel === sym) _geLastSel = _geSelIds.size ? [..._geSelIds][_geSelIds.size - 1] : null;
+  } else {
+    _geSelIds.add(sym); _geLastSel = sym;
+  }
+  geApplyFilter();
+}
+function geClearSelection(){ if (_geSelIds.size) { _geSelIds.clear(); _geLastSel = null; geApplyFilter(); } }
+
+// --- filter setters (hide/dim; only Relayout and the complex toggle rebuild) ---
+// Each of these changes which edges are visible, so a Relayout focus computed from the old
+// visible edges is stale — drop it and show everything the filters allow again.
+function setGeNature(nat, on){
+  if (geNatures.size === 0) geNatures = new Set(['promote','suppress','modify','bind']);
+  if (on) geNatures.add(nat); else geNatures.delete(nat);
+  if (geNatures.size === 4) geNatures = new Set();   // all on == the empty sentinel
+  _geLayoutIds = null; geApplyFilter();
+}
+function setGeMinBelief(v){ geMinBelief = Math.max(0, Math.min(1, Number(v) || 0)); const el = document.getElementById('ge-belief-val'); if (el) el.textContent = geMinBelief.toFixed(2); _geLayoutIds = null; geApplyFilter(); }
+function setGeMinEv(v){ geMinEv = Math.max(1, Math.round(Number(v) || 1)); const el = document.getElementById('ge-ev-val'); if (el) el.textContent = geMinEv; _geLayoutIds = null; geApplyFilter(); }
+function setGeShowComplex(on){
+  geShowComplex = !!on;
+  geComputeDrawn();
+  const svg = document.getElementById('ge-edges');
+  if (svg) svg.innerHTML = geEdgesHtml();     // rebuild just the edge layer; nodes keep their places
+  _geSig = _geNodes.map(n => n.sym).join(',') + '|' + geShowComplex;
+  _geLayoutIds = null; geApplyDOM(); geApplyFilter();
+}
+// Relayout packs only the connected-visible subgraph — visible nodes that have a visible edge to
+// another visible node — and hides the rest. With no filters active every node qualifies, so it
+// behaves like a full relayout; under a filter it re-packs just what's left connected.
+function geRelayout(){
+  geStop();
+  const connected = geConnectedVisible();
+  _geLayoutIds = connected.size ? connected : null;   // fall back to the whole graph so it never blanks
+  const sim = _geLayoutIds ? _geNodes.filter(n => _geLayoutIds.has(n.sym)) : _geNodes;
+  _geSim = sim; _geSimIds = new Set(sim.map(n => n.sym));
+  const { cw, ch } = geCanvasSize();
+  geSizeLayout(cw, ch);            // box sized to the subgraph (_geSim.length)
+  for (const n of sim) delete _geFixed[n.sym];   // release hand-placed nodes so they re-lay
+  geInitPositions(false, sim);     // fresh compact seed for just these; others keep their places
+  geFit(cw, ch); _geRefit = false;
+  geApplyDOM(); geApplyFilter(); geRun(1);
+}
+
+// ============================================================================
+// M2 — live INDRA expansion + ghost nodes. On demand (double-click a node, or
+// the action button), fetch that gene's INDRA neighbourhood, ground new partners
+// for chromosome, and merge: partners already in memento gain edges; partners
+// NOT in memento appear as dashed GHOST nodes you can promote to cards. The
+// offline map (M1) is untouched — this only lights up when online, and every
+// fetch is cached in IndexedDB. Grounding uses the same HGNC filter as the
+// sidecar builder, so a live expansion can't become a toxicology screen.
+// ============================================================================
+const GE_INDRA_URL = 'https://db.indra.bio/statements/from_agents';
+const GE_MYGENE_URL = 'https://mygene.info/v3/query';
+// Cap on new ghost genes added per expansion. A hub like MAPT returns ~100
+// partners, which swamps the map; keep the top N by evidence weight. Edges to
+// genes already on the map are never capped — only brand-new ghosts are trimmed.
+const GE_GHOST_CAP = 20;
+
+// Agents of an INDRA statement, HGNC-grounded only, upper-cased. Requiring HGNC
+// is the filter that keeps chemicals and ungrounded text (CTD toxicology, etc.)
+// out — the same move the sidecar builder makes.
+function geStmtAgents(s){
+  let ags;
+  if (s && s.members) ags = s.members;
+  else ags = ['subj', 'obj', 'enz', 'sub'].map(k => s && s[k]).filter(a => a && typeof a === 'object');
+  const out = [];
+  for (const a of ags || []) {
+    if (!a || !a.name || !(a.db_refs && a.db_refs.HGNC)) continue;
+    out.push(String(a.name).trim().toUpperCase());
+  }
+  return out;
+}
+function geThin(s, a, b, n){
+  const ev = (s && s.evidence) || [];
+  let pmid = null;
+  for (const e of ev) if (e && e.pmid) { pmid = e.pmid; break; }
+  // n is the TRUE evidence count, passed in from the response's evidence_counts.
+  // We query with ev_limit=1 (small payload), so ev.length is 1 and useless as a
+  // weight — the count filter and the ghost cap both rank on this number.
+  return { a, b, t: s.type, nat: geNature(s.type), belief: Math.round((s.belief || 0) * 1000) / 1000,
+           n: (n != null ? n : ev.length), pmid, complex: s.type === 'Complex', live: true };
+}
+// Parse a from_agents response for source gene G into thin edges incident to G,
+// endpoints sorted and deduped by (a,b,type) keeping the most-evidenced — the
+// same shape the sidecar's frozen edges use, so live and frozen coexist.
+function geParseIndra(resp, G){
+  const GU = String(G).toUpperCase();
+  const entries = resp && resp.statements ? Object.entries(resp.statements) : [];
+  const counts = (resp && resp.evidence_counts) || {};   // hash -> TRUE evidence total
+  const best = new Map();
+  for (const [hash, s] of entries) {
+    const ags = geStmtAgents(s);
+    if (!ags.includes(GU)) continue;
+    const nEv = counts[hash] || (s.evidence || []).length || 1;
+    for (const p of new Set(ags)) {
+      if (p === GU) continue;
+      const [x, y] = GU < p ? [GU, p] : [p, GU];
+      const key = x + '|' + y + '|' + s.type;
+      const e = geThin(s, x, y, nEv);
+      const prev = best.get(key);
+      if (!prev || e.n > prev.n) best.set(key, e);
+    }
+  }
+  return [...best.values()];
+}
+// Chromosome for new partner symbols, batched from MyGene (best effort; a ghost
+// with no chromosome just renders grey). INDRA already returns canonical HGNC
+// symbols, so this is metadata, not grounding. Built without URLSearchParams —
+// not an ES intrinsic, absent from the test sandbox.
+async function geGroundChrom(symbols){
+  const list = [...new Set(symbols)].filter(Boolean);
+  const out = {};
+  if (!list.length) return out;
+  const body = 'q=' + encodeURIComponent(list.join(',')) + '&scopes=symbol,alias&fields=symbol,genomic_pos&species=human';
+  const r = await fetch(GE_MYGENE_URL, { method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+  const hits = await r.json();
+  const seen = {};
+  for (const h of hits || []) (seen[h.query] = seen[h.query] || []).push(h);
+  for (const q of list) {
+    const hs = (seen[q] || []).filter(h => !h.notfound);
+    let chrom = null;
+    for (const h of hs) {
+      let gp = h.genomic_pos;
+      if (Array.isArray(gp)) gp = gp.find(g => /^(\d+|X|Y|MT)$/.test(String(g.chr))) || gp[0];
+      if (gp && gp.chr) { chrom = String(gp.chr); break; }
+    }
+    out[q] = chrom;
+  }
+  return out;
+}
+async function geCacheGet(sym){ try { return await idbGet('indra:' + sym.toUpperCase()); } catch(_) { return null; } }
+async function geCachePut(sym, rec){ try { await idbPut('indra:' + sym.toUpperCase(), rec); } catch(_) {} }
+
+// Re-render the scene's nodes and edges in place (positions preserved) after an
+// expansion adds to the model. Not a relayout.
+function geRebuildScene(){
+  const scene = document.getElementById('ge-scene');
+  if (!scene) return;
+  scene.innerHTML = `<svg class="ge-edges" id="ge-edges">${geEdgesHtml()}</svg>` + _geNodes.map(geNodeHtml).join('');
+}
+
+async function geExpand(sym){
+  if (!sym || _geExpanding) return;
+  const node = _geById.get(sym);
+  if (!node) return;   // ghosts CAN be expanded — you may want to explore further out from one
+  if (_geExpanded.has(sym)) { showToast(sym + ' already expanded'); return; }
+  _geExpanding = true; geUpdateAction();
+  try {
+    let rec = await geCacheGet(sym);
+    if (!rec) {
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) { showToast('Expansion needs a connection'); return; }
+      const url = GE_INDRA_URL + '?agent0=' + encodeURIComponent(sym) + '&format=json&limit=500&ev_limit=1';
+      const r = await fetch(url);
+      if (!r || !r.ok) { showToast('INDRA request failed' + (r ? ' (' + r.status + ')' : '')); return; }
+      const edges = geParseIndra(await r.json(), sym);
+      const knownU = new Set([..._geFrozenU.keys(), ..._geByU.keys()]);
+      const fresh = [...new Set(edges.flatMap(e => [e.a, e.b]))].filter(s => s !== sym.toUpperCase() && !knownU.has(s));
+      let chrom = {};
+      try { chrom = await geGroundChrom(fresh); } catch(_) {}
+      rec = { fetched: new Date().toISOString(), edges, chrom };
+      await geCachePut(sym, rec);
+    }
+    const added = geMergeExpansion(sym, rec);
+    _geExpanded.add(sym);
+    showToast(`${sym}: +${added.edges} interaction${added.edges === 1 ? '' : 's'}, +${added.ghosts} new gene${added.ghosts === 1 ? '' : 's'}`
+      + (added.capped ? ` (${added.capped} more below the top ${GE_GHOST_CAP})` : ''));
+  } catch(e) {
+    showToast('Expansion failed: ' + e.message);
+  } finally {
+    _geExpanding = false; geUpdateAction();
+  }
+}
+// Merge a fetched/cached expansion into the live model. Returns {ghosts, edges}.
+function geMergeExpansion(sym, rec){
+  const src = _gePos[sym] || { x: _geW / 2, y: _geH / 2 };
+  const added = { ghosts: 0, edges: 0, capped: 0 }, createdU = new Set();
+  // Rank brand-new ghost partners by their best evidence and keep only the top
+  // GE_GHOST_CAP; edges whose ghost endpoint didn't make the cut are dropped.
+  const SU = sym.toUpperCase();
+  const ghostBest = new Map();
+  for (const e of rec.edges) for (const U of [e.a, e.b]) {
+    if (U === SU || _geByU.has(U) || _geFrozenU.has(U)) continue;   // source / already a node
+    ghostBest.set(U, Math.max(ghostBest.get(U) || 0, e.n || 0));
+  }
+  const keptGhosts = new Set([...ghostBest.entries()].sort((a, b) => b[1] - a[1]).slice(0, GE_GHOST_CAP).map(x => x[0]));
+  added.capped = ghostBest.size - keptGhosts.size;
+  const dropped = (U) => ghostBest.has(U) && !keptGhosts.has(U);
+  const ensure = (U) => {
+    if (_geByU.has(U)) return _geByU.get(U);
+    const frozen = _geFrozenU.get(U);            // a sidecar gene that was isolated -> real node, not a ghost
+    const meta = frozen ? (interactions.genes[frozen] || {}) : {};
+    const canonical = frozen || U;
+    const chrom = frozen ? meta.chrom : (rec.chrom[U] || null);
+    const n = { sym: canonical, id: geIdSafe(canonical), chrom, cclass: geChromClass(chrom),
+                cards: meta.cards || [], groups: meta.groups || [], deg: 0, r: GE_NODE_R, ghost: !frozen };
+    _geNodes.push(n); _geById.set(n.sym, n); _geByU.set(U, n);
+    const ang = grHash(U) * Math.PI * 2;
+    _gePos[n.sym] = { x: src.x + Math.cos(ang) * 60, y: src.y + Math.sin(ang) * 60, vx: 0, vy: 0 };
+    _geHome[n.sym] = { x: _gePos[n.sym].x, y: _gePos[n.sym].y };
+    createdU.add(U);
+    if (frozen) _geIsolated = Math.max(0, _geIsolated - 1); else added.ghosts++;
+    return n;
+  };
+  const have = new Set(_geEdges.map(e => e.a + '|' + e.b + '|' + e.t));
+  for (const e of rec.edges) {
+    if (dropped(e.a) || dropped(e.b)) continue;   // ghost endpoint below the cap
+    const na = ensure(e.a), nb = ensure(e.b);
+    const key = na.sym + '|' + nb.sym + '|' + e.t;
+    if (have.has(key)) continue;
+    have.add(key);
+    const edge = { ...e, a: na.sym, b: nb.sym };
+    _geEdges.push(edge);
+    if (!edge.complex) { _geMechEdges.push(edge); na.deg++; nb.deg++; }   // radius = mech degree, as in geBuildModel
+    added.edges++;
+  }
+  for (const n of _geNodes) n.r = GE_NODE_R;
+  geComputeDrawn();
+  geRebuildScene();
+  _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
+  // Pin everything that existed before this expansion so the settled map does
+  // not lurch; only the newcomers move. geFinishFit unpins them.
+  _geUnpinAfter = new Set();
+  for (const n of _geNodes) {
+    if (!createdU.has(n.sym.toUpperCase()) && !_geFixed[n.sym]) { _geFixed[n.sym] = true; _geUnpinAfter.add(n.sym); }
+  }
+  geApplyDOM(); geApplyFilter();
+  geRun(0.7);
+  return added;
+}
+// Promote a ghost: open memento's own create form pre-filled with the gene, so
+// it takes the normal authoring path. It becomes a real node on the next sidecar
+// rebuild (the M3 freeze, or re-running kb-interactions.py).
+function gePromoteGhost(sym){
+  const f = document.getElementById('add-form');
+  if (f && f.style.display === 'none' && typeof toggleForm === 'function') toggleForm();
+  const g = document.getElementById('f-genes'); if (g) g.value = sym;
+  const t = document.getElementById('f-title'); if (t && !t.value) t.value = sym;
+  const c = document.getElementById('f-content'); if (c && c.focus) c.focus();
+  showToast('Write a note for ' + sym + ' and Save — it joins the map on the next rebuild');
+}
+
+// --- Add gene by name -------------------------------------------------------
+// Fetch a named gene from INDRA and connect it to the genes ALREADY in memento —
+// its edges to genes outside memento (ghosts) are dropped. Useful for "does gene
+// X touch anything I've written about?". The gene itself appears as an off-card
+// node (dashed) if it isn't in your cards.
+function geToggleAddGene(){
+  const inp = document.getElementById('ge-addgene');
+  if (!inp) return;
+  const open = inp.style.display === 'none';
+  inp.style.display = open ? '' : 'none';
+  if (open && inp.focus) { inp.value = ''; inp.focus(); }
+}
+function geAddGeneKey(ev){
+  if (ev.key === 'Enter') { geAddGene(ev.target.value); }
+  else if (ev.key === 'Escape') { ev.target.value = ''; ev.target.style.display = 'none'; }
+}
+async function geAddGene(name){
+  const X = String(name || '').trim().toUpperCase();
+  if (!X || _geExpanding) return;
+  const inp = document.getElementById('ge-addgene'); if (inp) { inp.value = ''; inp.style.display = 'none'; }
+  _geExpanding = true; geUpdateAction();
+  try {
+    let rec = await geCacheGet(X);
+    if (!rec) {
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) { showToast('Adding a gene needs a connection'); return; }
+      const r = await fetch(GE_INDRA_URL + '?agent0=' + encodeURIComponent(X) + '&format=json&limit=500&ev_limit=1');
+      if (!r || !r.ok) { showToast('INDRA request failed' + (r ? ' (' + r.status + ')' : '')); return; }
+      const edges = geParseIndra(await r.json(), X);
+      let chrom = {};
+      try { chrom = await geGroundChrom([X]); } catch(_) {}
+      rec = { fetched: new Date().toISOString(), edges, chrom };
+      await geCachePut(X, rec);
+    }
+    const res = geMergeAddGene(X, rec);
+    if (!res) { showToast(`Couldn't resolve ${X}`); return; }
+    showToast(res.edges
+      ? `Added ${res.sym}: ${res.edges} connection${res.edges === 1 ? '' : 's'} to your genes`
+      : `${res.sym}: no interactions with genes in memento`);
+  } catch(e) {
+    showToast('Add failed: ' + e.message);
+  } finally {
+    _geExpanding = false; geUpdateAction();
+  }
+}
+// Merge an added gene: ensure a node for X (a memento gene is promoted/solid; a
+// gene not in memento becomes an off-card ghost node), then add ONLY its edges to
+// genes already in memento (geEnsureMementoNode returns null otherwise).
+function geMergeAddGene(X, rec){
+  const before = new Set(_geNodes.map(n => n.sym));
+  let xnode = _geByU.get(X);
+  if (!xnode) {
+    if (_geFrozenU.get(X)) {
+      xnode = geEnsureMementoNode(X);                       // X is one of your genes
+    } else {
+      const chrom = rec.chrom[X] || null;                   // X is new to memento -> off-card ghost
+      xnode = { sym: X, id: geIdSafe(X), chrom, cclass: geChromClass(chrom), cards: [], groups: [], deg: 0, r: GE_NODE_R, ghost: true };
+      _geNodes.push(xnode); _geById.set(X, xnode); _geByU.set(X, xnode);
+      const ang = grHash(X) * Math.PI * 2, R = 0.3 * Math.min(_geW, _geH);
+      _gePos[X] = { x: _geW / 2 + Math.cos(ang) * R, y: _geH / 2 + Math.sin(ang) * R, vx: 0, vy: 0 };
+      _geHome[X] = { x: _gePos[X].x, y: _gePos[X].y };
+    }
+  }
+  if (!xnode) return null;
+  const have = new Set(_geEdges.map(e => e.a + '|' + e.b + '|' + e.t));
+  let added = 0;
+  for (const e of rec.edges) {
+    const partnerU = e.a === X ? e.b : (e.b === X ? e.a : null);
+    if (!partnerU) continue;
+    const pnode = geEnsureMementoNode(partnerU);            // in-memento only; null skips the ghost
+    if (!pnode || pnode.sym === xnode.sym) continue;
+    const [a, b] = xnode.sym < pnode.sym ? [xnode.sym, pnode.sym] : [pnode.sym, xnode.sym];
+    const key = a + '|' + b + '|' + e.t;
+    if (have.has(key)) continue;
+    have.add(key);
+    const edge = { ...e, a, b };
+    _geEdges.push(edge);
+    if (!edge.complex) { _geMechEdges.push(edge); xnode.deg++; pnode.deg++; }
+    added++;
+  }
+  geComputeDrawn(); geRebuildScene();
+  _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
+  _geSelIds.add(xnode.sym); _geLastSel = xnode.sym;         // highlight the gene you just added
+  // settle the newcomers while the existing map stays pinned
+  _geUnpinAfter = new Set();
+  for (const n of _geNodes) if (before.has(n.sym) && !_geFixed[n.sym]) { _geFixed[n.sym] = true; _geUnpinAfter.add(n.sym); }
+  geApplyDOM(); geApplyFilter(); geRun(0.7);
+  return { sym: xnode.sym, edges: added };
+}
+
+// ============================================================================
+// M3 — refresh-all + freeze. Refresh-all does in the browser what
+// kb-interactions.py --fetch does: query every gene node's INDRA neighbourhood
+// (incremental — cached genes are skipped), merging only NODE-to-NODE edges so
+// the map's node set and layout stay put. Freeze then writes the current
+// interactions back to interactions.json — same structure the Python builder
+// emits — via the folder (desktop) or a GitHub commit (iOS). Together they
+// retire interaction-store: explore and persist without leaving memento.
+// ============================================================================
+
+// Merge a fetched record's NODE-to-NODE edges only (no ghosts, no relayout):
+// new edges appear between genes already placed. Returns how many were added.
+// Resolve an INDRA agent (upper-cased) to a memento node, promoting a gene that
+// IS in memento (a sidecar gene, per _geFrozenU) but was isolated into a real
+// node. Returns null for anything NOT in memento — that is what keeps a
+// node-to-node refresh from ever adding a ghost. Newly promoted nodes are seeded
+// on a ring so the post-refresh settle can pull them into place by their edges.
+function geEnsureMementoNode(U){
+  const existing = _geByU.get(U);
+  if (existing) return existing.ghost ? null : existing;   // never wire a refresh edge to a ghost
+  const canonical = _geFrozenU.get(U);
+  if (!canonical) return null;                             // not a memento gene -> no ghost
+  const meta = interactions.genes[canonical] || {};
+  const n = { sym: canonical, id: geIdSafe(canonical), chrom: meta.chrom, cclass: geChromClass(meta.chrom),
+              cards: meta.cards || [], groups: meta.groups || [], deg: 0, r: GE_NODE_R, ghost: false };
+  _geNodes.push(n); _geById.set(n.sym, n); _geByU.set(U, n);
+  const ang = grHash(U) * Math.PI * 2, R = 0.35 * Math.min(_geW, _geH);
+  _gePos[n.sym] = { x: _geW / 2 + Math.cos(ang) * R, y: _geH / 2 + Math.sin(ang) * R, vx: 0, vy: 0 };
+  _geHome[n.sym] = { x: _gePos[n.sym].x, y: _gePos[n.sym].y };
+  _geIsolated = Math.max(0, _geIsolated - 1);
+  return n;
+}
+// Merge a fetched record's edges between MEMENTO genes only (promoting isolated
+// ones to nodes; never ghosts). No relayout — new edges appear between placed
+// nodes; newly promoted nodes settle after the whole refresh. Returns edges added.
+function geMergeNodeEdges(rec){
+  const have = new Set(_geEdges.map(e => e.a + '|' + e.b + '|' + e.t));
+  let added = 0;
+  for (const e of rec.edges) {
+    const na = geEnsureMementoNode(e.a), nb = geEnsureMementoNode(e.b);
+    if (!na || !nb) continue;                              // an endpoint isn't in memento
+    const key = na.sym + '|' + nb.sym + '|' + e.t;
+    if (have.has(key)) continue;
+    have.add(key);
+    const edge = { ...e, a: na.sym, b: nb.sym };
+    _geEdges.push(edge);
+    if (!edge.complex) { _geMechEdges.push(edge); na.deg++; nb.deg++; }
+    added++;
+  }
+  if (added) for (const n of _geNodes) n.r = GE_NODE_R;
+  return added;
+}
+function geSetRefreshUI(on){
+  const btn = document.getElementById('ge-refresh');
+  if (btn) btn.textContent = on ? '✕ Cancel' : '↻ Refresh all';
+  const p = document.getElementById('ge-progress');
+  if (p) p.style.display = on ? '' : 'none';
+}
+function geRefreshProgress(done, total, sym){
+  const p = document.getElementById('ge-progress');
+  if (p) p.textContent = `Refreshing ${done}/${total}${sym ? ' · ' + sym : ''}`;
+}
+// Bulk-refresh every real node from INDRA, incrementally (cached genes skipped),
+// a few in flight at once. A second press cancels. Node-node edges only, so the
+// layout never moves — the scene is repainted once at the end.
+async function geRefreshAll(){
+  if (_geRefreshing) { _geRefreshCancel = true; return; }
+  // Every gene memento knows about (the whole sidecar vocabulary), not just the
+  // ones already drawn — so isolated genes that turn out to interact get
+  // connected. Edges to genes outside memento are never added (geMergeNodeEdges).
+  const genes = Object.keys(interactions.genes || {});
+  if (!genes.length) return;
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) { showToast('Refresh needs a connection'); return; }
+  _geRefreshing = true; _geRefreshCancel = false;
+  geSetRefreshUI(true);
+  const before = new Set(_geNodes.map(n => n.sym));   // to pin while newcomers settle
+  const queue = genes.slice();
+  let done = 0, added = 0;
+  const worker = async () => {
+    while (queue.length && !_geRefreshCancel) {
+      const sym = queue.shift(); done++;
+      geRefreshProgress(done, genes.length, sym);
+      try {
+        let rec = await geCacheGet(sym);
+        if (!rec) {
+          const r = await fetch(GE_INDRA_URL + '?agent0=' + encodeURIComponent(sym) + '&format=json&limit=500&ev_limit=1');
+          if (!r || !r.ok) continue;
+          rec = { fetched: new Date().toISOString(), edges: geParseIndra(await r.json(), sym), chrom: {} };
+          await geCachePut(sym, rec);
+        }
+        added += geMergeNodeEdges(rec);
+      } catch(_) {}
+    }
+  };
+  const CONC = Math.min(5, queue.length);
+  await Promise.all(Array.from({ length: CONC }, worker));
+  const cancelled = _geRefreshCancel;
+  _geRefreshing = false; _geRefreshCancel = false;
+  const connected = _geNodes.filter(n => !before.has(n.sym)).length;   // isolated genes newly promoted
+  geComputeDrawn(); geRebuildScene();
+  if (connected) {
+    // Settle the newly connected genes while the existing map stays pinned.
+    _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
+    _geUnpinAfter = new Set();
+    for (const n of _geNodes) if (before.has(n.sym) && !_geFixed[n.sym]) { _geFixed[n.sym] = true; _geUnpinAfter.add(n.sym); }
+    geApplyDOM(); geApplyFilter(); geRun(0.8);
+  } else {
+    geApplyDOM(); geApplyFilter();
+  }
+  geSetRefreshUI(false);
+  const tail = `+${added} interaction${added === 1 ? '' : 's'}` + (connected ? `, ${connected} gene${connected === 1 ? '' : 's'} newly connected` : '');
+  showToast(cancelled ? `Refresh stopped at ${done}/${genes.length} · ${tail}` : `Refreshed ${genes.length} memento genes · ${tail}`);
+}
+
+// Build the frozen sidecar: the loaded baseline (genes/members/canon/bridges
+// unchanged — they are card-derived) with edges replaced by the current
+// node-to-node set (baseline + everything live). Ghost edges are dropped: a
+// frozen edge's endpoints must both be memento genes, exactly as the Python
+// builder requires, so a later kb-interactions.py rebuild stays consistent.
+function geBuildFrozen(){
+  const genes = interactions.genes || {};
+  const seen = new Set(), mech = [], cplx = [];
+  for (const e of _geEdges) {
+    if (!genes[e.a] || !genes[e.b]) continue;
+    const key = e.a + '|' + e.b + '|' + e.t;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    (e.complex ? cplx : mech).push({ a: e.a, b: e.b, t: e.t, belief: e.belief, n: e.n, pmid: e.pmid || null });
+  }
+  const byAB = (x, y) => x.a < y.a ? -1 : x.a > y.a ? 1 : x.b < y.b ? -1 : x.b > y.b ? 1 : 0;
+  mech.sort(byAB); cplx.sort(byAB);
+  return { ...interactions, generated: new Date().toISOString().slice(0, 10),
+           source: 'INDRA db.indra.bio + MyGene.info (frozen in-app)', edges: mech, complex_edges: cplx };
+}
+async function geWriteInteractions(json){
+  if (typeof dirHandle !== 'undefined' && dirHandle) {
+    try {
+      const fh = await dirHandle.getFileHandle('interactions.json', { create: true });
+      const w = await fh.createWritable(); await w.write(json); await w.close();
+      return true;
+    } catch(e) { showToast('Write failed: ' + e.message); return false; }
+  }
+  if (typeof ghRepoMode !== 'undefined' && ghRepoMode) {
+    if (!ghCanWrite) { showToast('Your GitHub token is read-only'); return false; }
+    try {
+      _ghQueue.set(`${GH_KB_PATH}/interactions.json`, { text: json });   // reuse the card commit machinery
+      await ghFlush();
+      return true;
+    } catch(e) { showToast('Commit failed: ' + e.message); return false; }
+  }
+  showToast('Connect a folder or GitHub to freeze');
+  return false;
+}
+async function geFreeze(){
+  if (!interactions) { showToast('Nothing to freeze'); return; }
+  const out = geBuildFrozen();
+  const nm = out.edges.length, nc = out.complex_edges.length;
+  if (typeof confirm === 'function' && !confirm(`Freeze ${nm} mechanistic + ${nc} complex interactions to interactions.json?`)) return;
+  const json = JSON.stringify(out, null, 1);
+  if (await geWriteInteractions(json)) { interactions = out; showToast(`Froze ${nm} + ${nc} interactions to interactions.json`); }
+}
+
+// Load the sidecar. On the desktop (File System Access) path this reads the same
+// folder the entries came from and makes NO network request — a missing file
+// just leaves the map empty, it never falls through to fetch (fsa-regression
+// guards this). Only when there is no folder handle does a same-origin relative
+// fetch cover the served / http case.
+async function loadInteractions(){
+  interactions = null;
+  if (typeof dirHandle !== 'undefined' && dirHandle) {
+    try {
+      const fh = await dirHandle.getFileHandle('interactions.json');
+      interactions = JSON.parse(await (await fh.getFile()).text());
+    } catch(_) {}
+    return;   // desktop path is filesystem-only; never touch the network
+  }
+  try {
+    const r = await fetch('knowledge-base/interactions.json', { cache: 'no-store' });
+    if (r.ok) { interactions = await r.json(); return; }
+  } catch(_) {}
+}
+
 function geneClick(e, gene) {
   e.stopPropagation();
   if (e.metaKey || e.ctrlKey) { e.preventDefault(); toggleHighlightGene(gene); return; }
@@ -3659,6 +4727,7 @@ function setView(v) {
   mainView = v;
   if (v !== 'timeline') tlFocusId = null;
   if (v !== 'graph') grStop();   // don't leave a force simulation running behind another view
+  if (v !== 'genes') geStop();
   applyControlBar();
   renderFilters();   // the page title says Dashboard / Cards (N) / Graph / Timeline
   renderList();
@@ -4325,6 +5394,7 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyD'){ e.preventDefault(); setView('dash'); return; }
       if(code==='KeyC'){ e.preventDefault(); setView('list'); return; }
       if(code==='KeyG'){ e.preventDefault(); setView('graph'); return; }
+      if(code==='KeyI'){ e.preventDefault(); setView('genes'); return; }   // I = interactions
       if(code==='KeyT'){ e.preventDefault(); setView('timeline'); return; }
       if(code==='KeyV'){ e.preventDefault(); togglePreviews(); return; }
       if(code==='KeyH'){ e.preventDefault(); toggleHighlightInput(); return; }

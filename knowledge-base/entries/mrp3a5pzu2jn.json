@@ -1,0 +1,24 @@
+{
+  "id": "mrp3a5pzu2jn",
+  "type": "reference",
+  "title": "Gene set: cAMP/PKA module",
+  "genes": [
+    "ADCY",
+    "ADRA2C",
+    "AKAP4",
+    "PJA1",
+    "PRKX",
+    "PRKY"
+  ],
+  "tags": [
+    "cAMP_PKA_module",
+    "gene-set"
+  ],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-07-17T15:25:00.000Z",
+  "synced": false
+}

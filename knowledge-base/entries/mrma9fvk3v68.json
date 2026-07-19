@@ -17,21 +17,21 @@
     "subtasks": [
       {
         "id": "smrn7nqex4ex",
-        "title": "1.0 version",
+        "title": "Phasic 1.0",
         "start": "2026-07-20",
-        "end": "2026-07-31"
+        "end": "2026-07-24"
       },
       {
         "id": "smrn7pzrhuly",
         "title": "Applied prob. paper",
-        "start": "2026-08-03",
-        "end": "2026-08-14"
+        "start": "2026-08-24",
+        "end": "2026-09-04"
       },
       {
         "id": "smrn7qknpc1y",
         "title": "Selection paper",
-        "start": "2026-08-17",
-        "end": "2026-08-28"
+        "start": "2026-09-14",
+        "end": "2026-09-25"
       }
     ]
   }

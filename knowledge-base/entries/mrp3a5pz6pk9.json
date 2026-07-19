@@ -1,0 +1,36 @@
+{
+  "id": "mrp3a5pz6pk9",
+  "type": "reference",
+  "title": "Gene set: linAR_human",
+  "genes": [
+    "AC244197.3",
+    "AGTR2",
+    "DMD",
+    "FGF13",
+    "FRMPD3",
+    "GCNA",
+    "GPC3",
+    "GPC4",
+    "IGSF1",
+    "IL1RAPL1",
+    "MID2",
+    "NHSL2",
+    "POLA1",
+    "PTCHD1",
+    "RAI2",
+    "SLITRK2",
+    "TENM1",
+    "TMSB15B"
+  ],
+  "tags": [
+    "linAR_human",
+    "gene-set"
+  ],
+  "source": "https://doi.org/10.1126/science.abm1696",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-07-17T15:25:00.000Z",
+  "synced": false
+}

@@ -1,0 +1,38 @@
+{
+  "id": "mrp3a5pzlvod",
+  "type": "reference",
+  "title": "Gene set: shannon genes",
+  "genes": [
+    "ADRA2C",
+    "BTBD3",
+    "DOCK2",
+    "FGGY",
+    "HCN1",
+    "HIVEP3",
+    "IQCJ-SCHIP1",
+    "IRS2",
+    "MAF1",
+    "MYO16",
+    "NKX2-4",
+    "OTOP1",
+    "POTED",
+    "RASGRP3",
+    "RBMX2",
+    "SORCS3",
+    "SPATC1",
+    "TMEM128",
+    "TPTE",
+    "XRN2"
+  ],
+  "tags": [
+    "shannon_genes",
+    "gene-set"
+  ],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-07-17T15:25:00.000Z",
+  "synced": false
+}

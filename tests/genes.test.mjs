@@ -309,6 +309,43 @@ function testEdgeDirection() {
   ok(!frozen.edges.some(e => e.a === 'A' && e.b === 'C'), 'complex edges are not in the frozen mech set');
 }
 
+function testEdgeFan() {
+  console.log('\nedge fan — a pair with several natures splits into separate, offset edges (no stacked colours)');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.mainView = 'genes';
+  api.interactions = {
+    generated: 'x', source: 'x', members: {}, canon: {}, bridges: [],
+    genes: { A: { chrom: '1', cards: ['c'], groups: [] }, B: { chrom: '1', cards: ['c'], groups: [] } },
+    edges: [
+      { a: 'A', b: 'B', t: 'Activation',      belief: 0.9, n: 5, pmid: 'p', dir: 'ab' },  // promote
+      { a: 'A', b: 'B', t: 'Inhibition',      belief: 0.8, n: 4, pmid: 'p', dir: 'ab' },  // suppress
+      { a: 'A', b: 'B', t: 'Phosphorylation', belief: 0.7, n: 2, pmid: 'p', dir: 'ab' },  // modify
+      { a: 'A', b: 'B', t: 'Ubiquitination',  belief: 0.6, n: 9, pmid: 'p', dir: 'ab' },  // modify dup (higher n)
+    ],
+    complex_edges: [],
+  };
+  api.items = [{ id: 'c', type: 'note', tags: [], genes: [], title: '', source: '', content: 'x', date: '2026-01-01T00:00:00Z' }];
+  sandbox.document.getElementById('search-input').value = '';
+  api.renderGenes();
+
+  // same-nature merge: 4 raw edges -> 3 drawn; the two "modify" collapse to the most-evidenced
+  eq(api.geDrawn.length, 3, 'the two modify edges merge; promote/suppress/modify remain (3 edges)');
+  eq((api.geDrawn.find(e => e.nat === 'modify') || {}).t, 'Ubiquitination', 'the surviving modify edge is the most-evidenced (n=9)');
+  // symmetric lanes around 0
+  eq(api.geDrawn.map(e => e._lane).sort((a, b) => a - b), [-1, 0, 1], 'the three natures get symmetric fan lanes (-1, 0, 1)');
+
+  // in the DOM the three lines are drawn at distinct (perpendicular-offset) positions, not stacked
+  const mid = i => { const l = sandbox.document.getElementById('ge-e' + i); return [(Number(l.getAttribute('x1')) + Number(l.getAttribute('x2'))) / 2, (Number(l.getAttribute('y1')) + Number(l.getAttribute('y2'))) / 2]; };
+  const m = api.geDrawn.map((_, i) => mid(i));
+  const dist = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
+  ok(dist(m[0], m[1]) > 0.5 && dist(m[1], m[2]) > 0.5 && dist(m[0], m[2]) > 0.5, 'the three edges sit at distinct offset positions, not stacked on one line');
+
+  // a single-nature pair stays straight (lane 0) — no gratuitous offset
+  api.interactions.edges = [{ a: 'A', b: 'B', t: 'Activation', belief: 0.9, n: 5, pmid: 'p', dir: 'ab' }];
+  api.geBuildModel(); api.geComputeDrawn();
+  eq(api.geDrawn[0]._lane, 0, 'a pair with one nature stays on lane 0 (drawn straight)');
+}
+
 function testShownCount() {
   console.log('\ngeShownCount — wired-gene count, before and after build');
   const { api } = setup();
@@ -563,6 +600,7 @@ testHighlightInputSync();
 testHighlightFocus();
 testEdgeToggleStability();
 testEdgeDirection();
+testEdgeFan();
 testSpikeGenes();
 testSpikePreservesGhosts();
 testCardScope();

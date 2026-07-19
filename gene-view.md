@@ -80,6 +80,18 @@ Direction comes from the INDRA statement (subject → object for regulations,
 enzyme → substrate for modifications). **Complex/`bind` edges are undirected** and
 carry no head. An edge whose direction isn't known yet is drawn as a plain line.
 
+#### One gene pair, several interactions
+
+Two genes often carry more than one kind of interaction — e.g. a kinase both
+**phosphorylates** and **activates** its target, or the literature both activates
+*and* inhibits it. About a third of pairs are like this. Rather than stack the
+colours and heads on one line (which reads as a single, confusingly two-coloured
+edge), each **nature** gets its own edge, **fanned** slightly apart so its colour
+and arrowhead stand alone. Duplicates *within* a nature (two kinds of modification,
+say) merge into one edge, keeping the most-evidenced. A pair with a single nature
+stays a straight line. This is why an activate-then-inhibit conflict shows as a
+green arrow **and** a red T-bar side by side — that contradiction is real signal.
+
 > **Filling in direction.** Older sidecars stored edges with the two genes sorted
 > alphabetically, discarding direction, so only edges re-derived since carry a head.
 > To direction every edge, run **Refresh all → Freeze** once: the refresh re-fetches

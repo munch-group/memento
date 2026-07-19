@@ -3755,6 +3755,7 @@ let geMinBelief = 0, geMinEv = 1, geShowComplex = false, geSpacing = 1;
 // Every node is the same size (radius, in scene units); the on-screen size is held
 // constant across zoom by --ge-nodescale, like the labels.
 const GE_NODE_R = 9;
+const GE_FAN_STEP = 7;   // perpendicular spacing (scene px at zoom 1) between fanned parallel edges
 
 // The node universe and the layout are fixed by the MECHANISTIC edges only, laid
 // out once. Complex edges never spring the layout (they would knot it into a
@@ -3783,7 +3784,30 @@ function geBuildModel(){
     belief:e.belief, n:e.n, pmid:e.pmid, complex:e.t === 'Complex', dir:e.dir || null }));
   _geIsolated = all.length - _geNodes.length;
 }
-function geComputeDrawn(){ _geDrawn = _geEdges.filter(e => !e.complex || geShowComplex); }
+function geComputeDrawn(){
+  const raw = _geEdges.filter(e => !e.complex || geShowComplex);
+  // Merge identical-nature duplicates between the same pair (e.g. Phosphorylation + Ubiquitination
+  // are both "modify") into one edge, keeping the most-evidenced. Their overlap was invisible anyway
+  // (same colour, same head); what confuses is DIFFERENT natures stacked on one line.
+  const pk = e => (e.a < e.b ? e.a + '|' + e.b : e.b + '|' + e.a);
+  const rep = new Map();   // pair|nature -> representative edge
+  for (const e of raw) {
+    const k = pk(e) + '|' + e.nat;
+    const prev = rep.get(k);
+    if (!prev || (e.n || 0) > (prev.n || 0)) rep.set(k, e);
+  }
+  const drawn = [...rep.values()];
+  // Fan a pair's distinct natures apart: give each a symmetric lane (…-1,0,1…) so geApplyDOM can
+  // offset it perpendicular to the edge. A pair with one nature stays on lane 0 (straight).
+  const ORDER = { promote: 0, suppress: 1, modify: 2, bind: 3 };
+  const nats = new Map();   // pair -> set of natures present
+  for (const e of drawn) { (nats.get(pk(e)) || nats.set(pk(e), new Set()).get(pk(e))).add(e.nat); }
+  for (const e of drawn) {
+    const arr = [...nats.get(pk(e))].sort((x, y) => (ORDER[x] ?? 9) - (ORDER[y] ?? 9));
+    e._lane = arr.length > 1 ? arr.indexOf(e.nat) - (arr.length - 1) / 2 : 0;
+  }
+  _geDrawn = drawn;
+}
 function geEdgeShown(e){
   // Complex ('bind') edges answer only to the complexes toggle (via _geDrawn), never the nature
   // checkboxes — otherwise the two controls fight and the shown set depends on toggle order.
@@ -4076,13 +4100,16 @@ function geApplyDOM(){
   // A directed edge stops at its TARGET node's rim so the arrowhead sits ABOVE the disc (nodes are
   // z-above edges), not buried under it. Disc radius is GE_NODE_R/max(1,zoom) scene units (the disc
   // counter-scales via --ge-nodescale); the extra clearance keeps the head off the border.
-  const zoom = _geZoom || 1, gap = GE_NODE_R / Math.max(1, zoom) + 3 / zoom;
+  const zoom = _geZoom || 1, gap = GE_NODE_R / Math.max(1, zoom) + 3 / zoom, step = GE_FAN_STEP / zoom;
   _geDrawn.forEach((e, i) => {
     const line = document.getElementById('ge-e' + i), pa = _gePos[e.a], pb = _gePos[e.b];
     if (!line || !pa || !pb || !line.setAttribute) return;
-    let x1 = pa.x, y1 = pa.y, x2 = pb.x, y2 = pb.y;
+    const dx = pb.x - pa.x, dy = pb.y - pa.y, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
+    // Fan: shift the whole edge perpendicular by its lane, so a pair's different natures sit on
+    // separate parallel lines (their arrowheads land side by side) instead of stacking.
+    const off = (e._lane || 0) * step, ox = -uy * off, oy = ux * off;
+    let x1 = pa.x + ox, y1 = pa.y + oy, x2 = pb.x + ox, y2 = pb.y + oy;
     if (e.dir && !e.complex) {
-      const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
       if (e.dir === 'ab') { x2 -= ux * gap; y2 -= uy * gap; }   // head at b
       else { x1 += ux * gap; y1 += uy * gap; }                  // head at a
     }

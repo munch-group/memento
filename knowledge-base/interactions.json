@@ -18148,7 +18148,8 @@
    "t": "Phosphorylation",
    "belief": 0.95,
    "n": 3,
-   "pmid": "15657060"
+   "pmid": "15657060",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18156,7 +18157,8 @@
    "t": "Activation",
    "belief": 0.539,
    "n": 2,
-   "pmid": "15657060"
+   "pmid": "15657060",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18164,7 +18166,8 @@
    "t": "Phosphorylation",
    "belief": 0.879,
    "n": 5,
-   "pmid": "10896159"
+   "pmid": "10896159",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18172,7 +18175,8 @@
    "t": "Activation",
    "belief": 0.848,
    "n": 1,
-   "pmid": "10896159"
+   "pmid": "10896159",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18180,7 +18184,8 @@
    "t": "Phosphorylation",
    "belief": 0.821,
    "n": 3,
-   "pmid": "17254966"
+   "pmid": "17254966",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18220,7 +18225,8 @@
    "t": "Activation",
    "belief": 0.797,
    "n": 1,
-   "pmid": "25561363"
+   "pmid": "25561363",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18228,7 +18234,8 @@
    "t": "IncreaseAmount",
    "belief": 0.566,
    "n": 1,
-   "pmid": "25219501"
+   "pmid": "25219501",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18236,7 +18243,8 @@
    "t": "Phosphorylation",
    "belief": 0.852,
    "n": 1,
-   "pmid": "25219501"
+   "pmid": "25219501",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18252,7 +18260,8 @@
    "t": "Phosphorylation",
    "belief": 0.918,
    "n": 3,
-   "pmid": "10637231"
+   "pmid": "10637231",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18260,7 +18269,8 @@
    "t": "Phosphorylation",
    "belief": 0.791,
    "n": 1,
-   "pmid": "10866655"
+   "pmid": "10866655",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18268,7 +18278,8 @@
    "t": "Activation",
    "belief": 0.556,
    "n": 1,
-   "pmid": "10866655"
+   "pmid": "10866655",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18292,7 +18303,8 @@
    "t": "Phosphorylation",
    "belief": 0.93,
    "n": 2,
-   "pmid": "16014719"
+   "pmid": "16014719",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18300,7 +18312,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "40087766"
+   "pmid": "40087766",
+   "dir": "ba"
   },
   {
    "a": "ABL1",
@@ -18308,7 +18321,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "16014719"
+   "pmid": "16014719",
+   "dir": "ba"
   },
   {
    "a": "ABL1",
@@ -18316,7 +18330,8 @@
    "t": "Phosphorylation",
    "belief": 0.889,
    "n": 1,
-   "pmid": "12110584"
+   "pmid": "12110584",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18324,7 +18339,8 @@
    "t": "Inhibition",
    "belief": 0.662,
    "n": 3,
-   "pmid": "21081495"
+   "pmid": "21081495",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18348,7 +18364,8 @@
    "t": "Phosphorylation",
    "belief": 0.755,
    "n": 1,
-   "pmid": "36338985"
+   "pmid": "36338985",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18356,7 +18373,8 @@
    "t": "IncreaseAmount",
    "belief": 0.585,
    "n": 1,
-   "pmid": "36338985"
+   "pmid": "36338985",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18396,7 +18414,8 @@
    "t": "Activation",
    "belief": 0.56,
    "n": 1,
-   "pmid": "32792487"
+   "pmid": "32792487",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18412,7 +18431,8 @@
    "t": "Phosphorylation",
    "belief": 0.847,
    "n": 1,
-   "pmid": "9109492"
+   "pmid": "9109492",
+   "dir": "ba"
   },
   {
    "a": "ABL1",
@@ -18420,7 +18440,8 @@
    "t": "Activation",
    "belief": 0.681,
    "n": 1,
-   "pmid": "9109492"
+   "pmid": "9109492",
+   "dir": "ba"
   },
   {
    "a": "ABL1",
@@ -18428,7 +18449,8 @@
    "t": "Inhibition",
    "belief": 0.494,
    "n": 1,
-   "pmid": "28924170"
+   "pmid": "28924170",
+   "dir": "ba"
   },
   {
    "a": "ABL1",
@@ -18436,7 +18458,8 @@
    "t": "Dephosphorylation",
    "belief": 0.549,
    "n": 1,
-   "pmid": "28924170"
+   "pmid": "28924170",
+   "dir": "ba"
   },
   {
    "a": "ABL1",
@@ -18444,7 +18467,8 @@
    "t": "Phosphorylation",
    "belief": 0.939,
    "n": 5,
-   "pmid": "11684015"
+   "pmid": "11684015",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18452,7 +18476,8 @@
    "t": "Activation",
    "belief": 0.713,
    "n": 5,
-   "pmid": "10212258"
+   "pmid": "10212258",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18460,7 +18485,8 @@
    "t": "Inhibition",
    "belief": 0.505,
    "n": 1,
-   "pmid": "9461559"
+   "pmid": "9461559",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18468,7 +18494,8 @@
    "t": "Phosphorylation",
    "belief": 0.898,
    "n": 3,
-   "pmid": "12379650"
+   "pmid": "12379650",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18476,7 +18503,8 @@
    "t": "Activation",
    "belief": 0.579,
    "n": 2,
-   "pmid": "12379650"
+   "pmid": "12379650",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18484,7 +18512,8 @@
    "t": "Phosphorylation",
    "belief": 0.888,
    "n": 3,
-   "pmid": "11971963"
+   "pmid": "11971963",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18500,7 +18529,8 @@
    "t": "Inhibition",
    "belief": 0.708,
    "n": 1,
-   "pmid": "8242749"
+   "pmid": "8242749",
+   "dir": "ba"
   },
   {
    "a": "ABL1",
@@ -18508,7 +18538,8 @@
    "t": "Phosphorylation",
    "belief": 0.794,
    "n": 1,
-   "pmid": "16158058"
+   "pmid": "16158058",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18548,7 +18579,8 @@
    "t": "Activation",
    "belief": 0.509,
    "n": 1,
-   "pmid": "23100514"
+   "pmid": "23100514",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18572,7 +18604,8 @@
    "t": "IncreaseAmount",
    "belief": 0.743,
    "n": 1,
-   "pmid": "11753601"
+   "pmid": "11753601",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18596,7 +18629,8 @@
    "t": "Phosphorylation",
    "belief": 0.843,
    "n": 1,
-   "pmid": "12944467"
+   "pmid": "12944467",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18604,7 +18638,8 @@
    "t": "Activation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "12944467"
+   "pmid": "12944467",
+   "dir": "ab"
   },
   {
    "a": "ABL1",
@@ -18988,7 +19023,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "36393857"
+   "pmid": "36393857",
+   "dir": "ab"
   },
   {
    "a": "ACLY",
@@ -19876,7 +19912,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "29760662"
+   "pmid": "29760662",
+   "dir": "ba"
   },
   {
    "a": "AGTR2",
@@ -19884,7 +19921,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "19074441"
+   "pmid": "19074441",
+   "dir": "ab"
   },
   {
    "a": "AGTR2",
@@ -20252,7 +20290,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "19942317"
+   "pmid": "19942317",
+   "dir": "ab"
   },
   {
    "a": "AIFM1",
@@ -20572,7 +20611,8 @@
    "t": "Phosphorylation",
    "belief": 0.899,
    "n": 5,
-   "pmid": "19664994"
+   "pmid": "19664994",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20580,7 +20620,8 @@
    "t": "Inhibition",
    "belief": 0.666,
    "n": 4,
-   "pmid": "9381178"
+   "pmid": "9381178",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20596,7 +20637,8 @@
    "t": "Inhibition",
    "belief": 0.573,
    "n": 1,
-   "pmid": "14766748"
+   "pmid": "14766748",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20628,7 +20670,8 @@
    "t": "Inhibition",
    "belief": 0.656,
    "n": 1,
-   "pmid": "16282323"
+   "pmid": "16282323",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20676,7 +20719,8 @@
    "t": "Inhibition",
    "belief": 0.707,
    "n": 2,
-   "pmid": "10579725"
+   "pmid": "10579725",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -20692,7 +20736,8 @@
    "t": "Inhibition",
    "belief": 0.745,
    "n": 3,
-   "pmid": "10529400"
+   "pmid": "10529400",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20700,7 +20745,8 @@
    "t": "Phosphorylation",
    "belief": 0.885,
    "n": 4,
-   "pmid": "10529400"
+   "pmid": "10529400",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20732,7 +20778,8 @@
    "t": "Phosphorylation",
    "belief": 0.934,
    "n": 2,
-   "pmid": "12244301"
+   "pmid": "12244301",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20740,7 +20787,8 @@
    "t": "Inhibition",
    "belief": 0.632,
    "n": 4,
-   "pmid": "12042314"
+   "pmid": "12042314",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20828,7 +20876,8 @@
    "t": "Inhibition",
    "belief": 0.57,
    "n": 1,
-   "pmid": "32781572"
+   "pmid": "32781572",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20836,7 +20885,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "28392905"
+   "pmid": "28392905",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -20844,7 +20894,8 @@
    "t": "Phosphorylation",
    "belief": 0.896,
    "n": 1,
-   "pmid": "21151116"
+   "pmid": "21151116",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20852,7 +20903,8 @@
    "t": "Activation",
    "belief": 0.662,
    "n": 1,
-   "pmid": "21151116"
+   "pmid": "21151116",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20884,7 +20936,8 @@
    "t": "Phosphorylation",
    "belief": 0.893,
    "n": 3,
-   "pmid": "16224021"
+   "pmid": "16224021",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20900,7 +20953,8 @@
    "t": "Phosphorylation",
    "belief": 0.803,
    "n": 5,
-   "pmid": "10217147"
+   "pmid": "10217147",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20908,7 +20962,8 @@
    "t": "Inhibition",
    "belief": 0.664,
    "n": 5,
-   "pmid": "16272144"
+   "pmid": "16272144",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20924,7 +20979,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 3,
-   "pmid": "8206977"
+   "pmid": "8206977",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20940,7 +20996,8 @@
    "t": "Inhibition",
    "belief": 0.844,
    "n": 3,
-   "pmid": "15829723"
+   "pmid": "15829723",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -20948,7 +21005,8 @@
    "t": "Phosphorylation",
    "belief": 0.868,
    "n": 5,
-   "pmid": "23552696"
+   "pmid": "23552696",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21028,7 +21086,8 @@
    "t": "Phosphorylation",
    "belief": 0.695,
    "n": 2,
-   "pmid": "35849305"
+   "pmid": "35849305",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21036,7 +21095,8 @@
    "t": "Dephosphorylation",
    "belief": 0.508,
    "n": 2,
-   "pmid": "35742986"
+   "pmid": "35742986",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21044,7 +21104,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "38952081"
+   "pmid": "38952081",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21052,7 +21113,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36691085"
+   "pmid": "36691085",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -21060,7 +21122,8 @@
    "t": "Activation",
    "belief": 0.72,
    "n": 2,
-   "pmid": "15169778"
+   "pmid": "15169778",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21068,7 +21131,8 @@
    "t": "Phosphorylation",
    "belief": 0.845,
    "n": 3,
-   "pmid": "15527798"
+   "pmid": "15527798",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21156,7 +21220,8 @@
    "t": "Phosphorylation",
    "belief": 0.899,
    "n": 1,
-   "pmid": "18439899"
+   "pmid": "18439899",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -21164,7 +21229,8 @@
    "t": "Activation",
    "belief": 0.639,
    "n": 1,
-   "pmid": "18439899"
+   "pmid": "18439899",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -21172,7 +21238,8 @@
    "t": "Inhibition",
    "belief": 0.75,
    "n": 2,
-   "pmid": "19903340"
+   "pmid": "19903340",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -21244,7 +21311,8 @@
    "t": "Phosphorylation",
    "belief": 0.85,
    "n": 5,
-   "pmid": "36566564"
+   "pmid": "36566564",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21252,7 +21320,8 @@
    "t": "Inhibition",
    "belief": 0.51,
    "n": 2,
-   "pmid": "33574926"
+   "pmid": "33574926",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21260,7 +21329,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "36566564"
+   "pmid": "36566564",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -21292,7 +21362,8 @@
    "t": "Phosphorylation",
    "belief": 0.86,
    "n": 1,
-   "pmid": "25042802"
+   "pmid": "25042802",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21300,7 +21371,8 @@
    "t": "IncreaseAmount",
    "belief": 0.603,
    "n": 2,
-   "pmid": "25042802"
+   "pmid": "25042802",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -21316,7 +21388,8 @@
    "t": "Activation",
    "belief": 0.748,
    "n": 1,
-   "pmid": "11287630"
+   "pmid": "11287630",
+   "dir": "ba"
   },
   {
    "a": "AKT1",
@@ -21412,7 +21485,8 @@
    "t": "IncreaseAmount",
    "belief": 0.566,
    "n": 3,
-   "pmid": "29301787"
+   "pmid": "29301787",
+   "dir": "ab"
   },
   {
    "a": "AKT2",
@@ -21420,7 +21494,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 1,
-   "pmid": "29301787"
+   "pmid": "29301787",
+   "dir": "ab"
   },
   {
    "a": "AKT2",
@@ -21500,7 +21575,8 @@
    "t": "Inhibition",
    "belief": 0.643,
    "n": 3,
-   "pmid": "16272144"
+   "pmid": "16272144",
+   "dir": "ab"
   },
   {
    "a": "AKT2",
@@ -21508,7 +21584,8 @@
    "t": "Phosphorylation",
    "belief": 0.831,
    "n": 4,
-   "pmid": "11313479"
+   "pmid": "11313479",
+   "dir": "ab"
   },
   {
    "a": "AKT2",
@@ -21540,7 +21617,8 @@
    "t": "Phosphorylation",
    "belief": 0.919,
    "n": 1,
-   "pmid": "16293724"
+   "pmid": "16293724",
+   "dir": "ab"
   },
   {
    "a": "AKT2",
@@ -21548,7 +21626,8 @@
    "t": "Inhibition",
    "belief": 0.755,
    "n": 2,
-   "pmid": "16293724"
+   "pmid": "16293724",
+   "dir": "ab"
   },
   {
    "a": "AKT2",
@@ -21580,7 +21659,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "30554086"
+   "pmid": "30554086",
+   "dir": "ab"
   },
   {
    "a": "AKT2",
@@ -21988,7 +22068,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "19934039"
+   "pmid": "19934039",
+   "dir": "ab"
   },
   {
    "a": "AP3B1",
@@ -22452,7 +22533,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "37462752"
+   "pmid": "37462752",
+   "dir": "ba"
   },
   {
    "a": "APTX",
@@ -22540,7 +22622,8 @@
    "t": "Phosphorylation",
    "belief": 0.815,
    "n": 1,
-   "pmid": "23591895"
+   "pmid": "23591895",
+   "dir": "ab"
   },
   {
    "a": "ARAF",
@@ -22548,7 +22631,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "23591895"
+   "pmid": "23591895",
+   "dir": "ab"
   },
   {
    "a": "ARAF",
@@ -23004,7 +23088,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "37936174"
+   "pmid": "37936174",
+   "dir": "ba"
   },
   {
    "a": "ARSD",
@@ -23452,7 +23537,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "34502304"
+   "pmid": "34502304",
+   "dir": "ba"
   },
   {
    "a": "ATAT1",
@@ -23524,7 +23610,8 @@
    "t": "Acetylation",
    "belief": 0.551,
    "n": 1,
-   "pmid": "29703898"
+   "pmid": "29703898",
+   "dir": "ab"
   },
   {
    "a": "ATAT1",
@@ -23532,7 +23619,8 @@
    "t": "IncreaseAmount",
    "belief": 0.558,
    "n": 1,
-   "pmid": "29703898"
+   "pmid": "29703898",
+   "dir": "ab"
   },
   {
    "a": "ATG4A",
@@ -23732,7 +23820,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "38815862"
+   "pmid": "38815862",
+   "dir": "ab"
   },
   {
    "a": "ATG5",
@@ -23740,7 +23829,8 @@
    "t": "Phosphorylation",
    "belief": 0.552,
    "n": 1,
-   "pmid": "31257024"
+   "pmid": "31257024",
+   "dir": "ab"
   },
   {
    "a": "ATG5",
@@ -23748,7 +23838,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "30010136"
+   "pmid": "30010136",
+   "dir": "ba"
   },
   {
    "a": "ATG5",
@@ -23756,7 +23847,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36227739"
+   "pmid": "36227739",
+   "dir": "ab"
   },
   {
    "a": "ATG5",
@@ -24012,7 +24104,8 @@
    "t": "Activation",
    "belief": 0.391,
    "n": 2,
-   "pmid": "24887583"
+   "pmid": "24887583",
+   "dir": "ab"
   },
   {
    "a": "ATP7A",
@@ -24020,7 +24113,8 @@
    "t": "Inhibition",
    "belief": 0.489,
    "n": 2,
-   "pmid": "23720634"
+   "pmid": "23720634",
+   "dir": "ba"
   },
   {
    "a": "ATP7A",
@@ -24028,7 +24122,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "37351604"
+   "pmid": "37351604",
+   "dir": "ab"
   },
   {
    "a": "ATP7A",
@@ -24244,7 +24339,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "22021382"
+   "pmid": "22021382",
+   "dir": "ab"
   },
   {
    "a": "ATRX",
@@ -24580,7 +24676,8 @@
    "t": "Phosphorylation",
    "belief": 0.917,
    "n": 1,
-   "pmid": "23579495"
+   "pmid": "23579495",
+   "dir": "ba"
   },
   {
    "a": "AXIN1",
@@ -24588,7 +24685,8 @@
    "t": "Activation",
    "belief": 0.574,
    "n": 5,
-   "pmid": "23579495"
+   "pmid": "23579495",
+   "dir": "ba"
   },
   {
    "a": "AXIN1",
@@ -25044,7 +25142,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "38638964"
+   "pmid": "38638964",
+   "dir": "ba"
   },
   {
    "a": "BAD",
@@ -25076,7 +25175,8 @@
    "t": "Phosphorylation",
    "belief": 0.694,
    "n": 5,
-   "pmid": "16403219"
+   "pmid": "16403219",
+   "dir": "ba"
   },
   {
    "a": "BAD",
@@ -25084,7 +25184,8 @@
    "t": "Inhibition",
    "belief": 0.618,
    "n": 4,
-   "pmid": "16403219"
+   "pmid": "16403219",
+   "dir": "ba"
   },
   {
    "a": "BAD",
@@ -25148,7 +25249,8 @@
    "t": "Phosphorylation",
    "belief": 0.868,
    "n": 5,
-   "pmid": "17663748"
+   "pmid": "17663748",
+   "dir": "ba"
   },
   {
    "a": "BAD",
@@ -25156,7 +25258,8 @@
    "t": "Inhibition",
    "belief": 0.494,
    "n": 3,
-   "pmid": "24055036"
+   "pmid": "24055036",
+   "dir": "ba"
   },
   {
    "a": "BAD",
@@ -25164,7 +25267,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "28718440"
+   "pmid": "28718440",
+   "dir": "ab"
   },
   {
    "a": "BAD",
@@ -26340,7 +26444,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "39551844"
+   "pmid": "39551844",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -26596,7 +26701,8 @@
    "t": "Activation",
    "belief": 0.868,
    "n": 1,
-   "pmid": "15525785"
+   "pmid": "15525785",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -26604,7 +26710,8 @@
    "t": "Phosphorylation",
    "belief": 0.854,
    "n": 1,
-   "pmid": "15525785"
+   "pmid": "15525785",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -26764,7 +26871,8 @@
    "t": "Inhibition",
    "belief": 0.493,
    "n": 2,
-   "pmid": "32502541"
+   "pmid": "32502541",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -26772,7 +26880,8 @@
    "t": "IncreaseAmount",
    "belief": 0.504,
    "n": 2,
-   "pmid": "38076203"
+   "pmid": "38076203",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -26780,7 +26889,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35858523"
+   "pmid": "35858523",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -26788,7 +26898,8 @@
    "t": "DecreaseAmount",
    "belief": 0.468,
    "n": 1,
-   "pmid": "28849505"
+   "pmid": "28849505",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -26796,7 +26907,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "39071270"
+   "pmid": "39071270",
+   "dir": "ab"
   },
   {
    "a": "BAX",
@@ -26892,7 +27004,8 @@
    "t": "DecreaseAmount",
    "belief": 0.512,
    "n": 1,
-   "pmid": "18158998"
+   "pmid": "18158998",
+   "dir": "ba"
   },
   {
    "a": "BAX",
@@ -27676,7 +27789,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "BBC3",
@@ -27684,7 +27798,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "25395275"
+   "pmid": "25395275",
+   "dir": "ba"
   },
   {
    "a": "BBC3",
@@ -27692,7 +27807,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "30958437"
+   "pmid": "30958437",
+   "dir": "ba"
   },
   {
    "a": "BBC3",
@@ -27940,7 +28056,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "22995307"
+   "pmid": "22995307",
+   "dir": "ba"
   },
   {
    "a": "BBS2",
@@ -28740,7 +28857,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "34624215"
+   "pmid": "34624215",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -28788,7 +28906,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "33461333"
+   "pmid": "33461333",
+   "dir": "ab"
   },
   {
    "a": "BCL2",
@@ -29108,7 +29227,8 @@
    "t": "DecreaseAmount",
    "belief": 0.572,
    "n": 1,
-   "pmid": "29107113"
+   "pmid": "29107113",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29308,7 +29428,8 @@
    "t": "Inhibition",
    "belief": 0.491,
    "n": 2,
-   "pmid": "22329655"
+   "pmid": "22329655",
+   "dir": "ab"
   },
   {
    "a": "BCL2",
@@ -29316,7 +29437,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 2,
-   "pmid": "39214273"
+   "pmid": "39214273",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29324,7 +29446,8 @@
    "t": "DecreaseAmount",
    "belief": 0.485,
    "n": 2,
-   "pmid": "28849505"
+   "pmid": "28849505",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29332,7 +29455,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "38076203"
+   "pmid": "38076203",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29340,7 +29464,8 @@
    "t": "Phosphorylation",
    "belief": 0.552,
    "n": 2,
-   "pmid": "37423542"
+   "pmid": "37423542",
+   "dir": "ab"
   },
   {
    "a": "BCL2",
@@ -29348,7 +29473,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "39071270"
+   "pmid": "39071270",
+   "dir": "ab"
   },
   {
    "a": "BCL2",
@@ -29452,7 +29578,8 @@
    "t": "IncreaseAmount",
    "belief": 0.527,
    "n": 5,
-   "pmid": "21503108"
+   "pmid": "21503108",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29460,7 +29587,8 @@
    "t": "DecreaseAmount",
    "belief": 0.535,
    "n": 4,
-   "pmid": "18566231"
+   "pmid": "18566231",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29612,7 +29740,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "30403180"
+   "pmid": "30403180",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29644,7 +29773,8 @@
    "t": "IncreaseAmount",
    "belief": 0.558,
    "n": 1,
-   "pmid": "23317270"
+   "pmid": "23317270",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29684,7 +29814,8 @@
    "t": "IncreaseAmount",
    "belief": 0.504,
    "n": 5,
-   "pmid": "24055036"
+   "pmid": "24055036",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29692,7 +29823,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "38884677"
+   "pmid": "38884677",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -29700,7 +29832,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "23936765"
+   "pmid": "23936765",
+   "dir": "ba"
   },
   {
    "a": "BCL2",
@@ -30244,7 +30377,8 @@
    "t": "IncreaseAmount",
    "belief": 0.55,
    "n": 3,
-   "pmid": "19343319"
+   "pmid": "19343319",
+   "dir": "ba"
   },
   {
    "a": "BCL2A1",
@@ -30572,7 +30706,8 @@
    "t": "Activation",
    "belief": 0.379,
    "n": 3,
-   "pmid": "31568920"
+   "pmid": "31568920",
+   "dir": "ba"
   },
   {
    "a": "BCL2L1",
@@ -30580,7 +30715,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "39551844"
+   "pmid": "39551844",
+   "dir": "ba"
   },
   {
    "a": "BCL2L1",
@@ -30796,7 +30932,8 @@
    "t": "IncreaseAmount",
    "belief": 0.748,
    "n": 5,
-   "pmid": "20066113"
+   "pmid": "20066113",
+   "dir": "ba"
   },
   {
    "a": "BCL2L1",
@@ -30828,7 +30965,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "16934922"
+   "pmid": "16934922",
+   "dir": "ba"
   },
   {
    "a": "BCL2L1",
@@ -30892,7 +31030,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "28476656"
+   "pmid": "28476656",
+   "dir": "ba"
   },
   {
    "a": "BCL2L1",
@@ -31444,7 +31583,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "26405162"
+   "pmid": "26405162",
+   "dir": "ba"
   },
   {
    "a": "BCL2L11",
@@ -31532,7 +31672,8 @@
    "t": "Deubiquitination",
    "belief": 0.945,
    "n": 1,
-   "pmid": "27013495"
+   "pmid": "27013495",
+   "dir": "ba"
   },
   {
    "a": "BCL2L11",
@@ -31748,7 +31889,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "10898795"
+   "pmid": "10898795",
+   "dir": "ab"
   },
   {
    "a": "BCOR",
@@ -31756,7 +31898,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "10898795"
+   "pmid": "10898795",
+   "dir": "ab"
   },
   {
    "a": "BCOR",
@@ -31772,7 +31915,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "17296600"
+   "pmid": "17296600",
+   "dir": "ab"
   },
   {
    "a": "BCOR",
@@ -32204,7 +32348,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "31691806"
+   "pmid": "31691806",
+   "dir": "ba"
   },
   {
    "a": "BDNF",
@@ -32212,7 +32357,8 @@
    "t": "Dephosphorylation",
    "belief": 0.697,
    "n": 2,
-   "pmid": "39027123"
+   "pmid": "39027123",
+   "dir": "ab"
   },
   {
    "a": "BDNF",
@@ -32220,7 +32366,8 @@
    "t": "Inhibition",
    "belief": 0.489,
    "n": 2,
-   "pmid": "27676333"
+   "pmid": "27676333",
+   "dir": "ba"
   },
   {
    "a": "BDNF",
@@ -32228,7 +32375,8 @@
    "t": "Activation",
    "belief": 0.419,
    "n": 2,
-   "pmid": "27676333"
+   "pmid": "27676333",
+   "dir": "ba"
   },
   {
    "a": "BDNF",
@@ -32236,7 +32384,8 @@
    "t": "Phosphorylation",
    "belief": 0.601,
    "n": 2,
-   "pmid": "37365651"
+   "pmid": "37365651",
+   "dir": "ab"
   },
   {
    "a": "BDNF",
@@ -32244,7 +32393,8 @@
    "t": "DecreaseAmount",
    "belief": 0.514,
    "n": 2,
-   "pmid": "27676333"
+   "pmid": "27676333",
+   "dir": "ba"
   },
   {
    "a": "BDNF",
@@ -32252,7 +32402,8 @@
    "t": "IncreaseAmount",
    "belief": 0.523,
    "n": 2,
-   "pmid": "24618580"
+   "pmid": "24618580",
+   "dir": "ab"
   },
   {
    "a": "BDNF",
@@ -32804,7 +32955,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "37982585"
+   "pmid": "37982585",
+   "dir": "ab"
   },
   {
    "a": "BID",
@@ -33420,7 +33572,8 @@
    "t": "Ubiquitination",
    "belief": 0.967,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ab"
   },
   {
    "a": "BIRC2",
@@ -33476,7 +33629,8 @@
    "t": "IncreaseAmount",
    "belief": 0.618,
    "n": 2,
-   "pmid": "15756023"
+   "pmid": "15756023",
+   "dir": "ba"
   },
   {
    "a": "BIRC2",
@@ -33796,7 +33950,8 @@
    "t": "IncreaseAmount",
    "belief": 0.71,
    "n": 5,
-   "pmid": "19343319"
+   "pmid": "19343319",
+   "dir": "ba"
   },
   {
    "a": "BIRC3",
@@ -33804,7 +33959,8 @@
    "t": "DecreaseAmount",
    "belief": 0.536,
    "n": 3,
-   "pmid": "18566231"
+   "pmid": "18566231",
+   "dir": "ba"
   },
   {
    "a": "BIRC3",
@@ -34100,7 +34256,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "35769258"
+   "pmid": "35769258",
+   "dir": "ba"
   },
   {
    "a": "BIRC5",
@@ -34108,7 +34265,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "33931637"
+   "pmid": "33931637",
+   "dir": "ba"
   },
   {
    "a": "BIRC5",
@@ -34228,7 +34386,8 @@
    "t": "IncreaseAmount",
    "belief": 0.54,
    "n": 1,
-   "pmid": "17553314"
+   "pmid": "17553314",
+   "dir": "ba"
   },
   {
    "a": "BIRC5",
@@ -34828,7 +34987,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "21309482"
+   "pmid": "21309482",
+   "dir": "ab"
   },
   {
    "a": "BMP2",
@@ -35364,7 +35524,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "30102687"
+   "pmid": "30102687",
+   "dir": "ab"
   },
   {
    "a": "CACNA1C",
@@ -35460,7 +35621,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 1,
-   "pmid": "14754994"
+   "pmid": "14754994",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35468,7 +35630,8 @@
    "t": "Activation",
    "belief": 0.575,
    "n": 4,
-   "pmid": "24614225"
+   "pmid": "24614225",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35476,7 +35639,8 @@
    "t": "Phosphorylation",
    "belief": 0.814,
    "n": 2,
-   "pmid": "24614225"
+   "pmid": "24614225",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35492,7 +35656,8 @@
    "t": "Phosphorylation",
    "belief": 0.787,
    "n": 4,
-   "pmid": "11306676"
+   "pmid": "11306676",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35508,7 +35673,8 @@
    "t": "Phosphorylation",
    "belief": 0.829,
    "n": 5,
-   "pmid": "7706316"
+   "pmid": "7706316",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35516,7 +35682,8 @@
    "t": "Inhibition",
    "belief": 0.537,
    "n": 4,
-   "pmid": "10090741"
+   "pmid": "10090741",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35524,7 +35691,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "39095921"
+   "pmid": "39095921",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35532,7 +35700,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "36467067"
+   "pmid": "36467067",
+   "dir": "ba"
   },
   {
    "a": "CAMK2A",
@@ -35548,7 +35717,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 1,
-   "pmid": "22888005"
+   "pmid": "22888005",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35556,7 +35726,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "21642394"
+   "pmid": "21642394",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35564,7 +35735,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "21642394"
+   "pmid": "21642394",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35572,7 +35744,8 @@
    "t": "Phosphorylation",
    "belief": 0.825,
    "n": 3,
-   "pmid": "11027280"
+   "pmid": "11027280",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35580,7 +35753,8 @@
    "t": "Inhibition",
    "belief": 0.536,
    "n": 3,
-   "pmid": "11027280"
+   "pmid": "11027280",
+   "dir": "ab"
   },
   {
    "a": "CAMK2A",
@@ -35636,7 +35810,8 @@
    "t": "Phosphorylation",
    "belief": 0.728,
    "n": 1,
-   "pmid": "12428809"
+   "pmid": "12428809",
+   "dir": "ab"
   },
   {
    "a": "CAMK2B",
@@ -35716,7 +35891,8 @@
    "t": "Phosphorylation",
    "belief": 0.576,
    "n": 2,
-   "pmid": "22482453"
+   "pmid": "22482453",
+   "dir": "ab"
   },
   {
    "a": "CAMK2G",
@@ -35940,7 +36116,8 @@
    "t": "Phosphorylation",
    "belief": 0.785,
    "n": 1,
-   "pmid": "18054859"
+   "pmid": "18054859",
+   "dir": "ba"
   },
   {
    "a": "CASK",
@@ -35948,7 +36125,8 @@
    "t": "Activation",
    "belief": 0.582,
    "n": 1,
-   "pmid": "18054859"
+   "pmid": "18054859",
+   "dir": "ba"
   },
   {
    "a": "CASK",
@@ -36348,7 +36526,8 @@
    "t": "Activation",
    "belief": 0.375,
    "n": 2,
-   "pmid": "33516874"
+   "pmid": "33516874",
+   "dir": "ab"
   },
   {
    "a": "CASP2",
@@ -36356,7 +36535,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "37686457"
+   "pmid": "37686457",
+   "dir": "ba"
   },
   {
    "a": "CASP2",
@@ -36364,7 +36544,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36343883"
+   "pmid": "36343883",
+   "dir": "ba"
   },
   {
    "a": "CASP2",
@@ -36372,7 +36553,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "38215516"
+   "pmid": "38215516",
+   "dir": "ab"
   },
   {
    "a": "CASP2",
@@ -36708,7 +36890,8 @@
    "t": "Inhibition",
    "belief": 0.489,
    "n": 5,
-   "pmid": "18846110"
+   "pmid": "18846110",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -36716,7 +36899,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "26541825"
+   "pmid": "26541825",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -37028,7 +37212,8 @@
    "t": "Activation",
    "belief": 0.534,
    "n": 1,
-   "pmid": "17761173"
+   "pmid": "17761173",
+   "dir": "ab"
   },
   {
    "a": "CASP3",
@@ -37268,7 +37453,8 @@
    "t": "Activation",
    "belief": 0.529,
    "n": 2,
-   "pmid": "35662233"
+   "pmid": "35662233",
+   "dir": "ab"
   },
   {
    "a": "CASP3",
@@ -37276,7 +37462,8 @@
    "t": "Phosphorylation",
    "belief": 0.85,
    "n": 2,
-   "pmid": "27621592"
+   "pmid": "27621592",
+   "dir": "ab"
   },
   {
    "a": "CASP3",
@@ -37284,7 +37471,8 @@
    "t": "Inhibition",
    "belief": 0.485,
    "n": 2,
-   "pmid": "34540002"
+   "pmid": "34540002",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -37292,7 +37480,8 @@
    "t": "IncreaseAmount",
    "belief": 0.604,
    "n": 2,
-   "pmid": "26631930"
+   "pmid": "26631930",
+   "dir": "ab"
   },
   {
    "a": "CASP3",
@@ -37300,7 +37489,8 @@
    "t": "DecreaseAmount",
    "belief": 0.485,
    "n": 2,
-   "pmid": "31428910"
+   "pmid": "31428910",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -37308,7 +37498,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "38928248"
+   "pmid": "38928248",
+   "dir": "ab"
   },
   {
    "a": "CASP3",
@@ -37468,7 +37659,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "29779946"
+   "pmid": "29779946",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -37540,7 +37732,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "30403180"
+   "pmid": "30403180",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -37564,7 +37757,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "24055036"
+   "pmid": "24055036",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -37572,7 +37766,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "24055036"
+   "pmid": "24055036",
+   "dir": "ba"
   },
   {
    "a": "CASP3",
@@ -38108,7 +38303,8 @@
    "t": "IncreaseAmount",
    "belief": 0.617,
    "n": 2,
-   "pmid": "24027553"
+   "pmid": "24027553",
+   "dir": "ab"
   },
   {
    "a": "CASP6",
@@ -38116,7 +38312,8 @@
    "t": "Activation",
    "belief": 0.376,
    "n": 2,
-   "pmid": "33649324"
+   "pmid": "33649324",
+   "dir": "ab"
   },
   {
    "a": "CASP6",
@@ -38124,7 +38321,8 @@
    "t": "Inhibition",
    "belief": 0.403,
    "n": 2,
-   "pmid": "33649324"
+   "pmid": "33649324",
+   "dir": "ba"
   },
   {
    "a": "CASP6",
@@ -38132,7 +38330,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "35883667"
+   "pmid": "35883667",
+   "dir": "ab"
   },
   {
    "a": "CASP6",
@@ -38324,7 +38523,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "23470959"
+   "pmid": "23470959",
+   "dir": "ba"
   },
   {
    "a": "CASP7",
@@ -38388,7 +38588,8 @@
    "t": "IncreaseAmount",
    "belief": 0.611,
    "n": 2,
-   "pmid": "23516100"
+   "pmid": "23516100",
+   "dir": "ab"
   },
   {
    "a": "CASP7",
@@ -38804,7 +39005,8 @@
    "t": "IncreaseAmount",
    "belief": 0.599,
    "n": 2,
-   "pmid": "23516100"
+   "pmid": "23516100",
+   "dir": "ab"
   },
   {
    "a": "CASP8",
@@ -38812,7 +39014,8 @@
    "t": "Activation",
    "belief": 0.363,
    "n": 2,
-   "pmid": "14678771"
+   "pmid": "14678771",
+   "dir": "ba"
   },
   {
    "a": "CASP8",
@@ -38820,7 +39023,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "28849454"
+   "pmid": "28849454",
+   "dir": "ba"
   },
   {
    "a": "CASP8",
@@ -38844,7 +39048,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "31656086"
+   "pmid": "31656086",
+   "dir": "ab"
   },
   {
    "a": "CASP8",
@@ -38884,7 +39089,8 @@
    "t": "Phosphorylation",
    "belief": 0.93,
    "n": 5,
-   "pmid": "23936765"
+   "pmid": "23936765",
+   "dir": "ba"
   },
   {
    "a": "CASP8",
@@ -38892,7 +39098,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "21183680"
+   "pmid": "21183680",
+   "dir": "ba"
   },
   {
    "a": "CASP8",
@@ -38900,7 +39107,8 @@
    "t": "Ubiquitination",
    "belief": 0.528,
    "n": 1,
-   "pmid": "39513921"
+   "pmid": "39513921",
+   "dir": "ba"
   },
   {
    "a": "CASP8",
@@ -38908,7 +39116,8 @@
    "t": "Deubiquitination",
    "belief": 0.448,
    "n": 1,
-   "pmid": "39513921"
+   "pmid": "39513921",
+   "dir": "ba"
   },
   {
    "a": "CASP8",
@@ -38916,7 +39125,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "28188028"
+   "pmid": "28188028",
+   "dir": "ba"
   },
   {
    "a": "CASP8",
@@ -39148,7 +39358,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "33461333"
+   "pmid": "33461333",
+   "dir": "ba"
   },
   {
    "a": "CASP9",
@@ -39156,7 +39367,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "33461333"
+   "pmid": "33461333",
+   "dir": "ba"
   },
   {
    "a": "CASP9",
@@ -39292,7 +39504,8 @@
    "t": "DecreaseAmount",
    "belief": 0.485,
    "n": 2,
-   "pmid": "31428910"
+   "pmid": "31428910",
+   "dir": "ba"
   },
   {
    "a": "CASP9",
@@ -39300,7 +39513,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "30789100"
+   "pmid": "30789100",
+   "dir": "ab"
   },
   {
    "a": "CASP9",
@@ -39308,7 +39522,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "21629713"
+   "pmid": "21629713",
+   "dir": "ba"
   },
   {
    "a": "CASP9",
@@ -39876,7 +40091,8 @@
    "t": "Phosphorylation",
    "belief": 0.697,
    "n": 2,
-   "pmid": "12084709"
+   "pmid": "12084709",
+   "dir": "ba"
   },
   {
    "a": "CDK16",
@@ -39884,7 +40100,8 @@
    "t": "Activation",
    "belief": 0.582,
    "n": 1,
-   "pmid": "12084709"
+   "pmid": "12084709",
+   "dir": "ba"
   },
   {
    "a": "CDK16",
@@ -39892,7 +40109,8 @@
    "t": "Phosphorylation",
    "belief": 0.893,
    "n": 2,
-   "pmid": "25205104"
+   "pmid": "25205104",
+   "dir": "ab"
   },
   {
    "a": "CDK16",
@@ -39900,7 +40118,8 @@
    "t": "DecreaseAmount",
    "belief": 0.579,
    "n": 2,
-   "pmid": "25205104"
+   "pmid": "25205104",
+   "dir": "ab"
   },
   {
    "a": "CDK16",
@@ -39964,7 +40183,8 @@
    "t": "Phosphorylation",
    "belief": 0.867,
    "n": 1,
-   "pmid": "29344296"
+   "pmid": "29344296",
+   "dir": "ab"
   },
   {
    "a": "CDK16",
@@ -39972,7 +40192,8 @@
    "t": "Inhibition",
    "belief": 0.558,
    "n": 1,
-   "pmid": "29344296"
+   "pmid": "29344296",
+   "dir": "ab"
   },
   {
    "a": "CDK16",
@@ -40140,7 +40361,8 @@
    "t": "IncreaseAmount",
    "belief": 0.503,
    "n": 3,
-   "pmid": "35723050"
+   "pmid": "35723050",
+   "dir": "ba"
   },
   {
    "a": "CDK2",
@@ -40148,7 +40370,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "29782654"
+   "pmid": "29782654",
+   "dir": "ba"
   },
   {
    "a": "CDK2",
@@ -40156,7 +40379,8 @@
    "t": "Phosphorylation",
    "belief": 0.728,
    "n": 1,
-   "pmid": "16280325"
+   "pmid": "16280325",
+   "dir": "ab"
   },
   {
    "a": "CDK2",
@@ -40164,7 +40388,8 @@
    "t": "DecreaseAmount",
    "belief": 0.468,
    "n": 2,
-   "pmid": "36012529"
+   "pmid": "36012529",
+   "dir": "ba"
   },
   {
    "a": "CDK2",
@@ -40172,7 +40397,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "36437949"
+   "pmid": "36437949",
+   "dir": "ba"
   },
   {
    "a": "CDK2",
@@ -40332,7 +40558,8 @@
    "t": "Phosphorylation",
    "belief": 0.826,
    "n": 2,
-   "pmid": "37927337"
+   "pmid": "37927337",
+   "dir": "ab"
   },
   {
    "a": "CDK2",
@@ -40596,7 +40823,8 @@
    "t": "Phosphorylation",
    "belief": 0.824,
    "n": 1,
-   "pmid": "18332217"
+   "pmid": "18332217",
+   "dir": "ab"
   },
   {
    "a": "CDK2",
@@ -40604,7 +40832,8 @@
    "t": "Inhibition",
    "belief": 0.529,
    "n": 1,
-   "pmid": "18332217"
+   "pmid": "18332217",
+   "dir": "ab"
   },
   {
    "a": "CDK2",
@@ -40748,7 +40977,8 @@
    "t": "Phosphorylation",
    "belief": 0.839,
    "n": 1,
-   "pmid": "26146988"
+   "pmid": "26146988",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40756,7 +40986,8 @@
    "t": "Inhibition",
    "belief": 0.575,
    "n": 2,
-   "pmid": "26146988"
+   "pmid": "26146988",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40772,7 +41003,8 @@
    "t": "Phosphorylation",
    "belief": 0.678,
    "n": 5,
-   "pmid": "15345747"
+   "pmid": "15345747",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40780,7 +41012,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "14741103"
+   "pmid": "14741103",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40788,7 +41021,8 @@
    "t": "Phosphorylation",
    "belief": 0.793,
    "n": 1,
-   "pmid": "21565170"
+   "pmid": "21565170",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40820,7 +41054,8 @@
    "t": "Activation",
    "belief": 0.836,
    "n": 1,
-   "pmid": "14757045"
+   "pmid": "14757045",
+   "dir": "ba"
   },
   {
    "a": "CDK5",
@@ -40828,7 +41063,8 @@
    "t": "Phosphorylation",
    "belief": 0.859,
    "n": 5,
-   "pmid": "18691976"
+   "pmid": "18691976",
+   "dir": "ba"
   },
   {
    "a": "CDK5",
@@ -40844,7 +41080,8 @@
    "t": "Phosphorylation",
    "belief": 0.864,
    "n": 1,
-   "pmid": "24607229"
+   "pmid": "24607229",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40852,7 +41089,8 @@
    "t": "DecreaseAmount",
    "belief": 0.579,
    "n": 1,
-   "pmid": "24607229"
+   "pmid": "24607229",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40916,7 +41154,8 @@
    "t": "Phosphorylation",
    "belief": 0.875,
    "n": 1,
-   "pmid": "21701498"
+   "pmid": "21701498",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40956,7 +41195,8 @@
    "t": "Phosphorylation",
    "belief": 0.927,
    "n": 5,
-   "pmid": "12226093"
+   "pmid": "12226093",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40964,7 +41204,8 @@
    "t": "Inhibition",
    "belief": 0.646,
    "n": 5,
-   "pmid": "21215781"
+   "pmid": "21215781",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40972,7 +41213,8 @@
    "t": "Activation",
    "belief": 0.636,
    "n": 2,
-   "pmid": "39818277"
+   "pmid": "39818277",
+   "dir": "ba"
   },
   {
    "a": "CDK5",
@@ -40980,7 +41222,8 @@
    "t": "Dephosphorylation",
    "belief": 0.533,
    "n": 2,
-   "pmid": "36686668"
+   "pmid": "36686668",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40988,7 +41231,8 @@
    "t": "DecreaseAmount",
    "belief": 0.624,
    "n": 2,
-   "pmid": "29705343"
+   "pmid": "29705343",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -40996,7 +41240,8 @@
    "t": "IncreaseAmount",
    "belief": 0.503,
    "n": 2,
-   "pmid": "16723713"
+   "pmid": "16723713",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41004,7 +41249,8 @@
    "t": "Glycosylation",
    "belief": 0.448,
    "n": 2,
-   "pmid": "19284597"
+   "pmid": "19284597",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41076,7 +41322,8 @@
    "t": "Phosphorylation",
    "belief": 0.761,
    "n": 1,
-   "pmid": "21145489"
+   "pmid": "21145489",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41084,7 +41331,8 @@
    "t": "Inhibition",
    "belief": 0.523,
    "n": 1,
-   "pmid": "21145489"
+   "pmid": "21145489",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41092,7 +41340,8 @@
    "t": "Inhibition",
    "belief": 0.572,
    "n": 1,
-   "pmid": "15741232"
+   "pmid": "15741232",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41100,7 +41349,8 @@
    "t": "Phosphorylation",
    "belief": 0.793,
    "n": 1,
-   "pmid": "15741232"
+   "pmid": "15741232",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41116,7 +41366,8 @@
    "t": "Phosphorylation",
    "belief": 0.775,
    "n": 1,
-   "pmid": "35443760"
+   "pmid": "35443760",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41124,7 +41375,8 @@
    "t": "Activation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "35443760"
+   "pmid": "35443760",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41140,7 +41392,8 @@
    "t": "Activation",
    "belief": 0.715,
    "n": 4,
-   "pmid": "17591690"
+   "pmid": "17591690",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41148,7 +41401,8 @@
    "t": "Phosphorylation",
    "belief": 0.676,
    "n": 5,
-   "pmid": "19664995"
+   "pmid": "19664995",
+   "dir": "ab"
   },
   {
    "a": "CDK5",
@@ -41260,7 +41514,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "34495563"
+   "pmid": "34495563",
+   "dir": "ab"
   },
   {
    "a": "CDKL5",
@@ -41268,7 +41523,8 @@
    "t": "Phosphorylation",
    "belief": 0.768,
    "n": 1,
-   "pmid": "16935860"
+   "pmid": "16935860",
+   "dir": "ab"
   },
   {
    "a": "CDKL5",
@@ -41460,7 +41716,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "30289047"
+   "pmid": "30289047",
+   "dir": "ba"
   },
   {
    "a": "CDKN1B",
@@ -41468,7 +41725,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "26497533"
+   "pmid": "26497533",
+   "dir": "ba"
   },
   {
    "a": "CDKN1B",
@@ -41476,7 +41734,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "39375731"
+   "pmid": "39375731",
+   "dir": "ba"
   },
   {
    "a": "CDKN1B",
@@ -41628,7 +41887,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "34606852"
+   "pmid": "34606852",
+   "dir": "ba"
   },
   {
    "a": "CDKN1B",
@@ -41708,7 +41968,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "16733069"
+   "pmid": "16733069",
+   "dir": "ba"
   },
   {
    "a": "CDKN1B",
@@ -41812,7 +42073,8 @@
    "t": "Phosphorylation",
    "belief": 0.652,
    "n": 5,
-   "pmid": "20969498"
+   "pmid": "20969498",
+   "dir": "ba"
   },
   {
    "a": "CDKN1B",
@@ -42260,7 +42522,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "25732822"
+   "pmid": "25732822",
+   "dir": "ba"
   },
   {
    "a": "CDKN2A",
@@ -42268,7 +42531,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "25732822"
+   "pmid": "25732822",
+   "dir": "ba"
   },
   {
    "a": "CDKN2A",
@@ -42492,7 +42756,8 @@
    "t": "Dephosphorylation",
    "belief": 0.519,
    "n": 2,
-   "pmid": "37842084"
+   "pmid": "37842084",
+   "dir": "ab"
   },
   {
    "a": "CDKN2A",
@@ -42500,7 +42765,8 @@
    "t": "IncreaseAmount",
    "belief": 0.503,
    "n": 2,
-   "pmid": "39757785"
+   "pmid": "39757785",
+   "dir": "ba"
   },
   {
    "a": "CDKN2A",
@@ -42508,7 +42774,8 @@
    "t": "Phosphorylation",
    "belief": 0.568,
    "n": 1,
-   "pmid": "39757785"
+   "pmid": "39757785",
+   "dir": "ab"
   },
   {
    "a": "CDKN2A",
@@ -42860,7 +43127,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "34606852"
+   "pmid": "34606852",
+   "dir": "ba"
   },
   {
    "a": "CDKN2B",
@@ -42996,7 +43264,8 @@
    "t": "Phosphorylation",
    "belief": 0.89,
    "n": 1,
-   "pmid": "23575666"
+   "pmid": "23575666",
+   "dir": "ba"
   },
   {
    "a": "CEBPD",
@@ -43172,7 +43441,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "25814441"
+   "pmid": "25814441",
+   "dir": "ab"
   },
   {
    "a": "CELF1",
@@ -43292,7 +43562,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "37074924"
+   "pmid": "37074924",
+   "dir": "ba"
   },
   {
    "a": "CEP83",
@@ -43332,7 +43603,8 @@
    "t": "Inhibition",
    "belief": 0.476,
    "n": 3,
-   "pmid": "28554548"
+   "pmid": "28554548",
+   "dir": "ab"
   },
   {
    "a": "CFAP410",
@@ -43372,7 +43644,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "23828565"
+   "pmid": "23828565",
+   "dir": "ab"
   },
   {
    "a": "CFLAR",
@@ -43500,7 +43773,8 @@
    "t": "IncreaseAmount",
    "belief": 0.568,
    "n": 3,
-   "pmid": "15986355"
+   "pmid": "15986355",
+   "dir": "ba"
   },
   {
    "a": "CFLAR",
@@ -44076,7 +44350,8 @@
    "t": "Phosphorylation",
    "belief": 0.602,
    "n": 2,
-   "pmid": "37638180"
+   "pmid": "37638180",
+   "dir": "ab"
   },
   {
    "a": "CISH",
@@ -44084,7 +44359,8 @@
    "t": "Inhibition",
    "belief": 0.476,
    "n": 2,
-   "pmid": "36049563"
+   "pmid": "36049563",
+   "dir": "ba"
   },
   {
    "a": "CISH",
@@ -44092,7 +44368,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "38219962"
+   "pmid": "38219962",
+   "dir": "ab"
   },
   {
    "a": "CISH",
@@ -44148,7 +44425,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "38079177"
+   "pmid": "38079177",
+   "dir": "ba"
   },
   {
    "a": "CISH",
@@ -44796,7 +45074,8 @@
    "t": "Phosphorylation",
    "belief": 0.765,
    "n": 4,
-   "pmid": "18691976"
+   "pmid": "18691976",
+   "dir": "ab"
   },
   {
    "a": "CSK",
@@ -44868,7 +45147,8 @@
    "t": "Phosphorylation",
    "belief": 0.792,
    "n": 2,
-   "pmid": "36379402"
+   "pmid": "36379402",
+   "dir": "ab"
   },
   {
    "a": "CSK",
@@ -45588,7 +45868,8 @@
    "t": "IncreaseAmount",
    "belief": 0.558,
    "n": 1,
-   "pmid": "10734088"
+   "pmid": "10734088",
+   "dir": "ba"
   },
   {
    "a": "CYBB",
@@ -45860,7 +46141,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "19376274"
+   "pmid": "19376274",
+   "dir": "ba"
   },
   {
    "a": "CYCS",
@@ -45916,7 +46198,8 @@
    "t": "Inhibition",
    "belief": 0.476,
    "n": 2,
-   "pmid": "19630065"
+   "pmid": "19630065",
+   "dir": "ba"
   },
   {
    "a": "CYCS",
@@ -45924,7 +46207,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "26037462"
+   "pmid": "26037462",
+   "dir": "ba"
   },
   {
    "a": "CYCS",
@@ -45932,7 +46216,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "25566747"
+   "pmid": "25566747",
+   "dir": "ab"
   },
   {
    "a": "CYCS",
@@ -46020,7 +46305,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "32948809"
+   "pmid": "32948809",
+   "dir": "ba"
   },
   {
    "a": "CYCS",
@@ -46220,7 +46506,8 @@
    "t": "Deubiquitination",
    "belief": 0.954,
    "n": 1,
-   "pmid": "26763122"
+   "pmid": "26763122",
+   "dir": "ab"
   },
   {
    "a": "CYLD",
@@ -46636,7 +46923,8 @@
    "t": "Phosphorylation",
    "belief": 0.911,
    "n": 1,
-   "pmid": "21159948"
+   "pmid": "21159948",
+   "dir": "ba"
   },
   {
    "a": "DCX",
@@ -46644,7 +46932,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "21159948"
+   "pmid": "21159948",
+   "dir": "ba"
   },
   {
    "a": "DCX",
@@ -46660,7 +46949,8 @@
    "t": "Activation",
    "belief": 0.692,
    "n": 2,
-   "pmid": "28701917"
+   "pmid": "28701917",
+   "dir": "ba"
   },
   {
    "a": "DCX",
@@ -46668,7 +46958,8 @@
    "t": "Phosphorylation",
    "belief": 0.78,
    "n": 2,
-   "pmid": "28701917"
+   "pmid": "28701917",
+   "dir": "ba"
   },
   {
    "a": "DCX",
@@ -46692,7 +46983,8 @@
    "t": "Ubiquitination",
    "belief": 0.949,
    "n": 1,
-   "pmid": "22199232"
+   "pmid": "22199232",
+   "dir": "ba"
   },
   {
    "a": "DCX",
@@ -46756,7 +47048,8 @@
    "t": "Inhibition",
    "belief": 0.482,
    "n": 1,
-   "pmid": "33627125"
+   "pmid": "33627125",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46764,7 +47057,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46772,7 +47066,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46780,7 +47075,8 @@
    "t": "Demethylation",
    "belief": 0.491,
    "n": 3,
-   "pmid": "27344963"
+   "pmid": "27344963",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46788,7 +47084,8 @@
    "t": "DecreaseAmount",
    "belief": 0.485,
    "n": 2,
-   "pmid": "27344963"
+   "pmid": "27344963",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46796,7 +47093,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "27344963"
+   "pmid": "27344963",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46804,7 +47102,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46812,7 +47111,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "33627125"
+   "pmid": "33627125",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46820,7 +47120,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46828,7 +47129,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46836,7 +47138,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "33627125"
+   "pmid": "33627125",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46844,7 +47147,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "33318149"
+   "pmid": "33318149",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46852,7 +47156,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "30297359"
+   "pmid": "30297359",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46860,7 +47165,8 @@
    "t": "Deacetylation",
    "belief": 0.517,
    "n": 4,
-   "pmid": "35194205"
+   "pmid": "35194205",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46868,7 +47174,8 @@
    "t": "Activation",
    "belief": 0.417,
    "n": 2,
-   "pmid": "34777380"
+   "pmid": "34777380",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46876,7 +47183,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "39071719"
+   "pmid": "39071719",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46884,7 +47192,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "31178390"
+   "pmid": "31178390",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46892,7 +47201,8 @@
    "t": "Methylation",
    "belief": 0.43,
    "n": 1,
-   "pmid": "40216969"
+   "pmid": "40216969",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46900,7 +47210,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "33589748"
+   "pmid": "33589748",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46908,7 +47219,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "20122165"
+   "pmid": "20122165",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46916,7 +47228,8 @@
    "t": "Deubiquitination",
    "belief": 0.483,
    "n": 3,
-   "pmid": "39551844"
+   "pmid": "39551844",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46924,7 +47237,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35954483"
+   "pmid": "35954483",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46932,7 +47246,8 @@
    "t": "Activation",
    "belief": 0.562,
    "n": 3,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46940,7 +47255,8 @@
    "t": "IncreaseAmount",
    "belief": 0.503,
    "n": 3,
-   "pmid": "23584477"
+   "pmid": "23584477",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46948,7 +47264,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46956,7 +47273,8 @@
    "t": "IncreaseAmount",
    "belief": 0.526,
    "n": 4,
-   "pmid": "39759074"
+   "pmid": "39759074",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46964,7 +47282,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "39759074"
+   "pmid": "39759074",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46972,7 +47291,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "39759074"
+   "pmid": "39759074",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46980,7 +47300,8 @@
    "t": "DecreaseAmount",
    "belief": 0.631,
    "n": 2,
-   "pmid": "21572407"
+   "pmid": "21572407",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -46988,7 +47309,8 @@
    "t": "DecreaseAmount",
    "belief": 0.485,
    "n": 3,
-   "pmid": "35646549"
+   "pmid": "35646549",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -46996,7 +47318,8 @@
    "t": "Demethylation",
    "belief": 0.46,
    "n": 2,
-   "pmid": "37612282"
+   "pmid": "37612282",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47004,7 +47327,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "32220295"
+   "pmid": "32220295",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47012,7 +47336,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "36915498"
+   "pmid": "36915498",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47020,7 +47345,8 @@
    "t": "Methylation",
    "belief": 0.449,
    "n": 1,
-   "pmid": "37612282"
+   "pmid": "37612282",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47028,7 +47354,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "37007137"
+   "pmid": "37007137",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47036,7 +47363,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "32553121"
+   "pmid": "32553121",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47044,7 +47372,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "27736973"
+   "pmid": "27736973",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47052,7 +47381,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "23153497"
+   "pmid": "23153497",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47060,7 +47390,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "32220295"
+   "pmid": "32220295",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47068,7 +47399,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "29301573"
+   "pmid": "29301573",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47076,7 +47408,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "35062979"
+   "pmid": "35062979",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47084,7 +47417,8 @@
    "t": "Activation",
    "belief": 0.376,
    "n": 4,
-   "pmid": "38323009"
+   "pmid": "38323009",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47092,7 +47426,8 @@
    "t": "Phosphorylation",
    "belief": 0.605,
    "n": 5,
-   "pmid": "28402257"
+   "pmid": "28402257",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47100,7 +47435,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "27736973"
+   "pmid": "27736973",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47108,7 +47444,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "27736973"
+   "pmid": "27736973",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47116,7 +47453,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "27736973"
+   "pmid": "27736973",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47124,7 +47462,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "28402257"
+   "pmid": "28402257",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -47132,7 +47471,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "25343452"
+   "pmid": "25343452",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47140,7 +47480,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "30899416"
+   "pmid": "30899416",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47148,7 +47489,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "31511697"
+   "pmid": "31511697",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47156,7 +47498,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "38265972"
+   "pmid": "38265972",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47164,7 +47507,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "27736973"
+   "pmid": "27736973",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47172,7 +47516,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "18846110"
+   "pmid": "18846110",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47180,7 +47525,8 @@
    "t": "Activation",
    "belief": 0.376,
    "n": 4,
-   "pmid": "18846110"
+   "pmid": "18846110",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -47188,7 +47534,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "18846110"
+   "pmid": "18846110",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47196,7 +47543,8 @@
    "t": "Activation",
    "belief": 0.669,
    "n": 5,
-   "pmid": "23470959"
+   "pmid": "23470959",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47204,7 +47552,8 @@
    "t": "IncreaseAmount",
    "belief": 0.489,
    "n": 5,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47212,7 +47561,8 @@
    "t": "DecreaseAmount",
    "belief": 0.505,
    "n": 5,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47220,7 +47570,8 @@
    "t": "Inhibition",
    "belief": 0.489,
    "n": 5,
-   "pmid": "23470959"
+   "pmid": "23470959",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47228,7 +47579,8 @@
    "t": "Phosphorylation",
    "belief": 0.645,
    "n": 5,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47236,7 +47588,8 @@
    "t": "Methylation",
    "belief": 0.449,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47244,7 +47597,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "28842590"
+   "pmid": "28842590",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47252,7 +47606,8 @@
    "t": "Demethylation",
    "belief": 0.458,
    "n": 1,
-   "pmid": "33627125"
+   "pmid": "33627125",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47260,7 +47615,8 @@
    "t": "DecreaseAmount",
    "belief": 0.503,
    "n": 4,
-   "pmid": "37149668"
+   "pmid": "37149668",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -47268,7 +47624,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "37149668"
+   "pmid": "37149668",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -47276,7 +47633,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "37149668"
+   "pmid": "37149668",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47284,7 +47642,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "37149668"
+   "pmid": "37149668",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -47292,7 +47651,8 @@
    "t": "Ubiquitination",
    "belief": 0.528,
    "n": 1,
-   "pmid": "37149668"
+   "pmid": "37149668",
+   "dir": "ba"
   },
   {
    "a": "DDX3X",
@@ -47300,7 +47660,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 3,
-   "pmid": "35811688"
+   "pmid": "35811688",
+   "dir": "ab"
   },
   {
    "a": "DDX3X",
@@ -47308,7 +47669,8 @@
    "t": "DecreaseAmount",
    "belief": 0.631,
    "n": 2,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "DHCR7",
@@ -47636,7 +47998,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "31413099"
+   "pmid": "31413099",
+   "dir": "ba"
   },
   {
    "a": "DKC1",
@@ -47644,7 +48007,8 @@
    "t": "Methylation",
    "belief": 0.449,
    "n": 1,
-   "pmid": "36244577"
+   "pmid": "36244577",
+   "dir": "ba"
   },
   {
    "a": "DKC1",
@@ -47652,7 +48016,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "37394885"
+   "pmid": "37394885",
+   "dir": "ba"
   },
   {
    "a": "DKC1",
@@ -47660,7 +48025,8 @@
    "t": "Activation",
    "belief": 0.397,
    "n": 1,
-   "pmid": "34714667"
+   "pmid": "34714667",
+   "dir": "ab"
   },
   {
    "a": "DKC1",
@@ -47668,7 +48034,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "37348120"
+   "pmid": "37348120",
+   "dir": "ab"
   },
   {
    "a": "DKC1",
@@ -47676,7 +48043,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "37348120"
+   "pmid": "37348120",
+   "dir": "ab"
   },
   {
    "a": "DKC1",
@@ -47684,7 +48052,8 @@
    "t": "Activation",
    "belief": 0.391,
    "n": 5,
-   "pmid": "25732822"
+   "pmid": "25732822",
+   "dir": "ab"
   },
   {
    "a": "DKC1",
@@ -47692,7 +48061,8 @@
    "t": "Inhibition",
    "belief": 0.618,
    "n": 4,
-   "pmid": "20501855"
+   "pmid": "20501855",
+   "dir": "ab"
   },
   {
    "a": "DKC1",
@@ -47700,7 +48070,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "20453831"
+   "pmid": "20453831",
+   "dir": "ab"
   },
   {
    "a": "DKC1",
@@ -47708,7 +48079,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "17888589"
+   "pmid": "17888589",
+   "dir": "ab"
   },
   {
    "a": "DMD",
@@ -47748,7 +48120,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35847203"
+   "pmid": "35847203",
+   "dir": "ab"
   },
   {
    "a": "DMD",
@@ -48060,7 +48433,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "32905139"
+   "pmid": "32905139",
+   "dir": "ab"
   },
   {
    "a": "DNMT1",
@@ -48068,7 +48442,8 @@
    "t": "Phosphorylation",
    "belief": 0.917,
    "n": 1,
-   "pmid": "20093774"
+   "pmid": "20093774",
+   "dir": "ba"
   },
   {
    "a": "DNMT1",
@@ -48284,7 +48659,8 @@
    "t": "Inhibition",
    "belief": 0.511,
    "n": 1,
-   "pmid": "28143904"
+   "pmid": "28143904",
+   "dir": "ba"
   },
   {
    "a": "DNMT1",
@@ -48932,7 +49308,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "38693921"
+   "pmid": "38693921",
+   "dir": "ba"
   },
   {
    "a": "DNTT",
@@ -48980,7 +49357,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "24563715"
+   "pmid": "24563715",
+   "dir": "ab"
   },
   {
    "a": "DOCK3",
@@ -49300,7 +49678,8 @@
    "t": "Dephosphorylation",
    "belief": 0.732,
    "n": 1,
-   "pmid": "23811940"
+   "pmid": "23811940",
+   "dir": "ba"
   },
   {
    "a": "EFNB1",
@@ -49308,7 +49687,8 @@
    "t": "Activation",
    "belief": 0.522,
    "n": 1,
-   "pmid": "23811940"
+   "pmid": "23811940",
+   "dir": "ba"
   },
   {
    "a": "EFNB1",
@@ -49564,7 +49944,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "25670678"
+   "pmid": "25670678",
+   "dir": "ab"
   },
   {
    "a": "EIF1AX",
@@ -49572,7 +49953,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": "21572407"
+   "pmid": "21572407",
+   "dir": "ba"
   },
   {
    "a": "EIF1AX",
@@ -49580,7 +49962,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "EIF1AX",
@@ -49588,7 +49971,8 @@
    "t": "IncreaseAmount",
    "belief": 0.532,
    "n": 1,
-   "pmid": "11717311"
+   "pmid": "11717311",
+   "dir": "ba"
   },
   {
    "a": "EIF1AX",
@@ -49596,7 +49980,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "32926483"
+   "pmid": "32926483",
+   "dir": "ab"
   },
   {
    "a": "ELF4",
@@ -49644,7 +50029,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "29736013"
+   "pmid": "29736013",
+   "dir": "ba"
   },
   {
    "a": "ELF4",
@@ -49836,7 +50222,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "38636799"
+   "pmid": "38636799",
+   "dir": "ab"
   },
   {
    "a": "EMD",
@@ -50036,7 +50423,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "33791294"
+   "pmid": "33791294",
+   "dir": "ab"
   },
   {
    "a": "EMP1",
@@ -50044,7 +50432,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "35529440"
+   "pmid": "35529440",
+   "dir": "ab"
   },
   {
    "a": "EMP1",
@@ -50508,7 +50897,8 @@
    "t": "Activation",
    "belief": 0.538,
    "n": 1,
-   "pmid": "17218258"
+   "pmid": "17218258",
+   "dir": "ba"
   },
   {
    "a": "ERCC6L",
@@ -50764,7 +51154,8 @@
    "t": "Phosphorylation",
    "belief": 0.896,
    "n": 1,
-   "pmid": "27494834"
+   "pmid": "27494834",
+   "dir": "ba"
   },
   {
    "a": "EZH2",
@@ -50772,7 +51163,8 @@
    "t": "Inhibition",
    "belief": 0.65,
    "n": 2,
-   "pmid": "27494834"
+   "pmid": "27494834",
+   "dir": "ba"
   },
   {
    "a": "EZH2",
@@ -50812,7 +51204,8 @@
    "t": "Phosphorylation",
    "belief": 0.811,
    "n": 1,
-   "pmid": "28868240"
+   "pmid": "28868240",
+   "dir": "ba"
   },
   {
    "a": "EZH2",
@@ -50820,7 +51213,8 @@
    "t": "Activation",
    "belief": 0.522,
    "n": 1,
-   "pmid": "28868240"
+   "pmid": "28868240",
+   "dir": "ba"
   },
   {
    "a": "EZH2",
@@ -51012,7 +51406,8 @@
    "t": "Ubiquitination",
    "belief": 0.954,
    "n": 2,
-   "pmid": "28067271"
+   "pmid": "28067271",
+   "dir": "ba"
   },
   {
    "a": "EZH2",
@@ -51020,7 +51415,8 @@
    "t": "DecreaseAmount",
    "belief": 0.549,
    "n": 1,
-   "pmid": "28067271"
+   "pmid": "28067271",
+   "dir": "ba"
   },
   {
    "a": "EZH2",
@@ -51412,7 +51808,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35631605"
+   "pmid": "35631605",
+   "dir": "ba"
   },
   {
    "a": "F8",
@@ -51756,7 +52153,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "34784549"
+   "pmid": "34784549",
+   "dir": "ab"
   },
   {
    "a": "FANCB",
@@ -52156,7 +52554,8 @@
    "t": "IncreaseAmount",
    "belief": 0.568,
    "n": 2,
-   "pmid": "16770006"
+   "pmid": "16770006",
+   "dir": "ba"
   },
   {
    "a": "FASLG",
@@ -52556,7 +52955,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "39809798"
+   "pmid": "39809798",
+   "dir": "ab"
   },
   {
    "a": "FKBP6",
@@ -52604,7 +53004,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "18667433"
+   "pmid": "18667433",
+   "dir": "ab"
   },
   {
    "a": "FLNA",
@@ -52612,7 +53013,8 @@
    "t": "Activation",
    "belief": 0.419,
    "n": 2,
-   "pmid": "35613261"
+   "pmid": "35613261",
+   "dir": "ab"
   },
   {
    "a": "FLNA",
@@ -52620,7 +53022,8 @@
    "t": "Phosphorylation",
    "belief": 0.599,
    "n": 2,
-   "pmid": "36506473"
+   "pmid": "36506473",
+   "dir": "ab"
   },
   {
    "a": "FLNA",
@@ -52628,7 +53031,8 @@
    "t": "IncreaseAmount",
    "belief": 0.5,
    "n": 2,
-   "pmid": "36506473"
+   "pmid": "36506473",
+   "dir": "ab"
   },
   {
    "a": "FLNA",
@@ -52636,7 +53040,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36399251"
+   "pmid": "36399251",
+   "dir": "ab"
   },
   {
    "a": "FLNA",
@@ -52644,7 +53049,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "35613261"
+   "pmid": "35613261",
+   "dir": "ab"
   },
   {
    "a": "FLNA",
@@ -52652,7 +53058,8 @@
    "t": "Phosphorylation",
    "belief": 0.829,
    "n": 5,
-   "pmid": "20019882"
+   "pmid": "20019882",
+   "dir": "ba"
   },
   {
    "a": "FLNA",
@@ -52660,7 +53067,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "26053065"
+   "pmid": "26053065",
+   "dir": "ba"
   },
   {
    "a": "FLNA",
@@ -52668,7 +53076,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "36684450"
+   "pmid": "36684450",
+   "dir": "ba"
   },
   {
    "a": "FLNA",
@@ -52708,7 +53117,8 @@
    "t": "Inhibition",
    "belief": 0.476,
    "n": 3,
-   "pmid": "29396548"
+   "pmid": "29396548",
+   "dir": "ba"
   },
   {
    "a": "FOXN2",
@@ -52716,7 +53126,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 2,
-   "pmid": "29396548"
+   "pmid": "29396548",
+   "dir": "ba"
   },
   {
    "a": "FOXN2",
@@ -52724,7 +53135,8 @@
    "t": "DecreaseAmount",
    "belief": 0.553,
    "n": 2,
-   "pmid": "29396548"
+   "pmid": "29396548",
+   "dir": "ba"
   },
   {
    "a": "FOXN2",
@@ -52732,7 +53144,8 @@
    "t": "Ubiquitination",
    "belief": 0.528,
    "n": 1,
-   "pmid": "29396548"
+   "pmid": "29396548",
+   "dir": "ba"
   },
   {
    "a": "FOXN2",
@@ -52788,7 +53201,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ab"
   },
   {
    "a": "FOXO4",
@@ -52916,7 +53330,8 @@
    "t": "Phosphorylation",
    "belief": 0.817,
    "n": 1,
-   "pmid": "15538382"
+   "pmid": "15538382",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -52924,7 +53339,8 @@
    "t": "Activation",
    "belief": 0.573,
    "n": 2,
-   "pmid": "15538382"
+   "pmid": "15538382",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -52948,7 +53364,8 @@
    "t": "Ubiquitination",
    "belief": 0.971,
    "n": 2,
-   "pmid": "18665269"
+   "pmid": "18665269",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -52956,7 +53373,8 @@
    "t": "Inhibition",
    "belief": 0.572,
    "n": 1,
-   "pmid": "18665269"
+   "pmid": "18665269",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -53100,7 +53518,8 @@
    "t": "Phosphorylation",
    "belief": 0.767,
    "n": 5,
-   "pmid": "38658799"
+   "pmid": "38658799",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -53108,7 +53527,8 @@
    "t": "Activation",
    "belief": 0.376,
    "n": 4,
-   "pmid": "38658799"
+   "pmid": "38658799",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -53116,7 +53536,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "38658799"
+   "pmid": "38658799",
+   "dir": "ab"
   },
   {
    "a": "FOXO4",
@@ -53228,7 +53649,8 @@
    "t": "Inhibition",
    "belief": 0.51,
    "n": 1,
-   "pmid": "20018851"
+   "pmid": "20018851",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -53236,7 +53658,8 @@
    "t": "DecreaseAmount",
    "belief": 0.536,
    "n": 1,
-   "pmid": "20018851"
+   "pmid": "20018851",
+   "dir": "ba"
   },
   {
    "a": "FOXO4",
@@ -53324,7 +53747,8 @@
    "t": "DecreaseAmount",
    "belief": 0.553,
    "n": 2,
-   "pmid": "27432879"
+   "pmid": "27432879",
+   "dir": "ba"
   },
   {
    "a": "FOXP3",
@@ -53332,7 +53756,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 1,
-   "pmid": "27432879"
+   "pmid": "27432879",
+   "dir": "ba"
   },
   {
    "a": "FOXP3",
@@ -53364,7 +53789,8 @@
    "t": "Ubiquitination",
    "belief": 0.943,
    "n": 1,
-   "pmid": "32636834"
+   "pmid": "32636834",
+   "dir": "ba"
   },
   {
    "a": "FOXP3",
@@ -53372,7 +53798,8 @@
    "t": "IncreaseAmount",
    "belief": 0.552,
    "n": 1,
-   "pmid": "20462637"
+   "pmid": "20462637",
+   "dir": "ba"
   },
   {
    "a": "FOXP3",
@@ -53412,7 +53839,8 @@
    "t": "IncreaseAmount",
    "belief": 0.567,
    "n": 1,
-   "pmid": "20462637"
+   "pmid": "20462637",
+   "dir": "ba"
   },
   {
    "a": "FOXP3",
@@ -53428,7 +53856,8 @@
    "t": "Activation",
    "belief": 0.655,
    "n": 2,
-   "pmid": "19701891"
+   "pmid": "19701891",
+   "dir": "ba"
   },
   {
    "a": "FOXP3",
@@ -53436,7 +53865,8 @@
    "t": "IncreaseAmount",
    "belief": 0.585,
    "n": 1,
-   "pmid": "20937549"
+   "pmid": "20937549",
+   "dir": "ba"
   },
   {
    "a": "FOXP3",
@@ -53564,7 +53994,8 @@
    "t": "Activation",
    "belief": 0.376,
    "n": 2,
-   "pmid": "22962971"
+   "pmid": "22962971",
+   "dir": "ba"
   },
   {
    "a": "FUT2",
@@ -53572,7 +54003,8 @@
    "t": "Inhibition",
    "belief": 0.476,
    "n": 2,
-   "pmid": "40004784"
+   "pmid": "40004784",
+   "dir": "ab"
   },
   {
    "a": "FUT2",
@@ -53580,7 +54012,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "39355003"
+   "pmid": "39355003",
+   "dir": "ab"
   },
   {
    "a": "FUT2",
@@ -53692,7 +54125,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 5,
-   "pmid": "11024032"
+   "pmid": "11024032",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53700,7 +54134,8 @@
    "t": "Activation",
    "belief": 0.678,
    "n": 1,
-   "pmid": "11483655"
+   "pmid": "11483655",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53732,7 +54167,8 @@
    "t": "Phosphorylation",
    "belief": 0.788,
    "n": 1,
-   "pmid": "23131831"
+   "pmid": "23131831",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53740,7 +54176,8 @@
    "t": "Inhibition",
    "belief": 0.529,
    "n": 1,
-   "pmid": "23131831"
+   "pmid": "23131831",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53748,7 +54185,8 @@
    "t": "Phosphorylation",
    "belief": 0.893,
    "n": 2,
-   "pmid": "36258016"
+   "pmid": "36258016",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53756,7 +54194,8 @@
    "t": "Inhibition",
    "belief": 0.623,
    "n": 2,
-   "pmid": "39355003"
+   "pmid": "39355003",
+   "dir": "ba"
   },
   {
    "a": "FYN",
@@ -53764,7 +54203,8 @@
    "t": "Activation",
    "belief": 0.448,
    "n": 2,
-   "pmid": "23582339"
+   "pmid": "23582339",
+   "dir": "ba"
   },
   {
    "a": "FYN",
@@ -53772,7 +54212,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "37565253"
+   "pmid": "37565253",
+   "dir": "ba"
   },
   {
    "a": "FYN",
@@ -53780,7 +54221,8 @@
    "t": "Dephosphorylation",
    "belief": 0.492,
    "n": 1,
-   "pmid": "21741124"
+   "pmid": "21741124",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53788,7 +54230,8 @@
    "t": "Phosphorylation",
    "belief": 0.797,
    "n": 5,
-   "pmid": "18156174"
+   "pmid": "18156174",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53796,7 +54239,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "18156174"
+   "pmid": "18156174",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53852,7 +54296,8 @@
    "t": "Phosphorylation",
    "belief": 0.841,
    "n": 1,
-   "pmid": "14707117"
+   "pmid": "14707117",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53860,7 +54305,8 @@
    "t": "Activation",
    "belief": 0.539,
    "n": 2,
-   "pmid": "14707117"
+   "pmid": "14707117",
+   "dir": "ab"
   },
   {
    "a": "FYN",
@@ -53876,7 +54322,8 @@
    "t": "Activation",
    "belief": 0.521,
    "n": 1,
-   "pmid": "26399441"
+   "pmid": "26399441",
+   "dir": "ba"
   },
   {
    "a": "G6PD",
@@ -53884,7 +54331,8 @@
    "t": "Activation",
    "belief": 0.548,
    "n": 2,
-   "pmid": "29138396"
+   "pmid": "29138396",
+   "dir": "ba"
   },
   {
    "a": "G6PD",
@@ -53892,7 +54340,8 @@
    "t": "Phosphorylation",
    "belief": 0.597,
    "n": 1,
-   "pmid": "29138396"
+   "pmid": "29138396",
+   "dir": "ba"
   },
   {
    "a": "G6PD",
@@ -53916,7 +54365,8 @@
    "t": "Inhibition",
    "belief": 0.827,
    "n": 1,
-   "pmid": "21336310"
+   "pmid": "21336310",
+   "dir": "ba"
   },
   {
    "a": "G6PD",
@@ -53948,7 +54398,8 @@
    "t": "IncreaseAmount",
    "belief": 0.558,
    "n": 1,
-   "pmid": "29360992"
+   "pmid": "29360992",
+   "dir": "ba"
   },
   {
    "a": "GABRA3",
@@ -53964,7 +54415,8 @@
    "t": "IncreaseAmount",
    "belief": 0.564,
    "n": 2,
-   "pmid": "12377757"
+   "pmid": "12377757",
+   "dir": "ab"
   },
   {
    "a": "GATA1",
@@ -54052,7 +54504,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "38387820"
+   "pmid": "38387820",
+   "dir": "ab"
   },
   {
    "a": "GATA1",
@@ -54140,7 +54593,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ab"
   },
   {
    "a": "GATA1",
@@ -54404,7 +54858,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "35600863"
+   "pmid": "35600863",
+   "dir": "ab"
   },
   {
    "a": "GEN1",
@@ -54412,7 +54867,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "35600863"
+   "pmid": "35600863",
+   "dir": "ab"
   },
   {
    "a": "GEN1",
@@ -54420,7 +54876,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35600863"
+   "pmid": "35600863",
+   "dir": "ab"
   },
   {
    "a": "GEN1",
@@ -54620,7 +55077,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "31160049"
+   "pmid": "31160049",
+   "dir": "ba"
   },
   {
    "a": "GNA12",
@@ -54908,7 +55366,8 @@
    "t": "Phosphorylation",
    "belief": 0.605,
    "n": 2,
-   "pmid": "35969759"
+   "pmid": "35969759",
+   "dir": "ab"
   },
   {
    "a": "GPC4",
@@ -54916,7 +55375,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "35969759"
+   "pmid": "35969759",
+   "dir": "ab"
   },
   {
    "a": "GPC4",
@@ -54924,7 +55384,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "35969759"
+   "pmid": "35969759",
+   "dir": "ba"
   },
   {
    "a": "GPC4",
@@ -54972,7 +55433,8 @@
    "t": "Activation",
    "belief": 0.527,
    "n": 1,
-   "pmid": "23332756"
+   "pmid": "23332756",
+   "dir": "ba"
   },
   {
    "a": "GPR161",
@@ -55092,7 +55554,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "21199326"
+   "pmid": "21199326",
+   "dir": "ab"
   },
   {
    "a": "GPRC5C",
@@ -55116,7 +55579,8 @@
    "t": "IncreaseAmount",
    "belief": 0.558,
    "n": 1,
-   "pmid": "27009485"
+   "pmid": "27009485",
+   "dir": "ba"
   },
   {
    "a": "GRIA3",
@@ -55124,7 +55588,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "30983965"
+   "pmid": "30983965",
+   "dir": "ab"
   },
   {
    "a": "GRIA3",
@@ -55188,7 +55653,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "23389038"
+   "pmid": "23389038",
+   "dir": "ba"
   },
   {
    "a": "GRIN2B",
@@ -55252,7 +55718,8 @@
    "t": "Phosphorylation",
    "belief": 0.594,
    "n": 2,
-   "pmid": "25276436"
+   "pmid": "25276436",
+   "dir": "ab"
   },
   {
    "a": "GRIN2B",
@@ -55260,7 +55727,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "37400870"
+   "pmid": "37400870",
+   "dir": "ba"
   },
   {
    "a": "GRIN2B",
@@ -55268,7 +55736,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "29180652"
+   "pmid": "29180652",
+   "dir": "ba"
   },
   {
    "a": "GRIN2B",
@@ -55276,7 +55745,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "40027104"
+   "pmid": "40027104",
+   "dir": "ba"
   },
   {
    "a": "GRIN2B",
@@ -55284,7 +55754,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "31757975"
+   "pmid": "31757975",
+   "dir": "ba"
   },
   {
    "a": "GRIN2B",
@@ -55332,7 +55803,8 @@
    "t": "Activation",
    "belief": 0.573,
    "n": 2,
-   "pmid": "17761173"
+   "pmid": "17761173",
+   "dir": "ab"
   },
   {
    "a": "GRIPAP1",
@@ -55340,7 +55812,8 @@
    "t": "Activation",
    "belief": 0.566,
    "n": 1,
-   "pmid": "17761173"
+   "pmid": "17761173",
+   "dir": "ab"
   },
   {
    "a": "GRIPAP1",
@@ -55364,7 +55837,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "39998900"
+   "pmid": "39998900",
+   "dir": "ab"
   },
   {
    "a": "GRM5",
@@ -55372,7 +55846,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "39955064"
+   "pmid": "39955064",
+   "dir": "ab"
   },
   {
    "a": "GRM5",
@@ -55380,7 +55855,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36640864"
+   "pmid": "36640864",
+   "dir": "ab"
   },
   {
    "a": "GRM5",
@@ -55388,7 +55864,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "37396410"
+   "pmid": "37396410",
+   "dir": "ab"
   },
   {
    "a": "GRM5",
@@ -55476,7 +55953,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35957724"
+   "pmid": "35957724",
+   "dir": "ab"
   },
   {
    "a": "GRSF1",
@@ -55484,7 +55962,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "30944385"
+   "pmid": "30944385",
+   "dir": "ab"
   },
   {
    "a": "GRSF1",
@@ -55492,7 +55971,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "30944385"
+   "pmid": "30944385",
+   "dir": "ab"
   },
   {
    "a": "GRSF1",
@@ -55500,7 +55980,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "34998399"
+   "pmid": "34998399",
+   "dir": "ba"
   },
   {
    "a": "GRSF1",
@@ -55508,7 +55989,8 @@
    "t": "Activation",
    "belief": 0.397,
    "n": 1,
-   "pmid": "34998399"
+   "pmid": "34998399",
+   "dir": "ba"
   },
   {
    "a": "GSK3B",
@@ -55524,7 +56006,8 @@
    "t": "Phosphorylation",
    "belief": 0.851,
    "n": 1,
-   "pmid": "21289184"
+   "pmid": "21289184",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55532,7 +56015,8 @@
    "t": "Activation",
    "belief": 0.802,
    "n": 1,
-   "pmid": "20520769"
+   "pmid": "20520769",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55540,7 +56024,8 @@
    "t": "Phosphorylation",
    "belief": 0.882,
    "n": 1,
-   "pmid": "20520769"
+   "pmid": "20520769",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55580,7 +56065,8 @@
    "t": "Phosphorylation",
    "belief": 0.893,
    "n": 1,
-   "pmid": "27929056"
+   "pmid": "27929056",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55588,7 +56074,8 @@
    "t": "DecreaseAmount",
    "belief": 0.658,
    "n": 1,
-   "pmid": "27929056"
+   "pmid": "27929056",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55628,7 +56115,8 @@
    "t": "Phosphorylation",
    "belief": 0.918,
    "n": 1,
-   "pmid": "16023596"
+   "pmid": "16023596",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55636,7 +56124,8 @@
    "t": "Inhibition",
    "belief": 0.593,
    "n": 3,
-   "pmid": "1846781"
+   "pmid": "1846781",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55748,7 +56237,8 @@
    "t": "Phosphorylation",
    "belief": 0.926,
    "n": 5,
-   "pmid": "20679343"
+   "pmid": "20679343",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55756,7 +56246,8 @@
    "t": "Inhibition",
    "belief": 0.713,
    "n": 5,
-   "pmid": "12387894"
+   "pmid": "12387894",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55764,7 +56255,8 @@
    "t": "Activation",
    "belief": 0.805,
    "n": 2,
-   "pmid": "29309769"
+   "pmid": "29309769",
+   "dir": "ba"
   },
   {
    "a": "GSK3B",
@@ -55772,7 +56264,8 @@
    "t": "Dephosphorylation",
    "belief": 0.538,
    "n": 2,
-   "pmid": "21147038"
+   "pmid": "21147038",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55780,7 +56273,8 @@
    "t": "Acetylation",
    "belief": 0.705,
    "n": 2,
-   "pmid": "35339896"
+   "pmid": "35339896",
+   "dir": "ba"
   },
   {
    "a": "GSK3B",
@@ -55788,7 +56282,8 @@
    "t": "IncreaseAmount",
    "belief": 0.505,
    "n": 2,
-   "pmid": "40869265"
+   "pmid": "40869265",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55796,7 +56291,8 @@
    "t": "DecreaseAmount",
    "belief": 0.726,
    "n": 2,
-   "pmid": "23964266"
+   "pmid": "23964266",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55804,7 +56300,8 @@
    "t": "Glycosylation",
    "belief": 0.448,
    "n": 2,
-   "pmid": "26601962"
+   "pmid": "26601962",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55820,7 +56317,8 @@
    "t": "Phosphorylation",
    "belief": 0.951,
    "n": 2,
-   "pmid": "16257959"
+   "pmid": "16257959",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55828,7 +56326,8 @@
    "t": "Activation",
    "belief": 0.637,
    "n": 1,
-   "pmid": "16257959"
+   "pmid": "16257959",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55836,7 +56335,8 @@
    "t": "Inhibition",
    "belief": 0.51,
    "n": 1,
-   "pmid": "18424437"
+   "pmid": "18424437",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55852,7 +56352,8 @@
    "t": "Phosphorylation",
    "belief": 0.944,
    "n": 4,
-   "pmid": "16543145"
+   "pmid": "16543145",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55860,7 +56361,8 @@
    "t": "Inhibition",
    "belief": 0.722,
    "n": 1,
-   "pmid": "16543145"
+   "pmid": "16543145",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55868,7 +56370,8 @@
    "t": "DecreaseAmount",
    "belief": 0.733,
    "n": 1,
-   "pmid": "16543145"
+   "pmid": "16543145",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55940,7 +56443,8 @@
    "t": "Phosphorylation",
    "belief": 0.84,
    "n": 1,
-   "pmid": "12871932"
+   "pmid": "12871932",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55948,7 +56452,8 @@
    "t": "Activation",
    "belief": 0.576,
    "n": 3,
-   "pmid": "17183360"
+   "pmid": "17183360",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55956,7 +56461,8 @@
    "t": "IncreaseAmount",
    "belief": 0.564,
    "n": 2,
-   "pmid": "12871932"
+   "pmid": "12871932",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55972,7 +56478,8 @@
    "t": "Phosphorylation",
    "belief": 0.833,
    "n": 1,
-   "pmid": "23395175"
+   "pmid": "23395175",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -55980,7 +56487,8 @@
    "t": "Activation",
    "belief": 0.539,
    "n": 3,
-   "pmid": "23395175"
+   "pmid": "23395175",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56028,7 +56536,8 @@
    "t": "Phosphorylation",
    "belief": 0.905,
    "n": 1,
-   "pmid": "16107342"
+   "pmid": "16107342",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56036,7 +56545,8 @@
    "t": "Inhibition",
    "belief": 0.709,
    "n": 1,
-   "pmid": "16107342"
+   "pmid": "16107342",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56100,7 +56610,8 @@
    "t": "Phosphorylation",
    "belief": 0.895,
    "n": 2,
-   "pmid": "17183360"
+   "pmid": "17183360",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56108,7 +56619,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 3,
-   "pmid": "17183360"
+   "pmid": "17183360",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56116,7 +56628,8 @@
    "t": "Phosphorylation",
    "belief": 0.903,
    "n": 5,
-   "pmid": "26253302"
+   "pmid": "26253302",
+   "dir": "ba"
   },
   {
    "a": "GSK3B",
@@ -56124,7 +56637,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "26473154"
+   "pmid": "26473154",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56132,7 +56646,8 @@
    "t": "Inhibition",
    "belief": 0.506,
    "n": 1,
-   "pmid": "8524413"
+   "pmid": "8524413",
+   "dir": "ba"
   },
   {
    "a": "GSK3B",
@@ -56140,7 +56655,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "32396532"
+   "pmid": "32396532",
+   "dir": "ba"
   },
   {
    "a": "GSK3B",
@@ -56148,7 +56664,8 @@
    "t": "Inhibition",
    "belief": 0.529,
    "n": 1,
-   "pmid": "32396532"
+   "pmid": "32396532",
+   "dir": "ba"
   },
   {
    "a": "GSK3B",
@@ -56188,7 +56705,8 @@
    "t": "Phosphorylation",
    "belief": 0.837,
    "n": 1,
-   "pmid": "18172167"
+   "pmid": "18172167",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56276,7 +56794,8 @@
    "t": "Activation",
    "belief": 0.796,
    "n": 1,
-   "pmid": "11483158"
+   "pmid": "11483158",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56284,7 +56803,8 @@
    "t": "Phosphorylation",
    "belief": 0.838,
    "n": 3,
-   "pmid": "12064478"
+   "pmid": "12064478",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56348,7 +56868,8 @@
    "t": "Activation",
    "belief": 0.535,
    "n": 2,
-   "pmid": "21873430"
+   "pmid": "21873430",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56356,7 +56877,8 @@
    "t": "Phosphorylation",
    "belief": 0.802,
    "n": 1,
-   "pmid": "21873430"
+   "pmid": "21873430",
+   "dir": "ab"
   },
   {
    "a": "GSK3B",
@@ -56540,7 +57062,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "38489364"
+   "pmid": "38489364",
+   "dir": "ab"
   },
   {
    "a": "HCCS",
@@ -56588,7 +57111,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "37903123"
+   "pmid": "37903123",
+   "dir": "ab"
   },
   {
    "a": "HCCS",
@@ -56724,7 +57248,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "29867437"
+   "pmid": "29867437",
+   "dir": "ab"
   },
   {
    "a": "HCN1",
@@ -57052,7 +57577,8 @@
    "t": "Ubiquitination",
    "belief": 0.963,
    "n": 1,
-   "pmid": "22016339"
+   "pmid": "22016339",
+   "dir": "ba"
   },
   {
    "a": "HDAC2",
@@ -57068,7 +57594,8 @@
    "t": "Phosphorylation",
    "belief": 0.641,
    "n": 2,
-   "pmid": "36208870"
+   "pmid": "36208870",
+   "dir": "ab"
   },
   {
    "a": "HDAC2",
@@ -57076,7 +57603,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35689974"
+   "pmid": "35689974",
+   "dir": "ab"
   },
   {
    "a": "HDAC2",
@@ -57220,7 +57748,8 @@
    "t": "Ubiquitination",
    "belief": 0.952,
    "n": 1,
-   "pmid": "12840003"
+   "pmid": "12840003",
+   "dir": "ba"
   },
   {
    "a": "HDAC2",
@@ -57236,7 +57765,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "28854942"
+   "pmid": "28854942",
+   "dir": "ab"
   },
   {
    "a": "HDAC2",
@@ -57348,7 +57878,8 @@
    "t": "Phosphorylation",
    "belief": 0.602,
    "n": 2,
-   "pmid": "30397132"
+   "pmid": "30397132",
+   "dir": "ab"
   },
   {
    "a": "HDAC3",
@@ -57356,7 +57887,8 @@
    "t": "Acetylation",
    "belief": 0.469,
    "n": 1,
-   "pmid": "30397132"
+   "pmid": "30397132",
+   "dir": "ab"
   },
   {
    "a": "HDAC3",
@@ -57596,7 +58128,8 @@
    "t": "Activation",
    "belief": 0.748,
    "n": 2,
-   "pmid": "22492994"
+   "pmid": "22492994",
+   "dir": "ab"
   },
   {
    "a": "HDAC6",
@@ -57604,7 +58137,8 @@
    "t": "Phosphorylation",
    "belief": 0.753,
    "n": 2,
-   "pmid": "30270813"
+   "pmid": "30270813",
+   "dir": "ab"
   },
   {
    "a": "HDAC6",
@@ -57612,7 +58146,8 @@
    "t": "Inhibition",
    "belief": 0.719,
    "n": 2,
-   "pmid": "25974414"
+   "pmid": "25974414",
+   "dir": "ba"
   },
   {
    "a": "HDAC6",
@@ -57620,7 +58155,8 @@
    "t": "Deacetylation",
    "belief": 0.514,
    "n": 2,
-   "pmid": "25666877"
+   "pmid": "25666877",
+   "dir": "ab"
   },
   {
    "a": "HDAC6",
@@ -57628,7 +58164,8 @@
    "t": "Acetylation",
    "belief": 0.701,
    "n": 2,
-   "pmid": "24464872"
+   "pmid": "24464872",
+   "dir": "ab"
   },
   {
    "a": "HDAC6",
@@ -57636,7 +58173,8 @@
    "t": "DecreaseAmount",
    "belief": 0.664,
    "n": 2,
-   "pmid": "25290336"
+   "pmid": "25290336",
+   "dir": "ab"
   },
   {
    "a": "HDAC6",
@@ -57644,7 +58182,8 @@
    "t": "IncreaseAmount",
    "belief": 0.597,
    "n": 2,
-   "pmid": "31865813"
+   "pmid": "31865813",
+   "dir": "ab"
   },
   {
    "a": "HDAC6",
@@ -57652,7 +58191,8 @@
    "t": "Dephosphorylation",
    "belief": 0.527,
    "n": 2,
-   "pmid": "37452321"
+   "pmid": "37452321",
+   "dir": "ab"
   },
   {
    "a": "HDAC6",
@@ -57828,7 +58368,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "35316495"
+   "pmid": "35316495",
+   "dir": "ab"
   },
   {
    "a": "HDAC8",
@@ -58012,7 +58553,8 @@
    "t": "Activation",
    "belief": 0.397,
    "n": 1,
-   "pmid": "24373746"
+   "pmid": "24373746",
+   "dir": "ba"
   },
   {
    "a": "HELQ",
@@ -58236,7 +58778,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "27117401"
+   "pmid": "27117401",
+   "dir": "ab"
   },
   {
    "a": "HNRNPK",
@@ -58660,7 +59203,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "31011884"
+   "pmid": "31011884",
+   "dir": "ab"
   },
   {
    "a": "HS6ST2",
@@ -58684,7 +59228,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "25472042"
+   "pmid": "25472042",
+   "dir": "ba"
   },
   {
    "a": "HSD3B1",
@@ -58932,7 +59477,8 @@
    "t": "Ubiquitination",
    "belief": 0.988,
    "n": 2,
-   "pmid": "16213503"
+   "pmid": "16213503",
+   "dir": "ab"
   },
   {
    "a": "HUWE1",
@@ -58940,7 +59486,8 @@
    "t": "DecreaseAmount",
    "belief": 0.726,
    "n": 1,
-   "pmid": "28939105"
+   "pmid": "28939105",
+   "dir": "ab"
   },
   {
    "a": "HUWE1",
@@ -58972,7 +59519,8 @@
    "t": "Ubiquitination",
    "belief": 0.945,
    "n": 1,
-   "pmid": "30818224"
+   "pmid": "30818224",
+   "dir": "ba"
   },
   {
    "a": "HUWE1",
@@ -58996,7 +59544,8 @@
    "t": "Ubiquitination",
    "belief": 0.959,
    "n": 2,
-   "pmid": "22203964"
+   "pmid": "22203964",
+   "dir": "ab"
   },
   {
    "a": "HUWE1",
@@ -59004,7 +59553,8 @@
    "t": "DecreaseAmount",
    "belief": 0.553,
    "n": 3,
-   "pmid": "22203964"
+   "pmid": "22203964",
+   "dir": "ab"
   },
   {
    "a": "HUWE1",
@@ -59076,7 +59626,8 @@
    "t": "Activation",
    "belief": 0.582,
    "n": 1,
-   "pmid": "26212014"
+   "pmid": "26212014",
+   "dir": "ba"
   },
   {
    "a": "HUWE1",
@@ -59108,7 +59659,8 @@
    "t": "Ubiquitination",
    "belief": 0.991,
    "n": 2,
-   "pmid": "31905981"
+   "pmid": "31905981",
+   "dir": "ab"
   },
   {
    "a": "HUWE1",
@@ -59116,7 +59668,8 @@
    "t": "DecreaseAmount",
    "belief": 0.72,
    "n": 1,
-   "pmid": "31905981"
+   "pmid": "31905981",
+   "dir": "ab"
   },
   {
    "a": "HUWE1",
@@ -59188,7 +59741,8 @@
    "t": "Ubiquitination",
    "belief": 0.945,
    "n": 1,
-   "pmid": "22613722"
+   "pmid": "22613722",
+   "dir": "ba"
   },
   {
    "a": "IGBP1",
@@ -59220,7 +59774,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "39296154"
+   "pmid": "39296154",
+   "dir": "ab"
   },
   {
    "a": "IGLON5",
@@ -59228,7 +59783,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "37090977"
+   "pmid": "37090977",
+   "dir": "ab"
   },
   {
    "a": "IGSF1",
@@ -59268,7 +59824,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "38472475"
+   "pmid": "38472475",
+   "dir": "ab"
   },
   {
    "a": "IKBKG",
@@ -59292,7 +59849,8 @@
    "t": "Phosphorylation",
    "belief": 0.778,
    "n": 1,
-   "pmid": "31932854"
+   "pmid": "31932854",
+   "dir": "ba"
   },
   {
    "a": "IKBKG",
@@ -59300,7 +59858,8 @@
    "t": "Activation",
    "belief": 0.558,
    "n": 1,
-   "pmid": "15489227"
+   "pmid": "15489227",
+   "dir": "ab"
   },
   {
    "a": "IKBKG",
@@ -59452,7 +60011,8 @@
    "t": "Activation",
    "belief": 0.559,
    "n": 1,
-   "pmid": "18445337"
+   "pmid": "18445337",
+   "dir": "ab"
   },
   {
    "a": "IL2RG",
@@ -59612,7 +60172,8 @@
    "t": "Phosphorylation",
    "belief": 0.622,
    "n": 2,
-   "pmid": "29174383"
+   "pmid": "29174383",
+   "dir": "ab"
   },
   {
    "a": "INSR",
@@ -59620,7 +60181,8 @@
    "t": "Inhibition",
    "belief": 0.425,
    "n": 2,
-   "pmid": "31260730"
+   "pmid": "31260730",
+   "dir": "ba"
   },
   {
    "a": "INSR",
@@ -59628,7 +60190,8 @@
    "t": "Dephosphorylation",
    "belief": 0.532,
    "n": 2,
-   "pmid": "27614112"
+   "pmid": "27614112",
+   "dir": "ab"
   },
   {
    "a": "INSR",
@@ -59636,7 +60199,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "18479783"
+   "pmid": "18479783",
+   "dir": "ab"
   },
   {
    "a": "INSR",
@@ -59644,7 +60208,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "31213970"
+   "pmid": "31213970",
+   "dir": "ba"
   },
   {
    "a": "INSR",
@@ -59708,7 +60273,8 @@
    "t": "Inhibition",
    "belief": 0.564,
    "n": 2,
-   "pmid": "23995781"
+   "pmid": "23995781",
+   "dir": "ab"
   },
   {
    "a": "INSR",
@@ -59732,7 +60298,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "9109420"
+   "pmid": "9109420",
+   "dir": "ba"
   },
   {
    "a": "INSR",
@@ -59828,7 +60395,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "27485122"
+   "pmid": "27485122",
+   "dir": "ab"
   },
   {
    "a": "ITPKB",
@@ -59836,7 +60404,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "39629139"
+   "pmid": "39629139",
+   "dir": "ba"
   },
   {
    "a": "ITPKB",
@@ -59884,7 +60453,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "36145091"
+   "pmid": "36145091",
+   "dir": "ab"
   },
   {
    "a": "JAK3",
@@ -60220,7 +60790,8 @@
    "t": "Phosphorylation",
    "belief": 0.734,
    "n": 2,
-   "pmid": "21671254"
+   "pmid": "21671254",
+   "dir": "ab"
   },
   {
    "a": "JUN",
@@ -60228,7 +60799,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 2,
-   "pmid": "32659913"
+   "pmid": "32659913",
+   "dir": "ba"
   },
   {
    "a": "JUN",
@@ -60236,7 +60808,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "32098382"
+   "pmid": "32098382",
+   "dir": "ba"
   },
   {
    "a": "JUN",
@@ -60244,7 +60817,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "38732141"
+   "pmid": "38732141",
+   "dir": "ab"
   },
   {
    "a": "JUN",
@@ -60500,7 +61074,8 @@
    "t": "Activation",
    "belief": 0.363,
    "n": 2,
-   "pmid": "23690850"
+   "pmid": "23690850",
+   "dir": "ba"
   },
   {
    "a": "JUN",
@@ -60508,7 +61083,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ab"
   },
   {
    "a": "JUN",
@@ -60812,7 +61388,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "19940015"
+   "pmid": "19940015",
+   "dir": "ba"
   },
   {
    "a": "KATNA1",
@@ -60860,7 +61437,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "30921702"
+   "pmid": "30921702",
+   "dir": "ab"
   },
   {
    "a": "KDM5C",
@@ -61084,7 +61662,8 @@
    "t": "Phosphorylation",
    "belief": 0.943,
    "n": 1,
-   "pmid": "21078677"
+   "pmid": "21078677",
+   "dir": "ba"
   },
   {
    "a": "KIF2C",
@@ -61092,7 +61671,8 @@
    "t": "Activation",
    "belief": 0.724,
    "n": 4,
-   "pmid": "25504441"
+   "pmid": "25504441",
+   "dir": "ba"
   },
   {
    "a": "KIF2C",
@@ -61100,7 +61680,8 @@
    "t": "DecreaseAmount",
    "belief": 0.658,
    "n": 1,
-   "pmid": "25504441"
+   "pmid": "25504441",
+   "dir": "ba"
   },
   {
    "a": "KIF2C",
@@ -61212,7 +61793,8 @@
    "t": "Phosphorylation",
    "belief": 0.807,
    "n": 1,
-   "pmid": "28817632"
+   "pmid": "28817632",
+   "dir": "ba"
   },
   {
    "a": "KIF4A",
@@ -61220,7 +61802,8 @@
    "t": "Inhibition",
    "belief": 0.65,
    "n": 1,
-   "pmid": "28817632"
+   "pmid": "28817632",
+   "dir": "ba"
   },
   {
    "a": "KIF4A",
@@ -61284,7 +61867,8 @@
    "t": "Inhibition",
    "belief": 0.492,
    "n": 2,
-   "pmid": "38275365"
+   "pmid": "38275365",
+   "dir": "ab"
   },
   {
    "a": "KIF5B",
@@ -61292,7 +61876,8 @@
    "t": "Activation",
    "belief": 0.376,
    "n": 2,
-   "pmid": "38275365"
+   "pmid": "38275365",
+   "dir": "ab"
   },
   {
    "a": "KIF5B",
@@ -61300,7 +61885,8 @@
    "t": "IncreaseAmount",
    "belief": 0.526,
    "n": 2,
-   "pmid": "36387285"
+   "pmid": "36387285",
+   "dir": "ab"
   },
   {
    "a": "KIF5B",
@@ -61308,7 +61894,8 @@
    "t": "Phosphorylation",
    "belief": 0.568,
    "n": 2,
-   "pmid": "36387285"
+   "pmid": "36387285",
+   "dir": "ab"
   },
   {
    "a": "KIF5B",
@@ -61316,7 +61903,8 @@
    "t": "Dephosphorylation",
    "belief": 0.492,
    "n": 2,
-   "pmid": "37006608"
+   "pmid": "37006608",
+   "dir": "ab"
   },
   {
    "a": "KIF5B",
@@ -61324,7 +61912,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "36387285"
+   "pmid": "36387285",
+   "dir": "ab"
   },
   {
    "a": "KIF5B",
@@ -61460,7 +62049,8 @@
    "t": "Phosphorylation",
    "belief": 0.827,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "L1CAM",
@@ -61476,7 +62066,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "36227739"
+   "pmid": "36227739",
+   "dir": "ba"
   },
   {
    "a": "LAMP2",
@@ -61980,7 +62571,8 @@
    "t": "Ubiquitination",
    "belief": 0.89,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "MAGED1",
@@ -62172,7 +62764,8 @@
    "t": "Activation",
    "belief": 0.363,
    "n": 2,
-   "pmid": "35332321"
+   "pmid": "35332321",
+   "dir": "ab"
   },
   {
    "a": "MAOA",
@@ -62180,7 +62773,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "38280071"
+   "pmid": "38280071",
+   "dir": "ab"
   },
   {
    "a": "MAOA",
@@ -62212,7 +62806,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 1,
-   "pmid": "38844706"
+   "pmid": "38844706",
+   "dir": "ba"
   },
   {
    "a": "MAOB",
@@ -62220,7 +62815,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "35665945"
+   "pmid": "35665945",
+   "dir": "ba"
   },
   {
    "a": "MAOB",
@@ -62476,7 +63072,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "30737440"
+   "pmid": "30737440",
+   "dir": "ba"
   },
   {
    "a": "MAP7D3",
@@ -62540,7 +63137,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "30737440"
+   "pmid": "30737440",
+   "dir": "ba"
   },
   {
    "a": "MAP9",
@@ -62548,7 +63146,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "37035244"
+   "pmid": "37035244",
+   "dir": "ba"
   },
   {
    "a": "MAP9",
@@ -62628,7 +63227,8 @@
    "t": "Phosphorylation",
    "belief": 0.895,
    "n": 2,
-   "pmid": "35790892"
+   "pmid": "35790892",
+   "dir": "ab"
   },
   {
    "a": "MAPK8",
@@ -62636,7 +63236,8 @@
    "t": "Dephosphorylation",
    "belief": 0.492,
    "n": 2,
-   "pmid": "33865914"
+   "pmid": "33865914",
+   "dir": "ab"
   },
   {
    "a": "MAPK8",
@@ -62644,7 +63245,8 @@
    "t": "DecreaseAmount",
    "belief": 0.621,
    "n": 1,
-   "pmid": "35607702"
+   "pmid": "35607702",
+   "dir": "ab"
   },
   {
    "a": "MAPK8",
@@ -62652,7 +63254,8 @@
    "t": "IncreaseAmount",
    "belief": 0.532,
    "n": 1,
-   "pmid": "15228592"
+   "pmid": "15228592",
+   "dir": "ab"
   },
   {
    "a": "MAPK8",
@@ -62852,7 +63455,8 @@
    "t": "Phosphorylation",
    "belief": 0.865,
    "n": 5,
-   "pmid": "8999860"
+   "pmid": "8999860",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62860,7 +63464,8 @@
    "t": "Inhibition",
    "belief": 0.49,
    "n": 5,
-   "pmid": "10090741"
+   "pmid": "10090741",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62868,7 +63473,8 @@
    "t": "Activation",
    "belief": 0.375,
    "n": 2,
-   "pmid": "19559622"
+   "pmid": "19559622",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62876,7 +63482,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "38329182"
+   "pmid": "38329182",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62884,7 +63491,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "27023670"
+   "pmid": "27023670",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62892,7 +63500,8 @@
    "t": "Phosphorylation",
    "belief": 0.917,
    "n": 2,
-   "pmid": "32018218"
+   "pmid": "32018218",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62900,7 +63509,8 @@
    "t": "Inhibition",
    "belief": 0.567,
    "n": 3,
-   "pmid": "10090741"
+   "pmid": "10090741",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62908,7 +63518,8 @@
    "t": "Activation",
    "belief": 0.375,
    "n": 2,
-   "pmid": "35469920"
+   "pmid": "35469920",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62916,7 +63527,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "38329182"
+   "pmid": "38329182",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62924,7 +63536,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "36048712"
+   "pmid": "36048712",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62932,7 +63545,8 @@
    "t": "Phosphorylation",
    "belief": 0.552,
    "n": 2,
-   "pmid": "38328178"
+   "pmid": "38328178",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62940,7 +63554,8 @@
    "t": "Phosphorylation",
    "belief": 0.833,
    "n": 2,
-   "pmid": "38712317"
+   "pmid": "38712317",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62948,7 +63563,8 @@
    "t": "Activation",
    "belief": 0.419,
    "n": 2,
-   "pmid": "38329182"
+   "pmid": "38329182",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62956,7 +63572,8 @@
    "t": "Inhibition",
    "belief": 0.537,
    "n": 5,
-   "pmid": "21204788"
+   "pmid": "21204788",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62964,7 +63581,8 @@
    "t": "IncreaseAmount",
    "belief": 0.526,
    "n": 2,
-   "pmid": "38712317"
+   "pmid": "38712317",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62972,7 +63590,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "27708431"
+   "pmid": "27708431",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62980,7 +63599,8 @@
    "t": "Ubiquitination",
    "belief": 0.483,
    "n": 2,
-   "pmid": "24905733"
+   "pmid": "24905733",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62988,7 +63608,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "28367114"
+   "pmid": "28367114",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -62996,7 +63617,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "23269898"
+   "pmid": "23269898",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63004,7 +63626,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "29637441"
+   "pmid": "29637441",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63012,7 +63635,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "37398204"
+   "pmid": "37398204",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63020,7 +63644,8 @@
    "t": "Activation",
    "belief": 0.375,
    "n": 2,
-   "pmid": "38205931"
+   "pmid": "38205931",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63028,7 +63653,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "37762200"
+   "pmid": "37762200",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63036,7 +63662,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "37398204"
+   "pmid": "37398204",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63044,7 +63671,8 @@
    "t": "Activation",
    "belief": 0.391,
    "n": 2,
-   "pmid": "37408220"
+   "pmid": "37408220",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63052,7 +63680,8 @@
    "t": "Phosphorylation",
    "belief": 0.584,
    "n": 2,
-   "pmid": "36077318"
+   "pmid": "36077318",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63060,7 +63689,8 @@
    "t": "Dephosphorylation",
    "belief": 0.492,
    "n": 2,
-   "pmid": "22579764"
+   "pmid": "22579764",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63068,7 +63698,8 @@
    "t": "Activation",
    "belief": 0.477,
    "n": 2,
-   "pmid": "37591720"
+   "pmid": "37591720",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63076,7 +63707,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "37591720"
+   "pmid": "37591720",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63084,7 +63716,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 2,
-   "pmid": "40026260"
+   "pmid": "40026260",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63092,7 +63725,8 @@
    "t": "Phosphorylation",
    "belief": 0.527,
    "n": 2,
-   "pmid": "14689204"
+   "pmid": "14689204",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63100,7 +63734,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "36703981"
+   "pmid": "36703981",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63108,7 +63743,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "15302095"
+   "pmid": "15302095",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63116,7 +63752,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "25940922"
+   "pmid": "25940922",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63124,7 +63761,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "37489441"
+   "pmid": "37489441",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63132,7 +63770,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 2,
-   "pmid": "36911732"
+   "pmid": "36911732",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63140,7 +63779,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "38136229"
+   "pmid": "38136229",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63148,7 +63788,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "23906641"
+   "pmid": "23906641",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63156,7 +63797,8 @@
    "t": "Activation",
    "belief": 0.382,
    "n": 2,
-   "pmid": "37838279"
+   "pmid": "37838279",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63164,7 +63806,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "32629809"
+   "pmid": "32629809",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63172,7 +63815,8 @@
    "t": "Glycosylation",
    "belief": 0.493,
    "n": 2,
-   "pmid": "35455959"
+   "pmid": "35455959",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63180,7 +63824,8 @@
    "t": "Activation",
    "belief": 0.387,
    "n": 2,
-   "pmid": "33258073"
+   "pmid": "33258073",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63188,7 +63833,8 @@
    "t": "Inhibition",
    "belief": 0.493,
    "n": 2,
-   "pmid": "34297044"
+   "pmid": "34297044",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63196,7 +63842,8 @@
    "t": "Dephosphorylation",
    "belief": 0.525,
    "n": 2,
-   "pmid": "30386294"
+   "pmid": "30386294",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63204,7 +63851,8 @@
    "t": "Phosphorylation",
    "belief": 0.678,
    "n": 2,
-   "pmid": "39225075"
+   "pmid": "39225075",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63212,7 +63860,8 @@
    "t": "DecreaseAmount",
    "belief": 0.468,
    "n": 2,
-   "pmid": "31931119"
+   "pmid": "31931119",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63220,7 +63869,8 @@
    "t": "Activation",
    "belief": 0.418,
    "n": 2,
-   "pmid": "36621732"
+   "pmid": "36621732",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63228,7 +63878,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "25775228"
+   "pmid": "25775228",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63236,7 +63887,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "25019344"
+   "pmid": "25019344",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63244,7 +63896,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "34137825"
+   "pmid": "34137825",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63252,7 +63905,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "24367683"
+   "pmid": "24367683",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63260,7 +63914,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "33791300"
+   "pmid": "33791300",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63268,7 +63923,8 @@
    "t": "Ubiquitination",
    "belief": 0.497,
    "n": 1,
-   "pmid": "41466523"
+   "pmid": "41466523",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63276,7 +63932,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "27568239"
+   "pmid": "27568239",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63284,7 +63941,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "23429041"
+   "pmid": "23429041",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63292,7 +63950,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "32181929"
+   "pmid": "32181929",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63300,7 +63959,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "32181929"
+   "pmid": "32181929",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63308,7 +63968,8 @@
    "t": "Dephosphorylation",
    "belief": 0.511,
    "n": 2,
-   "pmid": "7723931"
+   "pmid": "7723931",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63316,7 +63977,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "38537387"
+   "pmid": "38537387",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63324,7 +63986,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "31671508"
+   "pmid": "31671508",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63332,7 +63995,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "33015060"
+   "pmid": "33015060",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63340,7 +64004,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "37982585"
+   "pmid": "37982585",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63348,7 +64013,8 @@
    "t": "Activation",
    "belief": 0.375,
    "n": 2,
-   "pmid": "40296916"
+   "pmid": "40296916",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63356,7 +64022,8 @@
    "t": "Phosphorylation",
    "belief": 0.61,
    "n": 2,
-   "pmid": "16684527"
+   "pmid": "16684527",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63364,7 +64031,8 @@
    "t": "Dephosphorylation",
    "belief": 0.62,
    "n": 2,
-   "pmid": "35024240"
+   "pmid": "35024240",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63372,7 +64040,8 @@
    "t": "Inhibition",
    "belief": 0.491,
    "n": 2,
-   "pmid": "37936174"
+   "pmid": "37936174",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63380,7 +64049,8 @@
    "t": "Activation",
    "belief": 0.376,
    "n": 2,
-   "pmid": "32236736"
+   "pmid": "32236736",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63388,7 +64058,8 @@
    "t": "IncreaseAmount",
    "belief": 0.503,
    "n": 2,
-   "pmid": "38892329"
+   "pmid": "38892329",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63396,7 +64067,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "32430253"
+   "pmid": "32430253",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63404,7 +64076,8 @@
    "t": "Dephosphorylation",
    "belief": 0.467,
    "n": 2,
-   "pmid": "28924170"
+   "pmid": "28924170",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63412,7 +64085,8 @@
    "t": "IncreaseAmount",
    "belief": 0.504,
    "n": 2,
-   "pmid": "33582164"
+   "pmid": "33582164",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63420,7 +64094,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 2,
-   "pmid": "33417012"
+   "pmid": "33417012",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63428,7 +64103,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36030267"
+   "pmid": "36030267",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63436,7 +64112,8 @@
    "t": "Dephosphorylation",
    "belief": 0.527,
    "n": 2,
-   "pmid": "27154405"
+   "pmid": "27154405",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63444,7 +64121,8 @@
    "t": "Phosphorylation",
    "belief": 0.617,
    "n": 2,
-   "pmid": "24391543"
+   "pmid": "24391543",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63452,7 +64130,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63460,7 +64139,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "30593955"
+   "pmid": "30593955",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63468,7 +64148,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "34233183"
+   "pmid": "34233183",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63476,7 +64157,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "23356410"
+   "pmid": "23356410",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63484,7 +64166,8 @@
    "t": "Phosphorylation",
    "belief": 0.659,
    "n": 5,
-   "pmid": "9832145"
+   "pmid": "9832145",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63492,7 +64175,8 @@
    "t": "Phosphorylation",
    "belief": 0.703,
    "n": 2,
-   "pmid": "34744602"
+   "pmid": "34744602",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63500,7 +64184,8 @@
    "t": "Activation",
    "belief": 0.583,
    "n": 2,
-   "pmid": "29760653"
+   "pmid": "29760653",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63508,7 +64193,8 @@
    "t": "Inhibition",
    "belief": 0.602,
    "n": 2,
-   "pmid": "31911834"
+   "pmid": "31911834",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63516,7 +64202,8 @@
    "t": "Dephosphorylation",
    "belief": 0.492,
    "n": 2,
-   "pmid": "38157418"
+   "pmid": "38157418",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63524,7 +64211,8 @@
    "t": "Phosphorylation",
    "belief": 0.764,
    "n": 2,
-   "pmid": "9199504"
+   "pmid": "9199504",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63532,7 +64220,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "34686344"
+   "pmid": "34686344",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63540,7 +64229,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "37221563"
+   "pmid": "37221563",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63548,7 +64238,8 @@
    "t": "Phosphorylation",
    "belief": 0.6,
    "n": 2,
-   "pmid": "35701718"
+   "pmid": "35701718",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63556,7 +64247,8 @@
    "t": "Deacetylation",
    "belief": 0.514,
    "n": 2,
-   "pmid": "29514133"
+   "pmid": "29514133",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63564,7 +64256,8 @@
    "t": "Dephosphorylation",
    "belief": 0.492,
    "n": 2,
-   "pmid": "35701718"
+   "pmid": "35701718",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63572,7 +64265,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "35701718"
+   "pmid": "35701718",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63580,7 +64274,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "34108853"
+   "pmid": "34108853",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63588,7 +64283,8 @@
    "t": "Acetylation",
    "belief": 0.523,
    "n": 1,
-   "pmid": "22372633"
+   "pmid": "22372633",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63596,7 +64292,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "39810750"
+   "pmid": "39810750",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63604,7 +64301,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "39810750"
+   "pmid": "39810750",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63612,7 +64310,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "39992313"
+   "pmid": "39992313",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63620,7 +64319,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "26691836"
+   "pmid": "26691836",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63628,7 +64328,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "40202105"
+   "pmid": "40202105",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63636,7 +64337,8 @@
    "t": "Activation",
    "belief": 0.391,
    "n": 2,
-   "pmid": "35174546"
+   "pmid": "35174546",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63644,7 +64346,8 @@
    "t": "IncreaseAmount",
    "belief": 0.504,
    "n": 2,
-   "pmid": "36157070"
+   "pmid": "36157070",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63652,7 +64355,8 @@
    "t": "Inhibition",
    "belief": 0.476,
    "n": 2,
-   "pmid": "34551296"
+   "pmid": "34551296",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63660,7 +64364,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "39996737"
+   "pmid": "39996737",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63668,7 +64373,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36402384"
+   "pmid": "36402384",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63676,7 +64382,8 @@
    "t": "Phosphorylation",
    "belief": 0.865,
    "n": 2,
-   "pmid": "18070606"
+   "pmid": "18070606",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63684,7 +64391,8 @@
    "t": "Activation",
    "belief": 0.415,
    "n": 2,
-   "pmid": "28877763"
+   "pmid": "28877763",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63692,7 +64400,8 @@
    "t": "IncreaseAmount",
    "belief": 0.512,
    "n": 2,
-   "pmid": "28877763"
+   "pmid": "28877763",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63700,7 +64409,8 @@
    "t": "DecreaseAmount",
    "belief": 0.621,
    "n": 1,
-   "pmid": "38359047"
+   "pmid": "38359047",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63708,7 +64418,8 @@
    "t": "Inhibition",
    "belief": 0.529,
    "n": 1,
-   "pmid": "18070606"
+   "pmid": "18070606",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63716,7 +64427,8 @@
    "t": "Inhibition",
    "belief": 0.618,
    "n": 2,
-   "pmid": "24367683"
+   "pmid": "24367683",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63724,7 +64436,8 @@
    "t": "Phosphorylation",
    "belief": 0.641,
    "n": 2,
-   "pmid": "11978814"
+   "pmid": "11978814",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63732,7 +64445,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 2,
-   "pmid": "36865237"
+   "pmid": "36865237",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63740,7 +64454,8 @@
    "t": "DecreaseAmount",
    "belief": 0.468,
    "n": 2,
-   "pmid": "38451707"
+   "pmid": "38451707",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63748,7 +64463,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "25134526"
+   "pmid": "25134526",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63756,7 +64472,8 @@
    "t": "Activation",
    "belief": 0.421,
    "n": 2,
-   "pmid": "31632241"
+   "pmid": "31632241",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63764,7 +64481,8 @@
    "t": "Inhibition",
    "belief": 0.474,
    "n": 2,
-   "pmid": "16251403"
+   "pmid": "16251403",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63772,7 +64490,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "38556838"
+   "pmid": "38556838",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63780,7 +64499,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "15615641"
+   "pmid": "15615641",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63788,7 +64508,8 @@
    "t": "Dephosphorylation",
    "belief": 0.508,
    "n": 2,
-   "pmid": "33043002"
+   "pmid": "33043002",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63796,7 +64517,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "32579360"
+   "pmid": "32579360",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63804,7 +64526,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "33043002"
+   "pmid": "33043002",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63812,7 +64535,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "37111315"
+   "pmid": "37111315",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63820,7 +64544,8 @@
    "t": "Phosphorylation",
    "belief": 0.777,
    "n": 2,
-   "pmid": "30114473"
+   "pmid": "30114473",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63828,7 +64553,8 @@
    "t": "Activation",
    "belief": 0.419,
    "n": 2,
-   "pmid": "25309427"
+   "pmid": "25309427",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63836,7 +64562,8 @@
    "t": "IncreaseAmount",
    "belief": 0.512,
    "n": 2,
-   "pmid": "39717593"
+   "pmid": "39717593",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63844,7 +64571,8 @@
    "t": "Dephosphorylation",
    "belief": 0.519,
    "n": 2,
-   "pmid": "35083281"
+   "pmid": "35083281",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63852,7 +64580,8 @@
    "t": "Inhibition",
    "belief": 0.492,
    "n": 2,
-   "pmid": "8886852"
+   "pmid": "8886852",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63860,7 +64589,8 @@
    "t": "DecreaseAmount",
    "belief": 0.485,
    "n": 2,
-   "pmid": "39641099"
+   "pmid": "39641099",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63868,7 +64598,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "37027081"
+   "pmid": "37027081",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63876,7 +64607,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "20804593"
+   "pmid": "20804593",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63884,7 +64616,8 @@
    "t": "Phosphorylation",
    "belief": 0.631,
    "n": 2,
-   "pmid": "35801276"
+   "pmid": "35801276",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63892,7 +64625,8 @@
    "t": "Inhibition",
    "belief": 0.441,
    "n": 2,
-   "pmid": "39909381"
+   "pmid": "39909381",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63900,7 +64634,8 @@
    "t": "Phosphorylation",
    "belief": 0.843,
    "n": 2,
-   "pmid": "24287312"
+   "pmid": "24287312",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63908,7 +64643,8 @@
    "t": "Activation",
    "belief": 0.366,
    "n": 2,
-   "pmid": "29852409"
+   "pmid": "29852409",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63916,7 +64652,8 @@
    "t": "IncreaseAmount",
    "belief": 0.629,
    "n": 1,
-   "pmid": "30958437"
+   "pmid": "30958437",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63924,7 +64661,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "21629713"
+   "pmid": "21629713",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63932,7 +64670,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "39051250"
+   "pmid": "39051250",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -63940,7 +64679,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "32968279"
+   "pmid": "32968279",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63948,7 +64688,8 @@
    "t": "Activation",
    "belief": 0.391,
    "n": 2,
-   "pmid": "34739309"
+   "pmid": "34739309",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63956,7 +64697,8 @@
    "t": "Acetylation",
    "belief": 0.523,
    "n": 2,
-   "pmid": "34739309"
+   "pmid": "34739309",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63964,7 +64706,8 @@
    "t": "Phosphorylation",
    "belief": 0.557,
    "n": 2,
-   "pmid": "36469115"
+   "pmid": "36469115",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63972,7 +64715,8 @@
    "t": "Deacetylation",
    "belief": 0.479,
    "n": 2,
-   "pmid": "40083922"
+   "pmid": "40083922",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63980,7 +64724,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "34739309"
+   "pmid": "34739309",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63988,7 +64733,8 @@
    "t": "Phosphorylation",
    "belief": 0.846,
    "n": 2,
-   "pmid": "23331413"
+   "pmid": "23331413",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -63996,7 +64742,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "36892783"
+   "pmid": "36892783",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64004,7 +64751,8 @@
    "t": "Dephosphorylation",
    "belief": 0.492,
    "n": 1,
-   "pmid": "35858909"
+   "pmid": "35858909",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64012,7 +64760,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "35858909"
+   "pmid": "35858909",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64020,7 +64769,8 @@
    "t": "Phosphorylation",
    "belief": 0.532,
    "n": 1,
-   "pmid": "35858909"
+   "pmid": "35858909",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -64028,7 +64778,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "32993812"
+   "pmid": "32993812",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64036,7 +64787,8 @@
    "t": "DecreaseAmount",
    "belief": 0.468,
    "n": 2,
-   "pmid": "35082119"
+   "pmid": "35082119",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64044,7 +64796,8 @@
    "t": "Activation",
    "belief": 0.447,
    "n": 2,
-   "pmid": "36198316"
+   "pmid": "36198316",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64052,7 +64805,8 @@
    "t": "Deubiquitination",
    "belief": 0.499,
    "n": 2,
-   "pmid": "36198316"
+   "pmid": "36198316",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64060,7 +64814,8 @@
    "t": "Acetylation",
    "belief": 0.472,
    "n": 2,
-   "pmid": "36198316"
+   "pmid": "36198316",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64068,7 +64823,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "36240738"
+   "pmid": "36240738",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64076,7 +64832,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "36198316"
+   "pmid": "36198316",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64084,7 +64841,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "36198316"
+   "pmid": "36198316",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64092,7 +64850,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "36198316"
+   "pmid": "36198316",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64100,7 +64859,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "39394468"
+   "pmid": "39394468",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64108,7 +64868,8 @@
    "t": "Phosphorylation",
    "belief": 0.641,
    "n": 2,
-   "pmid": "39562545"
+   "pmid": "39562545",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64116,7 +64877,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "39449082"
+   "pmid": "39449082",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64124,7 +64886,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "27878758"
+   "pmid": "27878758",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64132,7 +64895,8 @@
    "t": "Ubiquitination",
    "belief": 0.562,
    "n": 1,
-   "pmid": "28083634"
+   "pmid": "28083634",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64140,7 +64904,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "34023421"
+   "pmid": "34023421",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64148,7 +64913,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "38582079"
+   "pmid": "38582079",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64156,7 +64922,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "39482469"
+   "pmid": "39482469",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64164,7 +64931,8 @@
    "t": "Activation",
    "belief": 0.419,
    "n": 2,
-   "pmid": "39773263"
+   "pmid": "39773263",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64172,7 +64940,8 @@
    "t": "Inhibition",
    "belief": 0.485,
    "n": 2,
-   "pmid": "39316141"
+   "pmid": "39316141",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64180,7 +64949,8 @@
    "t": "IncreaseAmount",
    "belief": 0.472,
    "n": 2,
-   "pmid": "39316141"
+   "pmid": "39316141",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64188,7 +64958,8 @@
    "t": "Ubiquitination",
    "belief": 0.519,
    "n": 2,
-   "pmid": "39596399"
+   "pmid": "39596399",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64196,7 +64967,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "37545006"
+   "pmid": "37545006",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64204,7 +64976,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "35269905"
+   "pmid": "35269905",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64212,7 +64985,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "35269905"
+   "pmid": "35269905",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -64220,7 +64994,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "36290771"
+   "pmid": "36290771",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64228,7 +65003,8 @@
    "t": "Inhibition",
    "belief": 0.492,
    "n": 2,
-   "pmid": "35662183"
+   "pmid": "35662183",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -64236,7 +65012,8 @@
    "t": "Phosphorylation",
    "belief": 0.557,
    "n": 2,
-   "pmid": "19737590"
+   "pmid": "19737590",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64244,7 +65021,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "33229737"
+   "pmid": "33229737",
+   "dir": "ab"
   },
   {
    "a": "MAPT",
@@ -64252,7 +65030,8 @@
    "t": "Dephosphorylation",
    "belief": 0.493,
    "n": 1,
-   "pmid": "19428794"
+   "pmid": "19428794",
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64260,7 +65039,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "MAPT",
@@ -64268,7 +65048,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "MARK1",
@@ -64300,7 +65081,8 @@
    "t": "Phosphorylation",
    "belief": 0.831,
    "n": 1,
-   "pmid": "19945424"
+   "pmid": "19945424",
+   "dir": "ab"
   },
   {
    "a": "MARK2",
@@ -64308,7 +65090,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "19945424"
+   "pmid": "19945424",
+   "dir": "ab"
   },
   {
    "a": "MARK3",
@@ -64348,7 +65131,8 @@
    "t": "Deubiquitination",
    "belief": 0.939,
    "n": 1,
-   "pmid": "27775833"
+   "pmid": "27775833",
+   "dir": "ba"
   },
   {
    "a": "MATR3",
@@ -64452,7 +65236,8 @@
    "t": "IncreaseAmount",
    "belief": 0.54,
    "n": 1,
-   "pmid": "18223231"
+   "pmid": "18223231",
+   "dir": "ba"
   },
   {
    "a": "MCL1",
@@ -64508,7 +65293,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "39218215"
+   "pmid": "39218215",
+   "dir": "ba"
   },
   {
    "a": "MCL1",
@@ -64532,7 +65318,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "28476656"
+   "pmid": "28476656",
+   "dir": "ba"
   },
   {
    "a": "MCL1",
@@ -64628,7 +65415,8 @@
    "t": "Deubiquitination",
    "belief": 0.945,
    "n": 1,
-   "pmid": "28279784"
+   "pmid": "28279784",
+   "dir": "ba"
   },
   {
    "a": "MCL1",
@@ -64956,7 +65744,8 @@
    "t": "Ubiquitination",
    "belief": 0.89,
    "n": 1,
-   "pmid": "22199232"
+   "pmid": "22199232",
+   "dir": "ab"
   },
   {
    "a": "MDM2",
@@ -65132,7 +65921,8 @@
    "t": "Ubiquitination",
    "belief": 0.95,
    "n": 1,
-   "pmid": "26926424"
+   "pmid": "26926424",
+   "dir": "ba"
   },
   {
    "a": "MDM2",
@@ -66804,7 +67594,8 @@
    "t": "DecreaseAmount",
    "belief": 0.722,
    "n": 1,
-   "pmid": "22700976"
+   "pmid": "22700976",
+   "dir": "ab"
   },
   {
    "a": "MTA1",
@@ -67836,7 +68627,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "37236669"
+   "pmid": "37236669",
+   "dir": "ba"
   },
   {
    "a": "NDP",
@@ -67964,7 +68756,8 @@
    "t": "DecreaseAmount",
    "belief": 0.518,
    "n": 1,
-   "pmid": "19940030"
+   "pmid": "19940030",
+   "dir": "ab"
   },
   {
    "a": "NFKB1",
@@ -67972,7 +68765,8 @@
    "t": "IncreaseAmount",
    "belief": 0.552,
    "n": 2,
-   "pmid": "19940030"
+   "pmid": "19940030",
+   "dir": "ab"
   },
   {
    "a": "NFKB1",
@@ -67980,7 +68774,8 @@
    "t": "Activation",
    "belief": 0.679,
    "n": 1,
-   "pmid": "9450761"
+   "pmid": "9450761",
+   "dir": "ab"
   },
   {
    "a": "NFKB1",
@@ -67988,7 +68783,8 @@
    "t": "IncreaseAmount",
    "belief": 0.523,
    "n": 1,
-   "pmid": "20596645"
+   "pmid": "20596645",
+   "dir": "ba"
   },
   {
    "a": "NFKB1",
@@ -68036,7 +68832,8 @@
    "t": "DecreaseAmount",
    "belief": 0.536,
    "n": 1,
-   "pmid": "14600595"
+   "pmid": "14600595",
+   "dir": "ab"
   },
   {
    "a": "NFKB1",
@@ -68076,7 +68873,8 @@
    "t": "IncreaseAmount",
    "belief": 0.739,
    "n": 5,
-   "pmid": "10079106"
+   "pmid": "10079106",
+   "dir": "ab"
   },
   {
    "a": "NFKB1",
@@ -68132,7 +68930,8 @@
    "t": "IncreaseAmount",
    "belief": 0.568,
    "n": 2,
-   "pmid": "20542572"
+   "pmid": "20542572",
+   "dir": "ab"
   },
   {
    "a": "NFKB1",
@@ -68172,7 +68971,8 @@
    "t": "Inhibition",
    "belief": 0.529,
    "n": 1,
-   "pmid": "11468175"
+   "pmid": "11468175",
+   "dir": "ba"
   },
   {
    "a": "NFKB1",
@@ -68188,7 +68988,8 @@
    "t": "IncreaseAmount",
    "belief": 0.552,
    "n": 4,
-   "pmid": "18223231"
+   "pmid": "18223231",
+   "dir": "ab"
   },
   {
    "a": "NFKB1",
@@ -68196,7 +68997,8 @@
    "t": "DecreaseAmount",
    "belief": 0.517,
    "n": 2,
-   "pmid": "18566231"
+   "pmid": "18566231",
+   "dir": "ab"
   },
   {
    "a": "NHEJ1",
@@ -68708,7 +69510,8 @@
    "t": "Ubiquitination",
    "belief": 0.626,
    "n": 1,
-   "pmid": "32994395"
+   "pmid": "32994395",
+   "dir": "ba"
   },
   {
    "a": "OGT",
@@ -68980,7 +69783,8 @@
    "t": "Deubiquitination",
    "belief": 0.945,
    "n": 1,
-   "pmid": "26649820"
+   "pmid": "26649820",
+   "dir": "ba"
   },
   {
    "a": "PALB2",
@@ -69140,7 +69944,8 @@
    "t": "Phosphorylation",
    "belief": 0.741,
    "n": 5,
-   "pmid": "11485553"
+   "pmid": "11485553",
+   "dir": "ba"
   },
   {
    "a": "PDHA1",
@@ -69148,7 +69953,8 @@
    "t": "Inhibition",
    "belief": 0.537,
    "n": 4,
-   "pmid": "11485553"
+   "pmid": "11485553",
+   "dir": "ba"
   },
   {
    "a": "PDHA1",
@@ -69444,7 +70250,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "28914261"
+   "pmid": "28914261",
+   "dir": "ba"
   },
   {
    "a": "PIM2",
@@ -69508,7 +70315,8 @@
    "t": "Ubiquitination",
    "belief": 0.972,
    "n": 2,
-   "pmid": "22199232"
+   "pmid": "22199232",
+   "dir": "ab"
   },
   {
    "a": "PJA1",
@@ -69516,7 +70324,8 @@
    "t": "Inhibition",
    "belief": 0.561,
    "n": 1,
-   "pmid": "32127355"
+   "pmid": "32127355",
+   "dir": "ab"
   },
   {
    "a": "PJA1",
@@ -69532,7 +70341,8 @@
    "t": "Ubiquitination",
    "belief": 0.947,
    "n": 1,
-   "pmid": "21513699"
+   "pmid": "21513699",
+   "dir": "ab"
   },
   {
    "a": "PLAC1",
@@ -69572,7 +70382,8 @@
    "t": "DecreaseAmount",
    "belief": 0.643,
    "n": 1,
-   "pmid": "21304604"
+   "pmid": "21304604",
+   "dir": "ba"
   },
   {
    "a": "PLAC1",
@@ -69620,7 +70431,8 @@
    "t": "Phosphorylation",
    "belief": 0.934,
    "n": 1,
-   "pmid": "27330107"
+   "pmid": "27330107",
+   "dir": "ab"
   },
   {
    "a": "PLK1",
@@ -69628,7 +70440,8 @@
    "t": "Inhibition",
    "belief": 0.569,
    "n": 1,
-   "pmid": "27330107"
+   "pmid": "27330107",
+   "dir": "ab"
   },
   {
    "a": "PLK1",
@@ -69684,7 +70497,8 @@
    "t": "Activation",
    "belief": 0.397,
    "n": 1,
-   "pmid": "24755224"
+   "pmid": "24755224",
+   "dir": "ab"
   },
   {
    "a": "PLK1",
@@ -69988,7 +70802,8 @@
    "t": "Activation",
    "belief": 0.414,
    "n": 2,
-   "pmid": "27028868"
+   "pmid": "27028868",
+   "dir": "ab"
   },
   {
    "a": "PMAIP1",
@@ -70116,7 +70931,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "28314766"
+   "pmid": "28314766",
+   "dir": "ba"
   },
   {
    "a": "PNPT1",
@@ -70124,7 +70940,8 @@
    "t": "Phosphorylation",
    "belief": 0.915,
    "n": 5,
-   "pmid": "22815474"
+   "pmid": "22815474",
+   "dir": "ba"
   },
   {
    "a": "PNPT1",
@@ -70132,7 +70949,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "22815474"
+   "pmid": "22815474",
+   "dir": "ba"
   },
   {
    "a": "PNPT1",
@@ -70140,7 +70958,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "16054527"
+   "pmid": "16054527",
+   "dir": "ba"
   },
   {
    "a": "PNPT1",
@@ -70148,7 +70967,8 @@
    "t": "Activation",
    "belief": 0.394,
    "n": 5,
-   "pmid": "21859751"
+   "pmid": "21859751",
+   "dir": "ba"
   },
   {
    "a": "PNPT1",
@@ -70156,7 +70976,8 @@
    "t": "Inhibition",
    "belief": 0.476,
    "n": 3,
-   "pmid": "21859751"
+   "pmid": "21859751",
+   "dir": "ba"
   },
   {
    "a": "PNPT1",
@@ -70164,7 +70985,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "29779946"
+   "pmid": "29779946",
+   "dir": "ab"
   },
   {
    "a": "PNPT1",
@@ -70172,7 +70994,8 @@
    "t": "DecreaseAmount",
    "belief": 0.474,
    "n": 1,
-   "pmid": "28262547"
+   "pmid": "28262547",
+   "dir": "ab"
   },
   {
    "a": "POLA1",
@@ -71044,7 +71867,8 @@
    "t": "Phosphorylation",
    "belief": 0.814,
    "n": 1,
-   "pmid": "19303849"
+   "pmid": "19303849",
+   "dir": "ab"
   },
   {
    "a": "PRKDC",
@@ -71052,7 +71876,8 @@
    "t": "Activation",
    "belief": 0.551,
    "n": 1,
-   "pmid": "19303849"
+   "pmid": "19303849",
+   "dir": "ab"
   },
   {
    "a": "PRKDC",
@@ -71444,7 +72269,8 @@
    "t": "Dephosphorylation",
    "belief": 0.725,
    "n": 1,
-   "pmid": "26869029"
+   "pmid": "26869029",
+   "dir": "ab"
   },
   {
    "a": "PTEN",
@@ -71452,7 +72278,8 @@
    "t": "Activation",
    "belief": 0.532,
    "n": 2,
-   "pmid": "26869029"
+   "pmid": "26869029",
+   "dir": "ab"
   },
   {
    "a": "PTEN",
@@ -71492,7 +72319,8 @@
    "t": "DecreaseAmount",
    "belief": 0.539,
    "n": 1,
-   "pmid": "19940030"
+   "pmid": "19940030",
+   "dir": "ba"
   },
   {
    "a": "PTEN",
@@ -71500,7 +72328,8 @@
    "t": "IncreaseAmount",
    "belief": 0.55,
    "n": 2,
-   "pmid": "19940030"
+   "pmid": "19940030",
+   "dir": "ba"
   },
   {
    "a": "PTEN",
@@ -71604,7 +72433,8 @@
    "t": "DecreaseAmount",
    "belief": 0.529,
    "n": 1,
-   "pmid": "17344317"
+   "pmid": "17344317",
+   "dir": "ba"
   },
   {
    "a": "PTEN",
@@ -71716,7 +72546,8 @@
    "t": "Ubiquitination",
    "belief": 0.98,
    "n": 2,
-   "pmid": "22199232"
+   "pmid": "22199232",
+   "dir": "ba"
   },
   {
    "a": "PTEN",
@@ -71724,7 +72555,8 @@
    "t": "DecreaseAmount",
    "belief": 0.713,
    "n": 1,
-   "pmid": "21532586"
+   "pmid": "21532586",
+   "dir": "ba"
   },
   {
    "a": "PTEN",
@@ -71764,7 +72596,8 @@
    "t": "Ubiquitination",
    "belief": 0.989,
    "n": 2,
-   "pmid": "19473982"
+   "pmid": "19473982",
+   "dir": "ba"
   },
   {
    "a": "PTEN",
@@ -71772,7 +72605,8 @@
    "t": "DecreaseAmount",
    "belief": 0.566,
    "n": 1,
-   "pmid": "19473982"
+   "pmid": "19473982",
+   "dir": "ba"
   },
   {
    "a": "PTEN",
@@ -73004,7 +73838,8 @@
    "t": "IncreaseAmount",
    "belief": 0.558,
    "n": 1,
-   "pmid": "30403180"
+   "pmid": "30403180",
+   "dir": "ab"
   },
   {
    "a": "RBM10",
@@ -73236,7 +74071,8 @@
    "t": "Phosphorylation",
    "belief": 0.808,
    "n": 1,
-   "pmid": "39050887"
+   "pmid": "39050887",
+   "dir": "ba"
   },
   {
    "a": "RELA",
@@ -73300,7 +74136,8 @@
    "t": "DecreaseAmount",
    "belief": 0.536,
    "n": 1,
-   "pmid": "14600595"
+   "pmid": "14600595",
+   "dir": "ab"
   },
   {
    "a": "RELA",
@@ -73420,7 +74257,8 @@
    "t": "Inhibition",
    "belief": 0.569,
    "n": 1,
-   "pmid": "11468175"
+   "pmid": "11468175",
+   "dir": "ba"
   },
   {
    "a": "RELA",
@@ -73612,7 +74450,8 @@
    "t": "Ubiquitination",
    "belief": 0.948,
    "n": 1,
-   "pmid": "33328571"
+   "pmid": "33328571",
+   "dir": "ab"
   },
   {
    "a": "RLIM",
@@ -73620,7 +74459,8 @@
    "t": "DecreaseAmount",
    "belief": 0.547,
    "n": 1,
-   "pmid": "23650532"
+   "pmid": "23650532",
+   "dir": "ba"
   },
   {
    "a": "RLIM",
@@ -73676,7 +74516,8 @@
    "t": "Ubiquitination",
    "belief": 0.975,
    "n": 2,
-   "pmid": "22596162"
+   "pmid": "22596162",
+   "dir": "ab"
   },
   {
    "a": "RLIM",
@@ -73684,7 +74525,8 @@
    "t": "DecreaseAmount",
    "belief": 0.636,
    "n": 1,
-   "pmid": "22596162"
+   "pmid": "22596162",
+   "dir": "ab"
   },
   {
    "a": "RLIM",
@@ -73892,7 +74734,8 @@
    "t": "Phosphorylation",
    "belief": 0.827,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73900,7 +74743,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "38169775"
+   "pmid": "38169775",
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73908,7 +74752,8 @@
    "t": "IncreaseAmount",
    "belief": 0.484,
    "n": 1,
-   "pmid": "25652085"
+   "pmid": "25652085",
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73916,7 +74761,8 @@
    "t": "Activation",
    "belief": 0.66,
    "n": 5,
-   "pmid": "37113690"
+   "pmid": "37113690",
+   "dir": "ba"
   },
   {
    "a": "RPS6KA3",
@@ -73924,7 +74770,8 @@
    "t": "Inhibition",
    "belief": 0.584,
    "n": 2,
-   "pmid": "40140815"
+   "pmid": "40140815",
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73932,7 +74779,8 @@
    "t": "Phosphorylation",
    "belief": 0.565,
    "n": 1,
-   "pmid": "28314444"
+   "pmid": "28314444",
+   "dir": "ba"
   },
   {
    "a": "RPS6KA3",
@@ -73940,7 +74788,8 @@
    "t": "Activation",
    "belief": 0.367,
    "n": 2,
-   "pmid": "21044953"
+   "pmid": "21044953",
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73948,7 +74797,8 @@
    "t": "Activation",
    "belief": 0.726,
    "n": 5,
-   "pmid": "24086335"
+   "pmid": "24086335",
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73956,7 +74806,8 @@
    "t": "Phosphorylation",
    "belief": 0.878,
    "n": 5,
-   "pmid": "24055036"
+   "pmid": "24055036",
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73964,7 +74815,8 @@
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
-   "pmid": "36674179"
+   "pmid": "36674179",
+   "dir": "ab"
   },
   {
    "a": "RPS6KA3",
@@ -73972,7 +74824,8 @@
    "t": "Inhibition",
    "belief": 0.436,
    "n": 1,
-   "pmid": "26144997"
+   "pmid": "26144997",
+   "dir": "ba"
   },
   {
    "a": "RPS6KA3",
@@ -73980,7 +74833,8 @@
    "t": "DecreaseAmount",
    "belief": 0.63,
    "n": 1,
-   "pmid": null
+   "pmid": null,
+   "dir": "ba"
   },
   {
    "a": "RPS6KA6",
@@ -74492,7 +75346,8 @@
    "t": "Deacetylation",
    "belief": 0.66,
    "n": 1,
-   "pmid": "12620231"
+   "pmid": "12620231",
+   "dir": "ab"
   },
   {
    "a": "SIRT2",
@@ -75028,7 +75883,8 @@
    "t": "Deubiquitination",
    "belief": 0.943,
    "n": 1,
-   "pmid": "27919796"
+   "pmid": "27919796",
+   "dir": "ba"
   },
   {
    "a": "SOX2",
@@ -75524,7 +76380,8 @@
    "t": "Phosphorylation",
    "belief": 0.66,
    "n": 2,
-   "pmid": "9490415"
+   "pmid": "9490415",
+   "dir": "ab"
   },
   {
    "a": "SYK",
@@ -75532,7 +76389,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "9490415"
+   "pmid": "9490415",
+   "dir": "ab"
   },
   {
    "a": "SYP",
@@ -75596,7 +76454,8 @@
    "t": "Phosphorylation",
    "belief": 0.877,
    "n": 1,
-   "pmid": "15053879"
+   "pmid": "15053879",
+   "dir": "ab"
   },
   {
    "a": "TAF1",
@@ -75604,7 +76463,8 @@
    "t": "Inhibition",
    "belief": 0.584,
    "n": 1,
-   "pmid": "15053879"
+   "pmid": "15053879",
+   "dir": "ab"
   },
   {
    "a": "TAF1",
@@ -77348,7 +78208,8 @@
    "t": "Deubiquitination",
    "belief": 0.961,
    "n": 1,
-   "pmid": "28801249"
+   "pmid": "28801249",
+   "dir": "ba"
   },
   {
    "a": "TP53",
@@ -77372,7 +78233,8 @@
    "t": "Deubiquitination",
    "belief": 0.939,
    "n": 1,
-   "pmid": "28801249"
+   "pmid": "28801249",
+   "dir": "ba"
   },
   {
    "a": "TP53",
@@ -77564,7 +78426,8 @@
    "t": "IncreaseAmount",
    "belief": 0.558,
    "n": 1,
-   "pmid": "15087442"
+   "pmid": "15087442",
+   "dir": "ba"
   },
   {
    "a": "TP53",
@@ -77644,7 +78507,8 @@
    "t": "Inhibition",
    "belief": 0.529,
    "n": 1,
-   "pmid": "22020298"
+   "pmid": "22020298",
+   "dir": "ab"
   },
   {
    "a": "TTLL1",
@@ -77708,7 +78572,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "34199813"
+   "pmid": "34199813",
+   "dir": "ab"
   },
   {
    "a": "UBA1",
@@ -77716,7 +78581,8 @@
    "t": "Ubiquitination",
    "belief": 0.595,
    "n": 1,
-   "pmid": "34199813"
+   "pmid": "34199813",
+   "dir": "ab"
   },
   {
    "a": "UBA1",
@@ -77724,7 +78590,8 @@
    "t": "Activation",
    "belief": 0.571,
    "n": 1,
-   "pmid": "34199813"
+   "pmid": "34199813",
+   "dir": "ab"
   },
   {
    "a": "UBA1",
@@ -77772,7 +78639,8 @@
    "t": "Deubiquitination",
    "belief": 0.943,
    "n": 1,
-   "pmid": "28279784"
+   "pmid": "28279784",
+   "dir": "ab"
   },
   {
    "a": "USP11",

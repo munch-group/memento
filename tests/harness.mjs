@@ -156,6 +156,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       set items(v){ items = v; },
       set ghRepoMode(v){ ghRepoMode = v; },
       get ghRepoMode(){ return ghRepoMode; },
+      loadInteractions,
       set readOnly(v){ readOnly = v; },
       get readOnly(){ return readOnly; },
       set canWrite(v){ ghCanWrite = v; },
@@ -216,7 +217,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get grH(){ return _grH; },
       get grAlpha(){ return _grAlpha; },
       // Genes view (M1)
-      renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown,
+      renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown, geEdgesHtml,
       geShownCount, geComputeDrawn, geStep, geInitPositions, geSizeLayout,
       setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, geSelect, geClearSelection, geApplyFilter, geRelayout,
       geSpikes, geSyncSpikes, geSyncSpikeNodes, get geSpikeSet(){ return [..._geSpikes].sort(); },

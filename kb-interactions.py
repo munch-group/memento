@@ -407,16 +407,26 @@ def build(fetch=False, n_bridges=20, min_links=5):
     stmts = from_local_cache(inside.keys())
     if fetch:
         missing = [s for s in inside if s not in stmts]
-        log(f"  fetching {len(missing)} genes live ...")
-        for i, sym in enumerate(missing, 1):
-            try:
-                st, _ = fetch_indra(sym)
-                if st:
-                    stmts[sym] = st
-            except Exception as exc:
-                log(f"    {sym}: {exc.__class__.__name__}")
-            if i % 25 == 0:
-                log(f"    {i}/{len(missing)}")
+        # INDRA's from_agents is slow (~6-30s/gene: it computes the whole result
+        # set even at ev_limit=1), so serial fetching of ~1000 genes runs for
+        # hours. Fetch a few at a time -- the same 5-way concurrency the browser's
+        # "Refresh all" uses -- which brings a full rebuild down to tens of minutes.
+        log(f"  fetching {len(missing)} genes live (5 concurrent) ...")
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        done = 0
+        with ThreadPoolExecutor(max_workers=5) as ex:
+            futs = {ex.submit(fetch_indra, sym): sym for sym in missing}
+            for fut in as_completed(futs):
+                sym = futs[fut]
+                done += 1
+                try:
+                    st, _ = fut.result()
+                    if st:
+                        stmts[sym] = st
+                except Exception as exc:
+                    log(f"    {sym}: {exc.__class__.__name__}")
+                if done % 25 == 0:
+                    log(f"    {done}/{len(missing)}")
 
     mech, complexes = {}, {}
     outside = defaultdict(set)
@@ -433,14 +443,24 @@ def build(fetch=False, n_bridges=20, min_links=5):
                         outside[o].add(i2)
             if len(set(ins)) < 2:
                 continue
+            is_mech = s.get("type") in MECH
+            # A mechanistic statement is DIRECTED: statement_agents returns agents
+            # source-first (subj->obj for regulations, enz->sub for modifications),
+            # and such a statement has exactly two agents. The source is ins[0].
+            # Complex membership is undirected, so it carries no direction. We keep
+            # a/b alphabetical (undirected key, so A-B and B-A still dedup together)
+            # and record which way the arrow points in `dir`: "ab" = a->b, "ba" = b->a.
+            src = ins[0] if (is_mech and len(set(ins)) == 2) else None
             pairs = sorted(set(ins))
             for x in range(len(pairs)):
                 for y in range(x + 1, len(pairs)):
                     a, b = pairs[x], pairs[y]
-                    tgt = mech if s.get("type") in MECH else complexes
+                    tgt = mech if is_mech else complexes
                     key = (a, b, s.get("type"))
                     prev = tgt.get(key)
                     e = thin(s, a, b)
+                    if src is not None:
+                        e["dir"] = "ab" if src == a else "ba"
                     if not prev or e["n"] > prev["n"]:
                         tgt[key] = e
 

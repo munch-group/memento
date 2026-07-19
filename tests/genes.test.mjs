@@ -231,6 +231,84 @@ function testEdgeToggleStability() {
   ok(api.geNodes.some(n => n.sym === 'GHOSTZ' && n.ghost), 'toggling complexes does not make the next render drop the ghost');
 }
 
+function testEdgeDirection() {
+  console.log('\nedge direction — parse subj→obj, carry dir, render PPI arrowheads, offset to the rim');
+  const { api, sandbox } = load({ fetchImpl: noop });
+
+  // (1) geParseIndra recovers direction from the raw statement (source-first agents).
+  const resp = { statements: {
+    h1: { type: 'Activation',      subj: { name: 'AAA', db_refs: { HGNC: '1' } }, obj: { name: 'BBB', db_refs: { HGNC: '2' } }, evidence: [{ pmid: 'p1' }] },
+    h2: { type: 'Phosphorylation', enz:  { name: 'CCC', db_refs: { HGNC: '3' } }, sub: { name: 'DDD', db_refs: { HGNC: '4' } }, evidence: [{ pmid: 'p2' }] },
+    h3: { type: 'Inhibition',      subj: { name: 'ZZZ', db_refs: { HGNC: '5' } }, obj: { name: 'AAA', db_refs: { HGNC: '1' } }, evidence: [{ pmid: 'p3' }] },
+    h4: { type: 'Complex',         members: [{ name: 'AAA', db_refs: { HGNC: '1' } }, { name: 'EEE', db_refs: { HGNC: '6' } }], evidence: [{ pmid: 'p4' }] },
+  }, evidence_counts: { h1: 5, h2: 3, h3: 4, h4: 2 } };
+  const eA = api.geParseIndra(resp, 'AAA');
+  const ab = eA.find(e => e.a === 'AAA' && e.b === 'BBB');
+  const za = eA.find(e => e.a === 'AAA' && e.b === 'ZZZ');
+  const ae = eA.find(e => e.a === 'AAA' && e.b === 'EEE');
+  eq(ab && ab.dir, 'ab', 'AAA→BBB (subj→obj) is dir "ab" (arrow at b)');
+  eq(za && za.dir, 'ba', 'ZZZ→AAA lands as a<b with dir "ba" (arrow points back at a)');
+  ok(ae && !ae.dir, 'a Complex membership edge carries no direction');
+  const eC = api.geParseIndra(resp, 'CCC');
+  eq((eC.find(e => e.b === 'DDD') || {}).dir, 'ab', 'CCC→DDD (enz→sub) is dir "ab"');
+
+  // (2) direction survives geBuildModel and drives the marker HTML.
+  api.interactions = {
+    generated: 'x', source: 'x', members: {}, canon: {}, bridges: [],
+    genes: { A: { chrom: '1', cards: ['c'], groups: [] }, B: { chrom: '1', cards: ['c'], groups: [] },
+             C: { chrom: '1', cards: ['c'], groups: [] }, D: { chrom: '1', cards: ['c'], groups: [] },
+             E: { chrom: '1', cards: ['c'], groups: [] }, F: { chrom: '1', cards: ['c'], groups: [] },
+             G: { chrom: '1', cards: ['c'], groups: [] }, H: { chrom: '1', cards: ['c'], groups: [] } },
+    edges: [
+      { a: 'A', b: 'B', t: 'Activation',      belief: 0.9, n: 5, pmid: 'p', dir: 'ab' },   // promote, head at b
+      { a: 'C', b: 'D', t: 'Inhibition',      belief: 0.8, n: 4, pmid: 'p', dir: 'ba' },   // suppress, head at a
+      { a: 'E', b: 'F', t: 'Phosphorylation', belief: 0.7, n: 3, pmid: 'p', dir: 'ab' },   // modify, head at b
+      { a: 'G', b: 'H', t: 'Activation',      belief: 0.6, n: 2, pmid: 'p' },              // no dir -> no head
+    ],
+    complex_edges: [{ a: 'A', b: 'C', t: 'Complex', belief: 0.5, n: 2, pmid: 'p' }],
+  };
+  api.geBuildModel();
+  const abE = api.geEdges.find(e => e.a === 'A' && e.b === 'B');
+  eq(abE.dir, 'ab', 'dir survives geBuildModel into _geEdges');
+  api.geComputeDrawn();
+  const html = api.geEdgesHtml();
+  ok(/ge-nat-promote[^>]*marker-end="url\(#ge-mk-promote\)"/.test(html), 'promote a→b gets a filled arrow at the b end (marker-end)');
+  ok(/ge-nat-suppress[^>]*marker-start="url\(#ge-mk-suppress\)"/.test(html), 'suppress b→a gets a T-bar at the a end (marker-start)');
+  ok(/ge-nat-modify[^>]*marker-end="url\(#ge-mk-modify\)"/.test(html), 'modify a→b gets an open arrow at the b end');
+  // the direction-less edge (G-H) must have no marker
+  const ghLine = html.split('<line').find(s => /ge-nat-promote/.test(s) && !/marker-/.test(s));
+  ok(!!ghLine, 'a direction-less mechanistic edge gets no arrowhead');
+  ok(/#ge-mk-promote/.test(html) && /<defs>/.test(html), 'marker <defs> are embedded in the edge layer (survive a complex-toggle rebuild)');
+
+  // (3) geApplyDOM pulls the HEAD endpoint back to the rim; the tail stays at the node centre.
+  api.mainView = 'genes';
+  sandbox.document.getElementById('search-input').value = '';
+  api.renderGenes();
+  const pos = api.gePos;
+  const num = (id, at) => Number(sandbox.document.getElementById(id).getAttribute(at));
+  const drawn = api.geDrawn;
+  const idxOf = (a, b) => drawn.findIndex(e => e.a === a && e.b === b);
+  const near = (x, y) => Math.abs(x - y) < 0.01;
+  // A→B (dir ab): x1,y1 at A's centre; x2,y2 pulled IN from B's centre
+  const iAB = idxOf('A', 'B');
+  ok(near(num('ge-e' + iAB, 'x1'), pos.A.x) && near(num('ge-e' + iAB, 'y1'), pos.A.y), 'directed edge tail stays at the source centre');
+  const dHead = Math.hypot(num('ge-e' + iAB, 'x2') - pos.B.x, num('ge-e' + iAB, 'y2') - pos.B.y);
+  ok(dHead > 1, 'directed edge head is pulled back off the target centre (arrow clears the disc)');
+  // G→H (no dir): both ends exactly at node centres
+  const iGH = idxOf('G', 'H');
+  ok(near(num('ge-e' + iGH, 'x2'), pos.H.x) && near(num('ge-e' + iGH, 'y2'), pos.H.y), 'a direction-less edge is not pulled back (drawn centre-to-centre)');
+
+  // (4) a re-fetch UPGRADES a pre-direction edge in place (so a Refresh can complete direction on
+  // an old sidecar instead of skipping the edge as a duplicate) — and it survives a freeze.
+  const gh = api.geEdges.find(e => e.a === 'G' && e.b === 'H');
+  ok(gh && !gh.dir, 'G-H starts direction-less (as in an old sidecar)');
+  api.geMergeNodeEdges({ edges: [{ a: 'G', b: 'H', t: 'Activation', nat: 'promote', belief: 0.6, n: 9, pmid: 'p', complex: false, dir: 'ab' }] });
+  eq(api.geEdges.find(e => e.a === 'G' && e.b === 'H').dir, 'ab', 'a re-fetch upgrades the existing edge\'s direction (not skipped as a dup)');
+  const frozen = api.geBuildFrozen();
+  eq((frozen.edges.find(e => e.a === 'G' && e.b === 'H') || {}).dir, 'ab', 'the upgraded direction is written on freeze');
+  ok(!frozen.edges.some(e => e.a === 'A' && e.b === 'C'), 'complex edges are not in the frozen mech set');
+}
+
 function testShownCount() {
   console.log('\ngeShownCount — wired-gene count, before and after build');
   const { api } = setup();
@@ -484,6 +562,7 @@ testSelect();
 testHighlightInputSync();
 testHighlightFocus();
 testEdgeToggleStability();
+testEdgeDirection();
 testSpikeGenes();
 testSpikePreservesGhosts();
 testCardScope();

@@ -65,6 +65,28 @@ for every pair of proteins in a co-immunoprecipitation, so a single pulldown wir
 a dozen genes together and says nothing mechanistic. Turn them on with the
 **complexes** toggle when you want them.
 
+#### Arrowheads show direction
+
+A mechanistic interaction is directed — one gene acts on the other — and the head
+at the **target** end shows which way, in the standard signalling convention:
+
+| Head | Nature | Reads as |
+|---|---|---|
+| ▶ filled arrow | **promote** | A activates / increases B |
+| ⊣ T-bar | **suppress** | A inhibits / decreases B |
+| ▷ open arrow | **modify** | A phosphorylates / modifies B (enzyme → substrate) |
+
+Direction comes from the INDRA statement (subject → object for regulations,
+enzyme → substrate for modifications). **Complex/`bind` edges are undirected** and
+carry no head. An edge whose direction isn't known yet is drawn as a plain line.
+
+> **Filling in direction.** Older sidecars stored edges with the two genes sorted
+> alphabetically, discarding direction, so only edges re-derived since carry a head.
+> To direction every edge, run **Refresh all → Freeze** once: the refresh re-fetches
+> from INDRA (the cache is versioned, so it re-pulls) and **upgrades** each existing
+> edge's direction in place, and the freeze writes it back. A `kb-interactions.py`
+> rebuild does the same from scratch.
+
 ### Ghost nodes
 
 When you expand a gene live (below), its INDRA partners that **aren't in memento**

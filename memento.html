@@ -3780,7 +3780,7 @@ function geBuildModel(){
   _geByU = new Map(_geNodes.map(n => [n.sym.toUpperCase(), n]));
   _geMechEdges = mech;
   _geEdges = mech.concat(cplx).map(e => ({ a:e.a, b:e.b, t:e.t, nat:geNature(e.t),
-    belief:e.belief, n:e.n, pmid:e.pmid, complex:e.t === 'Complex' }));
+    belief:e.belief, n:e.n, pmid:e.pmid, complex:e.t === 'Complex', dir:e.dir || null }));
   _geIsolated = all.length - _geNodes.length;
 }
 function geComputeDrawn(){ _geDrawn = _geEdges.filter(e => !e.complex || geShowComplex); }
@@ -3809,15 +3809,38 @@ function geNodeHtml(n){
   return `<div class="ge-node ge-c-${n.cclass}${offcard ? ' ge-offcard' : ''}${_geExpanded.has(n.sym) ? ' ge-expanded' : ''}" id="ge-n-${n.id}" data-sym="${esc(n.sym)}" style="--r:${Math.round(n.r * 2)}px"
     title="${tip}" onpointerdown="geNodeDown(event,this)" ondblclick="geNodeDbl(event,this)"><span class="ge-dot"></span><span class="ge-label">${esc(n.sym)}</span></div>`;
 }
+// Arrowhead markers, in PPI-signalling convention: promote = filled arrow, suppress = T-bar,
+// modify = open (hollow) arrow. Colours match the edge strokes. orient="auto-start-reverse" lets
+// one marker sit at EITHER end and still point outward, so an edge's `dir` picks marker-start vs
+// marker-end. markerUnits defaults to strokeWidth, and the stroke is counter-scaled (1.4px/zoom),
+// so the heads hold a constant on-screen size under zoom. Complex/bind edges are undirected: no head.
+function geMarkerDefs(){
+  return `<defs>
+    <marker id="ge-mk-promote" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0.5 L10,5 L0,9.5 Z" fill="#27AE60"></path></marker>
+    <marker id="ge-mk-modify" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0.8,1 L9.4,5 L0.8,9 Z" fill="none" stroke="#2980B9" stroke-width="1.5" stroke-linejoin="round"></path></marker>
+    <marker id="ge-mk-suppress" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M5,0.5 L5,9.5" fill="none" stroke="#C0392B" stroke-width="2.4" stroke-linecap="round"></path></marker>
+  </defs>`;
+}
 function geEdgesHtml(){
-  return _geDrawn.map((e, i) => `<line id="ge-e${i}" class="ge-edge ge-nat-${e.nat}${e.complex?' ge-complex':''}"></line>`).join('');
+  return geMarkerDefs() + _geDrawn.map((e, i) => {
+    // A directed mechanistic edge (dir set) gets a head at its TARGET end. dir 'ab' => arrow at b
+    // (marker-end); 'ba' => arrow at a (marker-start). Undirected or direction-less edges get none.
+    const mk = (!e.complex && e.dir && (e.nat === 'promote' || e.nat === 'suppress' || e.nat === 'modify')) ? 'ge-mk-' + e.nat : '';
+    const marker = !mk ? '' : (e.dir === 'ab' ? ` marker-end="url(#${mk})"` : ` marker-start="url(#${mk})"`);
+    return `<line id="ge-e${i}" class="ge-edge ge-nat-${e.nat}${e.complex?' ge-complex':''}"${marker}></line>`;
+  }).join('');
 }
 
 function renderGenes(){
   const host = document.getElementById('genes-view');
   if (!host) return;
   if (!interactions) {
-    host.innerHTML = `<div class="gr-empty"><p>No gene interaction data.</p><small>Run <code>python3 kb-interactions.py</code> to build knowledge-base/interactions.json, then reload the folder.</small></div>`;
+    // In GitHub mode the sidecar loads asynchronously after the cards (see loadInteractions), so a
+    // null here usually just means "still arriving" rather than "missing".
+    const gh = (typeof ghRepoMode !== 'undefined' && ghRepoMode);
+    host.innerHTML = gh
+      ? `<div class="gr-empty"><p>Loading gene interactions…</p><small>If this stays, the sidecar (knowledge-base/interactions.json) may be missing from the repo, or GitHub is unreachable.</small></div>`
+      : `<div class="gr-empty"><p>No gene interaction data.</p><small>Run <code>python3 kb-interactions.py</code> to build knowledge-base/interactions.json, then reload the folder.</small></div>`;
     return;
   }
   // Runs on every keystroke (via renderList). If the FROZEN gene set is
@@ -4050,11 +4073,21 @@ function geApplyDOM(){
     const el = document.getElementById('ge-n-' + n.id), p = _gePos[n.sym];
     if (el && p) el.style.transform = `translate(${p.x}px, ${p.y}px) translate(-50%, -50%)`;
   }
+  // A directed edge stops at its TARGET node's rim so the arrowhead sits ABOVE the disc (nodes are
+  // z-above edges), not buried under it. Disc radius is GE_NODE_R/max(1,zoom) scene units (the disc
+  // counter-scales via --ge-nodescale); the extra clearance keeps the head off the border.
+  const zoom = _geZoom || 1, gap = GE_NODE_R / Math.max(1, zoom) + 3 / zoom;
   _geDrawn.forEach((e, i) => {
     const line = document.getElementById('ge-e' + i), pa = _gePos[e.a], pb = _gePos[e.b];
     if (!line || !pa || !pb || !line.setAttribute) return;
-    line.setAttribute('x1', pa.x); line.setAttribute('y1', pa.y);
-    line.setAttribute('x2', pb.x); line.setAttribute('y2', pb.y);
+    let x1 = pa.x, y1 = pa.y, x2 = pb.x, y2 = pb.y;
+    if (e.dir && !e.complex) {
+      const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
+      if (e.dir === 'ab') { x2 -= ux * gap; y2 -= uy * gap; }   // head at b
+      else { x1 += ux * gap; y1 += uy * gap; }                  // head at a
+    }
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
   });
 }
 
@@ -4346,11 +4379,18 @@ function geParseIndra(resp, G){
     const ags = geStmtAgents(s);
     if (!ags.includes(GU)) continue;
     const nEv = counts[hash] || (s.evidence || []).length || 1;
+    // A mechanistic statement is DIRECTED: geStmtAgents returns agents source-first
+    // (subj->obj for regulations, enz->sub for modifications) and has exactly two.
+    // Complex membership is undirected. Keep x/y alphabetical (undirected key, so the
+    // pair still dedups) and record which way the arrow points: 'ab' = x->y, 'ba' = y->x.
+    const directed = s.type !== 'Complex' && new Set(ags).size === 2;
+    const src = directed ? ags[0] : null;
     for (const p of new Set(ags)) {
       if (p === GU) continue;
       const [x, y] = GU < p ? [GU, p] : [p, GU];
       const key = x + '|' + y + '|' + s.type;
       const e = geThin(s, x, y, nEv);
+      if (src != null) e.dir = (src === x ? 'ab' : 'ba');
       const prev = best.get(key);
       if (!prev || e.n > prev.n) best.set(key, e);
     }
@@ -4383,8 +4423,13 @@ async function geGroundChrom(symbols){
   }
   return out;
 }
-async function geCacheGet(sym){ try { return await idbGet('indra:' + sym.toUpperCase()); } catch(_) { return null; } }
-async function geCachePut(sym, rec){ try { await idbPut('indra:' + sym.toUpperCase(), rec); } catch(_) {} }
+// Bump when the cached edge shape changes so stale entries are re-fetched, not trusted. v2 added
+// edge direction (dir): a v1 rec's edges were normalised alphabetically with no direction, so it
+// must be re-fetched before its arrowheads can be drawn. geCacheGet returns null for a stale rec,
+// which every caller already treats as "not cached -> fetch", so the upgrade needs no other change.
+const GE_CACHE_V = 2;
+async function geCacheGet(sym){ try { const r = await idbGet('indra:' + sym.toUpperCase()); return (r && r.v === GE_CACHE_V) ? r : null; } catch(_) { return null; } }
+async function geCachePut(sym, rec){ try { await idbPut('indra:' + sym.toUpperCase(), { ...rec, v: GE_CACHE_V }); } catch(_) {} }
 
 // Re-render the scene's nodes and edges in place (positions preserved) after an
 // expansion adds to the model. Not a relayout.
@@ -4459,14 +4504,15 @@ function geMergeExpansion(sym, rec){
     if (frozen) _geIsolated = Math.max(0, _geIsolated - 1); else added.ghosts++;
     return n;
   };
-  const have = new Set(_geEdges.map(e => e.a + '|' + e.b + '|' + e.t));
+  const have = new Map(_geEdges.map(e => [e.a + '|' + e.b + '|' + e.t, e]));
   for (const e of rec.edges) {
     if (dropped(e.a) || dropped(e.b)) continue;   // ghost endpoint below the cap
     const na = ensure(e.a), nb = ensure(e.b);
     const key = na.sym + '|' + nb.sym + '|' + e.t;
-    if (have.has(key)) continue;
-    have.add(key);
+    const dup = have.get(key);
+    if (dup) { if (!dup.dir && e.dir) dup.dir = e.dir; continue; }   // upgrade a pre-direction edge in place
     const edge = { ...e, a: na.sym, b: nb.sym };
+    have.set(key, edge);
     _geEdges.push(edge);
     if (!edge.complex) { _geMechEdges.push(edge); na.deg++; nb.deg++; }   // radius = mech degree, as in geBuildModel
     added.edges++;
@@ -4560,7 +4606,7 @@ function geMergeAddGene(X, rec){
     }
   }
   if (!xnode) return null;
-  const have = new Set(_geEdges.map(e => e.a + '|' + e.b + '|' + e.t));
+  const have = new Map(_geEdges.map(e => [e.a + '|' + e.b + '|' + e.t, e]));
   let added = 0;
   for (const e of rec.edges) {
     const partnerU = e.a === X ? e.b : (e.b === X ? e.a : null);
@@ -4569,9 +4615,10 @@ function geMergeAddGene(X, rec){
     if (!pnode || pnode.sym === xnode.sym) continue;
     const [a, b] = xnode.sym < pnode.sym ? [xnode.sym, pnode.sym] : [pnode.sym, xnode.sym];
     const key = a + '|' + b + '|' + e.t;
-    if (have.has(key)) continue;
-    have.add(key);
+    const dup = have.get(key);
+    if (dup) { if (!dup.dir && e.dir) dup.dir = e.dir; continue; }   // upgrade a pre-direction edge in place
     const edge = { ...e, a, b };
+    have.set(key, edge);
     _geEdges.push(edge);
     if (!edge.complex) { _geMechEdges.push(edge); xnode.deg++; pnode.deg++; }
     added++;
@@ -4622,15 +4669,16 @@ function geEnsureMementoNode(U){
 // ones to nodes; never ghosts). No relayout — new edges appear between placed
 // nodes; newly promoted nodes settle after the whole refresh. Returns edges added.
 function geMergeNodeEdges(rec){
-  const have = new Set(_geEdges.map(e => e.a + '|' + e.b + '|' + e.t));
+  const have = new Map(_geEdges.map(e => [e.a + '|' + e.b + '|' + e.t, e]));
   let added = 0;
   for (const e of rec.edges) {
     const na = geEnsureMementoNode(e.a), nb = geEnsureMementoNode(e.b);
     if (!na || !nb) continue;                              // an endpoint isn't in memento
     const key = na.sym + '|' + nb.sym + '|' + e.t;
-    if (have.has(key)) continue;
-    have.add(key);
+    const dup = have.get(key);
+    if (dup) { if (!dup.dir && e.dir) dup.dir = e.dir; continue; }   // upgrade a pre-direction edge in place
     const edge = { ...e, a: na.sym, b: nb.sym };
+    have.set(key, edge);
     _geEdges.push(edge);
     if (!edge.complex) { _geMechEdges.push(edge); na.deg++; nb.deg++; }
     added++;
@@ -4713,7 +4761,8 @@ function geBuildFrozen(){
     const key = e.a + '|' + e.b + '|' + e.t;
     if (seen.has(key)) continue;
     seen.add(key);
-    (e.complex ? cplx : mech).push({ a: e.a, b: e.b, t: e.t, belief: e.belief, n: e.n, pmid: e.pmid || null });
+    (e.complex ? cplx : mech).push({ a: e.a, b: e.b, t: e.t, belief: e.belief, n: e.n, pmid: e.pmid || null,
+      ...(e.dir ? { dir: e.dir } : {}) });   // direction only on mechanistic edges; complexes are undirected
   }
   const byAB = (x, y) => x.a < y.a ? -1 : x.a > y.a ? 1 : x.b < y.b ? -1 : x.b > y.b ? 1 : 0;
   mech.sort(byAB); cplx.sort(byAB);
@@ -4755,13 +4804,35 @@ async function geFreeze(){
 // fetch cover the served / http case.
 async function loadInteractions(){
   interactions = null;
+  // Desktop: the folder is the single source of truth; never touch the network.
   if (typeof dirHandle !== 'undefined' && dirHandle) {
     try {
       const fh = await dirHandle.getFileHandle('interactions.json');
       interactions = JSON.parse(await (await fh.getFile()).text());
     } catch(_) {}
-    return;   // desktop path is filesystem-only; never touch the network
+    return;
   }
+  // GitHub mode (iOS and any browser without a folder): the sidecar lives in the repo, NOT next to
+  // the page, so a relative fetch can't reach it. Pull it from the API with the raw media type —
+  // which works for a private repo and for a file past the 1MB inline-content limit — and cache it
+  // by commit sha, since at ~1-2MB it is too big to re-download on every load.
+  if (typeof ghRepoMode !== 'undefined' && ghRepoMode && typeof ghPat === 'function' && ghPat()) {
+    const sha = _ghHeadSha;
+    try {
+      const cached = await idbGet('gh_interactions');
+      if (cached && cached.data && (!sha || cached.sha === sha)) { interactions = cached.data; return; }
+    } catch(_) {}
+    try {
+      const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_KB_PATH}/interactions.json?ref=${GH_BRANCH}`,
+        { headers: { ...ghHeaders(), 'Accept': 'application/vnd.github.raw' }, cache: 'no-store' });
+      if (r.ok) {
+        interactions = await r.json();
+        if (sha) { try { await idbPut('gh_interactions', { sha, data: interactions }); } catch(_) {} }
+        return;
+      }
+    } catch(_) {}
+  }
+  // Static hosting: the sidecar sits next to the page.
   try {
     const r = await fetch('knowledge-base/interactions.json', { cache: 'no-store' });
     if (r.ok) { interactions = await r.json(); return; }
@@ -6768,6 +6839,7 @@ async function ghLoadEntries() {
         computeSortTags(); renderFilters(); renderList();
         showApp();
         showToast('Loaded from cache');
+        loadInteractions().then(() => { if (mainView === 'genes') renderGenes(); });   // sidecar isn't in the card cache
         return;
       }
     }
@@ -6819,6 +6891,7 @@ async function ghLoadEntries() {
     computeSortTags(); renderFilters(); renderList();
     showApp();
     showToast(`Loaded ${items.length} entries from GitHub`);
+    loadInteractions().then(() => { if (mainView === 'genes') renderGenes(); });   // the gene sidecar, from the repo
   } catch(e) {
     showToast('GitHub load failed: ' + e.message);
   }
@@ -6837,6 +6910,7 @@ async function tryLoadFromGitHubCache() {
       ghCanWrite = (await idbGet('gh_can_write')) === true;
       readOnly = !ghCanWrite;
       computeSortTags(); renderFilters(); renderList();
+      loadInteractions().then(() => { if (mainView === 'genes') renderGenes(); });   // sidecar from its own cache/repo
       return true;
     }
   } catch(_) {}

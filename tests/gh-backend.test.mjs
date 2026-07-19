@@ -335,5 +335,38 @@ console.log('\n10. auto-refresh must never discard unsaved work');
   eq(api.queue.size > 0, true, 'the pending edit survives — it is not reloaded away');
 }
 
+console.log('\n11. GitHub mode loads the gene sidecar (iOS: no folder, sidecar lives in the repo, not next to the page)');
+{
+  let ixCalls = 0, allowNet = true;
+  const sidecar = { genes: { A: {}, B: {} }, edges: [{ a: 'A', b: 'B', t: 'Activation', dir: 'ab' }], complex_edges: [] };
+  const fetchImpl = async (url, opts = {}) => {
+    if (/contents\/knowledge-base\/interactions\.json\?ref=main/.test(url)) {
+      ixCalls++;
+      if (!allowNet) return { ok: false, status: 500, json: async () => ({}), text: async () => '' };
+      return { ok: true, status: 200, json: async () => sidecar, text: async () => JSON.stringify(sidecar) };
+    }
+    return { ok: false, status: 404, json: async () => ({}), text: async () => '' };
+  };
+  const { api } = load({ fetchImpl, pat: 'ghp_x' });
+  api.ghRepoMode = true; api.headSha = 'sha-1';
+
+  await api.loadInteractions();
+  ok(api.interactions && api.interactions.edges.length === 1, 'the sidecar loads from the repo in GitHub mode');
+  eq(api.interactions.edges[0].dir, 'ab', 'direction survives the GitHub load');
+  eq(ixCalls, 1, 'one contents-API request');
+
+  // a second load at the same commit sha is served from the IndexedDB cache — no re-download
+  allowNet = false; api.interactions = null;
+  await api.loadInteractions();
+  ok(api.interactions && api.interactions.edges.length === 1, 'a second load at the same sha comes from cache');
+  eq(ixCalls, 1, 'the ~1-2MB sidecar is not re-downloaded when nothing changed');
+
+  // a new commit sha busts the cache
+  allowNet = true; api.interactions = null; api.headSha = 'sha-2';
+  await api.loadInteractions();
+  eq(ixCalls, 2, 'a new commit sha re-downloads the sidecar');
+  ok(api.interactions && api.interactions.edges.length === 1, 're-download succeeds');
+}
+
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);

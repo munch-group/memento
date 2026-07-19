@@ -226,7 +226,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get geMechEdges(){ return _geMechEdges; }, get gePos(){ return _gePos; },
       get geSelIds(){ return [..._geSelIds].sort(); }, get geLastSel(){ return _geLastSel; },
       get geIsolated(){ return _geIsolated; },
-      get geNatures(){ return [...geNatures].sort(); }, get geMinBelief(){ return geMinBelief; },
+      get geNatures(){ return geNatures === null ? null : [...geNatures].sort(); }, get geMinBelief(){ return geMinBelief; },
       get geMinEv(){ return geMinEv; }, get geShowComplex(){ return geShowComplex; },
       set geSpacing(v){ geSpacing = v; },
       // M2 live expansion

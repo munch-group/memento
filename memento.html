@@ -3707,6 +3707,10 @@ const GE_NATURE = {
   Translocation:'modify', Gef:'modify', Gap:'modify', Complex:'bind',
 };
 function geNature(t){ return GE_NATURE[t] || 'modify'; }
+// The nature checkboxes filter MECHANISTIC edges only. 'bind' is not among them: every 'bind' edge
+// is a protein Complex, and complexes have their own dedicated toggle (geShowComplex). Offering
+// 'bind' as a nature made it a second, overlapping switch over the same edges.
+const GE_NAT_KEYS = ['promote', 'suppress', 'modify'];
 // Node fill = chromosome. X vs autosome is the meaningful axis for the drive
 // work; same palette as interaction-store (X red, autosome blue).
 function geChromClass(chrom){
@@ -3742,9 +3746,11 @@ let _geLayoutIds = null;
 let _geW = 800, _geH = 520, _gePan = { x:0, y:0 }, _geZoom = 1;
 let _geRaf = 0, _geAlpha = 0, _geRefit = false;
 let _geDrag = null, _gePanning = null;
-// Property filters HIDE, they never relayout — the map stays a map. geNatures
-// empty is the sentinel for "all on".
-let geNatures = new Set();
+// Property filters HIDE, they never relayout — the map stays a map. geNatures is
+// null for "all natures on" (the default); otherwise it is the explicit set of
+// natures to show, so an EMPTY set means "show none" — unchecking every box hides
+// every mechanistic edge instead of wrapping back around to all-on.
+let geNatures = null;
 let geMinBelief = 0, geMinEv = 1, geShowComplex = false, geSpacing = 1;
 // Every node is the same size (radius, in scene units); the on-screen size is held
 // constant across zoom by --ge-nodescale, like the labels.
@@ -3779,7 +3785,9 @@ function geBuildModel(){
 }
 function geComputeDrawn(){ _geDrawn = _geEdges.filter(e => !e.complex || geShowComplex); }
 function geEdgeShown(e){
-  if (geNatures.size && !geNatures.has(e.nat)) return false;
+  // Complex ('bind') edges answer only to the complexes toggle (via _geDrawn), never the nature
+  // checkboxes — otherwise the two controls fight and the shown set depends on toggle order.
+  if (!e.complex && geNatures && !geNatures.has(e.nat)) return false;
   if ((e.belief || 0) < geMinBelief) return false;
   if ((e.n || 0) < geMinEv) return false;
   return true;
@@ -3836,8 +3844,8 @@ function renderGenes(){
       </div>
       <div class="gr-tools ge-tools" onpointerdown="event.stopPropagation()">
         <div class="ge-filter-group" title="Nature of interaction">
-          ${['promote','suppress','modify','bind'].map(nat =>
-            `<label class="ge-chk ge-nat-lab-${nat}"><input type="checkbox" ${geNatures.size===0||geNatures.has(nat)?'checked':''} onchange="setGeNature('${nat}',this.checked)">${nat}</label>`).join('')}
+          ${GE_NAT_KEYS.map(nat =>
+            `<label class="ge-chk ge-nat-lab-${nat}"><input type="checkbox" ${!geNatures||geNatures.has(nat)?'checked':''} onchange="setGeNature('${nat}',this.checked)">${nat}</label>`).join('')}
         </div>
         <div class="gr-slider"><span class="seg-label" title="Minimum INDRA belief score">conf ≥ <span id="ge-belief-val">${geMinBelief.toFixed(2)}</span></span>
           <input type="range" class="gr-range" min="0" max="1" step="0.05" value="${geMinBelief}" oninput="setGeMinBelief(this.value)"></div>
@@ -4251,9 +4259,10 @@ function geWriteHighlightInput(){
 // Each of these changes which edges are visible, so a Relayout focus computed from the old
 // visible edges is stale — drop it and show everything the filters allow again.
 function setGeNature(nat, on){
-  if (geNatures.size === 0) geNatures = new Set(['promote','suppress','modify','bind']);
+  if (!GE_NAT_KEYS.includes(nat)) return;   // 'bind' is complex-only; only real natures toggle here
+  if (geNatures === null) geNatures = new Set(GE_NAT_KEYS);   // materialise the "all on" default to edit it
   if (on) geNatures.add(nat); else geNatures.delete(nat);
-  if (geNatures.size === 4) geNatures = new Set();   // all on == the empty sentinel
+  if (geNatures.size === GE_NAT_KEYS.length) geNatures = null;   // all present == the "all on" sentinel
   _geLayoutIds = null; geApplyFilter();
 }
 function setGeMinBelief(v){ geMinBelief = Math.max(0, Math.min(1, Number(v) || 0)); const el = document.getElementById('ge-belief-val'); if (el) el.textContent = geMinBelief.toFixed(2); _geLayoutIds = null; geApplyFilter(); }
@@ -4263,7 +4272,9 @@ function setGeShowComplex(on){
   geComputeDrawn();
   const svg = document.getElementById('ge-edges');
   if (svg) svg.innerHTML = geEdgesHtml();     // rebuild just the edge layer; nodes keep their places
-  _geSig = _geNodes.map(n => n.sym).join(',') + '|' + geShowComplex;
+  // Leave _geSig alone: the frozen gene set is unchanged, so the next search must still short-circuit.
+  // (Overwriting it here made _geSig disagree with frozenSig, forcing a full rebuild that dropped
+  // this session's live INDRA ghosts/expansions and re-ran the layout.)
   _geLayoutIds = null; geApplyDOM(); geApplyFilter();
 }
 // Relayout packs only the connected-visible subgraph — visible nodes that have a visible edge to

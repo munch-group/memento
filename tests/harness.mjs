@@ -219,6 +219,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown,
       geShownCount, geComputeDrawn, geStep, geInitPositions, geSizeLayout,
       setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, geSelect, geClearSelection, geApplyFilter, geRelayout,
+      geSpikes, geSyncSpikes, geSyncSpikeNodes, get geSpikeSet(){ return [..._geSpikes].sort(); },
+      getVisibleItems,
       set interactions(v){ interactions = v; }, get interactions(){ return interactions; },
       get geNodes(){ return _geNodes; }, get geEdges(){ return _geEdges; }, get geDrawn(){ return _geDrawn; },
       get geMechEdges(){ return _geMechEdges; }, get gePos(){ return _gePos; },

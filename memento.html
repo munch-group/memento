@@ -1478,6 +1478,9 @@ function getVisibleItems() {
       } else if (tok.startsWith('/')) {
         const types = tok.slice(1).split(',').filter(Boolean).map(resolveType);
         if (neg) notTypes.push(...types); else types.forEach(n => typeOr.push(n));
+      } else if (tok.startsWith('*')) {
+        // '*GENE' spikes a gene into the Genes view only; it never filters cards
+        // (and is ignored in every other view). The Genes view reads it via geSpikes().
       } else if (tok) {
         (neg ? notTerms : freeTerms).push(tok.toLowerCase());
       }
@@ -3720,6 +3723,10 @@ let _geFrozenU = new Map();  // upper(sym) -> canonical sym for every gene in th
 let _geIsolated = 0;
 // M2 (live INDRA expansion): genes expanded this session, and the in-flight guard.
 let _geExpanded = new Set(), _geExpanding = false, _geUnpinAfter = null;
+let _geExpandLeft = new Map();   // sym -> partners fetched but not yet shown (capped off); Expand again adds them
+// '*GENE' spikes: genes force-shown in the view via the search bar. _geSpikeAdded tracks the
+// isolated ones we added as nodes so they can be dropped when unspiked.
+let _geSpikes = new Set(), _geSpikeAdded = new Set();
 // M3 (refresh-all + freeze): the bulk-refresh flag and its cancel signal.
 let _geRefreshing = false, _geRefreshCancel = false;
 let _gePos = {}, _geHome = {}, _geFixed = {};
@@ -3810,10 +3817,12 @@ function renderGenes(){
   // expansions added this session. Just re-filter the map already drawn.
   _geLayoutIds = null;   // a search/facet change (or a fresh build) drops any Relayout focus
   const frozenSig = String(Object.keys(interactions.genes || {}).length);
-  if (_geBuilt && frozenSig === _geSig) { geApplyFilter(); return; }
+  if (_geBuilt && frozenSig === _geSig) { geSyncSpikes(); geApplyFilter(); return; }
   geStop();
   geBuildModel();
   _geSig = frozenSig; _geBuilt = false;
+  _geSpikeAdded = new Set();   // geBuildModel wiped the node set; re-derive spikes from scratch
+  geSyncSpikeNodes();          // add any '*GENE' spikes into the fresh node set before the DOM is built
   if (!_geNodes.length) {
     host.innerHTML = `<div class="gr-empty"><p>No connected genes.</p><small>No gene in your cards has a mechanistic interaction in the sidecar.</small></div>`;
     return;
@@ -3882,6 +3891,56 @@ function geCardOff(){
   }
   return off;
 }
+// '*GENE' spikes parsed from the search bar. Resolves a gene name like @ does (exact, else
+// unique-prefix) against the sidecar's OWN gene vocabulary (interactions.genes) — self-contained,
+// so there's no dependency on the last build's maps. Returns uppercase canonical syms that exist in
+// the sidecar; ambiguous or unknown tokens are ignored. (Aliases like *RNF12 aren't resolved yet.)
+function geSpikes(){
+  const raw = document.getElementById('search-input')?.value || '';
+  const keysU = new Map(Object.keys((interactions && interactions.genes) || {}).map(s => [s.toUpperCase(), s]));
+  const out = new Set();
+  for (const m of raw.matchAll(/\*([^\s]+)/g)) for (const part of m[1].split(/[,/]/)) {
+    const tok = part.trim().toUpperCase();
+    if (!tok) continue;
+    if (keysU.has(tok)) out.add(tok);
+    else { const c = [...keysU.keys()].filter(k => k.startsWith(tok)); if (c.length === 1) out.add(c[0]); }
+  }
+  return out;
+}
+// Remove a node that exists only because it was spiked in (an isolated sidecar gene we added).
+function geDropNode(sym){
+  _geNodes = _geNodes.filter(n => n.sym !== sym);
+  _geById.delete(sym); _geByU.delete(sym.toUpperCase());
+  delete _gePos[sym]; delete _geHome[sym]; delete _geFixed[sym];
+  _geIsolated++;
+}
+// Reconcile the spiked-in NODES with the current '*GENE' tokens WITHOUT rebuilding the model — so
+// live INDRA ghosts/expansions survive. An isolated sidecar gene that's spiked is promoted to a
+// node (reusing geEnsureMementoNode); one that's no longer spiked is dropped, unless it has since
+// become wired (an expand/refresh gave it a mechanistic edge). Wired spikes need no node change —
+// geApplyFilter just exempts them from the card-scope hiding. Returns whether the node set changed.
+function geSyncSpikeNodes(){
+  const want = geSpikes();
+  let changed = false;
+  for (const U of want) if (!_geByU.has(U)) { const n = geEnsureMementoNode(U); if (n) { _geSpikeAdded.add(n.sym); changed = true; } }
+  for (const sym of [..._geSpikeAdded]) {
+    if (want.has(sym.toUpperCase())) continue;
+    if (!_geMechEdges.some(e => e.a === sym || e.b === sym)) geDropNode(sym);
+    _geSpikeAdded.delete(sym); changed = true;
+  }
+  _geSpikes = want;
+  return changed;
+}
+// Short-circuit path (scene already drawn): reconcile spike nodes and, if they changed, repaint the
+// scene and settle the newcomers. The full render path calls geSyncSpikeNodes() before it builds
+// the DOM, so it doesn't need this.
+function geSyncSpikes(){
+  if (!geSyncSpikeNodes()) return false;
+  geComputeDrawn(); geRebuildScene();
+  _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
+  geApplyDOM(); geRun(0.5);
+  return true;
+}
 // The nodes a Relayout should pack: visible (not card-scoped out) AND with a visible edge to
 // another visible node. An edge is visible when it passes the property filters (geEdgeShown), is
 // currently drawn (complexes excluded from _geDrawn when off), and neither end is card-scoped out.
@@ -3895,10 +3954,19 @@ function geConnectedVisible(){
   return connected;
 }
 function geApplyFilter(){
+  // The "Highlight genes" input is the source of truth for what's highlighted: clicking nodes
+  // edits it and typing in it selects nodes (two-way synced). Derive the highlighted node set from
+  // it here — its genes are uppercase, mapped to nodes via _geByU.
+  _geSelIds = new Set();
+  for (const U of highlightInputGenes) { const n = _geByU.get(U); if (n) _geSelIds.add(n.sym); }
+  if (_geLastSel && !_geSelIds.has(_geLastSel)) _geLastSel = null;
+  if (!_geLastSel && _geSelIds.size) _geLastSel = [..._geSelIds][_geSelIds.size - 1];
   // Search bar / facet scope hides genes whose cards don't match; a Relayout focus additionally
   // hides everything outside its connected-visible subgraph. Both only hide, never move.
   const off = geCardOff();
   if (_geLayoutIds) for (const n of _geNodes) if (!_geLayoutIds.has(n.sym)) off.add(n.sym);
+  // '*GENE' spikes always show, overriding both the card scope and any Relayout focus.
+  if (_geSpikes.size) for (const n of _geNodes) if (_geSpikes.has(n.sym.toUpperCase())) off.delete(n.sym);
   // Highlighting focuses: every clicked gene AND its neighbours stay lit, the rest dim, and only
   // edges touching a clicked gene are drawn — accumulated over all clicked genes.
   const anySel = _geSelIds.size > 0;
@@ -3947,7 +4015,9 @@ function geUpdateAction(){
   const n = _geLastSel ? _geById.get(_geLastSel) : null;
   if (!n) { wrap.style.display = 'none'; return; }
   wrap.style.display = '';
-  if (_geExpanded.has(n.sym)) { exp.textContent = '✓ ' + n.sym + ' expanded'; exp.disabled = true; }
+  const left = _geExpandLeft.get(n.sym);
+  if (_geExpanded.has(n.sym) && left === 0) { exp.textContent = '✓ ' + n.sym + ' fully expanded'; exp.disabled = true; }
+  else if (_geExpanded.has(n.sym)) { exp.textContent = (_geExpanding ? '… expanding ' : '⤢ Expand ') + n.sym + (left ? ` (+${Math.min(left, GE_GHOST_CAP)} more)` : ''); exp.disabled = _geExpanding; }
   else { exp.textContent = (_geExpanding ? '… expanding ' : '⤢ Expand ') + n.sym; exp.disabled = _geExpanding; }
   if (add) {
     if (n.ghost) { add.style.display = ''; add.textContent = '＋ Add ' + n.sym + ' to memento'; add.disabled = false; }
@@ -4153,16 +4223,29 @@ function geWheel(ev){
   _gePan.x = mx - bx * _geZoom; _gePan.y = my - by * _geZoom;
   geApplyDOM();
 }
+// Clicking a node toggles it in the shared "Highlight genes" set (uppercase). geApplyFilter then
+// re-derives which nodes are lit from that set, so this stays in sync with the input both ways.
 function geSelect(sym){
-  if (_geSelIds.has(sym)) {
-    _geSelIds.delete(sym);
-    if (_geLastSel === sym) _geLastSel = _geSelIds.size ? [..._geSelIds][_geSelIds.size - 1] : null;
-  } else {
-    _geSelIds.add(sym); _geLastSel = sym;
-  }
+  const U = sym.toUpperCase();
+  if (highlightInputGenes.has(U)) { highlightInputGenes.delete(U); if (_geLastSel === sym) _geLastSel = null; }
+  else { highlightInputGenes.add(U); _geLastSel = sym; }
+  geWriteHighlightInput();
   geApplyFilter();
 }
-function geClearSelection(){ if (_geSelIds.size) { _geSelIds.clear(); _geLastSel = null; geApplyFilter(); } }
+function geClearSelection(){
+  if (!highlightInputGenes.size) return;
+  highlightInputGenes = new Set();
+  _geLastSel = null;
+  geWriteHighlightInput();
+  geApplyFilter();
+}
+// Mirror the highlight set into the input's value WITHOUT revealing the input, and keep the
+// highlight button lit. Setting .value programmatically doesn't fire oninput, so no loop.
+function geWriteHighlightInput(){
+  const inp = document.getElementById('highlight-input');
+  if (inp) inp.value = [...highlightInputGenes].map(U => (_geByU.get(U) || {}).sym || U).join(' ');
+  document.getElementById('highlight-btn')?.classList.toggle('active', highlightInputGenes.size > 0);
+}
 
 // --- filter setters (hide/dim; only Relayout and the complex toggle rebuild) ---
 // Each of these changes which edges are visible, so a Relayout focus computed from the old
@@ -4304,7 +4387,8 @@ async function geExpand(sym){
   if (!sym || _geExpanding) return;
   const node = _geById.get(sym);
   if (!node) return;   // ghosts CAN be expanded — you may want to explore further out from one
-  if (_geExpanded.has(sym)) { showToast(sym + ' already expanded'); return; }
+  // Re-expanding is allowed: geMergeExpansion skips ghosts already on the map, so each pass adds
+  // the NEXT top-GE_GHOST_CAP partners by evidence.
   _geExpanding = true; geUpdateAction();
   try {
     let rec = await geCacheGet(sym);
@@ -4323,8 +4407,10 @@ async function geExpand(sym){
     }
     const added = geMergeExpansion(sym, rec);
     _geExpanded.add(sym);
-    showToast(`${sym}: +${added.edges} interaction${added.edges === 1 ? '' : 's'}, +${added.ghosts} new gene${added.ghosts === 1 ? '' : 's'}`
-      + (added.capped ? ` (${added.capped} more below the top ${GE_GHOST_CAP})` : ''));
+    _geExpandLeft.set(sym, added.capped);   // partners still not shown; the next Expand adds them
+    showToast(`${sym}: +${added.edges} interaction${added.edges === 1 ? '' : 's'}, +${added.ghosts} gene${added.ghosts === 1 ? '' : 's'}`
+      + (added.capped ? ` — ${added.capped} more, Expand again for the next ${Math.min(added.capped, GE_GHOST_CAP)}`
+                      : (added.ghosts || added.edges ? '' : ' (nothing new)')));
   } catch(e) {
     showToast('Expansion failed: ' + e.message);
   } finally {
@@ -4481,7 +4567,7 @@ function geMergeAddGene(X, rec){
   }
   geComputeDrawn(); geRebuildScene();
   _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
-  _geSelIds.add(xnode.sym); _geLastSel = xnode.sym;         // highlight the gene you just added
+  highlightInputGenes.add(xnode.sym.toUpperCase()); _geLastSel = xnode.sym; geWriteHighlightInput();   // highlight the gene you just added
   // settle the newcomers while the existing map stays pinned
   _geUnpinAfter = new Set();
   for (const n of _geNodes) if (before.has(n.sym) && !_geFixed[n.sym]) { _geFixed[n.sym] = true; _geUnpinAfter.add(n.sym); }

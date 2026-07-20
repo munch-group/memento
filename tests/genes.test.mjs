@@ -274,7 +274,7 @@ function testEdgeDirection() {
   const html = api.geEdgesHtml();
   ok(/ge-nat-promote[^>]*marker-end="url\(#ge-mk-promote\)"/.test(html), 'promote a→b gets a filled arrow at the b end (marker-end)');
   ok(/ge-nat-suppress[^>]*marker-start="url\(#ge-mk-suppress\)"/.test(html), 'suppress b→a gets a T-bar at the a end (marker-start)');
-  ok(/ge-nat-modify[^>]*marker-end="url\(#ge-mk-modify\)"/.test(html), 'modify a→b gets an open arrow at the b end');
+  ok(/ge-nat-modify[^>]*marker-end="url\(#ge-mk-modify\)"/.test(html), 'modify a→b gets a filled arrow at the b end');
   // the direction-less edge (G-H) must have no marker
   const ghLine = html.split('<line').find(s => /ge-nat-promote/.test(s) && !/marker-/.test(s));
   ok(!!ghLine, 'a direction-less mechanistic edge gets no arrowhead');
@@ -297,6 +297,14 @@ function testEdgeDirection() {
   // G→H (no dir): both ends exactly at node centres
   const iGH = idxOf('G', 'H');
   ok(near(num('ge-e' + iGH, 'x2'), pos.H.x) && near(num('ge-e' + iGH, 'y2'), pos.H.y), 'a direction-less edge is not pulled back (drawn centre-to-centre)');
+
+  // (5) head clearance: an edge arriving from BELOW must clear the name-label pill (which sits below
+  // the disc and would otherwise hide the arrowhead); from above/the side it stops at the disc rim.
+  const node = { sym: 'STK11' }, rN = 9;
+  ok(api.geHeadClear(node, 0, 1, rN, 1) > rN + 8, 'a head arriving from directly below is pushed past the label pill');
+  eq(api.geHeadClear(node, 0, -1, rN, 1), rN, 'a head arriving from above stops at the disc rim');
+  eq(api.geHeadClear(node, 1, 0, rN, 1), rN, 'a head arriving from the side stops at the disc rim');
+  ok(api.geHeadClear(node, 0, 1, rN, 1) > api.geHeadClear(node, 0, -1, rN, 1), 'below needs more clearance than above');
 
   // (4) a re-fetch UPGRADES a pre-direction edge in place (so a Refresh can complete direction on
   // an old sidecar instead of skipping the edge as a duplicate) — and it survives a freeze.
@@ -339,6 +347,15 @@ function testEdgeFan() {
   const m = api.geDrawn.map((_, i) => mid(i));
   const dist = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
   ok(dist(m[0], m[1]) > 0.5 && dist(m[1], m[2]) > 0.5 && dist(m[0], m[2]) > 0.5, 'the three edges sit at distinct offset positions, not stacked on one line');
+
+  // merging same-nature edges must not lose a known direction: if the most-evidenced edge has none
+  // but a lower-evidence same-nature edge does, the merged edge keeps that direction.
+  api.interactions.edges = [
+    { a: 'A', b: 'B', t: 'Phosphorylation', belief: 0.9, n: 9, pmid: 'p' },              // modify, no dir, higher n
+    { a: 'A', b: 'B', t: 'Ubiquitination',  belief: 0.8, n: 3, pmid: 'p', dir: 'ba' },   // modify, has dir, lower n
+  ];
+  api.geBuildModel(); api.geComputeDrawn();
+  eq((api.geDrawn.find(e => e.nat === 'modify') || {}).dir, 'ba', 'a merged edge keeps a known direction even if the top edge lacks one');
 
   // a single-nature pair stays straight (lane 0) — no gratuitous offset
   api.interactions.edges = [{ a: 'A', b: 'B', t: 'Activation', belief: 0.9, n: 5, pmid: 'p', dir: 'ab' }];

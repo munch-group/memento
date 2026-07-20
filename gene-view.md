@@ -72,13 +72,15 @@ at the **target** end shows which way, in the standard signalling convention:
 
 | Head | Nature | Reads as |
 |---|---|---|
-| ▶ filled arrow | **promote** | A activates / increases B |
-| ⊣ T-bar | **suppress** | A inhibits / decreases B |
-| ▷ open arrow | **modify** | A phosphorylates / modifies B (enzyme → substrate) |
+| ▶ filled arrow (green) | **promote** | A activates / increases B |
+| ⊣ T-bar (red) | **suppress** | A inhibits / decreases B |
+| ▶ filled arrow (blue) | **modify** | A phosphorylates / modifies B (enzyme → substrate) |
 
 Direction comes from the INDRA statement (subject → object for regulations,
 enzyme → substrate for modifications). **Complex/`bind` edges are undirected** and
 carry no head. An edge whose direction isn't known yet is drawn as a plain line.
+The head stops just outside the target's footprint — its disc, and the name-label
+pill below it when the edge arrives from underneath — so it never hides behind the label.
 
 #### One gene pair, several interactions
 

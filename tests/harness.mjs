@@ -217,7 +217,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get grH(){ return _grH; },
       get grAlpha(){ return _grAlpha; },
       // Genes view (M1)
-      renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown, geEdgesHtml,
+      renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown, geEdgesHtml, geHeadClear,
       geShownCount, geComputeDrawn, geStep, geInitPositions, geSizeLayout,
       setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, geSelect, geClearSelection, geApplyFilter, geRelayout,
       geSpikes, geSyncSpikes, geSyncSpikeNodes, get geSpikeSet(){ return [..._geSpikes].sort(); },

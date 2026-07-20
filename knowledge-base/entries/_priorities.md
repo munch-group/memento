@@ -7,6 +7,7 @@
 - SMBE follow-up: Tidy notes
 - Funding application overview/plan
 - tspaint with SCAR or similar
+- Make 1Password be more convenient
 
 ## Week run
 - Clean up chr3 notebook in geneinfo repo

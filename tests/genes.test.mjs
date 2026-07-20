@@ -476,6 +476,51 @@ function testRelayoutConnected() {
   ok(!off('A') && !off('B') && !off('C') && !off('D'), 'lowering the filter restores all nodes');
 }
 
+function testExpandUnderRelayoutFocus() {
+  console.log('\nexpand/add under a Relayout focus — new nodes join the focus, not hidden (regression)');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.interactions = {
+    genes: { A: { chrom: '1', cards: [], groups: [] }, B: { chrom: '1', cards: [], groups: [] },
+             C: { chrom: '1', cards: [], groups: [] }, D: { chrom: '1', cards: [], groups: [] } },
+    edges: [ { a: 'A', b: 'B', t: 'Phosphorylation', belief: 0.9, n: 5, pmid: '1' },
+             { a: 'C', b: 'D', t: 'Phosphorylation', belief: 0.4, n: 1, pmid: '2' } ],
+    complex_edges: [],
+  };
+  api.renderGenes();
+  const off = sym => { const el = sandbox.document.getElementById('ge-n-' + sym); return !!(el && /ge-off/.test(el.className)); };
+  const edgeShown = (x, y) => api.geDrawn.some((e, i) =>
+    ((e.a === x && e.b === y) || (e.a === y && e.b === x))
+    && sandbox.document.getElementById('ge-e' + i).getAttribute('opacity') === '1');
+
+  // Focus the map on the A–B subgraph (filter out the weak C–D edge, then relayout).
+  api.setGeMinBelief(0.6);
+  api.geRelayout();
+  ok(!off('A') && !off('B') && off('C') && off('D'), 'relayout focuses on the A–B subgraph');
+
+  // (1) double-click expansion: a fresh ghost partner G must appear under the focus.
+  api.geMergeExpansion('A', { edges: [
+    { a: 'A', b: 'G', t: 'Activation', nat: 'promote', belief: 0.8, n: 4, pmid: 'g', complex: false, dir: 'ab' },
+  ], chrom: { G: 'X' } });
+  ok(api.geNodes.some(n => n.sym === 'G'), 'the expansion created ghost G');
+  ok(!off('G'), 'the new ghost G is visible under the relayout focus (was hidden before the fix)');
+  ok(!off('A'), 'the expanded gene A stays visible');
+  ok(edgeShown('A', 'G'), 'the new A–G edge is drawn');
+
+  // (2) Add gene under the same focus: the added gene must also join the focus.
+  api.geMergeAddGene('B', { edges: [
+    { a: 'B', b: 'A', t: 'Activation', nat: 'promote', belief: 0.7, n: 2, pmid: 'q', complex: false },
+  ], chrom: {} });   // re-touch an existing pair; the real regression is the added-node visibility below
+  api.geMergeAddGene('NEWG', { edges: [
+    { a: 'NEWG', b: 'A', t: 'Activation', nat: 'promote', belief: 0.8, n: 3, pmid: 'r', complex: false },
+  ], chrom: { NEWG: 'X' } });
+  ok(api.geNodes.some(n => n.sym === 'NEWG'), 'add-gene created NEWG');
+  ok(!off('NEWG'), 'the added gene NEWG is visible under the relayout focus');
+  ok(edgeShown('A', 'NEWG'), 'the NEWG–A edge is drawn');
+
+  // The focus still excludes the genuinely-filtered C and D.
+  ok(off('C') && off('D'), 'the relayout focus still hides the filtered-out C and D');
+}
+
 function testHighlightInputSync() {
   console.log('\nhighlight input ↔ node clicks are synced');
   const { api, sandbox } = setup();
@@ -518,6 +563,49 @@ function testHighlightFocus() {
 
   api.geClearSelection();
   ok(!dim('STK11') && !dim('MAPT') && !dim('MARK2'), 'clearing removes all dimming');
+}
+
+function testHighlightBackground() {
+  console.log('\nhighlight — background stays drawn but dimmed; filtering still hides off nodes/edges');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.mainView = 'genes';
+  api.interactions = {
+    genes: { HUB: { chrom: '1', cards: ['c1'], groups: [] }, P1: { chrom: '1', cards: ['c1'], groups: [] },
+             P2: { chrom: '1', cards: ['c1'], groups: [] }, FAR: { chrom: 'X', cards: ['c2'], groups: [] } },
+    edges: [
+      { a: 'HUB', b: 'P1', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: '1' },
+      { a: 'HUB', b: 'P2', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: '2' },
+      { a: 'P1',  b: 'P2', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: '3' },   // background edge among visible nodes
+      { a: 'FAR', b: 'HUB', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: '4' },  // edge to a filtered-out node
+    ],
+    complex_edges: [],
+  };
+  api.items = [
+    { id: 'c1', type: 'note', tags: ['Drive'], genes: ['HUB', 'P1', 'P2'], title: '', source: '', content: 'x', date: '2026-01-01T00:00:00Z' },
+    { id: 'c2', type: 'note', tags: ['Other'], genes: ['FAR'], title: '', source: '', content: 'x', date: '2026-01-01T00:00:00Z' },
+  ];
+  const search = sandbox.document.getElementById('search-input');
+  const op = (x, y) => { const i = api.geDrawn.findIndex(e => (e.a === x && e.b === y) || (e.a === y && e.b === x)); return i < 0 ? null : sandbox.document.getElementById('ge-e' + i).getAttribute('opacity'); };
+  const cls = sym => { const el = sandbox.document.getElementById('ge-n-' + sym); return el ? el.className : ''; };
+
+  // Filter to #Drive: FAR (on the Other card) is hidden; HUB/P1/P2 shown.
+  search.value = '#Drive'; api.renderGenes();
+  ok(/ge-off/.test(cls('FAR')), '#Drive hides FAR');
+  ok(op('HUB', 'FAR') === '0', 'the edge to the hidden FAR is not drawn');
+  ok(op('HUB', 'P1') === '1' && op('P1', 'P2') === '1', 'no highlight: every edge among visible nodes is full');
+
+  // Highlight HUB: incident edges emphasised, the rest of the visible graph dimmed (not removed).
+  api.geSelect('HUB');
+  ok(op('HUB', 'P1') === '1' && op('HUB', 'P2') === '1', 'edges incident to the highlighted gene stay full');
+  const bg = op('P1', 'P2');
+  ok(bg !== null && Number(bg) > 0 && Number(bg) < 1, 'a background edge between two visible nodes is dimmed (0 < opacity < 1), not hidden');
+  ok(op('HUB', 'FAR') === '0', 'the edge to the still-hidden FAR stays undrawn (filtering beats the dimmed background)');
+  ok(/ge-off/.test(cls('FAR')) && !/ge-dim/.test(cls('FAR')), 'FAR stays hidden (off), never surfaced as a dimmed background node');
+  ok(!/ge-dim/.test(cls('P1')) && !/ge-dim/.test(cls('P2')), 'HUB\'s neighbours P1/P2 stay lit');
+
+  // Clearing the highlight restores full-strength background edges.
+  api.geClearSelection();
+  ok(op('P1', 'P2') === '1', 'clearing the highlight restores full-strength background edges');
 }
 
 function testSpikeGenes() {
@@ -615,6 +703,7 @@ testLayoutDeterministic();
 testSelect();
 testHighlightInputSync();
 testHighlightFocus();
+testHighlightBackground();
 testEdgeToggleStability();
 testEdgeDirection();
 testEdgeFan();
@@ -622,6 +711,7 @@ testSpikeGenes();
 testSpikePreservesGhosts();
 testCardScope();
 testRelayoutConnected();
+testExpandUnderRelayoutFocus();
 testEmptyStates();
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

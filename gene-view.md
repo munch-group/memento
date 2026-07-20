@@ -125,7 +125,7 @@ haven't written about. With a ghost selected you get two actions:
 | **conf ≥** slider | Hide interactions below an INDRA belief score (0–1) |
 | **ev ≥** slider | Hide interactions below N independent evidence texts (1–5) |
 | **complexes** | Draw protein-complex (`bind`) edges (off by default). This is the **only** control over complex edges — the nature checkboxes never touch them, so the two can't fight. |
-| **↻ Relayout** | Re-pack the *connected-visible* subgraph — visible genes that have a visible edge to another visible gene — and hide the rest, until you change a filter. With no filters active every gene qualifies, so it re-lays the whole map. |
+| **↻ Relayout** | Re-pack the *connected-visible* subgraph — visible genes that have a visible edge to another visible gene — and hide the rest, until you change a filter. With no filters active every gene qualifies, so it re-lays the whole map. Expanding, adding, or refreshing a gene while a Relayout focus is active brings the new genes *into* the focus so they show — the focus grows with your exploration rather than hiding what you just surfaced. |
 | **↻ Refresh all** | Bulk-fetch INDRA for every gene in memento and add interactions *between* them — never genes outside memento (see below); press again to cancel |
 | **⭳ Freeze** | Write the current interactions back to `interactions.json` |
 | **＋ Add gene** | Pops up an input; fetch a gene by name and connect it to your memento genes only (see below) |

@@ -8,6 +8,9 @@
 - Funding application overview/plan
 - tspaint with SCAR or similar
 - Make 1Password be more convenient
+- Sort out sync status of phasic on mac and cluster and stay on cluster
+- move tspaint to cluster
+- On ios, the genes view updates very very slowly. Please limit round-trips to github. Also pinch zoom does not work.
 
 ## Week run
 - Clean up chr3 notebook in geneinfo repo

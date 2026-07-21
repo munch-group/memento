@@ -15,4 +15,3 @@
 - Africa genomes access request
 - Review if phasic issues are relevant after refactor
 - Flesh out the phasic-popgen repo (Coal. Sel. / PSMC / Ghost model / sticcs tool)
--on iPad the genes view updates really slowly. Please limit the round-trip to GitHub. Also, pinch zoom does not work

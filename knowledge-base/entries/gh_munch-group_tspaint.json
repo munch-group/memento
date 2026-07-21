@@ -8,7 +8,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/tspaint",
-  "date": "2026-07-12T21:09:06Z",
+  "date": "2026-07-14T13:39:23Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/tspaint",
@@ -19,6 +19,16 @@
   "_ghPrivate": false,
   "_sortTag": "LAI",
   "_ghCommits": [
+    {
+      "sha": "1964945",
+      "msg": "update",
+      "date": "2026-07-14T13:39:14Z"
+    },
+    {
+      "sha": "c8ba32b",
+      "msg": "Planning and more external tools for benchmarking",
+      "date": "2026-07-14T10:17:27Z"
+    },
     {
       "sha": "32a12b2",
       "msg": "update",
@@ -58,16 +68,6 @@
       "sha": "7f9b241",
       "msg": "update",
       "date": "2026-07-06T20:18:04Z"
-    },
-    {
-      "sha": "4404d86",
-      "msg": "Lots of updates",
-      "date": "2026-07-06T20:03:27Z"
-    },
-    {
-      "sha": "8759ed9",
-      "msg": "Add ARGweaver as an alternative posterior-ARG ensemble front end",
-      "date": "2026-07-03T19:06:40Z"
     }
   ],
   "_ghIssuesRecent": []

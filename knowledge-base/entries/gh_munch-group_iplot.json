@@ -7,7 +7,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/iplot",
-  "date": "2026-04-29T18:35:16Z",
+  "date": "2026-07-21T08:12:53Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/iplot",
@@ -16,8 +16,13 @@
   "_ghLang": "Python",
   "_ghOpenIssues": 1,
   "_ghPrivate": false,
-  "_sortTag": "",
+  "_sortTag": "Teaching",
   "_ghCommits": [
+    {
+      "sha": "5c6c8f7",
+      "msg": "update",
+      "date": "2026-07-21T08:09:46Z"
+    },
     {
       "sha": "db6c12c",
       "msg": "Update conda-release.yml",
@@ -62,11 +67,6 @@
       "sha": "943ddec",
       "msg": "patch  version bump",
       "date": "2025-09-24T12:09:37Z"
-    },
-    {
-      "sha": "5a03187",
-      "msg": "update",
-      "date": "2025-09-06T14:41:19Z"
     }
   ],
   "_ghIssuesRecent": [

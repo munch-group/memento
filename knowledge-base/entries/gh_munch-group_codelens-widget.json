@@ -7,7 +7,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/codelens-widget",
-  "date": "2026-05-23T18:11:39Z",
+  "date": "2026-07-19T14:03:44Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/codelens-widget",
@@ -16,57 +16,57 @@
   "_ghLang": "Python",
   "_ghOpenIssues": 0,
   "_ghPrivate": false,
-  "_sortTag": "",
+  "_sortTag": "Teaching",
   "_ghCommits": [
     {
-      "sha": "2968e9a",
-      "msg": "update",
-      "date": "2026-05-23T18:10:38Z"
-    },
-    {
-      "sha": "39b622f",
+      "sha": "4e50bc0",
       "msg": "patch  version bump",
-      "date": "2026-05-23T17:10:11Z"
+      "date": "2026-07-19T14:02:36Z"
     },
     {
-      "sha": "b962c46",
+      "sha": "bbab000",
       "msg": "patch  version bump",
-      "date": "2026-05-23T17:10:06Z"
+      "date": "2026-07-19T14:02:35Z"
     },
     {
-      "sha": "30770ed",
+      "sha": "4153c91",
       "msg": "update",
-      "date": "2026-05-23T17:09:40Z"
+      "date": "2026-07-19T14:02:00Z"
     },
     {
-      "sha": "7a680f8",
+      "sha": "75fd4ae",
       "msg": "patch  version bump",
-      "date": "2026-05-23T17:06:24Z"
+      "date": "2026-07-18T09:51:24Z"
     },
     {
-      "sha": "0786d29",
+      "sha": "b3f19b4",
       "msg": "patch  version bump",
-      "date": "2026-05-23T17:06:22Z"
+      "date": "2026-07-18T09:51:22Z"
     },
     {
-      "sha": "1999191",
-      "msg": "notebook updates",
-      "date": "2026-05-23T17:03:35Z"
+      "sha": "1bd12f3",
+      "msg": "patch  version bump",
+      "date": "2026-07-18T06:30:41Z"
     },
     {
-      "sha": "669f207",
-      "msg": "update",
-      "date": "2026-05-23T17:02:55Z"
+      "sha": "6760d41",
+      "msg": "patch  version bump",
+      "date": "2026-07-18T06:30:36Z"
     },
     {
-      "sha": "4a7d650",
-      "msg": "notebook updates",
-      "date": "2026-05-23T16:52:23Z"
+      "sha": "8dc7381",
+      "msg": "fix for conda building",
+      "date": "2026-07-18T06:30:02Z"
     },
     {
-      "sha": "eafa6f3",
-      "msg": "update",
-      "date": "2026-05-23T16:48:52Z"
+      "sha": "0cf0247",
+      "msg": "patch  version bump",
+      "date": "2026-07-17T16:28:37Z"
+    },
+    {
+      "sha": "8c656ea",
+      "msg": "patch  version bump",
+      "date": "2026-07-17T16:28:31Z"
     }
   ],
   "_ghIssuesRecent": []

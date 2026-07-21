@@ -21,5 +21,6 @@
     "sortAsc": false,
     "conn": "all",
     "archive": "active"
-  }
+  },
+  "_sortTag": ""
 }

@@ -1,0 +1,51 @@
+{
+  "id": "gh_munch-group_myiagi-widget",
+  "type": "github",
+  "title": "myiagi-widget",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/myiagi-widget",
+  "date": "2026-07-19T18:20:26Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/myiagi-widget",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "fe08981",
+      "msg": "update",
+      "date": "2026-07-19T18:19:27Z"
+    },
+    {
+      "sha": "32f455c",
+      "msg": "update",
+      "date": "2026-07-19T16:23:31Z"
+    },
+    {
+      "sha": "4c4e85c",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T16:21:47Z"
+    },
+    {
+      "sha": "882314e",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T16:21:43Z"
+    },
+    {
+      "sha": "32645ac",
+      "msg": "Added files",
+      "date": "2026-07-19T16:20:13Z"
+    },
+    {
+      "sha": "059d292",
+      "msg": "Initial commit",
+      "date": "2026-07-19T14:08:21Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

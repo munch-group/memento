@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_snippet-cast",
+  "type": "github",
+  "title": "snippet-cast",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/snippet-cast",
+  "date": "2026-07-21T10:28:21Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/snippet-cast",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "761e440",
+      "msg": "patch  version bump",
+      "date": "2026-07-21T10:25:44Z"
+    },
+    {
+      "sha": "1f31ccf",
+      "msg": "patch  version bump",
+      "date": "2026-07-21T10:25:40Z"
+    },
+    {
+      "sha": "aeabfe8",
+      "msg": "bumped base image version",
+      "date": "2026-07-21T10:25:09Z"
+    },
+    {
+      "sha": "03aad45",
+      "msg": "patch  version bump",
+      "date": "2026-07-21T07:33:51Z"
+    },
+    {
+      "sha": "25ed1d9",
+      "msg": "patch  version bump",
+      "date": "2026-07-21T07:33:47Z"
+    },
+    {
+      "sha": "58907db",
+      "msg": "patch  version bump",
+      "date": "2026-07-20T21:15:39Z"
+    },
+    {
+      "sha": "0896154",
+      "msg": "patch  version bump",
+      "date": "2026-07-20T21:15:35Z"
+    },
+    {
+      "sha": "9928218",
+      "msg": "patch  version bump",
+      "date": "2026-07-20T20:23:35Z"
+    },
+    {
+      "sha": "ac64a96",
+      "msg": "patch  version bump",
+      "date": "2026-07-20T20:23:31Z"
+    },
+    {
+      "sha": "058b8ee",
+      "msg": "Merge origin/main (changelog update for v0.1.25) into local main",
+      "date": "2026-07-20T20:20:42Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

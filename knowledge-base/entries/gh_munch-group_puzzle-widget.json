@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_puzzle-widget",
+  "type": "github",
+  "title": "puzzle-widget",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/puzzle-widget",
+  "date": "2026-07-20T11:43:11Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/puzzle-widget",
+  "_ghStars": 1,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "341d49a",
+      "msg": "update",
+      "date": "2026-07-20T11:42:08Z"
+    },
+    {
+      "sha": "7a0ca15",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T21:24:24Z"
+    },
+    {
+      "sha": "3b6e1db",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T21:24:19Z"
+    },
+    {
+      "sha": "f263c96",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T20:48:10Z"
+    },
+    {
+      "sha": "f6cf7b0",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T20:48:06Z"
+    },
+    {
+      "sha": "292f031",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T20:47:38Z"
+    },
+    {
+      "sha": "a413a84",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T20:47:31Z"
+    },
+    {
+      "sha": "ca8158b",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T18:50:36Z"
+    },
+    {
+      "sha": "33979df",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T18:50:35Z"
+    },
+    {
+      "sha": "f8d1482",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T18:40:51Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -7,7 +7,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/turtle-widget",
-  "date": "2026-05-23T17:11:27Z",
+  "date": "2026-07-19T14:04:35Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/turtle-widget",
@@ -16,8 +16,33 @@
   "_ghLang": "Python",
   "_ghOpenIssues": 0,
   "_ghPrivate": false,
-  "_sortTag": "",
+  "_sortTag": "Teaching",
   "_ghCommits": [
+    {
+      "sha": "755fdc8",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T14:03:19Z"
+    },
+    {
+      "sha": "99357f9",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T14:03:18Z"
+    },
+    {
+      "sha": "5aa76f1",
+      "msg": "update",
+      "date": "2026-07-19T14:03:05Z"
+    },
+    {
+      "sha": "60aee0d",
+      "msg": "patch  version bump",
+      "date": "2026-07-18T09:50:48Z"
+    },
+    {
+      "sha": "0a0110d",
+      "msg": "patch  version bump",
+      "date": "2026-07-18T09:50:46Z"
+    },
     {
       "sha": "518fb6d",
       "msg": "update",
@@ -42,31 +67,6 @@
       "sha": "55c8a3c",
       "msg": "notebook updates",
       "date": "2026-05-23T16:49:54Z"
-    },
-    {
-      "sha": "2b690b2",
-      "msg": "patch  version bump",
-      "date": "2026-05-23T16:23:13Z"
-    },
-    {
-      "sha": "599cc51",
-      "msg": "patch  version bump",
-      "date": "2026-05-23T16:23:08Z"
-    },
-    {
-      "sha": "f4a6729",
-      "msg": "update",
-      "date": "2026-05-23T16:22:34Z"
-    },
-    {
-      "sha": "0aafc0c",
-      "msg": "patch  version bump",
-      "date": "2026-05-23T14:32:10Z"
-    },
-    {
-      "sha": "d5d8b2b",
-      "msg": "patch  version bump",
-      "date": "2026-05-23T14:32:08Z"
     }
   ],
   "_ghIssuesRecent": []

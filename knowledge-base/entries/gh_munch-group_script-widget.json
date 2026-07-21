@@ -1,0 +1,56 @@
+{
+  "id": "gh_munch-group_script-widget",
+  "type": "github",
+  "title": "script-widget",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/script-widget",
+  "date": "2026-07-20T13:09:53Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/script-widget",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "7828449",
+      "msg": "docs: update CHANGELOG.md for v0.1.19 [skip ci]",
+      "date": "2026-07-20T13:09:44Z"
+    },
+    {
+      "sha": "ae1de9e",
+      "msg": "patch  version bump",
+      "date": "2026-07-20T13:08:45Z"
+    },
+    {
+      "sha": "81d59dc",
+      "msg": "fix: pin conda recipe python to requires-python range",
+      "date": "2026-07-20T12:03:15Z"
+    },
+    {
+      "sha": "75c5478",
+      "msg": "patch  version bump",
+      "date": "2026-07-20T11:29:42Z"
+    },
+    {
+      "sha": "4a8e59b",
+      "msg": "patch  version bump",
+      "date": "2026-07-20T11:29:42Z"
+    },
+    {
+      "sha": "2689d20",
+      "msg": "update",
+      "date": "2026-07-20T11:29:21Z"
+    },
+    {
+      "sha": "3bfdea1",
+      "msg": "Initial commit",
+      "date": "2026-07-20T06:44:25Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

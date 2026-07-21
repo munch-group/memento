@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_steps-widget",
+  "type": "github",
+  "title": "steps-widget",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/steps-widget",
+  "date": "2026-07-19T17:40:27Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/steps-widget",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "170598a",
+      "msg": "update",
+      "date": "2026-07-19T17:39:16Z"
+    },
+    {
+      "sha": "cfe5fe4",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T08:11:43Z"
+    },
+    {
+      "sha": "58e8d37",
+      "msg": "minor  version bump",
+      "date": "2026-07-19T08:11:35Z"
+    },
+    {
+      "sha": "9fa5d7f",
+      "msg": "Escape backslashes when flattening steps.py into the exec oneliner",
+      "date": "2026-07-19T08:02:14Z"
+    },
+    {
+      "sha": "ee9b472",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T07:33:38Z"
+    },
+    {
+      "sha": "a8fe14d",
+      "msg": "patch  version bump",
+      "date": "2026-07-19T07:33:35Z"
+    },
+    {
+      "sha": "2cc4a52",
+      "msg": "Added suppport for python 3.10 and up",
+      "date": "2026-07-19T07:33:17Z"
+    },
+    {
+      "sha": "d7ce733",
+      "msg": "patch  version bump",
+      "date": "2026-07-18T09:50:09Z"
+    },
+    {
+      "sha": "0f07fdc",
+      "msg": "patch  version bump",
+      "date": "2026-07-18T09:50:09Z"
+    },
+    {
+      "sha": "60e1272",
+      "msg": "patch  version bump",
+      "date": "2026-07-18T09:11:20Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

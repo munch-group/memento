@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/bp-help",
-  "date": "2024-09-10T10:51:25Z",
+  "date": "2026-07-20T11:44:08Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/bp-help",
@@ -16,6 +16,11 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "a7ff659",
+      "msg": "Fixes done while porting/splitting to other repos",
+      "date": "2026-07-20T11:43:43Z"
+    },
     {
       "sha": "5525b9c",
       "msg": "update",
@@ -60,11 +65,6 @@
       "sha": "048bc14",
       "msg": "update",
       "date": "2024-08-29T21:14:54Z"
-    },
-    {
-      "sha": "2591760",
-      "msg": "update",
-      "date": "2024-08-29T20:46:52Z"
     }
   ],
   "_ghIssuesRecent": [

@@ -17,6 +17,21 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "472ce8c",
+      "msg": "patch  version bump",
+      "date": "2026-07-22T13:43:14Z"
+    },
+    {
+      "sha": "3da695b",
+      "msg": "patch  version bump",
+      "date": "2026-07-22T13:43:13Z"
+    },
+    {
+      "sha": "f651813",
+      "msg": "updated docs",
+      "date": "2026-07-21T12:16:23Z"
+    },
+    {
       "sha": "7828449",
       "msg": "docs: update CHANGELOG.md for v0.1.19 [skip ci]",
       "date": "2026-07-20T13:09:44Z"

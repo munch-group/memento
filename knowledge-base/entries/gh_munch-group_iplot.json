@@ -19,6 +19,21 @@
   "_sortTag": "Teaching",
   "_ghCommits": [
     {
+      "sha": "250b94c",
+      "msg": "patch  version bump",
+      "date": "2026-07-21T12:34:43Z"
+    },
+    {
+      "sha": "5da5d38",
+      "msg": "patch  version bump",
+      "date": "2026-07-21T12:34:42Z"
+    },
+    {
+      "sha": "6cce24d",
+      "msg": "fixed docs",
+      "date": "2026-07-21T12:34:29Z"
+    },
+    {
       "sha": "5c6c8f7",
       "msg": "update",
       "date": "2026-07-21T08:09:46Z"
@@ -52,21 +67,6 @@
       "sha": "23cae53",
       "msg": "patch  version bump",
       "date": "2025-09-25T14:19:32Z"
-    },
-    {
-      "sha": "1d30549",
-      "msg": "patch  version bump",
-      "date": "2025-09-24T12:27:05Z"
-    },
-    {
-      "sha": "4d50be1",
-      "msg": "patch  version bump",
-      "date": "2025-09-24T12:10:53Z"
-    },
-    {
-      "sha": "943ddec",
-      "msg": "patch  version bump",
-      "date": "2025-09-24T12:09:37Z"
     }
   ],
   "_ghIssuesRecent": [

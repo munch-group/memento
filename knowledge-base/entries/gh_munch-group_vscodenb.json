@@ -17,6 +17,21 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "812b359",
+      "msg": "patch  version bump",
+      "date": "2026-07-21T12:47:20Z"
+    },
+    {
+      "sha": "62a3d50",
+      "msg": "major  version bump",
+      "date": "2026-07-21T12:46:57Z"
+    },
+    {
+      "sha": "5f37a14",
+      "msg": "Now automatically runs set_vscode_theme in import",
+      "date": "2026-07-21T12:46:07Z"
+    },
+    {
       "sha": "fe73c71",
       "msg": "patch  version bump",
       "date": "2026-06-15T14:11:34Z"
@@ -50,21 +65,6 @@
       "sha": "907500c",
       "msg": "patch  version bump",
       "date": "2026-05-21T09:13:12Z"
-    },
-    {
-      "sha": "59622d3",
-      "msg": "patch  version bump",
-      "date": "2026-05-21T09:13:11Z"
-    },
-    {
-      "sha": "e647296",
-      "msg": "Changed default figure format to svg",
-      "date": "2026-05-21T09:12:48Z"
-    },
-    {
-      "sha": "c98dfd5",
-      "msg": "patch  version bump",
-      "date": "2026-05-10T08:14:35Z"
     }
   ],
   "_ghIssuesRecent": [

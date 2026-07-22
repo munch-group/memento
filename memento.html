@@ -3736,6 +3736,20 @@ let _geRefreshing = false, _geRefreshCancel = false;
 let _gePos = {}, _geHome = {}, _geFixed = {};
 let _geSim = [], _geSimIds = new Set();
 let _geSig = '', _geBuilt = false;
+// The signature (sorted syms, before any live spikes/ghosts are merged in) that the CURRENT frozen
+// node set builds to. Set right after geBuildModel(); geApplyLayoutCache() compares the cache
+// against this, and geSaveLayoutCache() tags what it writes with it — so a live-session ghost never
+// becomes part of the key a later reopen has to match.
+let _geBaseSig = '';
+// Last-known settled layout, loaded once from IndexedDB at boot (below) so the FIRST Genes-view
+// build this session can seed positions from it instead of resimulating from scratch — the
+// expensive part of opening the view (O(n^2) repulsion + 4x O(n^2) collision, ~400 animation
+// frames for a graph the size this file's sidecar reaches). It's pure local storage, independent of
+// which backend loads the cards, so it's kicked off unconditionally here rather than threaded
+// through loadInteractions()'s three backend-specific call sites. A miss (nothing cached yet, or
+// the gene set changed) just falls back to the original from-scratch settle.
+let _geLayoutCache = null;
+idbGet('ge_layout').then(v => { _geLayoutCache = v || null; }).catch(() => {});
 // Multi-highlight, like the Graph view: clicked genes stay highlighted until clicked again.
 // _geLastSel is the most recent click — the one the action button expands.
 let _geSelIds = new Set(), _geLastSel = null;
@@ -3744,7 +3758,7 @@ let _geSelIds = new Set(), _geLastSel = null;
 // change or fresh render clears it.
 let _geLayoutIds = null;
 let _geW = 800, _geH = 520, _gePan = { x:0, y:0 }, _geZoom = 1;
-let _geRaf = 0, _geAlpha = 0, _geRefit = false;
+let _geRaf = 0, _geAlpha = 0, _geRefit = false, _geFramesLeft = Infinity;
 let _geDrag = null, _gePanning = null;
 // Every finger currently on the canvas, by pointerId. Two of them = a pinch — see _grPtrs/_grPinch
 // in the Graph view, whose pointer-tracking this mirrors.
@@ -3761,6 +3775,10 @@ let geMinBelief = 0, geMinEv = 1, geShowComplex = false, geSpacing = 1;
 const GE_NODE_R = 9;
 const GE_FAN_STEP = 7;   // perpendicular spacing (scene px at zoom 1) between fanned parallel edges
 const GE_DIM = 0.22;     // dimmed-background edge opacity under a highlight — a touch above the 0.16 .ge-dim node rule so thin colour strokes read as equally faded (they wash out at 0.16)
+// A cache-seeded layout is already at equilibrium; this just gives any node the cache didn't cover
+// (a rare leftover — see geApplyLayoutCache) a handful of frames to settle in, instead of paying the
+// full ~400-frame decay for a graph that mostly isn't moving.
+const GE_CACHE_SETTLE_FRAMES = 20;
 
 // The node universe and the layout are fixed by the MECHANISTIC edges only, laid
 // out once. Complex edges never spring the layout (they would knot it into a
@@ -3889,6 +3907,7 @@ function renderGenes(){
   geStop();
   geBuildModel();
   _geSig = frozenSig; _geBuilt = false;
+  _geBaseSig = geLayoutSig(_geNodes);   // before spikes are merged in — see geApplyLayoutCache
   _geSpikeAdded = new Set();   // geBuildModel wiped the node set; re-derive spikes from scratch
   geSyncSpikeNodes();          // add any '*GENE' spikes into the fresh node set before the DOM is built
   if (!_geNodes.length) {
@@ -3939,11 +3958,17 @@ function renderGenes(){
   _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
   geSizeLayout(cw, ch);
   const fresh = !Object.keys(_gePos).length;
+  // A fresh build (first Genes-view open this session) is the expensive case a from-scratch settle
+  // targets; if IndexedDB has a settled layout for this exact node set, seed from it instead and
+  // only let the (usually empty) leftover — nodes the cache didn't cover — settle in briefly, rather
+  // than resimulating ~769 nodes' worth of forces for ~400 frames just to land back where they
+  // already were.
+  const cacheHit = fresh && geApplyLayoutCache();
   geInitPositions(true);
   if (fresh) { geFit(cw, ch); _geRefit = true; }
   geApplyDOM();
   geApplyFilter();
-  geRun(fresh ? 1 : 0.4);
+  geRun(fresh && !cacheHit ? 1 : 0.4, cacheHit ? GE_CACHE_SETTLE_FRAMES : undefined);
 }
 
 // Filtering hides; it never moves. Selecting a node dims everything but it and
@@ -4160,6 +4185,42 @@ function geApplyDOM(){
   });
 }
 
+// The persisted-layout cache: geApplyLayoutCache() seeds _gePos from IndexedDB's last-known settle
+// when its signature matches, geSaveLayoutCache() writes the current one back after a settle or a
+// manual drag. See _geLayoutCache's declaration above for why this exists.
+//
+// Order-independent (sorted) since geBuildModel's node order isn't guaranteed stable — only
+// membership should affect the key, not the order the sidecar happened to list genes in.
+function geLayoutSig(nodes){ return nodes.map(n => n.sym).sort().join(','); }
+// Returns whether anything was applied, so the caller knows whether it can skip straight to a short
+// settle instead of a full from-scratch one. A session-only ghost/spike just won't be in the cache
+// (its sym was never part of a saved _geBaseSig) — geInitPositions still seeds it fresh afterward,
+// same as any other node the cache doesn't cover.
+function geApplyLayoutCache(){
+  if (!_geLayoutCache || _geLayoutCache.sig !== _geBaseSig) return false;
+  let applied = 0;
+  for (const n of _geNodes) {
+    const p = _geLayoutCache.pos[n.sym];
+    if (p) { _gePos[n.sym] = { x: p.x, y: p.y, vx: 0, vy: 0 }; _geHome[n.sym] = { x: p.x, y: p.y }; applied++; }
+  }
+  return applied > 0;
+}
+// Debounced: geFinishFit can fire in quick succession (an expand/refresh settling, then settling
+// again) and a drag-end shouldn't cost a write per pixel — batch a burst of activity into one.
+let _geLayoutSaveTimer = 0;
+function geSaveLayoutCache(){
+  clearTimeout(_geLayoutSaveTimer);
+  _geLayoutSaveTimer = setTimeout(() => {
+    if (!_geBaseSig || !_geNodes.length) return;
+    const pos = {};
+    for (const n of _geNodes) { const p = _gePos[n.sym]; if (p) pos[n.sym] = { x: p.x, y: p.y }; }
+    const rec = { sig: _geBaseSig, pos };
+    _geLayoutCache = rec;   // keep the in-memory copy in step, so reopening the view later this same
+                             // session (a fresh build after the gene set changed and changed back) benefits too
+    idbPut('ge_layout', rec).catch(() => {});
+  }, 500);
+}
+
 // --- physics: grStep's constants, circular collision instead of pill packing ---
 // Seed on a phyllotaxis (sunflower) disk, not an ellipse ring. The card graph's
 // ring seed piles nodes at similar hashed angles; with only sparse springs to
@@ -4243,10 +4304,15 @@ function geCollide(){
     }
   }
 }
-function geRun(alpha){
+// maxFrames bounds the settle regardless of alpha decay — used only when the positions came from
+// the layout cache (geApplyLayoutCache), where the graph is already at (or near) equilibrium and the
+// full ~400-frame decay would just re-spend the same O(n^2) pass hundreds of times over nodes that
+// aren't moving. Omitted (Infinity), every other caller settles exactly as before.
+function geRun(alpha, maxFrames){
   _geAlpha = alpha;
+  _geFramesLeft = maxFrames || Infinity;
   if (typeof requestAnimationFrame !== 'function') {   // test harness: settle synchronously
-    for (let k = 0; k < 500 && _geAlpha > 0.02; k++) { geStep(_geAlpha); _geAlpha *= 0.99; }
+    for (let k = 0; k < Math.min(500, _geFramesLeft) && _geAlpha > 0.02; k++) { geStep(_geAlpha); _geAlpha *= 0.99; }
     geApplyDOM(); geFinishFit();
     return;
   }
@@ -4254,9 +4320,9 @@ function geRun(alpha){
 }
 function geTick(){
   _geRaf = 0;
-  geStep(_geAlpha); _geAlpha *= 0.99;
+  geStep(_geAlpha); _geAlpha *= 0.99; _geFramesLeft--;
   geApplyDOM();
-  if (_geAlpha > 0.02) _geRaf = requestAnimationFrame(geTick);
+  if (_geAlpha > 0.02 && _geFramesLeft > 0) _geRaf = requestAnimationFrame(geTick);
   else geFinishFit();
 }
 function geStop(){ if (_geRaf) { cancelAnimationFrame(_geRaf); _geRaf = 0; } _geAlpha = 0; }
@@ -4265,6 +4331,7 @@ function geFinishFit(){
   // them once the sim comes to rest so later drags/relayouts behave normally.
   if (_geUnpinAfter) { for (const s of _geUnpinAfter) delete _geFixed[s]; _geUnpinAfter = null; }
   if (_geRefit) { _geRefit = false; const { cw, ch } = geCanvasSize(); geFit(cw, ch); geApplyDOM(); }
+  geSaveLayoutCache();   // remember where things settled, so the next reopen can skip resimulating
 }
 
 function geCanvasSize(){ const c = document.getElementById('ge-canvas'); return { cw: (c && c.clientWidth) || 900, ch: (c && c.clientHeight) || 560 }; }
@@ -4359,6 +4426,7 @@ function _geUp(ev){
   }
   if (_geDrag && !_geDrag.moved) geSelect(_geDrag.sym);        // a tap on a node toggles its highlight
   else if (_gePanning && !_gePanning.moved) geClearSelection();   // a tap on empty clears all highlights
+  if (_geDrag && _geDrag.moved) geSaveLayoutCache();   // a manual reposition is worth remembering too
   _geDrag = null; _gePanning = null;
   if (_gePtrs.size === 0) geUnbind();
 }

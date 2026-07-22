@@ -397,6 +397,67 @@ function testLayoutDeterministic() {
   eq(after, snapshot, 'tightening the confidence filter hides edges but moves nothing');
 }
 
+function testLayoutCache() {
+  console.log('\nlayout cache — a matching cached layout is reused (bounded settle); a mismatch falls back to a full one');
+  const wired = ['MAPT', 'MARK1', 'MARK2', 'STK11'];
+
+  // Baseline: no cache at all -> the original from-scratch behaviour. The sim always runs down to
+  // the alpha<=0.02 stop condition, however many frames that takes.
+  {
+    const { api } = setup();
+    api.renderGenes();
+    ok(api.geAlpha <= 0.02, 'no cache: the settle fully converges (uncapped)');
+  }
+
+  // A genuinely settled layout from one "session" (an actual full settle, so these are real
+  // equilibrium positions, not arbitrary numbers) fed to a second session as its cache.
+  const s0 = setup();
+  s0.api.renderGenes();
+  const settled = JSON.parse(JSON.stringify(s0.api.gePos));
+  const sig = s0.api.geBaseSig;
+
+  // A cache whose signature matches the current frozen node set seeds positions from it and bounds
+  // the settle to GE_CACHE_SETTLE_FRAMES frames — nowhere near enough to reach the 0.02 stop
+  // condition from alpha 0.4, so a surviving alpha above that threshold IS the proof the frame cap
+  // (not the usual full decay) is what ended this run.
+  {
+    const { api } = setup();
+    api.geLayoutCache = { sig, pos: settled };
+    api.renderGenes();
+    eq(api.geBaseSig, sig, 'the built node set signature matches what was cached');
+    for (const sym of wired) {
+      // Already at equilibrium, so the brief capped settle should barely move it — unlike a fresh
+      // phyllotaxis seed, which the same brief settle would leave nowhere near these coordinates.
+      ok(Math.abs(api.gePos[sym].x - settled[sym].x) < 2, `${sym} stays at its cached x (already settled)`);
+      ok(Math.abs(api.gePos[sym].y - settled[sym].y) < 2, `${sym} stays at its cached y (already settled)`);
+    }
+    ok(api.geAlpha > 0.02, 'the settle stopped on the frame cap, not on convergence — the expensive full decay never ran');
+  }
+
+  // A cache for a DIFFERENT node set (e.g. last session's gene count) must never leak stale
+  // positions into today's map — a mismatch is a plain miss, same as having no cache at all.
+  {
+    const { api } = setup();
+    api.geLayoutCache = { sig: 'NOT,THE,RIGHT,SIGNATURE', pos: { MAPT: { x: 999, y: 999 } } };
+    api.renderGenes();
+    ok(api.gePos.MAPT.x !== 999, 'a signature mismatch is ignored, not applied');
+    ok(api.geAlpha <= 0.02, 'mismatch falls back to the full, uncapped settle');
+  }
+}
+
+function testLayoutCachePersists() {
+  console.log('\nlayout cache — a settle persists its result, for the next session to reuse');
+  return (async () => {
+    const { api } = setup();
+    api.renderGenes();   // settles synchronously; geFinishFit schedules a debounced cache save
+    await new Promise(r => setTimeout(r, 700));   // past the 500ms debounce
+    ok(api.geLayoutCache && api.geLayoutCache.sig === api.geBaseSig, 'the in-memory cache now holds this settle');
+    const stored = await api.idbGet('ge_layout');
+    ok(stored && stored.sig === api.geBaseSig, 'and it was written to IndexedDB, not just kept in memory');
+    eq(Math.round(stored.pos.MAPT.x), Math.round(api.gePos.MAPT.x), 'a stored position matches the settled one');
+  })();
+}
+
 function testSelect() {
   console.log('\ngeSelect — multi-highlight, toggle, last-clicked drives the action');
   const { api } = setup();   // sidecar has MAPT, MARK1, MARK2 wired
@@ -700,6 +761,8 @@ testDrawnAndComplexToggle();
 testEdgeFilters();
 testShownCount();
 testLayoutDeterministic();
+testLayoutCache();
+await testLayoutCachePersists();
 testSelect();
 testHighlightInputSync();
 testHighlightFocus();

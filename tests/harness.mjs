@@ -230,6 +230,11 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get geNatures(){ return geNatures === null ? null : [...geNatures].sort(); }, get geMinBelief(){ return geMinBelief; },
       get geMinEv(){ return geMinEv; }, get geShowComplex(){ return geShowComplex; },
       set geSpacing(v){ geSpacing = v; },
+      // Layout cache (persisted settled positions, so a reopen can skip resimulating from scratch)
+      geLayoutSig, geApplyLayoutCache, geSaveLayoutCache, GE_CACHE_SETTLE_FRAMES,
+      get geBaseSig(){ return _geBaseSig; },
+      get geLayoutCache(){ return _geLayoutCache; }, set geLayoutCache(v){ _geLayoutCache = v; },
+      get geAlpha(){ return _geAlpha; },
       // M2 live expansion
       geExpand, geParseIndra, geStmtAgents, geThin, geGroundChrom, geMergeExpansion,
       gePromoteGhost, geUpdateAction, geActionExpand, geActionAdd, geAddGene, geMergeAddGene, GE_GHOST_CAP,

@@ -317,6 +317,15 @@ per-device:
   entries). To pull fresh data for an already-cached gene, clear the browser's
   IndexedDB for the app.
 
+The **layout** — where each node settled — is cached the same way, separately
+(`ge_layout` in the same store). Laying the map out is a physics simulation over
+every gene and edge, and redoing it from scratch on every open is the slowest part
+of opening this view, especially on iOS: a backgrounded tab there is prone to being
+evicted from memory, so "first open this session" happens far more often than on
+desktop. A matching cached layout is reused instead, and only a brief settle runs to
+place anything the cache didn't cover; a gene-set change invalidates it automatically
+(the cache key is the exact set of connected genes), so it always reflects your data.
+
 ---
 
 ## What you control vs. what's fixed

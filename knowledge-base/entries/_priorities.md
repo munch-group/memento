@@ -18,3 +18,4 @@
 - Africa genomes access request
 - Review if phasic issues are relevant after refactor
 - Flesh out the phasic-popgen repo (Coal. Sel. / PSMC / Ghost model / sticcs tool)
+- Office mac crontab: "*/5 * * * * cd /Users/kmt/memento && pixi run sync"

@@ -176,7 +176,8 @@ Clearing the token drops a spiked-in gene back out — unless it has since becom
 | **Double-click** any node | Expand it live from INDRA — ghosts included, to explore further out |
 | **Drag** a node | Reposition it (it stays put) |
 | **Drag** the background | Pan |
-| **Wheel** | Zoom |
+| **Wheel** | Zoom (desktop) |
+| **Pinch** (two fingers) | Zoom (touch) |
 | **Action bar** (bottom-centre) | Acts on the **last-clicked** gene. **Expand** it (any node); a ghost also gets an **Add to memento** button to bring it into your cards. |
 
 The caption (bottom-left) always reports: gene count, ghost count, interactions

@@ -3746,6 +3746,10 @@ let _geLayoutIds = null;
 let _geW = 800, _geH = 520, _gePan = { x:0, y:0 }, _geZoom = 1;
 let _geRaf = 0, _geAlpha = 0, _geRefit = false;
 let _geDrag = null, _gePanning = null;
+// Every finger currently on the canvas, by pointerId. Two of them = a pinch — see _grPtrs/_grPinch
+// in the Graph view, whose pointer-tracking this mirrors.
+let _gePtrs = new Map();
+let _gePinch = null;
 // Property filters HIDE, they never relayout — the map stays a map. geNatures is
 // null for "all natures on" (the default); otherwise it is the explicit set of
 // natures to show, so an EMPTY set means "show none" — unchecking every box hides
@@ -3923,6 +3927,14 @@ function renderGenes(){
     </div>`;
   _geBuilt = true;
   const c = document.getElementById('ge-canvas');
+  // iOS: a two-finger pinch would otherwise zoom the whole PAGE (see the Graph view's identical
+  // guard). touch-action:none suppresses that on most versions; blocking WebKit's gesture events
+  // makes sure, and does nothing on browsers that never fire them.
+  if (c && c.addEventListener) {
+    const noPageZoom = ev => ev.preventDefault();
+    c.addEventListener('gesturestart', noPageZoom);
+    c.addEventListener('gesturechange', noPageZoom);
+  }
   const cw = (c && c.clientWidth) || 900, ch = (c && c.clientHeight) || 560;
   _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
   geSizeLayout(cw, ch);
@@ -4288,13 +4300,44 @@ function geToScene(cx, cy){
 }
 function geBind(){ document.addEventListener('pointermove', _geMove); document.addEventListener('pointerup', _geUp); document.addEventListener('pointercancel', _geUp); }
 function geUnbind(){ document.removeEventListener('pointermove', _geMove); document.removeEventListener('pointerup', _geUp); document.removeEventListener('pointercancel', _geUp); }
-function gePanDown(ev){ _gePanning = { x: ev.clientX, y: ev.clientY, px: _gePan.x, py: _gePan.y, moved: false }; geBind(); }
+function gePanDown(ev){
+  _gePtrs.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+  geBind();
+  if (_gePtrs.size >= 2) { geStartPinch(); return; }   // a second finger turns this into a zoom
+  _gePanning = { x: ev.clientX, y: ev.clientY, px: _gePan.x, py: _gePan.y, moved: false };
+}
 function geNodeDown(ev, el){
   ev.preventDefault(); ev.stopPropagation();
-  _geDrag = { sym: el.dataset.sym, sx: ev.clientX, sy: ev.clientY, moved: false };
+  _gePtrs.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
   geBind();
+  if (_gePtrs.size >= 2) { geStartPinch(); return; }
+  _geDrag = { sym: el.dataset.sym, sx: ev.clientX, sy: ev.clientY, moved: false };
+}
+// Two fingers down: abandon whatever one-finger drag/pan was in progress and zoom by the distance
+// between them instead.
+function geStartPinch(){
+  _geDrag = null; _gePanning = null;
+  const p = [..._gePtrs.values()];
+  const dist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y) || 1;
+  _gePinch = { dist0: dist, zoom0: _geZoom };
+}
+function gePinchMove(){
+  const p = [..._gePtrs.values()];
+  if (p.length < 2) return;
+  const c = document.getElementById('ge-canvas');
+  if (!c || !c.getBoundingClientRect) return;
+  const r = c.getBoundingClientRect();
+  const ox = (p[0].x + p[1].x) / 2 - r.left;   // the midpoint between the fingers, in canvas space
+  const oy = (p[0].y + p[1].y) / 2 - r.top;
+  const dist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y) || 1;
+  const before = { x: (ox - _gePan.x) / _geZoom, y: (oy - _gePan.y) / _geZoom };
+  _geZoom = Math.max(0.1, Math.min(4, _gePinch.zoom0 * dist / _gePinch.dist0));
+  _gePan = { x: ox - before.x * _geZoom, y: oy - before.y * _geZoom };   // hold the midpoint fixed
+  geApplyDOM();
 }
 function _geMove(ev){
+  if (_gePtrs.has(ev.pointerId)) _gePtrs.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+  if (_gePinch) { gePinchMove(); return; }
   if (_geDrag) {
     if (Math.abs(ev.clientX - _geDrag.sx) > 3 || Math.abs(ev.clientY - _geDrag.sy) > 3) _geDrag.moved = true;
     const s = geToScene(ev.clientX, ev.clientY), p = _gePos[_geDrag.sym];
@@ -4307,10 +4350,17 @@ function _geMove(ev){
     geApplyDOM();
   }
 }
-function _geUp(){
+function _geUp(ev){
+  if (ev && _gePtrs.has(ev.pointerId)) _gePtrs.delete(ev.pointerId);
+  if (_gePinch) {                              // in a pinch: end it once a finger lifts
+    if (_gePtrs.size < 2) _gePinch = null;
+    if (_gePtrs.size === 0) geUnbind();
+    return;
+  }
   if (_geDrag && !_geDrag.moved) geSelect(_geDrag.sym);        // a tap on a node toggles its highlight
   else if (_gePanning && !_gePanning.moved) geClearSelection();   // a tap on empty clears all highlights
-  _geDrag = null; _gePanning = null; geUnbind();
+  _geDrag = null; _gePanning = null;
+  if (_gePtrs.size === 0) geUnbind();
 }
 function geWheel(ev){
   ev.preventDefault();
@@ -6869,13 +6919,15 @@ async function ghRefreshIfStale() {
   if (_ghQueue.size || _ghFlushing || _ghError) return;   // never reload over unsaved work
   try {
     const head = await ghApiJson(`/commits/${GH_BRANCH}`);
-    if (head.sha && head.sha !== _ghHeadSha) await ghLoadEntries();
+    if (head.sha && head.sha !== _ghHeadSha) await ghLoadEntries(head.sha);
   } catch(_) { /* offline or rate-limited: stay on what we have */ }
 }
 
 // --- GitHub read mode (for iOS / browsers without File System Access API) ---
 
-async function ghLoadEntries() {
+// knownSha: pass the HEAD sha when the caller already fetched it (ghRefreshIfStale), so this
+// doesn't turn one round trip into two.
+async function ghLoadEntries(knownSha) {
   if (!ghPat()) {
     await ghPromptPat();
     if (!ghPat()) return;
@@ -6890,10 +6942,12 @@ async function ghLoadEntries() {
     await ghApplyWritePermission();
     // Check if cache is still valid
     const cachedSha = await idbGet('gh_tree_sha');
-    const headResp = await fetch(`https://api.github.com/repos/${GH_REPO}/commits/${GH_BRANCH}`, { headers: ghHeaders() });
-    if (!headResp.ok) throw new Error(`GitHub API ${headResp.status}: ${headResp.statusText}`);
-    const headData = await headResp.json();
-    const currentSha = headData.sha;
+    let currentSha = knownSha;
+    if (!currentSha) {
+      const headResp = await fetch(`https://api.github.com/repos/${GH_REPO}/commits/${GH_BRANCH}`, { headers: ghHeaders() });
+      if (!headResp.ok) throw new Error(`GitHub API ${headResp.status}: ${headResp.statusText}`);
+      currentSha = (await headResp.json()).sha;
+    }
     _ghHeadSha = currentSha;
 
     if (cachedSha === currentSha) {
@@ -6973,6 +7027,11 @@ async function tryLoadFromGitHubCache() {
       window._kbInbox = await idbGet('gh_inbox') || '';
       items = cached.filter(i => i.id !== '_digest');
       ghRepoMode = true;
+      // Seed _ghHeadSha with the sha this cache was last known to match, so the very first
+      // ghRefreshIfStale() (fired by the visibilitychange that follows almost immediately on iOS)
+      // compares against a real value instead of null — null always reads as "stale" and forced a
+      // full reload (plus its own round trips) on every single foreground, even when nothing changed.
+      try { _ghHeadSha = await idbGet('gh_tree_sha') || null; } catch(_) {}
       // Trust the last known answer so the cards render editable immediately; the boot path
       // re-checks against GitHub straight after.
       ghCanWrite = (await idbGet('gh_can_write')) === true;

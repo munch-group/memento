@@ -368,5 +368,31 @@ console.log('\n11. GitHub mode loads the gene sidecar (iOS: no folder, sidecar l
   ok(api.interactions && api.interactions.edges.length === 1, 're-download succeeds');
 }
 
+console.log('\n12. iOS reopen (fresh page load, cache already warm): stale-check costs one request, not three');
+{
+  const { gh, api } = await setup();
+  api.items = [card('a', 'here')];
+  await api.saveEntryToFile(api.items[0]);   // commits, and mirrors gh_tree_sha/gh_entries into IDB
+  await api.ghFlush();
+
+  // iOS reloaded the page: JS module state resets (headSha back to null) but IndexedDB survives.
+  api.headSha = null;
+
+  const seeded = await api.tryLoadFromGitHubCache();
+  eq(seeded, true, 'boots from the IndexedDB cache');
+  ok(api.headSha, 'headSha is seeded from the cached tree sha, not left null');
+  // tryLoadFromGitHubCache() kicks off its own loadInteractions() without awaiting it (a pre-existing
+  // fire-and-forget); let that settle before measuring, or its requests land in the wrong window.
+  await new Promise(r => setTimeout(r, 0));
+
+  // Nothing changed on GitHub since -> the first foreground check should be exactly one request,
+  // same as any other unchanged-main check. Before the fix, a null headSha always read as "stale",
+  // forcing a full ghLoadEntries() (write-permission check + a second, redundant HEAD fetch).
+  const before = gh.log.length;
+  await api.ghRefreshIfStale();
+  eq(gh.log.length, before + 1, 'costs exactly one request on the first foreground after a cache boot');
+  eq(api.items.map(i => i.id), ['a'], 'and does not reload');
+}
+
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);

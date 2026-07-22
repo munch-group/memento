@@ -164,7 +164,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       ghFlush, ghScheduleFlush, saveEntryToFile, deleteEntryFile, saveToFile,
       ghEnqueueEntry, ghEnqueueImage, ghEnqueueInbox, splitEntry, ghApplyWritePermission,
       ghCommitMessage, fileToBase64, ghChunkTree,
-      loadFromFile, storageReady, ghRefreshIfStale, SORTS,
+      loadFromFile, storageReady, ghRefreshIfStale, ghLoadEntries, tryLoadFromGitHubCache, idbGet, idbPut, SORTS,
       openTagEditor, toggleCardTag, closeTagEditor, renderTagEditor,
       get tagUniverse(){ return _tagUniverse; },
       get tagEditorId(){ return _tagEditorId; },

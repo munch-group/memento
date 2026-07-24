@@ -37,11 +37,9 @@ a { color: inherit; }
 .main { flex: 1; min-width: 0; overflow-x: hidden; overflow-y: auto; padding: 1.5rem 2rem 4rem; }
 .sb-title { font-size: 14px; font-weight: 600; padding: 0 1.25rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem; }
 .sb-section { font-size: 13px; font-weight: 600; color: var(--text); padding: 0 1.25rem; margin: 1rem 0 0.4rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; text-transform: uppercase; letter-spacing: 0.05em; }
-.sb-section:hover { color: var(--text2); }
 .sb-section .sb-arrow { font-size: 9px; transition: transform 0.15s; }
 .sb-section.collapsed .sb-arrow { transform: rotate(-90deg); }
 .filter-chip { display: block; width: 100%; text-align: left; font-size: 13.5px; padding: 4px 1.25rem; border: none; background: transparent; cursor: pointer; color: var(--text); transition: background 0.15s, color 0.15s; }
-.filter-chip:hover { background: rgba(0,0,0,0.04); }
 .filter-chip.active { background: var(--bg3); color: var(--text); font-weight: 500; }
 #tag-items .filter-chip, #sort-list .filter-chip, #filter-list .filter-chip { color: var(--text3); }
 #tag-items .filter-chip.active, #sort-list .filter-chip.active, #filter-list .filter-chip.active { color: var(--text); }
@@ -51,9 +49,17 @@ a { color: inherit; }
 .sb-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text3); }
 .sb-row-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sb-action { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 12px; padding: 0; opacity: 0.5; transition: opacity 0.15s; }
-.sb-action:hover { opacity: 1; color: var(--text2); }
 .sb-link { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 11px; padding: 0; font-family: var(--font); }
-.sb-link:hover { color: var(--text2); }
+/* Gated on hover:hover: iOS has no mouseleave to clear :hover on tap, so an unconditional rule here
+   would leave the last-tapped sidebar row (a tag, a filter, a section header) looking stuck
+   "selected" until another row is tapped. Desktop keeps the highlight since the cursor leaving is
+   itself the clear. */
+@media (hover: hover) {
+  .sb-section:hover { color: var(--text2); }
+  .filter-chip:hover { background: rgba(0,0,0,0.04); }
+  .sb-action:hover { opacity: 1; color: var(--text2); }
+  .sb-link:hover { color: var(--text2); }
+}
 .btn { background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); padding: 6px 14px; font-size: 13px; cursor: pointer; color: var(--text); font-family: var(--font); transition: all 0.15s ease; font-weight: 500; }
 .btn:hover { background: var(--bg2); border-color: var(--text3); }
 .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }

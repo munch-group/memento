@@ -3,6 +3,7 @@
 - Email
 - Email Sriram / Yun / John P. / Linda / Yan
 - New controller about Lundbeck Experiment wrap-up
+- Learning objectives for course with Claude
 - Shannon status
 - SMBE follow-up: Tidy notes
 - Funding application overview/plan

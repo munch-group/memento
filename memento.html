@@ -494,7 +494,10 @@ a { color: inherit; }
 .tl-rowact:hover { opacity: 1; }
 .tl-rowact.add { color: var(--text2); }
 .tl-rowact.del { color: #c44; }
-.tl-lanes { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; cursor: grab; }
+/* pan-x, not the bars'/grip's none: a single touch still has to pan the lane natively (there is no
+   vertical content to pan anyway), but this stops iOS treating a two-finger touch here as a page
+   pinch-zoom — that gesture is ours (see tlTouchDown) once a second finger lands on the background. */
+.tl-lanes { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; cursor: grab; touch-action: pan-x; }
 /* min-height so the grid, the weekend shading and the Today line run to the bottom of the panel
    rather than stopping at the last row. */
 .tl-inner { position: relative; min-height: 100%; }
@@ -1882,6 +1885,12 @@ let _tlDrag = null;
 let _tlScrollLeft = null;   // null until first paint, which positions the view on today
 let _tlFocusPending = false;
 let _tlLaneW = 0;         // measured width of the lane viewport; the window must be at least this wide
+// Touch fingers currently down over the lanes, by pointerId. A lone finger is left alone — the lane
+// pans natively for it, same as ever — but a second one turns the gesture into a two-finger zoom,
+// same meaning as the trackpad's vertical wheel path (see tlWheel), just driven by a raw drag instead
+// of a synthesized delta.
+let _tlPtrs = new Map();
+let _tlPinchY = null;     // average Y of the two fingers as of the last move; null outside a zoom gesture
 
 function tlSubs(e){ return (e.schedule && e.schedule.subtasks) || []; }
 function tlOnTimeline(e){
@@ -2162,6 +2171,14 @@ function tlSaveScroll(){
 function tlAfterRender(){
   const lanes = document.getElementById('tl-lanes');
   if (!lanes) return;
+  // #tl-lanes is rebuilt (innerHTML) on every zoom/sort re-render, so its listeners go with it —
+  // rebind every time rather than once. touch-action:pan-x already keeps iOS from treating a second
+  // finger here as a page pinch; the gesture listeners are belt-and-suspenders for WebKit versions
+  // that still fire them anyway (see the identical comment on the graph canvas).
+  lanes.addEventListener('pointerdown', tlTouchDown, { capture: true });
+  const noPageZoom = ev => ev.preventDefault();
+  lanes.addEventListener('gesturestart', noPageZoom);
+  lanes.addEventListener('gesturechange', noPageZoom);
   if (lanes.clientWidth) _tlLaneW = lanes.clientWidth;   // tlWindow needs it to know what "full" is
   if (_tlFocusPending && tlFocusId) {
     const e = items.find(i => i.id === tlFocusId);
@@ -2286,6 +2303,52 @@ function tlWheel(e){
   if (_tlWheelAxis === 'x') return;   // sideways: the lane scrolls natively — the smoothest pan
   e.preventDefault();                 // up/down: zoom about the cursor, exactly as the pinch does
   tlZoomBy(dy, offset);
+}
+// A raw touchscreen has no trackpad to translate a two-finger swipe into the wheel events above, so
+// it gets its own path: track every finger down over the lanes, and once a second one lands, feed the
+// pair's vertical travel into the same tlZoomBy the wheel uses (same sign, same sensitivity — a drag
+// upward zooms in exactly as scrolling up does). Bound with capture:true on #tl-lanes, ahead of the
+// bars'/grips' own pointerdown handlers, so the second finger is caught and turned into a zoom no
+// matter what element it happens to land on.
+function tlTouchDown(e){
+  if (e.pointerType !== 'touch') return;
+  if (_tlPtrs.size >= 2) { e.stopPropagation(); return; }   // a third finger: ignore it, the pair keeps zooming
+  _tlPtrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (_tlPtrs.size < 2) return;   // first finger: let it start its own single-finger gesture as usual
+  // Second finger: whatever the first one started (a bar drag, a pan) is moot now — stop it from
+  // reaching its target handler, and abandon anything already under way.
+  e.stopPropagation();
+  if (_tlDrag) { tlDetach(); _tlDrag = null; }
+  tlWheelReset();
+  const p = [..._tlPtrs.values()];
+  _tlPinchY = (p[0].y + p[1].y) / 2;
+  document.addEventListener('pointermove', _tlPinchMove);
+  document.addEventListener('pointerup', _tlPinchUp);
+  document.addEventListener('pointercancel', _tlPinchUp);
+}
+function _tlPinchMove(e){
+  if (!_tlPtrs.has(e.pointerId)) return;
+  _tlPtrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (_tlPtrs.size < 2 || _tlPinchY == null) return;
+  const lanes = document.getElementById('tl-lanes');
+  if (!lanes || !lanes.getBoundingClientRect) return;
+  e.preventDefault();
+  const p = [..._tlPtrs.values()];
+  const y = (p[0].y + p[1].y) / 2, x = (p[0].x + p[1].x) / 2;
+  const dy = y - _tlPinchY;
+  _tlPinchY = y;
+  tlZoomBy(dy, x - lanes.getBoundingClientRect().left);
+}
+function _tlPinchUp(e){
+  if (e && _tlPtrs.has(e.pointerId)) _tlPtrs.delete(e.pointerId);
+  if (_tlPtrs.size >= 2) return;
+  // Below two fingers: the gesture is over. Any one finger still down is left untracked, so it can
+  // fall back to a native single-finger pan rather than trying to resume as a drag mid-touch.
+  _tlPtrs.clear();
+  _tlPinchY = null;
+  document.removeEventListener('pointermove', _tlPinchMove);
+  document.removeEventListener('pointerup', _tlPinchUp);
+  document.removeEventListener('pointercancel', _tlPinchUp);
 }
 // --- Timeline drags -------------------------------------------------------------------------
 // All of them are delta-based and snap to whole days. The entry is written ONCE, on pointerup —

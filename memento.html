@@ -362,19 +362,27 @@ a { color: inherit; }
 .gr-mono .gr-icon { color: var(--text3); }
 
 .gr-caption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 10px; color: var(--text3); pointer-events: none; }
-.gr-tools { position: absolute; right: 12px; top: 10px; display: flex; align-items: center; gap: 16px; padding: 4px 10px; border-radius: var(--r); background: rgba(255,255,255,0.78); }
+.gr-tools { position: absolute; right: 12px; top: 10px; display: flex; align-items: center; gap: 16px; padding: 8px 12px; border-radius: var(--r); background: rgba(255,255,255,0.78); }
 /* Where there is a cursor, the corner is a hover zone and the bar is transparent until you reach for
    it — the collapsed card's icons do the same (see .card-quick). The bar keeps its box while hidden,
    which is what there is to hover; only the paint goes. The children are pointer-events:none until
    shown, so a drag begun in the corner pans the canvas rather than grabbing an invisible Spacing
    slider. Gated on hover:hover deliberately: a touch screen has no hover to reveal it with, and
    unlike the card's icons — which an expanded card repeats in its bottom row — these controls exist
-   nowhere else, so hiding them there would strand them for good. */
+   nowhere else, so hiding them there would strand them for good.
+   In the genes layout .gr-tools wraps to two rows (.ge-tools), and a click on the bottom row is a
+   click near the box's bottom edge — ordinary cursor jitter between mousedown and mouseup can carry
+   the pointer past it, and with no grace period that instantly drops :hover and swallows the click
+   mid-press. The padding above gives real breathing room, and the leave transition below is delayed
+   (enter stays instant) so a momentary overshoot doesn't un-hover before the click completes.
+   pointer-events needs transition-behavior:allow-discrete to actually honour that delay — without it
+   Chrome flips a discrete property the instant the rule stops matching, ignoring transition-delay, so
+   the bar would look present but be dead to clicks for the whole grace window instead of staying live. */
 @media (hover: hover) {
-  .gr-tools { background: transparent; transition: background 0.12s ease; }
-  .gr-tools > * { opacity: 0; pointer-events: none; transition: opacity 0.12s ease; }
-  .gr-tools:hover { background: rgba(255,255,255,0.78); }
-  .gr-tools:hover > * { opacity: 1; pointer-events: auto; }
+  .gr-tools { background: transparent; transition: background 0.12s ease 0.15s; }
+  .gr-tools > * { opacity: 0; pointer-events: none; transition: opacity 0.12s ease 0.15s, pointer-events 0.01s ease 0.15s; transition-behavior: allow-discrete; }
+  .gr-tools:hover { background: rgba(255,255,255,0.78); transition-delay: 0s; }
+  .gr-tools:hover > * { opacity: 1; pointer-events: auto; transition-delay: 0s; }
 }
 .gr-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
 .gr-check input { margin: 0; accent-color: var(--accent); cursor: pointer; }

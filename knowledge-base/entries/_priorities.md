@@ -1,19 +1,15 @@
 ## Today todo
-- Desktop clean up
 - Email
-- Email Sriram / Yun / John P. / Linda / Yan
-- New controller about Lundbeck Experiment wrap-up
-- Learning objectives for course with Claude
+  - Project student
+  - Email Sriram / Yun / John P. / Linda / Yan
+  - New controller about Lundbeck Experiment wrap-up
+- Erik status
 - Shannon status
-- SMBE follow-up: Tidy notes
 - Funding application overview/plan
-- tspaint with SCAR or similar
 - Make 1Password be more convenient
-- Sort out sync status of phasic on mac and cluster and stay on cluster
-- move tspaint to cluster
-- On ios, the genes view updates very very slowly. Please limit round-trips to github. Also pinch zoom does not work.
 
 ## Week run
+- SMBE follow-up: Tidy notes / watch talks
 - Clean up chr3 notebook in geneinfo repo
 - PsychENCODE access request
 - Africa genomes access request
@@ -21,3 +17,4 @@
 - Sort out git-lfs (https://docs.github.com/en/billing/concepts/product-billing/git-lfs, https://docs.github.com/en/repositories/working-with-files/managing-large-files/removing-files-from-git-large-file-storage)
 - Flesh out the phasic-popgen repo (Coal. Sel. / PSMC / Ghost model / sticcs tool)
 - Office mac crontab: "*/5 * * * * cd /Users/kmt/memento && pixi run sync"
+- **Prepare GT re-exam**

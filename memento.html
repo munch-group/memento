@@ -4134,9 +4134,12 @@ function geConnectedVisible(){
 function geApplyFilter(){
   // The "Highlight genes" input is the source of truth for what's highlighted: clicking nodes
   // edits it and typing in it selects nodes (two-way synced). Derive the highlighted node set from
-  // it here — its genes are uppercase, mapped to nodes via _geByU.
+  // it here — its genes are uppercase, mapped to nodes via _geByU. A hidden panel mutes this
+  // entirely (geHighlightVisible), so show/hide toggles highlighting without losing the set.
   _geSelIds = new Set();
-  for (const U of highlightInputGenes) { const n = _geByU.get(U); if (n) _geSelIds.add(n.sym); }
+  if (geHighlightVisible()) {
+    for (const U of highlightInputGenes) { const n = _geByU.get(U); if (n) _geSelIds.add(n.sym); }
+  }
   if (_geLastSel && !_geSelIds.has(_geLastSel)) _geLastSel = null;
   if (!_geLastSel && _geSelIds.size) _geLastSel = [..._geSelIds][_geSelIds.size - 1];
   // Search bar / facet scope hides genes whose cards don't match; a Relayout focus additionally
@@ -4523,6 +4526,8 @@ function geSelect(sym){
   if (highlightInputGenes.has(U)) { highlightInputGenes.delete(U); if (_geLastSel === sym) _geLastSel = null; }
   else { highlightInputGenes.add(U); _geLastSel = sym; }
   geWriteHighlightInput();
+  // A click is a request to see the highlight, so it un-mutes the panel if hiding it muted things.
+  if (!geHighlightVisible()) document.getElementById('highlight-input-wrap').style.display = 'flex';
   geApplyFilter();
 }
 function geClearSelection(){
@@ -4532,8 +4537,9 @@ function geClearSelection(){
   geWriteHighlightInput();
   geApplyFilter();
 }
-// Mirror the highlight set into the input's value WITHOUT revealing the input, and keep the
-// highlight button lit. Setting .value programmatically doesn't fire oninput, so no loop.
+// Mirror the highlight set into the input's value (callers decide separately whether to reveal
+// the panel) and keep the highlight button lit. Setting .value programmatically doesn't fire
+// oninput, so no loop.
 function geWriteHighlightInput(){
   const inp = document.getElementById('highlight-input');
   if (inp) inp.value = [...highlightInputGenes].map(U => (_geByU.get(U) || {}).sym || U).join(' ');
@@ -4887,6 +4893,7 @@ function geMergeAddGene(X, rec){
   geComputeDrawn(); geRebuildScene();
   _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
   highlightInputGenes.add(xnode.sym.toUpperCase()); _geLastSel = xnode.sym; geWriteHighlightInput();   // highlight the gene you just added
+  if (!geHighlightVisible()) document.getElementById('highlight-input-wrap').style.display = 'flex';
   // settle the newcomers while the existing map stays pinned
   _geUnpinAfter = new Set();
   for (const n of _geNodes) if (before.has(n.sym) && !_geFixed[n.sym]) { _geFixed[n.sym] = true; _geUnpinAfter.add(n.sym); }
@@ -5308,6 +5315,13 @@ function toggleHighlightInput() {
   const visible = wrap.style.display !== 'none';
   wrap.style.display = visible ? 'none' : 'flex';
   if (!visible) document.getElementById('highlight-input').focus();
+  geApplyFilter();   // Gene view mutes/unmutes its highlight with the panel — see geHighlightVisible()
+}
+// Whether the "Highlight genes" panel is shown. The Gene view treats this as a mute switch: hidden
+// ⇒ the stored gene set (typed or clicked) contributes nothing, without losing it.
+function geHighlightVisible(){
+  const w = document.getElementById('highlight-input-wrap');
+  return !!w && w.style.display !== 'none';
 }
 function updateHighlightSet() {
   const raw = document.getElementById('highlight-input').value;

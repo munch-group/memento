@@ -80,9 +80,15 @@ a { color: inherit; }
    touch larger than Inter at the same px, so 14 is the optical match for the title's 15. */
 .title-pill { margin-left: 9px; padding: 1px 9px; border-radius: 5px; font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--text2); background: var(--bg3); }
 .header-actions { display: flex; gap: 8px; align-items: center; }
-.searchbar { width: 100%; margin-bottom: 1rem; display: flex; gap: 8px; }
-.searchbar input { flex: 1; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
+/* flex-wrap so the highlight field (a flex child now, not a row of its own) drops to its own line
+   on a narrow window instead of squeezing both inputs unreadably thin. */
+.searchbar { width: 100%; margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 8px; }
+.searchbar input { flex: 1; min-width: 160px; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .searchbar input:focus { border-color: var(--accent); }
+/* The highlight/bookmark/clear buttons as one unit: flex-shrink:0 so it's never squeezed, and
+   flex-wrap is NOT set here, so on a narrow window it wraps to its own line as a whole rather than
+   its buttons scattering onto separate lines (which read as overlapping "Clear" buttons). */
+.searchbar-actions { display: flex; flex-shrink: 0; gap: 8px; }
 .add-form { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--rl); padding: 1.25rem; margin-bottom: 1.25rem; }
 .add-form.gh-edit .field-full { display: none; }
 .add-form.inbox-edit .field { display: none; }
@@ -186,7 +192,10 @@ a { color: inherit; }
 .highlight-btn { display: flex; align-items: center; justify-content: center; padding: 0 8px; background: none; border: none; color: var(--text3); cursor: pointer; font-size: 13px; line-height: 1; }
 .highlight-btn:hover { color: var(--text2); }
 .highlight-btn.active { color: var(--accent); }
-.highlight-input-wrap { display: flex; gap: 8px; margin: -0.5rem 0 1rem; }
+/* A flex child of .searchbar, sharing its row with the search input (flex:1 each) instead of a
+   full-width row underneath — showing/hiding it no longer reflows the canvas below. min-width
+   matches .searchbar input's so flex-wrap drops it to its own line rather than squeezing both. */
+.highlight-input-wrap { flex: 1; min-width: 200px; display: flex; gap: 8px; }
 .highlight-input-wrap input { flex: 1; font-family: var(--font); font-size: 13px; padding: 5px 10px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .highlight-input-wrap input:focus { border-color: var(--accent); }
 .digest-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -726,17 +735,20 @@ a { color: inherit; }
       </div>
       <div class="searchbar">
         <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR" oninput="renderList()" />
-        <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
-        <button class="highlight-btn" id="highlight-btn" onclick="toggleHighlightInput()" title="Highlight genes without filtering (H)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></button>
-        <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
-      </div>
-      <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
-        <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6 — highlights without filtering" oninput="updateHighlightSet()" />
-        <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
+        <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
+          <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6 — highlights without filtering" oninput="updateHighlightSet()" />
+          <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
+        </div>
+        <!-- One flex-shrink:0 unit so these three never scatter onto separate wrapped lines. -->
+        <div class="searchbar-actions">
+          <button class="highlight-btn" id="highlight-btn" onclick="toggleHighlightInput()" title="Highlight genes without filtering (H)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></button>
+          <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
+          <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
+        </div>
       </div>
       <div class="control-bar">
         <div class="seg" id="view-seg">
-          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Cards</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setView('genes')">Genes</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span>
+          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Cards</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setView('genes')">Genes</span>
         </div>
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>

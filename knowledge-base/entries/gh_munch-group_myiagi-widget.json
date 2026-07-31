@@ -2,7 +2,9 @@
   "id": "gh_munch-group_myiagi-widget",
   "type": "github",
   "title": "myiagi-widget",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/myiagi-widget",
   "date": "2026-07-19T18:20:26Z",

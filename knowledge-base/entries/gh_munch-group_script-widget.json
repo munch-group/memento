@@ -2,7 +2,9 @@
   "id": "gh_munch-group_script-widget",
   "type": "github",
   "title": "script-widget",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/script-widget",
   "date": "2026-07-22T13:44:25Z",

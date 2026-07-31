@@ -2,7 +2,9 @@
   "id": "gh_munch-group_steps-widget",
   "type": "github",
   "title": "steps-widget",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/steps-widget",
   "date": "2026-07-19T17:40:27Z",

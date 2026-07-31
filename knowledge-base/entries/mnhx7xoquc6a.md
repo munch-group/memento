@@ -1,1 +1,0 @@
-Check nr of seats and billing for GitHub organization

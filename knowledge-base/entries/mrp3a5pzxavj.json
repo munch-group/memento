@@ -12,13 +12,12 @@
     "MIR892C"
   ],
   "tags": [
-    "Xq27_miRNA_cluster",
     "gene-set"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,
   "archived": false,
-  "pinned": false,
+  "pinned": true,
   "due": "",
   "date": "2026-07-17T15:25:00.000Z",
   "synced": false,

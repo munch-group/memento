@@ -2,7 +2,9 @@
   "id": "gh_munch-group_puzzle-widget",
   "type": "github",
   "title": "puzzle-widget",
-  "tags": [],
+  "tags": [
+    "Teaching"
+  ],
   "genes": [],
   "source": "https://github.com/munch-group/puzzle-widget",
   "date": "2026-07-20T11:43:11Z",

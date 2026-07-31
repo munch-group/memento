@@ -1,7 +1,7 @@
 {
   "id": "mrma9fvk3v68",
   "type": "note",
-  "title": "",
+  "title": "Phasic plan",
   "genes": [],
   "tags": [
     "Phasic"
@@ -10,7 +10,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-15T17:10:11.569Z",
+  "date": "2026-07-31T07:26:33.143Z",
   "synced": false,
   "_sortTag": "Phasic",
   "schedule": {
@@ -34,5 +34,6 @@
         "end": "2026-09-25"
       }
     ]
-  }
+  },
+  "pinned": true
 }

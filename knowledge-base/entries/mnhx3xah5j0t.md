@@ -1,1 +1,0 @@
-Check Claude permissions granted

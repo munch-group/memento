@@ -1,20 +1,21 @@
 ## Today todo
 - Email
 - Funding application overview/plan
-- New TA plan (Bjarke is done TAing)
+- New [TA plan](https://docs.google.com/spreadsheets/d/1-P4IaAKzO0Wkv8HwAe5CbBQ68a7YqUhdoXF9hlxsIOg/edit?gid=0#gid=0) (Bjarke is done TAing)
+- Prepare GT re-exam
+- Check Claude permissions granted
 
 ## Week run
-- Prepare GT re-exam
 - Work plan for Bioinformatics
 - Finish Phasic refactor and have Claude review which github issues are relevant after refactor
 - Lundbeck wrap up / Grove UKbiobank
 - Clean up chr3 notebook in geneinfo repo
-- Sort out git-lfs (https://docs.github.com/en/billing/concepts/product-billing/git-lfs, https://docs.github.com/en/repositories/working-with-files/managing-large-files/removing-files-from-git-large-file-storage)
+- Check nr of seats and billing for GitHub organization
 
 ## Month tactic
 - Plan for exploiting UKbiobank
 - Flesh out the phasic-popgen repo
-- SMBE follow-up: Tidy notes / watch talks
+- SMBE follow-up: Tidy notes / watch talks [[mrnfkhbc3h18|SMBE26 notes]]
 - PsychENCODE access request
 - Africa genomes access request
 - Read Juliens papers

@@ -41,7 +41,7 @@ a { color: inherit; }
 .sb-section.collapsed .sb-arrow { transform: rotate(-90deg); }
 .filter-chip { display: block; width: 100%; text-align: left; font-size: 13.5px; padding: 4px 1.25rem; border: none; background: transparent; cursor: pointer; color: var(--text); transition: background 0.15s, color 0.15s; }
 .filter-chip.active { background: var(--bg3); color: var(--text); font-weight: 500; }
-#tag-items .filter-chip, #sort-list .filter-chip, #filter-list .filter-chip { color: var(--text3); }
+#tag-items .filter-chip, #sort-list .filter-chip, #filter-list .filter-chip { color: #747472; }
 #tag-items .filter-chip.active, #sort-list .filter-chip.active, #filter-list .filter-chip.active { color: var(--text); }
 .sb-count { float: right; font-size: 12px; color: var(--text3); }
 .sb-scroll { overflow-y: auto; flex: 1; }
@@ -111,9 +111,9 @@ a { color: inherit; }
 .type-opt.active { border-width: 1.5px; }
 .form-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 .card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--rl); padding: 1rem 1.1rem; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 1px 3px var(--shadow); position: relative; }
-/* Quick actions floating in a collapsed card's top-right corner. The corner itself is the hover
-   zone: the container sits there transparently and only reveals (and enables) its icons on hover,
-   so they never clutter the card yet are one reach away. */
+/* Quick actions floating in a card's top-right corner (collapsed or expanded). The corner itself is
+   the hover zone: the container sits there transparently and only reveals (and enables) its icons
+   on hover, so they never clutter the card yet are one reach away. */
 .card-quick { position: absolute; top: 0; right: 0; display: flex; gap: 4px; padding: 7px 9px; z-index: 4; }
 .card-quick .qicon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 5px; color: var(--text3); opacity: 0; pointer-events: none; transition: opacity 0.12s ease, background 0.12s ease, color 0.12s ease; cursor: pointer; }
 .card-quick:hover .qicon { opacity: 1; pointer-events: auto; background: rgba(20,20,19,0.05); }
@@ -178,7 +178,7 @@ a { color: inherit; }
 .control-bar > :last-child { justify-self: end; }
 /* An inline switch: every option is shown, the current one is in accent. State is legible without
    decoding a dot, and any option is one click away — no cycling blind. (The keyboard still cycles.) */
-.seg { font-family: var(--mono); font-size: 11px; color: var(--text3); display: flex; align-items: center; }
+.seg { font-family: var(--mono); font-size: 11px; color: #747472; display: flex; align-items: center; }
 .seg-opt { cursor: pointer; padding: 1px 0; border-bottom: 1.5px solid transparent; white-space: nowrap; }
 .seg-opt:hover { color: var(--text2); }
 .seg-opt.active { color: var(--accent); border-bottom-color: var(--accent); }
@@ -261,6 +261,8 @@ a { color: inherit; }
 .tl-icon { font-size: 11px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
 .tl-icon:hover { opacity: 1; }
 .tl-icon.active { opacity: 0.85; color: var(--accent); }
+.ref-icon { font-size: 11px; cursor: pointer; opacity: 0.7; color: var(--text3); transition: opacity 0.15s, color 0.15s; user-select: none; display: inline-flex; align-items: center; }
+.ref-icon:hover { opacity: 1; }
 .card.overdue { border-color: rgba(200, 0, 0, 0.5); }
 .card.due-today { border-color: rgba(200,0,0,0.8); }
 .card.due-soon { border-color: rgba(200, 0, 0, 0.3); }
@@ -336,21 +338,22 @@ a { color: inherit; }
   font-size: min(1em, calc(var(--gr-cap, 14px) / var(--gr-zoom, 1))); }
 .gr-node.gr-off { display: none; }
 .gr-node.pinned { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(217,119,87,0.35); }
-/* Accent, like every other bit of interaction feedback here, and a wash rather than an outline so it
-   reads at a glance across a crowd without competing with the pinned ring next to it. Survives
-   monochrome mode: this is action, not data.
-   Two strengths, because they answer different questions. The pale one means "the web reaches this
-   from something you clicked". The strong one means "you clicked THIS" — and so it is the one to
-   click again to put the neighbourhood away. Mutually exclusive: a card is one or the other.
+/* Only the card you actually clicked gets picked out — a wash rather than an outline so it reads at
+   a glance across a crowd without competing with the pinned ring next to it. Gray rather than accent
+   — unlike the pinned ring or the connection border, this is a transient selection, not a standing
+   property of the card, so it reads as "picked out" rather than "orange = drawn connection" (which
+   .conn already owns). Survives monochrome mode: this is action, not data.
+   The neighbours a click reaches answer "what does the web reach from here?" on their own — full
+   opacity, undimmed, drawing the highlighted edges right up to them — so their own background stays
+   plain and only the card that was actually clicked wears a tint. Click it again to put the
+   neighbourhood away.
 
    Mixed SOLID, not laid on as a translucent wash. A node's background is the only thing hiding the
-   web that runs beneath it — these rules REPLACE the opaque .gr-node white rather than layering over
-   it, so as a wash they left the lines showing through the very cards the tint had picked out. Same
-   two colours to look at: each is its old wash over --bg2, the canvas the nodes sit on, worked out by
-   color-mix instead of by the compositor. Written as a mix rather than the flat #f5e7df / #edc8b9 so
-   the tint still follows --accent, and has no hex of its own to drift out of step with it. */
-.gr-node.gr-tint { background: color-mix(in srgb, var(--accent) 14%, var(--bg2)); }
-.gr-node.gr-sel { background: color-mix(in srgb, var(--accent) 38%, var(--bg2)); }
+   web that runs beneath it — this rule REPLACES the opaque .gr-node white rather than layering over
+   it, so as a wash it left the lines showing through the very card the tint had picked out. Written
+   as a mix over --bg2, the canvas the nodes sit on, rather than a flat hex, so the tint still follows
+   --text3 and has no hex of its own to drift out of step with it. */
+.gr-node.gr-sel { background: color-mix(in srgb, var(--text3) 7%, var(--bg2)); }
 .gr-icon { flex-shrink: 0; display: inline-flex; align-items: center; color: var(--tc); margin-top: 1px; }
 .gr-icon svg { display: block; width: 12px; height: 12px; }
 /* A connection card: the design drew this as a label on the edge. Here it IS a node — draggable
@@ -670,7 +673,7 @@ a { color: inherit; }
     </div>
     <div id="app-area" style="display:none">
       <div class="page-header">
-        <span class="page-title" id="page-title">Cards</span>
+        <span class="page-title" id="page-title">Stack</span>
         <!-- Reload, Export and Cleanup are gone. Reload: both platforms now refresh themselves.
              Export/Cleanup: Claude reads the knowledge base live through memento-mcp.py, so there
              is nothing to push into its memory and nothing to reap afterwards. -->
@@ -748,7 +751,7 @@ a { color: inherit; }
       </div>
       <div class="control-bar">
         <div class="seg" id="view-seg">
-          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Cards</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setView('genes')">Genes</span>
+          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Stack</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setView('genes')">Genes</span>
         </div>
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
@@ -1167,9 +1170,6 @@ function sortItems(arr) {
   // dir: 1 = ascending, -1 = descending (default for date = newest first)
   const dir = sortAsc ? 1 : -1;
   return arr.slice().sort((a,b) => {
-    // Pinned items always sort first
-    const pa = a.pinned ? 1 : 0, pb = b.pinned ? 1 : 0;
-    if (pa !== pb) return pb - pa;
     // When highlight is active, sort by match fraction first (matches ÷ genes listed in the
     // card), so a card where most genes match outranks a huge list with the same raw count.
     if (highlightGenes.size) {
@@ -1308,7 +1308,7 @@ function renderFilters() {
     }
   }
   // The title names the view you're in, and each active filter gets its own pill beside it. The ←
-  // therefore points at where it takes you ("Cards"), not at the filter you're already
+  // therefore points at where it takes you ("Stack"), not at the filter you're already
   // looking at — "← #Baboons" read like a link *to* Baboons. Pills also mean two filters can be
   // shown at once: an archived scope used to be swallowed whenever a tag was also active.
   const archived = archiveFilter === 'archived';
@@ -1331,7 +1331,7 @@ function renderFilters() {
         : mainView === 'timeline' ? `Timeline (${tlRows().length})`
         : mainView === 'graph' ? `Graph (${grShownCount()})`
         : mainView === 'genes' ? `Genes (${geShownCount()})`
-        : `Cards (${scope.length})`);
+        : `Stack (${scope.length})`);
 }
 
 function toggleSection(headerId, contentId) {
@@ -1685,12 +1685,13 @@ function renderList() {
   // everything below stays a lazy placeholder. md() is memoized, so re-renders of seen cards stay cheap.
   const EAGER = 6 * nCols;
   vis.forEach((item, i) => cols[i % nCols].push(renderCard(item, false, i < EAGER)));
-  // Dashboard view: Dashboard / Priorities / Inbox each sit atop their own column; pinned cards fill below each.
+  // Dashboard view: pinned and deadline-approaching cards fill the top of each column; Dashboard /
+  // Priorities / Inbox sit below.
   if (mainView === 'dash') {
     const heads = digestHeads();
     const headCols = Array.from({length: nCols}, () => []);
     heads.forEach((h, i) => headCols[i % nCols].push(h));
-    for (let c = 0; c < nCols; c++) cols[c] = headCols[c].concat(cols[c]);
+    for (let c = 0; c < nCols; c++) cols[c] = cols[c].concat(headCols[c]);
   }
   list.style.flexDirection = '';
   // Progressive insert: paint the first FIRST cards per column now, then stream the rest over later
@@ -1822,13 +1823,15 @@ function renderCard(item, forceExpand, eagerBody) {
   // On the dashboard, a deadline less than four days away (overdue included) gets a red border; the
   // .dash-view CSS quiets every other border there.
   const deadlineUrgent = mainView === 'dash' && item.due && daysBetween(todayISO(), item.due) < 4 ? ' deadline-urgent' : '';
-  // Collapsed cards carry a quick-action overlay in the top-right corner: full-width, timeline, pin.
-  // The corner is a hover zone (transparent until hovered) so the icons stay out of the way but are
-  // one reach away without expanding the card. Expanded cards already have these in the bottom row.
-  const quick = (!expChrome && !_cardPreview && !SPECIAL_IDS.has(item.id)) ? `<div class="card-quick">
+  // Every card — collapsed or expanded — carries a quick-action overlay in the top-right corner:
+  // full-width, timeline, pin, copy link. The corner is a hover zone (transparent until hovered) so
+  // the icons stay out of the way but are one reach away, without having to reach the bottom row —
+  // useful on an expanded card, which repeats pin/focus/timeline/ref there too but can run long.
+  const quick = (!_cardPreview && !SPECIAL_IDS.has(item.id)) ? `<div class="card-quick">
     <span class="qicon focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
     <span class="qicon tl-icon${tlOnTimeline(item)?' active':''}" title="${tlOnTimeline(item)?'On the timeline — open it':'Put on the timeline'}" onclick="cardToTimeline(event,'${item.id}')">${TL_ICON}</span>
     <span class="qicon pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>
+    <span class="qicon ref-icon" title="Copy card link" onclick="copyCardRef(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
   </div>` : '';
   return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${deadlineUrgent}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" oncontextmenu="cardContextMenu(event,'${item.id}')" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   ${quick}
@@ -1875,6 +1878,7 @@ function renderCard(item, forceExpand, eagerBody) {
       ${!SPECIAL_IDS.has(item.id)?`<span class="pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>`:''}
       <span class="focus-icon" title="Expand to full width" onclick="focusCard(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
       ${!SPECIAL_IDS.has(item.id)?`<span class="tl-icon${tlOnTimeline(item)?' active':''}" title="${tlOnTimeline(item)?'On the timeline — open it':'Put on the timeline'}" onclick="cardToTimeline(event,'${item.id}')">${TL_ICON}</span>`:''}
+      <span class="ref-icon" title="Copy card link" onclick="copyCardRef(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
       ${allGenes.length?`<span class="gene-search-icon" title="Add genes to search bar" onclick="appendGenesToSearch(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>`:''}
       ${item.type==='github'&&item._ghOpenIssues?`<button class="icon-btn" onclick="ghShowIssues(event,'${item._ghFullName}','${item.title.replace(/'/g,"\\'")}') " title="Open issues (${item._ghOpenIssues})" style="color:var(--accent)">⊙</button>`:''}
       ${basePath?`<button class="icon-btn" onclick="event.stopPropagation();openInVSCode('${item.id}')" title="Open in VS Code" style="font-size:11px;font-weight:600">VS</button>`:''}
@@ -3065,6 +3069,7 @@ function grMoveNode(id, x, y){
 // the same whichever way you draw it. With no highlight at all, every line is lit, which is the one
 // undivided web there has always been.
 function grWebLit(p){
+  if (_grSelIds.size) return _grSelIds.has(p.a) || _grSelIds.has(p.b);
   if (!highlightGenes.size) return true;
   return _grHiIds.has(p.a) || _grHiIds.has(p.b);
 }
@@ -3403,6 +3408,11 @@ function grApplyFilter(){
   let hidden = 0;
   _grHiIds = new Set();
   const tint = grTinted();
+  // A click is the stronger, more deliberate spotlight of the two — same relationship as in the
+  // Genes map, where a clicked gene's dim/lit split overrides the search highlight's. So once
+  // anything is clicked, it alone decides what fades; the gene-name highlight only drives dimming
+  // when nothing is.
+  const anySel = _grSelIds.size > 0;
   for (const e of _grNodes) {
     const on = vis.has(e.id);
     if (!on) hidden++;
@@ -3413,21 +3423,20 @@ function grApplyFilter(){
     el.classList.toggle('gr-off', !on);
     el.classList.toggle('link-target', linkMode && e.id !== editingId);
     el.classList.toggle('gr-hi', hi);
-    el.classList.toggle('gr-dim', lit && !hi);
-    // The one you clicked wears the strong tint; the ones it reached wear the pale one. Only the
-    // strong ones answer to another click, so the two have to be told apart on sight.
-    const sel = _grSelIds.has(e.id);
-    el.classList.toggle('gr-sel', sel);
-    el.classList.toggle('gr-tint', !sel && tint.has(e.id));
+    el.classList.toggle('gr-dim', anySel ? !tint.has(e.id) : (lit && !hi));
+    // Only the card you actually clicked wears the tint; the neighbours it reached stay plain and
+    // just keep their full opacity (the !dim above) to show they're part of the same neighbourhood.
+    el.classList.toggle('gr-sel', _grSelIds.has(e.id));
   }
   // A connection line falls back with the cards it runs between: leaving it at full accent while both
   // its ends fade is what made the highlight read as half-applied — the orange was the loudest thing
-  // left on the canvas, pointing at nothing you asked for.
+  // left on the canvas, pointing at nothing you asked for. Under a click, only lines touching a
+  // CLICKED card (not merely a tinted neighbour) stay full — same rule the Genes map's edges follow.
   _grEdges.forEach((c, i) => {
     const line = document.getElementById('gr-e' + i);
     if (!line || !line.setAttribute) return;
     const on = vis.has(c.a) && vis.has(c.b);
-    const touches = !lit || _grHiIds.has(c.a) || _grHiIds.has(c.b);
+    const touches = anySel ? (_grSelIds.has(c.a) || _grSelIds.has(c.b)) : (!lit || _grHiIds.has(c.a) || _grHiIds.has(c.b));
     line.setAttribute('opacity', !on ? '0' : touches ? '1' : String(GR_DIM));
   });
   grApplyDOM();   // the web drops any line whose far end has just been filtered away
@@ -5184,7 +5193,7 @@ function setView(v) {
   if (v !== 'graph') grStop();   // don't leave a force simulation running behind another view
   if (v !== 'genes') geStop();
   applyControlBar();
-  renderFilters();   // the page title says Dashboard / Cards (N) / Graph / Timeline
+  renderFilters();   // the page title says Dashboard / Stack (N) / Graph / Timeline
   renderList();
 }
 function setDashboard(v) { setView(v ? 'dash' : 'list'); }   // kept: the D key and callers still speak in booleans
@@ -5643,6 +5652,16 @@ function appendGenesToSearch(e, id) {
   renderList();
   showToast('Added to search: ' + text);
 }
+// Copies the [[id|title]] reference itself, for pasting into any card's body — same syntax
+// insertCardRef() writes into a Connection card's source, rendered by the [[...]] handling in md().
+function copyCardRef(e, id) {
+  e.stopPropagation();
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  const title = item.title || item.content.split('\n')[0].slice(0,40);
+  const ref = `[[${id}|${title}]]`;
+  navigator.clipboard.writeText(ref).then(() => showToast('Copied: ' + ref));
+}
 function copyCardMarkdown(e, id) {
   e.stopPropagation();
   const item = items.find(i => i.id === id);
@@ -6036,18 +6055,21 @@ document.addEventListener('click', e => {
 
 // --- Utilities ---
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// Renders a [[id|title]] (or bare [[id]]) reference as the clickable chip used everywhere such
+// refs appear — a Connection card's source, or one pasted into any card's body via copyCardRef().
+function cardRefHtml(id, title) {
+  if (!title) {
+    const item = items.find(i => i.id === id);
+    title = item ? (item.title || item.content.split('\n')[0].slice(0,30)) : id;
+  }
+  return `<span class="card-ref" onclick="event.stopPropagation();expandLinkedCard('${esc(id)}')" title="Go to: ${esc(title)}">${esc(title)}</span>`;
+}
 function formatSource(s) {
   if (!s) return '';
   // Replace [[id|title]] references with clickable chips
-  let out = s.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, (_, id, title) => {
-    return `<span class="card-ref" onclick="event.stopPropagation();expandLinkedCard('${esc(id)}')" title="Go to: ${esc(title)}">${esc(title)}</span>`;
-  });
+  let out = s.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, (_, id, title) => cardRefHtml(id, title));
   // Also handle [[id]] without title
-  out = out.replace(/\[\[([^\]]+)\]\]/g, (_, id) => {
-    const item = items.find(i => i.id === id);
-    const title = item ? (item.title || item.content.split('\n')[0].slice(0,30)) : id;
-    return `<span class="card-ref" onclick="event.stopPropagation();expandLinkedCard('${esc(id)}')" title="Go to: ${esc(title)}">${esc(title)}</span>`;
-  });
+  out = out.replace(/\[\[([^\]]+)\]\]/g, (_, id) => cardRefHtml(id));
   // Replace URLs with links
   out = out.replace(/(https?:\/\/[^\s<]+)/g, (url) => {
     return `<a href="${esc(url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(url)}</a>`;
@@ -6068,6 +6090,17 @@ function md(s){
       placeholders.push({id, tex, display});
       return id;
     }
+    // [[id|title]] / [[id]] card references — extracted before marked (same reason as math: keep
+    // the brackets/pipe from being mangled), then swapped back in as the same clickable chip a
+    // Connection card's source renders. Reuses the [[...]] syntax copyCardRef() writes.
+    const refPlaceholders = [];
+    function refPh(id, title) {
+      const id0 = '\x00REF' + refPlaceholders.length + '\x00';
+      refPlaceholders.push({id0, id, title});
+      return id0;
+    }
+    s = s.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, (_, id, title) => refPh(id, title));
+    s = s.replace(/\[\[([^\]]+)\]\]/g, (_, id) => refPh(id, null));
     // Display math: $$...$$ and \[...\]
     s = s.replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) => ph(tex, true));
     s = s.replace(/\\\[([\s\S]+?)\\\]/g, (_, tex) => ph(tex, true));
@@ -6089,6 +6122,9 @@ function md(s){
         rendered = esc(display ? `$$${tex}$$` : `$${tex}$`);
       }
       h = h.replace(id, () => rendered);   // fn replacer: '$' in the math must stay literal
+    }
+    for (const {id0, id, title} of refPlaceholders) {
+      h = h.replace(id0, () => cardRefHtml(id, title));
     }
     h = h.replace(/<a /g, '<a target="_blank" rel="noopener" ');
     h = h.replace(/<img /g, '<img loading="lazy" decoding="async" ');   // let the browser schedule decode/load (real src set later by resolveImages)

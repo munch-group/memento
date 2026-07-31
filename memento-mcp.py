@@ -166,8 +166,8 @@ def get_entry(entry_id: str) -> dict:
 
     Args:
         entry_id: The entry id, as returned by search_entries (e.g. "mnhs3dmls8ll"). The special
-            ids "_priorities", "_strategy" and "_digest" hold Kasper's current priorities,
-            strategy, and the generated "where am I" digest.
+            ids "_priorities", "_strategy", "_networking" and "_digest" hold Kasper's current
+            priorities, strategy, networking notes, and the generated "where am I" digest.
     """
     for e in entries():
         if e.get("id") == entry_id:

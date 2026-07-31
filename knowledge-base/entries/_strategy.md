@@ -1,3 +1,7 @@
+## Quarter plan
+- Paper Joint prob., BFFG, Ghost IM.  
+- Phasic: Coalescent with selection, State lumping, Paper.  
+
 ## Year strategy
 - Phasic paper on joint probability.  
 - Phasic paper on coalescent with selection.  

@@ -807,8 +807,9 @@ const TYPE_ICONS = {
 // (so the CLI and digest tooling need no special-casing) with a reserved id. Order here is the
 // order they appear on the dashboard.
 const SPECIAL_CARDS = [
-  { id: '_priorities', title: 'Priorities', staleDays: 4 },
-  { id: '_strategy',   title: 'Strategy',   staleDays: 30 },
+  { id: '_priorities', title: 'Priorities',  staleDays: 4 },
+  { id: '_networking', title: 'Networking',  staleDays: 14 },
+  { id: '_strategy',   title: 'Strategy',    staleDays: 30 },
 ];
 const SPECIAL_IDS = new Set([...SPECIAL_CARDS.map(s => s.id), '_digest']);
 
@@ -1567,14 +1568,18 @@ function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
 // Dashboard "head" cards — each sits atop a column in digest view, in this order:
-// the special cards (Priorities, Strategy), then the generated Dashboard digest, then Inbox.
+// the special cards (Priorities, Networking, Strategy), then the generated Dashboard digest, then Inbox.
+// Each array entry lands in its own column (round-robin, see renderList) — except Networking and
+// Strategy, which are glued into one entry so Strategy always renders directly under Networking
+// in the same column, instead of scattering across separate columns like the other heads.
 function digestHeads(){
   const d = window._kbDigest;
   const digestHtml = (!d || !d.markdown)
     ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
     : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
-  const specials = SPECIAL_CARDS.map(spec => renderSpecialCard(spec, items.find(i => i.id === spec.id)));
-  return [...specials, digestHtml, renderInboxCard()].filter(Boolean);
+  const cardFor = id => renderSpecialCard(SPECIAL_CARDS.find(s => s.id === id), items.find(i => i.id === id));
+  const networkingAndStrategy = cardFor('_networking') + cardFor('_strategy');
+  return [cardFor('_priorities'), networkingAndStrategy, digestHtml, renderInboxCard()].filter(Boolean);
 }
 function renderLinkBanner() {
   const el = document.getElementById('link-banner');

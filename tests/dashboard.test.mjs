@@ -1,6 +1,6 @@
-// The dashboard's special cards (Priorities, Strategy). They are ordinary note entries with
-// reserved ids — so the Python tooling needs no special-casing — that render as dashboard heads
-// and never appear in the normal card list.
+// The dashboard's special cards (Priorities, Networking, Strategy). They are ordinary note
+// entries with reserved ids — so the Python tooling needs no special-casing — that render as
+// dashboard heads and never appear in the normal card list.
 import { load } from './harness.mjs';
 
 let pass = 0, fail = 0;
@@ -14,12 +14,12 @@ const noop = async () => ({ ok: true, status: 200, json: async () => ({}), text:
 const note = (id, title, extra = {}) =>
   ({ id, type: 'note', title, tags: [], genes: [], content: 'body of ' + id, date: '2026-07-14T00:00:00Z', ...extra });
 
-// The <h2> of each dashboard head, in the order they're emitted. A head with no <h2> is the
-// "click to create" placeholder for a special card that doesn't exist yet.
+// The <h2> of every dashboard head, in emission order. Networking and Strategy are glued into a
+// single array entry (see digestHeads), so this pulls every <h2> out of each entry rather than
+// just the first — otherwise Strategy's heading would be invisible to this helper. A head with no
+// <h2> is the "click to create" placeholder for a special card that doesn't exist yet.
 const headings = html => html
-  .map(h => h.match(/<h2[^>]*>(?:<a[^>]*>)?([^<]+)/))
-  .filter(Boolean)
-  .map(m => m[1].trim());
+  .flatMap(h => [...h.matchAll(/<h2[^>]*>(?:<a[^>]*>)?([^<]+)/g)].map(m => m[1].trim()));
 
 function setup(cards) {
   const { api, sandbox } = load({ fetchImpl: noop });
@@ -33,19 +33,45 @@ function setup(cards) {
 console.log('\nThe registry');
 {
   const { api } = setup([]);
-  eq(api.SPECIAL_CARDS.map(s => s.id), ['_priorities', '_strategy'], 'Priorities then Strategy');
-  eq([...api.SPECIAL_IDS], ['_priorities', '_strategy', '_digest'], 'the generated digest is special too');
+  eq(api.SPECIAL_CARDS.map(s => s.id), ['_priorities', '_networking', '_strategy'], 'Priorities, Networking, then Strategy');
+  eq([...api.SPECIAL_IDS], ['_priorities', '_networking', '_strategy', '_digest'], 'the generated digest is special too');
 }
 
-console.log('\nDashboard order: Priorities, Strategy, Dashboard, then Inbox');
+console.log('\nDashboard order: Priorities, Networking, Strategy, Dashboard, then Inbox');
 {
   const { api } = setup([
     note('_strategy', 'Strategy'),        // deliberately out of order in `items`...
+    note('_networking', 'Networking'),
     note('_priorities', 'Priorities'),
     note('n1', 'Normal'),
   ]);
   // ...the dashboard order comes from the registry, not from entry order on disk.
-  eq(headings(api.digestHeads()), ['Priorities', 'Strategy', 'Dashboard', 'Inbox'], 'heads render in the intended order');
+  eq(headings(api.digestHeads()), ['Priorities', 'Networking', 'Strategy', 'Dashboard', 'Inbox'], 'heads render in the intended order');
+}
+
+console.log('\nNetworking and Strategy are glued to one column, Strategy directly below Networking');
+{
+  // Heads distribute round-robin across columns (see renderList), which would otherwise scatter
+  // Networking and Strategy into different columns. Check every column count the layout can pick.
+  const { api, sandbox } = setup([
+    note('_priorities', 'Priorities'),
+    note('_networking', 'Networking'),
+    note('_strategy', 'Strategy'),
+  ]);
+  const list = sandbox.document.getElementById('item-list');
+  api.digestVisible = true;
+  for (const [width, nCols] of [[450, 1], [1200, 2], [1400, 3], [1900, 4]]) {
+    list.offsetWidth = width;
+    api.renderList();
+    const cols = list.innerHTML.split('class="item-col"').slice(1);
+    eq(cols.length, nCols, `width ${width}: layout picks ${nCols} column(s)`);
+    const col = cols.find(c => c.includes('<h2>Networking</h2>'));
+    const iN = col ? col.indexOf('<h2>Networking</h2>') : -1;
+    const iS = col ? col.indexOf('<h2>Strategy</h2>') : -1;
+    eq(iN !== -1 && iS > iN, true, `${nCols} column(s): Strategy is in the same column, after Networking`);
+    eq(iN !== -1 && !col.slice(iN + '<h2>Networking</h2>'.length, iS === -1 ? undefined : iS).includes('<h2>'), true,
+       `${nCols} column(s): nothing else sits between Networking and Strategy`);
+  }
 }
 
 console.log('\nA missing special card offers to create itself');
@@ -70,6 +96,7 @@ console.log('\nSpecial cards never appear in the normal list');
   const { api, sandbox } = setup([
     note('_priorities', 'Priorities'),
     note('_strategy', 'Strategy'),
+    note('_networking', 'Networking'),
     note('p1', 'Pinned', { pinned: true }),
     note('n1', 'Normal'),
   ]);
@@ -79,8 +106,8 @@ console.log('\nSpecial cards never appear in the normal list');
   api.renderList();
   const list = listHtml();
   eq(/data-id="n1"/.test(list), true, 'a normal card is listed');
-  eq(/data-id="_priorities"/.test(list) || /data-id="_strategy"/.test(list), false,
-     'neither special card leaks into the list');
+  eq(/data-id="_priorities"/.test(list) || /data-id="_strategy"/.test(list) || /data-id="_networking"/.test(list), false,
+     'no special card leaks into the list');
 
   api.digestVisible = true;       // the dashboard
   api.renderList();
@@ -89,6 +116,8 @@ console.log('\nSpecial cards never appear in the normal list');
   eq(/data-id="n1"/.test(dash), false, 'but not unpinned ones');
   eq(/data-id="_strategy"/.test(dash), false, 'and Strategy appears only as a head, never as a card');
   eq(/<h2>Strategy<\/h2>/.test(dash), true, 'the Strategy head is rendered');
+  eq(/data-id="_networking"/.test(dash), false, 'and Networking appears only as a head, never as a card');
+  eq(/<h2>Networking<\/h2>/.test(dash), true, 'the Networking head is rendered');
 }
 
 console.log('\nThe dashboard also surfaces cards coming due within two weeks');
@@ -153,9 +182,10 @@ console.log('\nThe dashboard also surfaces cards coming due within two weeks');
 
 console.log('\nSpecial cards are not taggable or pinnable');
 {
-  const { api } = setup([note('_priorities', 'Priorities'), note('_strategy', 'Strategy'), note('n1', 'Normal')]);
+  const { api } = setup([note('_priorities', 'Priorities'), note('_strategy', 'Strategy'), note('_networking', 'Networking'), note('n1', 'Normal')]);
   eq(api.taggable(api.items.find(i => i.id === '_strategy')), false, 'Strategy takes no tags');
   eq(api.taggable(api.items.find(i => i.id === '_priorities')), false, 'nor does Priorities');
+  eq(api.taggable(api.items.find(i => i.id === '_networking')), false, 'nor does Networking');
   eq(api.taggable(api.items.find(i => i.id === 'n1')), true, 'a normal card still does');
 }
 

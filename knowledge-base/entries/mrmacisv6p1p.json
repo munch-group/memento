@@ -16,12 +16,6 @@
   "schedule": {
     "subtasks": [
       {
-        "id": "smrmc3e6tn46",
-        "title": "Week plan",
-        "start": "2026-07-20",
-        "end": "2026-07-23"
-      },
-      {
         "id": "smrmc9ynjl87",
         "title": "1:",
         "start": "2026-08-24",
@@ -106,16 +100,10 @@
         "end": "2026-12-04"
       },
       {
-        "id": "smrn7y2nluog",
-        "title": "New exercises",
-        "start": "2026-07-27",
-        "end": "2026-07-31"
-      },
-      {
         "id": "smrn7yj49ydv",
-        "title": "Lecture notes",
-        "start": "2026-08-10",
-        "end": "2026-08-14"
+        "title": "New course material",
+        "start": "2026-08-03",
+        "end": "2026-08-07"
       }
     ]
   },

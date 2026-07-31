@@ -1,0 +1,1 @@
+For each lineage in each tree plot P(A) posterior of nodes as function of node height. Compute probability that the admixture happened on each branch

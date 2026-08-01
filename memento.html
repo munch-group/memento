@@ -5429,16 +5429,10 @@ function insertCardRef(id) {
   showToast('Linked: ' + title);
 }
 
-function expandLinkedCard(id) {
+function expandLinkedCard(e, id) {
   const item = items.find(i => i.id === id);
   if (!item) { showToast('Linked card not found'); return; }
-  expandedId = id;
-  renderList();
-  // Scroll to the card
-  setTimeout(() => {
-    const el = document.querySelector(`.card[data-id="${id}"]`);
-    if (el) el.scrollIntoView({behavior:'smooth', block:'nearest'});
-  }, 50);
+  focusCard(e, id);
 }
 
 function exitLinkMode() {
@@ -6062,7 +6056,7 @@ function cardRefHtml(id, title) {
     const item = items.find(i => i.id === id);
     title = item ? (item.title || item.content.split('\n')[0].slice(0,30)) : id;
   }
-  return `<span class="card-ref" onclick="event.stopPropagation();expandLinkedCard('${esc(id)}')" title="Go to: ${esc(title)}">${esc(title)}</span>`;
+  return `<span class="card-ref" onclick="event.stopPropagation();expandLinkedCard(event,'${esc(id)}')" title="Go to: ${esc(title)}">${esc(title)}</span>`;
 }
 function formatSource(s) {
   if (!s) return '';

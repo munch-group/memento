@@ -180,6 +180,34 @@ console.log('\nThe dashboard also surfaces cards coming due within two weeks');
   eq(abovePinAllDeadlines, true, 'in its column, every card above the pinned one is a deadline card');
 }
 
+console.log('\nA card whose timeline bar spans today leads the dashboard, then due date order takes over');
+{
+  // A third way onto the dashboard, on top of pinned/due-soon: a schedule bar covering today. Those
+  // lead every other card, and everything after them is ordered strictly by due date (soonest on
+  // top) — a pinned card with no due date at all trails behind every due-dated card, near or far.
+  const { api, sandbox } = setup([]);
+  const T = api.todayISO(), at = n => api.addDaysISO(T, n);
+  api.items = [
+    note('_priorities', 'Priorities'),
+    note('pin',    'Pinned, no due',                { pinned: true }),
+    note('urgent', 'Due in 2 days',                  { due: at(2) }),
+    note('soon',   'Due in a week',                  { due: at(7) }),
+    note('inprog', 'Bar spans today, no due or pin'),
+  ];
+  api.tlSeed(api.items.find(i => i.id === 'inprog'));   // bar: today .. today+2
+
+  eq(api.scheduleOverlapsToday(api.items.find(i => i.id === 'inprog')), true, 'a freshly seeded bar spans today');
+  eq(api.scheduleOverlapsToday(api.items.find(i => i.id === 'pin')), false, 'a plain pinned card carries no bar');
+
+  const list = sandbox.document.getElementById('item-list');
+  list.offsetWidth = 450;   // force a single column so the resulting order is unambiguous
+  api.digestVisible = true;
+  api.renderList();
+  const ids = [...list.innerHTML.matchAll(/data-id="([^"]+)"/g)].map(m => m[1]).filter(id => !id.startsWith('_'));
+  eq(ids, ['inprog', 'urgent', 'soon', 'pin'],
+     'in-progress card first, then ascending due date, then the due-less pin last');
+}
+
 console.log('\nSpecial cards are not taggable or pinnable');
 {
   const { api } = setup([note('_priorities', 'Priorities'), note('_strategy', 'Strategy'), note('_networking', 'Networking'), note('n1', 'Normal')]);

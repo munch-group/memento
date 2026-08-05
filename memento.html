@@ -1591,6 +1591,11 @@ function renderLinkBanner() {
 // Due inside the next two weeks — the test the dashboard uses to decide a card needs attention.
 // Overdue counts (its date is behind today, which is less than two weeks ahead), so those show too.
 function dueSoon(item){ return !!(item && item.due) && daysBetween(todayISO(), item.due) < 14; }
+// A card is "in progress" when one of its timeline bars spans today (start/end are both inclusive).
+function scheduleOverlapsToday(item){
+  const today = todayISO();
+  return tlSubs(item).some(s => s.start <= today && today <= s.end);
+}
 function renderList() {
   _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
   renderLinkBanner();   // link mode is a mode of the app, so it must announce itself in every view
@@ -1639,17 +1644,20 @@ function renderList() {
   }
   let { vis } = getVisibleItems();
   if (mainView === 'dash') {
-    // The dashboard is what-needs-attention: the cards you pinned, plus anything coming due inside
-    // two weeks (overdue included — that needs attention most of all). The deadline cards come first,
-    // soonest due first, then the pinned ones. Borders are quiet here (no pinned outline, no red
-    // due-state edge) EXCEPT a deadline less than four days out, which gets a red border — see the
-    // .dash-view CSS and the deadline-urgent class in renderCard.
-    vis = vis.filter(i => !SPECIAL_IDS.has(i.id) && (i.pinned || dueSoon(i)));
+    // The dashboard is what-needs-attention: cards with a timeline bar spanning today, the cards
+    // you pinned, plus anything coming due inside two weeks (overdue included — that needs
+    // attention most of all). In-progress cards (today's bar) come first; everything else is
+    // ordered by due date, soonest on top, with due-less cards (plain pins) trailing. Borders are
+    // quiet here (no pinned outline, no red due-state edge) EXCEPT a deadline less than four days
+    // out, which gets a red border — see the .dash-view CSS and the deadline-urgent class in renderCard.
+    vis = vis.filter(i => !SPECIAL_IDS.has(i.id) && (i.pinned || dueSoon(i) || scheduleOverlapsToday(i)));
     vis = vis.slice().sort((a, b) => {
-      const da = dueSoon(a), db = dueSoon(b);
-      if (da !== db) return da ? -1 : 1;                        // deadline cards before pinned ones
-      if (da && db) return (a.due || '').localeCompare(b.due || '');   // soonest deadline first
-      return 0;                                                 // pinned: keep the current sort order
+      const oa = scheduleOverlapsToday(a), ob = scheduleOverlapsToday(b);
+      if (oa !== ob) return oa ? -1 : 1;                        // today's timeline bar first
+      const da = !!a.due, db = !!b.due;
+      if (da !== db) return da ? -1 : 1;                        // any due date before none at all
+      if (da && db) return a.due.localeCompare(b.due);          // soonest due date first
+      return 0;                                                 // no due date: keep the current sort order
     });
   } else {
     vis = vis.filter(i => !SPECIAL_IDS.has(i.id));               // special cards live only on the dashboard

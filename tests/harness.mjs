@@ -168,7 +168,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       openTagEditor, toggleCardTag, closeTagEditor, renderTagEditor,
       get tagUniverse(){ return _tagUniverse; },
       get tagEditorId(){ return _tagEditorId; },
-      digestHeads, createSpecialCard, taggable, renderList, renderFilters, dueSoon,
+      digestHeads, createSpecialCard, taggable, renderList, renderFilters, dueSoon, scheduleOverlapsToday,
       SPECIAL_CARDS, SPECIAL_IDS,
       // digestVisible became the tri-state mainView when the timeline arrived; kept here as a
       // derived view so the existing control-bar tests still speak in booleans.

@@ -10,7 +10,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-08-01T09:08:33.497Z",
+  "date": "2026-08-05T09:15:11.765Z",
   "synced": false,
   "_sortTag": "Teaching",
   "schedule": {
@@ -100,10 +100,10 @@
         "end": "2026-12-04"
       },
       {
-        "id": "smrn7yj49ydv",
-        "title": "Lecture notes",
-        "start": "2026-08-01",
-        "end": "2026-08-02"
+        "id": "smsfvgwo7zl9",
+        "title": "Finish course material",
+        "start": "2026-08-05",
+        "end": "2026-08-07"
       }
     ]
   },

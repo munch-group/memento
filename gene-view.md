@@ -8,6 +8,8 @@ the literature says they interact.
 
 - **Open it:** press `I` (interactions), or click **Genes** in the view bar
   (Dashboard · Cards · Graph · **Genes** · Timeline).
+- **The short version:** [gene-view-rules.md](gene-view-rules.md) — the one-page
+  rule sheet this document explains at length.
 - **Data:** a git-tracked sidecar, `knowledge-base/interactions.json`, built by
   `kb-interactions.py` and refreshable from inside the app. The map works fully
   **offline** from that file; live features light up only when you're online.
@@ -35,7 +37,7 @@ Chromosome colours:
 
 | Colour | Chromosome |
 |---|---|
-| 🟤 terracotta (`--accent`, `#D97757`) | X |
+| 🟣 soft violet (the bookmark/view colour `#6E56CF`, mixed 70/30 with white) | X |
 | ⚪ grey (`#b9b7ae`) | autosome |
 | 🟠 orange (`#E8A020`) | Y |
 | 🔵 blue (`#5B9BD5`) | mitochondrial |
@@ -94,6 +96,16 @@ say) merge into one edge, keeping the most-evidenced. A pair with a single natur
 stays a straight line. This is why an activate-then-inhibit conflict shows as a
 green arrow **and** a red T-bar side by side — that contradiction is real signal.
 
+#### Simple mode
+
+The **simple** checkbox (or `E`) collapses all of this: one plain grey undirected
+line per connected gene pair — no natures, no arrowheads, no fanned parallels.
+This is the default; untick it for the full per-nature view described above.
+Useful when you only care about *who talks to whom*, not how. It is a display
+collapse only: the layout never moves, and the filters keep working — a pair's
+line shows iff **any** of its interactions passes the current nature checkboxes
+and sliders (a Complex interaction only counts while **complexes** is on).
+
 > **Filling in direction.** Older sidecars stored edges with the two genes sorted
 > alphabetically, discarding direction, so only edges re-derived since carry a head.
 > To direction every edge, run **Refresh all → Freeze** once: the refresh re-fetches
@@ -112,6 +124,9 @@ haven't written about. With a ghost selected you get two actions:
   further out, just like any node.
 - **Add … to memento** (the second button) — opens memento's card-create form
   pre-filled with the gene; it becomes a real node on the next freeze/rebuild.
+  Offered only while no live thought card documents the gene: if a card already
+  exists (written since the last sidecar rebuild, say), there is nothing to add,
+  so the ghost offers **Expand** alone — like any real node.
 
 ---
 
@@ -125,6 +140,8 @@ haven't written about. With a ghost selected you get two actions:
 | **conf ≥** slider | Hide interactions below an INDRA belief score (0–1) |
 | **ev ≥** slider | Hide interactions below N independent evidence texts (1–5) |
 | **complexes** | Draw protein-complex (`bind`) edges (off by default). This is the **only** control over complex edges — the nature checkboxes never touch them, so the two can't fight. |
+| **simple** | Collapse each connected gene pair to a single plain grey undirected line (also `E`). On by default — untick for the full per-nature edges. Shown iff any of the pair's interactions passes the current filters. |
+| **cards** | Split view: a single-column panel of live cards on the right (also `P`). On by default. Highlighted genes → their cards; nothing highlighted → cards for every gene visible on the map. The map re-fits to the narrower canvas. |
 | **↻ Relayout** | Re-pack the *connected-visible* subgraph — visible genes that have a visible edge to another visible gene — and hide the rest, until you change a filter. With no filters active every gene qualifies, so it re-lays the whole map. Expanding, adding, or refreshing a gene while a Relayout focus is active brings the new genes *into* the focus so they show — the focus grows with your exploration rather than hiding what you just surfaced. |
 | **↻ Refresh all** | Bulk-fetch INDRA for every gene in memento and add interactions *between* them — never genes outside memento (see below); press again to cancel |
 | **⭳ Freeze** | Write the current interactions back to `interactions.json` |
@@ -171,6 +188,8 @@ Clearing the token drops a spiked-in gene back out — unless it has since becom
 | Gesture | Action |
 |---|---|
 | `I` | Open the Genes view |
+| `E` | Toggle simple edges (works only while the Genes view is showing) |
+| `P` | Toggle the card panel (Genes view only) |
 | **Click** a node | Toggle its highlight — the clicked gene *and its neighbours* stay lit while everything else dims. Several genes can be highlighted at once (like the Graph view): each adds its own neighbourhood to what's lit. Click a highlighted gene again to drop it. |
 | **Click** empty canvas | Clear all highlights (un-dim everything) |
 | **Double-click** any node | Expand it live from INDRA — ghosts included, to explore further out |
@@ -178,10 +197,11 @@ Clearing the token drops a spiked-in gene back out — unless it has since becom
 | **Drag** the background | Pan |
 | **Wheel** | Zoom (desktop) |
 | **Pinch** (two fingers) | Zoom (touch) |
-| **Action bar** (bottom-centre) | Acts on the **last-clicked** gene. **Expand** it (any node); a ghost also gets an **Add to memento** button to bring it into your cards. |
+| **Action bar** (bottom-centre) | Acts on the **last-clicked** gene. **Expand** it (any node); a ghost with no card yet also gets an **Add to memento** button to bring it into your cards (hidden once a live thought card documents the gene). |
 
 The caption (bottom-left) always reports: gene count, ghost count, interactions
-shown, isolated genes hidden, and how many are highlighted.
+shown (in simple mode it says "links" — pair-lines, not interactions), isolated
+genes hidden, and how many are highlighted.
 
 ### Highlight input
 
@@ -191,6 +211,22 @@ The **Highlight genes** input (the target-circle button next to the search bar, 
 those, replacing whatever was highlighted before. It's the same input that
 highlights genes in the Cards and Graph views, so a highlight you build here follows
 you across views. The action bar targets the **last** gene in the input.
+
+### Card panel (split view)
+
+The **cards** checkbox (or `P`) splits the view: the map narrows and a single
+column of cards appears on the right. On by default; untick for the full-width map. Content is selection-driven — highlight
+gene(s) and the panel shows the union of their cards; with nothing highlighted it
+shows cards for every gene visible on the map (so the search bar narrows it too).
+A highlighted gene's cards appear even when the search scopes them out — a
+highlight is an explicit request. Cards resolve *live* (a card written this
+session shows up, ghosts included) and exclude archived and gene-set cards.
+
+These are the same live cards as the Stack view: click to expand inline, edit,
+pin, tag — everything works, and the Title·Tags·Body detail switch (`V`) applies.
+The panel caps at 60 cards with a "+N more" note. Opening or closing the panel
+re-fits the map to the new canvas width without moving any node. In-memory —
+resets on reload.
 
 ---
 

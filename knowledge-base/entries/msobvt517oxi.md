@@ -1,0 +1,6 @@
+Mechanistic target of rapamycin kinase (MTOR)
+
+The protein encoded by this gene belongs to a family of phosphatidylinositol kinase-related kinases. These kinases mediate cellular responses to stresses such as DNA damage and nutrient deprivation. This kinase is a component of two distinct complexes, mTORC1, which controls protein synthesis, cell growth and proliferation, and mTORC2, which is a regulator of the actin cytoskeleton, and promotes cell survival and cell cycle progression. This protein acts as the target for the cell-cycle arrest and immunosuppressive effects of the FKBP12-rapamycin complex. Inhibitors of mTOR are used in organ transplants as immunosuppressants, and are being evaluated for their therapeutic potential in SARS-CoV-2 infections. Mutations in this gene are associated with Smith-Kingsmore syndrome and somatic focal cortical dysplasia type II. The ANGPTL7 gene is located in an intron of this gene. [provided by RefSeq, Aug 2020].
+
+Aliases: FRAP, FRAP1, FRAP2, RAFT1, RAPT1, SKS
+Chromosome: 1

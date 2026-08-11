@@ -331,6 +331,125 @@ console.log('\nA facet that cannot survive the scope change is dropped');
   eq(api.activeTypes, [], '...no archived card is an idea, so it is dropped');
 }
 
+// ---------------------------------------------------------------------------------------------
+// Search bar <-> sidebar sync. Type/Tag chips and the /type #tag tokens in the search box are two
+// views of the same state now: clicking a chip writes its token, typing a token selects its chip.
+// ---------------------------------------------------------------------------------------------
+
+console.log('\nA sidebar click writes the matching /type token into the search bar');
+{
+  const { api, el } = facetSetup();
+  api.setFilter('fact');
+  eq(el('search-input').value, '/fact', 'clicking a Type chip writes its token');
+  api.setFilter('idea');
+  eq(el('search-input').value, '/fact,idea', 'a second type appends in TYPES-array order, not click order');
+  api.setFilter('fact');
+  eq(el('search-input').value, '/idea', 'toggling one back off leaves just the other');
+  api.setFilter('idea');
+  eq(el('search-input').value, '', 'toggling the last one off empties the box');
+}
+
+console.log('\nA sidebar tag click writes #tag too, alongside any type token');
+{
+  const { api, el } = facetSetup();
+  api.setTagFilter('Shared');
+  eq(el('search-input').value, '#Shared', 'clicking a Tag chip writes its token');
+  api.setTagFilter('Live');
+  eq(el('search-input').value, '#Live,Shared', 'a second tag appends alphabetically');
+  api.setFilter('fact');
+  eq(el('search-input').value, '/fact #Live,Shared', 'a type token is prepended ahead of the tag token');
+  api.setTagFilter('Live'); api.setTagFilter('Shared');
+  eq(el('search-input').value, '/fact', 'toggling both tags off strips the tag token but keeps the type token');
+}
+
+console.log('\nSyncing a chip leaves free text and other OR-groups untouched');
+{
+  const { api, el } = facetSetup();
+  el('search-input').value = 'foo, bar baz';
+  api.setFilter('fact');
+  eq(el('search-input').value, '/fact foo, bar baz', 'the token is prepended to group 1; group 2 survives verbatim');
+}
+
+console.log('\nTyping a /type or #tag token selects the matching sidebar chip');
+{
+  const { api, el } = facetSetup();
+  el('search-input').value = '/fact';
+  api.renderFilters();
+  eq(api.activeTypes, ['fact'], 'typing /fact selects the Fact chip');
+
+  el('search-input').value = '#live';   // lowercase — resolveTag() always lowercases
+  api.renderFilters();
+  eq(api.activeTags, ['Live'], 'a lowercase #tag token still selects the real-cased Live chip');
+
+  el('search-input').value = '#Live,Shared';
+  api.renderFilters();
+  eq(api.activeTags, ['Live', 'Shared'], 'a comma-joined tag token (OR) selects both chips');
+
+  el('search-input').value = '';
+  api.renderFilters();
+  eq(api.activeTypes, [], 'clearing the box clears the type chips too');
+  eq(api.activeTags, [], '...and the tag chips');
+}
+
+console.log('\nAn AND-style tag query freezes the chips instead of misrepresenting it');
+{
+  // No combination of chips (pure OR) can mean "Live AND Shared", so a hand-typed AND query must
+  // leave the sidebar exactly as it was rather than pretend it's an OR of the same names.
+  const { api, el } = facetSetup();
+  api.setTagFilter('Live');
+  eq(api.activeTags, ['Live'], 'baseline: Live selected via the sidebar');
+
+  el('search-input').value = '#Live #Shared';   // two separate bare tokens = AND
+  api.renderFilters();
+  eq(api.activeTags, ['Live'], 'two separate #tag tokens (AND) leave the chips frozen');
+
+  el('search-input').value = '#Live #Shared,Dead';   // "Live AND (Shared OR Dead)" — still not chip-able
+  api.renderFilters();
+  eq(api.activeTags, ['Live'], 'an AND mixed with an OR also freezes the chips');
+}
+
+console.log('\nA multi-OR-group query freezes both facets — ambiguous which group is "the" scope');
+{
+  const { api, el } = facetSetup();
+  api.setFilter('idea');
+  eq(api.activeTypes, ['idea'], 'baseline: Idea selected via the sidebar');
+
+  el('search-input').value = '/fact, other text';   // a second, unrelated OR-group
+  api.renderFilters();
+  eq(api.activeTypes, ['idea'], 'the sidebar stays put rather than being overwritten from group 1 alone');
+}
+
+console.log('\nSwitching archive scope drops the stale token from the search text too');
+{
+  // setArchiveFilter already drops a facet the new scope has no cards for (tested above) — the
+  // search box must not keep showing a token for a filter that was just silently dropped.
+  const { api, el } = facetSetup();
+  api.setTagFilter('Live');
+  eq(el('search-input').value, '#Live', 'baseline: token written for the Live tag');
+  api.setArchiveFilter('archived');
+  eq(api.activeTags, [], 'the tag itself is dropped (existing behavior)');
+  eq(el('search-input').value, '', 'and the stale #Live token no longer lingers in the box');
+}
+
+console.log('\nAn old-format saved view (singular type/tag, tokens not yet baked into q) still applies');
+{
+  const view = { id: 'v1', type: 'view', title: 'Old view', view: { type: 'fact', tag: 'Live', q: 'legacy text' } };
+  const { api, el } = facetSetup();
+  api.applyView(view);
+  eq(api.activeTypes, ['fact'], 'legacy singular `type` still restores the Type chip');
+  eq(api.activeTags, ['Live'], 'legacy singular `tag` still restores the Tag chip');
+  eq(el('search-input').value, '/fact #Live legacy text', 'the search box now shows the tokens too, not just the old free text');
+}
+
+console.log('\nA click round-trips through the text back to the same Set (idempotent)');
+{
+  const { api } = facetSetup();
+  api.setFilter('fact'); api.setTagFilter('Live');
+  api.renderFilters();   // simulates the extra derive pass a real oninput would also trigger
+  eq(api.activeTypes, ['fact'], 'activeTypes unchanged by the round trip');
+  eq(api.activeTags, ['Live'], 'activeTags unchanged by the round trip');
+}
+
 console.log('\nThe push-to-Claude machinery is gone');
 {
   // Export/Cleanup/the synced flag existed to push cards into Claude's memory and then reap the

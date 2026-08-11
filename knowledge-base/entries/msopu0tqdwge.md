@@ -1,0 +1,6 @@
+Janus kinase 1 (JAK1)
+
+This gene encodes a membrane protein that is a member of a class of protein-tyrosine kinases (PTK) characterized by the presence of a second phosphotransferase-related domain immediately N-terminal to the PTK domain. The encoded kinase phosphorylates STAT proteins (signal transducers and activators of transcription) and plays a key role in interferon-alpha/beta, interferon-gamma, and cytokine signal transduction. This gene plays a crucial role in effecting the expression of genes that mediate inflammation, epithelial remodeling, and metastatic cancer progression. This gene is a key component of the interleukin-6 (IL-6)/JAK1/STAT3 immune and inflammation response and is a therapeutic target for alleviating cytokine storms. The kinase activity of this gene is directly inhibited by the suppressor of cytokine signalling 1 (SOCS1) protein. Alternative splicing results in multiple transcript variants. [provided by RefSeq, Jul 2020].
+
+Aliases: AIIDE, JAK1A, JAK1B, JTK3
+Chromosome: 1

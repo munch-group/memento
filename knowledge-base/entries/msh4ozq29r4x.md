@@ -1,0 +1,2 @@
+
+NGFR encodes the nerve growth factor receptor, a low-affinity neurotrophin receptor in the TNF receptor superfamily that binds NGF and related neurotrophins. It is a single-pass membrane receptor with extracellular cysteine-rich repeats, a transmembrane segment, and a cytoplasmic death domain, placing it at the cell surface where it can transmit signals after ligand engagement. NGFR is expressed at high levels in the gastrointestinal tract and male reproductive system, with strong RNA expression in the peripheral nervous system.

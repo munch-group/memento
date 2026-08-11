@@ -279,6 +279,169 @@ function testPromote() {
   eq(sandbox.document.getElementById('f-genes').value, 'PRKAA1', 'gene symbol dropped into the form');
 }
 
+const card = (id, genes, extra = {}) =>
+  ({ id, type: 'note', title: id, genes, tags: [], content: 'x', date: '2026-07-14T00:00:00Z', ...extra });
+
+// ---------------------------------------------------------------------------------------------
+// gePromoteGhost, M3: a ghost is only "not in the frozen sidecar" — the sidecar is a snapshot,
+// not the live source of truth, so a gene already on a card written since the last rebuild still
+// shows as a ghost. Adding it should behave differently depending on whether it's genuinely new.
+// ---------------------------------------------------------------------------------------------
+
+async function testPromoteNewGeneIsReferenceNoTag() {
+  console.log('\ngePromoteGhost — a genuinely new gene opens the form as \'reference\', with no tag added');
+  const { api, sandbox } = setup();
+  sandbox.document.getElementById('add-form').style.display = '';
+  sandbox.document.getElementById('f-tags').value = '';
+  await api.gePromoteGhost('PRKAA1');
+  eq(api.selectedType, 'reference', 'type defaults to reference for sourced-info cards');
+  eq(sandbox.document.getElementById('f-tags').value, '', 'no tag is auto-added');
+}
+
+async function testPromoteFillsContentFromMyGene() {
+  console.log('\ngePromoteGhost — pulls basic gene info from mygene.info into the content field');
+  const fetchImpl = async (url) => {
+    const u = String(url);
+    if (u.includes('mygene.info')) {
+      return { ok: true, status: 200, json: async () => [{
+        query: 'MAPT', symbol: 'MAPT', name: 'microtubule associated protein tau',
+        summary: 'Tau promotes microtubule assembly.', alias: ['TAU', 'DDPAC'], genomic_pos: { chr: '17' },
+      }] };
+    }
+    return { ok: true, status: 200, json: async () => ({}), text: async () => '' };
+  };
+  const { api, sandbox } = load({ fetchImpl });
+  api.interactions = sidecar();
+  api.renderGenes();
+  sandbox.document.getElementById('add-form').style.display = '';
+  await api.gePromoteGhost('MAPT');
+  const content = sandbox.document.getElementById('f-content').value;
+  ok(content.includes('Microtubule associated protein tau (MAPT)'), 'content opens with the capitalized name + symbol');
+  ok(content.includes('Tau promotes microtubule assembly.'), 'content includes the mygene.info summary');
+  ok(content.includes('Aliases: TAU, DDPAC'), 'content lists aliases');
+  ok(content.includes('Chromosome: 17'), 'content lists the chromosome');
+}
+
+async function testPromoteDoesNotClobberTypedContent() {
+  console.log('\ngePromoteGhost — never overwrites content the user already started typing');
+  const fetchImpl = async (url) => {
+    const u = String(url);
+    if (u.includes('mygene.info')) return { ok: true, status: 200, json: async () => [{ query: 'MAPT', symbol: 'MAPT', name: 'tau', summary: 'x' }] };
+    return { ok: true, status: 200, json: async () => ({}), text: async () => '' };
+  };
+  const { api, sandbox } = load({ fetchImpl });
+  api.interactions = sidecar();
+  api.renderGenes();
+  sandbox.document.getElementById('add-form').style.display = '';
+  const p = api.gePromoteGhost('MAPT');
+  sandbox.document.getElementById('f-content').value = 'already writing my own note';
+  await p;
+  eq(sandbox.document.getElementById('f-content').value, 'already writing my own note',
+     'the fetch never overwrote what the user typed while it was in flight');
+}
+
+async function testAdoptAlreadyOnACard() {
+  console.log('\ngePromoteGhost — a gene already on a live thought card is pulled in like Refresh all, no form');
+  const { api, sandbox, calls } = setup();
+  await api.geExpand('STK11');   // creates the PRKAA1 ghost
+  ok(api.geNodes.find(n => n.sym === 'PRKAA1')?.ghost, 'PRKAA1 starts as a ghost');
+  api.items = [card('c9', ['PRKAA1'], { tags: ['kinases'] })];
+  const form = sandbox.document.getElementById('add-form');
+  form.style.display = 'sentinel';
+  sandbox.document.getElementById('f-genes').value = 'untouched';
+  const before = calls.indra;
+  await api.gePromoteGhost('PRKAA1');
+  eq(form.style.display, 'sentinel', 'the create form is never opened');
+  eq(sandbox.document.getElementById('f-genes').value, 'untouched', 'the form fields are never touched');
+  const n = api.geNodes.find(nn => nn.sym === 'PRKAA1');
+  ok(n && n.ghost === false, 'the node is promoted to a real (non-ghost) node');
+  eq(n.cards, ['c9'], 'cards derived from the matching live card');
+  eq(n.groups, ['kinases'], 'groups derived from the matching live card\'s tags');
+  ok(calls.indra > before, 'its INDRA neighbourhood was fetched, same as Refresh all');
+  ok(sandbox.__toasts.some(t => /already on a card/.test(t)), 'toast explains what happened');
+  ok(api.geAdopted.has('PRKAA1'), 'recorded in the session adoption map');
+}
+
+async function testAddHiddenWhenDocumented() {
+  console.log('\ngeUpdateAction — a ghost already documented on a live thought card offers Expand only');
+  const { api, sandbox } = setup();
+  await api.geExpand('STK11');   // creates the PRKAA1 ghost
+  api.geSelect('PRKAA1');
+  const add = sandbox.document.getElementById('ge-action-add');
+  const exp = sandbox.document.getElementById('ge-action-expand');
+  ok(add.style.display !== 'none', 'no card yet: the ghost offers Add');
+  api.items = [card('c9', ['PRKAA1'])];
+  api.geUpdateAction();
+  ok(add.style.display === 'none', 'a live thought card exists: Add is gone');
+  ok(/Expand/.test(exp.textContent), '...but Expand is still offered');
+  // The rule matches gePromoteGhost's adopt branch exactly: set-only and archived mentions don't count.
+  api.items = [card('c9', ['PRKAA1'], { tags: ['gene-set'] })];
+  api.geUpdateAction();
+  ok(add.style.display !== 'none', 'a gene-set-only mention still offers Add (no per-gene note yet)');
+  api.items = [card('c9', ['PRKAA1'], { archived: true })];
+  api.geUpdateAction();
+  ok(add.style.display !== 'none', 'an archived-only mention still offers Add');
+}
+
+async function testPanelShowsGhostCard() {
+  console.log('\ncard panel — a ghost\'s live card (unknown to the frozen sidecar) still appears');
+  const { api, sandbox } = setup();
+  await api.geExpand('STK11');   // creates the PRKAA1 ghost
+  api.items = [card('c9', ['PRKAA1'])];
+  api.setGeCardPanel(true);
+  api.geSelect('PRKAA1');
+  const panel = sandbox.document.getElementById('ge-cards');
+  ok(/data-id="c9"/.test(panel.innerHTML), 'the ghost\'s live card shows in the panel (geThoughtCards path)');
+  api.setGeCardPanel(false);
+}
+
+async function testAdoptSkipsSetOnlyMentions() {
+  console.log('\ngePromoteGhost — a gene mentioned ONLY on a gene-set card still opens the form (no per-gene note yet)');
+  const { api, sandbox } = setup();
+  await api.geExpand('STK11');
+  api.items = [card('c9', ['PRKAA1'], { tags: ['xi_escape', 'gene-set'] })];
+  sandbox.document.getElementById('add-form').style.display = '';
+  await api.gePromoteGhost('PRKAA1');
+  eq(sandbox.document.getElementById('f-genes').value, 'PRKAA1', 'a set-only mention still falls through to the create form');
+  eq(api.geNodes.find(nn => nn.sym === 'PRKAA1').ghost, true, 'the node stays a ghost — no per-gene note exists yet');
+}
+
+async function testAdoptSkipsArchivedCards() {
+  console.log('\ngePromoteGhost — an archived card mentioning the gene does not count as "already documented"');
+  const { api, sandbox } = setup();
+  await api.geExpand('STK11');
+  api.items = [card('c9', ['PRKAA1'], { archived: true })];
+  sandbox.document.getElementById('add-form').style.display = '';
+  await api.gePromoteGhost('PRKAA1');
+  eq(sandbox.document.getElementById('f-genes').value, 'PRKAA1', 'an archived-only mention still opens the form');
+}
+
+async function testAdoptOffline() {
+  console.log('\ngePromoteGhost — offline, an already-documented gene is still adopted, just without new interactions');
+  const { api, sandbox, calls } = setup();
+  await api.geExpand('STK11');
+  api.items = [card('c9', ['PRKAA1'])];
+  sandbox.navigator.onLine = false;
+  const before = calls.indra;
+  await api.gePromoteGhost('PRKAA1');
+  eq(calls.indra, before, 'no network call while offline');
+  const n = api.geNodes.find(nn => nn.sym === 'PRKAA1');
+  ok(n && n.ghost === false, 'the node is still promoted — it really is documented, regardless of connectivity');
+  ok(sandbox.__toasts.some(t => /connect/i.test(t)), 'toast explains interactions need a connection');
+}
+
+async function testAdoptDoubleClickGuard() {
+  console.log('\ngePromoteGhost — a second click while adopting is a no-op (busy guard)');
+  const { api, calls } = setup();
+  await api.geExpand('STK11');
+  api.items = [card('c9', ['PRKAA1'])];
+  const before = calls.indra;
+  const p1 = api.gePromoteGhost('PRKAA1');
+  const p2 = api.gePromoteGhost('PRKAA1');   // fired before p1 settles
+  await Promise.all([p1, p2]);
+  eq(calls.indra, before + 1, 'only one INDRA fetch happened, not two');
+}
+
 async function run() {
   console.log('Genes view (M2 — live INDRA)');
   testStmtAgents();
@@ -292,6 +455,16 @@ async function run() {
   await testAddGene();
   await testExpandGhost();
   testPromote();
+  await testPromoteNewGeneIsReferenceNoTag();
+  await testPromoteFillsContentFromMyGene();
+  await testPromoteDoesNotClobberTypedContent();
+  await testAdoptAlreadyOnACard();
+  await testAddHiddenWhenDocumented();
+  await testPanelShowsGhostCard();
+  await testAdoptSkipsSetOnlyMentions();
+  await testAdoptSkipsArchivedCards();
+  await testAdoptOffline();
+  await testAdoptDoubleClickGuard();
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 }

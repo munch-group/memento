@@ -9,6 +9,7 @@
 //   * Property filters (nature / confidence / evidence) HIDE; they never relayout.
 //   * An edge to a gene that is not itself a node is dropped (both ends must exist).
 import { load } from './harness.mjs';
+import { readFileSync } from 'node:fs';
 
 let pass = 0, fail = 0;
 const eq = (a, b, msg) => {
@@ -46,6 +47,11 @@ function sidecar() {
 function setup() {
   const { api, sandbox } = load({ fetchImpl: noop });
   api.interactions = sidecar();
+  // Simple edges and the card panel ship ON by default (asserted in testSimpleEdges /
+  // testCardPanel); the classic-mode tests below opt out so they exercise the full
+  // per-nature drawn set.
+  api.setGeSimpleEdges(false);
+  api.setGeCardPanel(false);
   return { api, sandbox };
 }
 
@@ -142,6 +148,7 @@ function testEdgeFilters() {
 function testEdgeToggleStability() {
   console.log('\nedge show/hide — stress: complex≠bind duplication, order-independence, no rebuild');
   const { api, sandbox } = load({ fetchImpl: noop });
+  api.setGeSimpleEdges(false);   // classic per-nature drawn set; the ops list flips simple itself
   api.mainView = 'genes';
   api.interactions = {
     generated: 'x', source: 'x', members: {}, canon: {}, bridges: [],
@@ -172,12 +179,14 @@ function testEdgeToggleStability() {
   const domVisible = () => api.geDrawn.map((_, i) => vis(i));
   // The intended contract: a complex edge is governed ONLY by the complexes toggle (its
   // presence in geDrawn) plus the sliders; the nature checkboxes filter mechanistic edges only.
-  const wantVisible = () => api.geDrawn.map(e => {
+  const edgeOk = e => {
     const beliefOk = (e.belief || 0) >= api.geMinBelief;
     const evOk = (e.n || 0) >= api.geMinEv;
     const natOk = e.complex ? true : (api.geNatures === null || api.geNatures.includes(e.nat));
     return beliefOk && evOk && natOk;
-  });
+  };
+  // A simple-mode entry (merged pair, carries _members) is visible iff ANY member passes.
+  const wantVisible = () => api.geDrawn.map(e => e._members ? e._members.some(edgeOk) : edgeOk(e));
   const match = label => eq(domVisible(), wantVisible(), label);
 
   // (1) The reported bug: "bind" and "complexes" are two switches over the SAME edges.
@@ -197,16 +206,18 @@ function testEdgeToggleStability() {
 
   // (3) Order-independence / no hysteresis: after every op the DOM equals a pure function of state.
   const ops = [
-    ['nat', 'promote', false], ['complex', true], ['nat', 'suppress', false], ['belief', 0.6],
+    ['nat', 'promote', false], ['simple', true], ['complex', true], ['nat', 'suppress', false], ['belief', 0.6],
     ['complex', false], ['nat', 'bind', false], ['nat', 'promote', true], ['ev', 3],
-    ['complex', true], ['nat', 'modify', false], ['belief', 0], ['nat', 'bind', true],
-    ['nat', 'suppress', true], ['ev', 1], ['nat', 'modify', true], ['complex', false],
-    ['complex', true], ['complex', true], ['nat', 'promote', false], ['nat', 'promote', false],
+    ['simple', false], ['complex', true], ['nat', 'modify', false], ['belief', 0], ['nat', 'bind', true],
+    ['nat', 'suppress', true], ['ev', 1], ['simple', true], ['nat', 'modify', true], ['complex', false],
+    ['complex', true], ['complex', true], ['simple', true], ['nat', 'promote', false], ['nat', 'promote', false],
+    ['simple', false],
   ];
   let allMatch = true;
   for (const [kind, a, b] of ops) {
     if (kind === 'nat') api.setGeNature(a, b);
     else if (kind === 'complex') api.setGeShowComplex(a);
+    else if (kind === 'simple') api.setGeSimpleEdges(a);
     else if (kind === 'belief') api.setGeMinBelief(a);
     else if (kind === 'ev') api.setGeMinEv(a);
     const w = wantVisible(), g = domVisible();
@@ -215,7 +226,7 @@ function testEdgeToggleStability() {
   ok(allMatch, 'the shown-edge set is always a pure function of the current filter state (no path dependence)');
 
   // (4) Two different paths to the same target state give the identical shown set.
-  const reset = () => { for (const n of ['promote', 'suppress', 'modify']) api.setGeNature(n, true); api.setGeShowComplex(false); api.setGeMinBelief(0); api.setGeMinEv(1); };
+  const reset = () => { for (const n of ['promote', 'suppress', 'modify']) api.setGeNature(n, true); api.setGeShowComplex(false); api.setGeSimpleEdges(false); api.setGeMinBelief(0); api.setGeMinEv(1); };
   reset(); api.setGeShowComplex(true); api.setGeNature('promote', false); api.setGeMinBelief(0.6);
   const pathA = domVisible().join(',');
   reset(); api.setGeMinBelief(0.6); api.setGeNature('promote', false); api.setGeShowComplex(true);
@@ -234,6 +245,7 @@ function testEdgeToggleStability() {
 function testEdgeDirection() {
   console.log('\nedge direction — parse subj→obj, carry dir, render PPI arrowheads, offset to the rim');
   const { api, sandbox } = load({ fetchImpl: noop });
+  api.setGeSimpleEdges(false);   // arrowheads exist only in the classic per-nature mode
 
   // (1) geParseIndra recovers direction from the raw statement (source-first agents).
   const resp = { statements: {
@@ -320,6 +332,7 @@ function testEdgeDirection() {
 function testEdgeFan() {
   console.log('\nedge fan — a pair with several natures splits into separate, offset edges (no stacked colours)');
   const { api, sandbox } = load({ fetchImpl: noop });
+  api.setGeSimpleEdges(false);   // fanning exists only in the classic per-nature mode
   api.mainView = 'genes';
   api.interactions = {
     generated: 'x', source: 'x', members: {}, canon: {}, bridges: [],
@@ -361,6 +374,146 @@ function testEdgeFan() {
   api.interactions.edges = [{ a: 'A', b: 'B', t: 'Activation', belief: 0.9, n: 5, pmid: 'p', dir: 'ab' }];
   api.geBuildModel(); api.geComputeDrawn();
   eq(api.geDrawn[0]._lane, 0, 'a pair with one nature stays on lane 0 (drawn straight)');
+}
+
+function testSimpleEdges() {
+  console.log('\nsimple edges — one plain grey line per pair, shown iff ANY member passes the filters');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.mainView = 'genes';
+  api.interactions = {
+    generated: 'x', source: 'x', members: {}, canon: {}, bridges: [],
+    genes: { A: { chrom: '1', cards: ['c'], groups: [] }, B: { chrom: '1', cards: ['c'], groups: [] },
+             C: { chrom: '2', cards: ['c'], groups: [] } },
+    edges: [
+      { a: 'A', b: 'B', t: 'Activation',      belief: 0.9, n: 5, pmid: 'p', dir: 'ab' },  // promote
+      { a: 'A', b: 'B', t: 'Inhibition',      belief: 0.8, n: 4, pmid: 'p', dir: 'ab' },  // suppress
+      { a: 'A', b: 'B', t: 'Phosphorylation', belief: 0.7, n: 2, pmid: 'p', dir: 'ab' },  // modify
+      { a: 'A', b: 'B', t: 'Ubiquitination',  belief: 0.6, n: 9, pmid: 'p', dir: 'ab' },  // modify dup
+      { a: 'B', b: 'C', t: 'Activation',      belief: 0.9, n: 5, pmid: 'q', dir: 'ab' },  // makes C a node
+    ],
+    complex_edges: [
+      { a: 'A', b: 'C', t: 'Complex', belief: 0.8, n: 4, pmid: 'x' },   // A-C connected ONLY by complex
+    ],
+  };
+  api.items = [{ id: 'c', type: 'note', tags: [], genes: [], title: '', source: '', content: 'x', date: '2026-01-01T00:00:00Z' }];
+  sandbox.document.getElementById('search-input').value = '';
+  api.renderGenes();
+
+  // simple mode is the DEFAULT: a fresh render already collapses pairs
+  ok(api.geSimpleEdges, 'simple edges are on by default');
+  eq(api.geDrawn.length, 2, 'default render: one entry per connected pair (A-B, B-C)');
+  api.setGeSimpleEdges(false);
+  eq(api.geDrawn.length, 4, 'classic mode: 3 fanned A-B natures + B-C (complexes off)');
+  const posSnap = () => ['A', 'B', 'C'].map(s => `${api.gePos[s].x},${api.gePos[s].y}`).join('|');
+  const snapshot = posSnap();
+  const mechCount = api.geMechEdges.length;
+
+  api.setGeSimpleEdges(true);
+  eq(api.geDrawn.length, 2, 'simple mode: one entry per connected pair (A-B, B-C)');
+  ok(api.geDrawn.every(e => e.simple && e._lane === 0), 'every simple entry is on lane 0 (no fan)');
+  const ab = api.geDrawn.find(e => (e.a === 'A' && e.b === 'B') || (e.a === 'B' && e.b === 'A'));
+  eq(ab._members.length, 4, 'the A-B entry carries all 4 member edges');
+  const html = api.geEdgesHtml();
+  ok(html.includes('ge-simple'), 'simple lines carry the ge-simple class');
+  ok(!html.includes('marker-') && !html.includes('ge-nat-'), 'no direction markers, no nature classes');
+
+  // layout untouched: springs and positions identical across the toggle
+  eq(api.geMechEdges.length, mechCount, 'mechanistic springs unchanged by the toggle');
+  eq(posSnap(), snapshot, 'no node moves when toggling simple mode');
+
+  // OR-visibility: the pair line shows iff ANY member passes the sliders/checkboxes
+  const abIdx = api.geDrawn.indexOf(ab);
+  const opacity = i => sandbox.document.getElementById('ge-e' + i).getAttribute('opacity');
+  api.setGeMinBelief(0.65);
+  eq(opacity(abIdx), '1', 'belief 0.65: A-B shown (members at .9/.8/.7 still pass)');
+  api.setGeMinBelief(0.95);
+  eq(opacity(abIdx), '0', 'belief 0.95: A-B hidden (no member passes)');
+  api.setGeMinBelief(0);
+  api.setGeNature('promote', false); api.setGeNature('suppress', false);
+  eq(opacity(abIdx), '1', 'promote+suppress off: A-B still shown via its modify members');
+  const bcIdx = api.geDrawn.findIndex(e => e !== ab);
+  eq(opacity(bcIdx), '0', '...but promote-only B-C is hidden');
+  api.setGeNature('modify', false);
+  eq(opacity(abIdx), '0', 'all natures off: A-B hidden');
+  for (const n of ['promote', 'suppress', 'modify']) api.setGeNature(n, true);
+
+  // complex gating: a complex-only pair appears only while complexes are on
+  api.setGeShowComplex(true);
+  eq(api.geDrawn.length, 3, 'complexes on: the complex-only A-C pair gains a line');
+  ok(api.geDrawn.every(e => e.simple), 'the complex-backed entry is a plain simple line too');
+  api.setGeShowComplex(false);
+  eq(api.geDrawn.length, 2, 'complexes off: it goes away again');
+
+  // toggle off: back to the normal fanned shape
+  api.setGeSimpleEdges(false);
+  eq(api.geDrawn.length, 4, 'toggling off restores the fanned per-nature edges');
+  eq(api.geDrawn.filter(e => e.a === 'A' && e.b === 'B').map(e => e._lane).sort((a, b) => a - b), [-1, 0, 1],
+     'A-B fans back into lanes -1/0/1');
+  eq(posSnap(), snapshot, 'still no node moved');
+
+  // the E key is registered, guarded to the Genes view (the harness never dispatches keydown)
+  const src = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
+  ok(src.includes("code==='KeyE' && mainView==='genes'"), 'KeyE is bound, scoped to the Genes view');
+}
+
+function testCardPanel() {
+  console.log('\ncard panel — split view: live cards for the highlighted genes, or all visible ones');
+  const { api, sandbox } = load({ fetchImpl: noop });   // not setup(): that opts out of the on-by-default toggles
+  api.interactions = sidecar();
+  const cardFx = (id, genes, tags = []) =>
+    ({ id, type: 'note', tags, genes, title: id, source: '', content: 'x', date: '2026-01-01T00:00:00Z' });
+  api.items = [cardFx('c1', ['MAPT', 'MARK1']), cardFx('c2', ['MARK2']), cardFx('c3', ['STK11'], ['Solo'])];
+  sandbox.document.getElementById('search-input').value = '';
+  api.renderGenes();
+
+  const panel = sandbox.document.getElementById('ge-cards');
+  const ids = () => [...panel.innerHTML.matchAll(/data-id="([^"]+)"/g)].map(m => m[1]).sort();
+  // the panel is the DEFAULT: a fresh render opens split and fills it
+  ok(api.geCardPanel, 'the panel is on by default');
+  ok(sandbox.document.getElementById('genes-view').classList.contains('ge-split'), 'the host gets the ge-split class');
+  eq(ids(), ['c1', 'c2', 'c3'], 'no selection: cards for every visible gene');
+  ok(/class="card/.test(panel.innerHTML), 'the panel holds real renderCard output');
+  ok(panel.innerHTML.includes("toggleCard('c1'"), '...with live card wiring (click to expand)');
+
+  // selection-driven
+  api.geSelect('MAPT');
+  eq(ids(), ['c1'], 'highlighting MAPT narrows the panel to its card');
+  api.geClearSelection();
+  eq(ids(), ['c1', 'c2', 'c3'], 'clearing the highlight restores all visible genes\' cards');
+
+  // search scope (no selection): only c3 carries #Solo
+  sandbox.document.getElementById('search-input').value = '#Solo';
+  api.renderGenes();
+  eq(ids(), ['c3'], 'the search scope narrows the no-selection panel');
+  api.geSelect('MAPT');
+  eq(ids(), ['c1'], 'a highlighted gene\'s card shows even though the search scopes it out');
+  api.geClearSelection();
+  sandbox.document.getElementById('search-input').value = '';
+  api.renderGenes();
+
+  // expanding a card flows through to the panel (sig includes expandedId)
+  api.expandedId = 'c1';
+  api.geApplyFilter();
+  ok(/class="card expanded/.test(panel.innerHTML), 'an expanded card renders expanded in the panel');
+  api.expandedId = null;
+  api.geApplyFilter();
+  ok(!/class="card expanded/.test(panel.innerHTML), '...and collapses again');
+
+  // the detail switch rides on the panel root, like #item-list
+  api.setPreviewMode('compact');
+  ok(panel.classList.contains('hide-previews'), "'compact' puts hide-previews on the panel root");
+  api.setPreviewMode('minimal');
+  ok(panel.classList.contains('hide-meta') && !panel.classList.contains('hide-previews'), "'minimal' swaps it for hide-meta");
+
+  // toggling refits pan/zoom but never moves layout coordinates
+  const pos = JSON.stringify(api.gePos);
+  api.setGeCardPanel(false);
+  eq(JSON.stringify(api.gePos), pos, 'closing the panel refits the view without moving any node');
+  ok(!sandbox.document.getElementById('genes-view').classList.contains('ge-split'), 'the ge-split class is removed');
+
+  // the P key is registered, guarded to the Genes view
+  const src = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
+  ok(src.includes("code==='KeyP' && mainView==='genes'"), 'KeyP is bound, scoped to the Genes view');
 }
 
 function testShownCount() {
@@ -754,6 +907,24 @@ function testEmptyStates() {
      'sidecar with no mechanistic edges -> "no connected genes"');
 }
 
+// geIsSetCard mirrors kb-interactions.py's is_set_card() exactly: a card is SET-defining (its
+// tags annotate its genes, it contributes no node) if it carries the literal 'gene-set' tag, or
+// simply lists too many genes to be about any one of them (the size threshold that catches
+// unmarked bulk-import dump cards). Used to decide whether gePromoteGhost adopts a live-card gene
+// or opens the create form — getting this wrong either way would misclassify a card's genes.
+function testIsSetCard() {
+  console.log('\ngeIsSetCard — mirrors kb-interactions.py\'s is_set_card()');
+  const { api } = load({ fetchImpl: noop });
+  const thought = { genes: ['MAPT', 'FYN'], tags: ['neuro'] };
+  ok(!api.geIsSetCard(thought), 'a normal few-gene card is NOT a set card');
+  const tagged = { genes: ['MAPT'], tags: ['gene-set'] };
+  ok(api.geIsSetCard(tagged), 'the literal gene-set tag makes it a set card, even with one gene');
+  const dump = { genes: Array.from({ length: 100 }, (_, i) => 'G' + i), tags: [] };
+  ok(api.geIsSetCard(dump), '>=100 genes makes it a set card even without the tag');
+  const justUnder = { genes: Array.from({ length: 99 }, (_, i) => 'G' + i), tags: [] };
+  ok(!api.geIsSetCard(justUnder), '99 genes stays under the threshold');
+}
+
 console.log('Genes view (M1)');
 testNatureAndChrom();
 testModel();
@@ -770,11 +941,14 @@ testHighlightBackground();
 testEdgeToggleStability();
 testEdgeDirection();
 testEdgeFan();
+testSimpleEdges();
+testCardPanel();
 testSpikeGenes();
 testSpikePreservesGhosts();
 testCardScope();
 testRelayoutConnected();
 testExpandUnderRelayoutFocus();
 testEmptyStates();
+testIsSetCard();
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

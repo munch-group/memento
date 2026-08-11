@@ -219,7 +219,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       // Genes view (M1)
       renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown, geEdgesHtml, geHeadClear,
       geShownCount, geComputeDrawn, geStep, geInitPositions, geSizeLayout,
-      setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, geSelect, geClearSelection, geApplyFilter, geRelayout,
+      setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, setGeSimpleEdges, geSelect, geClearSelection, geApplyFilter, geRelayout,
+      renderCard, geThoughtCards, setGeCardPanel, geRenderCardPanel, toggleCard, updateCardInPlace,
       geSpikes, geSyncSpikes, geSyncSpikeNodes, get geSpikeSet(){ return [..._geSpikes].sort(); },
       getVisibleItems,
       set interactions(v){ interactions = v; }, get interactions(){ return interactions; },
@@ -229,6 +230,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get geIsolated(){ return _geIsolated; },
       get geNatures(){ return geNatures === null ? null : [...geNatures].sort(); }, get geMinBelief(){ return geMinBelief; },
       get geMinEv(){ return geMinEv; }, get geShowComplex(){ return geShowComplex; },
+      get geSimpleEdges(){ return geSimpleEdges; },
+      get geCardPanel(){ return geCardPanel; },
+      get geZoom(){ return _geZoom; }, get gePan(){ return _gePan; },
       set geSpacing(v){ geSpacing = v; },
       // Layout cache (persisted settled positions, so a reopen can skip resimulating from scratch)
       geLayoutSig, geApplyLayoutCache, geSaveLayoutCache, GE_CACHE_SETTLE_FRAMES,
@@ -238,6 +242,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       // M2 live expansion
       geExpand, geParseIndra, geStmtAgents, geThin, geGroundChrom, geMergeExpansion,
       gePromoteGhost, geUpdateAction, geActionExpand, geActionAdd, geAddGene, geMergeAddGene, GE_GHOST_CAP,
+      geIsSetCard, geAdoptLiveGene, geFetchGeneInfo, geFormatGeneInfo,
+      get geAdopted(){ return _geAdopted; },
+      get selectedType(){ return selectedType; },
       get geExpanded(){ return [..._geExpanded].sort(); },
       get geExpanding(){ return _geExpanding; },
       geTestResetExpanded: () => { _geExpanded = new Set(); },
@@ -251,6 +258,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get sortAsc(){ return sortAsc; },
       setDashboard, toggleDigest, setPreviewMode, togglePreviews, applyPreviewMode,
       setConnFilter, setArchiveFilter, clearAllFilters, setFilter, setTagFilter, scopedItems,
+      deriveFacetsFromSearchText, syncSearchTextFromFacets, applyView, captureView,
       get activeTags(){ return [...activeTags].sort(); },
       get activeTypes(){ return [...activeTypes].sort(); },
       get previewMode(){ return previewMode; },

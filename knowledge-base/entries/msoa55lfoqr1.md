@@ -1,0 +1,6 @@
+Signal transducer and activator of transcription 3 (STAT3)
+
+The protein encoded by this gene is a member of the STAT protein family. In response to cytokines and growth factors, STAT family members are phosphorylated by the receptor associated kinases, and then form homo- or heterodimers that translocate to the cell nucleus where they act as transcription activators. This protein is activated through phosphorylation in response to various cytokines and growth factors including IFNs, EGF, IL5, IL6, HGF, LIF and BMP2. This protein mediates the expression of a variety of genes in response to cell stimuli, and thus plays a key role in many cellular processes such as cell growth and apoptosis. The small GTPase Rac1 has been shown to bind and regulate the activity of this protein. PIAS3 protein is a specific inhibitor of this protein. This gene also plays a role in regulating host response to viral and bacterial infections. Mutations in this gene are associated with infantile-onset multisystem autoimmune disease and hyper-immunoglobulin E syndrome. [provided by RefSeq, Aug 2020].
+
+Aliases: ADMIO, ADMIO1, APRF, HIES
+Chromosome: 17

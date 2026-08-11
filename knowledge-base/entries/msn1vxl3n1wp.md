@@ -1,0 +1,3 @@
+- Write LF about re-budgeting: Cover the 25.000 extra travel using 30.000 (to be used soon to cover Shannon's two papers).
+- Do RejsUd and see how much expense remains.
+- Use ~40,000 DKK (~70,000 if travel->publication is approved) to cover compute or sequencing (if it can be justified)

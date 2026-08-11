@@ -175,6 +175,45 @@ async function testFreezeWritesFolder() {
   ok(parsed.edges.some(e => e.pmid === 'seed1'), 'baseline edge present in the written file');
 }
 
+const card = (id, genes, extra = {}) =>
+  ({ id, type: 'note', title: id, genes, tags: [], content: 'x', date: '2026-07-14T00:00:00Z', ...extra });
+
+// A gene adopted this session via gePromoteGhost (see genes-live.test.mjs) is never written into
+// interactions.genes directly — geBuildFrozen() folds _geAdopted in only at freeze time, so the
+// loaded baseline stays exactly what was loaded until a real freeze (or kb-interactions.py rebuild).
+async function testBuildFrozenIncludesAdoptedGene() {
+  console.log('\ngeBuildFrozen — a live-session adoption is folded in without mutating the loaded baseline');
+  const { api } = setup();
+  await api.geExpand('STK11');   // indraFor's phosphorylation partner -> NEWGENE ghost
+  ok(api.geNodes.find(n => n.sym === 'NEWGENE')?.ghost, 'NEWGENE starts as a ghost');
+  const genesBefore = JSON.stringify(api.interactions.genes);
+  api.items = [card('c9', ['NEWGENE'], { tags: ['grp1'] })];
+  await api.gePromoteGhost('NEWGENE');
+  ok(api.geAdopted.has('NEWGENE'), 'the adoption is recorded in the session map');
+  eq(JSON.stringify(api.interactions.genes), genesBefore, 'the loaded baseline object is byte-for-byte unchanged');
+  ok(!('NEWGENE' in api.interactions.genes), 'NEWGENE was never written into the loaded genes dict');
+  const out = api.geBuildFrozen();
+  ok('NEWGENE' in out.genes, 'geBuildFrozen() folds the adopted gene into its output');
+  eq(out.genes.NEWGENE.cards, ['c9'], 'adopted gene keeps its live-card id');
+  eq(out.genes.NEWGENE.groups, ['grp1'], 'adopted gene keeps its live-card tags as groups');
+  ok(out.edges.some(e => e.a === 'NEWGENE' || e.b === 'NEWGENE'), 'an edge touching the adopted gene survives into the frozen output');
+}
+
+async function testFreezeIncludesAdoptedGene() {
+  console.log('\ngeFreeze — a live-session adoption is written into interactions.json, then the session map clears');
+  const { api, sandbox } = setup();
+  await api.geExpand('STK11');
+  api.items = [card('c9', ['NEWGENE'])];
+  await api.gePromoteGhost('NEWGENE');
+  let written = null;
+  const fakeDir = { getFileHandle: async () => ({ createWritable: async () => ({ write: async (t) => { written = t; }, close: async () => {} }) }) };
+  sandbox.__setHandles(fakeDir, null);
+  await api.geFreeze();
+  const parsed = JSON.parse(written);
+  ok('NEWGENE' in parsed.genes, 'the adopted gene is written into interactions.json on Freeze');
+  eq(api.geAdopted.size, 0, 'the session adoption map is cleared after a successful freeze — folded into the new baseline');
+}
+
 async function run() {
   console.log('Genes view (M3 — refresh-all + freeze)');
   testMergeNodeEdges();
@@ -183,6 +222,8 @@ async function run() {
   await testRefreshOffline();
   testBuildFrozen();
   await testFreezeWritesFolder();
+  await testBuildFrozenIncludesAdoptedGene();
+  await testFreezeIncludesAdoptedGene();
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 }

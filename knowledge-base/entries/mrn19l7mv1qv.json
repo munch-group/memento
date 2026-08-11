@@ -10,7 +10,7 @@
   "connection": false,
   "archived": false,
   "due": "2026-09-01",
-  "date": "2026-07-16T09:49:35.114Z",
+  "date": "2026-08-10T13:22:21.233Z",
   "synced": false,
   "_sortTag": "Funding",
   "schedule": {
@@ -22,5 +22,6 @@
         "end": "2026-08-14"
       }
     ]
-  }
+  },
+  "pinned": false
 }

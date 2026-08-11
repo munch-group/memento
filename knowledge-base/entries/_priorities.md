@@ -1,21 +1,22 @@
 ## Today todo
 - Prepare GT re-exam (**CENSOR**)
-- Email
+
+## Week run
 - Lundbeck wrap up / Grove UKbiobank
 - New [TA plan](https://docs.google.com/spreadsheets/d/1-P4IaAKzO0Wkv8HwAe5CbBQ68a7YqUhdoXF9hlxsIOg/edit?gid=0#gid=0) (Bjarke is done TAing)
-- Erik status (Google doc and the sims I promissed)
+- Erik status: [Manuscript](https://docs.google.com/document/d/1GaKJeLyq0ZLxUpiKnbMErn8zJV0CVSaYHeq-cWxYbc8/edit?tab=t.0#heading=h.6p4icvdq6o7p) [Notebook](https://github.com/erikfogh/admixture_baboons/blob/master/review_notebooks/rfmix05_diversity_and_admixture_close.ipynb) (Google doc and the sims I promissed)
 - Shannon status (her results and y-strat-gwas)
 - Funding application overview/plan
 - Review [[mrma9fvk3v68|Phasic plan]]
-
-## Week run
 - Finish course material [[mrmacisv6p1p|Bioinformatics plan]]
 - Finish Phasic refactor
-- Check nr of seats and billing for GitHub organization
-- Check Claude permissions granted
 
 ## Month tactic
+- SMBE talks: https://smbe2026.org/virtual-streaming/ Code: SMBE2026
+- Check nr of seats and billing for GitHub organization
+- Check Claude permissions granted
 - Have Claude review which github issues are relevant after refactor
+- Try Claude Science on LoF project
 - Complete hypothesis doc [[mndbilmcd0xt|Meiotic drive as engine of change]]
 - Clean up chr3 notebook in geneinfo repo
 - Plan for exploiting UKbiobank

@@ -1,0 +1,6 @@
+Transcription factor 3 (TCF3)
+
+This gene encodes a member of the E protein (class I) family of helix-loop-helix transcription factors. E proteins activate transcription by binding to regulatory E-box sequences on target genes as heterodimers or homodimers, and are inhibited by heterodimerization with inhibitor of DNA-binding (class IV) helix-loop-helix proteins. E proteins play a critical role in lymphopoiesis, and the encoded protein is required for B and T lymphocyte development. Deletion of this gene or diminished activity of the encoded protein may play a role in lymphoid malignancies. This gene is also involved in several chromosomal translocations that are associated with lymphoid malignancies including pre-B-cell acute lymphoblastic leukemia (t(1;19), with PBX1), childhood leukemia (t(19;19), with TFPT) and acute leukemia (t(12;19), with ZNF384). Alternatively spliced transcript variants encoding multiple isoforms have been observed for this gene, and a pseudogene of this gene is located on the short arm of chromosome 9. [provided by RefSeq, Sep 2011].
+
+Aliases: AGM8, AGM8A, AGM8B, E2A, E47, ITF1, TCF-3, VDIR, bHLHb21, p75
+Chromosome: 19

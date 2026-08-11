@@ -441,6 +441,8 @@ a { color: inherit; }
    CSS `opacity` rule would override that attribute so complex edges never hid. stroke-opacity is a
    separate property that multiplies with the attribute instead. */
 .ge-complex { stroke-width: calc(1px / var(--ge-zoom, 1)); stroke-dasharray: calc(3px / var(--ge-zoom, 1)) calc(3px / var(--ge-zoom, 1)); stroke-opacity: 0.65; }
+/* Simple mode: one plain grey line per gene pair, undirected. No CSS `opacity` rule here either. */
+.ge-simple { stroke: #888; }
 /* The node box wraps ONLY the dot (the label is positioned absolutely below it), so the
    translate(-50%,-50%) in geApplyDOM centres the DOT on the node's (x,y) — which is where edges
    connect. If the label were in flow the box centre would sit between dot and label, and edges
@@ -451,10 +453,10 @@ a { color: inherit; }
    caps growth when zoomed IN (the case that obscured the map) but leaves the fit/overview view
    untouched, so zooming out still shrinks the cloud to an overview. */
 .ge-dot { display: block; width: calc(var(--r, 12px) / var(--ge-nodescale, 1)); height: calc(var(--r, 12px) / var(--ge-nodescale, 1)); border-radius: 50%; border: calc(1.5px / var(--ge-nodescale, 1)) solid rgba(20,20,19,0.28); box-shadow: 0 1px 2px rgba(20,20,19,0.12); }
-/* Chromosome colours, from the theme palette: terracotta (the app accent) X, orange Y, a warm
-   grey for the autosome majority so X and Y pop, blue mitochondrial, white for unknown. Defined
-   once so a real node's fill and a ghost's dashed border always agree. */
-.ge-canvas { --chrom-X: var(--accent); --chrom-auto: #b9b7ae; --chrom-Y: #E8A020; --chrom-MT: #5B9BD5; --chrom-unknown: #ffffff; }
+/* Chromosome colours, from the theme palette: violet (the bookmark/view colour) X, orange Y, a
+   warm grey for the autosome majority so X and Y pop, blue mitochondrial, white for unknown.
+   Defined once so a real node's fill and a ghost's dashed border always agree. */
+.ge-canvas { --chrom-X: color-mix(in srgb, #6E56CF 70%, white); --chrom-auto: #b9b7ae; --chrom-Y: #E8A020; --chrom-MT: #5B9BD5; --chrom-unknown: #ffffff; }
 .ge-c-X .ge-dot { background: var(--chrom-X); } .ge-c-auto .ge-dot { background: var(--chrom-auto); } .ge-c-Y .ge-dot { background: var(--chrom-Y); } .ge-c-MT .ge-dot { background: var(--chrom-MT); } .ge-c-unknown .ge-dot { background: var(--chrom-unknown); }
 .ge-label { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: calc(2px / var(--ge-zoom, 1));
   font-size: calc(10px / var(--ge-zoom, 1)); font-weight: 500; color: var(--text2); white-space: nowrap; pointer-events: none; max-width: 140px; overflow: hidden; text-overflow: ellipsis;
@@ -471,6 +473,19 @@ a { color: inherit; }
 .ge-tools { flex-wrap: wrap; max-width: min(92%, 760px); }
 .ge-filter-group { display: flex; gap: 10px; align-items: center; }
 .ge-chk { display: flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; }
+/* Split view (P): a single-column panel of live cards on the right; the canvas shrinks.
+   flex-basis 0 (not the inherited auto) is load-bearing: with basis auto, the panel's stack of
+   in-flow cards becomes #genes-view's intrinsic height, the whole view grows to content height
+   (thousands of px), geFit centres the map way below the fold and the visible canvas is blank.
+   The framed rounded box moves from the view onto the canvas alone, so the map looks exactly as it
+   does full-width (just narrower) and the cards float on the page background like the Stack. */
+#genes-view.ge-split { flex-direction: row; flex: 1 1 0; gap: 1.25rem;
+  border: none; border-radius: 0; background: transparent; }
+#genes-view.ge-split .ge-canvas { min-width: 0; border: 1px solid var(--border); border-radius: var(--rl); }
+.ge-cards { display: none; }
+#genes-view.ge-split .ge-cards { display: flex; flex-direction: column; gap: 8px;   /* the Stack's .item-col gap */
+  flex: 0 0 min(420px, 45%); overflow-y: auto; }
+.ge-cards-empty, .ge-cards-more { color: var(--text3); font-size: 12px; text-align: center; padding: 6px 0; }
 .ge-nat-lab-promote { color: #27AE60; } .ge-nat-lab-suppress { color: #C0392B; } .ge-nat-lab-modify { color: #2980B9; } .ge-nat-lab-bind { color: #7a7a7a; }
 /* Ghost nodes (M2): genes NOT in memento, surfaced by a live INDRA expansion.
    Hollow, dashed, chromosome-tinted outline — clearly "not yours yet", promotable. */
@@ -737,7 +752,7 @@ a { color: inherit; }
         </div>
       </div>
       <div class="searchbar">
-        <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR" oninput="renderList()" />
+        <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR" oninput="renderFilters();renderList()" />
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
           <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6 — highlights without filtering" oninput="updateHighlightSet()" />
           <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
@@ -746,7 +761,7 @@ a { color: inherit; }
         <div class="searchbar-actions">
           <button class="highlight-btn" id="highlight-btn" onclick="toggleHighlightInput()" title="Highlight genes without filtering (H)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></button>
           <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
-          <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderList()">Clear</button>
+          <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderFilters();renderList()">Clear</button>
         </div>
       </div>
       <div class="control-bar">
@@ -1234,6 +1249,7 @@ function computeSortTags() {
 
 // --- Filters ---
 function renderFilters() {
+  deriveFacetsFromSearchText();   // mirror any hand-typed /type #tag tokens into the sidebar first
   renderSortList();
   // The two scope filters. Unlike Type/Tag/Gene — which are facets that replace each other — these
   // AND with everything else, so they get the switch vocabulary rather than the radio-chip one.
@@ -1362,6 +1378,7 @@ function setArchiveFilter(v) {
   for (const t of [...activeTags])  if (!scope.some(i => (i.tags||[]).includes(t))) activeTags.delete(t);
   for (const k of [...activeTypes]) if (!scope.some(i => i.type === k)) activeTypes.delete(k);
   if (activeGene && !scope.some(i => (i.genes||[]).some(g => geneAliasesU(g).includes(activeGene.toUpperCase())))) activeGene = null;
+  syncSearchTextFromFacets();   // drop any /type #tag token whose facet was just pruned above
   applyControlBar(); renderFilters(); renderList();   // renderFilters: the title names the archived scope
 }
 function clearAllFilters() {
@@ -1379,8 +1396,8 @@ function clearAllFilters() {
 // Each chip is its own switch. They no longer wipe each other out: a Type and a Tag can both be on,
 // and they narrow together.
 function toggleIn(set, v) { if (set.has(v)) set.delete(v); else set.add(v); }
-function setFilter(type) { toggleIn(activeTypes, type); renderFilters(); renderList(); }
-function setTagFilter(tag) { toggleIn(activeTags, tag); renderFilters(); renderList(); }
+function setFilter(type) { toggleIn(activeTypes, type); syncSearchTextFromFacets(); renderFilters(); renderList(); }
+function setTagFilter(tag) { toggleIn(activeTags, tag); syncSearchTextFromFacets(); renderFilters(); renderList(); }
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
 
 // --- Saved views ---
@@ -1448,6 +1465,10 @@ function applyView(item) {
   // Views saved before Type and Tag became multi-select carry a single `type`/`tag` — keep reading them.
   activeTypes = new Set(v.types || (v.type && v.type !== 'all' ? [v.type] : []));
   activeTags = new Set(v.tags || (v.tag ? [v.tag] : []));
+  // Old-format views (saved before this sync existed) carry type/tag only in v.types/v.tags, not
+  // baked into v.q — mirror them into the just-restored search text so the box matches the chips
+  // immediately, not only after the user's next keystroke.
+  syncSearchTextFromFacets();
   activeGene = v.gene || null;
   highlightInputGenes = new Set(v.genes || []);
   const hi = document.getElementById('highlight-input'); if (hi) hi.value = [...highlightInputGenes].join(' ');
@@ -1468,6 +1489,99 @@ function applyView(item) {
 function exitView() { clearAllFilters(); }
 
 // --- List & Cards ---
+// Shared query grammar — hoisted to module scope so both getVisibleItems() (which needs every
+// OR-group, for actual filtering) and deriveFacetsFromSearchText() (which only ever looks at the
+// first group, to mirror it into the Type/Tag sidebar) parse search text the exact same way.
+// resolveGene/resolveTag stay as caller-built closures (they're only cheap once allGeneNames/
+// allTagNames exist) and get passed into parseGroup so neither caller recomputes those per token.
+const GROUP_SEP_RE = /\s*,\s+|\s+,\s*/;   // splits the search text into comma-OR'd groups
+const TOKEN_RE = /[@#][^\s]+|\S+/g;        // splits a group into @gene/#tag//type/free-text tokens
+function splitOrGroups(raw) {
+  return raw ? raw.split(GROUP_SEP_RE).map(s=>s.trim()).filter(Boolean) : [];
+}
+function resolveType(prefix) {
+  const lo = prefix.toLowerCase();
+  for (const t of TYPES) if (t.key===lo || t.label.toLowerCase()===lo || t.short.toLowerCase()===lo) return t.key;
+  const m = [...new Set(TYPES.filter(t => t.key.startsWith(lo) || t.label.toLowerCase().startsWith(lo) || t.short.toLowerCase().startsWith(lo)).map(t=>t.key))];
+  return m.length === 1 ? m[0] : lo;
+}
+function parseGroup(str, resolveGene, resolveTag) {
+  const tokens = str.match(TOKEN_RE) || [];
+  const geneLists = [], tagAnd = [], tagOr = [], typeOr = [], freeTerms = [];
+  const notGenes = [], notTags = [], notTypes = [], notTerms = [];   // ! = NOT, AND'd within the group
+  tokens.forEach(tok => {
+    let neg = false;
+    if (tok.length > 1 && tok[0] === '!') { neg = true; tok = tok.slice(1); }   // only a leading '!' negates
+    if (tok.startsWith('@')) {
+      const names = tok.slice(1).split(/[,/]/).filter(Boolean).map(n => resolveGene(n));
+      if (names.length) { if (neg) notGenes.push(...names); else geneLists.push(names); }   // each @token is its own OR-list; multiple @tokens are AND'd
+    } else if (tok.startsWith('#')) {
+      const names = tok.slice(1).split(',').filter(Boolean).map(resolveTag);
+      if (neg) notTags.push(...names);
+      else if (names.length > 1) names.forEach(n => tagOr.push(n));
+      else if (names.length === 1) tagAnd.push(names[0]);
+    } else if (tok.startsWith('/')) {
+      const types = tok.slice(1).split(',').filter(Boolean).map(resolveType);
+      if (neg) notTypes.push(...types); else types.forEach(n => typeOr.push(n));
+    } else if (tok.startsWith('*')) {
+      // '*GENE' spikes a gene into the Genes view only; it never filters cards
+      // (and is ignored in every other view). The Genes view reads it via geSpikes().
+    } else if (tok) {
+      (neg ? notTerms : freeTerms).push(tok.toLowerCase());
+    }
+  });
+  return { geneLists, tagAnd, tagOr, typeOr, q: freeTerms.join(' '), notGenes, notTags, notTypes, notTerms };
+}
+// Real-cased lookup for a lowercased tag name: resolveTag() always returns lowercase, but
+// activeTags/chip-highlighting/filtering all match tags by their actual stored casing.
+function canonicalTagCase(lowerTag) {
+  for (const i of items) for (const t of (i.tags||[])) if (t.toLowerCase()===lowerTag) return t;
+  return lowerTag;
+}
+// Mirrors the first OR-group's /type and #tag tokens into the sidebar's activeTypes/activeTags —
+// the text->sidebar half of the sync. Freezes (leaves the Sets untouched) whenever the group is
+// ambiguous for chip purposes: multiple OR-groups (no single scope to mirror), or a tag
+// combination that mixes AND with OR (no combination of chips means "a AND (b OR c)").
+function deriveFacetsFromSearchText() {
+  const raw = (document.getElementById('search-input')?.value||'').trim();
+  const groups = splitOrGroups(raw);
+  if (groups.length > 1) return;   // ambiguous which group is "the" facet scope — leave chips as they are
+  const allGeneNames = [...new Set(items.flatMap(i=>(i.genes||[]).flatMap(g=>geneAliasesU(g))))];
+  const allTagNames = [...new Set(items.flatMap(i=>(i.tags||[]).map(t=>t.toLowerCase())))];
+  const resolveGene = prefix => { const up=prefix.toUpperCase(); if (allGeneNames.includes(up)) return up; const m=allGeneNames.filter(g=>g.startsWith(up)); return m.length===1?m[0]:up; };
+  const resolveTag = prefix => { const lo=prefix.toLowerCase(); if (allTagNames.includes(lo)) return lo; const m=allTagNames.filter(t=>t.startsWith(lo)); return m.length===1?m[0]:lo; };
+  const g = groups.length ? parseGroup(groups[0], resolveGene, resolveTag) : { typeOr: [], tagAnd: [], tagOr: [] };
+  activeTypes = new Set(g.typeOr);   // /type is always pure-OR — always safe to mirror
+  const tagSyncSafe = g.tagAnd.length === 0 || (g.tagAnd.length === 1 && g.tagOr.length === 0);
+  if (tagSyncSafe) activeTags = new Set((g.tagAnd.length ? g.tagAnd : g.tagOr).map(canonicalTagCase));
+  // else: leave activeTags untouched — an AND-style tag combination can't be shown as chips
+}
+// Mirrors the sidebar's activeTypes/activeTags into the first OR-group of the search text — the
+// sidebar->text half of the sync. Rewrites only the /type and #tag tokens of that group; every
+// other token (free text, @gene, negated tokens) and any other OR-group is left exactly as typed.
+function syncSearchTextFromFacets() {
+  const si = document.getElementById('search-input');
+  if (!si) return;
+  const raw = si.value;
+  const m = GROUP_SEP_RE.exec(raw);
+  const first = m ? raw.slice(0, m.index) : raw;
+  const rest = m ? raw.slice(m.index) : '';
+  const kept = (first.match(TOKEN_RE) || []).filter(tok => {
+    const neg = tok.length > 1 && tok[0] === '!';
+    const body = neg ? tok.slice(1) : tok;
+    return neg || !(body.startsWith('/') || body.startsWith('#'));
+  });
+  const fresh = [];
+  if (activeTypes.size) fresh.push('/' + TYPES.filter(t=>activeTypes.has(t.key)).map(t=>t.key).join(','));
+  if (activeTags.size) {
+    // Tags with a space or comma can't round-trip through the token grammar — leave them Set-only;
+    // the chip still filters correctly, it just won't appear as text.
+    const safe = [...activeTags].filter(t=>!/[\s,]/.test(t)).sort((a,b)=>a.localeCompare(b));
+    if (safe.length) fresh.push('#' + safe.join(','));
+  }
+  const newFirst = [...fresh, ...kept].join(' ');
+  si.value = newFirst ? newFirst + rest : rest.replace(/^\s*,\s*/, '');
+}
 function getVisibleItems() {
   const raw=(document.getElementById('search-input')?.value||'').trim();
   const allGeneNames = [...new Set(items.flatMap(i=>(i.genes||[]).flatMap(g=>geneAliasesU(g))))];
@@ -1483,39 +1597,6 @@ function getVisibleItems() {
     if (allTagNames.includes(lo)) return lo;
     const m = allTagNames.filter(t => t.startsWith(lo));
     return m.length === 1 ? m[0] : lo;
-  }
-  function resolveType(prefix) {
-    const lo = prefix.toLowerCase();
-    for (const t of TYPES) if (t.key===lo || t.label.toLowerCase()===lo || t.short.toLowerCase()===lo) return t.key;
-    const m = [...new Set(TYPES.filter(t => t.key.startsWith(lo) || t.label.toLowerCase().startsWith(lo) || t.short.toLowerCase().startsWith(lo)).map(t=>t.key))];
-    return m.length === 1 ? m[0] : lo;
-  }
-  function parseGroup(str) {
-    const tokens = str.match(/[@#][^\s]+|\S+/g) || [];
-    const geneLists = [], tagAnd = [], tagOr = [], typeOr = [], freeTerms = [];
-    const notGenes = [], notTags = [], notTypes = [], notTerms = [];   // ! = NOT, AND'd within the group
-    tokens.forEach(tok => {
-      let neg = false;
-      if (tok.length > 1 && tok[0] === '!') { neg = true; tok = tok.slice(1); }   // only a leading '!' negates
-      if (tok.startsWith('@')) {
-        const names = tok.slice(1).split(/[,/]/).filter(Boolean).map(n => resolveGene(n));
-        if (names.length) { if (neg) notGenes.push(...names); else geneLists.push(names); }   // each @token is its own OR-list; multiple @tokens are AND'd
-      } else if (tok.startsWith('#')) {
-        const names = tok.slice(1).split(',').filter(Boolean).map(resolveTag);
-        if (neg) notTags.push(...names);
-        else if (names.length > 1) names.forEach(n => tagOr.push(n));
-        else if (names.length === 1) tagAnd.push(names[0]);
-      } else if (tok.startsWith('/')) {
-        const types = tok.slice(1).split(',').filter(Boolean).map(resolveType);
-        if (neg) notTypes.push(...types); else types.forEach(n => typeOr.push(n));
-      } else if (tok.startsWith('*')) {
-        // '*GENE' spikes a gene into the Genes view only; it never filters cards
-        // (and is ignored in every other view). The Genes view reads it via geSpikes().
-      } else if (tok) {
-        (neg ? notTerms : freeTerms).push(tok.toLowerCase());
-      }
-    });
-    return { geneLists, tagAnd, tagOr, typeOr, q: freeTerms.join(' '), notGenes, notTags, notTypes, notTerms };
   }
   function itemHasText(i, term) {
     return (i.content||'').toLowerCase().includes(term)
@@ -1538,7 +1619,7 @@ function getVisibleItems() {
     if (g.notTerms.length && g.notTerms.some(t=>itemHasText(i, t))) return false;
     return true;
   }
-  const orGroups = raw ? raw.split(/\s*,\s+|\s+,\s*/).map(s=>s.trim()).filter(Boolean).map(parseGroup) : [];
+  const orGroups = splitOrGroups(raw).map(s => parseGroup(s, resolveGene, resolveTag));
   // Highlight reflects the filter criterion: within a group, the genes common to every @-list
   // (their intersection) plus any single-gene (required) term; unioned across OR-groups and the highlight input.
   const searchGenes = orGroups.flatMap(g => {
@@ -3880,7 +3961,12 @@ let _gePinch = null;
 // natures to show, so an EMPTY set means "show none" — unchecking every box hides
 // every mechanistic edge instead of wrapping back around to all-on.
 let geNatures = null;
-let geMinBelief = 0, geMinEv = 1, geShowComplex = false, geSpacing = 1;
+let geMinBelief = 0, geMinEv = 1, geShowComplex = false, geSimpleEdges = true, geSpacing = 1;
+// Split view: a single-column panel of live cards beside the canvas. _geOff is the hidden-node set
+// geApplyFilter last computed (the panel derives "visible genes" from it); _gePanelSig is a content
+// signature so keystrokes that change nothing skip the repaint.
+let geCardPanel = true, _gePanelSig = null, _geOff = new Set();
+const GE_PANEL_CAP = 60;   // md()-rendering hundreds of card bodies would block the main thread
 // Every node is the same size (radius, in scene units); the on-screen size is held
 // constant across zoom by --ge-nodescale, like the labels.
 const GE_NODE_R = 9;
@@ -3924,6 +4010,15 @@ function geComputeDrawn(){
   // are both "modify") into one edge, keeping the most-evidenced. Their overlap was invisible anyway
   // (same colour, same head); what confuses is DIFFERENT natures stacked on one line.
   const pk = e => (e.a < e.b ? e.a + '|' + e.b : e.b + '|' + e.a);
+  // Simple mode: collapse everything between a pair — natures, directions, duplicates — into one
+  // plain undirected line. The entry keeps its member edges so geDrawnShown can show the line iff
+  // ANY member passes the property filters. No dir (=> no marker, no trim), lane 0 (=> no fan).
+  if (geSimpleEdges) {
+    const pairs = new Map();   // pair -> all its (complex-gated) edges
+    for (const e of raw) { const k = pk(e); (pairs.get(k) || pairs.set(k, []).get(k)).push(e); }
+    _geDrawn = [...pairs.values()].map(es => ({ a: es[0].a, b: es[0].b, simple: true, _lane: 0, _members: es }));
+    return;
+  }
   const groups = new Map();   // pair|nature -> all same-nature edges of that pair
   for (const e of raw) {
     const k = pk(e) + '|' + e.nat;
@@ -3958,6 +4053,9 @@ function geEdgeShown(e){
   if ((e.n || 0) < geMinEv) return false;
   return true;
 }
+// Visibility of a DRAWN entry: a normal entry IS an edge; a simple-mode entry is a merged pair,
+// shown iff any of its member edges passes the current filters.
+function geDrawnShown(e){ return e._members ? e._members.some(geEdgeShown) : geEdgeShown(e); }
 function geShownCount(){
   if (_geBuilt) return _geNodes.length;
   if (!interactions || !interactions.genes) return 0;
@@ -3989,6 +4087,7 @@ function geMarkerDefs(){
 }
 function geEdgesHtml(){
   return geMarkerDefs() + _geDrawn.map((e, i) => {
+    if (e.simple) return `<line id="ge-e${i}" class="ge-edge ge-simple"></line>`;
     // A directed mechanistic edge (dir set) gets a head at its TARGET end. dir 'ab' => arrow at b
     // (marker-end); 'ba' => arrow at a (marker-start). Undirected or direction-less edges get none.
     const mk = (!e.complex && e.dir && (e.nat === 'promote' || e.nat === 'suppress' || e.nat === 'modify')) ? 'ge-mk-' + e.nat : '';
@@ -4042,6 +4141,8 @@ function renderGenes(){
         <div class="gr-slider"><span class="seg-label" title="Minimum independent evidence texts">ev ≥ <span id="ge-ev-val">${geMinEv}</span></span>
           <input type="range" class="gr-range" min="1" max="5" step="1" value="${geMinEv}" oninput="setGeMinEv(this.value)"></div>
         <label class="ge-chk" title="Protein-complex membership — 88% of edges, off by default"><input type="checkbox" ${geShowComplex?'checked':''} onchange="setGeShowComplex(this.checked)"> complexes</label>
+        <label class="ge-chk" title="One plain grey line per connected gene pair — no natures, directions or parallel edges (E)"><input type="checkbox" id="ge-simple-chk" ${geSimpleEdges?'checked':''} onchange="setGeSimpleEdges(this.checked)"> simple</label>
+        <label class="ge-chk" title="Split view: live cards for the highlighted genes — or all visible ones (P)"><input type="checkbox" id="ge-cards-chk" ${geCardPanel?'checked':''} onchange="setGeCardPanel(this.checked)"> cards</label>
         <span class="gr-relayout" onclick="geRelayout()" title="Lay the map out again from scratch">↻ Relayout</span>
         <span class="gr-relayout" id="ge-refresh" onclick="geRefreshAll()" title="Fetch INDRA for every gene in memento and add the interactions BETWEEN them — never genes outside memento. Isolated genes that interact get connected. Incremental and cached; press again to cancel.">↻ Refresh all</span>
         <span class="gr-relayout" onclick="geFreeze()" title="Write the current interactions back to interactions.json (folder, or a GitHub commit)">⭳ Freeze</span>
@@ -4054,7 +4155,10 @@ function renderGenes(){
         <button class="ge-action ge-action-alt" id="ge-action-add" style="display:none" onclick="geActionAdd()"></button>
       </div>
       <span class="gr-caption" id="ge-caption"></span>
-    </div>`;
+    </div>
+    <div class="ge-cards" id="ge-cards"></div>`;
+  host.classList.toggle('ge-split', geCardPanel);
+  _gePanelSig = null;   // fresh DOM — the geApplyFilter below repaints the panel
   _geBuilt = true;
   const c = document.getElementById('ge-canvas');
   // iOS: a two-finger pinch would otherwise zoom the whole PAGE (see the Graph view's identical
@@ -4160,7 +4264,7 @@ function geConnectedVisible(){
   const cardOff = geCardOff();
   const connected = new Set();
   for (const e of _geDrawn) {
-    if (!geEdgeShown(e) || cardOff.has(e.a) || cardOff.has(e.b)) continue;
+    if (!geDrawnShown(e) || cardOff.has(e.a) || cardOff.has(e.b)) continue;
     connected.add(e.a); connected.add(e.b);
   }
   return connected;
@@ -4182,12 +4286,13 @@ function geApplyFilter(){
   if (_geLayoutIds) for (const n of _geNodes) if (!_geLayoutIds.has(n.sym)) off.add(n.sym);
   // '*GENE' spikes always show, overriding both the card scope and any Relayout focus.
   if (_geSpikes.size) for (const n of _geNodes) if (_geSpikes.has(n.sym.toUpperCase())) off.delete(n.sym);
+  _geOff = off;   // stashed for the card panel: "visible genes" = exactly what this pass shows
   // Highlighting focuses: every clicked gene AND its neighbours stay lit, the rest dim, and only
   // edges touching a clicked gene are drawn — accumulated over all clicked genes.
   const anySel = _geSelIds.size > 0;
   const lit = new Set(_geSelIds);
   if (anySel) for (const e of _geDrawn) {
-    if (!geEdgeShown(e) || off.has(e.a) || off.has(e.b)) continue;
+    if (!geDrawnShown(e) || off.has(e.a) || off.has(e.b)) continue;
     if (_geSelIds.has(e.a)) lit.add(e.b);
     if (_geSelIds.has(e.b)) lit.add(e.a);
   }
@@ -4196,7 +4301,7 @@ function geApplyFilter(){
     const line = document.getElementById('ge-e' + i);
     if (!line || !line.setAttribute) return;
     // An edge is drawn iff both its endpoints are visible (filtering hides an edge to an off node).
-    const visible = geEdgeShown(e) && !off.has(e.a) && !off.has(e.b);
+    const visible = geDrawnShown(e) && !off.has(e.a) && !off.has(e.b);
     // Under a highlight, edges incident to a highlighted gene are emphasised (full) and the rest of
     // the still-visible graph stays drawn but dimmed — so the background reads as a faded version of
     // the filtered map, not a scatter of edgeless dots. No highlight ⇒ every visible edge is full.
@@ -4217,11 +4322,12 @@ function geApplyFilter(){
   const cap = document.getElementById('ge-caption');
   if (cap) cap.textContent = (realShown < realTotal ? `${realShown} of ${realTotal} genes` : `${realTotal} genes`)
     + `${offcards ? ` · ${offcards} not on a card` : ''}`
-    + ` · ${shown} interaction${shown === 1 ? '' : 's'} shown`
+    + ` · ${shown} ${geSimpleEdges ? 'link' : 'interaction'}${shown === 1 ? '' : 's'} shown`
     + `${geShowComplex ? ' (incl. complexes)' : ''}`
     + `${_geIsolated > 0 ? ` · ${_geIsolated} isolated hidden` : ''}`
     + `${_geSelIds.size ? ` · ${_geSelIds.size} highlighted` : ''}`;
   geUpdateAction();
+  geRenderCardPanel();
 }
 // The contextual action bar (bottom-centre) acts on the LAST-clicked gene. Every node can be
 // EXPANDED (fetch its INDRA neighbourhood); a ghost (a gene not in memento) additionally gets an
@@ -4239,7 +4345,10 @@ function geUpdateAction(){
   else if (_geExpanded.has(n.sym)) { exp.textContent = (_geExpanding ? '… expanding ' : '⤢ Expand ') + n.sym + (left ? ` (+${Math.min(left, GE_GHOST_CAP)} more)` : ''); exp.disabled = _geExpanding; }
   else { exp.textContent = (_geExpanding ? '… expanding ' : '⤢ Expand ') + n.sym; exp.disabled = _geExpanding; }
   if (add) {
-    if (n.ghost) { add.style.display = ''; add.textContent = '＋ Add ' + n.sym + ' to memento'; add.disabled = false; }
+    const busy = _geExpanding || _geRefreshing;
+    // A ghost already documented on a live thought card (written since the last sidecar rebuild)
+    // has nothing to add — offer Expand only, like any real node.
+    if (n.ghost && !geThoughtCards(n.sym.toUpperCase()).length) { add.style.display = ''; add.textContent = (busy ? '… adding ' : '＋ Add ') + n.sym + (busy ? '' : ' to memento'); add.disabled = busy; }
     else { add.style.display = 'none'; }
   }
 }
@@ -4602,6 +4711,28 @@ function setGeShowComplex(on){
   // this session's live INDRA ghosts/expansions and re-ran the layout.)
   _geLayoutIds = null; geApplyDOM(); geApplyFilter();
 }
+function setGeSimpleEdges(on){
+  geSimpleEdges = !!on;
+  const chk = document.getElementById('ge-simple-chk');
+  if (chk) chk.checked = geSimpleEdges;      // keyboard toggle: keep the toolbar checkbox honest
+  geComputeDrawn();
+  const svg = document.getElementById('ge-edges');
+  if (svg) svg.innerHTML = geEdgesHtml();     // rebuild just the edge layer; nodes keep their places
+  // Leave _geSig alone — same reason as setGeShowComplex above.
+  _geLayoutIds = null; geApplyDOM(); geApplyFilter();
+}
+function setGeCardPanel(on){
+  geCardPanel = !!on;
+  const host = document.getElementById('genes-view');
+  if (host && host.classList) host.classList.toggle('ge-split', geCardPanel);
+  const chk = document.getElementById('ge-cards-chk');
+  if (chk) chk.checked = geCardPanel;      // keyboard toggle keeps the checkbox honest
+  if (geCardPanel) { _gePanelSig = null; geRenderCardPanel(); }
+  // The canvas just changed width; re-fit the map to it (reading clientWidth after the class
+  // toggle reflows synchronously). Direct refit, not _geRefit — no sim runs on a toggle.
+  const { cw, ch } = geCanvasSize();
+  geSizeLayout(cw, ch); geFit(cw, ch); geApplyDOM();
+}
 // Relayout packs only the connected-visible subgraph — visible nodes that have a visible edge to
 // another visible node — and hides the rest. With no filters active every node qualifies, so it
 // behaves like a full relayout; under a filter it re-packs just what's left connected.
@@ -4832,16 +4963,168 @@ function geMergeExpansion(sym, rec){
   geRun(0.7);
   return added;
 }
-// Promote a ghost: open memento's own create form pre-filled with the gene, so
-// it takes the normal authoring path. It becomes a real node on the next sidecar
-// rebuild (the M3 freeze, or re-running kb-interactions.py).
+// A card only counts as a SET card (annotates its genes, contributes no node) under exactly the
+// same rule kb-interactions.py's is_set_card() uses: an explicit 'gene-set' tag, or too many genes
+// to be about any one of them. Kept in sync with that file's SET_TAG / SET_CARD_MIN_GENES.
+const GE_SET_TAG = 'gene-set', GE_SET_CARD_MIN_GENES = 100;
+function geIsSetCard(item){
+  const toks = (item.genes||[]).map(g => String(g||'').trim()).filter(Boolean);
+  return (item.tags||[]).includes(GE_SET_TAG) || toks.length >= GE_SET_CARD_MIN_GENES;
+}
+// Promote a ghost. A ghost only means "not in the loaded sidecar" (_geFrozenU) — the sidecar is a
+// periodically-rebuilt snapshot, not the live source of truth, so a gene mentioned on a card
+// written since the last rebuild still shows as a ghost even though it's genuinely documented.
+// Two different cases, two different actions:
+//   - already on a thought card -> nothing to write; pull it in the same way Refresh all does.
+//   - not on any card yet -> this is what the create form is for; open it, pre-filled with basic
+//     gene info from mygene.info so there's something to start from.
+// The live thought cards documenting a gene (X uppercase). A gene-set card is an annotation, not
+// documentation, and an archived card doesn't count — the same rule gePromoteGhost's adopt branch
+// and the action bar's Add button both apply, so they can never disagree.
+function geThoughtCards(X){
+  return items.filter(i => !i.archived && !geIsSetCard(i) && (i.genes || []).some(g => geneAliasesU(g).includes(X)));
+}
+// The split-view card panel: live cards for the highlighted genes, or for every gene visible on
+// the map when nothing is highlighted. Cards resolve via geThoughtCards() — the same live rule
+// the action bar uses — ordered and scoped by getVisibleItems().vis (the Stack's order).
+function geRenderCardPanel(){
+  const panel = document.getElementById('ge-cards');
+  if (!panel || !geCardPanel) return;
+  const sel = _geSelIds.size > 0;
+  const syms = sel ? [..._geSelIds] : _geNodes.filter(n => !_geOff.has(n.sym)).map(n => n.sym);
+  // One pass over items (geThoughtCards' predicate inverted): per-sym scans are O(syms × items)
+  // and made every search keystroke crawl when all ~hundreds of genes were visible.
+  const wantU = new Set(syms.map(s => s.toUpperCase()));
+  const want = new Set();
+  for (const it of items) {
+    if (it.archived || geIsSetCard(it)) continue;
+    if ((it.genes || []).some(g => geneAliasesU(g).some(a => wantU.has(a)))) want.add(it.id);
+  }
+  const { vis } = getVisibleItems();
+  let list = vis.filter(i => want.has(i.id) && !SPECIAL_IDS.has(i.id));
+  if (sel) {   // a highlighted gene's cards show even outside the search scope — appended after
+    const seen = new Set(list.map(i => i.id));
+    for (const it of items) if (want.has(it.id) && !seen.has(it.id) && !SPECIAL_IDS.has(it.id)) list.push(it);
+  }
+  const over = Math.max(0, list.length - GE_PANEL_CAP);
+  if (over) list = list.slice(0, GE_PANEL_CAP);
+  const sig = previewMode + '|' + expandedId + '|' + list.map(i => i.id + ':' + (i.date || '')).join(',');
+  if (sig === _gePanelSig) return;   // keystroke-safe: identical content, skip the repaint
+  _gePanelSig = sig;
+  panel.classList.remove('hide-previews', 'hide-meta');   // same mode classes the list uses (applyPreviewMode)
+  if (previewMode === 'compact') panel.classList.add('hide-previews');
+  else if (previewMode === 'minimal') panel.classList.add('hide-meta');
+  panel.innerHTML = (list.length
+    ? list.map(i => renderCard(i, false, true)).join('')   // eagerBody — the lazy observer is list-scoped, see showCardPop
+    : '<div class="ge-cards-empty">No cards for the current selection</div>')
+    + (over ? `<div class="ge-cards-more">+${over} more — narrow the search or highlight a gene</div>` : '');
+  resolveImages();
+  geneOverflowPass();
+}
 function gePromoteGhost(sym){
+  const X = sym.toUpperCase();
+  const thought = geThoughtCards(X);
+  if (thought.length) {
+    const matching = items.filter(i => !i.archived && (i.genes||[]).some(g => geneAliasesU(g).includes(X)));
+    const cards = thought.map(i => i.id);
+    const groups = [...new Set(matching.flatMap(i => i.tags || []))];   // both kinds contribute groups
+    return geAdoptLiveGene(sym, X, cards, groups);
+  }
   const f = document.getElementById('add-form');
   if (f && f.style.display === 'none' && typeof toggleForm === 'function') toggleForm();
   const g = document.getElementById('f-genes'); if (g) g.value = sym;
   const t = document.getElementById('f-title'); if (t && !t.value) t.value = sym;
+  if (typeof selType === 'function') selType('reference');   // sourced info, same convention as gene-set imports
   const c = document.getElementById('f-content'); if (c && c.focus) c.focus();
   showToast('Write a note for ' + sym + ' and Save — it joins the map on the next rebuild');
+  return geFetchGeneInfo(sym).then(info => {
+    if (!info) return;
+    const gEl = document.getElementById('f-genes'); if (!gEl || gEl.value !== sym) return;   // form moved on
+    const cEl = document.getElementById('f-content');
+    if (!cEl || cEl.value.trim()) return;   // user already typed something — never clobber it
+    cEl.value = geFormatGeneInfo(sym, info);
+  }).catch(() => {});
+}
+// Basic gene info for the new-card prefill above — name, summary, aliases, chromosome. Same
+// endpoint and POST-with-fields pattern geGroundChrom already uses, just richer fields.
+async function geFetchGeneInfo(sym){
+  const X = sym.toUpperCase();
+  try {
+    const body = 'q=' + encodeURIComponent(sym) + '&scopes=symbol,alias&fields=symbol,name,summary,alias,genomic_pos&species=human';
+    const r = await fetch(GE_MYGENE_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+    if (!r || !r.ok) return null;
+    const hits = (await r.json() || []).filter(h => h && !h.notfound);
+    return hits.find(h => h.symbol && h.symbol.toUpperCase() === X) || hits[0] || null;
+  } catch(_) { return null; }
+}
+function geFormatGeneInfo(sym, info){
+  const name = info.name ? info.name.charAt(0).toUpperCase() + info.name.slice(1) : '';
+  const aliases = Array.isArray(info.alias) ? info.alias : (info.alias ? [info.alias] : []);
+  let gp = info.genomic_pos;
+  if (Array.isArray(gp)) gp = gp.find(g => /^(\d+|X|Y|MT)$/.test(String(g.chr))) || gp[0];
+  const chrom = gp && gp.chr ? String(gp.chr) : null;
+  const parts = [name ? `${name} (${sym})` : sym];
+  if (info.summary) parts.push(info.summary);
+  const meta = [];
+  if (aliases.length) meta.push(`Aliases: ${aliases.join(', ')}`);
+  if (chrom) meta.push(`Chromosome: ${chrom}`);
+  if (meta.length) parts.push(meta.join('\n'));
+  return parts.join('\n\n');
+}
+// Adopt a gene that's already on a thought card but isn't in the sidecar yet (see gePromoteGhost
+// above). The ghost node for `sym` already exists — geEnsureMementoNode refuses to touch an
+// existing ghost by design, so this flips it in place instead, then runs exactly the fetch+merge
+// geRefreshAll()'s per-gene worker runs, so it behaves like any other known gene from here on.
+let _geAdopted = new Map();   // sym -> {chrom, cards, groups} for this session's adoptions; folded
+                               // into interactions.genes only inside geBuildFrozen() — the loaded
+                               // sidecar itself is never mutated, the same way interactions.edges
+                               // only updates at Freeze while _geEdges is the live working set.
+async function geAdoptLiveGene(sym, X, cards, groups){
+  if (_geExpanding || _geRefreshing) return;
+  const node = _geByU.get(X);
+  if (!node) return;   // defensive: the button only exists because this node is on screen
+  _geExpanding = true; geUpdateAction();
+  try {
+    let chrom = node.chrom;
+    if (!chrom) { try { chrom = (await geGroundChrom([sym]))[X] || null; } catch(_) {} }
+    _geAdopted.set(sym, { chrom, cards, groups });
+    _geFrozenU.set(X, sym);
+    node.ghost = false; node.cards = cards; node.groups = groups; node.chrom = chrom; node.cclass = geChromClass(chrom);
+    let rec = await geCacheGet(sym);
+    if (!rec) {
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+        showToast(sym + ' is already on a card — pulled it in; connect to fetch its interactions');
+        geComputeDrawn(); geRebuildScene(); geApplyDOM(); geApplyFilter();
+        return;
+      }
+      const r = await fetch(GE_INDRA_URL + '?agent0=' + encodeURIComponent(sym) + '&format=json&limit=500&ev_limit=1');
+      if (!r || !r.ok) {
+        showToast('INDRA request failed' + (r ? ' (' + r.status + ')' : ''));
+        geComputeDrawn(); geRebuildScene(); geApplyDOM(); geApplyFilter();
+        return;
+      }
+      rec = { fetched: new Date().toISOString(), edges: geParseIndra(await r.json(), sym), chrom: {} };
+      await geCachePut(sym, rec);
+    }
+    const before = new Set(_geNodes.map(n => n.sym));
+    const added = geMergeNodeEdges(rec);
+    geComputeDrawn(); geRebuildScene();
+    const connected = _geNodes.filter(n => !before.has(n.sym));
+    if (connected.length) {
+      _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
+      _geUnpinAfter = new Set();
+      for (const n of _geNodes) if (before.has(n.sym) && !_geFixed[n.sym]) { _geFixed[n.sym] = true; _geUnpinAfter.add(n.sym); }
+      geFocusInclude([sym, ...connected.map(n => n.sym)]);
+      geApplyDOM(); geApplyFilter(); geRun(0.8);
+    } else {
+      geFocusInclude([sym]); geApplyDOM(); geApplyFilter();
+    }
+    showToast(`${sym} was already on a card — pulled it in (+${added} interaction${added===1?'':'s'}${connected.length ? `, ${connected.length} gene${connected.length===1?'':'s'} newly connected` : ''})`);
+  } catch(e) {
+    showToast('Add failed: ' + e.message);
+  } finally {
+    _geExpanding = false; geUpdateAction();
+  }
 }
 
 // --- Add gene by name -------------------------------------------------------
@@ -5057,8 +5340,11 @@ async function geRefreshAll(){
 // node-to-node set (baseline + everything live). Ghost edges are dropped: a
 // frozen edge's endpoints must both be memento genes, exactly as the Python
 // builder requires, so a later kb-interactions.py rebuild stays consistent.
+// This session's geAdoptLiveGene() adoptions (_geAdopted) are folded in here, not written into
+// interactions.genes directly — that object is the loaded baseline and stays untouched so a Freeze
+// before those genes have edges of their own doesn't silently mutate what was actually loaded.
 function geBuildFrozen(){
-  const genes = interactions.genes || {};
+  const genes = { ...(interactions.genes || {}), ...Object.fromEntries(_geAdopted) };
   const seen = new Set(), mech = [], cplx = [];
   for (const e of _geEdges) {
     if (!genes[e.a] || !genes[e.b]) continue;
@@ -5071,7 +5357,7 @@ function geBuildFrozen(){
   const byAB = (x, y) => x.a < y.a ? -1 : x.a > y.a ? 1 : x.b < y.b ? -1 : x.b > y.b ? 1 : 0;
   mech.sort(byAB); cplx.sort(byAB);
   return { ...interactions, generated: new Date().toISOString().slice(0, 10),
-           source: 'INDRA db.indra.bio + MyGene.info (frozen in-app)', edges: mech, complex_edges: cplx };
+           source: 'INDRA db.indra.bio + MyGene.info (frozen in-app)', genes, edges: mech, complex_edges: cplx };
 }
 async function geWriteInteractions(json){
   if (typeof dirHandle !== 'undefined' && dirHandle) {
@@ -5098,7 +5384,10 @@ async function geFreeze(){
   const nm = out.edges.length, nc = out.complex_edges.length;
   if (typeof confirm === 'function' && !confirm(`Freeze ${nm} mechanistic + ${nc} complex interactions to interactions.json?`)) return;
   const json = JSON.stringify(out, null, 1);
-  if (await geWriteInteractions(json)) { interactions = out; showToast(`Froze ${nm} + ${nc} interactions to interactions.json`); }
+  if (await geWriteInteractions(json)) {
+    interactions = out; _geAdopted = new Map();   // now part of the new baseline — nothing left to fold in
+    showToast(`Froze ${nm} + ${nc} interactions to interactions.json`);
+  }
 }
 
 // Load the sidecar. On the desktop (File System Access) path this reads the same
@@ -5168,10 +5457,14 @@ function togglePreviews() {
     : 'minimal');
 }
 function applyPreviewMode() {
-  const list = document.getElementById('item-list');
-  list.classList.remove('hide-previews', 'hide-meta');
-  if (previewMode === 'compact')      list.classList.add('hide-previews');
-  else if (previewMode === 'minimal') list.classList.add('hide-meta');
+  const setModeClasses = el => {
+    if (!el || !el.classList) return;
+    el.classList.remove('hide-previews', 'hide-meta');
+    if (previewMode === 'compact')      el.classList.add('hide-previews');
+    else if (previewMode === 'minimal') el.classList.add('hide-meta');
+  };
+  setModeClasses(document.getElementById('item-list'));
+  setModeClasses(document.getElementById('ge-cards'));   // the Genes split panel obeys the same switch
   applyControlBar();
 }
 // Light the current option in each switch. Single source of truth for both bars, so the UI can't
@@ -5372,14 +5665,17 @@ function toggleHighlightGene(gene) {
   if (highlightInputGenes.size > 0 && wrap.style.display === 'none') wrap.style.display = 'flex';
   renderList(); // getVisibleItems() recomputes the combined highlightGenes and toggles the bar
 }
-function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTags.clear(); activeTypes.clear(); renderFilters(); renderList(); }
+function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTags.clear(); activeTypes.clear(); syncSearchTextFromFacets(); renderFilters(); renderList(); }
 // Re-render one card in place (expand/collapse) without rebuilding the whole list.
 // Returns false if the card isn't currently in the DOM, so the caller can fall back to renderList().
 function updateCardInPlace(id){
-  const el = [...document.querySelectorAll('#item-list .card')].find(c=>c.dataset.id===id);
+  // In the Genes view the visible cards live in the split panel; #item-list still holds the stale
+  // hidden Stack cards, which would match first and report a false success.
+  const root = mainView === 'genes' ? '#ge-cards' : '#item-list';
+  const el = [...document.querySelectorAll(root + ' .card')].find(c=>c.dataset.id===id);
   const item = items.find(i=>i.id===id);
   if(!el || !item) return false;
-  el.outerHTML = renderCard(item);
+  el.outerHTML = renderCard(item, false, root === '#ge-cards');   // panel cards are always eager
   const cc = document.getElementById('cc-'+id);
   if(cc && cc.dataset.lazy) observeLazyEls(cc.parentElement);   // a freshly-collapsed card becomes a lazy placeholder
   resolveImages();
@@ -5881,6 +6177,9 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyT'){ e.preventDefault(); setView('timeline'); return; }
       if(code==='KeyV'){ e.preventDefault(); togglePreviews(); return; }
       if(code==='KeyH'){ e.preventDefault(); toggleHighlightInput(); return; }
+      // E toggles simple edges — the first view-scoped key: only meaningful (and only bound) in Genes.
+      if(code==='KeyE' && mainView==='genes'){ e.preventDefault(); setGeSimpleEdges(!geSimpleEdges); return; }
+      if(code==='KeyP' && mainView==='genes'){ e.preventDefault(); setGeCardPanel(!geCardPanel); return; }
     }
   }
   if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){
@@ -5904,7 +6203,7 @@ document.addEventListener('keydown', async e=>{
       cancelEdit();
     } else {
       const search = document.getElementById('search-input');
-      if(search && search.value){ search.value=''; renderList(); }
+      if(search && search.value){ search.value=''; renderFilters(); renderList(); }
       else {
         // Nothing else for Esc to do — if a "← back" link is showing in the title, follow it.
         const back = document.querySelector('#page-title [onclick]');

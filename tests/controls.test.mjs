@@ -10,6 +10,7 @@ const eq = (a, b, msg) => {
   if (A === B) { pass++; console.log(`  ✓ ${msg}`); }
   else { fail++; console.log(`  ✗ ${msg}\n      expected ${B}\n      actual   ${A}`); }
 };
+const ok = (cond, msg) => { if (cond) { pass++; console.log(`  ✓ ${msg}`); } else { fail++; console.log(`  ✗ ${msg}`); } };
 
 const noop = async () => ({ ok: true, status: 200, json: async () => ({}), text: async () => '' });
 const note = (id, title, extra = {}) =>
@@ -57,6 +58,77 @@ console.log('\nThe C key still cycles (must not regress)');
   const seen = [api.previewMode];
   for (let i = 0; i < 3; i++) { api.togglePreviews(); seen.push(api.previewMode); }
   eq(seen, ['minimal', 'compact', 'rendered', 'minimal'], 'minimal -> compact -> rendered -> minimal');
+}
+
+// Bulk actions: Shift-click (or any click in Select mode) selects cards instead of expanding
+// them; the floating bar then pins/archives/tags/deletes the lot through the same per-card save
+// paths a single edit uses. Pin/Archive act toward the shared target state, so the same button
+// bulk-unarchives from the Archived scope.
+console.log('\nBulk actions — select with Shift-click or Select mode; pin/archive/tag/delete the lot');
+{
+  const { api, sandbox, el } = setup();   // items: p1 (pinned), n1, n2
+  const shift = () => ({ shiftKey: true, target: { closest: () => null }, stopPropagation(){} });
+  api.renderList();
+
+  api.toggleCard('n1', shift());
+  eq(api.bulkIds, ['n1'], 'Shift-click selects the card instead of expanding it');
+  api.toggleCard('n2', shift());
+  eq(api.bulkIds, ['n1', 'n2'], 'a second Shift-click grows the selection');
+  ok(el('bulk-bar').innerHTML.includes('2 selected'), 'the floating bar counts the selection');
+  ok(/bulk-sel/.test(api.renderCard(api.items.find(i => i.id === 'n1'), false)), 'a selected card wears the ring class');
+  api.toggleCard('n1', shift());
+  eq(api.bulkIds, ['n2'], 'Shift-clicking a selected card drops it again');
+  api.toggleCard('n1', shift());
+
+  // pin toward the shared state, and back
+  await api.bulkPin();
+  ok(['n1', 'n2'].every(id => api.items.find(i => i.id === id).pinned), 'Pin pins every selected card');
+  ok(el('bulk-bar').innerHTML.includes('Unpin'), '...and the bar now offers Unpin');
+  await api.bulkPin();
+  ok(['n1', 'n2'].every(id => !api.items.find(i => i.id === id).pinned), 'Unpin clears them all again');
+
+  // the tag picker completes a partial tag onto all, then removes it from all
+  api.items.find(i => i.id === 'n1').tags = ['Shared'];
+  api.openBulkTagPicker();
+  const overlay = sandbox.document.__created.find(elc => elc.innerHTML.includes('bt-on'));
+  ok(!!overlay && overlay.innerHTML.includes('tag-editor'), 'the bulk tag picker wears the tag pop-up chassis');
+  await api.toggleBulkTag('Shared');
+  ok(['n1', 'n2'].every(id => (api.items.find(i => i.id === id).tags || []).includes('Shared')),
+     'a tag on only some selected cards is completed onto all of them');
+  await api.toggleBulkTag('Shared');
+  ok(['n1', 'n2'].every(id => !(api.items.find(i => i.id === id).tags || []).includes('Shared')),
+     'a tag on every selected card is removed from all of them');
+  api.closeBulkTagPicker();
+
+  // archive consumes the selection (the cards leave the scope)
+  await api.bulkArchive();
+  ok(['n1', 'n2'].every(id => api.items.find(i => i.id === id).archived), 'Archive archives every selected card');
+  eq(api.bulkIds, [], '...and puts the selection away');
+
+  // delete respects the confirm
+  api.toggleCard('p1', shift());
+  sandbox.confirm = () => false;
+  await api.bulkDelete();
+  ok(api.items.some(i => i.id === 'p1'), 'a refused confirm deletes nothing');
+  sandbox.confirm = () => true;
+  await api.bulkDelete();
+  ok(!api.items.some(i => i.id === 'p1'), 'a confirmed Delete removes every selected card');
+
+  // Select mode: plain clicks select; clearing puts mode and selection away together
+  api.toggleBulkMode();
+  api.toggleCard('n1', { target: { closest: () => null }, stopPropagation(){} });
+  eq(api.bulkIds, ['n1'], 'in Select mode a plain click selects');
+  api.bulkClear();
+  eq([api.bulkIds.length, api.bulkMode], [0, false], 'clearing puts selection and mode away');
+
+  const src = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
+  ok(src.includes("code==='KeyM' && !readOnly"), 'M toggles Select mode (not read-only)');
+  ok(src.includes('bulkMode || _bulkIds.size'), 'Esc clears the bulk selection before the search');
+  // Shift-click must not ALSO paint a text selection across the app: the browser starts that at
+  // mousedown, so a card-scoped mousedown guard suppresses it there (the harness registers no
+  // listeners, so this is asserted in the source).
+  ok(/mousedown[\s\S]{0,200}e\.shiftKey && !readOnly[\s\S]{0,100}closest\('\.card'\)[\s\S]{0,40}preventDefault/.test(src),
+     'shift-mousedown on a card suppresses the native text-selection');
 }
 
 // The copy-genes icon (⧉). On an expanded card it trails the last gene inside the list, always

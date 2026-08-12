@@ -233,6 +233,11 @@ a { color: inherit; }
 .tag-edit:hover { opacity: 1; background: var(--bg3); }
 .tag-editor-overlay { position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; padding: 1rem; }
 .tag-editor { display: flex; flex-direction: column; width: 100%; max-width: 420px; max-height: 82vh; padding: 1rem; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--rl); box-shadow: 0 8px 40px rgba(0,0,0,0.18); }
+/* Bulk selection: a blue ring (the pinned ring's technique, blue instead of accent so the two
+   read apart) and the floating action bar that appears while anything is selected. */
+.card.bulk-sel { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(91,155,213,0.9); }
+.bulk-bar { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 95; display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--rl); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+.bulk-count { font-family: var(--mono); font-size: 11px; color: var(--text2); white-space: nowrap; }
 .te-head { font-size: 14px; font-weight: 600; }
 .te-label { display: flex; justify-content: space-between; align-items: baseline; margin: 10px 0 4px; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
 .te-hint { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text3); }
@@ -795,11 +800,13 @@ a { color: inherit; }
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
         </div>
+        <div class="seg"><span class="seg-opt" id="bulk-btn" onclick="toggleBulkMode()" title="Select cards for bulk pin / archive / tag / delete — taps select while on. Shift-click always selects. (M)">Select</span></div>
         <!-- Connections. Always on screen, so it can never narrow the list from behind the ☰.
              Populated by renderFilters() only when connection cards exist. -->
         <div class="seg" id="conn-seg"></div>
       </div>
       <div id="link-banner"></div>
+      <div class="bulk-bar" id="bulk-bar" style="display:none"></div>
       <div id="item-list" class="hide-meta"></div>
       <!-- Siblings of #item-list rather than content inside it, so neither panel has to fight
            renderList()'s column distribution and progressive-insert streaming. -->
@@ -1949,7 +1956,7 @@ function renderCard(item, forceExpand, eagerBody) {
     <span class="qicon pin-icon${item.pinned?' active':''}" title="${item.pinned?'Unpin':'Pin to top'}" onclick="togglePin(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>
     <span class="qicon ref-icon" title="Copy card link" onclick="copyCardRef(event,'${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
   </div>` : '';
-  return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${deadlineUrgent}${lm}${item.id===activeViewId?' view-active':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" oncontextmenu="cardContextMenu(event,'${item.id}')" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
+  return `<div class="card${expChrome?' expanded':''}${item.pinned?' pinned':''}${isOverdue?' overdue':''}${isDueToday?' due-today':''}${isDueSoon?' due-soon':''}${deadlineUrgent}${lm}${item.id===activeViewId?' view-active':''}${_bulkIds.has(item.id)?' bulk-sel':''}" data-type="${item.type}" data-id="${item.id}" onclick="toggleCard('${item.id}',event)" oncontextmenu="cardContextMenu(event,'${item.id}')" ondragover="cardDragOver(event)" ondragleave="cardDragLeave(event)" ondrop="cardDrop(event,'${item.id}')">
   ${quick}
   <div class="card-top">
     ${typeLabel}
@@ -3896,6 +3903,140 @@ function closeTagEditor() {
   _tagEditorId = null;
   computeSortTags(); renderFilters(); renderList();   // refresh sidebar tag counts and the card
 }
+
+// --- Bulk actions -----------------------------------------------------------
+// Select several cards, then pin/archive/tag/delete them all at once. Two ways in: Shift-click
+// any card (desktop), or Select mode (the control-bar button, or M) where plain clicks/taps
+// select — the touch path. Selected cards wear a blue ring; a floating bar appears while
+// anything is selected. Every write goes through the per-card save path, so on the GitHub
+// backend a bulk edit coalesces into one commit like any other burst.
+let bulkMode = false;
+let _bulkIds = new Set();
+function bulkSelected(){ return items.filter(i => _bulkIds.has(i.id)); }
+function toggleBulkMode(){
+  bulkMode = !bulkMode;
+  if (!bulkMode) _bulkIds = new Set();   // leaving the mode puts the selection away too
+  bulkRender();
+  renderList();
+}
+function bulkToggle(id){
+  if (readOnly || SPECIAL_IDS.has(id)) return;
+  if (_bulkIds.has(id)) _bulkIds.delete(id); else _bulkIds.add(id);
+  if (!updateCardInPlace(id)) renderList();
+  bulkRender();
+}
+function bulkClear(){
+  const had = bulkMode || _bulkIds.size > 0;
+  bulkMode = false; _bulkIds = new Set();
+  if (had) { bulkRender(); renderList(); }
+  return had;
+}
+function bulkRender(){
+  const btn = document.getElementById('bulk-btn');
+  if (btn && btn.classList) btn.classList.toggle('active', bulkMode);
+  const bar = document.getElementById('bulk-bar');
+  if (!bar) return;
+  const sel = bulkSelected();
+  if (!sel.length) { bar.style.display = 'none'; bar.innerHTML = ''; return; }
+  const allPinned = sel.every(i => i.pinned), allArchived = sel.every(i => i.archived);
+  bar.style.display = '';
+  bar.innerHTML = `
+    <span class="bulk-count">${sel.length} selected</span>
+    <button class="btn btn-sm" onclick="bulkPin()">${allPinned ? 'Unpin' : 'Pin'}</button>
+    <button class="btn btn-sm" onclick="bulkArchive()">${allArchived ? 'Unarchive' : 'Archive'}</button>
+    <button class="btn btn-sm" onclick="openBulkTagPicker()">Tag…</button>
+    <button class="btn btn-sm btn-danger" onclick="bulkDelete()">Delete</button>
+    <button class="btn btn-sm" onclick="bulkClear()" title="Clear selection (Esc)">✕</button>`;
+}
+// Pin/Archive act toward the shared target state: if every selected card already has it, the
+// button reads (and does) the reverse — so bulk-unarchiving from the Archived scope just works.
+async function bulkPin(){
+  const sel = bulkSelected(); if (!sel.length) return;
+  const target = !sel.every(i => i.pinned);
+  for (const it of sel) if (!!it.pinned !== target) { it.pinned = target; await saveEntryToFile(it); }
+  renderList(); bulkRender();
+  showToast(`${target ? 'Pinned' : 'Unpinned'} ${sel.length}`);
+}
+async function bulkArchive(){
+  const sel = bulkSelected(); if (!sel.length) return;
+  const target = !sel.every(i => i.archived);
+  for (const it of sel) if (!!it.archived !== target) { it.archived = target; it.synced = false; await saveEntryToFile(it); }
+  // Same escape hatch as toggleArchived: un-archiving the last archived card leaves the scope.
+  if (!target && archiveFilter === 'archived' && !items.some(i => i.archived)) archiveFilter = 'active';
+  _bulkIds = new Set();   // the cards just left this scope; a stale ring would linger unseen
+  renderFilters(); renderList(); bulkRender();
+  showToast(`${target ? 'Archived' : 'Unarchived'} ${sel.length}`);
+}
+async function bulkDelete(){
+  const sel = bulkSelected(); if (!sel.length) return;
+  if (!confirm(`Delete ${sel.length} card${sel.length === 1 ? '' : 's'}?`)) return;
+  const ids = new Set(sel.map(i => i.id));
+  items = items.filter(i => !ids.has(i.id));
+  if (ids.has(expandedId)) expandedId = null;
+  for (const id of ids) await deleteEntryFile(id);
+  _bulkIds = new Set();
+  renderFilters(); renderList(); bulkRender();
+  showToast(`Deleted ${ids.size}`);
+}
+// The tag pop-up, bulk flavor: "on every selected card" chips remove the tag from all of them;
+// "available" chips add it to all (a tag on only SOME selected cards counts as available —
+// adding it completes the set).
+function openBulkTagPicker(){
+  if (readOnly || !_bulkIds.size) return;
+  _tagUniverse = [...new Set(items.flatMap(i => i.tags || []))].sort((a, b) => a.localeCompare(b));
+  const overlay = document.createElement('div');
+  overlay.className = 'tag-editor-overlay bulk-tag-overlay';
+  overlay.innerHTML = `
+    <div class="tag-editor">
+      <div class="te-head">Tags — <span id="bt-count"></span></div>
+      <div class="te-label"><span>On every selected card</span><span class="te-hint">tap to remove from all</span></div>
+      <div class="te-box" id="bt-on"></div>
+      <div class="te-label"><span>Available</span><span class="te-hint">tap to add to all</span></div>
+      <div class="te-box" id="bt-off"></div>
+      <div class="te-actions"><button class="btn btn-sm btn-primary" id="bt-done">Done</button></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', ev => {
+    const chip = ev.target.closest('.te-box .tag');
+    if (chip) { toggleBulkTag(chip.dataset.tag); return; }
+    if (ev.target === overlay || ev.target.id === 'bt-done') closeBulkTagPicker();
+  });
+  document.addEventListener('keydown', bulkTagKey, true);
+  renderBulkTagPicker();
+}
+// Capture phase, like tagEditorKey: the app's single-letter shortcuts must not fire behind it.
+function bulkTagKey(ev){
+  if (ev.key === 'Escape') { ev.preventDefault(); closeBulkTagPicker(); }
+  ev.stopPropagation();
+}
+function renderBulkTagPicker(){
+  const sel = bulkSelected();
+  if (!sel.length) return closeBulkTagPicker();
+  const cnt = document.getElementById('bt-count');
+  if (cnt) cnt.textContent = `${sel.length} card${sel.length === 1 ? '' : 's'}`;
+  const on = _tagUniverse.filter(t => sel.every(i => (i.tags || []).includes(t)));
+  const onSet = new Set(on);
+  const off = _tagUniverse.filter(t => !onSet.has(t));
+  const chips = list => list.map(t => `<span class="tag" data-tag="${esc(t)}">${esc(t)}</span>`).join('');
+  document.getElementById('bt-on').innerHTML  = on.length  ? chips(on)  : '<span class="te-empty">no shared tags</span>';
+  document.getElementById('bt-off').innerHTML = off.length ? chips(off) : '<span class="te-empty">every tag is on every card</span>';
+}
+async function toggleBulkTag(tag){
+  const sel = bulkSelected(); if (!sel.length) return;
+  const onAll = sel.every(i => (i.tags || []).includes(tag));
+  for (const it of sel) {
+    if (!it.tags) it.tags = [];
+    const has = it.tags.includes(tag);
+    if (onAll && has) { it.tags.splice(it.tags.indexOf(tag), 1); await saveEntryToFile(it); }
+    else if (!onAll && !has) { it.tags.push(tag); await saveEntryToFile(it); }
+  }
+  renderBulkTagPicker();
+}
+function closeBulkTagPicker(){
+  document.removeEventListener('keydown', bulkTagKey, true);
+  document.querySelector('.bulk-tag-overlay')?.remove();
+  computeSortTags(); renderFilters(); renderList();
+}
 // ============================================================================
 // Genes view (M1: offline) — a gene-centric map. Nodes are GENES from the
 // interactions.json sidecar; edges are gene-gene interactions from INDRA. Where
@@ -5758,6 +5899,15 @@ function toggleCard(id,e){
     insertCardRef(id);
     return;
   }
+  // Bulk selection: Shift-click anywhere, or any plain click while Select mode (M) is on.
+  if(!readOnly && e && (e.shiftKey || bulkMode) && !e.metaKey && !e.ctrlKey && items.find(i=>i.id===id)){
+    e.stopPropagation && e.stopPropagation();
+    // The mousedown guard below stops shift-click from extending the text selection; drop any
+    // that formed anyway (a word double-clicked earlier, say) — this click means the CARD.
+    if (e.shiftKey && typeof getSelection === 'function') { const s = getSelection(); if (s && s.removeAllRanges) s.removeAllRanges(); }
+    bulkToggle(id);
+    return;
+  }
   const _it = items.find(i=>i.id===id);
   if (_it && _it.type==='view') { if (activeViewId===id) exitView(); else applyView(_it); return; }
   const prev = expandedId;
@@ -6225,6 +6375,8 @@ function keyHelpHtml(){
       ${row('T','Timeline')}
       ${row('V','Card detail (Title · Tags · Body)')}
       ${row('H','Highlight-genes panel')}
+      ${row('M','Select mode — bulk pin / archive / tag / delete')}
+      ${row('⇧ click','Select a card for bulk actions')}
       ${row('Esc','Close / clear, step by step')}
       ${row('?','This cheat-sheet')}
     </table></div>
@@ -6266,6 +6418,13 @@ function keyHelpKey(ev){
   if (ev.key === 'Escape' || ev.key === '?') { ev.preventDefault(); closeKeyHelp(); }
   ev.stopPropagation();
 }
+// Shift-click on a card means "select it for bulk actions" — but the browser's default for
+// shift-click is to EXTEND the text selection from wherever the caret last was, painting text
+// across the app. That behavior starts at mousedown, before any click handler runs, so mousedown
+// is where it has to be stopped. Scoped to cards: shift-selection of text elsewhere still works.
+document.addEventListener('mousedown', e => {
+  if (e.shiftKey && !readOnly && e.target && e.target.closest && e.target.closest('.card')) e.preventDefault();
+});
 document.addEventListener('keydown', async e=>{
   if((e.metaKey||e.ctrlKey)&&e.key==='v'){
     const active = document.activeElement;
@@ -6299,6 +6458,7 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyT'){ e.preventDefault(); setView('timeline'); return; }
       if(code==='KeyV'){ e.preventDefault(); togglePreviews(); return; }
       if(code==='KeyH'){ e.preventDefault(); toggleHighlightInput(); return; }
+      if(code==='KeyM' && !readOnly){ e.preventDefault(); toggleBulkMode(); return; }
       // E toggles simple edges — the first view-scoped key: only meaningful (and only bound) in Genes.
       if(code==='KeyE' && mainView==='genes'){ e.preventDefault(); setGeSimpleEdges(!geSimpleEdges); return; }
       if(code==='KeyP' && mainView==='genes'){ e.preventDefault(); setGeCardPanel(!geCardPanel); return; }
@@ -6346,6 +6506,9 @@ document.addEventListener('keydown', async e=>{
     e.preventDefault();
     if(document.getElementById('add-form').style.display!=='none'){
       cancelEdit();
+    } else if(bulkMode || _bulkIds.size){
+      // The most transient state first: put the bulk selection (and Select mode) away.
+      bulkClear();
     } else if(mainView==='genes' && highlightInputGenes.size){
       // The most local state first: in the Genes view an Esc drops the highlight set
       // (the keyboard twin of tapping empty canvas) before touching the search.

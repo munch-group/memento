@@ -8,6 +8,20 @@ A single-file browser app for managing a local JSON knowledge base with Claude m
 2. Click **Connect folder** and select your `knowledge-base/` directory (entries are stored as individual files in `entries/`).
 3. The app remembers your file handle between sessions via IndexedDB, so next time it will reconnect automatically.
 
+## Bulk actions
+
+Select several cards and act on all of them at once:
+
+- **Shift-click** any card to select it (desktop), or turn on **Select** in the control bar
+  (also the `M` key) so plain clicks/taps select — the touch path. Selected cards wear a blue
+  ring.
+- A floating bar appears while anything is selected: **Pin / Archive / Tag… / Delete**, plus
+  the count. Pin and Archive act toward the shared state — if every selected card is already
+  pinned, the button reads Unpin (so bulk-unarchiving from the Archived scope just works).
+- **Tag…** opens the tag pop-up in bulk flavor: chips on *every* selected card remove on tap;
+  available chips add to all.
+- **Delete** confirms once with the count. **Esc** puts the selection (and Select mode) away.
+
 ## Desktop app (macOS)
 
 memento can run as its own standalone app — a chromeless window with its own Dock icon —

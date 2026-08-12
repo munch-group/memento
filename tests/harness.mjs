@@ -234,6 +234,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get geCardPanel(){ return geCardPanel; },
       get geZoom(){ return _geZoom; }, get gePan(){ return _gePan; },
       set geSpacing(v){ geSpacing = v; },
+      geZoomFit, toggleKeyHelp, keyHelpVisible,
       // Layout cache (persisted settled positions, so a reopen can skip resimulating from scratch)
       geLayoutSig, geApplyLayoutCache, geSaveLayoutCache, GE_CACHE_SETTLE_FRAMES,
       get geBaseSig(){ return _geBaseSig; },

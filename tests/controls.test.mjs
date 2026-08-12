@@ -87,7 +87,7 @@ console.log('\nThe page title names the view you are actually in');
 
   api.setDashboard(false);
   api.renderFilters();
-  eq(el('page-title').innerHTML, `Cards (${api.items.length})`, 'off it, the title counts the entries');
+  eq(el('page-title').innerHTML, `Stack (${api.items.length})`, 'off it, the title counts the entries');
 }
 
 console.log('\nd / c / g / t jump straight to their views (no toggle)');
@@ -156,7 +156,7 @@ console.log('\nThe title announces the archived scope — which is what lets its
   const { api, el } = scopeSetup();
   api.renderFilters();
   // 5 entries, 2 of them archived — the title counts the 3 you can actually see, not all 5.
-  eq(el('page-title').innerHTML, 'Cards (3)', 'the title counts the entries in scope, not the archived ones too');
+  eq(el('page-title').innerHTML, 'Stack (3)', 'the title counts the entries in scope, not the archived ones too');
 
   api.setArchiveFilter('archived');
   api.renderFilters();
@@ -242,7 +242,7 @@ function facetSetup() {
   // "How many cards am I looking at" — the title reports it, whichever scope you're in.
   const count = () => {
     const h = el('page-title').innerHTML;
-    const m = h.match(/Cards \((\d+)\)/) || h.match(/Archived (\d+)/);
+    const m = h.match(/Stack \((\d+)\)/) || h.match(/Archived (\d+)/);
     return m ? Number(m[1]) : null;
   };
   return { api, tags, types, count, el };

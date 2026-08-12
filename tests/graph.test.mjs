@@ -845,11 +845,14 @@ console.log('\nThe gene highlight takes the lines with it, not just the cards');
   eq([opacityOf('lit'), opacityOf('dull')], ['1', '1'], 'and with no highlight, every line is full strength');
 }
 
-// Click a card and it tints, along with everything the web joins it to; click it again and the tint
-// goes. Several can be held at once, which is the point — you pick out neighbourhoods and compare
-// them. The tinted set is derived from the clicked ones on every pass, never stored, which is what
-// makes overlapping neighbourhoods come out right.
-console.log('\nClicking a card tints it and its web neighbourhood, until clicked again');
+// Click a card and it is picked out (.gr-sel), and everything the web joins it to keeps full
+// opacity while the rest of the map dims; click it again and the neighbourhood goes away. Several
+// can be held at once, which is the point — you pick out neighbourhoods and compare them. Only the
+// clicked card wears a tint; the reached neighbours stay plain and are expressed by NOT dimming
+// (the pale gr-tint wash was dropped in the grey-tint redesign). The undimmed set is derived from
+// the clicked ones on every pass, never stored, which is what makes overlapping neighbourhoods
+// come out right.
+console.log('\nClicking a card picks it out and holds its web neighbourhood at full strength, until clicked again');
 {
   const { api, sandbox } = setup([
     card('A',   { tags: ['red'] }),
@@ -864,66 +867,67 @@ console.log('\nClicking a card tints it and its web neighbourhood, until clicked
   api.setView('graph');
   const has = (id, c) => sandbox.document.getElementById('gr-n-' + id).classList.contains(c);
   const ids = () => api.grNodes().map(n => n.id);
-  // Either strength: the whole tinted neighbourhood.
-  const tinted = () => ids().filter(id => has(id, 'gr-tint') || has(id, 'gr-sel')).sort();
-  const clicked = () => ids().filter(id => has(id, 'gr-sel')).sort();     // strong — click to remove
-  const reached = () => ids().filter(id => has(id, 'gr-tint')).sort();    // pale — pulled in by the web
+  const clicked = () => ids().filter(id => has(id, 'gr-sel')).sort();   // tinted — click to remove
+  const undimmed = () => ids().filter(id => !has(id, 'gr-dim')).sort(); // the whole neighbourhood
+  const dimmed = () => ids().filter(id => has(id, 'gr-dim')).sort();
 
-  eq(tinted(), [], 'nothing is tinted until something is clicked');
+  eq(clicked(), [], 'nothing is picked out until something is clicked');
+  eq(dimmed(), [], '...and nothing is dimmed either');
   api.grToggleSelect('A');
-  eq(tinted(), ['A', 'mid', 'n1'], 'clicking a card tints it and everything the web joins it to');
-  eq(tinted().includes('n2'), false, '...and nothing further out — it is one hop, not the whole component');
+  eq(undimmed(), ['A', 'mid', 'n1'], 'clicking a card holds it and everything the web joins it to at full strength');
+  eq(undimmed().includes('n2'), false, '...and nothing further out — it is one hop, not the whole component');
 
   // Which of them will answer to another click has to be visible, or you cannot undo what you did.
-  eq(clicked(), ['A'], 'the card you clicked wears the strong tint — it is the one that undoes this');
-  eq(reached(), ['mid', 'n1'], '...and the ones the web reached wear the pale one');
+  eq(clicked(), ['A'], 'only the card you clicked wears the tint — it is the one that undoes this');
+  eq(has('mid', 'gr-tint') || has('n1', 'gr-tint'), false, '...and the reached neighbours stay plain — no pale wash of their own');
 
   api.grToggleSelect('B');
-  eq(tinted(), ['A', 'B', 'mid', 'n1', 'n2'], 'a second click holds both neighbourhoods at once');
-  eq(clicked(), ['A', 'B'], '...with both clicked cards standing out from the five tinted');
+  eq(undimmed(), ['A', 'B', 'mid', 'n1', 'n2'], 'a second click holds both neighbourhoods at once');
+  eq(clicked(), ['A', 'B'], '...with both clicked cards standing out from the five undimmed');
 
   // The case a stored set would get wrong.
   api.grToggleSelect('A');
-  eq(tinted(), ['B', 'mid', 'n2'], 'un-clicking A drops its own, but mid stays — B still reaches it');
+  eq(undimmed(), ['B', 'mid', 'n2'], 'un-clicking A drops its own, but mid stays — B still reaches it');
   api.grToggleSelect('B');
-  eq(tinted(), [], '...and un-clicking the last one clears the lot');
+  eq(dimmed(), [], '...and un-clicking the last one clears the lot');
 
-  // Clicking a card that is only PALE selects it, rather than undoing anything — and it goes strong,
-  // so the two clicks are told apart afterwards.
+  // Clicking a card that is only REACHED selects it, rather than undoing anything — and it goes
+  // tinted, so the two clicks are told apart afterwards.
   api.grToggleSelect('A');
   api.grToggleSelect('n1');
-  eq(api.grSelIds.has('n1'), true, 'clicking a pale neighbour selects it in its own right');
-  eq(clicked(), ['A', 'n1'], '...and it goes strong, so you can see it now answers to a click of its own');
-  eq(tinted(), ['A', 'mid', 'n1'], '...while the neighbourhood itself is unchanged — it was already in A\'s reach');
+  eq(api.grSelIds.has('n1'), true, 'clicking a reached neighbour selects it in its own right');
+  eq(clicked(), ['A', 'n1'], '...and it takes the tint, so you can see it now answers to a click of its own');
+  eq(undimmed(), ['A', 'mid', 'n1'], '...while the neighbourhood itself is unchanged — it was already in A\'s reach');
 
   // It survives a repaint — the classes are re-derived, not remembered by the DOM.
   api.renderList();
-  eq([tinted(), clicked()], [['A', 'mid', 'n1'], ['A', 'n1']], 'and both strengths survive a re-render');
+  eq([undimmed(), clicked()], [['A', 'mid', 'n1'], ['A', 'n1']], 'and both survive a re-render');
 }
 
 // A node's background is the ONLY thing hiding the web that runs beneath it (edges are z-index 1,
-// nodes 2), and these rules replace .gr-node's opaque white rather than layering over it. As washes
-// they let the lines through the very cards they were picking out. This is CSS, so it is asserted as
-// CSS: the fake DOM has no engine to compute a colour with.
-console.log('\nThe click tint is opaque, or the web shows through the cards it picks out');
+// nodes 2), and this rule replaces .gr-node's opaque white rather than layering over it. As a wash
+// it let the lines through the very card the tint had picked out. Grey (--text3), not accent: a
+// click is a transient selection, not a standing property of the card, and orange already means
+// "drawn connection" (.conn). This is CSS, so it is asserted as CSS: the fake DOM has no engine to
+// compute a colour with.
+console.log('\nThe click tint is opaque and grey, or the web shows through the card it picks out');
 {
   const css = HTML.slice(HTML.indexOf('<style'), HTML.indexOf('</style>'));
   const decl = n => ((css.match(new RegExp(`\\.gr-node\\.${n}\\s*\\{([^}]*)\\}`)) || [])[1] || '').trim();
 
-  for (const [n, pct] of [['gr-tint', 14], ['gr-sel', 38]]) {
-    const bg = decl(n);
-    eq(bg.length > 0, true, `.gr-node.${n} sets a background`);
-    eq(/rgba\(|\/\s*0?\.\d/.test(bg), false, `...with no alpha in it — a see-through node is the whole bug`);
-    // Same two colours as the washes they replace: that strength of accent over the canvas behind it.
-    eq(new RegExp(`color-mix\\(in srgb, var\\(--accent\\) ${pct}%, var\\(--bg2\\)\\)`).test(bg), true,
-       `...and it is still ${pct}% accent over the canvas, mixed rather than composited`);
-  }
-  // The tint must keep following the accent rather than freezing a hex beside it. Comments are
-  // stripped first: the flattened values are WRITTEN there on purpose, to say what the mix comes to.
+  const bg = decl('gr-sel');
+  eq(bg.length > 0, true, '.gr-node.gr-sel sets a background');
+  eq(/rgba\(|\/\s*0?\.\d/.test(bg), false, '...with no alpha in it — a see-through node is the whole bug');
+  // Mixed solid over --bg2, the canvas the nodes sit on, so the tint follows --text3 and has no
+  // hex of its own to drift out of step with it.
+  eq(/color-mix\(in srgb, var\(--text3\) 7%, var\(--bg2\)\)/.test(bg), true,
+     '...and it is 7% grey over the canvas, mixed rather than composited');
+  eq(decl('gr-tint'), '', 'the pale gr-tint wash is gone — reached neighbours stay plain, only undimmed');
+  // The tint must keep following the variables rather than freezing a hex beside them. Comments are
+  // stripped first — a flattened value is fine as documentation, never as a live value.
   const live = css.replace(/\/\*[\s\S]*?\*\//g, '');
   eq(/#f5e7df|#edc8b9|#f5e6de|#eec7b9/i.test(live), false,
-     'and no flattened hex is left lying about as a value, to drift out of step with --accent');
-  eq(/#f5e7df/i.test(css), true, '...though the comment still records what the mix comes to, for whoever reads it next');
+     'and no flattened accent hex is left lying about as a value, to drift out of step');
 }
 
 // The map is dense enough that crossing it brushes a dozen cards on the way to the one you want, and

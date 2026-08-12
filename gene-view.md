@@ -136,16 +136,16 @@ haven't written about. With a ghost selected you get two actions:
 
 | Control | Does |
 |---|---|
-| **promote / suppress / modify** | Show/hide the three **mechanistic** natures (all on by default). Unchecking every box hides every mechanistic edge — it does not wrap back around to "all on". |
+| **promote / suppress / modify** | Show/hide the three **mechanistic** natures (also `1`/`2`/`3`; all on by default). Unchecking every box hides every mechanistic edge — it does not wrap back around to "all on". |
 | **conf ≥** slider | Hide interactions below an INDRA belief score (0–1) |
 | **ev ≥** slider | Hide interactions below N independent evidence texts (1–5) |
-| **complexes** | Draw protein-complex (`bind`) edges (off by default). This is the **only** control over complex edges — the nature checkboxes never touch them, so the two can't fight. |
+| **complexes** | Draw protein-complex (`bind`) edges (also `B`; off by default). This is the **only** control over complex edges — the nature checkboxes never touch them, so the two can't fight. |
 | **simple** | Collapse each connected gene pair to a single plain grey undirected line (also `E`). On by default — untick for the full per-nature edges. Shown iff any of the pair's interactions passes the current filters. |
 | **cards** | Split view: a single-column panel of live cards on the right (also `P`). On by default. Highlighted genes → their cards; nothing highlighted → cards for every gene visible on the map. The map re-fits to the narrower canvas. |
-| **↻ Relayout** | Re-pack the *connected-visible* subgraph — visible genes that have a visible edge to another visible gene — and hide the rest, until you change a filter. With no filters active every gene qualifies, so it re-lays the whole map. Expanding, adding, or refreshing a gene while a Relayout focus is active brings the new genes *into* the focus so they show — the focus grows with your exploration rather than hiding what you just surfaced. |
-| **↻ Refresh all** | Bulk-fetch INDRA for every gene in memento and add interactions *between* them — never genes outside memento (see below); press again to cancel |
-| **⭳ Freeze** | Write the current interactions back to `interactions.json` |
-| **＋ Add gene** | Pops up an input; fetch a gene by name and connect it to your memento genes only (see below) |
+| **↻ Relayout** | Re-pack the *connected-visible* subgraph — visible genes that have a visible edge to another visible gene — and hide the rest, until you change a filter (also `L`). With no filters active every gene qualifies, so it re-lays the whole map. Expanding, adding, or refreshing a gene while a Relayout focus is active brings the new genes *into* the focus so they show — the focus grows with your exploration rather than hiding what you just surfaced. |
+| **↻ Refresh all** | Bulk-fetch INDRA for every gene in memento and add interactions *between* them — never genes outside memento (see below); press again to cancel (also `R`) |
+| **⭳ Freeze** | Write the current interactions back to `interactions.json` (also `F`; asks for confirmation first) |
+| **＋ Add gene** | Pops up an input; fetch a gene by name and connect it to your memento genes only (also `A`; see below) |
 
 **Filters hide, they never move nodes.** The map is a map: every gene is always in
 the same place, so a filter you dial in and out returns you exactly where you were.
@@ -185,11 +185,26 @@ Clearing the token drops a spiked-in gene back out — unless it has since becom
 
 ### Mouse & keyboard
 
+Every tools-bar action has a single-letter key, Gmail-style — no modifiers. All of
+them (everything below except `I`) work only while the Genes view is showing; in
+other views the letters keep their global jobs. Press `?` anywhere for the built-in
+cheat-sheet.
+
 | Gesture | Action |
 |---|---|
 | `I` | Open the Genes view |
-| `E` | Toggle simple edges (works only while the Genes view is showing) |
-| `P` | Toggle the card panel (Genes view only) |
+| `E` | Toggle simple edges |
+| `P` | Toggle the card panel |
+| `A` | Open the **＋ Add gene** input (`Enter` fetches, `Esc` closes it) |
+| `X` | Expand the last-clicked gene — the keyboard twin of double-click |
+| `L` | Relayout |
+| `R` | Refresh all (press again to cancel) |
+| `F` | Freeze (asks for confirmation first) |
+| `B` | Toggle complex (`bind`) edges |
+| `1` `2` `3` | Toggle promote / suppress / modify |
+| `Z` | Re-fit the map to the canvas — the way back after a wild pan/zoom, without re-laying anything out |
+| `Esc` | Clear the highlight set (the keyboard twin of clicking empty canvas); pressed again it falls through to the usual cascade — clear the search, then go back |
+| `?` | Keyboard cheat-sheet overlay (any click, `?`, or `Esc` dismisses it) |
 | **Click** a node | Toggle its highlight — the clicked gene *and its neighbours* stay lit while everything else dims. Several genes can be highlighted at once (like the Graph view): each adds its own neighbourhood to what's lit. Click a highlighted gene again to drop it. |
 | **Click** empty canvas | Clear all highlights (un-dim everything) |
 | **Double-click** any node | Expand it live from INDRA — ghosts included, to explore further out |

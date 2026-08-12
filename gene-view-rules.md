@@ -23,7 +23,7 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 
 ## What lights up (highlight)
 
-- The highlight set *is* the **Highlight genes** input (`H`); clicking nodes edits it, typing in it selects — two-way. Hiding the panel mutes the highlight without losing it.
+- The highlight set *is* the **Highlight genes** input (`H`); clicking nodes edits it, typing in it selects — two-way. Hiding the panel mutes the highlight without losing it. `Esc` (or a click on empty canvas) clears the set.
 - Highlighted genes wear a ring; they and their (currently shown) neighbours stay full; everything else dims; only edges touching a highlighted gene stay full.
 - The card panel (**cards**, default): highlighted genes → their cards; nothing highlighted → cards of every visible gene. A highlighted gene's cards show even when the search scopes them out.
 
@@ -47,6 +47,12 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 | **Add … to memento** | Open the create form pre-filled from MyGene — write the card that makes the ghost yours. |
 | **↻ Refresh all** | Fetch INDRA for every real node; add node-to-node edges only, never ghosts. Incremental (cache-skipped), cancellable. |
 | **⭳ Freeze** | Write the live state back to `interactions.json`: baseline genes + this session's adoptions; edges = current node-to-node set, ghost edges dropped. The snapshot catches up to the map. |
+
+## Keys
+
+Single letters, no modifiers, scoped to the Genes view (`?` anywhere shows the cheat-sheet):
+
+`E` simple · `P` cards · `A` add gene · `X` expand selected · `L` relayout · `R` refresh all (again = cancel) · `F` freeze (confirms) · `B` complexes · `1/2/3` promote/suppress/modify · `Z` fit map · `H` highlight panel · `Esc` clear highlights
 
 ## Live vs frozen
 

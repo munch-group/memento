@@ -486,6 +486,16 @@ a { color: inherit; }
 #genes-view.ge-split .ge-cards { display: flex; flex-direction: column; gap: 8px;   /* the Stack's .item-col gap */
   flex: 0 0 min(420px, 45%); overflow-y: auto; }
 .ge-cards-empty, .ge-cards-more { color: var(--text3); font-size: 12px; text-align: center; padding: 6px 0; }
+/* Keyboard cheat-sheet (?): a dismiss-on-any-click overlay listing the single-key shortcuts. */
+.key-help { position: fixed; inset: 0; z-index: 400; background: rgba(20, 20, 19, 0.4); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.key-help-box { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--rl); box-shadow: 0 12px 40px var(--shadow-hover); padding: 18px 24px 20px; max-width: 660px; width: min(92vw, 660px); max-height: 82vh; overflow-y: auto; font-size: 13px; color: var(--text); }
+.key-help-cols { display: flex; gap: 28px; flex-wrap: wrap; }
+.key-help-cols > div { flex: 1 1 240px; min-width: 240px; }
+.key-help h3 { margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); }
+.key-help table { border-collapse: collapse; }
+.key-help td { padding: 2px 10px 2px 0; vertical-align: baseline; white-space: nowrap; }
+.key-help td:last-child { white-space: normal; color: var(--text2); }
+.key-help kbd { display: inline-block; min-width: 16px; text-align: center; padding: 0 5px; border: 1px solid var(--border2); border-bottom-width: 2px; border-radius: 4px; background: var(--bg3); font-family: var(--mono); font-size: 11px; color: var(--text); }
 .ge-nat-lab-promote { color: #27AE60; } .ge-nat-lab-suppress { color: #C0392B; } .ge-nat-lab-modify { color: #2980B9; } .ge-nat-lab-bind { color: #7a7a7a; }
 /* Ghost nodes (M2): genes NOT in memento, surfaced by a live INDRA expansion.
    Hollow, dashed, chromosome-tinted outline — clearly "not yours yet", promotable. */
@@ -4132,21 +4142,21 @@ function renderGenes(){
         ${_geNodes.map(geNodeHtml).join('')}
       </div>
       <div class="gr-tools ge-tools" onpointerdown="event.stopPropagation()">
-        <div class="ge-filter-group" title="Nature of interaction">
+        <div class="ge-filter-group" title="Nature of interaction (1/2/3)">
           ${GE_NAT_KEYS.map(nat =>
-            `<label class="ge-chk ge-nat-lab-${nat}"><input type="checkbox" ${!geNatures||geNatures.has(nat)?'checked':''} onchange="setGeNature('${nat}',this.checked)">${nat}</label>`).join('')}
+            `<label class="ge-chk ge-nat-lab-${nat}"><input type="checkbox" id="ge-nat-${nat}" ${!geNatures||geNatures.has(nat)?'checked':''} onchange="setGeNature('${nat}',this.checked)">${nat}</label>`).join('')}
         </div>
         <div class="gr-slider"><span class="seg-label" title="Minimum INDRA belief score">conf ≥ <span id="ge-belief-val">${geMinBelief.toFixed(2)}</span></span>
           <input type="range" class="gr-range" min="0" max="1" step="0.05" value="${geMinBelief}" oninput="setGeMinBelief(this.value)"></div>
         <div class="gr-slider"><span class="seg-label" title="Minimum independent evidence texts">ev ≥ <span id="ge-ev-val">${geMinEv}</span></span>
           <input type="range" class="gr-range" min="1" max="5" step="1" value="${geMinEv}" oninput="setGeMinEv(this.value)"></div>
-        <label class="ge-chk" title="Protein-complex membership — 88% of edges, off by default"><input type="checkbox" ${geShowComplex?'checked':''} onchange="setGeShowComplex(this.checked)"> complexes</label>
+        <label class="ge-chk" title="Protein-complex membership — 88% of edges, off by default (B)"><input type="checkbox" id="ge-complex-chk" ${geShowComplex?'checked':''} onchange="setGeShowComplex(this.checked)"> complexes</label>
         <label class="ge-chk" title="One plain grey line per connected gene pair — no natures, directions or parallel edges (E)"><input type="checkbox" id="ge-simple-chk" ${geSimpleEdges?'checked':''} onchange="setGeSimpleEdges(this.checked)"> simple</label>
         <label class="ge-chk" title="Split view: live cards for the highlighted genes — or all visible ones (P)"><input type="checkbox" id="ge-cards-chk" ${geCardPanel?'checked':''} onchange="setGeCardPanel(this.checked)"> cards</label>
-        <span class="gr-relayout" onclick="geRelayout()" title="Lay the map out again from scratch">↻ Relayout</span>
-        <span class="gr-relayout" id="ge-refresh" onclick="geRefreshAll()" title="Fetch INDRA for every gene in memento and add the interactions BETWEEN them — never genes outside memento. Isolated genes that interact get connected. Incremental and cached; press again to cancel.">↻ Refresh all</span>
-        <span class="gr-relayout" onclick="geFreeze()" title="Write the current interactions back to interactions.json (folder, or a GitHub commit)">⭳ Freeze</span>
-        <span class="gr-relayout" id="ge-addgene-btn" onclick="geToggleAddGene()" title="Add a gene by name: fetch it from INDRA and connect it to your memento genes only (no external genes are added)">＋ Add gene</span>
+        <span class="gr-relayout" onclick="geRelayout()" title="Lay the map out again from scratch (L)">↻ Relayout</span>
+        <span class="gr-relayout" id="ge-refresh" onclick="geRefreshAll()" title="Fetch INDRA for every gene in memento and add the interactions BETWEEN them — never genes outside memento. Isolated genes that interact get connected. Incremental and cached; press again to cancel. (R)">↻ Refresh all</span>
+        <span class="gr-relayout" onclick="geFreeze()" title="Write the current interactions back to interactions.json (folder, or a GitHub commit) (F)">⭳ Freeze</span>
+        <span class="gr-relayout" id="ge-addgene-btn" onclick="geToggleAddGene()" title="Add a gene by name: fetch it from INDRA and connect it to your memento genes only (no external genes are added) (A)">＋ Add gene</span>
         <input class="ge-addgene-input" id="ge-addgene" type="text" placeholder="gene symbol… ⏎" style="display:none" onkeydown="geAddGeneKey(event)">
       </div>
       <span class="ge-progress" id="ge-progress" style="display:none"></span>
@@ -4581,6 +4591,9 @@ function geFit(cw, ch){
   _geZoom = Math.max(0.15, Math.min(1.6, Math.min(cw / w, ch / h)));
   _gePan = { x: (cw - w * _geZoom) / 2 - (x0 - pad) * _geZoom, y: (ch - h * _geZoom) / 2 - (y0 - pad) * _geZoom };
 }
+// Z: re-fit the whole map to the canvas — the keyboard way back after a wild pan/zoom,
+// without Relayout's re-simulation. Pan/zoom only; no node moves.
+function geZoomFit(){ const { cw, ch } = geCanvasSize(); geFit(cw, ch); geApplyDOM(); }
 
 // --- interaction: pan, wheel-zoom, node drag, click-to-select ---------------
 function geToScene(cx, cy){
@@ -4697,12 +4710,16 @@ function setGeNature(nat, on){
   if (geNatures === null) geNatures = new Set(GE_NAT_KEYS);   // materialise the "all on" default to edit it
   if (on) geNatures.add(nat); else geNatures.delete(nat);
   if (geNatures.size === GE_NAT_KEYS.length) geNatures = null;   // all present == the "all on" sentinel
+  const chk = document.getElementById('ge-nat-' + nat);
+  if (chk) chk.checked = !!on;               // keyboard toggle (1/2/3): keep the toolbar checkbox honest
   _geLayoutIds = null; geApplyFilter();
 }
 function setGeMinBelief(v){ geMinBelief = Math.max(0, Math.min(1, Number(v) || 0)); const el = document.getElementById('ge-belief-val'); if (el) el.textContent = geMinBelief.toFixed(2); _geLayoutIds = null; geApplyFilter(); }
 function setGeMinEv(v){ geMinEv = Math.max(1, Math.round(Number(v) || 1)); const el = document.getElementById('ge-ev-val'); if (el) el.textContent = geMinEv; _geLayoutIds = null; geApplyFilter(); }
 function setGeShowComplex(on){
   geShowComplex = !!on;
+  const cchk = document.getElementById('ge-complex-chk');
+  if (cchk) cchk.checked = geShowComplex;    // keyboard toggle (B): keep the toolbar checkbox honest
   geComputeDrawn();
   const svg = document.getElementById('ge-edges');
   if (svg) svg.innerHTML = geEdgesHtml();     // rebuild just the edge layer; nodes keep their places
@@ -6144,6 +6161,58 @@ async function tryClipImport() {
     return false;
   } catch(err) { console.warn('Clip import failed:', err); return false; }
 }
+// --- Keyboard cheat-sheet (?) ----------------------------------------------
+// Built lazily on first use; any click (or ?, or Esc) dismisses it.
+function keyHelpHtml(){
+  const row = (k, what) => `<tr><td><kbd>${k}</kbd></td><td>${what}</td></tr>`;
+  return `<div class="key-help-box"><div class="key-help-cols">
+    <div><h3>Everywhere</h3><table>
+      ${row('N','New card')}
+      ${row('S','Focus search')}
+      ${row('D','Dashboard')}
+      ${row('C','Cards')}
+      ${row('G','Graph')}
+      ${row('I','Genes')}
+      ${row('T','Timeline')}
+      ${row('V','Card detail (Title · Tags · Body)')}
+      ${row('H','Highlight-genes panel')}
+      ${row('Esc','Close / clear, step by step')}
+      ${row('?','This cheat-sheet')}
+    </table></div>
+    <div><h3>Genes view</h3><table>
+      ${row('E','Simple edges')}
+      ${row('P','Card panel (split)')}
+      ${row('A','Add gene by name')}
+      ${row('X','Expand the selected gene')}
+      ${row('L','Relayout')}
+      ${row('R','Refresh all (again: cancel)')}
+      ${row('F','Freeze to interactions.json')}
+      ${row('B','Complex edges')}
+      ${row('1 2 3','Promote / suppress / modify')}
+      ${row('Z','Fit the map to the canvas')}
+      ${row('Esc','Clear highlights first')}
+    </table></div>
+  </div></div>`;
+}
+function toggleKeyHelp(){
+  let el = document.getElementById('key-help');
+  if (!el){
+    el = document.createElement('div');
+    el.id = 'key-help'; el.className = 'key-help';
+    document.body.appendChild(el);
+  }
+  if (!el.innerHTML){
+    el.innerHTML = keyHelpHtml();
+    el.onclick = () => { el.style.display = 'none'; };
+    el.style.display = '';
+    return;
+  }
+  el.style.display = el.style.display === 'none' ? '' : 'none';
+}
+function keyHelpVisible(){
+  const el = document.getElementById('key-help');
+  return !!(el && el.innerHTML && el.style.display !== 'none');
+}
 document.addEventListener('keydown', async e=>{
   if((e.metaKey||e.ctrlKey)&&e.key==='v'){
     const active = document.activeElement;
@@ -6180,7 +6249,29 @@ document.addEventListener('keydown', async e=>{
       // E toggles simple edges — the first view-scoped key: only meaningful (and only bound) in Genes.
       if(code==='KeyE' && mainView==='genes'){ e.preventDefault(); setGeSimpleEdges(!geSimpleEdges); return; }
       if(code==='KeyP' && mainView==='genes'){ e.preventDefault(); setGeCardPanel(!geCardPanel); return; }
+      // The rest of the Genes-view keys: every tools-bar action gets a letter. Freeze is behind its
+      // usual confirm(), and Refresh-all's press-again-cancels, so a stray key costs nothing.
+      if(code==='KeyA' && mainView==='genes'){ e.preventDefault(); geToggleAddGene(); return; }
+      if(code==='KeyX' && mainView==='genes'){ e.preventDefault(); geActionExpand(); return; }
+      if(code==='KeyL' && mainView==='genes'){ e.preventDefault(); geRelayout(); return; }
+      if(code==='KeyR' && mainView==='genes'){ e.preventDefault(); geRefreshAll(); return; }
+      if(code==='KeyF' && mainView==='genes'){ e.preventDefault(); geFreeze(); return; }
+      if(code==='KeyB' && mainView==='genes'){ e.preventDefault(); setGeShowComplex(!geShowComplex); return; }
+      if(code==='KeyZ' && mainView==='genes'){ e.preventDefault(); geZoomFit(); return; }
+      if((code==='Digit1'||code==='Digit2'||code==='Digit3') && mainView==='genes'){
+        e.preventDefault();
+        const nat = GE_NAT_KEYS[Number(code.slice(5)) - 1];
+        setGeNature(nat, !(!geNatures || geNatures.has(nat)));
+        return;
+      }
     }
+  }
+  // ? needs Shift on most layouts (and lives elsewhere on others), so it can't sit in the
+  // no-modifier block above — match the produced character instead of the physical key.
+  if(e.key==='?' && !e.metaKey && !e.ctrlKey && !e.altKey){
+    const active = document.activeElement;
+    const inField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+    if(!inField && document.getElementById('app-area').style.display!=='none'){ e.preventDefault(); toggleKeyHelp(); return; }
   }
   if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){
     e.preventDefault();
@@ -6191,6 +6282,7 @@ document.addEventListener('keydown', async e=>{
     }
   }
   if(e.key==='Escape'){
+    if(keyHelpVisible()){ e.preventDefault(); toggleKeyHelp(); return; }
     const active = document.activeElement;
     const inField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
     if(inField){
@@ -6201,6 +6293,10 @@ document.addEventListener('keydown', async e=>{
     e.preventDefault();
     if(document.getElementById('add-form').style.display!=='none'){
       cancelEdit();
+    } else if(mainView==='genes' && highlightInputGenes.size){
+      // The most local state first: in the Genes view an Esc drops the highlight set
+      // (the keyboard twin of tapping empty canvas) before touching the search.
+      geClearSelection();
     } else {
       const search = document.getElementById('search-input');
       if(search && search.value){ search.value=''; renderFilters(); renderList(); }

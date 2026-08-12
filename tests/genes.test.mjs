@@ -516,6 +516,45 @@ function testCardPanel() {
   ok(src.includes("code==='KeyP' && mainView==='genes'"), 'KeyP is bound, scoped to the Genes view');
 }
 
+function testKeyboardShortcuts() {
+  console.log('\nkeyboard — every tools-bar action has a key; toggles keep their checkboxes honest');
+  // bindings are asserted in the source (the harness never dispatches keydown)
+  const src = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
+  for (const k of ['KeyA', 'KeyX', 'KeyL', 'KeyR', 'KeyF', 'KeyB', 'KeyZ'])
+    ok(src.includes(`code==='${k}' && mainView==='genes'`), `${k} is bound, scoped to the Genes view`);
+  ok(src.includes("(code==='Digit1'||code==='Digit2'||code==='Digit3') && mainView==='genes'"),
+     '1/2/3 toggle the nature checkboxes, scoped to the Genes view');
+  ok(src.includes("mainView==='genes' && highlightInputGenes.size"),
+     'Esc clears the Genes-view highlight set before falling through to the search');
+  ok(src.includes("e.key==='?'"), '? opens the cheat-sheet (matched on the character, not the physical key)');
+
+  const { api, sandbox } = setup();
+  api.renderGenes();
+  // keyboard toggles keep the toolbar checkboxes honest
+  api.setGeShowComplex(true);
+  eq(sandbox.document.getElementById('ge-complex-chk').checked, true, 'the complexes toggle syncs its checkbox on');
+  api.setGeShowComplex(false);
+  eq(sandbox.document.getElementById('ge-complex-chk').checked, false, '...and off again');
+  api.setGeNature('promote', false);
+  eq(sandbox.document.getElementById('ge-nat-promote').checked, false, 'a nature toggle syncs its checkbox off');
+  api.setGeNature('promote', true);
+  eq(sandbox.document.getElementById('ge-nat-promote').checked, true, '...and on again');
+
+  // Z re-fits pan/zoom without moving any node
+  const pos = JSON.stringify(api.gePos);
+  api.geZoomFit();
+  ok(isFinite(api.geZoom) && api.geZoom > 0, 'geZoomFit lands on a finite zoom');
+  eq(JSON.stringify(api.gePos), pos, '...and moves no node');
+
+  // the cheat-sheet builds once, lists the keys, and toggles
+  api.toggleKeyHelp();
+  const help = sandbox.document.getElementById('key-help');
+  ok(help.innerHTML.includes('<kbd>') && help.innerHTML.includes('Freeze'), 'the cheat-sheet lists the keys');
+  ok(api.keyHelpVisible(), 'first ? shows it');
+  api.toggleKeyHelp();
+  ok(!api.keyHelpVisible(), 'second ? hides it');
+}
+
 function testShownCount() {
   console.log('\ngeShownCount — wired-gene count, before and after build');
   const { api } = setup();
@@ -943,6 +982,7 @@ testEdgeDirection();
 testEdgeFan();
 testSimpleEdges();
 testCardPanel();
+testKeyboardShortcuts();
 testSpikeGenes();
 testSpikePreservesGhosts();
 testCardScope();

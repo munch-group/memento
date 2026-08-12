@@ -225,10 +225,11 @@ console.log('\nThe sidebar Sort menu orders the timeline — it has no sort of i
   api.setSort('tags');
   eq(api.tlRows().map(r => r.id), ['b', 'a', 'c'], '...and reverses, exactly as it does in the card list');
 
-  // Pinned-first is a rule of the card sort, so it must hold here too.
+  // Pinned-first was dropped from the card sort (pinned cards surface atop the dashboard columns
+  // instead), so pinning must not reorder the timeline either — the two sorts stay in step.
   api.items.find(i => i.id === 'c').pinned = true;
   api.setSort('alpha');
-  eq(api.tlRows().map(r => r.id), ['c', 'a', 'b'], 'a pinned entry sorts first here exactly as it does in the list');
+  eq(api.tlRows().map(r => r.id), ['a', 'b', 'c'], 'pinning no longer jumps the queue — here exactly as in the list');
 }
 
 console.log('\nBars: add, rename, remove');

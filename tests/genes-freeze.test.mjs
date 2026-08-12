@@ -80,6 +80,51 @@ function testMergeNodeEdges() {
   ok(!api.geNodes.some(n => n.sym === 'NEWGENE'), 'the off-map gene did NOT become a node');
 }
 
+// The singleton regression: geEnsureMementoNode used to run on BOTH endpoints before the edge was
+// accepted, so an isolated memento gene whose only fetched edges point outside memento (or are
+// complex-only) materialised as an edgeless node. Promotion may only happen for a mechanistic
+// edge that is actually added.
+function testMergeNoSingletons() {
+  console.log('\ngeMergeNodeEdges — a rejected edge never leaves a promoted singleton behind');
+  const { fetchImpl } = mockFetch();
+  const { api } = load({ fetchImpl });
+  api.interactions = {
+    generated: 'x', source: 'x',
+    genes: { STK11: { chrom: '19', cards: ['c1'], groups: [] },
+             MARK1: { chrom: 'X',  cards: ['c1'], groups: [] },
+             ISO1:  { chrom: '1',  cards: ['c2'], groups: [] },    // isolated: no sidecar edge
+             ISO2:  { chrom: '2',  cards: ['c2'], groups: [] } },  // isolated: no sidecar edge
+    members: {}, canon: {},
+    edges: [{ a: 'MARK1', b: 'STK11', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: 'seed1' }],
+    complex_edges: [],
+    bridges: [],
+  };
+  api.renderGenes();
+  eq(api.geNodes.length, 2, 'only the wired pair starts as nodes');
+  eq(api.geIsolated, 2, 'the two edgeless genes are counted isolated');
+
+  // (1) isolated memento gene -> gene OUTSIDE memento: rejected without side effects
+  let added = api.geMergeNodeEdges({ edges: [{ a: 'ISO1', b: 'OUTSIDER', t: 'Activation', belief: 0.7, n: 1, pmid: 'x', complex: false }] });
+  eq(added, 0, 'an edge to a non-memento gene adds nothing');
+  ok(!api.geNodes.some(n => n.sym === 'ISO1'), '...and the isolated memento endpoint was NOT promoted');
+  eq(api.geIsolated, 2, '...and the isolated count is untouched');
+
+  // (2) complex-only edge between two isolated memento genes: complex edges never make a gene a node
+  added = api.geMergeNodeEdges({ edges: [{ a: 'ISO1', b: 'ISO2', t: 'Complex', belief: 0.7, n: 1, pmid: 'x', complex: true }] });
+  eq(added, 0, 'a complex edge between two isolated genes adds nothing');
+  eq(api.geNodes.length, 2, '...and promotes neither');
+
+  // (3) a complex edge between EXISTING nodes still merges (drawable via the complexes toggle)
+  added = api.geMergeNodeEdges({ edges: [{ a: 'MARK1', b: 'STK11', t: 'Complex', belief: 0.7, n: 1, pmid: 'x', complex: true }] });
+  eq(added, 1, 'a complex edge between existing nodes still merges');
+
+  // (4) a mechanistic edge into the map still promotes — the case the docs promise
+  added = api.geMergeNodeEdges({ edges: [{ a: 'ISO1', b: 'STK11', t: 'Activation', belief: 0.7, n: 1, pmid: 'x', complex: false }] });
+  eq(added, 1, 'a mechanistic edge to an existing node is added');
+  ok(api.geNodes.some(n => n.sym === 'ISO1'), '...and ISO1 is now promoted — it has a drawable edge');
+  eq(api.geIsolated, 1, '...and the isolated count drops by one');
+}
+
 async function testRefreshAll() {
   console.log('\ngeRefreshAll — every memento gene fetched once, incremental, edges merged');
   const { api, calls } = setup();
@@ -217,6 +262,7 @@ async function testFreezeIncludesAdoptedGene() {
 async function run() {
   console.log('Genes view (M3 — refresh-all + freeze)');
   testMergeNodeEdges();
+  testMergeNoSingletons();
   await testRefreshAll();
   await testRefreshPromotesIsolated();
   await testRefreshOffline();

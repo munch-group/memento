@@ -546,13 +546,55 @@ function testKeyboardShortcuts() {
   ok(isFinite(api.geZoom) && api.geZoom > 0, 'geZoomFit lands on a finite zoom');
   eq(JSON.stringify(api.gePos), pos, '...and moves no node');
 
-  // the cheat-sheet builds once, lists the keys, and toggles
+  // the cheat-sheet: tag-pop-up chassis, opened by ? or the bottom-left button, closed by a second ?
   api.toggleKeyHelp();
-  const help = sandbox.document.getElementById('key-help');
-  ok(help.innerHTML.includes('<kbd>') && help.innerHTML.includes('Freeze'), 'the cheat-sheet lists the keys');
-  ok(api.keyHelpVisible(), 'first ? shows it');
+  ok(api.keyHelpVisible(), '? opens the cheat-sheet');
+  const overlay = sandbox.document.__created.find(el => el.innerHTML.includes('key-help'));
+  ok(!!overlay, 'it is built lazily, like the tag pop-up');
+  ok(overlay.innerHTML.includes('tag-editor'), '...on the tag pop-up chassis');
+  ok(overlay.innerHTML.includes('<kbd>') && overlay.innerHTML.includes('Save edges') && overlay.innerHTML.includes('Spike in'),
+     'it lists the keys with what they do');
   api.toggleKeyHelp();
-  ok(!api.keyHelpVisible(), 'second ? hides it');
+  ok(!api.keyHelpVisible(), 'a second ? closes it');
+  ok(src.includes('key-help-fab') && src.includes('onclick="toggleKeyHelp()"'), 'the bottom-left ? button opens the same pop-up');
+}
+
+// Z fits what is VISIBLE. geFit used to fit the sim subset (stale after a Relayout focus
+// dissolved) with no regard for hidden nodes — an off-scope outlier could zoom the fit out
+// (or a stale subset zoom it in) until real nodes sat off-canvas.
+function testZoomFit() {
+  console.log('\ngeZoomFit — fits the visible genes, ignores hidden ones, moves no node');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.interactions = {
+    genes: { STK11: { chrom: '19', cards: ['c1'], groups: [] },
+             MARK1: { chrom: 'X',  cards: ['c1'], groups: [] },
+             MARK2: { chrom: 'X',  cards: ['c2'], groups: [] } },
+    edges: [{ a: 'STK11', b: 'MARK1', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: 'p' },
+            { a: 'MARK1', b: 'MARK2', t: 'Activation', belief: 0.9, n: 2, pmid: 'q' }],
+    complex_edges: [],
+  };
+  api.items = [
+    { id: 'c1', type: 'note', title: 'a', tags: ['Drive'], genes: ['STK11', 'MARK1'], source: '', content: 'x', date: '2026-01-01T00:00:00Z' },
+    { id: 'c2', type: 'fact', title: 'b', tags: ['Other'], genes: ['MARK2'], source: '', content: 'y', date: '2026-01-01T00:00:00Z' },
+  ];
+  const search = sandbox.document.getElementById('search-input');
+  search.value = '#Drive';
+  api.renderGenes();   // MARK2's only card is out of scope -> hidden
+
+  // Park the hidden gene far outside the layout: a fit that (wrongly) includes it must zoom out.
+  api.gePos.MARK2.x = 9999; api.gePos.MARK2.y = 9999;
+  const pos = JSON.stringify(api.gePos);
+  api.geZoomFit();
+  eq(JSON.stringify(api.gePos), pos, 'Z moves no node');
+  ok(api.geZoom > 0.5, 'the far-away hidden gene does not drive the zoom');
+  // The harness canvas is the 900x560 fallback; every visible gene must land inside it.
+  const on = sym => {
+    const p = api.gePos[sym];
+    const sx = p.x * api.geZoom + api.gePan.x, sy = p.y * api.geZoom + api.gePan.y;
+    return sx >= 0 && sx <= 900 && sy >= 0 && sy <= 560;
+  };
+  ok(on('STK11') && on('MARK1'), 'both visible genes sit inside the canvas after Z');
+  search.value = '';
 }
 
 function testShownCount() {
@@ -983,6 +1025,7 @@ testEdgeFan();
 testSimpleEdges();
 testCardPanel();
 testKeyboardShortcuts();
+testZoomFit();
 testSpikeGenes();
 testSpikePreservesGhosts();
 testCardScope();

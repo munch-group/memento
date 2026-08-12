@@ -4,7 +4,7 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 
 ## What exists (nodes)
 
-- A gene is a node iff it has ≥1 **mechanistic** edge in the frozen sidecar (`interactions.json`) — or it was brought in live this session (expand, add gene, `*GENE` spike).
+- A gene is a node iff it has ≥1 **mechanistic** edge in the frozen sidecar (`interactions.json`) — or it was brought in live this session (expand, spike-in, `*GENE` spike). 
 - Genes with only complex edges, or none, are **isolated**: counted in the caption, never drawn.
 - The sidecar is a **snapshot** of your cards; the live map can be ahead of it.
 
@@ -43,18 +43,18 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 | Action | Means |
 |---|---|
 | **Expand** (double-click / button) | Fetch this gene's INDRA neighbourhood. Partners in memento gain edges; new partners appear as ghosts (top-evidence capped; press again for the next batch). Cached per gene. |
-| **＋ Add gene** | Fetch a named gene from INDRA and wire it to memento genes **only** — never brings in outsiders. New to memento → off-card node. |
+| **＋ Spike in** | Fetch a named gene from INDRA and wire it to memento genes **only** — never brings in outsiders. New to memento → off-card node. The live cousin of the `*GENE` token, which spikes in genes memento already knows. |
 | **Add … to memento** | Open the create form pre-filled from MyGene — write the card that makes the ghost yours. |
 | **↻ Refresh all** | Fetch INDRA for every real node; add node-to-node edges only, never ghosts. Incremental (cache-skipped), cancellable. |
-| **⭳ Freeze** | Write the live state back to `interactions.json`: baseline genes + this session's adoptions; edges = current node-to-node set, ghost edges dropped. The snapshot catches up to the map. |
+| **⭳ Save edges** | Write the live state back to `interactions.json`: baseline genes + this session's adoptions; edges = current node-to-node set, ghost edges dropped. The snapshot catches up to the map. |
 
 ## Keys
 
-Single letters, no modifiers, scoped to the Genes view (`?` anywhere shows the cheat-sheet):
+Single letters, no modifiers, scoped to the Genes view (`?` — or the bottom-left `?` button — shows the cheat-sheet):
 
-`E` simple · `P` cards · `A` add gene · `X` expand selected · `L` relayout · `R` refresh all (again = cancel) · `F` freeze (confirms) · `B` complexes · `1/2/3` promote/suppress/modify · `Z` fit map · `H` highlight panel · `Esc` clear highlights
+`E` simple · `P` cards · `A` spike in · `X` expand selected · `L` relayout · `R` refresh all (again = cancel) · `F` save edges (confirms) · `B` complexes · `1/2/3` promote/suppress/modify · `Z` fit map · `H` highlight panel · `Esc` clear highlights
 
 ## Live vs frozen
 
 - Expansions, ghosts and added genes live in memory (fetches cached in IndexedDB); a reload keeps only what was frozen.
-- **Freeze** persists edges; a `kb-interactions.py` rebuild re-derives everything from the cards. Both converge: cards are the source of truth for *genes*, INDRA for *edges*.
+- **Save edges** persists edges; a `kb-interactions.py` rebuild re-derives everything from the cards. Both converge: cards are the source of truth for *genes*, INDRA for *edges*. 

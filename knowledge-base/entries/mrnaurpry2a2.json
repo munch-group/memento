@@ -16,15 +16,9 @@
   "schedule": {
     "subtasks": [
       {
-        "id": "smrnbfxjdch0",
-        "title": "Find collaborators and shape project",
-        "start": "2026-08-07",
-        "end": "2026-08-11"
-      },
-      {
         "id": "smrp41fhpgb6",
         "title": "Develop application",
-        "start": "2026-08-13",
+        "start": "2026-08-17",
         "end": "2026-09-01"
       }
     ]

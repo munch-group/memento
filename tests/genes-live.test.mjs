@@ -305,7 +305,8 @@ async function testPromoteFillsContentFromMyGene() {
     if (u.includes('mygene.info')) {
       return { ok: true, status: 200, json: async () => [{
         query: 'MAPT', symbol: 'MAPT', name: 'microtubule associated protein tau',
-        summary: 'Tau promotes microtubule assembly.', alias: ['TAU', 'DDPAC'], genomic_pos: { chr: '17' },
+        summary: 'Tau promotes microtubule assembly.', alias: ['TAU', 'DDPAC'],
+        genomic_pos: { chr: '17', start: 45894382, end: 46028334 },
       }] };
     }
     return { ok: true, status: 200, json: async () => ({}), text: async () => '' };
@@ -319,7 +320,11 @@ async function testPromoteFillsContentFromMyGene() {
   ok(content.includes('Microtubule associated protein tau (MAPT)'), 'content opens with the capitalized name + symbol');
   ok(content.includes('Tau promotes microtubule assembly.'), 'content includes the mygene.info summary');
   ok(content.includes('Aliases: TAU, DDPAC'), 'content lists aliases');
-  ok(content.includes('Chromosome: 17'), 'content lists the chromosome');
+  ok(content.includes('Position: chr17:45,894,382-46,028,334 (hg38)'), 'content lists the hg38 position');
+  ok(content.includes('[GeneCards](https://www.genecards.org/cgi-bin/carddisp.pl?gene=MAPT)'), 'content links the GeneCards page');
+  // A span-less genomic_pos (chromosome known, coordinates not) falls back to the plain line.
+  const bare = api.geFormatGeneInfo('LONE', { name: 'x', genomic_pos: { chr: 'Y' } });
+  ok(bare.includes('Chromosome: Y') && !bare.includes('Position:'), 'without a span, just the chromosome is listed');
 }
 
 async function testPromoteDoesNotClobberTypedContent() {

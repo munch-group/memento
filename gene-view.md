@@ -108,9 +108,9 @@ and sliders (a Complex interaction only counts while **complexes** is on).
 
 > **Filling in direction.** Older sidecars stored edges with the two genes sorted
 > alphabetically, discarding direction, so only edges re-derived since carry a head.
-> To direction every edge, run **Refresh all → Freeze** once: the refresh re-fetches
+> To direction every edge, run **Refresh all → Save edges** once: the refresh re-fetches
 > from INDRA (the cache is versioned, so it re-pulls) and **upgrades** each existing
-> edge's direction in place, and the freeze writes it back. A `kb-interactions.py`
+> edge's direction in place, and the save writes it back. A `kb-interactions.py`
 > rebuild does the same from scratch.
 
 ### Ghost nodes
@@ -123,7 +123,7 @@ haven't written about. With a ghost selected you get two actions:
 - **Expand** it (double-click, or the Expand button) — explore *its* neighbourhood
   further out, just like any node.
 - **Add … to memento** (the second button) — opens memento's card-create form
-  pre-filled with the gene; it becomes a real node on the next freeze/rebuild.
+  pre-filled with the gene; it becomes a real node on the next save/rebuild.
   Offered only while no live thought card documents the gene: if a card already
   exists (written since the last sidecar rebuild, say), there is nothing to add,
   so the ghost offers **Expand** alone — like any real node.
@@ -144,8 +144,8 @@ haven't written about. With a ghost selected you get two actions:
 | **cards** | Split view: a single-column panel of live cards on the right (also `P`). On by default. Highlighted genes → their cards; nothing highlighted → cards for every gene visible on the map. The map re-fits to the narrower canvas. |
 | **↻ Relayout** | Re-pack the *connected-visible* subgraph — visible genes that have a visible edge to another visible gene — and hide the rest, until you change a filter (also `L`). With no filters active every gene qualifies, so it re-lays the whole map. Expanding, adding, or refreshing a gene while a Relayout focus is active brings the new genes *into* the focus so they show — the focus grows with your exploration rather than hiding what you just surfaced. |
 | **↻ Refresh all** | Bulk-fetch INDRA for every gene in memento and add interactions *between* them — never genes outside memento (see below); press again to cancel (also `R`) |
-| **⭳ Freeze** | Write the current interactions back to `interactions.json` (also `F`; asks for confirmation first) |
-| **＋ Add gene** | Pops up an input; fetch a gene by name and connect it to your memento genes only (also `A`; see below) |
+| **⭳ Save edges** | Write the current interactions back to `interactions.json` (also `F`; asks for confirmation first) |
+| **＋ Spike in** | Pops up an input; spike in a gene by name — fetched from INDRA and connected to your memento genes only (also `A`; see below) |
 
 **Filters hide, they never move nodes.** The map is a map: every gene is always in
 the same place, so a filter you dial in and out returns you exactly where you were.
@@ -168,8 +168,8 @@ A `*GENE` token does the opposite of a filter: instead of narrowing to the genes
 matching cards, it **adds one specific gene** to the map without dragging in the
 other genes on the cards it appears on. It resolves a name the same way `@` does
 (exact, or a unique prefix), against the genes memento already knows — it never hits
-the network. Bringing in a gene memento *doesn't* have stays the job of **＋ Add
-gene**.
+the network. Bringing in a gene memento *doesn't* have stays the job of the
+**＋ Spike in** button (below).
 
 - `*MAPT` alone adds MAPT to the full map. If MAPT is isolated (no mechanistic
   edge), it spikes in as a lone node; if it's wired, you also see its edges to the
@@ -187,24 +187,24 @@ Clearing the token drops a spiked-in gene back out — unless it has since becom
 
 Every tools-bar action has a single-letter key, Gmail-style — no modifiers. All of
 them (everything below except `I`) work only while the Genes view is showing; in
-other views the letters keep their global jobs. Press `?` anywhere for the built-in
-cheat-sheet.
+other views the letters keep their global jobs. Press `?` anywhere — or the `?`
+button in the bottom-left corner — for the built-in cheat-sheet.
 
 | Gesture | Action |
 |---|---|
 | `I` | Open the Genes view |
 | `E` | Toggle simple edges |
 | `P` | Toggle the card panel |
-| `A` | Open the **＋ Add gene** input (`Enter` fetches, `Esc` closes it) |
+| `A` | Open the **＋ Spike in** input (`Enter` fetches, `Esc` closes it) |
 | `X` | Expand the last-clicked gene — the keyboard twin of double-click |
 | `L` | Relayout |
 | `R` | Refresh all (press again to cancel) |
-| `F` | Freeze (asks for confirmation first) |
+| `F` | Save edges (asks for confirmation first) |
 | `B` | Toggle complex (`bind`) edges |
 | `1` `2` `3` | Toggle promote / suppress / modify |
-| `Z` | Re-fit the map to the canvas — the way back after a wild pan/zoom, without re-laying anything out |
+| `Z` | Re-fit the map to the canvas — the way back after a wild pan/zoom, without re-laying anything out. Fits the genes currently visible (a search or Relayout focus narrows the fit with it) |
 | `Esc` | Clear the highlight set (the keyboard twin of clicking empty canvas); pressed again it falls through to the usual cascade — clear the search, then go back |
-| `?` | Keyboard cheat-sheet overlay (any click, `?`, or `Esc` dismisses it) |
+| `?` | Keyboard cheat-sheet pop-up, also opened by the `?` button bottom-left (click outside, Done, `?`, or `Esc` closes it) |
 | **Click** a node | Toggle its highlight — the clicked gene *and its neighbours* stay lit while everything else dims. Several genes can be highlighted at once (like the Graph view): each adds its own neighbourhood to what's lit. Click a highlighted gene again to drop it. |
 | **Click** empty canvas | Clear all highlights (un-dim everything) |
 | **Double-click** any node | Expand it live from INDRA — ghosts included, to explore further out |
@@ -283,9 +283,9 @@ pull in more only as you want it.
 
 ---
 
-## Add a gene by name
+## Spike in a gene by name — ＋ Spike in
 
-**＋ Add gene** opens a small input; type a gene symbol and press Enter. It fetches
+**＋ Spike in** opens a small input; type a gene symbol and press Enter. It fetches
 that gene from INDRA and adds **only its interactions with genes already in
 memento** — its edges to genes outside memento (ghosts) are dropped. The gene
 itself appears as an off-card node (dashed) if it isn't in your cards, highlighted
@@ -295,7 +295,7 @@ pulling in X's whole external neighbourhood. If X has no interactions with your
 genes, it says so.
 
 This is the inverse of expanding a node: **expand** surfaces ghosts (X's external
-partners) as candidates; **add gene** deliberately keeps only the connections back
+partners) as candidates; **spike in** deliberately keeps only the connections back
 into memento.
 
 ---
@@ -327,9 +327,9 @@ and evidence sliders filter those back out.
 
 ---
 
-## Freeze — persisting what you found
+## Save edges — persisting what you found
 
-**⭳ Freeze** writes the current interactions back to `interactions.json`, the same
+**⭳ Save edges** writes the current interactions back to `interactions.json`, the same
 structure `kb-interactions.py` produces:
 
 - **`genes`, `members`, `canon`, `bridges` are untouched** — they're derived from
@@ -348,8 +348,8 @@ Where it writes:
 - **iOS / GitHub backend:** commits `interactions.json` through the same machinery
   memento uses for cards.
 
-Freeze asks for confirmation first — it's a deliberate, manual step, so you decide
-what enters your (public) repo and when. Together, **refresh-all + freeze** replace
+Save edges asks for confirmation first — it's a deliberate, manual step, so you decide
+what enters your (public) repo and when. Together, **refresh-all + save-edges** replace
 the old two-tool loop: you explore and persist entirely inside memento, with no
 gene-list shuttling and no need to re-run the Python builder for updates.
 
@@ -388,7 +388,7 @@ correctness and payload size.
 | Under your control | Fixed (not adjustable in the UI) |
 |---|---|
 | **Which gene** to expand (which node you double-click) | The endpoint (`db.indra.bio/…/from_agents`) |
-| **When** to expand, refresh, or freeze | `limit=500` statements per gene |
+| **When** to expand, refresh, or save edges | `limit=500` statements per gene |
 | **Cancelling** a bulk refresh | `ev_limit=1` (evidence texts fetched; the count still comes through in full) |
 | **Which ghosts** to promote to cards | The **HGNC-grounding** requirement |
 | Display **nature** filter (promote/suppress/modify) | The **ghost cap** (top 20 by evidence) |

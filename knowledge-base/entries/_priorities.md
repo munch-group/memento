@@ -1,14 +1,13 @@
 ## Today todo
-- Prepare GT re-exam (**CENSOR**)
+- Shannon status (her results and y-strat-gwas)
 
 ## Week run
-- Lundbeck wrap up / Grove UKbiobank
+- Erik: Response to reviews + New figure 1 [Manuscript](https://docs.google.com/document/d/1GaKJeLyq0ZLxUpiKnbMErn8zJV0CVSaYHeq-cWxYbc8/edit?tab=t.0#heading=h.6p4icvdq6o7p) [Notebook](https://github.com/erikfogh/admixture_baboons/blob/master/review_notebooks/rfmix05_diversity_and_admixture_close.ipynb)
+- Finish course material [[mrmacisv6p1p|Bioinformatics plan]]
 - New [TA plan](https://docs.google.com/spreadsheets/d/1-P4IaAKzO0Wkv8HwAe5CbBQ68a7YqUhdoXF9hlxsIOg/edit?gid=0#gid=0) (Bjarke is done TAing)
-- Erik status: [Manuscript](https://docs.google.com/document/d/1GaKJeLyq0ZLxUpiKnbMErn8zJV0CVSaYHeq-cWxYbc8/edit?tab=t.0#heading=h.6p4icvdq6o7p) [Notebook](https://github.com/erikfogh/admixture_baboons/blob/master/review_notebooks/rfmix05_diversity_and_admixture_close.ipynb) (Google doc and the sims I promissed)
-- Shannon status (her results and y-strat-gwas)
+- Lundbeck wrap up / Grove UKbiobank
 - Funding application overview/plan
 - Review [[mrma9fvk3v68|Phasic plan]]
-- Finish course material [[mrmacisv6p1p|Bioinformatics plan]]
 - Finish Phasic refactor
 
 ## Month tactic

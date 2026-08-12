@@ -2,6 +2,7 @@
 // (Title · Tags · Body). Both used to be dot-toggles whose state you had to decode; the point of
 // the rework is that state is now explicit and every option is one click away.
 import { load } from './harness.mjs';
+import { readFileSync } from 'node:fs';
 
 let pass = 0, fail = 0;
 const eq = (a, b, msg) => {
@@ -56,6 +57,35 @@ console.log('\nThe C key still cycles (must not regress)');
   const seen = [api.previewMode];
   for (let i = 0; i < 3; i++) { api.togglePreviews(); seen.push(api.previewMode); }
   eq(seen, ['minimal', 'compact', 'rendered', 'minimal'], 'minimal -> compact -> rendered -> minimal');
+}
+
+// The copy-genes icon (⧉). On an expanded card it trails the last gene inside the list, always
+// visible. A collapsed card's gene strip is clipped and fade-masked, so there the icon sits AFTER
+// the strip (inside, the mask would swallow it) and is revealed by hovering the card.
+console.log('\nCopy genes: inline on an expanded card, hover-revealed after the strip on a collapsed one');
+{
+  const { api } = setup();
+  const g = note('g1', 'Geneful', { genes: ['MAPT', 'STK11'] });
+  api.items = [g];
+
+  const exp = api.renderCard(g, true);
+  eq(exp.includes('⧉</span></span>'), true, 'expanded: the icon is the last thing inside the gene list');
+  eq(exp.includes('gene-copy-hover'), false, '...and carries no hover class — it is always visible');
+
+  const col = api.renderCard(g, false);
+  eq(col.includes('</span></span><span class="gene-copy gene-copy-hover"'), true,
+     'collapsed: the icon sits after the clipped gene strip, outside the mask');
+  eq(col.includes(`onclick="copyGenes(event,'g1')"`), true, '...and copies the same gene list');
+  eq(api.renderCard(note('g0', 'Geneless'), false).includes('gene-copy'), false,
+     'a card with no genes gets no icon in either mode');
+
+  // The reveal is CSS (the fake DOM computes no styles): hidden but keeping its slot, shown on
+  // .card:hover — opacity, not display, so the strip never reflows under the pointer.
+  const css = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
+  eq(/\.gene-copy-hover \{ opacity: 0; pointer-events: none;/.test(css), true,
+     'the hover variant starts invisible and unclickable');
+  eq(/\.card:hover \.gene-copy-hover \{ opacity: 0\.6; pointer-events: auto; \}/.test(css), true,
+     '...and hovering the card brings it back');
 }
 
 console.log('\nView switch: Dashboard / Cards');

@@ -8,6 +8,31 @@ A single-file browser app for managing a local JSON knowledge base with Claude m
 2. Click **Connect folder** and select your `knowledge-base/` directory (entries are stored as individual files in `entries/`).
 3. The app remembers your file handle between sessions via IndexedDB, so next time it will reconnect automatically.
 
+## Desktop app (macOS)
+
+memento can run as its own standalone app — a chromeless window with its own Dock icon —
+by installing it as a Chrome PWA. Chrome only installs from a secure origin (not `file://`),
+so a launchd agent serves the repo locally:
+
+- `~/Library/LaunchAgents/com.kmt.memento-serve.plist` runs
+  `python3 -m http.server 8765 --bind 127.0.0.1 --directory /Users/kmt/memento` at login
+  (localhost-only; the knowledge base is never exposed to the network). Load it once with
+  `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kmt.memento-serve.plist`.
+- **Install once:** open `http://localhost:8765/memento.html` in Chrome and click the install
+  icon in the address bar (or ⋮ → Save and share → Install page as app). Chrome creates
+  `Memento.app` under `~/Applications/Chrome Apps.localized/` with the icon from
+  `manifest.webmanifest` / `icons/` — pin it to the Dock.
+- `./memento.sh` also launches it (starts the server if launchd isn't running it, opens the
+  installed app, falls back to a plain `--app` window when not yet installed).
+
+**Port 8765 is the app's storage origin** (PAT, folder permission, caches all key on it) —
+never change it once installed. And because `http://localhost:8765` is a different origin
+from `file://`, the first launch starts with empty browser storage: re-enter the GitHub PAT
+(if you use it on desktop), re-connect the knowledge-base folder, and the INDRA/layout caches
+rebuild themselves. The cards and git repo are untouched, and the old `file://` way of opening
+memento keeps working unchanged. Installed PWAs get *persistent* folder permissions in Chrome,
+so the folder re-prompt should appear less often than on `file://`.
+
 ## Card types
 
 Each entry has a type, shown as an icon on the card:

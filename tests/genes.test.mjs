@@ -1006,6 +1006,125 @@ function testIsSetCard() {
   ok(!api.geIsSetCard(justUnder), '99 genes stays under the threshold');
 }
 
+// ---------------------------------------------------------------------------------------------
+// Gene-set highlight picker: a button next to the highlight input lets you pick set cards by
+// name — checking one unions its genes into highlightInputGenes (the same field typing or
+// clicking a node writes to), unchecking removes them. Global (not Genes-view-gated): the
+// highlight set drives Stack/Graph/Genes alike.
+// ---------------------------------------------------------------------------------------------
+const gsFx = (id, genes, tags, extra = {}) =>
+  ({ id, type: 'note', title: extra.title ?? id, tags, genes, source: '', content: 'x', date: '2026-01-01T00:00:00Z', ...extra });
+function geneSetItems(){
+  return [
+    gsFx('t1', ['MAPT', 'FYN'], ['neuro'], { title: 'Tau interactors' }),
+    gsFx('s1', ['MARK1', 'MARK2'], ['gene-set'], { title: 'Gene set: xi_escape' }),
+    gsFx('s2', ['MARK2', 'STK11'], ['gene-set'], { title: 'Gene set: nDEG' }),
+    gsFx('s3', Array.from({ length: 100 }, (_, i) => 'G' + i), [], { title: '' }),   // >=100 fallback, blank title
+    gsFx('s4', ['NGFR'], ['gene-set'], { title: 'NGFR' }),                          // no "Gene set: " prefix
+    gsFx('s5', ['ARCH1'], ['gene-set'], { title: 'Gene set: archived_one', archived: true }),
+  ];
+}
+
+function testGeneSetCardsFilter() {
+  console.log('\ngeneSetCards() — the picker\'s universe');
+  const { api } = load({ fetchImpl: noop });
+  api.items = geneSetItems();
+  eq(api.geneSetCards().map(c => c.id).sort(), ['s1', 's2', 's3', 's4'],
+     'thought card and archived set card excluded; every non-archived set card included');
+}
+
+function testGeneSetLabel() {
+  console.log('\ngeneSetLabel() — chip text');
+  const { api } = load({ fetchImpl: noop });
+  api.items = geneSetItems();
+  const byId = id => api.geneSetLabel(api.items.find(i => i.id === id));
+  eq(byId('s1'), 'xi_escape', 'the literal "Gene set: " prefix is stripped for display');
+  eq(byId('s4'), 'NGFR', 'a title without the prefix is used as-is');
+  eq(byId('s3'), 's3', 'a blank title falls back to the card id, never an empty chip');
+}
+
+function testGeneSetChecked() {
+  console.log('\ngeneSetChecked() — every gene in the set must be highlighted');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.items = geneSetItems();
+  const s1 = api.items.find(i => i.id === 's1');
+  ok(!api.geneSetChecked(s1), 'nothing highlighted yet -> unchecked');
+  sandbox.document.getElementById('highlight-input').value = 'MARK1';
+  api.updateHighlightSet();
+  ok(!api.geneSetChecked(s1), 'only one of two genes highlighted -> still unchecked');
+  sandbox.document.getElementById('highlight-input').value = 'MARK1 MARK2';
+  api.updateHighlightSet();
+  ok(api.geneSetChecked(s1), 'both genes highlighted -> checked');
+}
+
+function testGeneSetToggleUnion() {
+  console.log('\ntoggleGeneSetHighlight — clicking an unchecked chip unions its genes in, from any view');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.items = geneSetItems();
+  api.mainView = 'list';   // proves this is NOT Genes-view-gated
+  sandbox.document.getElementById('highlight-input-wrap').style.display = 'none';   // the real markup's default
+  api.toggleGeneSetHighlight('s1');
+  eq(api.highlightInputGenes, ['MARK1', 'MARK2'], 'MARK1/MARK2 added to highlightInputGenes');
+  ok(api.geneSetChecked(api.items.find(i => i.id === 's1')), 's1 now reads checked');
+  const val = sandbox.document.getElementById('highlight-input').value;
+  ok(/MARK1/.test(val) && /MARK2/.test(val), 'the highlight-input field text is updated via geWriteHighlightInput');
+  eq(sandbox.document.getElementById('highlight-input-wrap').style.display, 'flex', 'the highlight panel is revealed');
+  ok(api.highlightGenes.has('MARK1') && api.highlightGenes.has('MARK2'),
+     'highlightGenes (the combined, all-views set) picks it up via renderList()');
+}
+
+function testGeneSetToggleOverlapSafe() {
+  console.log('\ntoggleGeneSetHighlight — unchecking one set does not remove a gene another checked set still claims');
+  const { api } = load({ fetchImpl: noop });
+  api.items = geneSetItems();   // s1: MARK1,MARK2   s2: MARK2,STK11
+  api.toggleGeneSetHighlight('s1');
+  api.toggleGeneSetHighlight('s2');
+  eq(api.highlightInputGenes, ['MARK1', 'MARK2', 'STK11'], 'both sets highlighted');
+  api.toggleGeneSetHighlight('s1');
+  eq(api.highlightInputGenes, ['MARK2', 'STK11'], 'MARK1 (only in s1) is removed; MARK2 (shared with still-checked s2) survives');
+  ok(api.geneSetChecked(api.items.find(i => i.id === 's2')), 's2 still reads checked');
+}
+
+function testGeneSetToggleManualOverlapLimitation() {
+  console.log('\ntoggleGeneSetHighlight — known limitation: a hand-typed gene coinciding with a set can be swept out');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.items = geneSetItems();
+  sandbox.document.getElementById('highlight-input').value = 'MARK2';   // typed by hand, also in s1
+  api.updateHighlightSet();
+  api.toggleGeneSetHighlight('s1');
+  eq(api.highlightInputGenes, ['MARK1', 'MARK2'], 's1 now fully present -> reads checked');
+  api.toggleGeneSetHighlight('s1');
+  eq(api.highlightInputGenes, [], 'MARK2 is removed too, even though it was typed by hand — accepted limitation');
+}
+
+function testGeneSetPickerChassis() {
+  console.log('\nopenGeneSetPicker / renderGeneSetPicker / closeGeneSetPicker — the modal mechanics');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.items = geneSetItems();
+  ok(!api.geneSetPickerVisible(), 'closed initially');
+  api.openGeneSetPicker();
+  ok(api.geneSetPickerVisible(), 'open() marks it visible');
+  const overlay = sandbox.document.__created.find(el => el.innerHTML.includes('gs-done'));
+  ok(!!overlay && overlay.innerHTML.includes('tag-editor'), 'wears the tag-editor chassis, like the bulk tag picker and cheat-sheet');
+  ok(/te-empty/.test(sandbox.document.getElementById('gs-on').innerHTML), 'nothing highlighted yet -> "Highlighted" bucket shows the empty state');
+  const off = sandbox.document.getElementById('gs-off').innerHTML;
+  ok(/xi_escape[\s\S]*?\(2\)/.test(off) && /NGFR[\s\S]*?\(1\)/.test(off), 'available chips show label + gene count');
+  api.toggleGeneSetHighlight('s1');
+  api.renderGeneSetPicker();
+  ok(/xi_escape[\s\S]*?\(2\)/.test(sandbox.document.getElementById('gs-on').innerHTML), 'toggling moves the chip from Available into Highlighted on re-render');
+  api.closeGeneSetPicker();
+  ok(!api.geneSetPickerVisible(), 'close() clears visibility');
+}
+
+function testGeneSetPickerEmptyState() {
+  console.log('\ngene-set picker — no qualifying cards at all');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.items = [gsFx('t1', ['MAPT'], [])];   // no set cards
+  api.openGeneSetPicker();
+  ok(/no gene-set cards yet/.test(sandbox.document.getElementById('gs-off').innerHTML), 'degrades gracefully');
+  api.closeGeneSetPicker();
+}
+
 console.log('Genes view (M1)');
 testNatureAndChrom();
 testModel();
@@ -1033,5 +1152,13 @@ testRelayoutConnected();
 testExpandUnderRelayoutFocus();
 testEmptyStates();
 testIsSetCard();
+testGeneSetCardsFilter();
+testGeneSetLabel();
+testGeneSetChecked();
+testGeneSetToggleUnion();
+testGeneSetToggleOverlapSafe();
+testGeneSetToggleManualOverlapLimitation();
+testGeneSetPickerChassis();
+testGeneSetPickerEmptyState();
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

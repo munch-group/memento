@@ -209,6 +209,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get grLinkBy(){ return grLinkBy; },
       set grLinkBy(v){ grLinkBy = v; },   // plain set, no rebuild — tests pick the mode they need
       get highlightGenes(){ return highlightGenes; },
+      get highlightInputGenes(){ return [...highlightInputGenes].sort(); },
       get grHome(){ return _grHome; },
       get grPos(){ return _grPos; },
       get grW(){ return _grW; },
@@ -247,7 +248,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       // M2 live expansion
       geExpand, geParseIndra, geStmtAgents, geThin, geGroundChrom, geMergeExpansion,
       gePromoteGhost, geUpdateAction, geActionExpand, geActionAdd, geAddGene, geMergeAddGene, GE_GHOST_CAP,
-      geIsSetCard, geAdoptLiveGene, geFetchGeneInfo, geFormatGeneInfo,
+      geIsSetCard, geAdoptLiveGene, geFetchGeneInfo, geFormatGeneInfo, geLiveDocsU,
+      geneSetCards, geneSetChecked, geneSetLabel, geneSetGenesU, toggleGeneSetHighlight,
+      openGeneSetPicker, renderGeneSetPicker, closeGeneSetPicker, geneSetPickerVisible,
       get geAdopted(){ return _geAdopted; },
       get selectedType(){ return selectedType; },
       get geExpanded(){ return [..._geExpanded].sort(); },

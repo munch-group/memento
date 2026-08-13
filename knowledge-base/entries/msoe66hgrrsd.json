@@ -4,7 +4,14 @@
   "title": "Davide Marnetto - chr17 region",
   "genes": [
     "MAPT",
-    "JUN"
+    "JUN",
+    "DAAM1",
+    "SLC13A3",
+    "GMNC",
+    "PRDM5",
+    "SETD9/MAP3K1",
+    "TSTD3",
+    "EYA4"
   ],
   "tags": [
     "chr17"
@@ -14,7 +21,7 @@
   "archived": false,
   "pinned": false,
   "due": "",
-  "date": "2026-08-11T08:23:45.451Z",
+  "date": "2026-08-13T07:59:23.697Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "chr17"
 }

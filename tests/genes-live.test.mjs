@@ -447,6 +447,96 @@ async function testAdoptDoubleClickGuard() {
   eq(calls.indra, before + 1, 'only one INDRA fetch happened, not two');
 }
 
+// ---------------------------------------------------------------------------------------------
+// The merge paths adopt live-card genes directly: a partner documented on a thought card written
+// since the last sidecar rebuild must arrive as a REAL node (cards/groups from the live card,
+// recorded as a session adoption), never as a white/dashed ghost. Regression for the RHOA case.
+// ---------------------------------------------------------------------------------------------
+
+async function testExpandAdoptsDocumentedPartner() {
+  console.log('\ngeExpand — a partner documented on a live thought card arrives as a REAL node, not a ghost');
+  const { api } = setup();
+  api.items = [card('c9', ['PRKAA1'], { tags: ['kinases'] })];   // card written since the last sidecar rebuild
+  await api.geExpand('STK11');
+  const n = api.geNodes.find(nn => nn.sym === 'PRKAA1');
+  ok(n && n.ghost === false, 'PRKAA1 (on a live card) is a real node from the start');
+  eq(n.cards, ['c9'], 'cards derived from the live card');
+  eq(n.groups, ['kinases'], 'groups derived from the live card\'s tags');
+  eq(n.cclass, 'auto', 'chromosome still grounded via MyGene (chr5 -> autosome)');
+  ok(api.geAdopted.has('PRKAA1'), 'recorded as a session adoption');
+  const strada = api.geNodes.find(nn => nn.sym === 'STRADA');
+  ok(strada && strada.ghost === true, 'STRADA (on no card) still arrives as a ghost');
+  const frozen = api.geBuildFrozen();
+  ok(!!frozen.genes.PRKAA1, 'Freeze folds the adopted gene in');
+  ok(frozen.edges.some(e => e.a === 'PRKAA1' && e.b === 'STK11'), '...and keeps its edge (both endpoints documented)');
+}
+
+async function testExpandSetOnlyOrArchivedStillGhost() {
+  console.log('\ngeExpand — set-only and archived mentions do NOT adopt (same rule as gePromoteGhost)');
+  { const { api } = setup();
+    api.items = [card('c9', ['PRKAA1'], { tags: ['gene-set'] })];
+    await api.geExpand('STK11');
+    ok(api.geNodes.find(nn => nn.sym === 'PRKAA1').ghost === true, 'a gene-set-only mention still ghosts'); }
+  { const { api } = setup();
+    api.items = [card('c9', ['PRKAA1'], { archived: true })];
+    await api.geExpand('STK11');
+    ok(api.geNodes.find(nn => nn.sym === 'PRKAA1').ghost === true, 'an archived-only mention still ghosts'); }
+}
+
+async function testDocumentedPartnerExemptFromCap() {
+  console.log('\ngeExpand — a documented partner never competes for the ghost cap');
+  const fetchImpl = async (url) => {
+    const u = String(url);
+    if (u.includes('db.indra.bio')) {
+      const K = 23;   // more than the cap; evidence count = i, so GH1 is weakest
+      const stmts = {};
+      for (let i = 1; i <= K; i++) {
+        stmts['h' + i] = { type: 'Phosphorylation', enz: HGNC('STK11', '11389'), sub: HGNC('GH' + i, String(1000 + i)),
+                           belief: 0.9, evidence: Array.from({ length: i }, (_, j) => ({ pmid: 'p' + i + '_' + j })) };
+      }
+      return { ok: true, status: 200, json: async () => ({ statements: stmts }) };
+    }
+    if (u.includes('mygene')) return { ok: true, status: 200, json: async () => [] };
+    return { ok: true, status: 200, json: async () => ({}), text: async () => '' };
+  };
+  const { api } = load({ fetchImpl });
+  api.interactions = sidecar();
+  api.renderGenes();
+  api.items = [card('c9', ['GH1'])];   // the WEAKEST partner is documented
+  await api.geExpand('STK11');
+  const gh1 = api.geNodes.find(n => n.sym === 'GH1');
+  ok(gh1 && gh1.ghost === false, 'GH1 (weakest evidence, but on a card) is in as a real node');
+  eq(api.geNodes.filter(n => n.ghost).length, api.GE_GHOST_CAP, 'the cap still applies to the true ghosts');
+  ok(!api.geNodes.some(n => n.sym === 'GH2'), 'the ghost trimmed by the cap is now GH2, the weakest true ghost');
+}
+
+async function testAddGeneDocumented() {
+  console.log('\ngeAddGene — a named gene already on a live thought card arrives solid, not dashed');
+  const fetchImpl = async (url) => {
+    const u = String(url);
+    if (u.includes('db.indra.bio')) {
+      const stmts = { h1: { type: 'Activation', subj: HGNC('NEWX', '1'), obj: HGNC('HUB', '2'), belief: 0.8, evidence: [{ pmid: 'p1' }] } };
+      return { ok: true, status: 200, json: async () => ({ statements: stmts, evidence_counts: {} }) };
+    }
+    if (u.includes('mygene')) return { ok: true, status: 200, json: async () => [{ query: 'NEWX', symbol: 'NEWX', genomic_pos: { chr: '7' } }] };
+    return { ok: true, status: 200, json: async () => ({}), text: async () => '' };
+  };
+  const { api } = load({ fetchImpl });
+  api.interactions = {
+    generated: 'x', source: 'x', members: {}, canon: {}, bridges: [],
+    genes: { HUB: { chrom: '1', cards: ['c1'], groups: [] } },
+    edges: [], complex_edges: [],
+  };
+  api.renderGenes();
+  api.items = [card('c9', ['NEWX'], { tags: ['leads'] })];
+  await api.geAddGene('newx');
+  const n = api.geNodes.find(nn => nn.sym === 'NEWX');
+  ok(n && n.ghost === false, 'NEWX is a real node — it is on a live card');
+  eq(n.cards, ['c9'], 'cards from the live card');
+  eq(n.groups, ['leads'], 'groups from the live card\'s tags');
+  ok(api.geAdopted.has('NEWX'), 'recorded as a session adoption');
+}
+
 async function run() {
   console.log('Genes view (M2 — live INDRA)');
   testStmtAgents();
@@ -470,6 +560,10 @@ async function run() {
   await testAdoptSkipsArchivedCards();
   await testAdoptOffline();
   await testAdoptDoubleClickGuard();
+  await testExpandAdoptsDocumentedPartner();
+  await testExpandSetOnlyOrArchivedStillGhost();
+  await testDocumentedPartnerExemptFromCap();
+  await testAddGeneDocumented();
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 }

@@ -243,6 +243,7 @@ a { color: inherit; }
 .te-hint { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text3); }
 .te-box { display: flex; flex-wrap: wrap; gap: 5px; align-content: flex-start; min-height: 46px; max-height: 28vh; overflow-y: auto; padding: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); }
 .te-box .tag { font-size: 12px; padding: 5px 9px; }   /* bigger tap targets than the 10px card chips */
+.te-box .tag .gs-count { opacity: 0.55; }   /* gene-set picker: (N) gene count, dimmer than the label */
 .te-empty { padding: 3px 2px; font-size: 11px; font-style: italic; color: var(--text3); }
 .te-actions { display: flex; justify-content: flex-end; margin-top: 12px; }
 .gene { font-family: var(--mono); font-size: 10px; color: var(--text3); background: transparent; padding: 2px 2px; border-radius: 3px; cursor: pointer; }
@@ -465,8 +466,9 @@ a { color: inherit; }
 .ge-dot { display: block; width: calc(var(--r, 12px) / var(--ge-nodescale, 1)); height: calc(var(--r, 12px) / var(--ge-nodescale, 1)); border-radius: 50%; border: calc(1.5px / var(--ge-nodescale, 1)) solid rgba(20,20,19,0.28); box-shadow: 0 1px 2px rgba(20,20,19,0.12); }
 /* Chromosome colours, from the theme palette: violet (the bookmark/view colour) X, orange Y, a
    warm grey for the autosome majority so X and Y pop, blue mitochondrial, white for unknown.
-   Defined once so a real node's fill and a ghost's dashed border always agree. */
-.ge-canvas { --chrom-X: color-mix(in srgb, #6E56CF 70%, white); --chrom-auto: #b9b7ae; --chrom-Y: #E8A020; --chrom-MT: #5B9BD5; --chrom-unknown: #ffffff; }
+   Defined once so a real node's fill, a ghost's dashed border and the cheat-sheet legend's
+   swatches always agree. */
+.ge-canvas, .key-help { --chrom-X: color-mix(in srgb, #6E56CF 70%, white); --chrom-auto: #b9b7ae; --chrom-Y: #E8A020; --chrom-MT: #5B9BD5; --chrom-unknown: #ffffff; }
 .ge-c-X .ge-dot { background: var(--chrom-X); } .ge-c-auto .ge-dot { background: var(--chrom-auto); } .ge-c-Y .ge-dot { background: var(--chrom-Y); } .ge-c-MT .ge-dot { background: var(--chrom-MT); } .ge-c-unknown .ge-dot { background: var(--chrom-unknown); }
 .ge-label { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: calc(2px / var(--ge-zoom, 1));
   font-size: calc(10px / var(--ge-zoom, 1)); font-weight: 500; color: var(--text2); white-space: nowrap; pointer-events: none; max-width: 140px; overflow: hidden; text-overflow: ellipsis;
@@ -499,7 +501,7 @@ a { color: inherit; }
 /* Keyboard cheat-sheet (?): the tag pop-up's chassis (.tag-editor-overlay/.tag-editor) with a
    two-column key table inside. Opened by the bottom-left ? button or the ? key; click outside,
    Done, ?, or Esc closes it. */
-.key-help { max-width: 560px; }
+.key-help { max-width: 780px; }   /* three columns: Everywhere · Genes view · Legend */
 .key-help-cols { display: flex; gap: 24px; flex-wrap: wrap; overflow-y: auto; }
 .key-help-cols > div { flex: 1 1 220px; min-width: 220px; }
 .key-help h3 { margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); }
@@ -510,6 +512,14 @@ a { color: inherit; }
 /* The discreet fixed ? button, bottom-left, that opens it with a click. */
 .key-help-fab { position: fixed; left: 14px; bottom: 14px; z-index: 90; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border2); background: var(--bg2); color: var(--text3); font-family: var(--mono); font-size: 13px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0.75; box-shadow: 0 1px 3px var(--shadow); }
 .key-help-fab:hover { opacity: 1; color: var(--text); }
+/* Legend swatches in the cheat-sheet: mini node dots (chromosome vars above, borders mirroring
+   .ge-dot / .ge-offcard / .ge-sel / .ge-expanded) and inline-SVG edge samples. */
+.kh-dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid rgba(20,20,19,0.28); vertical-align: -2px; }
+.kh-dot.kh-dashed { border-style: dashed; border-color: rgba(20,20,19,0.55); }
+.kh-dot.kh-sel { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(217,119,87,0.4); }
+.kh-dot.kh-halo { box-shadow: 0 0 0 2px rgba(20,20,19,0.10); }
+.kh-line { vertical-align: -1px; }
+.kh-note { margin: 6px 0 0; font-size: 12px; color: var(--text3); }
 .ge-nat-lab-promote { color: #27AE60; } .ge-nat-lab-suppress { color: #C0392B; } .ge-nat-lab-modify { color: #2980B9; } .ge-nat-lab-bind { color: #7a7a7a; }
 /* Ghost nodes (M2): genes NOT in memento, surfaced by a live INDRA expansion.
    Hollow, dashed, chromosome-tinted outline — clearly "not yours yet", promotable. */
@@ -781,7 +791,9 @@ a { color: inherit; }
              lines. The bookmark (shown only while an unsaved search/filter is active) sits between
              the search input and its Clear button. The highlight button sits LAST, outside the
              group, with its input wrap right before it: opening the input (flex:1) expands it
-             leftwards from the button, to the right of everything else on the row. -->
+             leftwards from the button, to the right of everything else on the row. The gene-set
+             picker button rides last of all — it only ever opens a modal, so it never needs to
+             make room for an inline input the way the highlight button does. -->
         <div class="searchbar-actions">
           <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
           <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderFilters();renderList()">Clear</button>
@@ -791,6 +803,7 @@ a { color: inherit; }
           <button class="btn btn-sm" onclick="document.getElementById('highlight-input').value='';updateHighlightSet()">Clear</button>
         </div>
         <button class="highlight-btn" id="highlight-btn" onclick="toggleHighlightInput()" title="Highlight genes without filtering (H)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></button>
+        <button class="highlight-btn" id="gene-set-btn" onclick="openGeneSetPicker()" title="Highlight a curated gene set…"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="9" r="4"/><circle cx="16" cy="9" r="4"/><circle cx="12" cy="16" r="4"/></svg></button>
       </div>
       <button class="key-help-fab" title="Keyboard shortcuts (?)" onclick="toggleKeyHelp()">?</button>
       <div class="control-bar">
@@ -4955,7 +4968,8 @@ const GE_INDRA_URL = 'https://db.indra.bio/statements/from_agents';
 const GE_MYGENE_URL = 'https://mygene.info/v3/query';
 // Cap on new ghost genes added per expansion. A hub like MAPT returns ~100
 // partners, which swamps the map; keep the top N by evidence weight. Edges to
-// genes already on the map are never capped — only brand-new ghosts are trimmed.
+// genes already on the map or documented on cards are never capped — only
+// brand-new ghosts are trimmed.
 const GE_GHOST_CAP = 20;
 
 // Agents of an INDRA statement, HGNC-grounded only, upper-cased. Requiring HGNC
@@ -5079,25 +5093,27 @@ async function geExpand(sym){
     const added = geMergeExpansion(sym, rec);
     _geExpanded.add(sym);
     _geExpandLeft.set(sym, added.capped);   // partners still not shown; the next Expand adds them
-    showToast(`${sym}: +${added.edges} interaction${added.edges === 1 ? '' : 's'}, +${added.ghosts} gene${added.ghosts === 1 ? '' : 's'}`
+    const genes = added.ghosts + added.adopted;
+    showToast(`${sym}: +${added.edges} interaction${added.edges === 1 ? '' : 's'}, +${genes} gene${genes === 1 ? '' : 's'}`
       + (added.capped ? ` — ${added.capped} more, Expand again for the next ${Math.min(added.capped, GE_GHOST_CAP)}`
-                      : (added.ghosts || added.edges ? '' : ' (nothing new)')));
+                      : (genes || added.edges ? '' : ' (nothing new)')));
   } catch(e) {
     showToast('Expansion failed: ' + e.message);
   } finally {
     _geExpanding = false; geUpdateAction();
   }
 }
-// Merge a fetched/cached expansion into the live model. Returns {ghosts, edges}.
+// Merge a fetched/cached expansion into the live model. Returns {ghosts, adopted, edges, capped}.
 function geMergeExpansion(sym, rec){
   const src = _gePos[sym] || { x: _geW / 2, y: _geH / 2 };
-  const added = { ghosts: 0, edges: 0, capped: 0 }, createdU = new Set();
+  const added = { ghosts: 0, adopted: 0, edges: 0, capped: 0 }, createdU = new Set();
+  const live = geLiveDocsU();   // thought-card genes the frozen sidecar doesn't know yet — real nodes, not ghosts
   // Rank brand-new ghost partners by their best evidence and keep only the top
   // GE_GHOST_CAP; edges whose ghost endpoint didn't make the cut are dropped.
   const SU = sym.toUpperCase();
   const ghostBest = new Map();
   for (const e of rec.edges) for (const U of [e.a, e.b]) {
-    if (U === SU || _geByU.has(U) || _geFrozenU.has(U)) continue;   // source / already a node
+    if (U === SU || _geByU.has(U) || _geFrozenU.has(U) || live.has(U)) continue;   // source / already a node / documented
     ghostBest.set(U, Math.max(ghostBest.get(U) || 0, e.n || 0));
   }
   const keptGhosts = new Set([...ghostBest.entries()].sort((a, b) => b[1] - a[1]).slice(0, GE_GHOST_CAP).map(x => x[0]));
@@ -5106,17 +5122,20 @@ function geMergeExpansion(sym, rec){
   const ensure = (U) => {
     if (_geByU.has(U)) return _geByU.get(U);
     const frozen = _geFrozenU.get(U);            // a sidecar gene that was isolated -> real node, not a ghost
-    const meta = frozen ? (interactions.genes[frozen] || {}) : {};
+    const doc = frozen ? null : live.get(U);     // documented on a card newer than the sidecar -> adopt, not a ghost
+    const meta = frozen ? (interactions.genes[frozen] || {}) : (doc || {});
     const canonical = frozen || U;
     const chrom = frozen ? meta.chrom : (rec.chrom[U] || null);
     const n = { sym: canonical, id: geIdSafe(canonical), chrom, cclass: geChromClass(chrom),
-                cards: meta.cards || [], groups: meta.groups || [], deg: 0, r: GE_NODE_R, ghost: !frozen };
+                cards: meta.cards || [], groups: meta.groups || [], deg: 0, r: GE_NODE_R, ghost: !frozen && !doc };
+    // An adoption is exactly what geAdoptLiveGene records: freeze folds it in, later merges know it.
+    if (doc) { _geAdopted.set(canonical, { chrom, cards: n.cards, groups: n.groups }); _geFrozenU.set(U, canonical); added.adopted++; }
     _geNodes.push(n); _geById.set(n.sym, n); _geByU.set(U, n);
     const ang = grHash(U) * Math.PI * 2;
     _gePos[n.sym] = { x: src.x + Math.cos(ang) * 60, y: src.y + Math.sin(ang) * 60, vx: 0, vy: 0 };
     _geHome[n.sym] = { x: _gePos[n.sym].x, y: _gePos[n.sym].y };
     createdU.add(U);
-    if (frozen) _geIsolated = Math.max(0, _geIsolated - 1); else added.ghosts++;
+    if (frozen) _geIsolated = Math.max(0, _geIsolated - 1); else if (!doc) added.ghosts++;
     return n;
   };
   const have = new Map(_geEdges.map(e => [e.a + '|' + e.b + '|' + e.t, e]));
@@ -5155,9 +5174,42 @@ function geIsSetCard(item){
   const toks = (item.genes||[]).map(g => String(g||'').trim()).filter(Boolean);
   return (item.tags||[]).includes(GE_SET_TAG) || toks.length >= GE_SET_CARD_MIN_GENES;
 }
-// Promote a ghost. A ghost only means "not in the loaded sidecar" (_geFrozenU) — the sidecar is a
-// periodically-rebuilt snapshot, not the live source of truth, so a gene mentioned on a card
-// written since the last rebuild still shows as a ghost even though it's genuinely documented.
+// The gene-set highlight picker: every set card, chosen by name, unions/removes its genes in the
+// "Highlight genes" field — a shortcut for what would otherwise be opening the card and copying
+// its gene list by hand. Global (searchbar), not Genes-view-scoped: highlightInputGenes drives
+// Stack/Graph/Genes alike.
+const GE_SET_TITLE_PREFIX = 'Gene set: ';
+// Chip label: kb-import-genesets.py titles its cards "Gene set: <name>", which is verbose for a
+// chip — strip that literal prefix for display only (never mutate item.title). A card without the
+// prefix (an ad-hoc gene-set-tagged card, or a >=100-gene card that was never explicitly named) is
+// shown as-is. Some bulk-import dump cards have no title at all — fall back to the id so the chip
+// is never blank.
+function geneSetLabel(item){
+  const t = String(item.title || '').trim();
+  if (!t) return item.id;
+  return t.startsWith(GE_SET_TITLE_PREFIX) ? t.slice(GE_SET_TITLE_PREFIX.length) : t;
+}
+// A set card's genes, alias-expanded and upper-cased — the same normalisation every other
+// highlight/lookup path uses, so "RLIM/RNF12" contributes both aliases.
+function geneSetGenesU(item){
+  return new Set((item.genes || []).flatMap(g => geneAliasesU(g)));
+}
+// Every card the picker offers: geIsSetCard's rule, archived excluded — the same exclusion
+// geThoughtCards/geLiveDocsU/geRenderCardPanel apply to this same card category.
+function geneSetCards(){
+  return items.filter(i => !i.archived && geIsSetCard(i))
+    .sort((a, b) => geneSetLabel(a).localeCompare(geneSetLabel(b)));
+}
+// A set card's chip reads "checked" when EVERY one of its genes is currently highlighted — derived
+// fresh from items + highlightInputGenes each render, no separate persisted UI state (mirrors
+// renderBulkTagPicker's on-bucket, sel.every(...)).
+function geneSetChecked(item){
+  const genesU = geneSetGenesU(item);
+  return genesU.size > 0 && [...genesU].every(U => highlightInputGenes.has(U));
+}
+// Promote a ghost. A ghost means "not documented": in neither the loaded sidecar (_geFrozenU) nor
+// any live thought card at merge time (geLiveDocsU — the merge paths adopt those as real nodes).
+// The one documented-but-still-ghost case left is a card written AFTER the node appeared, mid-session.
 // Two different cases, two different actions:
 //   - already on a thought card -> nothing to write; pull it in the same way Refresh all does.
 //   - not on any card yet -> this is what the create form is for; open it, pre-filled with basic
@@ -5167,6 +5219,28 @@ function geIsSetCard(item){
 // and the action bar's Add button both apply, so they can never disagree.
 function geThoughtCards(X){
   return items.filter(i => !i.archived && !geIsSetCard(i) && (i.genes || []).some(g => geneAliasesU(g).includes(X)));
+}
+// Upper-cased alias -> {cards, groups} for every gene documented on a live thought card but missing
+// from the loaded sidecar (a card written since the last rebuild). The merge paths consult this so
+// such a gene arrives as a REAL node instead of a ghost, with the same cards/groups derivation as
+// gePromoteGhost's adopt branch (cards from thought cards only, groups from every live mention) and
+// the same documentation rule as geThoughtCards (set-only or archived mentions don't count).
+function geLiveDocsU(){
+  const m = new Map();
+  for (const it of items) {
+    if (it.archived) continue;
+    const set = geIsSetCard(it);
+    for (const g of it.genes || []) for (const U of geneAliasesU(g)) {
+      if (_geFrozenU.has(U)) continue;
+      let rec = m.get(U);
+      if (!rec) m.set(U, rec = { cards: new Set(), groups: new Set() });
+      if (!set) rec.cards.add(it.id);
+      for (const t of it.tags || []) rec.groups.add(t);
+    }
+  }
+  const out = new Map();
+  for (const [U, rec] of m) if (rec.cards.size) out.set(U, { cards: [...rec.cards], groups: [...rec.groups] });
+  return out;
 }
 // The split-view card panel: live cards for the highlighted genes, or for every gene visible on
 // the map when nothing is highlighted. Cards resolve via geThoughtCards() — the same live rule
@@ -5359,9 +5433,9 @@ async function geAddGene(name){
     _geExpanding = false; geUpdateAction();
   }
 }
-// Merge an added gene: ensure a node for X (a memento gene is promoted/solid; a
-// gene not in memento becomes an off-card ghost node), then add ONLY its edges to
-// genes already in memento (geEnsureMementoNode returns null otherwise).
+// Merge an added gene: ensure a node for X (a memento gene — sidecar or live thought card — is
+// promoted/solid; a gene not in memento becomes an off-card ghost node), then add ONLY its edges
+// to genes already in memento (geEnsureMementoNode returns null otherwise).
 function geMergeAddGene(X, rec){
   const before = new Set(_geNodes.map(n => n.sym));
   let xnode = _geByU.get(X);
@@ -5369,8 +5443,11 @@ function geMergeAddGene(X, rec){
     if (_geFrozenU.get(X)) {
       xnode = geEnsureMementoNode(X);                       // X is one of your genes
     } else {
-      const chrom = rec.chrom[X] || null;                   // X is new to memento -> off-card ghost
-      xnode = { sym: X, id: geIdSafe(X), chrom, cclass: geChromClass(chrom), cards: [], groups: [], deg: 0, r: GE_NODE_R, ghost: true };
+      const doc = geLiveDocsU().get(X);                     // on a card newer than the sidecar -> adopt, solid
+      const chrom = rec.chrom[X] || null;                   // otherwise X is new to memento -> off-card ghost
+      xnode = { sym: X, id: geIdSafe(X), chrom, cclass: geChromClass(chrom),
+                cards: doc ? doc.cards : [], groups: doc ? doc.groups : [], deg: 0, r: GE_NODE_R, ghost: !doc };
+      if (doc) { _geAdopted.set(X, { chrom, cards: xnode.cards, groups: xnode.groups }); _geFrozenU.set(X, X); }
       _geNodes.push(xnode); _geById.set(X, xnode); _geByU.set(X, xnode);
       const ang = grHash(X) * Math.PI * 2, R = 0.3 * Math.min(_geW, _geH);
       _gePos[X] = { x: _geW / 2 + Math.cos(ang) * R, y: _geH / 2 + Math.sin(ang) * R, vx: 0, vy: 0 };
@@ -5867,6 +5944,77 @@ function toggleHighlightGene(gene) {
   if (highlightInputGenes.size > 0 && wrap.style.display === 'none') wrap.style.display = 'flex';
   renderList(); // getVisibleItems() recomputes the combined highlightGenes and toggles the bar
 }
+// Toggling a gene-set chip unions its genes in, or — overlap-safe — removes only the genes no
+// OTHER currently-checked set card still claims, so two overlapping highlighted sets don't stomp
+// on each other when one is unchecked. A manually-typed gene that happens to coincide with a set's
+// gene has no separate provenance and can be swept out when that set is unchecked; that is an
+// accepted limitation, not tracked further.
+function toggleGeneSetHighlight(id){
+  const card = items.find(i => i.id === id); if (!card) return;
+  const genesU = geneSetGenesU(card); if (!genesU.size) return;
+  if (geneSetChecked(card)) {
+    const keep = new Set();
+    for (const other of geneSetCards()) {
+      if (other.id === card.id || !geneSetChecked(other)) continue;
+      for (const U of geneSetGenesU(other)) keep.add(U);
+    }
+    for (const U of genesU) if (!keep.has(U)) highlightInputGenes.delete(U);
+  } else {
+    for (const U of genesU) highlightInputGenes.add(U);
+  }
+  geWriteHighlightInput();
+  // A click is a request to see the highlight, so it un-mutes the panel — same idiom as
+  // toggleHighlightGene/geSelect.
+  const wrap = document.getElementById('highlight-input-wrap');
+  if (highlightInputGenes.size > 0 && wrap.style.display === 'none') wrap.style.display = 'flex';
+  renderList();   // getVisibleItems()/renderGenes()/renderGraph() all re-derive highlightGenes
+}
+// The picker's overlay element, or null when closed — same idiom as _keyHelp/keyHelpVisible().
+let _geneSetPicker = null;
+function openGeneSetPicker(){
+  const overlay = document.createElement('div');
+  overlay.className = 'tag-editor-overlay gene-set-overlay';
+  overlay.innerHTML = `
+    <div class="tag-editor">
+      <div class="te-head">Gene sets — <span id="gs-count"></span></div>
+      <div class="te-label"><span>Highlighted</span><span class="te-hint">tap to remove</span></div>
+      <div class="te-box" id="gs-on"></div>
+      <div class="te-label"><span>Available</span><span class="te-hint">tap to highlight</span></div>
+      <div class="te-box" id="gs-off"></div>
+      <div class="te-actions"><button class="btn btn-sm btn-primary" id="gs-done">Done</button></div>
+    </div>`;
+  overlay.addEventListener('click', ev => {
+    const chip = ev.target.closest('.te-box .tag');
+    if (chip) { toggleGeneSetHighlight(chip.dataset.id); renderGeneSetPicker(); return; }
+    if (ev.target === overlay || ev.target.id === 'gs-done') closeGeneSetPicker();
+  });
+  document.addEventListener('keydown', geneSetPickerKey, true);
+  document.body.appendChild(overlay);
+  _geneSetPicker = overlay;
+  renderGeneSetPicker();
+}
+// Capture phase, like bulkTagKey/keyHelpKey: the app's single-letter shortcuts must not fire
+// behind the modal.
+function geneSetPickerKey(ev){
+  if (ev.key === 'Escape') { ev.preventDefault(); closeGeneSetPicker(); }
+  ev.stopPropagation();
+}
+function renderGeneSetPicker(){
+  const all = geneSetCards();
+  const cnt = document.getElementById('gs-count');
+  if (cnt) cnt.textContent = `${all.length} set${all.length === 1 ? '' : 's'}`;
+  const on = all.filter(geneSetChecked), off = all.filter(i => !geneSetChecked(i));
+  const chip = it => `<span class="tag" data-id="${esc(it.id)}">${esc(geneSetLabel(it))} <span class="gs-count">(${geneSetGenesU(it).size})</span></span>`;
+  document.getElementById('gs-on').innerHTML  = on.length  ? on.map(chip).join('')  : '<span class="te-empty">no gene sets highlighted</span>';
+  document.getElementById('gs-off').innerHTML = off.length ? off.map(chip).join('') :
+    (all.length ? '<span class="te-empty">every gene set is highlighted</span>' : '<span class="te-empty">no gene-set cards yet</span>');
+}
+function closeGeneSetPicker(){
+  document.removeEventListener('keydown', geneSetPickerKey, true);
+  if (_geneSetPicker && _geneSetPicker.remove) _geneSetPicker.remove();
+  _geneSetPicker = null;
+}
+function geneSetPickerVisible(){ return !!_geneSetPicker; }
 function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; activeTags.clear(); activeTypes.clear(); syncSearchTextFromFacets(); renderFilters(); renderList(); }
 // Re-render one card in place (expand/collapse) without rebuilding the whole list.
 // Returns false if the card isn't currently in the DOM, so the caller can fall back to renderList().
@@ -6362,8 +6510,16 @@ async function tryClipImport() {
 let _keyHelp = null;
 function keyHelpHtml(){
   const row = (k, what) => `<tr><td><kbd>${k}</kbd></td><td>${what}</td></tr>`;
+  // Legend rows: a swatch (dot or line svg) instead of a <kbd> key in the first cell.
+  const row2 = (swatch, what) => `<tr><td>${swatch}</td><td>${what}</td></tr>`;
+  // Legend swatches. Edge colours/heads mirror .ge-nat-* and geMarkerDefs() — keep them in sync.
+  const dot = (chrom, cls = '') => `<span class="kh-dot${cls}" style="background:var(--chrom-${chrom})"></span>`;
+  const line = (inner) => `<svg class="kh-line" width="30" height="10" viewBox="0 0 30 10">${inner}</svg>`;
+  const arrow = (c) => line(`<line x1="1" y1="5" x2="22" y2="5" stroke="${c}" stroke-width="1.6"></line><path d="M21,1.5 L29,5 L21,8.5 Z" fill="${c}"></path>`);
+  const tbar = (c) => line(`<line x1="1" y1="5" x2="25" y2="5" stroke="${c}" stroke-width="1.6"></line><line x1="27" y1="1.5" x2="27" y2="8.5" stroke="${c}" stroke-width="2.2" stroke-linecap="round"></line>`);
+  const plain = (extra = '') => line(`<line x1="1" y1="5" x2="29" y2="5" stroke="#888" stroke-width="1.6"${extra}></line>`);
   return `<div class="tag-editor key-help">
-    <div class="te-head">Keyboard shortcuts</div>
+    <div class="te-head">Cheat-sheet</div>
     <div class="key-help-cols">
     <div><h3>Everywhere</h3><table>
       ${row('N','New card')}
@@ -6393,6 +6549,25 @@ function keyHelpHtml(){
       ${row('Z','Fit the map to the canvas')}
       ${row('Esc','Clear highlights first')}
     </table></div>
+    <div><h3>Legend — nodes</h3><table>
+      ${row2(dot('X'), 'X-chromosome gene')}
+      ${row2(dot('Y'), 'Y-chromosome gene')}
+      ${row2(dot('auto'), 'Autosomal gene')}
+      ${row2(dot('MT'), 'Mitochondrial gene')}
+      ${row2(dot('unknown'), 'Chromosome unknown')}
+      ${row2(dot('auto'), 'Solid outline — on your cards')}
+      ${row2(dot('auto', ' kh-dashed'), 'Dashed outline, italic name — not on any card (ghost from an expansion, or added by name)')}
+      ${row2(dot('auto', ' kh-sel'), 'Accent ring — selected')}
+      ${row2(dot('auto', ' kh-halo'), 'Grey halo — already expanded')}
+    </table>
+    <h3>Legend — edges</h3><table>
+      ${row2(arrow('#27AE60'), 'Promotes (activation)')}
+      ${row2(tbar('#C0392B'), 'Suppresses (inhibition)')}
+      ${row2(arrow('#2980B9'), 'Modifies (phosphorylation & other PTMs)')}
+      ${row2(plain(), 'Binds — undirected')}
+      ${row2(plain(' stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.65"'), 'Complex co-membership (toggle B)')}
+    </table>
+    <p class="kh-note">Heads point source → target; no head = direction unknown. Simple mode (E) collapses each pair to one grey line.</p></div>
     </div>
     <div class="te-actions"><button class="btn btn-sm btn-primary" id="kh-done">Done</button></div>
   </div>`;

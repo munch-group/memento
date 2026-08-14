@@ -269,6 +269,14 @@ def thin(s, a, b):
     Evidence arrays are dropped here on purpose: they are ~3KB per statement,
     and keeping them is how interaction-store's cache reached 448MB. One PMID
     is enough to open the paper; the rest is re-fetchable on demand.
+
+    `n` prefers `_n` -- the TRUE evidence count fetch_indra() stashed from the
+    response's evidence_counts -- over len(evidence): live fetches ask for
+    ev_limit=1 to keep the payload small, so their evidence array is truncated
+    to (at most) one entry and len() of it is not a count, just a boolean. The
+    local SQLite bootstrap cache carries full (untruncated) evidence arrays
+    with no _n key, so len(ev) is already the right number there -- same as
+    the browser's geThin()/geParseIndra() pattern.
     """
     ev = s.get("evidence") or []
     pmid = next((e.get("pmid") for e in ev if e.get("pmid")), None)
@@ -276,7 +284,7 @@ def thin(s, a, b):
         "a": a, "b": b,
         "t": s.get("type"),
         "belief": round(float(s.get("belief") or 0), 3),
-        "n": len(ev),
+        "n": s.get("_n", len(ev)),
         "pmid": pmid,
     }
 
@@ -305,15 +313,32 @@ def from_local_cache(symbols, db_path=INDRA_CACHE):
     return out
 
 
-def fetch_indra(symbol, ev_limit=1, limit=500):
+def fetch_indra(symbol, ev_limit=1, limit=500, tries=3):
     q = urllib.parse.urlencode({
         "agent0": symbol, "format": "json",
         "limit": limit, "ev_limit": ev_limit,
     })
-    with urllib.request.urlopen(f"{INDRA}?{q}", timeout=90) as r:
-        d = json.loads(r.read())
+    d = None
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(f"{INDRA}?{q}", timeout=90) as r:
+                d = json.loads(r.read())
+            break
+        except Exception as exc:
+            if i == tries - 1:
+                raise
+            log(f"    {symbol}: retry {i+1}/{tries} ({exc.__class__.__name__})")
+            time.sleep(2 ** i)
     stmts = d.get("statements") or {}
-    return list(stmts.values()), d.get("total_evidence", 0)
+    # evidence_counts maps statement-hash -> TRUE evidence total, separate from the
+    # (ev_limit-truncated) evidence array on the statement itself. Stash it on the
+    # statement as _n so thin() can use the real count instead of len(evidence).
+    counts = d.get("evidence_counts") or {}
+    out = []
+    for h, s in stmts.items():
+        s["_n"] = counts.get(h) or len(s.get("evidence") or []) or 1
+        out.append(s)
+    return out, d.get("total_evidence", 0)
 
 
 def pmid_counts(symbols, batch=900):

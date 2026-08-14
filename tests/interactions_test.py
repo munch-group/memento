@@ -115,6 +115,12 @@ def test_thin():
     eq(kbi.thin({"type": "Activation", "evidence": []}, "A", "B")["pmid"], None,
        "no evidence yields no pmid")
     eq(kbi.thin({"type": "Activation"}, "A", "B")["belief"], 0.0, "missing belief is 0")
+    # fetch_indra() stashes the TRUE evidence count as _n, since a live fetch's own evidence
+    # array is truncated to ev_limit (=1) and len() of it would just be a bool in disguise.
+    live = {"type": "Activation", "_n": 70, "evidence": [{"source_api": "reach", "pmid": "1"}]}
+    eq(kbi.thin(live, "A", "B")["n"], 70, "_n (the true count) wins over len(evidence) when present")
+    no_n = {"type": "Activation", "evidence": [{"pmid": "1"}, {"pmid": "2"}]}
+    eq(kbi.thin(no_n, "A", "B")["n"], 2, "no _n (the SQLite bootstrap cache's full evidence arrays) -> len(evidence), as before")
 
 
 def test_load_cards():

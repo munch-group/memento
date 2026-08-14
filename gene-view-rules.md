@@ -18,6 +18,7 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 
 - The search bar and sidebar facets scope **cards**; a node hides iff all of its cards fall out of scope. Nodes with no cards (ghosts, added genes) are never scoped out.
 - An edge shows iff both ends show **and** it passes the filters: nature checkboxes (mechanistic only), the **complexes** toggle (the *only* control over complex edges), conf ≥, ev ≥.
+- **neighbours** (off by default): also reveals a scoped-out gene that has a currently-shown edge to a gene the filter kept in scope — one hop off the filtered set, not a chain (a gene only reachable *through* a revealed neighbour stays hidden).
 - **simple** (default): one grey undirected line per pair, shown iff *any* of the pair's interactions passes the filters. Untick for per-nature colours, arrowheads, and fans.
 - `*GENE` in the search **spikes** that gene: it always shows (overriding scope and any Relayout focus), materialising it as a node if it was isolated. In-memento genes only.
 
@@ -52,7 +53,7 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 
 Single letters, no modifiers, scoped to the Genes view (`?` — or the bottom-left `?` button — shows the cheat-sheet):
 
-`E` simple · `P` cards · `A` spike in · `X` expand selected · `L` relayout · `R` refresh all (again = cancel) · `F` save edges (confirms) · `B` complexes · `1/2/3` promote/suppress/modify · `Z` fit map · `H` highlight panel · `Esc` clear highlights
+`E` simple · `P` cards · `A` spike in · `X` expand selected · `L` relayout · `R` refresh all (again = cancel) · `F` save edges (confirms) · `B` complexes · `W` neighbours · `1/2/3` promote/suppress/modify · `Z` fit map · `H` highlight panel · `Esc` clear highlights
 
 ## Live vs frozen
 

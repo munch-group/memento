@@ -224,7 +224,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       // Genes view (M1)
       renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown, geEdgesHtml, geHeadClear,
       geShownCount, geComputeDrawn, geStep, geInitPositions, geSizeLayout,
-      setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, setGeSimpleEdges, geSelect, geClearSelection, geApplyFilter, geRelayout,
+      setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, setGeSimpleEdges, setGeShowNeighbours, geSelect, geClearSelection, geApplyFilter, geRelayout, geCardOff,
       renderCard, geThoughtCards, setGeCardPanel, geRenderCardPanel, toggleCard, updateCardInPlace,
       geSpikes, geSyncSpikes, geSyncSpikeNodes, get geSpikeSet(){ return [..._geSpikes].sort(); },
       getVisibleItems,
@@ -236,6 +236,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get geNatures(){ return geNatures === null ? null : [...geNatures].sort(); }, get geMinBelief(){ return geMinBelief; },
       get geMinEv(){ return geMinEv; }, get geShowComplex(){ return geShowComplex; },
       get geSimpleEdges(){ return geSimpleEdges; },
+      get geShowNeighbours(){ return geShowNeighbours; },
+      get geNeighboursRevealed(){ return [..._geNeighboursRevealed].sort(); },
       get geCardPanel(){ return geCardPanel; },
       get geZoom(){ return _geZoom; }, get gePan(){ return _gePan; },
       set geSpacing(v){ geSpacing = v; },

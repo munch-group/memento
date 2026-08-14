@@ -28,6 +28,7 @@ they'd only pad an outer ring — and are counted in the caption as "isolated".
 |---|---|
 | **Fill colour** | Chromosome |
 | **Dashed outline + italic label** | Not listed on any of your cards — a *ghost* from an expansion, or a gene you added by name. Still filled by chromosome so it stays visible. |
+| **Dashed outline, upright label** | On a card, but only shown because the **neighbours** toggle pulled it in — its own cards don't match the current search/filter. |
 
 All nodes are the same size, and both the discs and the edges hold a constant
 on-screen size as you zoom — only the layout scales, so zooming in spreads the
@@ -142,6 +143,7 @@ haven't written about. With a ghost selected you get two actions:
 | **complexes** | Draw protein-complex (`bind`) edges (also `B`; off by default). This is the **only** control over complex edges — the nature checkboxes never touch them, so the two can't fight. |
 | **simple** | Collapse each connected gene pair to a single plain grey undirected line (also `E`). On by default — untick for the full per-nature edges. Shown iff any of the pair's interactions passes the current filters. |
 | **cards** | Split view: a single-column panel of live cards on the right (also `P`). On by default. Highlighted genes → their cards; nothing highlighted → cards for every gene visible on the map. The map re-fits to the narrower canvas. |
+| **neighbours** | Also show a gene the search/filter scoped out if it has a currently-shown edge to a gene the filter kept in (also `W`; off by default). One hop only — a gene only reachable *through* a revealed neighbour stays hidden, so it doesn't snowball into the whole graph. Respects the nature/confidence/evidence/complexes filters: the edge pulling a neighbour in has to actually be drawn. Revealed neighbours are marked dashed (not italic — they're still real memento genes, just off-filter) so they read differently from ghosts. |
 | **↻ Relayout** | Re-pack the *connected-visible* subgraph — visible genes that have a visible edge to another visible gene — and hide the rest, until you change a filter (also `L`). With no filters active every gene qualifies, so it re-lays the whole map. Expanding, adding, or refreshing a gene while a Relayout focus is active brings the new genes *into* the focus so they show — the focus grows with your exploration rather than hiding what you just surfaced. |
 | **↻ Refresh all** | Bulk-fetch INDRA for every gene in memento and add interactions *between* them — never genes outside memento (see below); press again to cancel (also `R`) |
 | **⭳ Save edges** | Write the current interactions back to `interactions.json` (also `F`; asks for confirmation first) |
@@ -161,6 +163,12 @@ grammar the Cards and Graph views use, reading the same visible-card set, and it
 composes with the tools-bar filters. Ghost genes are never hidden this way: the
 search bar filters your knowledge base, and a ghost isn't in it yet. Clearing the
 search restores the full map.
+
+A search/filter only ever narrows to genes whose *own* cards match — two genes can
+have a real edge between them and still both vanish if neither's cards match, or one
+matches and the other doesn't. Turn on **neighbours** (`W`) to pull the second one
+back in: e.g. `#chr3` with neighbours on also shows any gene with a shown edge to a
+chr3-tagged gene, even if that gene's own cards carry no `chr3` tag.
 
 ### Spike in a single gene — `*GENE`
 
@@ -201,6 +209,7 @@ button in the bottom-left corner — for the built-in cheat-sheet.
 | `R` | Refresh all (press again to cancel) |
 | `F` | Save edges (asks for confirmation first) |
 | `B` | Toggle complex (`bind`) edges |
+| `W` | Toggle **neighbours** — also show a filtered-out gene with a shown edge to a gene the filter kept in |
 | `1` `2` `3` | Toggle promote / suppress / modify |
 | `Z` | Re-fit the map to the canvas — the way back after a wild pan/zoom, without re-laying anything out. Fits the genes currently visible (a search or Relayout focus narrows the fit with it) |
 | `Esc` | Clear the highlight set (the keyboard twin of clicking empty canvas); pressed again it falls through to the usual cascade — clear the search, then go back |

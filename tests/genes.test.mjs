@@ -745,6 +745,62 @@ function testCardScope() {
   ok(!off('STK11') && !off('MARK1'), 'clearing the search restores both');
 }
 
+function testNeighboursToggle() {
+  console.log('\ngeShowNeighbours (W) — one-hop reveal of scoped-out genes with a shown edge into the filtered set');
+  const { api, sandbox } = load({ fetchImpl: noop });
+  api.interactions = {
+    genes: {
+      STK11: { chrom: '19', cards: ['c1'], groups: [] },
+      MARK1: { chrom: 'X',  cards: ['c2'], groups: [] },   // one hop from STK11
+      MARK2: { chrom: 'X',  cards: ['c3'], groups: [] },   // two hops -- only reachable THROUGH MARK1
+      FAR:   { chrom: '1',  cards: ['c4'], groups: [] },   // one hop, but via a low-belief edge
+    },
+    edges: [
+      { a: 'STK11', b: 'MARK1', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: '1' },
+      { a: 'MARK1', b: 'MARK2', t: 'Phosphorylation', belief: 0.9, n: 3, pmid: '2' },
+      { a: 'STK11', b: 'FAR',   t: 'Activation',       belief: 0.2, n: 1, pmid: '3' },
+    ],
+    complex_edges: [],
+  };
+  api.items = [
+    { id: 'c1', type: 'note', title: 'a', tags: ['Drive'], genes: ['STK11'], source: '', content: 'x', date: '2026-01-01T00:00:00Z' },
+    { id: 'c2', type: 'note', title: 'b', tags: ['Other'], genes: ['MARK1'], source: '', content: 'y', date: '2026-01-01T00:00:00Z' },
+    { id: 'c3', type: 'note', title: 'c', tags: ['Other'], genes: ['MARK2'], source: '', content: 'z', date: '2026-01-01T00:00:00Z' },
+    { id: 'c4', type: 'note', title: 'd', tags: ['Other'], genes: ['FAR'],   source: '', content: 'w', date: '2026-01-01T00:00:00Z' },
+  ];
+  const search = sandbox.document.getElementById('search-input');
+  const off = sym => /ge-off/.test(sandbox.document.getElementById('ge-n-' + sym).className);
+  const neighbour = sym => /ge-neighbour/.test(sandbox.document.getElementById('ge-n-' + sym).className);
+
+  search.value = '#Drive';
+  api.renderGenes();
+  ok(!off('STK11') && off('MARK1') && off('MARK2') && off('FAR'), 'neighbours off (default): only the #Drive gene shows');
+  eq(api.geNeighboursRevealed, [], 'nothing revealed while the toggle is off');
+
+  api.setGeShowNeighbours(true);
+  ok(!off('STK11'), 'STK11 (matched the filter) still shown');
+  ok(!off('MARK1') && !off('FAR'), 'MARK1 and FAR (one hop from STK11, both edges currently shown) are revealed');
+  ok(off('MARK2'), 'MARK2 (two hops -- only reachable through MARK1) stays hidden: no cascade');
+  eq(api.geNeighboursRevealed, ['FAR', 'MARK1'], 'geNeighboursRevealed reports exactly the one-hop set');
+  ok(neighbour('MARK1') && neighbour('FAR') && !neighbour('STK11') && !neighbour('MARK2'),
+     'only revealed genes wear .ge-neighbour — the filter-matched gene and the still-hidden gene do not');
+
+  api.setGeMinBelief(0.5);   // FAR's only edge (belief 0.2) now fails the property filter
+  ok(!off('MARK1'), 'MARK1 stays revealed: its edge (belief 0.9) still passes');
+  ok(off('FAR'), 'FAR drops back out: the reveal only works through an edge that is actually drawn');
+  eq(api.geNeighboursRevealed, ['MARK1'], 'geNeighboursRevealed tracks the filter change');
+  api.setGeMinBelief(0);
+
+  api.setGeShowNeighbours(false);
+  ok(!off('STK11') && off('MARK1') && off('MARK2') && off('FAR'), 'toggling off re-hides every revealed neighbour');
+
+  search.value = '';
+  api.setGeShowNeighbours(true);
+  api.renderGenes();
+  ok(!off('STK11') && !off('MARK1') && !off('MARK2') && !off('FAR'), 'no active filter: neighbours has nothing to widen, everything just shows');
+  eq(api.geNeighboursRevealed, [], 'no scope -> nothing counted as "revealed" (it was never hidden)');
+}
+
 function testRelayoutConnected() {
   console.log('\ngeRelayout — packs only visible nodes with visible edges to visible nodes');
   const { api, sandbox } = load({ fetchImpl: noop });
@@ -1148,6 +1204,7 @@ testZoomFit();
 testSpikeGenes();
 testSpikePreservesGhosts();
 testCardScope();
+testNeighboursToggle();
 testRelayoutConnected();
 testExpandUnderRelayoutFocus();
 testEmptyStates();

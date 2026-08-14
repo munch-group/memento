@@ -527,8 +527,11 @@ a { color: inherit; }
    card. They keep their chromosome fill (so they're visible) with a dashed dark outline to mark
    that they aren't in your cards. (Previously hollow, which made unknown-chromosome ghosts with a
    white outline invisible.) */
-.ge-node.ge-offcard .ge-dot { border-style: dashed; border-color: rgba(20,20,19,0.55); border-width: calc(1.5px / var(--ge-nodescale, 1)); }
+.ge-node.ge-offcard .ge-dot, .ge-node.ge-neighbour .ge-dot { border-style: dashed; border-color: rgba(20,20,19,0.55); border-width: calc(1.5px / var(--ge-nodescale, 1)); }
 .ge-node.ge-offcard .ge-label { font-style: italic; }
+/* A "neighbours" (W) reveal: on a card, just not matching the current filter — dashed like an
+   off-card ghost (mutually exclusive with it: a node needs cards to ever be scoped off in the first
+   place) but NOT italic, since it IS documented; italic stays reserved for "not on any card". */
 .ge-node.ge-expanded .ge-dot { box-shadow: 0 0 0 calc(2px / var(--ge-nodescale, 1)) rgba(20,20,19,0.10), 0 1px 2px rgba(20,20,19,0.12); }
 /* Contextual action button, bottom-centre: expand a real node / add a ghost. */
 .ge-actions { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 6; display: flex; gap: 8px; }
@@ -4143,6 +4146,8 @@ let _gePinch = null;
 // every mechanistic edge instead of wrapping back around to all-on.
 let geNatures = null;
 let geMinBelief = 0, geMinEv = 1, geShowComplex = false, geSimpleEdges = true, geSpacing = 1;
+// Off by default, like geShowComplex — widening the visible set is an explicit ask, not the default read.
+let geShowNeighbours = false;
 // Split view: a single-column panel of live cards beside the canvas. _geOff is the hidden-node set
 // geApplyFilter last computed (the panel derives "visible genes" from it); _gePanelSig is a content
 // signature so keystrokes that change nothing skip the repaint.
@@ -4324,6 +4329,7 @@ function renderGenes(){
         <label class="ge-chk" title="Protein-complex membership — 88% of edges, off by default (B)"><input type="checkbox" id="ge-complex-chk" ${geShowComplex?'checked':''} onchange="setGeShowComplex(this.checked)"> complexes</label>
         <label class="ge-chk" title="One plain grey line per connected gene pair — no natures, directions or parallel edges (E)"><input type="checkbox" id="ge-simple-chk" ${geSimpleEdges?'checked':''} onchange="setGeSimpleEdges(this.checked)"> simple</label>
         <label class="ge-chk" title="Split view: live cards for the highlighted genes — or all visible ones (P)"><input type="checkbox" id="ge-cards-chk" ${geCardPanel?'checked':''} onchange="setGeCardPanel(this.checked)"> cards</label>
+        <label class="ge-chk" title="Also show memento genes with a shown edge to a gene your search/filter kept in scope — one hop, not a chain (W)"><input type="checkbox" id="ge-neighbours-chk" ${geShowNeighbours?'checked':''} onchange="setGeShowNeighbours(this.checked)"> neighbours</label>
         <span class="gr-relayout" onclick="geRelayout()" title="Lay the map out again from scratch (L)">↻ Relayout</span>
         <span class="gr-relayout" id="ge-refresh" onclick="geRefreshAll()" title="Fetch INDRA for every gene in memento and add the interactions BETWEEN them — never genes outside memento. Isolated genes that interact get connected. Incremental and cached; press again to cancel. (R)">↻ Refresh all</span>
         <span class="gr-relayout" onclick="geFreeze()" title="Write the current interactions back to interactions.json (folder, or a GitHub commit) (F)">⭳ Save edges</span>
@@ -4380,12 +4386,30 @@ function geCardScope(){
 }
 // Nodes hidden by the search bar / facets: a real node whose cards all fall outside the visible
 // set. Ghosts (no cards) are never card-scoped out.
+// _geNeighboursRevealed is the subset of THAT set that geShowNeighbours pulled back in this pass —
+// stashed so geApplyFilter can mark them (.ge-neighbour) without recomputing the same edge scan.
+let _geNeighboursRevealed = new Set();
 function geCardOff(){
   const scope = geCardScope();
   const off = new Set();
   if (scope) for (const n of _geNodes) {
     if (!n.ghost && n.cards.length && !n.cards.some(id => scope.has(id))) off.add(n.sym);
   }
+  // "neighbours" (geShowNeighbours, W): also reveal an otherwise-off gene that has a currently-shown
+  // edge to a gene the filter kept in scope. One hop only, straight off the ORIGINAL off set — this
+  // loop only reads `off`, never mutates it mid-pass, so a chain (A in-scope -> B revealed -> C only
+  // touching B) stops at B and does not cascade to C, matching "edges to THOSE [filtered] genes".
+  const revealed = new Set();
+  if (scope && geShowNeighbours && off.size) {
+    for (const e of _geDrawn) {
+      if (!geDrawnShown(e)) continue;
+      const aOff = off.has(e.a), bOff = off.has(e.b);
+      if (aOff && !bOff) revealed.add(e.a);
+      else if (bOff && !aOff) revealed.add(e.b);
+    }
+    for (const sym of revealed) off.delete(sym);
+  }
+  _geNeighboursRevealed = revealed;
   return off;
 }
 // '*GENE' spikes parsed from the search bar. Resolves a gene name like @ does (exact, else
@@ -4496,6 +4520,7 @@ function geApplyFilter(){
     el.classList.toggle('ge-off', off.has(n.sym));                    // hidden by the search filter
     el.classList.toggle('ge-dim', !off.has(n.sym) && anySel && !lit.has(n.sym));   // dimmed: not a clicked gene or a neighbour
     el.classList.toggle('ge-sel', _geSelIds.has(n.sym));              // clicked genes wear the ring
+    el.classList.toggle('ge-neighbour', _geNeighboursRevealed.has(n.sym));   // shown only via the W toggle
   }
   const offcards = _geNodes.reduce((k, n) => k + (n.cards.length === 0 ? 1 : 0), 0);
   const realTotal = _geNodes.length - offcards;
@@ -4506,6 +4531,7 @@ function geApplyFilter(){
     + ` · ${shown} ${geSimpleEdges ? 'link' : 'interaction'}${shown === 1 ? '' : 's'} shown`
     + `${geShowComplex ? ' (incl. complexes)' : ''}`
     + `${_geIsolated > 0 ? ` · ${_geIsolated} isolated hidden` : ''}`
+    + `${_geNeighboursRevealed.size ? ` · ${_geNeighboursRevealed.size} neighbour${_geNeighboursRevealed.size === 1 ? '' : 's'} shown` : ''}`
     + `${_geSelIds.size ? ` · ${_geSelIds.size} highlighted` : ''}`;
   geUpdateAction();
   geRenderCardPanel();
@@ -4917,6 +4943,13 @@ function setGeSimpleEdges(on){
   if (svg) svg.innerHTML = geEdgesHtml();     // rebuild just the edge layer; nodes keep their places
   // Leave _geSig alone — same reason as setGeShowComplex above.
   _geLayoutIds = null; geApplyDOM(); geApplyFilter();
+}
+function setGeShowNeighbours(on){
+  geShowNeighbours = !!on;
+  const chk = document.getElementById('ge-neighbours-chk');
+  if (chk) chk.checked = geShowNeighbours;   // keyboard toggle (W): keep the toolbar checkbox honest
+  // Doesn't touch _geDrawn (no edge composition change) — just which nodes geCardOff() hides.
+  _geLayoutIds = null; geApplyFilter();
 }
 function setGeCardPanel(on){
   geCardPanel = !!on;
@@ -6545,6 +6578,7 @@ function keyHelpHtml(){
       ${row('R','Refresh all (again: cancel)')}
       ${row('F','Save edges to interactions.json')}
       ${row('B','Complex edges')}
+      ${row('W','Show neighbours of the filtered genes')}
       ${row('1 2 3','Promote / suppress / modify')}
       ${row('Z','Fit the map to the canvas')}
       ${row('Esc','Clear highlights first')}
@@ -6557,6 +6591,7 @@ function keyHelpHtml(){
       ${row2(dot('unknown'), 'Chromosome unknown')}
       ${row2(dot('auto'), 'Solid outline — on your cards')}
       ${row2(dot('auto', ' kh-dashed'), 'Dashed outline, italic name — not on any card (ghost from an expansion, or added by name)')}
+      ${row2(dot('auto', ' kh-dashed'), 'Dashed outline, upright name — on a card, shown only because neighbours (W) pulled it in')}
       ${row2(dot('auto', ' kh-sel'), 'Accent ring — selected')}
       ${row2(dot('auto', ' kh-halo'), 'Grey halo — already expanded')}
     </table>
@@ -6645,6 +6680,9 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyR' && mainView==='genes'){ e.preventDefault(); geRefreshAll(); return; }
       if(code==='KeyF' && mainView==='genes'){ e.preventDefault(); geFreeze(); return; }
       if(code==='KeyB' && mainView==='genes'){ e.preventDefault(); setGeShowComplex(!geShowComplex); return; }
+      // W, not N ("neighbours" would read better) — N is the global new-card key and Genes view
+      // shouldn't swallow it, same reason B stands in for "complexes" (C is the global Stack-view key).
+      if(code==='KeyW' && mainView==='genes'){ e.preventDefault(); setGeShowNeighbours(!geShowNeighbours); return; }
       if(code==='KeyZ' && mainView==='genes'){ e.preventDefault(); geZoomFit(); return; }
       if((code==='Digit1'||code==='Digit2'||code==='Digit3') && mainView==='genes'){
         e.preventDefault();

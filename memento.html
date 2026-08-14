@@ -226,6 +226,15 @@ a { color: inherit; }
 .special-card:hover { border-color: var(--border2); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
+/* Pinned-card chips (Alt-click a card to force it into the filter, regardless of every other
+   filter — the card-level twin of the Genes view's `*GENE` spike). Accent-tinted like .card-ref,
+   since it's the same "specific card by reference" idea; unlike .card-ref it removes on click. */
+.pinned-cards { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 0 0; }
+.pin-chip { display: inline-flex; align-items: center; gap: 5px; max-width: 240px; font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(217,119,87,0.08); padding: 2px 7px; border-radius: 3px; cursor: pointer; }
+.pin-chip:hover { background: rgba(217,119,87,0.16); }
+.pin-chip-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pin-chip-x { opacity: 0.6; }
+.pin-chip:hover .pin-chip-x { opacity: 1; }
 .tag-suggest { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; max-height: 96px; overflow-y: auto; }
 .tag-suggest .tag.added { opacity: 0.4; }
 /* Quick tag editing straight from a card, without opening the edit form. */
@@ -808,6 +817,7 @@ a { color: inherit; }
         <button class="highlight-btn" id="highlight-btn" onclick="toggleHighlightInput()" title="Highlight genes without filtering (H)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></button>
         <button class="highlight-btn" id="gene-set-btn" onclick="openGeneSetPicker()" title="Highlight a curated gene set…"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="9" r="4"/><circle cx="16" cy="9" r="4"/><circle cx="12" cy="16" r="4"/></svg></button>
       </div>
+      <div class="pinned-cards" id="pinned-cards" style="display:none"></div>
       <button class="key-help-fab" title="Keyboard shortcuts (?)" onclick="toggleKeyHelp()">?</button>
       <div class="control-bar">
         <div class="seg" id="view-seg">
@@ -922,6 +932,10 @@ let ghRepoMode = false;    // true when entries loaded from GitHub API
 let ghCanWrite = false;    // true when the stored PAT has push access to GH_REPO
 let highlightGenes = new Set();      // combined: highlight-input genes ∪ @genes in the search bar
 let highlightInputGenes = new Set(); // genes typed into the "Highlight genes" input
+// Card ids Alt-clicked onto the filter (togglePinnedCard) — the card-level twin of the Genes
+// view's `*GENE` spike: forces a specific card into getVisibleItems() regardless of every other
+// filter (search text, tags, type, archive scope), the same way a spike overrides card scope there.
+let pinnedCardIds = new Set();
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
 let ghIssuesItems = [];  // temporary issue cards (not saved to JSON)
 let activeViewId = null;   // when set, a saved view card is "running" (focused result screen)
@@ -1433,6 +1447,7 @@ function clearAllFilters() {
   ghIssuesRepo=null; ghIssuesItems=[]; digestFocusCardId=null; focusedCardId=null;
   const si=document.getElementById('search-input'); if (si) si.value='';
   highlightInputGenes=new Set(); const hi=document.getElementById('highlight-input'); if (hi) hi.value='';
+  pinnedCardIds=new Set(); renderPinnedCards();
   if (activeViewId) {
     activeViewId=null; expandedId=null;
     if (window._viewPrevMain!==undefined) { mainView=window._viewPrevMain; applyControlBar(); }
@@ -1446,6 +1461,30 @@ function toggleIn(set, v) { if (set.has(v)) set.delete(v); else set.add(v); }
 function setFilter(type) { toggleIn(activeTypes, type); syncSearchTextFromFacets(); renderFilters(); renderList(); }
 function setTagFilter(tag) { toggleIn(activeTags, tag); syncSearchTextFromFacets(); renderFilters(); renderList(); }
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
+// Alt-click a card (see toggleCard) to force it into the visible set regardless of every other
+// filter — the card-level twin of the Genes view's `*GENE` spike. Kept out of the search text
+// (card ids are opaque, unlike gene symbols) as its own chip row instead; see renderPinnedCards.
+function togglePinnedCard(id) {
+  if (pinnedCardIds.has(id)) pinnedCardIds.delete(id); else pinnedCardIds.add(id);
+  renderPinnedCards();
+  renderList();
+}
+function pinnedCardLabel(item) {
+  const t = (item.title || '').trim();
+  return t || (item.content || '').split('\n')[0].slice(0, 30) || item.id;
+}
+function renderPinnedCards() {
+  const wrap = document.getElementById('pinned-cards');
+  if (!wrap) return;
+  if (!pinnedCardIds.size) { wrap.style.display = 'none'; wrap.innerHTML = ''; return; }
+  wrap.style.display = '';
+  wrap.innerHTML = [...pinnedCardIds].map(id => {
+    const it = items.find(i => i.id === id);
+    const label = it ? pinnedCardLabel(it) : id;
+    return `<span class="pin-chip" onclick="togglePinnedCard('${id}')" title="Pinned to the filter — click to remove">`
+      + `<span class="pin-chip-title">${esc(label)}</span><span class="pin-chip-x">✕</span></span>`;
+  }).join('');
+}
 
 // --- Saved views ---
 // Snapshot the current search/filter/highlight state so it can be stored on a view card.
@@ -1454,13 +1493,14 @@ function captureView() {
     q: (document.getElementById('search-input')?.value||'').trim(),
     types: [...activeTypes], tags: [...activeTags], gene: activeGene,
     genes: [...highlightInputGenes],
+    pinnedIds: [...pinnedCardIds],
     sortKey, sortAsc, conn: connFilter, archive: archiveFilter
   };
 }
 // True when there is something worth saving as a view (any active search or filter).
 function hasActiveView() {
   const q = (document.getElementById('search-input')?.value||'').trim();
-  return !!(q || activeTypes.size || activeTags.size || activeGene || highlightInputGenes.size);
+  return !!(q || activeTypes.size || activeTags.size || activeGene || highlightInputGenes.size || pinnedCardIds.size);
 }
 // Short human summary of a captured view, e.g. `Obs · #circRNA · @ARHGAP5 · hl:MAPT · "drive"`.
 function describeView(v) {
@@ -1470,6 +1510,7 @@ function describeView(v) {
   if (v.tag) parts.push('#'+v.tag);
   if (v.gene) parts.push('@'+v.gene);
   if (v.genes && v.genes.length) parts.push('hl:'+v.genes.join(','));
+  if (v.pinnedIds && v.pinnedIds.length) parts.push('pin:'+v.pinnedIds.length);
   if (v.q) parts.push('"'+v.q+'"');
   return parts.join(' · ') || 'all cards';
 }
@@ -1520,6 +1561,8 @@ function applyView(item) {
   highlightInputGenes = new Set(v.genes || []);
   const hi = document.getElementById('highlight-input'); if (hi) hi.value = [...highlightInputGenes].join(' ');
   if (highlightInputGenes.size) { const w=document.getElementById('highlight-input-wrap'); if (w) w.style.display='flex'; }
+  pinnedCardIds = new Set(v.pinnedIds || []);
+  renderPinnedCards();
   if (v.sortKey) sortKey = v.sortKey;
   if (typeof v.sortAsc === 'boolean') sortAsc = v.sortAsc;
   if (v.conn) connFilter = v.conn;
@@ -1688,6 +1731,14 @@ function getVisibleItems() {
   if(activeTags.size) vis=vis.filter(i=>(i.tags||[]).some(t=>activeTags.has(t)));
   if(activeGene) vis=vis.filter(i=>(i.genes||[]).some(g=>geneAliasesU(g).includes(activeGene.toUpperCase())));
   if(orGroups.length) vis=vis.filter(i=>orGroups.some(g=>matchesGroup(i,g)));
+  // Pinned cards (Alt-click) override every filter above, archive scope included — same "always
+  // shows, no matter what" contract as the Genes view's `*GENE` spike. Re-sort after the union so
+  // a pinned-in card lands in its natural sort position instead of tacked on at the end.
+  if(pinnedCardIds.size){
+    const have=new Set(vis.map(i=>i.id));
+    const extra=[...pinnedCardIds].map(id=>items.find(i=>i.id===id)).filter(i=>i&&!have.has(i.id));
+    if(extra.length) vis=sortItems(vis.concat(extra));
+  }
   return { vis, orGroups };
 }
 
@@ -6080,6 +6131,15 @@ function toggleCard(id,e){
     insertCardRef(id);
     return;
   }
+  // Alt-click pins/unpins a card to the filter (see togglePinnedCard) — chosen because every other
+  // modifier is already taken (Cmd=edit, Ctrl=full-width, Shift=bulk-select), and unconditional
+  // rather than gated on search-box focus: a focus check would make Alt-click's meaning depend on
+  // what you clicked last, which is exactly the "gets mixed up" risk a modifier key exists to avoid.
+  if(e&&e.altKey&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&items.find(i=>i.id===id)){
+    e.stopPropagation && e.stopPropagation();
+    togglePinnedCard(id);
+    return;
+  }
   // Bulk selection: Shift-click anywhere, or any plain click while Select mode (M) is on.
   if(!readOnly && e && (e.shiftKey || bulkMode) && !e.metaKey && !e.ctrlKey && items.find(i=>i.id===id)){
     e.stopPropagation && e.stopPropagation();
@@ -6566,6 +6626,7 @@ function keyHelpHtml(){
       ${row('H','Highlight-genes panel')}
       ${row('M','Select mode — bulk pin / archive / tag / delete')}
       ${row('⇧ click','Select a card for bulk actions')}
+      ${row('⌥ click','Pin/unpin a card to the filter, no matter what else it hides')}
       ${row('Esc','Close / clear, step by step')}
       ${row('?','This cheat-sheet')}
     </table></div>

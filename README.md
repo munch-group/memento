@@ -108,6 +108,14 @@ Type in the search bar to filter entries. Press **Escape** to clear the search.
 
 Tags and genes support prefix matching, so `@MAP` matches `@MAPT`, `@MAP2K1`, etc.
 
+### Pinning individual cards
+
+**⌥ (Alt) click** any card to pin it — it shows as a chip below the search bar and stays visible
+no matter what the search text, tags, type, or archive filter would otherwise hide, the same way
+`*GENE` overrides the Genes view's filters. Click the chip (or Alt-click the card again) to unpin
+it. Useful for "show me #Drive, plus this one other card I want next to it" without loosening the
+filter itself. Pinned cards are saved as part of a **saved view**, same as highlighted genes.
+
 ## Sorting
 
 The sidebar **Sort** section offers:

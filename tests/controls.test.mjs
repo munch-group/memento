@@ -131,6 +131,65 @@ console.log('\nBulk actions — select with Shift-click or Select mode; pin/arch
      'shift-mousedown on a card suppresses the native text-selection');
 }
 
+// Pinning: Alt-click a card to force it into view regardless of every other filter — the
+// card-level twin of the Genes view's `*GENE` spike. Chip row (not a search-text token) since
+// card ids are opaque, unlike gene symbols.
+console.log('\nPinning a card (Alt-click) forces it into view no matter what else would hide it');
+{
+  const { api, sandbox } = load({ fetchImpl: noop });
+  const el = id => sandbox.document.getElementById(id);
+  const alt = () => ({ altKey: true, target: { closest: () => null }, stopPropagation(){} });
+  api.items = [
+    note('a1', 'Alpha', { tags: ['Live'] }),
+    note('b1', 'Beta',  { tags: ['Dead'], archived: true }),   // wrong tag AND archived — a real stress test
+  ];
+  sandbox.window._kbInbox = ''; sandbox.window._kbDigest = null;
+  api.setDashboard(false);
+  api.renderList();
+
+  eq(api.getVisibleItems().vis.map(i => i.id), ['a1'], 'baseline: Beta (archived) is out of scope');
+  el('pinned-cards').style.display = 'none';   // the real markup's default (the fake DOM doesn't parse static inline styles)
+
+  api.toggleCard('b1', alt());
+  ok(el('pinned-cards').style.display !== 'none', 'Alt-click reveals the chip row');
+  ok(el('pinned-cards').innerHTML.includes('Beta'), 'the chip shows the card TITLE, not its opaque id');
+  ok(el('pinned-cards').innerHTML.includes("togglePinnedCard('b1')"), 'clicking the chip itself is wired to unpin');
+  eq(api.pinnedCardIds, ['b1'], 'b1 recorded as pinned');
+  eq(api.getVisibleItems().vis.map(i => i.id).sort(), ['a1', 'b1'], 'Beta shows despite being archived AND wrong-tagged');
+  eq(api.expandedId, null, 'Alt-click does not ALSO expand the card');
+  eq(api.bulkIds, [], '...or bulk-select it');
+
+  api.setTagFilter('Live');   // narrow further: Beta has neither Live nor a matching archive scope
+  eq(api.getVisibleItems().vis.map(i => i.id).sort(), ['a1', 'b1'], 'a #Live filter still cannot hide a pinned card');
+
+  api.togglePinnedCard('b1');
+  eq(api.pinnedCardIds, [], 'unpinning empties the set');
+  eq(el('pinned-cards').style.display, 'none', '...and hides the chip row again');
+  eq(api.getVisibleItems().vis.map(i => i.id), ['a1'], 'Beta drops back out (still filtered by #Live + archive scope)');
+  api.setTagFilter('Live');   // toggle back off, restoring baseline scope for the rest of this block
+
+  // untitled card: falls back to a content snippet, never a bare id
+  api.items.push({ id: 'c1', type: 'note', title: '', tags: [], genes: [], content: 'first line\nrest', date: '2026-01-01T00:00:00Z' });
+  api.toggleCard('c1', alt());
+  ok(el('pinned-cards').innerHTML.includes('first line'), 'an untitled card falls back to its first content line');
+
+  // clearAllFilters puts pins away with everything else
+  api.clearAllFilters();
+  eq(api.pinnedCardIds, [], 'clearAllFilters empties the pinned set too');
+  eq(el('pinned-cards').style.display, 'none', '...and the chip row is hidden again');
+
+  // saved views round-trip which cards were pinned, same as highlighted genes
+  api.togglePinnedCard('b1');
+  eq(api.hasActiveView(), true, 'a pin alone (no other filter) is enough to count as "a view worth saving"');
+  ok(api.describeView(api.captureView()).includes('pin:1'), 'describeView summarises the pin count');
+  const saved = api.captureView();
+  api.clearAllFilters();
+  eq(api.pinnedCardIds, [], 'sanity: cleared before restoring');
+  api.applyView({ id: 'v1', view: saved });
+  eq(api.pinnedCardIds, ['b1'], 'applyView restores the pinned set from the saved view');
+  ok(el('pinned-cards').style.display !== 'none', '...and repaints the chip row');
+}
+
 // The copy-genes icon (⧉). On an expanded card it trails the last gene inside the list, always
 // visible. A collapsed card's gene strip is clipped and fade-masked, so there the icon sits AFTER
 // the strip (inside, the mask would swallow it) and is revealed by hovering the card.

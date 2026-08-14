@@ -195,7 +195,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       grPanDown, grMove: _grMove, grUp: _grUp,
       get linkMode(){ return linkMode; },
       set editingId(v){ editingId = v; },
-      set expandedId(v){ expandedId = v; },
+      get expandedId(){ return expandedId; }, set expandedId(v){ expandedId = v; },
       get tlPxPerDay(){ return tlPxPerDay; },
       get tlFocusId(){ return tlFocusId; },
       // Graph
@@ -268,12 +268,14 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get sortAsc(){ return sortAsc; },
       setDashboard, toggleDigest, setPreviewMode, togglePreviews, applyPreviewMode,
       setConnFilter, setArchiveFilter, clearAllFilters, setFilter, setTagFilter, scopedItems,
-      deriveFacetsFromSearchText, syncSearchTextFromFacets, applyView, captureView,
+      deriveFacetsFromSearchText, syncSearchTextFromFacets, applyView, captureView, hasActiveView, describeView,
       get activeTags(){ return [...activeTags].sort(); },
       get activeTypes(){ return [...activeTypes].sort(); },
       get previewMode(){ return previewMode; },
       get connFilter(){ return connFilter; },
       get archiveFilter(){ return archiveFilter; },
+      togglePinnedCard, renderPinnedCards,
+      get pinnedCardIds(){ return [...pinnedCardIds].sort(); },
       GH_FLUSH_DELAY,
     };
     globalThis.__setHandles = (dh, eh) => { dirHandle = dh; entriesHandle = eh; };

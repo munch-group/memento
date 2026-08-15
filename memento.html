@@ -181,6 +181,7 @@ a { color: inherit; }
 /* 1fr auto 1fr: the middle switch is genuinely centred, whatever the flanking widths do. */
 .control-bar { margin-bottom: 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
 .control-bar > :last-child { justify-self: end; }
+.control-bar-right { display: flex; align-items: center; gap: 16px; }
 /* An inline switch: every option is shown, the current one is in accent. State is legible without
    decoding a dot, and any option is one click away — no cycling blind. (The keyboard still cycles.) */
 .seg { font-family: var(--mono); font-size: 11px; color: #747472; display: flex; align-items: center; }
@@ -668,9 +669,10 @@ a { color: inherit; }
   .card-content { overflow-x: auto; }
   .page-header { flex-wrap: wrap; gap: 8px; }
   .header-actions { flex-wrap: wrap; }
-  /* Three switches can't fit a phone's width (~429px of text vs ~358px available), so let them
-     wrap: view + detail on the first row, connections on the second. */
+  /* The switches can't fit a phone's width, so let them wrap: view + detail on the first row,
+     select + connections (grouped) on the second. */
   .control-bar { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 4px; }
+  .control-bar-right { gap: 12px; }
   /* One column on a phone: the meta fields stack the way they always did. */
   .meta-cols { grid-template-columns: 1fr; column-gap: 0; }
 }
@@ -826,10 +828,14 @@ a { color: inherit; }
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
         </div>
-        <div class="seg"><span class="seg-opt" id="bulk-btn" onclick="toggleBulkMode()" title="Select cards for bulk pin / archive / tag / delete — taps select while on. Shift-click always selects. (M)">Select</span></div>
-        <!-- Connections. Always on screen, so it can never narrow the list from behind the ☰.
-             Populated by renderFilters() only when connection cards exist. -->
-        <div class="seg" id="conn-seg"></div>
+        <!-- Grouped so the grid still sees 3 children (view-seg | detail-seg | this group) — a
+             bare 4th child would overflow the explicit column tracks and drop to a new row. -->
+        <div class="control-bar-right">
+          <div class="seg"><span class="seg-opt" id="bulk-btn" onclick="toggleBulkMode()" title="Select cards for bulk pin / archive / tag / delete — taps select while on. Shift-click always selects. (M)">Select</span></div>
+          <!-- Connections. Always on screen, so it can never narrow the list from behind the ☰.
+               Populated by renderFilters() only when connection cards exist. -->
+          <div class="seg" id="conn-seg"></div>
+        </div>
       </div>
       <div id="link-banner"></div>
       <div class="bulk-bar" id="bulk-bar" style="display:none"></div>

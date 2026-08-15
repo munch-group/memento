@@ -1,13 +1,17 @@
 {
   "id": "mnakw4f1h29k",
-  "type": "hypothesis",
+  "type": "idea",
   "title": "MT genes and pachytene peak",
   "genes": [],
   "tags": [
     "MT"
   ],
   "source": "",
-  "date": "2026-03-28T17:02:36.637Z",
+  "date": "2026-08-15T07:40:03.183Z",
   "synced": false,
-  "_sortTag": "MT"
+  "_sortTag": "MT",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "pinned": false
 }

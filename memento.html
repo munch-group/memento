@@ -489,7 +489,7 @@ a { color: inherit; }
   border-radius: calc(4px / var(--ge-zoom, 1));
   background: color-mix(in srgb, var(--bg2) 82%, transparent); }
 .ge-node.ge-off { display: none; }   /* hidden by the search bar / facet filter (positions kept) */
-.ge-node.ge-dim { opacity: 0.16; }
+.ge-node.ge-dim { opacity: var(--ge-dim-node, 0.16); }
 .ge-node.ge-sel { z-index: 5; }
 .ge-node.ge-sel .ge-dot { border-color: var(--accent); box-shadow: 0 0 0 calc(3px / var(--ge-nodescale, 1)) rgba(217,119,87,0.4); }
 .ge-tools { flex-wrap: wrap; max-width: min(92%, 760px); }
@@ -4214,7 +4214,11 @@ const GE_PANEL_CAP = 60;   // md()-rendering hundreds of card bodies would block
 // constant across zoom by --ge-nodescale, like the labels.
 const GE_NODE_R = 9;
 const GE_FAN_STEP = 7;   // perpendicular spacing (scene px at zoom 1) between fanned parallel edges
-const GE_DIM = 0.22;     // dimmed-background edge opacity under a highlight — a touch above the 0.16 .ge-dim node rule so thin colour strokes read as equally faded (they wash out at 0.16)
+// Dimmed-background node opacity under a highlight, user-adjustable via the toolbar slider and
+// persisted (the one genes-view setting that survives reload — see setGeDimStrength). Edge opacity
+// is derived a touch higher (see geApplyFilter) so thin colour strokes read as equally faded as
+// nodes, which wash out faster at the same opacity value.
+let geDimStrength = Number(localStorage.getItem('ge_dim')) || 0.16;
 // A cache-seeded layout is already at equilibrium; this just gives any node the cache didn't cover
 // (a rare leftover — see geApplyLayoutCache) a handful of frames to settle in, instead of paying the
 // full ~400-frame decay for a graph that mostly isn't moving.
@@ -4383,6 +4387,8 @@ function renderGenes(){
           <input type="range" class="gr-range" min="0" max="1" step="0.05" value="${geMinBelief}" oninput="setGeMinBelief(this.value)"></div>
         <div class="gr-slider"><span class="seg-label" title="Minimum independent evidence texts">ev ≥ <span id="ge-ev-val">${geMinEv}</span></span>
           <input type="range" class="gr-range" min="1" max="5" step="1" value="${geMinEv}" oninput="setGeMinEv(this.value)"></div>
+        <div class="gr-slider"><span class="seg-label" title="Opacity of background genes/edges under a highlight — drag right to fade them less">bg <span id="ge-dim-val">${Math.round(geDimStrength*100)}%</span></span>
+          <input type="range" class="gr-range" min="0" max="1" step="0.01" value="${geDimStrength}" oninput="setGeDimStrength(this.value)"></div>
         <label class="ge-chk" title="Protein-complex membership — 88% of edges, off by default (B)"><input type="checkbox" id="ge-complex-chk" ${geShowComplex?'checked':''} onchange="setGeShowComplex(this.checked)"> complexes</label>
         <label class="ge-chk" title="One plain grey line per connected gene pair — no natures, directions or parallel edges (E)"><input type="checkbox" id="ge-simple-chk" ${geSimpleEdges?'checked':''} onchange="setGeSimpleEdges(this.checked)"> simple</label>
         <label class="ge-chk" title="Split view: live cards for the highlighted genes — or all visible ones (P)"><input type="checkbox" id="ge-cards-chk" ${geCardPanel?'checked':''} onchange="setGeCardPanel(this.checked)"> cards</label>
@@ -4568,7 +4574,7 @@ function geApplyFilter(){
     // the still-visible graph stays drawn but dimmed — so the background reads as a faded version of
     // the filtered map, not a scatter of edgeless dots. No highlight ⇒ every visible edge is full.
     const emph = !anySel || _geSelIds.has(e.a) || _geSelIds.has(e.b);
-    line.setAttribute('opacity', !visible ? 0 : (emph ? 1 : GE_DIM));
+    line.setAttribute('opacity', !visible ? 0 : (emph ? 1 : Math.min(1, geDimStrength + 0.06)));
     if (visible) shown++;
   });
   for (const n of _geNodes) {
@@ -4647,6 +4653,7 @@ function geApplyDOM(){
   if (scene && scene.style.setProperty) {
     scene.style.setProperty('--ge-zoom', _geZoom);                        // labels: constant on-screen
     scene.style.setProperty('--ge-nodescale', Math.max(1, _geZoom));      // discs: capped so they don't balloon when zoomed in
+    scene.style.setProperty('--ge-dim-node', geDimStrength);              // .ge-dim opacity: the toolbar slider
   }
   for (const n of _geNodes) {
     const el = document.getElementById('ge-n-' + n.id), p = _gePos[n.sym];
@@ -4979,6 +4986,14 @@ function setGeNature(nat, on){
 }
 function setGeMinBelief(v){ geMinBelief = Math.max(0, Math.min(1, Number(v) || 0)); const el = document.getElementById('ge-belief-val'); if (el) el.textContent = geMinBelief.toFixed(2); _geLayoutIds = null; geApplyFilter(); }
 function setGeMinEv(v){ geMinEv = Math.max(1, Math.round(Number(v) || 1)); const el = document.getElementById('ge-ev-val'); if (el) el.textContent = geMinEv; _geLayoutIds = null; geApplyFilter(); }
+// Pure paint, not a filter — never touches _geLayoutIds (nothing is shown/hidden, just faded).
+function setGeDimStrength(v){
+  geDimStrength = Math.max(0, Math.min(1, Number(v)));
+  if (Number.isNaN(geDimStrength)) geDimStrength = 0.16;
+  localStorage.setItem('ge_dim', geDimStrength);
+  const el = document.getElementById('ge-dim-val'); if (el) el.textContent = Math.round(geDimStrength * 100) + '%';
+  geApplyDOM(); geApplyFilter();
+}
 function setGeShowComplex(on){
   geShowComplex = !!on;
   const cchk = document.getElementById('ge-complex-chk');

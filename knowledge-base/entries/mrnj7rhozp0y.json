@@ -1,7 +1,7 @@
 {
   "id": "mrnj7rhozp0y",
   "type": "note",
-  "title": "Prose on meiotic drive and sex chromosomes",
+  "title": "Claude Prose on meiotic drive and sex chromosomes",
   "genes": [],
   "tags": [
     "X",
@@ -13,7 +13,8 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-16T13:16:33.986Z",
+  "date": "2026-08-15T07:30:30.578Z",
   "synced": false,
-  "_sortTag": "LoF"
+  "_sortTag": "LoF",
+  "pinned": false
 }

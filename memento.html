@@ -6690,7 +6690,7 @@ function keyHelpHtml(){
       ${row('M','Select mode — bulk pin / archive / tag / delete')}
       ${row('⇧ click','Select a card for bulk actions')}
       ${row('⌥ click','Pin/unpin a card to the filter, no matter what else it hides')}
-      ${row('Esc','Close / clear, step by step')}
+      ${row('Esc','Close / clear, step by step — never the search')}
       ${row('?','This cheat-sheet')}
     </table></div>
     <div><h3>Genes view</h3><table>
@@ -6836,6 +6836,9 @@ document.addEventListener('keydown', async e=>{
     const active = document.activeElement;
     const inField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
     if(inField){
+      // preventDefault is load-bearing here, not tidiness: #search-input is type="search", which the
+      // browser itself empties on Esc. Suppressing the default is the only thing standing between a
+      // typed filter and the UA throwing it away. Blur, and keep what you typed.
       e.preventDefault();
       active.blur();
       return;
@@ -6848,16 +6851,17 @@ document.addEventListener('keydown', async e=>{
       bulkClear();
     } else if(mainView==='genes' && highlightInputGenes.size){
       // The most local state first: in the Genes view an Esc drops the highlight set
-      // (the keyboard twin of tapping empty canvas) before touching the search.
+      // (the keyboard twin of tapping empty canvas).
       geClearSelection();
     } else {
-      const search = document.getElementById('search-input');
-      if(search && search.value){ search.value=''; renderFilters(); renderList(); }
-      else {
-        // Nothing else for Esc to do — if a "← back" link is showing in the title, follow it.
-        const back = document.querySelector('#page-title [onclick]');
-        if(back) back.click();
-      }
+      // Esc does NOT clear the search, and never falls through to it. Everything above is transient
+      // state Esc put up and can take away again; a typed filter is not — it is the one thing here
+      // that costs real effort to reproduce, and losing it to the key you press to dismiss things is
+      // a bad trade however far down the ladder it sits. The Clear button next to the box says so
+      // explicitly, which is what a destructive action should have to do.
+      // Nothing else for Esc to do — if a "← back" link is showing in the title, follow it.
+      const back = document.querySelector('#page-title [onclick]');
+      if(back) back.click();
     }
   }
 });

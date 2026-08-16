@@ -359,6 +359,12 @@ a { color: inherit; }
   font-size: min(1em, calc(var(--gr-cap, 14px) / var(--gr-zoom, 1))); }
 .gr-node.gr-off { display: none; }
 .gr-node.pinned { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(217,119,87,0.35); }
+/* Bulk selection, same blue ring the list's cards wear — this is the CARD being picked, not the map
+   doing anything, so it has to look identical across the two views. A node can be dragged-pinned and
+   bulk-selected at once, so when both are on they stack as concentric rings rather than one replacing
+   the other: blue inside (what you just did), accent outside (where you left it). */
+.gr-node.bulk-sel { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(91,155,213,0.9); }
+.gr-node.pinned.bulk-sel { box-shadow: 0 1px 2px rgba(20,20,19,0.06), 0 0 0 2px rgba(91,155,213,0.9), 0 0 0 4px rgba(217,119,87,0.35); }
 /* Only the card you actually clicked gets picked out — a wash rather than an outline so it reads at
    a glance across a crowd without competing with the pinned ring next to it. Gray rather than accent
    — unlike the pinned ring or the connection border, this is a transient selection, not a standing
@@ -632,9 +638,19 @@ a { color: inherit; }
 .pop-card .card { cursor: pointer; }
 /* A tooltip renders a COLLAPSED card, so it has no bottom action row to begin with — the icons and
    date now live there, and the title wraps by default, so the tooltip needs no special-casing for
-   any of that any more. All it still needs: a preview must not act on itself — a click anywhere on
-   it means "open this card", nothing else. */
+   any of that any more. All it still needs: the BODY of a preview must not act on itself, so a click
+   that lands on prose, an image or a gene chip still means "open this card". */
 .pop-card .card * { pointer-events: none; }
+/* …except the two affordances that carry their own meaning in the list and should carry it here too:
+   the title (opens the editor) and the tag chips including the ＋ (open the tag editor). Both handlers
+   stopPropagation, so they take precedence over the wrapper's "open this card" without removing it.
+   A descendant may opt back in even though its ancestors are pointer-events:none — that is what makes
+   the blanket rule above a floor rather than a wall. */
+.pop-card .card .card-title-text > span,
+.pop-card .card .tag { pointer-events: auto; }
+/* !important: renderCard gives the title an inline cursor (text, or pointer for a GitHub card). In a
+   tooltip it is a button whatever the type, so the inline value must not win. */
+.pop-card .card .card-title-text > span { cursor: pointer !important; }
 .tl-empty { flex: 1; padding: 3.5rem 1rem; text-align: center; color: var(--text3); }
 .tl-empty p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
 .tl-empty small { font-family: var(--mono); font-size: 11px; }
@@ -3623,6 +3639,9 @@ function grApplyFilter(){
     // Only the card you actually clicked wears the tint; the neighbours it reached stay plain and
     // just keep their full opacity (the !dim above) to show they're part of the same neighbourhood.
     el.classList.toggle('gr-sel', _grSelIds.has(e.id));
+    // The bulk selection is the CARD's, not the map's, so it wears the same blue ring the list uses
+    // rather than the graph's own grey tint — the two can be on at once and must stay tellable apart.
+    el.classList.toggle('bulk-sel', _bulkIds.has(e.id));
   }
   // A connection line falls back with the cards it runs between: leaving it at full accent while both
   // its ends fade is what made the highlight read as half-applied — the orange was the loudest thing
@@ -3874,8 +3893,14 @@ function _grUp(e){
   if (!d) return;
   if (d.id && d.moved) grRelaxStart();     // the cards it passed are still springing back
   if (!d.moved && d.id) {                  // a tap, not a drag
-    // Clicking a node selects it and tints its neighbourhood, until clicked again. That is ALL a
-    // click does: the card is the hover's business alone, and comes and goes on its own terms.
+    // A node IS a card here — the map's way of drawing it — so the two card gestures that are about
+    // the card rather than the map have to mean the same thing they mean in the Stack: Alt pins it to
+    // the filter, and Shift (or a plain click under Select mode) picks it for the bulk bar. Without
+    // this the Select toggle and Alt-click were simply dead in the Graph, since a node carries no
+    // onclick and so never reached toggleCard, where both gestures live.
+    if (grCardGesture(e, d.id)) return;
+    // Otherwise: clicking a node selects it and tints its neighbourhood, until clicked again. That is
+    // ALL a click does: the card is the hover's business alone, and comes and goes on its own terms.
     //
     // Touch is the exception, and the only one. There is no hover to raise the card, so the tap has
     // to stand in for it, and no pointerleave to take it away again, so it is pinned until the next
@@ -3884,6 +3909,17 @@ function _grUp(e){
     if (d.touch) { grShowPop(d.id, true); popPin(); }
     grToggleSelect(d.id);
   }
+}
+// The card-level gestures a node answers to, in the same order and on the same terms toggleCard reads
+// them. Returns true when the tap was one of them, so the caller leaves the graph's own selection
+// alone. Cmd (edit) and Ctrl (full-width) are deliberately NOT here: both leave the map for a card
+// view, which a drag-and-inspect surface should not do behind an accidental modifier.
+function grCardGesture(e, id){
+  if (!e || !items.find(i => i.id === id)) return false;
+  if (e.metaKey || e.ctrlKey) return false;
+  if (e.altKey && !e.shiftKey) { togglePinnedCard(id); return true; }
+  if (!readOnly && (e.shiftKey || bulkMode)) { bulkToggle(id); return true; }
+  return false;
 }
 function grWheel(e){
   e.preventDefault();
@@ -6124,6 +6160,12 @@ function setGeneFilter(gene) { activeGene = activeGene===gene ? null : gene; act
 // Re-render one card in place (expand/collapse) without rebuilding the whole list.
 // Returns false if the card isn't currently in the DOM, so the caller can fall back to renderList().
 function updateCardInPlace(id){
+  // In the Graph the card is drawn as a NODE, so there is no card here to patch: report the miss and
+  // let the caller's renderList() fallback repaint the map instead. Cheap — the node set is unchanged,
+  // so renderGraph() only re-filters. Without this, the stale hidden #item-list cards below would
+  // match, report a false success, and leave the node showing no sign anything had happened, which is
+  // exactly what made Select mode look dead in the Graph.
+  if (mainView === 'graph') return false;
   // In the Genes view the visible cards live in the split panel; #item-list still holds the stale
   // hidden Stack cards, which would match first and report a false success.
   const root = mainView === 'genes' ? '#ge-cards' : '#item-list';

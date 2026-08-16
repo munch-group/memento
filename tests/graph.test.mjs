@@ -1113,6 +1113,114 @@ console.log('\nThe tooltip answers to the pointer, not to clicks');
   eq(shown(), false, '...and raises no card of its own');
 }
 
+// A node IS a card — the map's way of drawing one — so the gestures that are about the CARD rather
+// than the map have to survive the crossing. They did not: a node carries no onclick, so it never
+// reached toggleCard, where Alt-pin and Shift/Select-pick both live, and both were simply dead here.
+console.log('\nA node answers to the card gestures, not just the map ones');
+{
+  const { api, sandbox } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const ev = (o = {}) => ({ pointerId: 1, clientX: 0, clientY: 0, pointerType: 'mouse',
+                            preventDefault(){}, stopPropagation(){}, ...o });
+  const tap = (id, mods = {}) => { api.grNodeDown(ev(mods), id); api.grUp(ev(mods)); };
+  const ring = id => sandbox.document.getElementById('gr-n-' + id).classList.contains('bulk-sel');
+
+  // Select mode (the toggle, or M): a plain click picks the card, exactly as it does in the Stack.
+  api.toggleBulkMode();
+  tap('a');
+  eq(api.bulkIds, ['a'], 'under Select mode a plain click on a node selects its card');
+  eq(ring('a'), true, '...and the node wears the same ring the list card would');
+  eq([...api.grSelIds], [], "...and does NOT also tint it — under Select mode the click is the card's");
+  tap('b');
+  eq(api.bulkIds, ['a', 'b'], 'a second node joins the selection');
+  tap('a');
+  eq(api.bulkIds, ['b'], '...and clicking a selected one again drops it');
+  eq(ring('a'), false, '...ring and all');
+  api.bulkClear();
+
+  // Shift-click does it without the mode, same as anywhere else.
+  tap('a', { shiftKey: true });
+  eq(api.bulkIds, ['a'], 'Shift-click selects without the mode');
+  eq([...api.grSelIds], [], '...and still leaves the map alone');
+  api.bulkClear();
+
+  // Alt pins the card to the filter — the one gesture that was reachable before only through the
+  // hover tooltip, which is no way to find it.
+  tap('b', { altKey: true });
+  eq(api.pinnedCardIds, ['b'], 'Alt-click pins the card to the filter');
+  tap('b', { altKey: true });
+  eq(api.pinnedCardIds, [], '...and Alt-click again unpins it');
+
+  // The map's own gesture is untouched: a bare click still means "tint this neighbourhood".
+  eq([...api.grSelIds], [], 'no bare click has happened yet');
+  tap('a');
+  eq([...api.grSelIds], ['a'], 'a plain click, no modifier, no mode, still tints the neighbourhood');
+  eq(api.bulkIds, [], '...and selects nothing');
+  eq(api.pinnedCardIds, [], '...and pins nothing');
+}
+
+// Cmd (edit) and Ctrl (full-width) are deliberately left out: both leave the map for a card view,
+// which is too much to hand an accidental modifier on a surface you drag things around on.
+console.log('...but Cmd and Ctrl stay out of it — they would leave the map');
+{
+  const { api } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  const ev = (o = {}) => ({ pointerId: 1, clientX: 0, clientY: 0, pointerType: 'mouse',
+                            preventDefault(){}, stopPropagation(){}, ...o });
+  const tap = (id, mods = {}) => { api.grNodeDown(ev(mods), id); api.grUp(ev(mods)); };
+
+  tap('a', { metaKey: true });
+  eq(api.mainView, 'graph', 'Cmd-click does not open the editor from a node');
+  tap('b', { ctrlKey: true });
+  eq(api.mainView, 'graph', '...nor does Ctrl-click take you to the card full-width');
+  eq([...api.grSelIds].sort(), ['a', 'b'], 'both fall through to the map gesture instead');
+}
+
+// The ring can only appear if the repaint reaches the node. updateCardInPlace patches a CARD, and
+// under Graph there is none — but #item-list still holds the stale hidden Stack cards, so it used to
+// find one, patch something invisible, and report success. bulkToggle believed it and never repainted
+// the map, which is precisely why Select mode looked dead here.
+// The harness's DOM has no querySelectorAll('.card'), so it cannot tell a real patch from a missed
+// one — the observable half of this claim is the ring asserted above. What IS checkable here is that
+// the Graph never reaches the lookup at all, so a populated #item-list can never answer for it.
+console.log('...and the repaint has to reach the node, not a stale hidden card');
+{
+  const { api } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);
+  api.setView('graph');
+  eq(api.updateCardInPlace('a'), false,
+     'under Graph it reports the miss, so the caller repaints the map instead');
+  const fn = HTML.slice(HTML.indexOf('function updateCardInPlace(id){'));
+  const guard = fn.indexOf("if (mainView === 'graph') return false;");
+  const lookup = fn.indexOf("const root =");
+  eq(guard > -1 && lookup > -1 && guard < lookup, true,
+     '...and it returns before the #item-list lookup, not after it — the stale cards never get a vote');
+}
+
+// The tooltip IS a renderCard card, so it already carried the title and tag handlers — a blanket
+// pointer-events:none on every descendant was what kept them from ever being the click's target.
+console.log('\nThe tooltip card lets its title and tags be clicked, and nothing else');
+{
+  const rule = (sel) => new RegExp(sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).test(HTML);
+  eq(/\.pop-card \.card \* \{ pointer-events: none; \}/.test(HTML), true,
+     'the body of a preview is still inert — a click on prose means "open this card"');
+  eq(/\.pop-card \.card \.card-title-text > span,\s*\n\.pop-card \.card \.tag \{ pointer-events: auto; \}/.test(HTML), true,
+     '...but the title and the tag chips opt back in, so their own handlers can fire');
+  eq(rule('.pop-card .card .card-title-text > span { pointer-events: auto'), false,
+     '(the two selectors share one rule rather than each carrying their own)');
+  // The handlers themselves come from renderCard and must not have been special-cased away.
+  const { api, sandbox } = setup([card('a', { tags: ['x'] })]);
+  api.setView('graph');
+  api.setPreviewMode('rendered');
+  api.grShowPop('a', true);
+  const html = sandbox.document.getElementById('app-pop').innerHTML;
+  eq(/card-title-text[^>]*><span onclick="editItem\(event,'a'\)"/.test(html), true,
+     'the tooltip title still carries the editor handler the list card has');
+  eq(/class="tag" onclick="openTagEditor\(event,'a'\)"/.test(html), true,
+     '...and the tag chip still carries the tag editor');
+  eq(/onclick="openCardFocused\('a'\)"/.test(html), true,
+     '...while the wrapper keeps "open this card" for every click that misses both');
+}
+
 console.log('\n...but touch has no hover, so there a tap must still do both');
 {
   const { api, sandbox } = setup([card('a', { tags: ['x'] }), card('b', { tags: ['x'] })]);

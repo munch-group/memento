@@ -123,7 +123,15 @@ console.log('\nBulk actions — select with Shift-click or Select mode; pin/arch
 
   const src = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
   ok(src.includes("code==='KeyM' && !readOnly"), 'M toggles Select mode (not read-only)');
-  ok(src.includes('bulkMode || _bulkIds.size'), 'Esc clears the bulk selection before the search');
+  ok(src.includes('bulkMode || _bulkIds.size'), 'Esc clears the bulk selection');
+  // A typed filter is the one thing here that costs real effort to reproduce, so the key you press to
+  // dismiss things must not be able to take it — not as a fall-through, not at any rung of the ladder.
+  ok(!/search\.value\s*=\s*''/.test(src) && !/search && search\.value/.test(src),
+     '...but Esc never clears the search, at any step');
+  // #search-input is type="search", which the BROWSER empties on Esc — the in-field branch's
+  // preventDefault is the only thing holding that off, so it must not be dropped as tidy-up.
+  ok(/if\(inField\)\{[\s\S]{0,400}?e\.preventDefault\(\);\s*\n\s*active\.blur\(\);/.test(src),
+     '...including the browser doing it for us: Esc in a field preventDefaults, then blurs');
   // Shift-click must not ALSO paint a text selection across the app: the browser starts that at
   // mousedown, so a card-scoped mousedown guard suppresses it there (the harness registers no
   // listeners, so this is asserted in the source).

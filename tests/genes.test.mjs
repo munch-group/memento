@@ -525,7 +525,7 @@ function testKeyboardShortcuts() {
   ok(src.includes("(code==='Digit1'||code==='Digit2'||code==='Digit3') && mainView==='genes'"),
      '1/2/3 toggle the nature checkboxes, scoped to the Genes view');
   ok(src.includes("mainView==='genes' && highlightInputGenes.size"),
-     'Esc clears the Genes-view highlight set before falling through to the search');
+     'Esc clears the Genes-view highlight set (the keyboard twin of tapping empty canvas)');
   ok(src.includes("e.key==='?'"), '? opens the cheat-sheet (matched on the character, not the physical key)');
 
   const { api, sandbox } = setup();

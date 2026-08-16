@@ -82,7 +82,11 @@ a { color: inherit; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 /* flex-wrap so the highlight field (a flex child now, not a row of its own) drops to its own line
    on a narrow window instead of squeezing both inputs unreadably thin. */
-.searchbar { width: 100%; margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 8px; }
+/* The gap before the control bar belongs to the block, not to the box — see the markup. With the
+   chips showing it falls below them; with the row empty it is the search box's own bottom margin
+   exactly as before, since an empty .pinned-cards is display:none and contributes nothing. */
+.search-block { margin-bottom: 1rem; }
+.searchbar { width: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
 .searchbar input { flex: 1; min-width: 160px; font-family: var(--font); font-size: 14px; padding: 7px 12px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); color: var(--text); outline: none; }
 .searchbar input:focus { border-color: var(--accent); }
 /* The highlight/bookmark/clear buttons as one unit: flex-shrink:0 so it's never squeezed, and
@@ -815,6 +819,13 @@ a { color: inherit; }
           <button class="btn btn-sm btn-danger" id="btn-form-delete" onclick="deleteEditingItem()" style="display:none">Delete</button>
         </div>
       </div>
+      <!-- The search box and the pin chips are one block, and the block (not the box) owns the gap
+           before the control bar. The chips describe what the search is currently being made to let
+           through, so they have to read as hanging off the box above them — given the gap themselves
+           they sat 22px under the search and flush against Dashboard · Stack, looking like part of
+           the view switch. Grouping them puts the slack below the chips instead of above, at no cost
+           in height: 1rem + 6px above becomes 6px above + 1rem below, so nothing under it moves. -->
+      <div class="search-block">
       <div class="searchbar">
         <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR" oninput="renderFilters();renderList()" />
         <!-- One flex-shrink:0 unit so the bookmark and Clear never scatter onto separate wrapped
@@ -835,7 +846,8 @@ a { color: inherit; }
         <button class="highlight-btn" id="highlight-btn" onclick="toggleHighlightInput()" title="Highlight genes without filtering (H)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></button>
         <button class="highlight-btn" id="gene-set-btn" onclick="openGeneSetPicker()" title="Highlight a curated gene set…"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="9" r="4"/><circle cx="16" cy="9" r="4"/><circle cx="12" cy="16" r="4"/></svg></button>
       </div>
-      <div class="pinned-cards" id="pinned-cards" style="display:none"></div>
+        <div class="pinned-cards" id="pinned-cards" style="display:none"></div>
+      </div>
       <button class="key-help-fab" title="Keyboard shortcuts (?)" onclick="toggleKeyHelp()">?</button>
       <div class="control-bar">
         <div class="seg" id="view-seg">

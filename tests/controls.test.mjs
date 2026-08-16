@@ -188,6 +188,20 @@ console.log('\nPinning a card (Alt-click) forces it into view no matter what els
   api.applyView({ id: 'v1', view: saved });
   eq(api.pinnedCardIds, ['b1'], 'applyView restores the pinned set from the saved view');
   ok(el('pinned-cards').style.display !== 'none', '...and repaints the chip row');
+
+  // The chips say what the search is being made to let through, so they have to hang off the search
+  // box, not off the view switch. That is structural, not a nudge: the box and the row are one block
+  // and the BLOCK owns the gap before the control bar, which puts the slack under the chips instead
+  // of over them. A margin back on .searchbar would silently push them down against Dashboard·Stack
+  // again, so both halves are asserted. (Layout itself is a real-browser check; this pins the shape.)
+  const src2 = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
+  ok(/<div class="search-block">\s*\n\s*<div class="searchbar">/.test(src2),
+     'the search box opens a .search-block that the chip row shares');
+  ok(/<div class="pinned-cards" id="pinned-cards"[^>]*><\/div>\s*\n\s*<\/div>/.test(src2),
+     '...and the chip row is the last thing inside it, not a sibling below it');
+  ok(/\.search-block \{ margin-bottom: 1rem; \}/.test(src2), 'the block owns the gap');
+  ok(/\.searchbar \{ width: 100%; display: flex;/.test(src2),
+     '...and the search box itself carries no bottom margin to put back above the chips');
 }
 
 // The copy-genes icon (⧉). On an expanded card it trails the last gene inside the list, always

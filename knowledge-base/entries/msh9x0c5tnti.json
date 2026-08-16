@@ -5,7 +5,9 @@
   "genes": [
     "DMC1"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
@@ -13,5 +15,5 @@
   "due": "",
   "date": "2026-08-11T07:29:18.217Z",
   "synced": false,
-  "_sortTag": "gene-set"
+  "_sortTag": ""
 }

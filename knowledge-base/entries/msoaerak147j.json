@@ -6,7 +6,8 @@
     "RHOA"
   ],
   "tags": [
-    "chr3"
+    "chr3",
+    "gene-set"
   ],
   "source": "",
   "connection": false,
@@ -15,5 +16,5 @@
   "due": "",
   "date": "2026-08-11T13:32:57.187Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "chr3"
 }

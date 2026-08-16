@@ -232,12 +232,15 @@
     "ZNF721",
     "ZNF799"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "https://github.com/munch-group/primary-cilia-proteome",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-13T14:08:22.854Z",
+  "date": "2026-08-16T05:27:54.873Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "",
+  "pinned": false
 }

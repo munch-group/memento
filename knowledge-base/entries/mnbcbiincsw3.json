@@ -320,10 +320,15 @@
     "ZXDB"
   ],
   "tags": [
-    "Xi"
+    "Xi",
+    "gene-set"
   ],
   "source": "Roman et al. 2023 / https://doi.org/10.1016/j.xgen.2023.100259",
-  "date": "2026-03-29T05:50:24.383Z",
+  "date": "2026-08-16T05:33:50.028Z",
   "synced": false,
-  "_sortTag": "Xi"
+  "_sortTag": "Xi",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "pinned": false
 }

@@ -5,12 +5,15 @@
   "genes": [
     "JAK1"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "pinned": false,
   "due": "",
   "date": "2026-08-11T13:48:14.894Z",
-  "synced": false
+  "synced": false,
+  "_sortTag": ""
 }

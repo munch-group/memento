@@ -5,12 +5,15 @@
   "genes": [
     "MMP9"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "pinned": false,
   "due": "",
   "date": "2026-08-11T06:29:42.431Z",
-  "synced": false
+  "synced": false,
+  "_sortTag": ""
 }

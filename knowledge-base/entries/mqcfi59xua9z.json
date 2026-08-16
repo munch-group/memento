@@ -100,12 +100,15 @@
     "WDR49",
     "ZNRF1"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "https://github.com/munch-group/primary-cilia-proteome",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-13T14:06:25.845Z",
+  "date": "2026-08-16T05:41:29.492Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "",
+  "pinned": false
 }

@@ -8125,6 +8125,7 @@ async function ghRefreshIfStale() {
 }
 
 // --- GitHub read mode (for iOS / browsers without File System Access API) ---
+let _ghLoadStep = '';
 
 // knownSha: pass the HEAD sha when the caller already fetched it (ghRefreshIfStale), so this
 // doesn't turn one round trip into two.
@@ -8139,12 +8140,18 @@ async function ghLoadEntries(knownSha) {
     if (_ghQueue.size) { showToast('Pending changes not saved — resolve before reloading'); return; }
   }
   showToast('Loading from GitHub…');
+  // Which stage we reached. WebKit error messages ("The string did not match the expected
+  // pattern.") name no call site, so without this a failure here is unattributable on a phone,
+  // where there is no console to open.
+  _ghLoadStep = 'permissions';
   try {
     await ghApplyWritePermission();
     // Check if cache is still valid
+    _ghLoadStep = 'read cached sha';
     const cachedSha = await idbGet('gh_tree_sha');
     let currentSha = knownSha;
     if (!currentSha) {
+      _ghLoadStep = 'fetch HEAD';
       const headResp = await fetch(`https://api.github.com/repos/${GH_REPO}/commits/${GH_BRANCH}`, { headers: ghHeaders() });
       if (!headResp.ok) throw new Error(`GitHub API ${headResp.status}: ${headResp.statusText}`);
       currentSha = (await headResp.json()).sha;
@@ -8152,6 +8159,7 @@ async function ghLoadEntries(knownSha) {
     _ghHeadSha = currentSha;
 
     if (cachedSha === currentSha) {
+      _ghLoadStep = 'hydrate from cache';
       const cached = await idbGet('gh_entries');
       const cachedInbox = await idbGet('gh_inbox');
       if (cached && cachedInbox !== undefined) {
@@ -8168,6 +8176,7 @@ async function ghLoadEntries(knownSha) {
     }
 
     // Fetch directory listing and INBOX.md in parallel
+    _ghLoadStep = 'fetch listing';
     const [listResp, inboxResp] = await Promise.all([
       fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_ENTRIES_PATH}`, { headers: ghHeaders() }),
       fetch(`https://api.github.com/repos/${GH_REPO}/contents/knowledge-base/INBOX.md`, { headers: {...ghHeaders(), 'Accept': 'application/vnd.github.raw'} }).catch(() => null),
@@ -8182,6 +8191,7 @@ async function ghLoadEntries(knownSha) {
     // Fetch all files in parallel via raw download_url (not rate-limited)
     const loaded = [];
     const batchSize = 20;
+    _ghLoadStep = 'fetch entries';
     for (let i = 0; i < jsonFiles.length; i += batchSize) {
       const batch = jsonFiles.slice(i, i + batchSize);
       const results = await Promise.all(batch.map(async jf => {
@@ -8204,10 +8214,12 @@ async function ghLoadEntries(knownSha) {
     }
 
     // Cache in IndexedDB
+    _ghLoadStep = 'write cache';
     await idbPut('gh_entries', loaded);
     await idbPut('gh_tree_sha', currentSha);
     await idbPut('gh_inbox', window._kbInbox || '');
 
+    _ghLoadStep = 'render';
     window._kbDigest = loaded.find(i => i.id === '_digest') || null;
     items = loaded.filter(i => i.id !== '_digest');
     ghRepoMode = true;
@@ -8216,7 +8228,10 @@ async function ghLoadEntries(knownSha) {
     showToast(`Loaded ${items.length} entries from GitHub`);
     loadInteractions().then(() => { if (mainView === 'genes') renderGenes(); });   // the gene sidecar, from the repo
   } catch(e) {
-    showToast('GitHub load failed: ' + e.message);
+    // Name the stage and the error type. `${e}` keeps the type when message is empty, which is how
+    // several DOMExceptions arrive.
+    console.error('[gh load] failed during:', _ghLoadStep, e);
+    showToast(`GitHub load failed at "${_ghLoadStep}": ${e && e.name ? e.name + ': ' : ''}${(e && e.message) || e}`);
   }
 }
 

@@ -669,6 +669,11 @@ console.log('\nRelayout arranges the cards you can SEE');
   api.renderList();
   eq(hidden.every(id => moved(id) < 0.001), true, 'clearing the filter finds every hidden card still in its place');
   eq(api.grSim.length, 12, '...and they take part in the physics again');
+
+  // L relayouts here just as it does in the Genes view — the binding is asserted in the source,
+  // since the harness never dispatches keydown.
+  eq(HTML.includes("code==='KeyL' && mainView==='graph'"), true, 'L is bound to Relayout, scoped to the Graph view');
+  eq(/title="Start the layout again from scratch \(L\)"/.test(HTML), true, '...and the Relayout button names the key');
 }
 
 console.log('\nThe gene highlight picks cards out of the map without narrowing it');

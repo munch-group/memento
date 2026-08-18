@@ -65,6 +65,7 @@ a { color: inherit; }
 .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
 .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
+.btn:disabled { opacity: 0.55; cursor: default; }
 .btn-danger { color: #c00; border-color: rgba(200,0,0,0.3); }
 .btn-danger:hover { background: rgba(200,0,0,0.05); }
 .view-bookmark { display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; background: none; border: none; color: #6E56CF; cursor: pointer; opacity: 0.75; transition: opacity 0.15s; }
@@ -813,7 +814,7 @@ a { color: inherit; }
           </div>
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveItem()">Save</button>
+          <button class="btn btn-primary" id="btn-form-save" onclick="saveItem()">Save</button>
           <button class="btn" onclick="cancelEdit()">Cancel</button>
           <span class="spacer"></span>
           <button class="btn btn-sm btn-danger" id="btn-form-delete" onclick="deleteEditingItem()" style="display:none">Delete</button>
@@ -3590,7 +3591,7 @@ function renderGraph(){
           <span class="seg-label" title="How long the pointer must rest on a card before its tooltip opens — all the way down for no wait at all">Delay</span>
           <input type="range" class="gr-range" id="gr-delay" min="0" max="1" step="0.05" value="${grPopDelay / 1000}" oninput="setGrPopDelay(this.value)">
         </div>
-        <span class="gr-relayout" onclick="grRelayout()" title="Start the layout again from scratch">↻ Relayout</span>
+        <span class="gr-relayout" onclick="grRelayout()" title="Start the layout again from scratch (L)">↻ Relayout</span>
       </div>
       <span class="gr-caption" id="gr-caption"></span>
     </div>`;
@@ -6390,7 +6391,24 @@ function buildTypePicker(){
 }
 function selType(k){selectedType=k;lastType=k;buildTypePicker();}
 
+// The card is written to disk before the form clears and closes, so while that write is in flight the
+// form is still up, still filled in, and still clickable — and editingId has already been reset to null.
+// A second Save press in that window therefore takes the "new card" branch and files a whole second
+// copy. Five presses on one slow write once produced five identical cards. Serialise the presses.
+let _saveInFlight = false;
 async function saveItem(){
+  if (_saveInFlight) return;
+  _saveInFlight = true;
+  const btn = document.getElementById('btn-form-save');
+  if (btn) btn.disabled = true;
+  try { await saveItemInner(); }
+  finally {
+    _saveInFlight = false;
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function saveItemInner(){
   if (inboxEditMode) { await saveInbox(); return; }
   const content=document.getElementById('f-content').value;
   if(!ghEditMode && !content.trim() && !(selectedType==='view' && document.getElementById('f-title').value.trim())){showToast('Content is required');return;}
@@ -6718,6 +6736,9 @@ function keyHelpHtml(){
       ${row('1 2 3','Promote / suppress / modify')}
       ${row('Z','Fit the map to the canvas')}
       ${row('Esc','Clear highlights first')}
+    </table>
+    <h3>Graph view</h3><table>
+      ${row('L','Relayout')}
     </table></div>
     <div><h3>Legend — nodes</h3><table>
       ${row2(dot('X'), 'X-chromosome gene')}
@@ -6813,6 +6834,8 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyA' && mainView==='genes'){ e.preventDefault(); geToggleAddGene(); return; }
       if(code==='KeyX' && mainView==='genes'){ e.preventDefault(); geActionExpand(); return; }
       if(code==='KeyL' && mainView==='genes'){ e.preventDefault(); geRelayout(); return; }
+      // Same letter, same meaning one view over: L throws the positions away and lays out again.
+      if(code==='KeyL' && mainView==='graph'){ e.preventDefault(); grRelayout(); return; }
       if(code==='KeyR' && mainView==='genes'){ e.preventDefault(); geRefreshAll(); return; }
       if(code==='KeyF' && mainView==='genes'){ e.preventDefault(); geFreeze(); return; }
       if(code==='KeyB' && mainView==='genes'){ e.preventDefault(); setGeShowComplex(!geShowComplex); return; }

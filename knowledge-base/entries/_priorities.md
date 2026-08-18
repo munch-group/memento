@@ -1,11 +1,13 @@
 ## Today todo
 - Erik: Response to reviews [Manuscript](https://docs.google.com/document/d/1GaKJeLyq0ZLxUpiKnbMErn8zJV0CVSaYHeq-cWxYbc8/edit?tab=t.0#heading=h.6p4icvdq6o7p) [Notebook](https://github.com/erikfogh/admixture_baboons/blob/master/review_notebooks/rfmix05_diversity_and_admixture_close.ipynb)
+- Ghostbuster til Emma
+- - Email TAs and Peter
+- Finish course material [[mrmacisv6p1p|Bioinformatics plan]]
+- Lundbeck wrap up / Grove UKbiobank
 - vep_data til Vasilij
 
 ## Week run
-- Finish course material [[mrmacisv6p1p|Bioinformatics plan]]
 - Shannon status (her results and y-strat-gwas)
-- Lundbeck wrap up / Grove UKbiobank
 - Funding application overview/plan
 - Finish Phasic refactor
 - Look through [[msodvd8qz63d|Old research notes]]

@@ -8269,6 +8269,13 @@ if (hasFSAccess) {
       showApp();
       // Confirm push access against GitHub — it decides whether editing is offered at all.
       if (ghPat()) { await ghApplyWritePermission(); updateWriteUI(); renderList(); }
+      // A cache hit used to end the boot right here, so the app opened on whatever was cached and
+      // stayed there until something else moved it. The only refresh was the visibilitychange
+      // handler — and visibilitychange does NOT fire on load, only on a real foreground/background
+      // transition. A cold launch (how an iOS PWA normally starts, since iOS evicts them) therefore
+      // never asked GitHub anything, and the phone showed stale cards until you backgrounded the app
+      // and came back. One cheap request that only reloads if main actually moved.
+      await ghRefreshIfStale();
     } else if (ghPat()) {
       ghLoadEntries();
     }

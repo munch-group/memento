@@ -73,5 +73,44 @@ console.log('\nC. iOS boot with a READ-ONLY token');
   eq(api.readOnly, true, 'app degrades to read-only rather than failing on save');
 }
 
+// A returning iOS user boots from the IndexedDB cache, not from an empty one. That path used to
+// end at showApp() without ever asking GitHub whether main had moved: visibilitychange, the only
+// thing that called ghRefreshIfStale(), does not fire on load. So the phone opened on stale cards
+// and stayed stale until you backgrounded the app and came back.
+const warmCache = (sha) => ({
+  gh_entries: [{ id: 'stale1', type: 'note', title: 'Stale card', tags: [], genes: [],
+                 content: 'old body', date: '2026-06-01T00:00:00Z' }],
+  gh_inbox: 'old inbox',
+  gh_tree_sha: sha,
+  gh_can_write: true,
+});
+
+console.log('\nD. iOS boot from a cache that is BEHIND main');
+{
+  const gh = ghFetch({ push: true });
+  // Cache was built at head0; GitHub now reports head1.
+  const { api } = load({ fetchImpl: gh.fetch, full: true, hasFSAccess: false, pat: 'ghp_x',
+                         idbSeed: warmCache('head0') });
+  await settle();
+  eq(api.ghRepoMode, true, 'boots on the GitHub backend from cache');
+  eq(gh.calls.some(c => c.includes('/commits/main')), true, 'checks HEAD on load, without waiting to be foregrounded');
+  eq(api.items.map(i => i.id), ['a1'], 'stale cached card replaced by what is on GitHub now');
+  eq(api.items[0].content, 'card body', 'fresh body fetched too');
+}
+
+console.log('\nE. iOS boot from a cache that is ALREADY current');
+{
+  const gh = ghFetch({ push: true });
+  const { api } = load({ fetchImpl: gh.fetch, full: true, hasFSAccess: false, pat: 'ghp_x',
+                         idbSeed: warmCache('head1') });   // same sha GitHub reports
+  await settle();
+  eq(api.items.map(i => i.id), ['stale1'], 'cache kept — nothing on GitHub moved');
+  // The interactions sidecar still loads (it always did, and it is not part of the card cache);
+  // what must NOT happen is a refetch of the entries listing — the expensive full reload.
+  eq(gh.calls.filter(c => c.includes('/contents/knowledge-base/entries')).length, 0,
+     'no entry refetch: the staleness check costs one request, not a full reload');
+  eq(gh.calls.filter(c => c.includes('/commits/main')).length, 1, 'exactly one HEAD check');
+}
+
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);

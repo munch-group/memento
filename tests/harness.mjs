@@ -48,9 +48,13 @@ insertBefore(){}, contains(){ return false; },
   return el;
 }
 
-// Minimal in-memory IndexedDB good enough for idbOpen/idbPut/idbGet.
-function fakeIndexedDB() {
+// Minimal in-memory IndexedDB good enough for idbOpen/idbPut/idbGet. `seed` pre-populates the
+// store, so a test can boot the way a returning iOS user does: with a warm cache already on disk.
+function fakeIndexedDB(seed) {
   const stores = new Map();
+  // Seeding here (rather than after open) also means the store already exists, so the upgrade path
+  // never fires and never wipes what we just put in.
+  if (seed) stores.set('h', new Map(Object.entries(seed)));
   return {
     open() {
       const req = {};
@@ -79,7 +83,7 @@ function fakeIndexedDB() {
   };
 }
 
-export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false, frames = false }) {
+export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false, frames = false, idbSeed = null }) {
   const store = new Map(pat ? [['gh_pat', pat]] : []);
   const toasts = [];
   const created = [];        // every element the script builds, so tests can inspect popup markup
@@ -111,7 +115,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       setItem: (k, v) => store.set(k, String(v)),
       removeItem: k => store.delete(k),
     },
-    indexedDB: fakeIndexedDB(),
+    indexedDB: fakeIndexedDB(idbSeed),
     // Removing a timeline row clears the entry's due date, so it asks first. Tests flip this to
     // false to prove the refusal is honoured.
     confirm: () => true,
@@ -119,6 +123,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
     marked: { parse: s => s, setOptions() {}, use() {} },
     katex: { renderToString: () => '', render: () => {} },
     URL: { createObjectURL: () => 'blob:fake', revokeObjectURL() {} },
+    // showApp() -> applyClipParams() reads the query string. Without this the boot path threw
+    // and the throw was swallowed by ghLoadEntries' catch, so boot tests passed over a crash.
+    URLSearchParams,
     Event: class { constructor(type) { this.type = type; } stopPropagation() {} preventDefault() {} },
     setTimeout, clearTimeout, setInterval, clearInterval, queueMicrotask,
     console, TextEncoder, TextDecoder, btoa, atob, Date, Math, JSON, Promise, Map, Set,

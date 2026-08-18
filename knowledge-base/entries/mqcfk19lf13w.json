@@ -517,15 +517,12 @@
     "ZNF780B",
     "ZSCAN10"
   ],
-  "tags": [
-    "gene-set"
-  ],
+  "tags": [],
   "source": "https://github.com/munch-group/primary-cilia-proteome",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-08-16T05:35:23.119Z",
+  "date": "2026-06-13T14:07:53.961Z",
   "synced": false,
-  "_sortTag": "",
-  "pinned": false
+  "_sortTag": ""
 }

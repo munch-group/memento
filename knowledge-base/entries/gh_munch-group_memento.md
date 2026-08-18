@@ -1,1 +1,1 @@
-Web app for thinking and remembering with Claude
+Web app for thinking and remembering with Claude.

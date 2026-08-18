@@ -1,0 +1,1 @@
+Jupyter notebook cell magic for running cell in an isolated process.

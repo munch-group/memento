@@ -1,1 +1,1 @@
-Central registry for PtDAlgorithms pre-computed elimination traces
+Central registry for PtDAlgorithms pre-computed elimination traces.

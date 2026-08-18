@@ -1,0 +1,1 @@
+Command line tool for launching VS Code on a SLURM compute node.

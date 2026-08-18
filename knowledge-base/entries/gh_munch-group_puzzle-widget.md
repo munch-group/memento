@@ -1,0 +1,1 @@
+Jupyter notebook cell magic for producing an educational puzzle widget.

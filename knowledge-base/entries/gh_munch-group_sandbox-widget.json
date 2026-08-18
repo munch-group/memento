@@ -1,0 +1,17 @@
+{
+  "id": "gh_munch-group_sandbox-widget",
+  "type": "github",
+  "title": "sandbox-widget",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/sandbox-widget",
+  "date": "2026-08-09T21:52:41Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/sandbox-widget",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false
+}

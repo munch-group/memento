@@ -1501,15 +1501,13 @@
     "ZNF780B",
     "ZSCAN10"
   ],
-  "tags": [
-    "gene-set"
-  ],
+  "tags": [],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-08-16T05:40:50.425Z",
+  "date": "2026-06-13T15:35:01.575Z",
   "synced": false,
-  "_sortTag": "gene-set",
+  "_sortTag": "",
   "pinned": false
 }

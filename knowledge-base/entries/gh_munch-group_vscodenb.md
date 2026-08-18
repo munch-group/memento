@@ -1,1 +1,1 @@
-Theme sensitive plot and widget styling in vscode
+Theme sensitive plot and widget styling in vscode.

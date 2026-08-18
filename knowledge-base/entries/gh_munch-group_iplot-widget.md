@@ -1,0 +1,1 @@
+Jupyter notebook widget for interactive creation of seaborn plots.

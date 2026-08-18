@@ -1,1 +1,1 @@
-GWF workflow for sticcs
+GWF workflow for sticcs.

@@ -1,1 +1,1 @@
-Lecture notes for bioinformatics and programming
+Lecture notes for bioinformatics and programming.

@@ -1,0 +1,1 @@
+Jupyter notebook cell magic for producing an educational widget showing how marked expressions lines reduce to single values.

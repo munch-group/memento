@@ -9,8 +9,18 @@
   "source": "",
   "connection": false,
   "archived": false,
-  "due": "",
+  "due": "2026-09-03",
   "date": "2026-07-16T09:22:18.304Z",
   "synced": false,
-  "_sortTag": "Funding"
+  "_sortTag": "Funding",
+  "schedule": {
+    "subtasks": [
+      {
+        "id": "smrp41fhpgb6",
+        "title": "Develop application",
+        "start": "2026-08-17",
+        "end": "2026-09-01"
+      }
+    ]
+  }
 }

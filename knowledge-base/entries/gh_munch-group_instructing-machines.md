@@ -1,0 +1,1 @@
+Course material for an introduction to Python programming aided by AI.

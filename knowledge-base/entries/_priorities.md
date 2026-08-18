@@ -1,29 +1,23 @@
 ## Today todo
-- ~Ghostbuster til Emma~
-- Email TAs and Peter
-- Finish course material [[mrmacisv6p1p|Bioinformatics plan]]
-- Lundbeck wrap up / Grove UKbiobank
+- Shannon status (her results and y-strat-gwas)
 
 ## Week run
-- vep_data til Vasilij
-- Erik: Response to reviews [Manuscript](https://docs.google.com/document/d/1GaKJeLyq0ZLxUpiKnbMErn8zJV0CVSaYHeq-cWxYbc8/edit?tab=t.0#heading=h.6p4icvdq6o7p) [Notebook](https://github.com/erikfogh/admixture_baboons/blob/master/review_notebooks/rfmix05_diversity_and_admixture_close.ipynb)
-- Shannon status (her results and y-strat-gwas)
+- Erik: Response to reviews + New figure 1 [Manuscript](https://docs.google.com/document/d/1GaKJeLyq0ZLxUpiKnbMErn8zJV0CVSaYHeq-cWxYbc8/edit?tab=t.0#heading=h.6p4icvdq6o7p) [Notebook](https://github.com/erikfogh/admixture_baboons/blob/master/review_notebooks/rfmix05_diversity_and_admixture_close.ipynb)
+- Finish course material [[mrmacisv6p1p|Bioinformatics plan]]
+- New [TA plan](https://docs.google.com/spreadsheets/d/1-P4IaAKzO0Wkv8HwAe5CbBQ68a7YqUhdoXF9hlxsIOg/edit?gid=0#gid=0) (Bjarke is done TAing)
+- Lundbeck wrap up / Grove UKbiobank
 - Funding application overview/plan
+- Review [[mrma9fvk3v68|Phasic plan]]
 - Finish Phasic refactor
-- Look through [[msodvd8qz63d|Old research notes]]
-- Desktop items -> Memento
-- Pinboard -> Memento
-- LoF plan
-- Clean up chr3 notebook in geneinfo repo
 
 ## Month tactic
-- Read paper for journal club
-- Review [[mrma9fvk3v68|Phasic plan]] and have Claude review which github issues are still relevant.
 - SMBE talks: https://smbe2026.org/virtual-streaming/ Code: SMBE2026
 - Check nr of seats and billing for GitHub organization
 - Check Claude permissions granted
+- Have Claude review which github issues are relevant after refactor
 - Try Claude Science on LoF project
 - Complete hypothesis doc [[mndbilmcd0xt|Meiotic drive as engine of change]]
+- Clean up chr3 notebook in geneinfo repo
 - Plan for exploiting UKbiobank
 - Flesh out the phasic-popgen repo
 - SMBE follow-up: Tidy notes / watch talks [[mrnfkhbc3h18|SMBE26 notes]]

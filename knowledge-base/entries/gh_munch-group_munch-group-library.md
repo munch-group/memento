@@ -1,1 +1,1 @@
-Our template for a python library
+Our template for a python library.

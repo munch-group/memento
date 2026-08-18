@@ -1,1 +1,1 @@
-Tool for gene interaction exploration with Claude Code and INDRA
+Tool for gene interaction exploration with Claude Code and INDRA.

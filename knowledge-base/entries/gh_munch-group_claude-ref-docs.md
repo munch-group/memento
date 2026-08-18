@@ -1,1 +1,1 @@
-Submodule for internal docs extracted from online resources for use internal reference for Claude
+Submodule for internal docs extracted from online resources for use internal reference for Claude.

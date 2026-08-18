@@ -1,1 +1,1 @@
-Automated narrated screencast for educational use
+Automated narrated screencast for educational use.

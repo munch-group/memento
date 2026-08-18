@@ -3,7 +3,10 @@
   "type": "github",
   "title": "hic-compartment-borders",
   "tags": [
-    "Chromatin"
+    "Chromatin",
+    "hi-c",
+    "molecular-evolution",
+    "pymc"
   ],
   "genes": [],
   "source": "https://github.com/munch-group/hic-compartment-borders",

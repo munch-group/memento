@@ -1,1 +1,1 @@
-Our template for a python library
+Utility for saving large pandas data frames as parquet format split into smaller files smaller than the max size allowed on GitHub.

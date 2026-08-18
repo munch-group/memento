@@ -1,1 +1,1 @@
-Light VScode theme with a Claude feel
+VS code extension for a Light VScode theme with a Claude feel.

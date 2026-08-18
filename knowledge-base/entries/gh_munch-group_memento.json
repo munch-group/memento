@@ -17,6 +17,21 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "57f3eb5",
+      "msg": "update",
+      "date": "2026-08-18T13:25:57Z"
+    },
+    {
+      "sha": "9f5e3a8",
+      "msg": "update 502 entries",
+      "date": "2026-08-18T11:48:43Z"
+    },
+    {
+      "sha": "d3c79e2",
+      "msg": "update 504 entries",
+      "date": "2026-08-18T11:48:20Z"
+    },
+    {
       "sha": "99e0dbb",
       "msg": "update",
       "date": "2026-08-18T11:47:32Z"
@@ -50,21 +65,6 @@
       "sha": "8d8ce5b",
       "msg": "Pin chips hang off the search box, not the view switch",
       "date": "2026-08-16T06:07:25Z"
-    },
-    {
-      "sha": "44730cf",
-      "msg": "Esc never clears the search",
-      "date": "2026-08-16T05:50:05Z"
-    },
-    {
-      "sha": "d69419a",
-      "msg": "Merge pull request #4 from munch-group/graph-view-interactions",
-      "date": "2026-08-16T05:45:03Z"
-    },
-    {
-      "sha": "ba363d2",
-      "msg": "Graph view: give nodes and tooltip cards the card gestures they were missing",
-      "date": "2026-08-16T05:43:46Z"
     }
   ],
   "_ghIssuesRecent": [

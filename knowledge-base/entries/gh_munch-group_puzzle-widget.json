@@ -19,6 +19,46 @@
   "_sortTag": "Teaching",
   "_ghCommits": [
     {
+      "sha": "773926a",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:15:51Z"
+    },
+    {
+      "sha": "6eb2ab0",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:15:50Z"
+    },
+    {
+      "sha": "43f54e0",
+      "msg": "Added platforms",
+      "date": "2026-08-05T11:15:46Z"
+    },
+    {
+      "sha": "55792bd",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:09:49Z"
+    },
+    {
+      "sha": "bc6c39a",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:09:48Z"
+    },
+    {
+      "sha": "8c1c442",
+      "msg": "Switch conda package to noarch: python",
+      "date": "2026-08-05T09:59:22Z"
+    },
+    {
+      "sha": "df5c03f",
+      "msg": "patch  version bump",
+      "date": "2026-07-23T08:56:26Z"
+    },
+    {
+      "sha": "78ac3e3",
+      "msg": "patch  version bump",
+      "date": "2026-07-23T08:56:25Z"
+    },
+    {
       "sha": "341d49a",
       "msg": "update",
       "date": "2026-07-20T11:42:08Z"
@@ -27,46 +67,6 @@
       "sha": "7a0ca15",
       "msg": "patch  version bump",
       "date": "2026-07-19T21:24:24Z"
-    },
-    {
-      "sha": "3b6e1db",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T21:24:19Z"
-    },
-    {
-      "sha": "f263c96",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T20:48:10Z"
-    },
-    {
-      "sha": "f6cf7b0",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T20:48:06Z"
-    },
-    {
-      "sha": "292f031",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T20:47:38Z"
-    },
-    {
-      "sha": "a413a84",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T20:47:31Z"
-    },
-    {
-      "sha": "ca8158b",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T18:50:36Z"
-    },
-    {
-      "sha": "33979df",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T18:50:35Z"
-    },
-    {
-      "sha": "f8d1482",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T18:40:51Z"
     }
   ],
   "_ghIssuesRecent": []

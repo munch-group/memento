@@ -17,10 +17,64 @@
   "_sortTag": "",
   "_ghCommits": [
     {
-      "sha": "1dc96c2",
-      "msg": "Initial commit",
-      "date": "2026-07-22T18:01:38Z"
+      "sha": "b46fb35",
+      "msg": "update",
+      "date": "2026-08-09T21:59:59Z"
+    },
+    {
+      "sha": "c90f591",
+      "msg": "update",
+      "date": "2026-08-08T21:31:06Z"
+    },
+    {
+      "sha": "971cdf9",
+      "msg": "update",
+      "date": "2026-08-08T19:20:55Z"
+    },
+    {
+      "sha": "18357c0",
+      "msg": "update",
+      "date": "2026-08-08T16:34:14Z"
+    },
+    {
+      "sha": "2f61b74",
+      "msg": "update",
+      "date": "2026-08-08T12:52:02Z"
+    },
+    {
+      "sha": "cb2c796",
+      "msg": "update",
+      "date": "2026-08-08T10:52:04Z"
+    },
+    {
+      "sha": "c5e4949",
+      "msg": "Fixes to exercises",
+      "date": "2026-08-08T09:21:25Z"
+    },
+    {
+      "sha": "14a1df6",
+      "msg": "Added badges to exercises",
+      "date": "2026-08-07T22:14:00Z"
+    },
+    {
+      "sha": "f217fee",
+      "msg": "update",
+      "date": "2026-08-07T18:36:06Z"
+    },
+    {
+      "sha": "deda888",
+      "msg": "update",
+      "date": "2026-08-07T18:04:40Z"
     }
   ],
-  "_ghIssuesRecent": []
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "tester",
+      "state": "closed",
+      "date": "2026-08-08T10:36:14Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/instructing-machines/issues/1"
+    }
+  ]
 }

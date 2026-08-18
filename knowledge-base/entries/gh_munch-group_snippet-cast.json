@@ -19,54 +19,54 @@
   "_sortTag": "Teaching",
   "_ghCommits": [
     {
-      "sha": "761e440",
+      "sha": "d21f228",
       "msg": "patch  version bump",
-      "date": "2026-07-21T10:25:44Z"
+      "date": "2026-08-05T10:11:31Z"
     },
     {
-      "sha": "1f31ccf",
+      "sha": "4650a05",
       "msg": "patch  version bump",
-      "date": "2026-07-21T10:25:40Z"
+      "date": "2026-08-05T10:11:27Z"
     },
     {
-      "sha": "aeabfe8",
-      "msg": "bumped base image version",
-      "date": "2026-07-21T10:25:09Z"
+      "sha": "ea2eb11",
+      "msg": "Switch conda package to noarch: python",
+      "date": "2026-08-05T10:01:44Z"
     },
     {
-      "sha": "03aad45",
+      "sha": "420af61",
       "msg": "patch  version bump",
-      "date": "2026-07-21T07:33:51Z"
+      "date": "2026-07-23T15:23:33Z"
     },
     {
-      "sha": "25ed1d9",
+      "sha": "1b43e4f",
       "msg": "patch  version bump",
-      "date": "2026-07-21T07:33:47Z"
+      "date": "2026-07-23T15:23:30Z"
     },
     {
-      "sha": "58907db",
+      "sha": "a197d8f",
       "msg": "patch  version bump",
-      "date": "2026-07-20T21:15:39Z"
+      "date": "2026-07-23T15:12:30Z"
     },
     {
-      "sha": "0896154",
+      "sha": "9f5a5cc",
       "msg": "patch  version bump",
-      "date": "2026-07-20T21:15:35Z"
+      "date": "2026-07-23T15:12:23Z"
     },
     {
-      "sha": "9928218",
+      "sha": "ba8e542",
+      "msg": "updated pixi.lock",
+      "date": "2026-07-23T11:11:24Z"
+    },
+    {
+      "sha": "071dbf0",
       "msg": "patch  version bump",
-      "date": "2026-07-20T20:23:35Z"
+      "date": "2026-07-23T11:11:09Z"
     },
     {
-      "sha": "ac64a96",
+      "sha": "a07bf94",
       "msg": "patch  version bump",
-      "date": "2026-07-20T20:23:31Z"
-    },
-    {
-      "sha": "058b8ee",
-      "msg": "Merge origin/main (changelog update for v0.1.25) into local main",
-      "date": "2026-07-20T20:20:42Z"
+      "date": "2026-07-23T11:11:06Z"
     }
   ],
   "_ghIssuesRecent": []

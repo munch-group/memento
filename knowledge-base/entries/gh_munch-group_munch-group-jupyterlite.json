@@ -17,6 +17,41 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "33d801a",
+      "msg": "updated gitignore",
+      "date": "2026-08-07T18:35:35Z"
+    },
+    {
+      "sha": "9ecadd3",
+      "msg": "update",
+      "date": "2026-07-26T14:05:16Z"
+    },
+    {
+      "sha": "b744d3a",
+      "msg": "update",
+      "date": "2026-07-23T20:34:53Z"
+    },
+    {
+      "sha": "649420f",
+      "msg": "Add anywidget as a build-time dependency",
+      "date": "2026-07-23T18:47:41Z"
+    },
+    {
+      "sha": "f2da1de",
+      "msg": "Add jupyterlab_widgets so ipywidgets/anywidget actually render",
+      "date": "2026-07-23T18:32:38Z"
+    },
+    {
+      "sha": "2822210",
+      "msg": "update",
+      "date": "2026-07-23T16:51:22Z"
+    },
+    {
+      "sha": "6d3e9f5",
+      "msg": "update",
+      "date": "2026-07-23T16:34:47Z"
+    },
+    {
       "sha": "5b87682",
       "msg": "Add arg-dashboard notebook with installation and run configurations",
       "date": "2026-02-08T23:22:57Z"
@@ -30,36 +65,6 @@
       "sha": "4921033",
       "msg": "update",
       "date": "2025-11-19T20:36:54Z"
-    },
-    {
-      "sha": "47dd3f2",
-      "msg": "Update",
-      "date": "2025-11-19T20:33:20Z"
-    },
-    {
-      "sha": "bae0918",
-      "msg": "Update deploy.yml",
-      "date": "2025-06-04T06:05:04Z"
-    },
-    {
-      "sha": "c40e857",
-      "msg": "Update deploy.yml",
-      "date": "2025-06-04T06:00:35Z"
-    },
-    {
-      "sha": "ae7bcf2",
-      "msg": "Update deploy.yml",
-      "date": "2025-06-04T05:58:27Z"
-    },
-    {
-      "sha": "b76e463",
-      "msg": "Update README.md",
-      "date": "2025-06-04T05:32:13Z"
-    },
-    {
-      "sha": "81278c1",
-      "msg": "Initial commit",
-      "date": "2025-06-04T05:28:42Z"
     }
   ],
   "_ghIssuesRecent": []

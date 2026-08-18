@@ -17,54 +17,54 @@
   "_sortTag": "",
   "_ghCommits": [
     {
-      "sha": "02574c4",
-      "msg": "Plotting work",
-      "date": "2025-12-15T09:09:32Z"
+      "sha": "6023736",
+      "msg": "Close population RFMix work",
+      "date": "2026-07-20T13:04:47Z"
     },
     {
-      "sha": "28052d3",
-      "msg": "Relate updated analysis",
-      "date": "2023-09-28T11:38:09Z"
+      "sha": "268657e",
+      "msg": "README update",
+      "date": "2026-07-08T09:22:34Z"
     },
     {
-      "sha": "0087772",
-      "msg": "Remove ignored files",
-      "date": "2023-03-01T10:54:42Z"
+      "sha": "1dfafba",
+      "msg": "Readme update and admixture timing tests",
+      "date": "2026-07-08T09:21:50Z"
     },
     {
-      "sha": "b7848a1",
-      "msg": "Remove ignored files",
-      "date": "2023-03-01T10:53:52Z"
+      "sha": "f14d4cf",
+      "msg": "Chromosome X simulation analysis",
+      "date": "2026-07-07T09:09:22Z"
     },
     {
-      "sha": "817eac9",
-      "msg": "Remove ignored files",
-      "date": "2023-03-01T10:51:47Z"
+      "sha": "21ed926",
+      "msg": "Rfmix sim chrX",
+      "date": "2026-07-02T17:43:56Z"
     },
     {
-      "sha": "1666834",
-      "msg": "ReLERNN implementation",
-      "date": "2023-03-01T10:48:03Z"
+      "sha": "ac34a6b",
+      "msg": "RFmix updates",
+      "date": "2026-06-26T11:11:48Z"
     },
     {
-      "sha": "d1e8b01",
-      "msg": "lai analysis setup",
-      "date": "2023-02-13T13:46:19Z"
+      "sha": "c8ad724",
+      "msg": "Chr8 sim runs",
+      "date": "2026-06-25T08:51:02Z"
     },
     {
-      "sha": "e5ec0f9",
-      "msg": "lai analysis setup",
-      "date": "2023-02-13T13:41:08Z"
+      "sha": "85f032d",
+      "msg": "License update",
+      "date": "2026-06-25T08:43:03Z"
     },
     {
-      "sha": "0772ebb",
-      "msg": "Git test",
-      "date": "2022-01-18T15:22:45Z"
+      "sha": "3f7aae7",
+      "msg": "Close reference investigation",
+      "date": "2026-06-24T08:45:16Z"
     },
     {
-      "sha": "de86599",
-      "msg": "Recombination/ancestry interaction",
-      "date": "2022-01-18T15:19:55Z"
+      "sha": "63ccd64",
+      "msg": "Review prep",
+      "date": "2026-05-25T10:29:31Z"
     }
   ],
   "_ghIssuesRecent": []

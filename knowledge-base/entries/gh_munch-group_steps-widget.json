@@ -19,54 +19,54 @@
   "_sortTag": "Teaching",
   "_ghCommits": [
     {
-      "sha": "170598a",
+      "sha": "2d26d7a",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:10:35Z"
+    },
+    {
+      "sha": "801272f",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:10:35Z"
+    },
+    {
+      "sha": "6daa430",
+      "msg": "Switch conda package to noarch: python",
+      "date": "2026-08-05T09:37:13Z"
+    },
+    {
+      "sha": "78ec0d0",
+      "msg": "patch  version bump",
+      "date": "2026-08-04T11:05:52Z"
+    },
+    {
+      "sha": "ccfbe72",
+      "msg": "patch  version bump",
+      "date": "2026-08-04T11:05:51Z"
+    },
+    {
+      "sha": "03a0d30",
+      "msg": "Added steps of math too",
+      "date": "2026-08-04T11:05:34Z"
+    },
+    {
+      "sha": "2d90d2a",
+      "msg": "patch  version bump",
+      "date": "2026-08-04T08:35:43Z"
+    },
+    {
+      "sha": "898d4f0",
+      "msg": "patch  version bump",
+      "date": "2026-08-04T08:35:43Z"
+    },
+    {
+      "sha": "c4f2c89",
       "msg": "update",
-      "date": "2026-07-19T17:39:16Z"
+      "date": "2026-08-04T08:35:36Z"
     },
     {
-      "sha": "cfe5fe4",
+      "sha": "c8859bb",
       "msg": "patch  version bump",
-      "date": "2026-07-19T08:11:43Z"
-    },
-    {
-      "sha": "58e8d37",
-      "msg": "minor  version bump",
-      "date": "2026-07-19T08:11:35Z"
-    },
-    {
-      "sha": "9fa5d7f",
-      "msg": "Escape backslashes when flattening steps.py into the exec oneliner",
-      "date": "2026-07-19T08:02:14Z"
-    },
-    {
-      "sha": "ee9b472",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T07:33:38Z"
-    },
-    {
-      "sha": "a8fe14d",
-      "msg": "patch  version bump",
-      "date": "2026-07-19T07:33:35Z"
-    },
-    {
-      "sha": "2cc4a52",
-      "msg": "Added suppport for python 3.10 and up",
-      "date": "2026-07-19T07:33:17Z"
-    },
-    {
-      "sha": "d7ce733",
-      "msg": "patch  version bump",
-      "date": "2026-07-18T09:50:09Z"
-    },
-    {
-      "sha": "0f07fdc",
-      "msg": "patch  version bump",
-      "date": "2026-07-18T09:50:09Z"
-    },
-    {
-      "sha": "60e1272",
-      "msg": "patch  version bump",
-      "date": "2026-07-18T09:11:20Z"
+      "date": "2026-07-23T08:55:13Z"
     }
   ],
   "_ghIssuesRecent": []

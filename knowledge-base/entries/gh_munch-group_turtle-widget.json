@@ -19,54 +19,54 @@
   "_sortTag": "Teaching",
   "_ghCommits": [
     {
-      "sha": "755fdc8",
+      "sha": "52b7283",
       "msg": "patch  version bump",
-      "date": "2026-07-19T14:03:19Z"
+      "date": "2026-08-08T12:48:08Z"
     },
     {
-      "sha": "99357f9",
+      "sha": "ee97ddd",
       "msg": "patch  version bump",
-      "date": "2026-07-19T14:03:18Z"
+      "date": "2026-08-08T12:48:06Z"
     },
     {
-      "sha": "5aa76f1",
-      "msg": "update",
-      "date": "2026-07-19T14:03:05Z"
+      "sha": "f1c9576",
+      "msg": "Added games",
+      "date": "2026-08-08T12:47:53Z"
     },
     {
-      "sha": "60aee0d",
+      "sha": "2c87a13",
       "msg": "patch  version bump",
-      "date": "2026-07-18T09:50:48Z"
+      "date": "2026-08-05T11:21:28Z"
     },
     {
-      "sha": "0a0110d",
+      "sha": "f1f4e40",
       "msg": "patch  version bump",
-      "date": "2026-07-18T09:50:46Z"
+      "date": "2026-08-05T11:21:25Z"
     },
     {
-      "sha": "518fb6d",
-      "msg": "update",
-      "date": "2026-05-23T17:10:25Z"
+      "sha": "0a3b4c1",
+      "msg": "Added platforms",
+      "date": "2026-08-05T11:21:16Z"
     },
     {
-      "sha": "d8c9d88",
+      "sha": "9a43713",
+      "msg": "Added platforms",
+      "date": "2026-08-05T11:16:41Z"
+    },
+    {
+      "sha": "2c27090",
       "msg": "patch  version bump",
-      "date": "2026-05-23T17:05:44Z"
+      "date": "2026-08-05T10:12:01Z"
     },
     {
-      "sha": "0bf46fd",
+      "sha": "7fbc8b6",
       "msg": "patch  version bump",
-      "date": "2026-05-23T17:05:42Z"
+      "date": "2026-08-05T10:12:00Z"
     },
     {
-      "sha": "ed8cef9",
-      "msg": "update",
-      "date": "2026-05-23T17:05:17Z"
-    },
-    {
-      "sha": "55c8a3c",
-      "msg": "notebook updates",
-      "date": "2026-05-23T16:49:54Z"
+      "sha": "e4c4fb8",
+      "msg": "Switch conda package to noarch: python",
+      "date": "2026-08-05T09:59:47Z"
     }
   ],
   "_ghIssuesRecent": []

@@ -13,5 +13,68 @@
   "_ghForks": 0,
   "_ghLang": "Python",
   "_ghOpenIssues": 1,
-  "_ghPrivate": false
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "8db95de",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:15:34Z"
+    },
+    {
+      "sha": "abb3bde",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:15:33Z"
+    },
+    {
+      "sha": "41ec406",
+      "msg": "Added platforms",
+      "date": "2026-08-05T11:15:31Z"
+    },
+    {
+      "sha": "03cc031",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:15:16Z"
+    },
+    {
+      "sha": "24909e6",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:15:16Z"
+    },
+    {
+      "sha": "1c55dcc",
+      "msg": "Added platforms",
+      "date": "2026-08-05T11:15:11Z"
+    },
+    {
+      "sha": "3b962b7",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:09:29Z"
+    },
+    {
+      "sha": "b3bfbdb",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:09:28Z"
+    },
+    {
+      "sha": "9bd01a9",
+      "msg": "Switch conda package to noarch: python",
+      "date": "2026-08-05T10:01:11Z"
+    },
+    {
+      "sha": "50c0751",
+      "msg": "Remove stale docs/index.qmd stub blocking homepage redirect",
+      "date": "2026-07-25T10:44:07Z"
+    }
+  ],
+  "_ghIssuesRecent": [
+    {
+      "number": 1,
+      "title": "Fix github action",
+      "state": "open",
+      "date": "2026-04-01T11:39:51Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/iplot-widget/issues/1"
+    }
+  ]
 }

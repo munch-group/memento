@@ -20,6 +20,11 @@
   "_sortTag": "LAI",
   "_ghCommits": [
     {
+      "sha": "4042b75",
+      "msg": "Lots of work exploring what can be achieved with better ARG sampling",
+      "date": "2026-07-27T10:09:32Z"
+    },
+    {
       "sha": "1964945",
       "msg": "update",
       "date": "2026-07-14T13:39:14Z"
@@ -63,11 +68,6 @@
       "sha": "81184b0",
       "msg": "Updated notebooks and api docs",
       "date": "2026-07-07T08:03:46Z"
-    },
-    {
-      "sha": "7f9b241",
-      "msg": "update",
-      "date": "2026-07-06T20:18:04Z"
     }
   ],
   "_ghIssuesRecent": []

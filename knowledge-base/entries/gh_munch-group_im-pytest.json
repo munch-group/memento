@@ -13,5 +13,59 @@
   "_ghForks": 0,
   "_ghLang": "Python",
   "_ghOpenIssues": 0,
-  "_ghPrivate": false
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "f73d93e",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:14:58Z"
+    },
+    {
+      "sha": "b5c975d",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T11:14:58Z"
+    },
+    {
+      "sha": "71f70da",
+      "msg": "Added platforms",
+      "date": "2026-08-05T11:14:54Z"
+    },
+    {
+      "sha": "a6a5af5",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:09:10Z"
+    },
+    {
+      "sha": "589b7de",
+      "msg": "patch  version bump",
+      "date": "2026-08-05T10:08:32Z"
+    },
+    {
+      "sha": "19f0f93",
+      "msg": "Switch conda package to noarch: python",
+      "date": "2026-08-05T10:00:30Z"
+    },
+    {
+      "sha": "4652de6",
+      "msg": "patch  version bump",
+      "date": "2026-08-03T12:13:05Z"
+    },
+    {
+      "sha": "03cb32b",
+      "msg": "patch  version bump",
+      "date": "2026-08-03T12:13:05Z"
+    },
+    {
+      "sha": "13ece21",
+      "msg": "updated undefined functions message",
+      "date": "2026-08-03T12:12:40Z"
+    },
+    {
+      "sha": "32d8b1e",
+      "msg": "patch  version bump",
+      "date": "2026-08-03T11:26:26Z"
+    }
+  ],
+  "_ghIssuesRecent": []
 }

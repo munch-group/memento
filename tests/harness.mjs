@@ -171,7 +171,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       ghFlush, ghScheduleFlush, saveEntryToFile, deleteEntryFile, saveToFile,
       ghEnqueueEntry, ghEnqueueImage, ghEnqueueInbox, splitEntry, ghApplyWritePermission,
       ghCommitMessage, fileToBase64, ghChunkTree,
-      loadFromFile, storageReady, ghRefreshIfStale, ghLoadEntries, tryLoadFromGitHubCache, idbGet, idbPut, SORTS,
+      loadFromFile, reloadNow, storageReady, ghRefreshIfStale, ghLoadEntries, tryLoadFromGitHubCache, idbGet, idbPut, SORTS,
       openTagEditor, toggleCardTag, closeTagEditor, renderTagEditor,
       toggleBulkMode, bulkToggle, bulkClear, bulkRender, bulkPin, bulkArchive, bulkDelete,
       openBulkTagPicker, toggleBulkTag, closeBulkTagPicker,

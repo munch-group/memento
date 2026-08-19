@@ -424,5 +424,42 @@ console.log('\n12. iOS reopen (fresh page load, cache already warm): stale-check
   eq(api.items.map(i => i.id), ['a'], 'and does not reload');
 }
 
+console.log('\n13. a manual reload actually reloads');
+{
+  const { gh, api } = await setup();
+  gh.externalCommit(`${ENTRIES}/x.json`, JSON.stringify({ id: 'x', type: 'note', title: 'x', tags: [], genes: [], date: '2026-07-01T00:00:00Z' }));
+  gh.externalCommit(`${ENTRIES}/x.md`, 'first body');
+  await api.ghLoadEntries();
+  eq(api.items.map(i => i.id), ['x'], 'first load fills the cache');
+
+  // Nothing moved on the server. The automatic paths are RIGHT to do nothing here...
+  const beforeAuto = gh.log.filter(c => c.url.includes('raw.githubusercontent')).length;
+  await api.ghRefreshIfStale();
+  eq(gh.log.filter(c => c.url.includes('raw.githubusercontent')).length, beforeAuto,
+     'the automatic check refetches nothing when main has not moved');
+
+  // ...but a press is an explicit "go and look now", and must actually go and look.
+  const beforeManual = gh.log.filter(c => c.url.includes('raw.githubusercontent')).length;
+  await api.reloadNow();
+  eq(gh.log.filter(c => c.url.includes('raw.githubusercontent')).length > beforeManual, true,
+     'a manual reload refetches even though the sha is unchanged');
+  eq(api.items.map(i => i.id), ['x'], 'and the cards are still there afterwards');
+
+  // A manual reload picks up an edit made outside the app, which is the whole point of pressing it.
+  gh.externalCommit(`${ENTRIES}/x.md`, 'edited on the mac');
+  await api.reloadNow();
+  eq(api.items.find(i => i.id === 'x').content, 'edited on the mac', 'a manual reload shows work pushed from elsewhere');
+}
+
+console.log('\n14. a manual reload must not discard unsaved work either');
+{
+  const { gh, api, toasts } = await setup();
+  api.items = [card('p', 'typed on the phone, not yet committed')];
+  await api.saveEntryToFile(api.items[0]);
+  eq(api.queue.size > 0, true, 'an edit is pending');
+  await api.reloadNow();
+  eq(api.items.map(i => i.id), ['p'], 'the pending card survives a manual reload');
+}
+
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);

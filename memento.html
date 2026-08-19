@@ -66,6 +66,9 @@ a { color: inherit; }
 .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
 .btn:disabled { opacity: 0.55; cursor: default; }
+.rl-glyph { display: inline-block; }
+@keyframes rl-spin { to { transform: rotate(360deg); } }
+.rl-glyph.spin { animation: rl-spin 0.9s linear infinite; }
 .btn-danger { color: #c00; border-color: rgba(200,0,0,0.3); }
 .btn-danger:hover { background: rgba(200,0,0,0.05); }
 .view-bookmark { display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; background: none; border: none; color: #6E56CF; cursor: pointer; opacity: 0.75; transition: opacity 0.15s; }
@@ -762,6 +765,7 @@ a { color: inherit; }
              Export/Cleanup: Claude reads the knowledge base live through memento-mcp.py, so there
              is nothing to push into its memory and nothing to reap afterwards. -->
         <div class="header-actions">
+          <button class="btn btn-sm" id="btn-reload" onclick="reloadNow()" title="Reload from GitHub now"><span class="rl-glyph">&#8635;</span></button>
           <button class="btn btn-sm btn-primary" id="btn-add-toggle" onclick="toggleForm()">+ Add</button>
         </div>
       </div>
@@ -1043,6 +1047,36 @@ function splitEntry(entry) {
 async function loadFromFile() {
   if (ghRepoMode) return ghLoadEntries();
   return fsaLoadEntries();
+}
+
+// Manual reload. Every automatic path (window focus, visibilitychange, boot, the periodic check)
+// deliberately re-reads only when something actually moved — right for them, since they fire
+// unprompted and shouldn't refetch 600 cards for nothing. But it made a button pointless: press it
+// while the sha matched and all it did was say "Loaded from cache" and change nothing on screen.
+// A press is an explicit "go and look now", so this bypasses the cache shortcut and refetches.
+let _reloading = false;
+async function reloadNow() {
+  if (_reloading) return;
+  _reloading = true;
+  const btn = document.getElementById('btn-reload');
+  const glyph = btn && btn.querySelector('.rl-glyph');
+  if (btn) btn.disabled = true;
+  if (glyph) glyph.classList.add('spin');
+  try {
+    if (ghRepoMode) {
+      await ghLoadEntries(null, { force: true });
+    } else if (dirHandle) {
+      await loadFromFile();
+      computeSortTags(); renderFilters(); renderList();
+      showToast(`Reloaded ${items.length} entries`);
+    } else {
+      showToast('Connect a folder or GitHub first');
+    }
+  } finally {
+    _reloading = false;
+    if (btn) btn.disabled = false;
+    if (glyph) glyph.classList.remove('spin');
+  }
 }
 
 async function saveEntryToFile(entry) {
@@ -8112,6 +8146,11 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+// A phone can sit open on the same screen for hours without a single visibility change, so the
+// event-driven checks alone can leave it hours behind. One cheap request every ten minutes; it
+// only reloads when main actually moved, and never while the tab is hidden.
+setInterval(() => { if (document.visibilityState === 'visible') ghRefreshIfStale(); }, 10 * 60 * 1000);
+
 // The desktop already reloads itself on window focus (see the 'focus' listener). This is the
 // same courtesy for the GitHub backend, which had none — which is why iOS needed a Reload button
 // at all. One cheap request on returning to the app: only reload if main actually moved.
@@ -8129,7 +8168,7 @@ let _ghLoadStep = '';
 
 // knownSha: pass the HEAD sha when the caller already fetched it (ghRefreshIfStale), so this
 // doesn't turn one round trip into two.
-async function ghLoadEntries(knownSha) {
+async function ghLoadEntries(knownSha, opts = {}) {
   if (!ghPat()) {
     await ghPromptPat();
     if (!ghPat()) return;
@@ -8158,7 +8197,8 @@ async function ghLoadEntries(knownSha) {
     }
     _ghHeadSha = currentSha;
 
-    if (cachedSha === currentSha) {
+    // A manual reload skips this shortcut on purpose — see reloadNow().
+    if (!opts.force && cachedSha === currentSha) {
       _ghLoadStep = 'hydrate from cache';
       const cached = await idbGet('gh_entries');
       const cachedInbox = await idbGet('gh_inbox');

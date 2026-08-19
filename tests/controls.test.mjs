@@ -642,9 +642,14 @@ console.log('\nThe push-to-Claude machinery is gone');
   eq(api.SORTS.map(s => s.key), ['date', 'due', 'type', 'tags', 'connection', 'alpha'], 'the remaining sorts are unchanged');
 
   const html = (await import('node:fs')).readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
-  for (const gone of ['syncAll(', 'cleanupMemory(', 'syncItem(', 'syncEditingItem(', 'btn-sync-all', 'btn-reload', 'btn-form-sync']) {
+  // btn-reload is NOT in this list any more. Reload was dropped when both platforms started
+  // refreshing themselves, but self-refresh is deliberately conservative — it re-reads only when
+  // the sha moved — so the button came back for the case that needs it: "go and look right now".
+  for (const gone of ['syncAll(', 'cleanupMemory(', 'syncItem(', 'syncEditingItem(', 'btn-sync-all', 'btn-form-sync']) {
     eq(html.includes(gone), false, `${gone} is gone from memento.html`);
   }
+  eq(html.includes('btn-reload'), true, 'the manual reload button is present');
+  eq(html.includes('reloadNow()'), true, 'and it is wired to reloadNow()');
   // The field itself must stay: kb-manage.py's validate command requires it on every entry.
   eq(html.includes('synced:false'), true, 'new entries still carry `synced` (kb-manage.py validate requires it)');
 }

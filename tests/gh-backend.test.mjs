@@ -46,6 +46,14 @@ function makeGitHub({ pushAccess = true } = {}) {
       const b = blobs.get(bs);
       return Buffer.from(b.content, 'base64').toString('utf8');
     },
+    // The read path pins raw URLs to the commit its listing came from, not to the tip.
+    fileAtCommit(cs, path) {
+      const c = commits.get(cs);
+      if (!c) return undefined;
+      const bs = trees.get(c.tree).get(path);
+      if (!bs) return undefined;
+      return Buffer.from(blobs.get(bs).content, 'base64').toString('utf8');
+    },
     rawAt(path) {
       const bs = gh.tipTree().get(path);
       return bs ? Buffer.from(blobs.get(bs).content, 'base64') : undefined;
@@ -75,6 +83,16 @@ function makeGitHub({ pushAccess = true } = {}) {
     const body = opts.body ? JSON.parse(opts.body) : null;
     const base = `https://api.github.com/repos/${REPO}`;
 
+    // Raw file fetches, pinned to a commit — what the Trees-API listing builds its URLs from.
+    const rawBase = `https://raw.githubusercontent.com/${REPO}/`;
+    if (url.startsWith(rawBase)) {
+      const rest = url.slice(rawBase.length);
+      const cut = rest.indexOf('/');
+      const body = gh.fileAtCommit(rest.slice(0, cut), rest.slice(cut + 1));
+      if (body === undefined) return json(404, { message: 'no such file' });
+      return { ok: true, status: 200, statusText: '', text: async () => body, json: async () => JSON.parse(body) };
+    }
+
     // Raw file fetches — the read path downloads each entry via its download_url.
     if (url.startsWith('https://raw.test/')) {
       const body = gh.fileAt(url.slice('https://raw.test/'.length));
@@ -84,6 +102,18 @@ function makeGitHub({ pushAccess = true } = {}) {
 
     const path = url.startsWith(base) ? url.slice(base.length) : null;
     if (path === null) return json(404, { message: 'no route ' + url });
+
+    // Git Trees API — how the read path lists entries now. The Contents API caps a directory at
+    // 1000 files and truncates in silence, which is what hid the newest cards from iOS.
+    if (method === 'GET' && path.startsWith('/git/trees/')) {
+      const [cs, dir = ''] = decodeURIComponent(path.slice('/git/trees/'.length)).split(':');
+      const c = commits.get(cs);
+      if (!c) return json(404, { message: 'no commit ' + cs });
+      const t = trees.get(c.tree);
+      const prefix = dir ? dir + '/' : '';
+      const kids = [...t.keys()].filter(k => k.startsWith(prefix) && !k.slice(prefix.length).includes('/'));
+      return json(200, { truncated: false, tree: kids.map(k => ({ path: k.slice(prefix.length), type: 'blob' })) });
+    }
 
     // Directory listing + INBOX, as the read path expects them.
     if (method === 'GET' && path.startsWith('/contents/')) {

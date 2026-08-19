@@ -8175,14 +8175,29 @@ async function ghLoadEntries(knownSha) {
       }
     }
 
-    // Fetch directory listing and INBOX.md in parallel
+    // Fetch directory listing and INBOX.md in parallel.
+    //
+    // The listing comes from the Git Trees API, NOT the Contents API. Contents caps a directory at
+    // 1000 entries and truncates silently — no error, no flag. entries/ holds a .json and a .md per
+    // card, so it crossed that line at ~500 cards, and from then on iOS quietly loaded only the
+    // first 500. Ids are Date.now().toString(36), so they sort chronologically and the half that
+    // got cut was the NEWEST half: every card made after the cutoff was simply invisible on the
+    // phone. Trees has no such cap (100k entries) and sets `truncated` when it does hit its own.
     _ghLoadStep = 'fetch listing';
-    const [listResp, inboxResp] = await Promise.all([
-      fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_ENTRIES_PATH}`, { headers: ghHeaders() }),
+    const [treeResp, inboxResp] = await Promise.all([
+      fetch(`https://api.github.com/repos/${GH_REPO}/git/trees/${currentSha}:${GH_ENTRIES_PATH}`, { headers: ghHeaders() }),
       fetch(`https://api.github.com/repos/${GH_REPO}/contents/knowledge-base/INBOX.md`, { headers: {...ghHeaders(), 'Accept': 'application/vnd.github.raw'} }).catch(() => null),
     ]);
-    if (!listResp.ok) throw new Error(`GitHub API ${listResp.status}: ${listResp.statusText}`);
-    const files = await listResp.json();
+    if (!treeResp.ok) throw new Error(`GitHub API ${treeResp.status}: ${treeResp.statusText}`);
+    const tree = await treeResp.json();
+    // Never truncate in silence again — that is the whole bug.
+    if (tree.truncated) showToast('Warning: GitHub truncated the entry listing — some cards are missing');
+    // Trees gives path + sha but no download_url, so build the raw URL. Pinned to the same commit
+    // the listing came from, so a mid-load push can't mix two versions. (Public repo: raw needs no
+    // token. If this repo ever goes private these URLs need one.)
+    const files = (tree.tree || [])
+      .filter(f => f.type === 'blob')
+      .map(f => ({ name: f.path, download_url: `https://raw.githubusercontent.com/${GH_REPO}/${currentSha}/${GH_ENTRIES_PATH}/${f.path}` }));
     window._kbInbox = (inboxResp && inboxResp.ok) ? await inboxResp.text() : '';
 
     // Group by entry id

@@ -26,14 +26,15 @@ function ghFetch({ push = true } = {}) {
       });
       if (url === `https://api.github.com/repos/${REPO}`) return j({ permissions: { push } });
       if (url.includes('/commits/main')) return j({ sha: 'head1' });
-      if (url.includes('/contents/knowledge-base/entries')) {
-        return j([{ name: 'a1.json', download_url: 'https://raw.example/a1.json' }]);
+      // Listing via the Git Trees API (the Contents API caps a directory at 1000 files).
+      if (url.includes('/git/trees/') && url.includes('knowledge-base/entries')) {
+        return j({ truncated: false, tree: [{ path: 'a1.json', type: 'blob' }, { path: 'a1.md', type: 'blob' }] });
       }
       if (url.includes('/contents/knowledge-base/INBOX.md')) return j('inbox text');
-      if (url === 'https://raw.example/a1.json') {
+      if (/entries\/a1\.json$/.test(url)) {
         return j({ id: 'a1', type: 'note', title: 'Card A', tags: [], genes: [], date: '2026-07-01T00:00:00Z' });
       }
-      if (url === 'https://raw.example/a1.md') return j('card body');
+      if (/entries\/a1\.md$/.test(url)) return j('card body');
       return j({}, false);
     },
   };

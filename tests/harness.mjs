@@ -281,6 +281,10 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get previewMode(){ return previewMode; },
       get connFilter(){ return connFilter; },
       get archiveFilter(){ return archiveFilter; },
+      // Images (drop + paste)
+      imageFileName, saveImageFile, insertImagesAtCaret, appendImagesToCard, clipboardImages, imagePaste,
+      cardDrop, contentDrop,
+      set ghEditMode(v){ ghEditMode = v; },
       togglePinnedCard, renderPinnedCards,
       get pinnedCardIds(){ return [...pinnedCardIds].sort(); },
       GH_FLUSH_DELAY,

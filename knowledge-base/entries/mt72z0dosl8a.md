@@ -1,0 +1,5 @@
+- Make imanol-pib repo and make him co-owner
+- gdk-project-add-user -g imanol-pib -u imanolhpc
+- check out repo and init and gh-pages
+- make folder structure and, check out repo
+- Juraj about trained model

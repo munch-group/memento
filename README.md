@@ -174,7 +174,18 @@ Toggle the gene highlight bar to enter gene names. Matching genes are shown in a
 
 ## Images
 
-Drag and drop images onto a card while editing. Images are stored in a local `images/` folder (requires connecting a folder). Image markdown is stripped during Claude sync since local images aren't accessible to Claude.
+Drag and drop images onto a card while editing, or **paste** one straight from the clipboard
+(⌘V) — a screenshot goes in without ever touching a file. Both write the image into the
+`images/` folder and drop a markdown `![…](images/…)` reference into the card body:
+
+- **Editor open** — the reference is spliced in at the caret of the Content field (appended to the
+  end if the field isn't focused). Nothing is written to the card until you Save.
+- **Editor closed** — the image is appended to the **expanded** card and saved immediately.
+- Anywhere else — no card open, or the caret in the search box — the paste is left to the browser.
+
+Images need a connected folder (or the GitHub backend, where the image is committed alongside the
+card in one commit). Image markdown is stripped during Claude sync since local images aren't
+accessible to Claude.
 
 ## Web clipper bookmarklet
 

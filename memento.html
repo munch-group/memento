@@ -568,6 +568,19 @@ a { color: inherit; }
 .ge-progress { position: absolute; left: 12px; top: 12px; z-index: 6; padding: 4px 10px; border-radius: var(--r);
   background: rgba(255,255,255,0.9); font-family: var(--mono); font-size: 11px; color: var(--text2); box-shadow: 0 1px 4px rgba(20,20,19,0.12); }
 .tl-body { flex: 1 0 auto; display: flex; }
+/* Split view: clicking a task name opens that card beside the lanes (tlOpenCard). The framed
+   rounded box moves from the view onto the timeline body alone, so the lanes look exactly as they
+   do full-width — just narrower — and the card floats on the page background like the Stack's do.
+   That is the Genes view's bargain (#genes-view.ge-split), struck the same way one panel over.
+   The card half is a hard 50%; the lanes take what is left, which needs flex-basis 0 and min-width
+   0 on .tl-body — its own basis is auto, and auto plus shrink 0 would keep the full-width lane and
+   push the card off the edge. The host stays flex:1 0 auto, so a long card grows the view and
+   .main scrolls, exactly as a timeline with more rows than fit already does. */
+#timeline-view.tl-split { flex-direction: row; gap: 1.25rem; border: none; border-radius: 0; background: transparent; overflow: visible; }
+#timeline-view.tl-split .tl-body { flex: 1 1 0; min-width: 0; border: 1px solid var(--border); border-radius: var(--rl); background: #ffffff; overflow: hidden; }
+.tl-cards { display: none; }
+#timeline-view.tl-split .tl-cards { display: flex; flex-direction: column; gap: 8px;   /* the Stack's .item-col gap */
+  flex: 0 0 50%; min-width: 0; }
 /* The Task column is a drawer: click its header or empty space to minimise it to a thin strip of
    just the row markers (freeing width for the canvas), click again to restore. The inner is a fixed
    216px so the labels hold their layout while the outer clips them away as it narrows. */
@@ -582,6 +595,11 @@ a { color: inherit; }
 .tl-dot { width: 8px; height: 8px; border-radius: 2px; background: #c4c2b8; flex-shrink: 0; }
 .tl-rowtitle { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; cursor: pointer; }
 .tl-rowtitle:hover { color: var(--accent); }
+/* The row whose card is open in the panel. No background tint: .tl-rowacts fades in over a --bg2
+   gradient, which a tinted row would show a seam against on hover. The marker and the title carry
+   it instead. */
+.tl-rowhead.tl-open .tl-rowtitle { color: var(--accent); font-weight: 600; }
+.tl-rowhead.tl-open .tl-dot { background: var(--accent); }
 /* Absolutely placed, so they cost the row title no width while hidden — the column is only 216px
    and the titles need all of it. The gradient fades the title's tail out under them on hover. */
 .tl-rowacts { position: absolute; right: 0; top: 0; height: 100%; display: flex; align-items: center; gap: 4px; padding: 0 10px 0 20px; opacity: 0; transition: opacity 0.15s; background: linear-gradient(to right, rgba(250,249,245,0), var(--bg2) 45%); }
@@ -610,6 +628,7 @@ a { color: inherit; }
 .tl-today-pill { position: absolute; top: 2px; left: 1px; transform: translateX(-50%); background: var(--accent); color: #fff; font-family: var(--mono); font-size: 9px; font-weight: 600; line-height: 11px; padding: 2px 7px; border-radius: 999px; white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase; }
 .tl-row { position: relative; height: 40px; border-bottom: 1px solid #efeee9; }
 .tl-row.focus { background: rgba(217, 119, 87, 0.07); }
+.tl-row.tl-open { background: rgba(217, 119, 87, 0.07); }   /* the lane half of .tl-rowhead.tl-open */
 /* The same accent outline a pinned card carries, so a bar reads as the same kind of object. */
 .tl-bar { position: absolute; top: 7px; height: 26px; background: #e9e7df; border-radius: 6px; box-shadow: inset 0 0 0 1.5px rgba(217,119,87,0.55); display: flex; align-items: center; padding: 0 10px; cursor: grab; touch-action: none; }
 .tl-bar-label { font-size: 12px; color: #33322f; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
@@ -2168,6 +2187,7 @@ const TL_MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'
 
 let tlPxPerDay = 40;
 let tlFocusId = null;     // row to tint (set when you arrive from a card's timeline icon)
+let tlCardId = null;      // row whose card is open in the split panel; null = lanes at full width
 let tlLo = null;          // ISO date of column 0 — the origin every x-coordinate is measured from
 let _tlDrag = null;
 let _tlScrollLeft = null;   // null until first paint, which positions the view on today
@@ -2248,8 +2268,16 @@ function renderTimeline(){
   if (!host) return;
   popHide();   // it points at bar elements this render is about to throw away
   tlSaveScroll();
-  host.innerHTML = `<div class="tl-body" id="tl-body">${tlBodyHtml(tlRows())}</div>`;
+  // The open card can leave from under the panel — deleted, archived, or taken off the timeline
+  // (tlRemoveRow). A row the SEARCH has hidden is not that: the card you opened stays until you
+  // close it, the same way the Genes panel keeps a highlighted gene's cards in view.
+  if (tlCardId && !tlOnTimeline(items.find(i => i.id === tlCardId))) tlCardId = null;
+  host.innerHTML = `<div class="tl-body" id="tl-body">${tlBodyHtml(tlRows())}</div><div class="tl-cards" id="tl-cards"></div>`;
+  // Toggled BEFORE tlAfterRender: that is what measures the lane's clientWidth, and in split view
+  // the lane is half the width it was a moment ago.
+  if (host.classList) host.classList.toggle('tl-split', !!tlCardId);
   tlAfterRender();
+  tlRenderCardPanel();
 }
 
 function tlBodyHtml(rows){
@@ -2295,9 +2323,9 @@ function tlBodyHtml(rows){
     }
   }
 
-  const heads = rows.map(e => `<div class="tl-rowhead" data-eid="${e.id}" onclick="event.stopPropagation()">
+  const heads = rows.map(e => `<div class="tl-rowhead${tlCardId === e.id ? ' tl-open' : ''}" data-eid="${e.id}" onclick="event.stopPropagation()">
       <span class="tl-dot" onpointerenter="popIn();tlRowPop(event,'${e.id}')" onpointerleave="popOut()"></span>
-      <span class="tl-rowtitle" onclick="openCardFocused('${e.id}')" onpointerenter="popIn();tlRowPop(event,'${e.id}')" onpointerleave="popOut()">${esc(cardSortLabel(e) || '(untitled)')}</span>
+      <span class="tl-rowtitle" onclick="tlOpenCard('${e.id}')" onpointerenter="popIn();tlRowPop(event,'${e.id}')" onpointerleave="popOut()">${esc(cardSortLabel(e) || '(untitled)')}</span>
       ${readOnly ? '' : `<span class="tl-rowacts"><span class="tl-rowact add" title="Add a bar" onclick="tlAddBar(event,'${e.id}')">＋</span><span class="tl-rowact del" title="Remove from the timeline" onclick="tlRemoveRow(event,'${e.id}')">✕</span></span>`}
     </div>`).join('');
 
@@ -2306,7 +2334,7 @@ function tlBodyHtml(rows){
     const due = e.due
       ? `<div class="tl-due" id="tl-due-${e.id}" style="left:${tlX(e.due)}px" title="Due ${esc(e.due)} — drag to change"${readOnly ? '' : ` onpointerdown="tlDueDown(event,'${e.id}')"`}><span class="tl-due-pill">${esc(tlFmtDay(e.due))}</span></div>`
       : '';
-    return `<div class="tl-row${tlFocusId === e.id ? ' focus' : ''}" data-eid="${e.id}"${readOnly ? '' : ` ondblclick="tlLaneDbl(event,'${e.id}')"`}>${bars}${due}</div>`;
+    return `<div class="tl-row${tlFocusId === e.id ? ' focus' : ''}${tlCardId === e.id ? ' tl-open' : ''}" data-eid="${e.id}"${readOnly ? '' : ` ondblclick="tlLaneDbl(event,'${e.id}')"`}>${bars}${due}</div>`;
   }).join('');
 
   return `
@@ -2425,6 +2453,7 @@ function showCardPop(e, el){
 // The timeline task label's tooltip — the same card the graph shows on hover.
 function tlRowPop(ev, id){
   if (_tlDrag) return;
+  if (id === tlCardId) return;   // that card is already open, full size, a few pixels to the right
   showCardPop(items.find(i => i.id === id), ev && (ev.currentTarget || ev.target));
 }
 
@@ -2520,6 +2549,46 @@ function tlToggleDrawer(){
   if (el && el.classList) el.classList.toggle('tl-min', _tlMin);
 }
 function tlScroll(){ popHide(); }   // the bar popover is anchored to the moving canvas
+
+// --- The card panel ---------------------------------------------------------------------------
+// Clicking a task name opens THAT card beside the lanes instead of navigating away to it: the
+// timeline keeps the left half, the card takes the right. It is the same live card the Stack and
+// the Genes split panel draw — renderCard, not a preview — so expanding, tagging, editing, pinning
+// and dropping an image all work in place, and the schedule you are reading stays on screen beside
+// what you are reading it about. Click the same name again (or press Esc) to give the width back;
+// click a different one and the panel swaps, since two half-cards would be worse than either.
+// The full-page focused card is still a click away, on the card's own ⤢ quick-action.
+function tlOpenCard(id){
+  if (tlCardId === id) { tlCloseCard(); return; }
+  popHide();               // the hover card for this row is about to be the panel, twice over
+  tlCardId = id;
+  expandedId = id;         // opened, therefore open: the same expanded state focusCard gives it
+  renderTimeline();
+}
+function tlCloseCard(){
+  if (!tlCardId) return;
+  if (expandedId === tlCardId) expandedId = null;
+  tlCardId = null;
+  renderTimeline();
+}
+// geRenderCardPanel with the gene-selection step replaced by "the row you clicked". Same
+// renderCard(…, eagerBody): the lazy-body observer is scoped to #item-list, so a card living
+// outside it has to render its body up front. Same preview-mode classes too, so V means the same
+// thing here as it does everywhere else.
+function tlRenderCardPanel(){
+  const panel = document.getElementById('tl-cards');
+  if (!panel) return;
+  const it = tlCardId ? items.find(i => i.id === tlCardId) : null;
+  if (!it) { panel.innerHTML = ''; return; }
+  if (panel.classList) {
+    panel.classList.remove('hide-previews', 'hide-meta');
+    if (previewMode === 'compact') panel.classList.add('hide-previews');
+    else if (previewMode === 'minimal') panel.classList.add('hide-meta');
+  }
+  panel.innerHTML = renderCard(it, false, true);
+  resolveImages();
+  geneOverflowPass();
+}
 
 // Wheel over the lanes: sideways pans, up/down zooms about the cursor, and a pinch zooms too.
 // Up/down and pinch meaning the one thing is the graph view's bargain, borrowed so the trackpad
@@ -5932,6 +6001,7 @@ function applyPreviewMode() {
   };
   setModeClasses(document.getElementById('item-list'));
   setModeClasses(document.getElementById('ge-cards'));   // the Genes split panel obeys the same switch
+  setModeClasses(document.getElementById('tl-cards'));   // and so does the Timeline's
   applyControlBar();
 }
 // Light the current option in each switch. Single source of truth for both bars, so the UI can't
@@ -5991,6 +6061,12 @@ function focusCard(e, id, from) {
   e.stopPropagation();
   const item = items.find(i => i.id === id);
   if (!item) return;
+  // The ⤢ quick-action on a card in a split panel — the Genes view's, and now the timeline's —
+  // lands here with no origin. renderList() routes on mainView, so focusing without stepping out
+  // of the panel first would repaint the PANEL and never draw the focused card at all. Stepping
+  // out is exactly what openCardFocused does, and it calls straight back in with `from` filled, so
+  // the ← knows to put you back on the map you were reading the card beside.
+  if (!from && mainView !== 'list' && mainView !== 'dash') { openCardFocused(id); return; }
   focusFrom = from || null;    // no origin given: you focused it from the list, so ← goes back there
   focusedCardId = id;
   expandedId = id;
@@ -6215,11 +6291,12 @@ function updateCardInPlace(id){
   if (mainView === 'graph') return false;
   // In the Genes view the visible cards live in the split panel; #item-list still holds the stale
   // hidden Stack cards, which would match first and report a false success.
-  const root = mainView === 'genes' ? '#ge-cards' : '#item-list';
+  // Same story in the Timeline: the open card lives in the split panel, not in #item-list.
+  const root = mainView === 'genes' ? '#ge-cards' : mainView === 'timeline' ? '#tl-cards' : '#item-list';
   const el = [...document.querySelectorAll(root + ' .card')].find(c=>c.dataset.id===id);
   const item = items.find(i=>i.id===id);
   if(!el || !item) return false;
-  el.outerHTML = renderCard(item, false, root === '#ge-cards');   // panel cards are always eager
+  el.outerHTML = renderCard(item, false, root !== '#item-list');   // panel cards are always eager
   const cc = document.getElementById('cc-'+id);
   if(cc && cc.dataset.lazy) observeLazyEls(cc.parentElement);   // a freshly-collapsed card becomes a lazy placeholder
   resolveImages();
@@ -6773,6 +6850,10 @@ function keyHelpHtml(){
     </table>
     <h3>Graph view</h3><table>
       ${row('L','Relayout')}
+    </table>
+    <h3>Timeline view</h3><table>
+      ${row('click','A task name opens its card beside the lanes; again closes it')}
+      ${row('Esc','Close the card panel first')}
     </table></div>
     <div><h3>Legend — nodes</h3><table>
       ${row2(dot('X'), 'X-chromosome gene')}
@@ -6922,6 +7003,9 @@ document.addEventListener('keydown', async e=>{
       // The most local state first: in the Genes view an Esc drops the highlight set
       // (the keyboard twin of tapping empty canvas).
       geClearSelection();
+    } else if(mainView==='timeline' && tlCardId){
+      // Same rung, one view over: give the width back to the lanes before Esc means anything else.
+      tlCloseCard();
     } else {
       // Esc does NOT clear the search, and never falls through to it. Everything above is transient
       // state Esc put up and can take away again; a typed filter is not — it is the one thing here

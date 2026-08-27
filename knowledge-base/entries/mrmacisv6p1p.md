@@ -1,6 +1,5 @@
-- Fix kernel issue
-- Add email to web pages
-- Onedrive (keep downloaed)
+- Add email and weekplan link to web pages
+- Screen shot from black girl
 - Screencast with setup walk-through
 - Maybe make a short version of setup without explanations
 - Stress that they read closely and do things in right order

@@ -10,6 +10,8 @@
 - Baboon paper on Awash and layered swampings (Phasic FMC, BDMI sims. Hum-Nean admix, macaque hic).  
 - More funding.  
 - Tree selection stats paper.  
+- Linda about mouse mir and circRNA / human ortholog and / check my own mir target list and circRNA list [[mrp3a5pzxavj|Gene set: Xq27 miRNA cluster]]
+
 
 ## Three-year goals
 - Larger group.  

@@ -10,7 +10,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-31T07:26:33.143Z",
+  "date": "2026-08-27T08:26:18.755Z",
   "synced": false,
   "_sortTag": "Phasic",
   "schedule": {
@@ -18,20 +18,20 @@
       {
         "id": "smrn7nqex4ex",
         "title": "Phasic 1.0",
-        "start": "2026-08-10",
-        "end": "2026-08-14"
+        "start": "2026-09-10",
+        "end": "2026-09-14"
       },
       {
         "id": "smrn7pzrhuly",
         "title": "Applied prob. paper",
-        "start": "2026-08-24",
-        "end": "2026-09-04"
+        "start": "2026-09-18",
+        "end": "2026-09-29"
       },
       {
         "id": "smrn7qknpc1y",
         "title": "Selection paper",
-        "start": "2026-09-14",
-        "end": "2026-09-25"
+        "start": "2026-09-30",
+        "end": "2026-10-11"
       }
     ]
   },

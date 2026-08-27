@@ -197,6 +197,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       tlClampZoom, tlWheel, tlWindow, scheduleMd, fmtSchedDay,
       tlScroll, tlToggleDrawer,
       get tlMin(){ return _tlMin; },
+      tlOpenCard, tlCloseCard, tlRenderCardPanel,
+      get tlCardId(){ return tlCardId; }, set tlCardId(v){ tlCardId = v; },
       cardToTimeline, openCardFocused, backFromFocus, focusCard,
       toggleLinkMode, exitLinkMode, insertCardRef, grNodeDown, renderLinkBanner,
       grPanDown, grMove: _grMove, grUp: _grUp,

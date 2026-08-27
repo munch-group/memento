@@ -745,5 +745,150 @@ console.log('\nThe panel carries no chrome of its own');
   eq(el('page-title').innerHTML, 'Timeline (1)', 'the entry count lives in the page title');
 }
 
+// ---------------------------------------------------------------------------------------------
+// The card panel. Clicking a task name used to LEAVE the timeline (openCardFocused → the Stack's
+// single focused card), which threw away the very thing you were reading the card next to. Now it
+// opens beside the lanes instead: timeline left, card right, both live.
+console.log('\nClicking a task name opens its card beside the lanes');
+{
+  const { api, el } = setup([
+    note('a', 'Paper', { due: '2026-07-20' }),
+    note('b', 'Grant', { schedule: sched(bar('s1', '2026-07-15', '2026-07-17')) }),
+  ]);
+  api.setView('timeline');
+  eq(api.tlCardId, null, 'nothing is open to begin with — the lanes have the full width');
+  eq(el('timeline-view').classList.contains('tl-split'), false, '...so the view is not split');
+
+  api.tlOpenCard('a');
+  eq(api.tlCardId, 'a', 'clicking a task name opens that card');
+  eq(api.mainView, 'timeline', '...WITHOUT leaving the timeline — the whole point of the panel');
+  eq(el('timeline-view').classList.contains('tl-split'), true, '...and splits the view in half');
+  eq(/data-id="a"/.test(el('tl-cards').innerHTML), true, '...with the real card in the right half');
+  eq(api.expandedId, 'a', '...fully displayed, not collapsed to a preview');
+
+  // The lanes must still be there. A card panel that replaced the timeline would be the old
+  // openCardFocused with extra steps.
+  eq(/tl-lanes/.test(el('timeline-view').innerHTML), true, 'the lanes are still drawn beside it');
+  eq(/tl-rowhead/.test(el('timeline-view').innerHTML), true, '...and so is the Task column');
+}
+
+console.log('\nThe open row says so, on both halves of itself');
+{
+  const { api, el } = setup([
+    note('a', 'Paper', { due: '2026-07-20' }),
+    note('b', 'Grant', { due: '2026-07-22' }),
+  ]);
+  api.setView('timeline');
+  api.tlOpenCard('b');
+  const html = el('timeline-view').innerHTML;
+  eq(/class="tl-rowhead tl-open" data-eid="b"/.test(html), true, 'the row head is marked open');
+  eq(/class="tl-rowhead" data-eid="a"/.test(html), true, '...and the other row is not');
+  eq(/class="tl-row tl-open" data-eid="b"/.test(html), true, 'the lane row is marked too, so the eye can cross the gap');
+}
+
+console.log('\nThe same name closes it, a different one swaps it');
+{
+  const { api, el } = setup([
+    note('a', 'Paper', { due: '2026-07-20' }),
+    note('b', 'Grant', { due: '2026-07-22' }),
+  ]);
+  api.setView('timeline');
+  api.tlOpenCard('a');
+  api.tlOpenCard('b');
+  eq(api.tlCardId, 'b', 'a different name swaps the card rather than opening a second one');
+  eq(/data-id="b"/.test(el('tl-cards').innerHTML), true, '...and the panel shows the new one');
+  eq(/data-id="a"/.test(el('tl-cards').innerHTML), false, '...only the new one');
+
+  api.tlOpenCard('b');
+  eq(api.tlCardId, null, 'the same name again closes it');
+  eq(api.expandedId, null, '...and lets the card go with it');
+  eq(el('timeline-view').classList.contains('tl-split'), false, '...giving the width back to the lanes');
+  eq(el('tl-cards').innerHTML, '', '...and emptying the panel');
+
+  api.tlOpenCard('a');
+  api.tlCloseCard();
+  eq(api.tlCardId, null, 'tlCloseCard (the Esc rung) closes it too');
+}
+
+console.log('\nThe card can leave from under the panel');
+{
+  const { api, el } = setup([note('a', 'Paper', { due: '2026-07-20' })]);
+  api.setView('timeline');
+
+  api.tlOpenCard('a');
+  await api.tlRemoveRow({ stopPropagation(){} }, 'a');   // clears the due date, so the row goes
+  eq(api.tlCardId, null, 'taking the row off the timeline closes its card');
+  eq(el('timeline-view').classList.contains('tl-split'), false, '...and unsplits the view');
+
+  api.items[0].due = '2026-07-20';
+  api.renderTimeline();
+  api.tlOpenCard('a');
+  api.items[0].archived = true;
+  api.renderTimeline();
+  eq(api.tlCardId, null, 'archiving it closes it as well — archived entries are off the timeline');
+
+  api.items[0].archived = false;
+  api.renderTimeline();
+  api.tlOpenCard('a');
+  api.items = [];
+  api.renderTimeline();
+  eq(api.tlCardId, null, '...and so does deleting the entry outright');
+}
+
+console.log('\nBut a search that hides the row does NOT close it');
+{
+  const { api, el } = setup([note('a', 'Paper', { due: '2026-07-20' })]);
+  api.setView('timeline');
+  api.tlOpenCard('a');
+  el('search-input').value = 'nothing-matches-this';
+  api.renderList();
+  eq(api.tlRows().length, 0, 'the search empties the timeline');
+  eq(api.tlCardId, 'a', '...but the card you opened stays open — you asked for it, the filter did not');
+  eq(/data-id="a"/.test(el('tl-cards').innerHTML), true, '...and is still drawn');
+}
+
+console.log('\nThe panel obeys the same Card-detail switch as every other card');
+{
+  const { api, el } = setup([note('a', 'Paper', { due: '2026-07-20' })]);
+  api.setView('timeline');
+  api.tlOpenCard('a');
+  const panel = el('tl-cards');
+
+  api.setPreviewMode('compact');
+  eq(panel.classList.contains('hide-previews'), true, 'Tags mode hides the previews here too');
+  api.setPreviewMode('minimal');
+  eq(panel.classList.contains('hide-meta'), true, 'Title mode hides the meta');
+  eq(panel.classList.contains('hide-previews'), false, '...and only one class at a time');
+  api.setPreviewMode('rendered');
+  eq([panel.classList.contains('hide-previews'), panel.classList.contains('hide-meta')], [false, false],
+     'Body mode clears both');
+}
+
+console.log('\nZooming and panning leave the panel alone');
+{
+  const { api, el } = setup([note('a', 'Paper', { schedule: sched(bar('s1', '2026-07-15', '2026-07-17')) })]);
+  api.setView('timeline');
+  api.tlOpenCard('a');
+  api.tlSetZoom(96);   // rebuilds #tl-body only — the panel is its sibling
+  eq(api.tlCardId, 'a', 'a zoom does not disturb the open card');
+  eq(/data-id="a"/.test(el('tl-cards').innerHTML), true, '...and it is still on screen');
+  eq(/tl-rowhead tl-open/.test(el('tl-body').innerHTML), true, '...with its row still marked open');
+}
+
+console.log('\nExpanding a panel card to full width still comes back to the lanes');
+{
+  const { api, el } = setup([note('a', 'Paper', { due: '2026-07-20' })]);
+  api.setView('timeline');
+  api.tlOpenCard('a');
+  // The ⤢ quick-action on the panel card calls focusCard with no origin. From anywhere else that
+  // means "back to the Stack"; here the lanes are what you were reading the card beside.
+  api.focusCard({ stopPropagation(){} }, 'a');
+  eq(api.mainView, 'list', 'the card goes full width in the Stack');
+  eq(/← Paper/.test(el('page-title').innerHTML), true, '...with a back link in the title');
+  api.backFromFocus();
+  eq(api.mainView, 'timeline', '...and ← puts you back on the timeline, not in the Stack');
+  eq(api.tlCardId, 'a', '...with the panel still open where you left it');
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

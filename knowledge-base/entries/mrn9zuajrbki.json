@@ -12,15 +12,5 @@
   "due": "",
   "date": "2026-07-16T08:57:23.995Z",
   "synced": false,
-  "schedule": {
-    "subtasks": [
-      {
-        "id": "smrn9zuaji7y",
-        "title": "Status/brush-off",
-        "start": "2026-09-07",
-        "end": "2026-09-11"
-      }
-    ]
-  },
   "_sortTag": "Teaching"
 }

@@ -14,16 +14,10 @@
   "schedule": {
     "subtasks": [
       {
-        "id": "smrn91iejw2d",
-        "title": "git lfs -> pd-lfs",
-        "start": "2026-08-17",
-        "end": "2026-08-18"
-      },
-      {
         "id": "smronpljzutb",
-        "title": "submodules / meta-repo",
-        "start": "2026-08-20",
-        "end": "2026-08-21"
+        "title": "chr3 notebook /submodules / meta-repo",
+        "start": "2026-08-29",
+        "end": "2026-08-30"
       }
     ]
   }

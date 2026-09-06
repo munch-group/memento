@@ -1066,7 +1066,7 @@ function testIsSetCard() {
 // Gene-set highlight picker: a button next to the highlight input lets you pick set cards by
 // name — checking one unions its genes into highlightInputGenes (the same field typing or
 // clicking a node writes to), unchecking removes them. Global (not Genes-view-gated): the
-// highlight set drives Stack/Graph/Genes alike.
+// highlight set drives Collection/Graph/Genes alike.
 // ---------------------------------------------------------------------------------------------
 const gsFx = (id, genes, tags, extra = {}) =>
   ({ id, type: 'note', title: extra.title ?? id, tags, genes, source: '', content: 'x', date: '2026-01-01T00:00:00Z', ...extra });

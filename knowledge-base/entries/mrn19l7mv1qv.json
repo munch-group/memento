@@ -9,19 +9,9 @@
   "source": "",
   "connection": false,
   "archived": false,
-  "due": "2026-09-01",
+  "due": "",
   "date": "2026-08-10T13:22:21.233Z",
   "synced": false,
   "_sortTag": "Funding",
-  "schedule": {
-    "subtasks": [
-      {
-        "id": "smrn7wwq2duy",
-        "title": "Subset NERD application -> NNF Research Proj.",
-        "start": "2026-08-27",
-        "end": "2026-08-31"
-      }
-    ]
-  },
   "pinned": false
 }

@@ -1130,7 +1130,7 @@ console.log('\nA node answers to the card gestures, not just the map ones');
   const tap = (id, mods = {}) => { api.grNodeDown(ev(mods), id); api.grUp(ev(mods)); };
   const ring = id => sandbox.document.getElementById('gr-n-' + id).classList.contains('bulk-sel');
 
-  // Select mode (the toggle, or M): a plain click picks the card, exactly as it does in the Stack.
+  // Select mode (the toggle, or M): a plain click picks the card, exactly as it does in the Collection.
   api.toggleBulkMode();
   tap('a');
   eq(api.bulkIds, ['a'], 'under Select mode a plain click on a node selects its card');
@@ -1182,7 +1182,7 @@ console.log('...but Cmd and Ctrl stay out of it — they would leave the map');
 }
 
 // The ring can only appear if the repaint reaches the node. updateCardInPlace patches a CARD, and
-// under Graph there is none — but #item-list still holds the stale hidden Stack cards, so it used to
+// under Graph there is none — but #item-list still holds the stale hidden Collection cards, so it used to
 // find one, patch something invisible, and report success. bulkToggle believed it and never repainted
 // the map, which is precisely why Select mode looked dead here.
 // The harness's DOM has no querySelectorAll('.card'), so it cannot tell a real patch from a missed

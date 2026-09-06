@@ -8,3 +8,4 @@
 - Morteza about macaques
 - itrails workflow for Roos postdoc
 - random forest code for Ida
+- [Andreas Basse-O'Connor](https://sites.google.com/site/basseoconnor/Home)

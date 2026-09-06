@@ -564,6 +564,16 @@ console.log('\nThe Task column minimises to a markers-only strip on click, and r
   api.tlToggleDrawer();                      // minimise
   api.renderTimeline();
   eq(el('tl-left').classList.contains('tl-min'), true, 'the minimised state persists across a re-render');
+  // Born minimised, not minimised afterwards. Applying the class after the markup let the
+  // clientWidth read in tlAfterRender resolve the column at its full 216px first, which gave
+  // `transition: width` a starting value — so every zoom re-render played the column open and
+  // snapped it shut again (and measured the lane 172px short while it was at it).
+  eq(/class="tl-left tl-min"/.test(el('timeline-view').innerHTML), true,
+     '...and it is in the markup the rebuild writes, so the column never opens full-width first');
+
+  api.tlToggleDrawer();                      // restore
+  api.renderTimeline();
+  eq(/class="tl-left"/.test(el('timeline-view').innerHTML), true, 'a full column carries no tl-min');
 }
 
 // Sideways pans, up/down zooms, a pinch zooms — the graph view's gestures, so the trackpad means
@@ -746,7 +756,7 @@ console.log('\nThe panel carries no chrome of its own');
 }
 
 // ---------------------------------------------------------------------------------------------
-// The card panel. Clicking a task name used to LEAVE the timeline (openCardFocused → the Stack's
+// The card panel. Clicking a task name used to LEAVE the timeline (openCardFocused → the Collection's
 // single focused card), which threw away the very thing you were reading the card next to. Now it
 // opens beside the lanes instead: timeline left, card right, both live.
 console.log('\nClicking a task name opens its card beside the lanes');
@@ -881,12 +891,12 @@ console.log('\nExpanding a panel card to full width still comes back to the lane
   api.setView('timeline');
   api.tlOpenCard('a');
   // The ⤢ quick-action on the panel card calls focusCard with no origin. From anywhere else that
-  // means "back to the Stack"; here the lanes are what you were reading the card beside.
+  // means "back to the Collection"; here the lanes are what you were reading the card beside.
   api.focusCard({ stopPropagation(){} }, 'a');
-  eq(api.mainView, 'list', 'the card goes full width in the Stack');
+  eq(api.mainView, 'list', 'the card goes full width in the Collection');
   eq(/← Paper/.test(el('page-title').innerHTML), true, '...with a back link in the title');
   api.backFromFocus();
-  eq(api.mainView, 'timeline', '...and ← puts you back on the timeline, not in the Stack');
+  eq(api.mainView, 'timeline', '...and ← puts you back on the timeline, not in the Collection');
   eq(api.tlCardId, 'a', '...with the panel still open where you left it');
 }
 

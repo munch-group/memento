@@ -246,7 +246,7 @@ A highlighted gene's cards appear even when the search scopes them out — a
 highlight is an explicit request. Cards resolve *live* (a card written this
 session shows up, ghosts included) and exclude archived and gene-set cards.
 
-These are the same live cards as the Stack view: click to expand inline, edit,
+These are the same live cards as the Collection view: click to expand inline, edit,
 pin, tag — everything works, and the Title·Tags·Body detail switch (`V`) applies.
 The panel caps at 60 cards with a "+N more" note. Opening or closing the panel
 re-fits the map to the new canvas width without moving any node. In-memory —

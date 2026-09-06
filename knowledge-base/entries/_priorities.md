@@ -1,11 +1,14 @@
 ## Today
-- Shannon cake
+- **Follow up with Bjarke (if he can swap his December 16 presentation with mine September 9)**
 - Email
-- Funding application overview/plan
-- Make NNF project a Phd for the dutch girl
+- Shannons papers
+- Primate publication charges
 
 ## Week
 - Shannon Y in Nat.Gen and X in Jama phsy
+- crossrepo library
+- VEP data
+- itrails repo
 
 ## Month
 - LF wrap up with controller / UKbiobank

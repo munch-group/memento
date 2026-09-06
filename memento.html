@@ -25,6 +25,12 @@
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --shadow: rgba(20, 20, 19, 0.04); --shadow-hover: rgba(20, 20, 19, 0.08);
   --accent: #D97757; --accent-hover: #c4684a;
+  /* How wide a card is allowed to get when it is shown beside a panel rather than in a column of
+     its own. Close to the Collection's own 450px column (renderList's colWidth), so a card opened
+     out of a panel reads at the width it reads at everywhere else. Both split views cap here — the
+     timeline's card panel (#timeline-view.tl-split) and the Genes view's (#genes-view.ge-split) —
+     so a wide window spends the surplus on the lanes / the canvas instead. */
+  --card-max: 500px;
 }
 body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100%; overflow: hidden; }
 html { overflow: hidden; overscroll-behavior-x: none; height: 100%; }
@@ -514,13 +520,17 @@ a { color: inherit; }
    in-flow cards becomes #genes-view's intrinsic height, the whole view grows to content height
    (thousands of px), geFit centres the map way below the fold and the visible canvas is blank.
    The framed rounded box moves from the view onto the canvas alone, so the map looks exactly as it
-   does full-width (just narrower) and the cards float on the page background like the Stack. */
+   does full-width (just narrower) and the cards float on the page background like the Collection.
+   45% until that hits --card-max, then flat: the same bargain the timeline's split strikes
+   (#timeline-view.tl-split), off the same token — a card is only worth reading width, so beyond it
+   the surplus is the canvas's, which is what a wider window is for. .ge-canvas is flex:1, so it
+   absorbs whatever the cap leaves. */
 #genes-view.ge-split { flex-direction: row; flex: 1 1 0; gap: 1.25rem;
   border: none; border-radius: 0; background: transparent; }
 #genes-view.ge-split .ge-canvas { min-width: 0; border: 1px solid var(--border); border-radius: var(--rl); }
 .ge-cards { display: none; }
-#genes-view.ge-split .ge-cards { display: flex; flex-direction: column; gap: 8px;   /* the Stack's .item-col gap */
-  flex: 0 0 min(420px, 45%); overflow-y: auto; }
+#genes-view.ge-split .ge-cards { display: flex; flex-direction: column; gap: 8px;   /* the Collection's .item-col gap */
+  flex: 0 0 min(var(--card-max), 45%); overflow-y: auto; }
 .ge-cards-empty, .ge-cards-more { color: var(--text3); font-size: 12px; text-align: center; padding: 6px 0; }
 /* Keyboard cheat-sheet (?): the tag pop-up's chassis (.tag-editor-overlay/.tag-editor) with a
    two-column key table inside. Opened by the bottom-left ? button or the ? key; click outside,
@@ -570,17 +580,20 @@ a { color: inherit; }
 .tl-body { flex: 1 0 auto; display: flex; }
 /* Split view: clicking a task name opens that card beside the lanes (tlOpenCard). The framed
    rounded box moves from the view onto the timeline body alone, so the lanes look exactly as they
-   do full-width — just narrower — and the card floats on the page background like the Stack's do.
+   do full-width — just narrower — and the card floats on the page background like the Collection's do.
    That is the Genes view's bargain (#genes-view.ge-split), struck the same way one panel over.
-   The card half is a hard 50%; the lanes take what is left, which needs flex-basis 0 and min-width
-   0 on .tl-body — its own basis is auto, and auto plus shrink 0 would keep the full-width lane and
-   push the card off the edge. The host stays flex:1 0 auto, so a long card grows the view and
-   .main scrolls, exactly as a timeline with more rows than fit already does. */
+   The card half is 50%, capped at --card-max so it stays at a Collection card's reading width — past
+   that the extra goes to the lanes, which is where a wider window actually helps: the card wants
+   reading width, the timeline wants span. The lanes take what is left, which needs flex-basis 0
+   and min-width 0 on .tl-body — its own basis is auto, and auto plus shrink 0 would keep the full-width lane and
+   push the card off the edge. Clamping .tl-cards frees space that .tl-body's flex-grow absorbs.
+   The host stays flex:1 0 auto, so a long card grows the view and .main scrolls, exactly as a
+   timeline with more rows than fit already does. */
 #timeline-view.tl-split { flex-direction: row; gap: 1.25rem; border: none; border-radius: 0; background: transparent; overflow: visible; }
 #timeline-view.tl-split .tl-body { flex: 1 1 0; min-width: 0; border: 1px solid var(--border); border-radius: var(--rl); background: #ffffff; overflow: hidden; }
 .tl-cards { display: none; }
-#timeline-view.tl-split .tl-cards { display: flex; flex-direction: column; gap: 8px;   /* the Stack's .item-col gap */
-  flex: 0 0 50%; min-width: 0; }
+#timeline-view.tl-split .tl-cards { display: flex; flex-direction: column; gap: 8px;   /* the Collection's .item-col gap */
+  flex: 0 0 50%; min-width: 0; max-width: var(--card-max); }
 /* The Task column is a drawer: click its header or empty space to minimise it to a thin strip of
    just the row markers (freeing width for the canvas), click again to restore. The inner is a fixed
    216px so the labels hold their layout while the outer clips them away as it narrows. */
@@ -779,7 +792,7 @@ a { color: inherit; }
     </div>
     <div id="app-area" style="display:none">
       <div class="page-header">
-        <span class="page-title" id="page-title">Stack</span>
+        <span class="page-title" id="page-title">Collection</span>
         <!-- Reload, Export and Cleanup are gone. Reload: both platforms now refresh themselves.
              Export/Cleanup: Claude reads the knowledge base live through memento-mcp.py, so there
              is nothing to push into its memory and nothing to reap afterwards. -->
@@ -846,7 +859,7 @@ a { color: inherit; }
       <!-- The search box and the pin chips are one block, and the block (not the box) owns the gap
            before the control bar. The chips describe what the search is currently being made to let
            through, so they have to read as hanging off the box above them — given the gap themselves
-           they sat 22px under the search and flush against Dashboard · Stack, looking like part of
+           they sat 22px under the search and flush against Dashboard · Collection, looking like part of
            the view switch. Grouping them puts the slack below the chips instead of above, at no cost
            in height: 1rem + 6px above becomes 6px above + 1rem below, so nothing under it moves. -->
       <div class="search-block">
@@ -861,7 +874,7 @@ a { color: inherit; }
              make room for an inline input the way the highlight button does. -->
         <div class="searchbar-actions">
           <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
-          <button class="btn btn-sm" onclick="document.getElementById('search-input').value='';renderFilters();renderList()">Clear</button>
+          <button class="btn btn-sm" title="Clear the search (Esc Esc)" onclick="document.getElementById('search-input').value='';renderFilters();renderList()">Clear</button>
         </div>
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
           <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6 — highlights without filtering" oninput="updateHighlightSet()" />
@@ -875,7 +888,7 @@ a { color: inherit; }
       <button class="key-help-fab" title="Keyboard shortcuts (?)" onclick="toggleKeyHelp()">?</button>
       <div class="control-bar">
         <div class="seg" id="view-seg">
-          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Stack</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setView('genes')">Genes</span>
+          <span class="seg-opt" data-val="dash" onclick="setView('dash')">Dashboard</span><span class="seg-sep">·</span><span class="seg-opt" data-val="list" onclick="setView('list')">Collection</span><span class="seg-sep">·</span><span class="seg-opt" data-val="graph" onclick="setView('graph')">Graph</span><span class="seg-sep">·</span><span class="seg-opt" data-val="timeline" onclick="setView('timeline')">Timeline</span><span class="seg-sep">·</span><span class="seg-opt" data-val="genes" onclick="setView('genes')">Genes</span>
         </div>
         <div class="seg" id="detail-seg">
           <span class="seg-opt" data-val="minimal" onclick="setPreviewMode('minimal')">Title</span><span class="seg-sep">·</span><span class="seg-opt" data-val="compact" onclick="setPreviewMode('compact')">Tags</span><span class="seg-sep">·</span><span class="seg-opt" data-val="rendered" onclick="setPreviewMode('rendered')">Body</span>
@@ -1473,7 +1486,7 @@ function renderFilters() {
     }
   }
   // The title names the view you're in, and each active filter gets its own pill beside it. The ←
-  // therefore points at where it takes you ("Stack"), not at the filter you're already
+  // therefore points at where it takes you ("Collection"), not at the filter you're already
   // looking at — "← #Baboons" read like a link *to* Baboons. Pills also mean two filters can be
   // shown at once: an archived scope used to be swallowed whenever a tag was also active.
   const archived = archiveFilter === 'archived';
@@ -1496,7 +1509,7 @@ function renderFilters() {
         : mainView === 'timeline' ? `Timeline (${tlRows().length})`
         : mainView === 'graph' ? `Graph (${grShownCount()})`
         : mainView === 'genes' ? `Genes (${geShownCount()})`
-        : `Stack (${scope.length})`);
+        : `Collection (${scope.length})`);
 }
 
 function toggleSection(headerId, contentId) {
@@ -2338,7 +2351,7 @@ function tlBodyHtml(rows){
   }).join('');
 
   return `
-  <div class="tl-left" id="tl-left" onclick="tlToggleDrawer()" title="Click to show / hide the task names">
+  <div class="tl-left${_tlMin ? ' tl-min' : ''}" id="tl-left" onclick="tlToggleDrawer()" title="Click to show / hide the task names">
     <div class="tl-left-inner">
       <div class="tl-left-head">Task</div>
       <div>${heads}</div>
@@ -2496,6 +2509,14 @@ function tlAfterRender(){
   const noPageZoom = ev => ev.preventDefault();
   lanes.addEventListener('gesturestart', noPageZoom);
   lanes.addEventListener('gesturechange', noPageZoom);
+  // The minimised state persists across the zoom/sort re-renders that rebuild this column. It is
+  // stamped straight into the markup above, so the column is never full-width even for an instant;
+  // this re-asserts it, and has to stay ABOVE the clientWidth read below. Reading layout while the
+  // column was still wearing its full 216px was the bug: it resolved that width as the transition's
+  // starting value, so every zoom re-render played a 216 -> 44px close (the column "snapping shut"),
+  // and it measured the lane 172px short into the bargain.
+  const left = document.getElementById('tl-left');
+  if (left && left.classList) left.classList.toggle('tl-min', _tlMin);
   if (lanes.clientWidth) _tlLaneW = lanes.clientWidth;   // tlWindow needs it to know what "full" is
   if (_tlFocusPending && tlFocusId) {
     const e = items.find(i => i.id === tlFocusId);
@@ -2509,9 +2530,6 @@ function tlAfterRender(){
   // "today". Open on today (a little in from the edge) rather than a month in the past.
   if (_tlScrollLeft == null) _tlScrollLeft = Math.max(0, tlX(todayISO()) - 80);
   lanes.scrollLeft = _tlScrollLeft;
-  // Re-apply the minimised state to the freshly built column (persists across zoom/sort re-renders).
-  const left = document.getElementById('tl-left');
-  if (left && left.classList) left.classList.toggle('tl-min', _tlMin);
 }
 
 // Two decimals, not one: zoom is multiplicative, so the scale's resolution has to be a fraction of
@@ -2552,8 +2570,8 @@ function tlScroll(){ popHide(); }   // the bar popover is anchored to the moving
 
 // --- The card panel ---------------------------------------------------------------------------
 // Clicking a task name opens THAT card beside the lanes instead of navigating away to it: the
-// timeline keeps the left half, the card takes the right. It is the same live card the Stack and
-// the Genes split panel draw — renderCard, not a preview — so expanding, tagging, editing, pinning
+// timeline keeps the left half, the card takes the right. It is the same live card the Collection
+// and the Genes split panel draw — renderCard, not a preview — so expanding, tagging, editing, pinning
 // and dropping an image all work in place, and the schedule you are reading stays on screen beside
 // what you are reading it about. Click the same name again (or press Esc) to give the width back;
 // click a different one and the panel swaps, since two half-cards would be worse than either.
@@ -4010,10 +4028,10 @@ function _grUp(e){
   if (d.id && d.moved) grRelaxStart();     // the cards it passed are still springing back
   if (!d.moved && d.id) {                  // a tap, not a drag
     // A node IS a card here — the map's way of drawing it — so the two card gestures that are about
-    // the card rather than the map have to mean the same thing they mean in the Stack: Alt pins it to
-    // the filter, and Shift (or a plain click under Select mode) picks it for the bulk bar. Without
-    // this the Select toggle and Alt-click were simply dead in the Graph, since a node carries no
-    // onclick and so never reached toggleCard, where both gestures live.
+    // the card rather than the map have to mean the same thing they mean in the Collection: Alt
+    // pins it to the filter, and Shift (or a plain click under Select mode) picks it for the bulk
+    // bar. Without this the Select toggle and Alt-click were simply dead in the Graph, since a node
+    // carries no onclick and so never reached toggleCard, where both gestures live.
     if (grCardGesture(e, d.id)) return;
     // Otherwise: clicking a node selects it and tints its neighbourhood, until clicked again. That is
     // ALL a click does: the card is the hover's business alone, and comes and goes on its own terms.
@@ -5434,7 +5452,7 @@ function geIsSetCard(item){
 // The gene-set highlight picker: every set card, chosen by name, unions/removes its genes in the
 // "Highlight genes" field — a shortcut for what would otherwise be opening the card and copying
 // its gene list by hand. Global (searchbar), not Genes-view-scoped: highlightInputGenes drives
-// Stack/Graph/Genes alike.
+// Collection/Graph/Genes alike.
 const GE_SET_TITLE_PREFIX = 'Gene set: ';
 // Chip label: kb-import-genesets.py titles its cards "Gene set: <name>", which is verbose for a
 // chip — strip that literal prefix for display only (never mutate item.title). A card without the
@@ -5501,7 +5519,7 @@ function geLiveDocsU(){
 }
 // The split-view card panel: live cards for the highlighted genes, or for every gene visible on
 // the map when nothing is highlighted. Cards resolve via geThoughtCards() — the same live rule
-// the action bar uses — ordered and scoped by getVisibleItems().vis (the Stack's order).
+// the action bar uses — ordered and scoped by getVisibleItems().vis (the Collection's order).
 function geRenderCardPanel(){
   const panel = document.getElementById('ge-cards');
   if (!panel || !geCardPanel) return;
@@ -6031,7 +6049,7 @@ function setView(v) {
   if (v !== 'graph') grStop();   // don't leave a force simulation running behind another view
   if (v !== 'genes') geStop();
   applyControlBar();
-  renderFilters();   // the page title says Dashboard / Stack (N) / Graph / Timeline
+  renderFilters();   // the page title says Dashboard / Collection (N) / Graph / Timeline
   renderList();
 }
 function setDashboard(v) { setView(v ? 'dash' : 'list'); }   // kept: the D key and callers still speak in booleans
@@ -6290,7 +6308,7 @@ function updateCardInPlace(id){
   // exactly what made Select mode look dead in the Graph.
   if (mainView === 'graph') return false;
   // In the Genes view the visible cards live in the split panel; #item-list still holds the stale
-  // hidden Stack cards, which would match first and report a false success.
+  // hidden Collection cards, which would match first and report a false success.
   // Same story in the Timeline: the open card lives in the split panel, not in #item-list.
   const root = mainView === 'genes' ? '#ge-cards' : mainView === 'timeline' ? '#tl-cards' : '#item-list';
   const el = [...document.querySelectorAll(root + ' .card')].find(c=>c.dataset.id===id);
@@ -6822,7 +6840,7 @@ function keyHelpHtml(){
       ${row('N','New card')}
       ${row('S','Focus search')}
       ${row('D','Dashboard')}
-      ${row('C','Stack')}
+      ${row('C','Collection')}
       ${row('G','Graph')}
       ${row('I','Genes')}
       ${row('T','Timeline')}
@@ -6832,6 +6850,7 @@ function keyHelpHtml(){
       ${row('⇧ click','Select a card for bulk actions')}
       ${row('⌥ click','Pin/unpin a card to the filter, no matter what else it hides')}
       ${row('Esc','Close / clear, step by step — never the search')}
+      ${row2('<kbd>Esc</kbd> <kbd>Esc</kbd>','Clear the search — once Esc has nothing left to close')}
       ${row('?','This cheat-sheet')}
     </table></div>
     <div><h3>Genes view</h3><table>
@@ -6907,6 +6926,10 @@ function keyHelpKey(ev){
 document.addEventListener('mousedown', e => {
   if (e.shiftKey && !readOnly && e.target && e.target.closest && e.target.closest('.card')) e.preventDefault();
 });
+// Esc Esc clears the search. Two presses inside this window count as one deliberate gesture;
+// outside it they are two unrelated presses and the filter is left alone (see the Esc ladder below).
+const ESC_DBL_MS = 500;
+let _lastEscAt = 0;
 document.addEventListener('keydown', async e=>{
   if((e.metaKey||e.ctrlKey)&&e.key==='v'){
     const active = document.activeElement;
@@ -6955,7 +6978,7 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyF' && mainView==='genes'){ e.preventDefault(); geFreeze(); return; }
       if(code==='KeyB' && mainView==='genes'){ e.preventDefault(); setGeShowComplex(!geShowComplex); return; }
       // W, not N ("neighbours" would read better) — N is the global new-card key and Genes view
-      // shouldn't swallow it, same reason B stands in for "complexes" (C is the global Stack-view key).
+      // shouldn't swallow it, same reason B stands in for "complexes" (C is the global Collection-view key).
       if(code==='KeyW' && mainView==='genes'){ e.preventDefault(); setGeShowNeighbours(!geShowNeighbours); return; }
       if(code==='KeyZ' && mainView==='genes'){ e.preventDefault(); geZoomFit(); return; }
       if((code==='Digit1'||code==='Digit2'||code==='Digit3') && mainView==='genes'){
@@ -6982,6 +7005,12 @@ document.addEventListener('keydown', async e=>{
     }
   }
   if(e.key==='Escape'){
+    // Arm the double-tap only on a press that had nothing to CLOSE — a blur, or a press that found
+    // the ladder empty. A press that dismissed something disarms it, so the reflexive second Esc
+    // after closing a form or a bulk selection cannot take the filter with it. The rule the user
+    // sees: when Esc has nothing left to close, press it again to clear the search.
+    const dblEsc = Date.now() - _lastEscAt < ESC_DBL_MS;
+    _lastEscAt = 0;
     if(keyHelpVisible()){ e.preventDefault(); toggleKeyHelp(); return; }
     const active = document.activeElement;
     const inField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
@@ -6991,6 +7020,7 @@ document.addEventListener('keydown', async e=>{
       // typed filter and the UA throwing it away. Blur, and keep what you typed.
       e.preventDefault();
       active.blur();
+      _lastEscAt = Date.now();   // dropping focus closes nothing — arm the gesture
       return;
     }
     e.preventDefault();
@@ -7007,14 +7037,21 @@ document.addEventListener('keydown', async e=>{
       // Same rung, one view over: give the width back to the lanes before Esc means anything else.
       tlCloseCard();
     } else {
-      // Esc does NOT clear the search, and never falls through to it. Everything above is transient
-      // state Esc put up and can take away again; a typed filter is not — it is the one thing here
-      // that costs real effort to reproduce, and losing it to the key you press to dismiss things is
-      // a bad trade however far down the ladder it sits. The Clear button next to the box says so
-      // explicitly, which is what a destructive action should have to do.
+      // A SINGLE Esc does not clear the search and never falls through to it. Everything above is
+      // transient state Esc put up and can take away again; a typed filter is not — it is the one
+      // thing here that costs real effort to reproduce, and losing it to the key you press to
+      // dismiss things would be a bad trade however far down the ladder it sits.
+      // A second Esc is the exception, and it is a gesture rather than a fall-through: it counts
+      // only when the PREVIOUS press also had nothing to close (see the arming rule above), so the
+      // press that dismisses a form, a bulk selection, a highlight set or a timeline card can never
+      // be half of it. That leaves one way in — two presses into an app with nothing left to
+      // dismiss — which is deliberate enough to stand in for the Clear button.
+      const si = document.getElementById('search-input');
+      if(dblEsc && si && si.value){ si.value=''; renderFilters(); renderList(); return; }
       // Nothing else for Esc to do — if a "← back" link is showing in the title, follow it.
       const back = document.querySelector('#page-title [onclick]');
-      if(back) back.click();
+      if(back){ back.click(); return; }   // a navigation is a close: leaves the gesture disarmed
+      _lastEscAt = Date.now();            // truly nothing to do — arm it
     }
   }
 });

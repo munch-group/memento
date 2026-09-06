@@ -200,7 +200,7 @@ console.log('\nPinning a card (Alt-click) forces it into view no matter what els
   // The chips say what the search is being made to let through, so they have to hang off the search
   // box, not off the view switch. That is structural, not a nudge: the box and the row are one block
   // and the BLOCK owns the gap before the control bar, which puts the slack under the chips instead
-  // of over them. A margin back on .searchbar would silently push them down against Dashboard·Stack
+  // of over them. A margin back on .searchbar would silently push them down against Dashboard·Collection
   // again, so both halves are asserted. (Layout itself is a real-browser check; this pins the shape.)
   const src2 = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
   ok(/<div class="search-block">\s*\n\s*<div class="searchbar">/.test(src2),
@@ -270,7 +270,7 @@ console.log('\nThe page title names the view you are actually in');
 
   api.setDashboard(false);
   api.renderFilters();
-  eq(el('page-title').innerHTML, `Stack (${api.items.length})`, 'off it, the title counts the entries');
+  eq(el('page-title').innerHTML, `Collection (${api.items.length})`, 'off it, the title counts the entries');
 }
 
 console.log('\nd / c / g / t jump straight to their views (no toggle)');
@@ -339,7 +339,7 @@ console.log('\nThe title announces the archived scope — which is what lets its
   const { api, el } = scopeSetup();
   api.renderFilters();
   // 5 entries, 2 of them archived — the title counts the 3 you can actually see, not all 5.
-  eq(el('page-title').innerHTML, 'Stack (3)', 'the title counts the entries in scope, not the archived ones too');
+  eq(el('page-title').innerHTML, 'Collection (3)', 'the title counts the entries in scope, not the archived ones too');
 
   api.setArchiveFilter('archived');
   api.renderFilters();
@@ -425,7 +425,7 @@ function facetSetup() {
   // "How many cards am I looking at" — the title reports it, whichever scope you're in.
   const count = () => {
     const h = el('page-title').innerHTML;
-    const m = h.match(/Stack \((\d+)\)/) || h.match(/Archived (\d+)/);
+    const m = h.match(/Collection \((\d+)\)/) || h.match(/Archived (\d+)/);
     return m ? Number(m[1]) : null;
   };
   return { api, tags, types, count, el };

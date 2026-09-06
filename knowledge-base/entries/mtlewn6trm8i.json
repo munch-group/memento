@@ -1,0 +1,27 @@
+{
+  "id": "mtlewn6trm8i",
+  "type": "reference",
+  "title": "Recurrent structural variation and recent turnover at the 17q21.31 locus in humans and great apes | Nature Communications",
+  "genes": [
+    "MAP3K14",
+    "ARHGAP27",
+    "PLEKHM1",
+    "LRRC37A2",
+    "CRHR1",
+    "MAPT",
+    "KANSL1",
+    "NSF",
+    "WNT3"
+  ],
+  "tags": [
+    "chr17"
+  ],
+  "source": "https://www.nature.com/articles/s41467-026-73174-1",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-09-03T11:10:14.720Z",
+  "synced": false,
+  "_sortTag": "chr17"
+}

@@ -1,3 +1,5 @@
+
+- Ebbe about his setup
 - Add email and weekplan link to web pages
 - Screen shot from black girl
 - Screencast with setup walk-through

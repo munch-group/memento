@@ -18,7 +18,11 @@ function extractInlineJs(full = false) {
   return js.slice(0, init);
 }
 
-function fakeEl() {
+// `focusCell` is the per-load holder behind document.activeElement. Only blur() is wired to it, on
+// purpose: the Esc handler blurs the search box and the next Esc must see the focus actually gone.
+// focus() stays a no-op — making it live would hand insertImagesAtCaret a "focused" textarea with
+// no selectionStart, which is a different test's problem and not this one's to invent.
+function fakeEl(focusCell) {
   const classes = new Set();   // a real classList: the preview modes are expressed as classes on #item-list
   const el = {
     // renderList() derives its column count from offsetWidth; without a number it computes NaN.
@@ -38,8 +42,9 @@ function fakeEl() {
     get className() { return [...classes].join(' '); },
     childNodes: [], children: [], firstChild: null, nodeType: 1,   // truncateRendered() walks these
     addEventListener(){}, removeEventListener(){}, appendChild(){}, remove(){},
-    scrollIntoView(){}, focus(){}, blur(){}, click(){},
-    querySelector(){ return fakeEl(); }, querySelectorAll(){ return []; },
+    scrollIntoView(){}, focus(){}, click(){},
+    blur(){ if (focusCell && focusCell.el === el) focusCell.el = null; },
+    querySelector(){ return fakeEl(focusCell); }, querySelectorAll(){ return []; },
     getAttribute(k){ return k in this.attrs ? this.attrs[k] : null; },
     setAttribute(k, v){ this.attrs[k] = String(v); },
     closest(){ return null; },
@@ -88,12 +93,38 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
   const toasts = [];
   const created = [];        // every element the script builds, so tests can inspect popup markup
   const byId = new Map();    // stable per id, so what the app renders into an element persists
+  // The app's keyboard shortcuts hang off a document-level keydown listener. A no-op
+  // addEventListener swallowed it, so key handling was the one part of the UI no test could drive;
+  // keep the handlers so press() below can deliver a synthetic event to the real code.
+  const listeners = new Map();
+  const focusCell = { el: null };
+  const selectors = new Map();
   const doc = {
-    getElementById: id => { if (!byId.has(id)) byId.set(id, fakeEl()); return byId.get(id); },
-    querySelector: () => fakeEl(),
+    getElementById: id => { if (!byId.has(id)) byId.set(id, fakeEl(focusCell)); return byId.get(id); },
+    // Permissive by default (any selector matches a fresh element), because most callers only poke
+    // at what they find. A test that needs a selector to match NOTHING — the real DOM's answer for
+    // an absent element, and the difference between "there is a back link" and "there isn't" —
+    // registers it in `selectors`.
+    querySelector: sel => (selectors.has(sel) ? selectors.get(sel) : fakeEl(focusCell)),
     querySelectorAll: () => [],
-    createElement: () => { const el = fakeEl(); created.push(el); return el; },
-    addEventListener() {}, removeEventListener() {}, body: fakeEl(), documentElement: fakeEl(),
+    createElement: () => { const el = fakeEl(focusCell); created.push(el); return el; },
+    // Note: the capture flag is recorded nowhere, so capture and bubble listeners for a type all
+    // fire in registration order. Real capture listeners that call stopPropagation() (keyHelpKey,
+    // tagEditorKey) do NOT shadow the app's main keydown handler here the way they do in a browser.
+    addEventListener(type, fn) {
+      if (!listeners.has(type)) listeners.set(type, []);
+      listeners.get(type).push(fn);
+    },
+    removeEventListener(type, fn) {
+      const l = listeners.get(type) || [];
+      const i = l.indexOf(fn);
+      if (i >= 0) l.splice(i, 1);
+    },
+    body: fakeEl(focusCell), documentElement: fakeEl(focusCell),
+    // Settable by tests, and cleared by the app's own blur(). Defaults to null — the same falsiness
+    // as the undefined it replaces, so tests that don't care about focus are unaffected.
+    get activeElement(){ return focusCell.el; },
+    set activeElement(v){ focusCell.el = v; },
     visibilityState: 'visible',
     __created: created,
   };
@@ -142,6 +173,20 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
     sandbox.requestAnimationFrame = fn => { framesDue.set(++rafId, fn); return rafId; };
     sandbox.cancelAnimationFrame = id => framesDue.delete(id);
   }
+  // Deliver a synthetic event to the real document-level handlers. Returns the event, so a test can
+  // assert on defaultPrevented. The keydown handler is async but only awaits inside the paste
+  // branch; every key path this drives runs to completion synchronously.
+  const fire = (type, props = {}) => {
+    const ev = { type, defaultPrevented: false, ...props };
+    ev.preventDefault = () => { ev.defaultPrevented = true; };
+    ev.stopPropagation = () => {};
+    for (const fn of [...(listeners.get(type) || [])]) fn(ev);
+    return ev;
+  };
+  const press = (key, props = {}) => {
+    const code = /^[a-z]$/i.test(key) ? `Key${key.toUpperCase()}` : key;
+    return fire('keydown', { code, ...props, key });
+  };
   const flushFrames = () => {
     const due = [...framesDue.values()];
     framesDue.clear();
@@ -290,6 +335,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       togglePinnedCard, renderPinnedCards,
       get pinnedCardIds(){ return [...pinnedCardIds].sort(); },
       GH_FLUSH_DELAY,
+      // Esc Esc clears the search; a test fakes a slow second press by backdating lastEscAt.
+      ESC_DBL_MS,
+      get lastEscAt(){ return _lastEscAt; }, set lastEscAt(v){ _lastEscAt = v; },
     };
     globalThis.__setHandles = (dh, eh) => { dirHandle = dh; entriesHandle = eh; };
   `;
@@ -300,5 +348,5 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
   );
   vm.createContext(sandbox);
   vm.runInContext(patched + epilogue, sandbox, { filename: 'memento-inline.js' });
-  return { api: sandbox.__api, toasts, sandbox, persistCalls, flushFrames };
+  return { api: sandbox.__api, toasts, sandbox, persistCalls, flushFrames, fire, press, selectors };
 }

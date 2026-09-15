@@ -1,0 +1,1 @@
+bash -c 'echo -n "Your genome.au.dk username : " && read username && [ -f ~/.ssh/id_ed25519 ] || ssh-keygen -q -t ed25519 -q -N "" -f ~/.ssh/id_ed25519 && ssh-copy-id -i ~/.ssh/id_ed25519 ${username}@login.genome.au.dk'

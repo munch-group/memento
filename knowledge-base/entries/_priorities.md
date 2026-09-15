@@ -1,14 +1,16 @@
 ## Today
-- **Follow up with Bjarke (if he can swap his December 16 presentation with mine September 9)**
 - Email
+- Move repos to office machine
 - Shannons papers
 - Primate publication charges
+- Kernels gets registered several times ...
 
 ## Week
 - Shannon Y in Nat.Gen and X in Jama phsy
 - crossrepo library
 - VEP data
 - itrails repo
+- Watch SMBE talks
 
 ## Month
 - LF wrap up with controller / UKbiobank

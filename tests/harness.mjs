@@ -88,7 +88,8 @@ function fakeIndexedDB(seed) {
   };
 }
 
-export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false, frames = false, idbSeed = null }) {
+export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false, frames = false,
+                       idbSeed = null, hostname = '', protocol = 'http:' }) {
   const store = new Map(pat ? [['gh_pat', pat]] : []);
   const toasts = [];
   const created = [];        // every element the script builds, so tests can inspect popup markup
@@ -130,7 +131,9 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
   };
   const win = {
     addEventListener() {}, removeEventListener() {},
-    location: { search: '', pathname: '/' }, history: { replaceState() {} },
+    // hostname/protocol decide whether initBasePath() seeds the VS Code path: it only does so
+    // on the machine that serves the repo. Default '' = neither, i.e. no seeding.
+    location: { search: '', pathname: '/', hostname, protocol }, history: { replaceState() {} },
     innerWidth: 1200,
     showDirectoryPicker: hasFSAccess ? async () => { throw new Error('not used'); } : undefined,
   };
@@ -279,6 +282,8 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       renderGenes, geBuildModel, geNature, geChromClass, geIdSafe, geEdgeShown, geEdgesHtml, geHeadClear,
       geShownCount, geComputeDrawn, geStep, geInitPositions, geSizeLayout,
       setGeNature, setGeMinBelief, setGeMinEv, setGeShowComplex, setGeSimpleEdges, setGeShowNeighbours, geSelect, geClearSelection, geApplyFilter, geRelayout, geCardOff,
+      initBasePath, updateVSCodeRow,
+      get basePath(){ return basePath; }, set basePath(v){ basePath = v; },
       renderCard, geThoughtCards, setGeCardPanel, geRenderCardPanel, toggleCard, updateCardInPlace,
       geSpikes, geSyncSpikes, geSyncSpikeNodes, get geSpikeSet(){ return [..._geSpikes].sort(); },
       getVisibleItems,

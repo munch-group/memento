@@ -995,6 +995,13 @@ let connFilter = 'all'; // 'all' | 'conn' | 'noconn'
 let archiveFilter = 'active'; // 'active' | 'archived'
 let entriesHandle = null; // DirectoryHandle for entries/
 let basePath = '';         // absolute path to knowledge-base folder (for vscode:// links)
+// basePath lives in IndexedDB, which is per-ORIGIN: when the app moved off file:// and onto the
+// local server it started with an empty store, basePath came back '', and the per-card "Open in
+// VS Code" button — which only renders when basePath is set — silently vanished. A typed-in
+// absolute path is not worth losing a feature over, so seed it on the machine that serves the
+// repo and let the sidebar override it. Anywhere else (iOS, GitHub Pages) there is no VS Code to
+// open, so it stays empty and the button stays absent.
+const DEFAULT_BASE_PATH = '/Users/kmt/memento/knowledge-base';
 const hasFSAccess = typeof window.showDirectoryPicker === 'function';
 // Writable via the local filesystem (Chrome/Edge) or, failing that, via the GitHub API once a
 // token with push access is known. Set by ghApplyWritePermission() during the GitHub load.
@@ -1205,8 +1212,6 @@ async function fsaDeleteEntry(eid) {
 
 async function tryRestoreHandle() {
   try {
-    const bp = await idbGet('basePath');
-    if (bp) basePath = bp;
     const dh = await idbGet('dh');
     if (dh) {
       const perm = await dh.queryPermission({mode:'readwrite'});
@@ -1300,6 +1305,18 @@ function updateFileStatus(name) {
 }
 
 // --- VS Code integration ---
+// Runs before the first render, on every backend: renderCard() only draws the VS button when
+// basePath is already set, so reading it late means cards render without it.
+async function initBasePath() {
+  let bp;
+  try { bp = await idbGet('basePath'); } catch(_) {}
+  if (bp) { basePath = bp; return; }
+  const host = (window.location && window.location.hostname) || '';
+  const local = host === 'localhost' || host === '127.0.0.1' || window.location?.protocol === 'file:';
+  // Deliberately NOT written back to IndexedDB: a stored copy would outlive any later change to
+  // the constant. Only an explicit choice in promptBasePath() gets persisted.
+  if (local) basePath = DEFAULT_BASE_PATH;
+}
 function updateVSCodeRow() {
   const row = document.getElementById('vscode-row');
   if (basePath) {
@@ -8512,29 +8529,33 @@ applyPreviewMode();   // light the current option in both switches (and sync #it
 // iOS evicts script-writable storage from web apps left unused; here that costs the cached
 // entries and the saved token, but never the data itself, which lives in the repo.
 if (navigator.storage?.persist) navigator.storage.persist().catch(()=>{});
-if (hasFSAccess) {
-  tryRestoreHandle();
-} else {
-  // iOS / Safari: show GitHub connect screen, try cache first
-  document.getElementById('connect-fs').style.display = 'none';
-  document.getElementById('connect-gh').style.display = '';
-  tryLoadFromGitHubCache().then(async loaded => {
-    if (loaded) {
-      showApp();
-      // Confirm push access against GitHub — it decides whether editing is offered at all.
-      if (ghPat()) { await ghApplyWritePermission(); updateWriteUI(); renderList(); }
-      // A cache hit used to end the boot right here, so the app opened on whatever was cached and
-      // stayed there until something else moved it. The only refresh was the visibilitychange
-      // handler — and visibilitychange does NOT fire on load, only on a real foreground/background
-      // transition. A cold launch (how an iOS PWA normally starts, since iOS evicts them) therefore
-      // never asked GitHub anything, and the phone showed stale cards until you backgrounded the app
-      // and came back. One cheap request that only reloads if main actually moved.
-      await ghRefreshIfStale();
-    } else if (ghPat()) {
-      ghLoadEntries();
-    }
-  });
-}
+// The VS Code base path has to be known before the first render — a card only draws its
+// "Open in VS Code" button when basePath is set — so it gates the whole boot.
+initBasePath().then(() => {
+  if (hasFSAccess) {
+    tryRestoreHandle();
+  } else {
+    // iOS / Safari: show GitHub connect screen, try cache first
+    document.getElementById('connect-fs').style.display = 'none';
+    document.getElementById('connect-gh').style.display = '';
+    tryLoadFromGitHubCache().then(async loaded => {
+      if (loaded) {
+        showApp();
+        // Confirm push access against GitHub — it decides whether editing is offered at all.
+        if (ghPat()) { await ghApplyWritePermission(); updateWriteUI(); renderList(); }
+        // A cache hit used to end the boot right here, so the app opened on whatever was cached and
+        // stayed there until something else moved it. The only refresh was the visibilitychange
+        // handler — and visibilitychange does NOT fire on load, only on a real foreground/background
+        // transition. A cold launch (how an iOS PWA normally starts, since iOS evicts them) therefore
+        // never asked GitHub anything, and the phone showed stale cards until you backgrounded the app
+        // and came back. One cheap request that only reloads if main actually moved.
+        await ghRefreshIfStale();
+      } else if (ghPat()) {
+        ghLoadEntries();
+      }
+    });
+  }
+});
 </script>
 </body>
 </html>

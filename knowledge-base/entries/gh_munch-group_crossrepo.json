@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_crossrepo",
+  "type": "github",
+  "title": "crossrepo",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/crossrepo",
+  "date": "2026-09-14T12:18:00Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/crossrepo",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "9c026f0",
+      "msg": "patch  version bump",
+      "date": "2026-09-14T12:14:37Z"
+    },
+    {
+      "sha": "32e6c24",
+      "msg": "added python verion range",
+      "date": "2026-09-14T12:14:08Z"
+    },
+    {
+      "sha": "5875914",
+      "msg": "update",
+      "date": "2026-09-12T18:51:03Z"
+    },
+    {
+      "sha": "b24922b",
+      "msg": "patch  version bump",
+      "date": "2026-09-12T15:26:22Z"
+    },
+    {
+      "sha": "9f4c319",
+      "msg": "update",
+      "date": "2026-09-12T15:26:12Z"
+    },
+    {
+      "sha": "0a976e2",
+      "msg": "patch  version bump",
+      "date": "2026-09-12T13:08:32Z"
+    },
+    {
+      "sha": "38411f2",
+      "msg": "update",
+      "date": "2026-09-12T13:08:23Z"
+    },
+    {
+      "sha": "b1e1ddc",
+      "msg": "published symlink version",
+      "date": "2026-09-12T13:07:43Z"
+    },
+    {
+      "sha": "b3b3ae2",
+      "msg": "Added tester symlink",
+      "date": "2026-09-12T13:06:01Z"
+    },
+    {
+      "sha": "9a72751",
+      "msg": "patch  version bump",
+      "date": "2026-09-12T07:39:51Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

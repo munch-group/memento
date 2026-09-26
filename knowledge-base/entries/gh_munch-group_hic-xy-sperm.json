@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/hic-xy-sperm",
-  "date": "2026-01-02T14:30:06Z",
+  "date": "2026-09-12T20:13:15Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/hic-xy-sperm",
@@ -16,6 +16,26 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "bf00594",
+      "msg": "Added crossrepo shares",
+      "date": "2026-09-12T20:12:51Z"
+    },
+    {
+      "sha": "5112e31",
+      "msg": "update",
+      "date": "2026-09-06T15:28:45Z"
+    },
+    {
+      "sha": "fce5f7f",
+      "msg": "Added labdata.yml",
+      "date": "2026-09-01T09:30:51Z"
+    },
+    {
+      "sha": "db65fb7",
+      "msg": "Cleaned up a bit and make csv files for shannon",
+      "date": "2026-02-27T11:43:19Z"
+    },
     {
       "sha": "7fe9665",
       "msg": "GO info update",

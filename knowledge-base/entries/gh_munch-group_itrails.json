@@ -5,17 +5,42 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/itrails",
-  "date": "2026-08-16T08:17:30Z",
+  "date": "2026-09-24T13:17:11Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/itrails",
   "_ghStars": 0,
   "_ghForks": 0,
-  "_ghLang": "Python",
+  "_ghLang": "Jupyter Notebook",
   "_ghOpenIssues": 0,
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "a0ee13a",
+      "msg": "updates",
+      "date": "2026-09-24T13:14:45Z"
+    },
+    {
+      "sha": "6b105a4",
+      "msg": "update",
+      "date": "2026-09-18T09:00:56Z"
+    },
+    {
+      "sha": "f4608e8",
+      "msg": "update",
+      "date": "2026-09-15T10:29:24Z"
+    },
+    {
+      "sha": "17ae4e2",
+      "msg": "update",
+      "date": "2026-09-10T10:06:15Z"
+    },
+    {
+      "sha": "79a9654",
+      "msg": "update",
+      "date": "2026-09-10T10:05:58Z"
+    },
     {
       "sha": "74c2333",
       "msg": "update",

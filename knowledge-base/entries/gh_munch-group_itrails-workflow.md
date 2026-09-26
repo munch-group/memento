@@ -1,0 +1,1 @@
+itrails gwf workflow to serve as git submoule

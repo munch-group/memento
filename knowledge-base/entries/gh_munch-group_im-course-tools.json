@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_im-course-tools",
+  "type": "github",
+  "title": "im-course-tools",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/im-course-tools",
+  "date": "2026-09-25T14:59:46Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/im-course-tools",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "572d8d0",
+      "msg": "patch  version bump",
+      "date": "2026-09-25T14:58:43Z"
+    },
+    {
+      "sha": "f1db703",
+      "msg": "bug fix",
+      "date": "2026-09-25T14:58:32Z"
+    },
+    {
+      "sha": "ed54a71",
+      "msg": "patch  version bump",
+      "date": "2026-09-09T11:12:41Z"
+    },
+    {
+      "sha": "9784448",
+      "msg": "Made all im commands trigger its own update",
+      "date": "2026-09-09T11:12:16Z"
+    },
+    {
+      "sha": "8a8689f",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T14:51:51Z"
+    },
+    {
+      "sha": "967c090",
+      "msg": "extension fix",
+      "date": "2026-08-31T14:51:17Z"
+    },
+    {
+      "sha": "1487832",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T12:16:47Z"
+    },
+    {
+      "sha": "e471893",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T12:15:44Z"
+    },
+    {
+      "sha": "391f4dc",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T12:14:20Z"
+    },
+    {
+      "sha": "5f5cd51",
+      "msg": "update",
+      "date": "2026-08-31T12:14:12Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

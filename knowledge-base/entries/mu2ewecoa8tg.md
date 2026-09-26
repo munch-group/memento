@@ -1,4 +1,6 @@
-- Move repos to office machine
+- Clean up chr3 notebook in geneinfo repo
+
+- - Move repos to office machine
 
 - interaction_store
 - geneinfo

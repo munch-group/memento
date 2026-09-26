@@ -1,14 +1,14 @@
 {
   "id": "mrn8x1cswi91",
   "type": "note",
-  "title": "Cross-repo analysis setup",
+  "title": "Meta-repo / hypothesis plan",
   "genes": [],
   "tags": [],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-07-16T08:27:13.564Z",
+  "date": "2026-09-26T07:22:37.029Z",
   "synced": false,
   "_sortTag": "",
   "schedule": {
@@ -16,9 +16,10 @@
       {
         "id": "smronpljzutb",
         "title": "chr3 notebook /submodules / meta-repo",
-        "start": "2026-08-29",
-        "end": "2026-08-30"
+        "start": "2026-10-04",
+        "end": "2026-10-05"
       }
     ]
-  }
+  },
+  "pinned": false
 }

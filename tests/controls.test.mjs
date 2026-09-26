@@ -212,6 +212,57 @@ console.log('\nPinning a card (Alt-click) forces it into view no matter what els
      '...and the search box itself carries no bottom margin to put back above the chips');
 }
 
+// Pasting a card id into the search box. Ids leak out of the app all the time — entries/<id>.md
+// filenames, git diffs, script reports, the MCP server — and there was no way back in from one.
+// It is a lookup, not a filter: like a pin, it beats every other filter, because an id is something
+// you paste rather than type and an empty result would read as "that card is gone".
+console.log('\nSearching a card id pulls up that card, whatever else is filtering');
+{
+  const { api, sandbox } = load({ fetchImpl: noop });
+  const el = id => sandbox.document.getElementById(id);
+  const search = v => { el('search-input').value = v; return api.getVisibleItems().vis.map(i => i.id); };
+  api.items = [
+    note('a1', 'Alpha', { tags: ['Live'] }),
+    note('msodvd8qz63d', 'Beta', { tags: ['Dead'], archived: true }),   // archived AND wrong-tagged
+    note('gh_munch-group_ARGdashboard', 'Repo'),                        // a slug id carrying uppercase
+  ];
+  sandbox.window._kbInbox = ''; sandbox.window._kbDigest = null;
+  api.setDashboard(false);
+  api.renderList();
+
+  eq(search(''), ['a1', 'gh_munch-group_ARGdashboard'], 'baseline: the archived card is out of scope');
+  eq(search('msodvd8qz63d'), ['msodvd8qz63d'],
+     'its id finds it even though the archive scope excludes it');
+  eq(search('msodvd8qz63'), [], 'a partial id matches nothing — exact only, so no random noise');
+  eq(search('MSODVD8QZ63D'), ['msodvd8qz63d'], 'case does not matter');
+  eq(search('gh_munch-group_argdashboard'), ['gh_munch-group_ARGdashboard'],
+     '...in the other direction too: a lowercase query finds an id stored with capitals');
+  eq(search('[[msodvd8qz63d|Beta]]'), ['msodvd8qz63d'],
+     'the [[id|title]] form works, so pasting back what the 🔗 icon copied lands on the card');
+  eq(search('nosuchcard123'), [], 'an id that names nothing finds nothing');
+  eq(search('body of a1'), ['a1'], 'ordinary text search is untouched');
+
+  api.setTagFilter('Live');
+  eq(search('msodvd8qz63d'), ['msodvd8qz63d'], 'a #Live chip cannot hide an id lookup either');
+  eq(search(''), ['a1'], 'sanity: the chip is really still filtering');
+  api.setTagFilter('Live');   // toggle back off
+
+  eq(search('a1, msodvd8qz63d'), ['a1', 'msodvd8qz63d'],
+     'comma-OR: a text group and an id group each contribute');
+
+  api.togglePinnedCard('msodvd8qz63d');
+  eq(search('msodvd8qz63d'), ['msodvd8qz63d'], 'pinned AND looked up by id yields one card, not two');
+  api.togglePinnedCard('msodvd8qz63d');
+
+  eq(api.cardIdFromQuery('msodvd8qz63d'), 'msodvd8qz63d', 'cardIdFromQuery: a bare id');
+  eq(api.cardIdFromQuery('[[msodvd8qz63d|Some Title]]'), 'msodvd8qz63d', '...strips the [[ and the |title');
+  eq(api.cardIdFromQuery(''), '', '...empty query, empty id');
+  eq(api.cardIdFromQuery('two words'), 'two', '...only ever the first word, which then has to match exactly');
+
+  const src3 = readFileSync(new URL('../memento.html', import.meta.url), 'utf8');
+  ok(/placeholder="[^"]*paste a card id/.test(src3), 'the placeholder says so — otherwise nobody would guess');
+}
+
 // The copy-genes icon (⧉). On an expanded card it trails the last gene inside the list, always
 // visible. A collapsed card's gene strip is clipped and fade-masked, so there the icon sits AFTER
 // the strip (inside, the mask would swallow it) and is revealed by hovering the card.

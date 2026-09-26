@@ -32,7 +32,7 @@ def sync_card(card, token):
     """Fetch commits and issues for a single GitHub card. Returns updated card fields."""
     fn = card["_ghFullName"]
     commits_raw = gh_get(f"https://api.github.com/repos/{fn}/commits?per_page=10", token) or []
-    issues_raw = gh_get(f"https://api.github.com/repos/{fn}/issues?state=all&sort=updated&direction=desc&per_page=10", token) or []
+    issues_raw = gh_get(f"https://api.github.com/repos/{fn}/issues?state=all&sort=updated&direction=desc&per_page=100", token) or []
     latest_raw = gh_get(f"https://api.github.com/repos/{fn}/issues?state=open&per_page=1&sort=created&direction=desc", token) or []
 
     gh_commits = [
@@ -89,6 +89,7 @@ def main(kb_dir, days, model, sync_only):
                 card = card_map[card_id]
                 card["_ghCommits"] = commits
                 card["_ghIssuesRecent"] = issues
+                card["_ghIssuesAt"] = datetime.now(timezone.utc).isoformat()
                 if latest_date and latest_date > (card.get("date") or ""):
                     card["date"] = latest_date
                     mtime_updated += 1

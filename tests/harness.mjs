@@ -227,7 +227,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get bulkMode(){ return bulkMode; },
       get tagUniverse(){ return _tagUniverse; },
       get tagEditorId(){ return _tagEditorId; },
-      digestHeads, createSpecialCard, taggable, renderList, renderFilters, dueSoon, scheduleOverlapsToday,
+      digestHeads, renderGhIssuesCard, ghIssuesToggle, ghRefreshAllIssues, createSpecialCard, taggable, renderList, renderFilters, dueSoon, scheduleOverlapsToday,
       SPECIAL_CARDS, SPECIAL_IDS,
       // digestVisible became the tri-state mainView when the timeline arrived; kept here as a
       // derived view so the existing control-bar tests still speak in booleans.
@@ -286,7 +286,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get basePath(){ return basePath; }, set basePath(v){ basePath = v; },
       renderCard, geThoughtCards, setGeCardPanel, geRenderCardPanel, toggleCard, updateCardInPlace,
       geSpikes, geSyncSpikes, geSyncSpikeNodes, get geSpikeSet(){ return [..._geSpikes].sort(); },
-      getVisibleItems,
+      getVisibleItems, cardIdFromQuery,
       set interactions(v){ interactions = v; }, get interactions(){ return interactions; },
       get geNodes(){ return _geNodes; }, get geEdges(){ return _geEdges; }, get geDrawn(){ return _geDrawn; },
       get geMechEdges(){ return _geMechEdges; }, get gePos(){ return _gePos; },

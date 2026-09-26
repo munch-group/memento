@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/munch-group-vscode-light-theme",
-  "date": "2026-04-29T18:17:31Z",
+  "date": "2026-09-09T10:22:50Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/munch-group-vscode-light-theme",
@@ -16,6 +16,16 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "e373702",
+      "msg": "Added vsix file",
+      "date": "2026-09-09T10:22:19Z"
+    },
+    {
+      "sha": "bf855eb",
+      "msg": "update",
+      "date": "2026-08-23T23:30:07Z"
+    },
     {
       "sha": "04f67d9",
       "msg": "update",

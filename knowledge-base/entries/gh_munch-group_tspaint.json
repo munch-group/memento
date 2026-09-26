@@ -8,7 +8,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/tspaint",
-  "date": "2026-07-27T10:10:39Z",
+  "date": "2026-09-10T05:36:49Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/tspaint",
@@ -19,6 +19,11 @@
   "_ghPrivate": false,
   "_sortTag": "LAI",
   "_ghCommits": [
+    {
+      "sha": "f7ce086",
+      "msg": "updated plans",
+      "date": "2026-09-10T05:36:29Z"
+    },
     {
       "sha": "4042b75",
       "msg": "Lots of work exploring what can be achieved with better ARG sampling",
@@ -63,11 +68,6 @@
       "sha": "576ab4c",
       "msg": "update",
       "date": "2026-07-08T00:06:05Z"
-    },
-    {
-      "sha": "81184b0",
-      "msg": "Updated notebooks and api docs",
-      "date": "2026-07-07T08:03:46Z"
     }
   ],
   "_ghIssuesRecent": []

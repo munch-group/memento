@@ -1,0 +1,26 @@
+{
+  "id": "gh_munch-group_application-NNFproject-2026",
+  "type": "github",
+  "title": "application-NNFproject-2026",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/application-NNFproject-2026",
+  "date": "2026-08-27T09:18:04Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/application-NNFproject-2026",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": null,
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "785a3f8",
+      "msg": "Initial commit",
+      "date": "2026-08-27T09:18:03Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

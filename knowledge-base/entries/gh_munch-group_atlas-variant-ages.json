@@ -9,17 +9,42 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/atlas-variant-ages",
-  "date": "2026-04-24T10:30:57Z",
+  "date": "2026-09-06T15:27:25Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/atlas-variant-ages",
   "_ghStars": 0,
   "_ghForks": 0,
-  "_ghLang": "Python",
+  "_ghLang": "Shell",
   "_ghOpenIssues": 0,
   "_ghPrivate": false,
   "_sortTag": "LoF",
   "_ghCommits": [
+    {
+      "sha": "6e6fb1c",
+      "msg": "update",
+      "date": "2026-09-06T15:27:23Z"
+    },
+    {
+      "sha": "619b60e",
+      "msg": "added scripts",
+      "date": "2026-09-02T15:58:11Z"
+    },
+    {
+      "sha": "d3306d2",
+      "msg": "Add data files (batch 2/2)",
+      "date": "2026-09-02T15:54:11Z"
+    },
+    {
+      "sha": "0dc82c7",
+      "msg": "Add data files (batch 1/2)",
+      "date": "2026-09-02T15:46:58Z"
+    },
+    {
+      "sha": "950a34f",
+      "msg": "Update build_parquet.py and add labdata.yml; keep parquet data out of git",
+      "date": "2026-09-02T13:37:39Z"
+    },
     {
       "sha": "085f34f",
       "msg": "Update README and scripts for parquet file generation; enhance logging and update pd-lfs dependency",

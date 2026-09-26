@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_itrails-workflow",
+  "type": "github",
+  "title": "itrails-workflow",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/itrails-workflow",
+  "date": "2026-09-14T06:32:03Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/itrails-workflow",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Jupyter Notebook",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "6cbec98",
+      "msg": "Added files",
+      "date": "2026-09-14T06:29:33Z"
+    },
+    {
+      "sha": "7ab578f",
+      "msg": "Update meta.yaml",
+      "date": "2026-05-23T16:28:29Z"
+    },
+    {
+      "sha": "a93451d",
+      "msg": "Add conda-build installation step to workflow",
+      "date": "2026-05-23T16:25:09Z"
+    },
+    {
+      "sha": "ea70bda",
+      "msg": "Change development install description in pyproject.toml",
+      "date": "2026-04-24T09:18:21Z"
+    },
+    {
+      "sha": "3cbb4be",
+      "msg": "Refactor GitHub release script for default repo",
+      "date": "2026-04-24T09:16:18Z"
+    },
+    {
+      "sha": "b9b8ca4",
+      "msg": "Added claue code review kit",
+      "date": "2026-04-23T10:48:25Z"
+    },
+    {
+      "sha": "32fcb7e",
+      "msg": "Update pyproject.toml",
+      "date": "2026-03-23T11:16:56Z"
+    },
+    {
+      "sha": "411d983",
+      "msg": "update",
+      "date": "2026-03-01T20:18:15Z"
+    },
+    {
+      "sha": "e3cf580",
+      "msg": "update",
+      "date": "2026-03-01T20:12:55Z"
+    },
+    {
+      "sha": "7878147",
+      "msg": "remove files",
+      "date": "2026-03-01T20:08:24Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

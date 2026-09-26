@@ -7,7 +7,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/primate-prot-var",
-  "date": "2026-06-15T11:17:29Z",
+  "date": "2026-09-10T10:42:09Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/primate-prot-var",
@@ -18,6 +18,41 @@
   "_ghPrivate": false,
   "_sortTag": "LoF",
   "_ghCommits": [
+    {
+      "sha": "936cfd2",
+      "msg": "update",
+      "date": "2026-09-10T10:42:03Z"
+    },
+    {
+      "sha": "a213972",
+      "msg": "crossrepo fix",
+      "date": "2026-09-10T10:38:57Z"
+    },
+    {
+      "sha": "9536093",
+      "msg": "update",
+      "date": "2026-09-06T15:29:43Z"
+    },
+    {
+      "sha": "cd614af",
+      "msg": "update",
+      "date": "2026-09-05T17:53:21Z"
+    },
+    {
+      "sha": "aaf844d",
+      "msg": "update",
+      "date": "2026-09-05T17:46:06Z"
+    },
+    {
+      "sha": "a4cfd23",
+      "msg": "update",
+      "date": "2026-09-05T17:42:50Z"
+    },
+    {
+      "sha": "afe4aa5",
+      "msg": "lots of old stuff to save",
+      "date": "2026-09-01T13:41:23Z"
+    },
     {
       "sha": "181bf4e",
       "msg": "update",
@@ -32,41 +67,6 @@
       "sha": "d6065f1",
       "msg": "Added some jscatter scaffold code",
       "date": "2025-12-14T22:08:49Z"
-    },
-    {
-      "sha": "9dca8ce",
-      "msg": "updated gnomad script",
-      "date": "2025-12-06T20:51:18Z"
-    },
-    {
-      "sha": "453faed",
-      "msg": "added files",
-      "date": "2025-12-06T19:03:55Z"
-    },
-    {
-      "sha": "662d351",
-      "msg": "Update from cluster",
-      "date": "2025-10-13T12:56:06Z"
-    },
-    {
-      "sha": "5c1f8f8",
-      "msg": "Update from cluster",
-      "date": "2025-10-13T12:54:55Z"
-    },
-    {
-      "sha": "a0c0ed5",
-      "msg": "update",
-      "date": "2025-10-10T10:51:43Z"
-    },
-    {
-      "sha": "ff066f8",
-      "msg": "added claude scripts",
-      "date": "2025-10-10T10:50:12Z"
-    },
-    {
-      "sha": "5edcd6b",
-      "msg": "Added script",
-      "date": "2025-09-23T08:50:04Z"
     }
   ],
   "_ghIssuesRecent": [

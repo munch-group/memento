@@ -54,4 +54,4 @@ What Sabina (cc-ed here) from our group found is that when she looked at TTLL10 
 
 https://omabrowser.org/api/docs
 
-https://github.com/DessimozLab/pyomadb/tree/master
+[DessimozLab/pyomadb — PyOMADB is a python client to the OMA browser, using the REST API](https://github.com/DessimozLab/pyomadb/tree/master)

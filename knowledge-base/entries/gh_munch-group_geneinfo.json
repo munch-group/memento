@@ -5,17 +5,22 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/geneinfo",
-  "date": "2026-07-01T15:03:05Z",
+  "date": "2026-09-26T08:00:45Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/geneinfo",
   "_ghStars": 5,
   "_ghForks": 0,
   "_ghLang": "Jupyter Notebook",
-  "_ghOpenIssues": 13,
+  "_ghOpenIssues": 14,
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "620eb84",
+      "msg": "update",
+      "date": "2026-08-28T18:42:20Z"
+    },
     {
       "sha": "9dd0b28",
       "msg": "patch  version bump",
@@ -60,14 +65,17 @@
       "sha": "f13be16",
       "msg": "patch  version bump",
       "date": "2026-05-29T14:08:51Z"
-    },
-    {
-      "sha": "9ec3b8b",
-      "msg": "Addded fallback to US mirror of UCSC API",
-      "date": "2026-05-29T14:08:05Z"
     }
   ],
   "_ghIssuesRecent": [
+    {
+      "number": 15,
+      "title": "Finish adding circos plot",
+      "state": "open",
+      "date": "2026-09-26T08:00:47Z",
+      "labels": [],
+      "url": "https://github.com/munch-group/geneinfo/issues/15"
+    },
     {
       "number": 14,
       "title": "Zoom centromere color in dark mode",

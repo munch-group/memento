@@ -218,4 +218,8 @@ memory/
 # The distillate (knowledge-base/interactions.json) IS tracked; this is not.
 .interactions-cache/
 
+# Local url -> title cache for kb-titles.py. The titles it resolves land in the
+# entry markdown, which IS tracked; re-resolving is one --refresh away.
+.titles-cache/
+
 .DS_Store

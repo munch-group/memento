@@ -19,4 +19,4 @@ Make the rolling background state be total branch length (draft for sampling bra
 - The two conditional joint probabilities are computed using different state spaces:
 No “non-diamond” recombination events allowed: Count recombination events like you do for each ton. Record if a coalescent event closes a “diamond loop”, in which case we reduce the nr of recombination events by 1. Redirect all edges leading to states with more than one recombination event to trash states.
 At least one “non-diamond” recombination event happens: .Like above, but allowing only states with at least one recombination event to transition to absorbing.
-- https://www.biorxiv.org/content/10.1101/2024.03.24.586479v1.full.pdf
+- [A structured coalescent model reveals deep ancestral structure shared by all modern humans](https://www.biorxiv.org/content/10.1101/2024.03.24.586479v1.full.pdf)

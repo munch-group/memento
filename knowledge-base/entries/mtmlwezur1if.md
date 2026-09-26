@@ -1,4 +1,4 @@
-https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/#core-takeaways-about-this-incident
+[metr.org/blog/…](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/#core-takeaways-about-this-incident)
 
 - Expoit gym: challenges for the AI. Can you break out of this containers and find a 
 flag

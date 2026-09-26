@@ -1,12 +1,11 @@
-
-- Paul Denny 
+- Prepare for Cleo's arrival (interested in structural variation - maybe involve her in CTCF inversions)
+- itrails workflow for Roos postdoc
 - John about hybrid incompatibility and XY haplotype driver pairs
 - Anjali Gupta (Kansas) about simulations and her autosome paper
-- Kalle / Charlotte about ABC bears.
+- Kalle / Charlotte about ABC bears (chrX/rfmix/itrails/ghostbuster/phasic).
 - John Huelsenbeck about Phasic and MCMC
-- Shriram
-- Davide Marnetto
-- Morteza about macaques
-- itrails workflow for Roos postdoc
-- random forest code for Ida
+- Paul Denny (instructing machines)
+- Shriram about Phasic
+- Davide Marnetto (Italien guy)
+- Morteza about macaques genomes
 - [Andreas Basse-O'Connor](https://sites.google.com/site/basseoconnor/Home)

@@ -7,7 +7,7 @@
   ],
   "genes": [],
   "source": "https://github.com/munch-group/snippet-cast",
-  "date": "2026-08-05T10:12:46Z",
+  "date": "2026-09-08T14:28:27Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/snippet-cast",
@@ -19,54 +19,54 @@
   "_sortTag": "Teaching",
   "_ghCommits": [
     {
-      "sha": "d21f228",
+      "sha": "872d923",
       "msg": "patch  version bump",
-      "date": "2026-08-05T10:11:31Z"
+      "date": "2026-09-08T14:27:14Z"
     },
     {
-      "sha": "4650a05",
+      "sha": "9a27a85",
+      "msg": "update",
+      "date": "2026-09-08T14:27:05Z"
+    },
+    {
+      "sha": "3146aee",
       "msg": "patch  version bump",
-      "date": "2026-08-05T10:11:27Z"
+      "date": "2026-09-08T06:51:25Z"
     },
     {
-      "sha": "ea2eb11",
-      "msg": "Switch conda package to noarch: python",
-      "date": "2026-08-05T10:01:44Z"
+      "sha": "ba5cc5e",
+      "msg": "Changed default video dir to .snippet-cast for all fronends",
+      "date": "2026-09-08T06:50:33Z"
     },
     {
-      "sha": "420af61",
+      "sha": "def672b",
+      "msg": "update",
+      "date": "2026-09-07T16:06:39Z"
+    },
+    {
+      "sha": "4173f10",
       "msg": "patch  version bump",
-      "date": "2026-07-23T15:23:33Z"
+      "date": "2026-09-07T16:05:42Z"
     },
     {
-      "sha": "1b43e4f",
+      "sha": "60578dc",
+      "msg": "updated defaults",
+      "date": "2026-09-07T16:05:31Z"
+    },
+    {
+      "sha": "4fdf443",
       "msg": "patch  version bump",
-      "date": "2026-07-23T15:23:30Z"
+      "date": "2026-09-07T11:24:49Z"
     },
     {
-      "sha": "a197d8f",
+      "sha": "e6a6ec0",
+      "msg": "update",
+      "date": "2026-09-07T11:24:32Z"
+    },
+    {
+      "sha": "4859a97",
       "msg": "patch  version bump",
-      "date": "2026-07-23T15:12:30Z"
-    },
-    {
-      "sha": "9f5a5cc",
-      "msg": "patch  version bump",
-      "date": "2026-07-23T15:12:23Z"
-    },
-    {
-      "sha": "ba8e542",
-      "msg": "updated pixi.lock",
-      "date": "2026-07-23T11:11:24Z"
-    },
-    {
-      "sha": "071dbf0",
-      "msg": "patch  version bump",
-      "date": "2026-07-23T11:11:09Z"
-    },
-    {
-      "sha": "a07bf94",
-      "msg": "patch  version bump",
-      "date": "2026-07-23T11:11:06Z"
+      "date": "2026-09-06T22:31:42Z"
     }
   ],
   "_ghIssuesRecent": []

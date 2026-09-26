@@ -1,0 +1,36 @@
+{
+  "id": "gh_munch-group_vep-data",
+  "type": "github",
+  "title": "vep-data",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/vep-data",
+  "date": "2026-09-11T14:52:43Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/vep-data",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "dbd95fa",
+      "msg": "added crossrepo",
+      "date": "2026-09-11T14:52:20Z"
+    },
+    {
+      "sha": "4488b49",
+      "msg": "added crossrepo.yml",
+      "date": "2026-09-10T11:50:41Z"
+    },
+    {
+      "sha": "15c0546",
+      "msg": "Initial commit: VEP annotation workflow",
+      "date": "2026-09-10T11:39:07Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

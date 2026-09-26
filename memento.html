@@ -239,6 +239,18 @@ a { color: inherit; }
 .special-card { cursor: pointer; }
 .inbox-card { cursor: pointer; }
 .special-card:hover { border-color: var(--border2); }
+/* Open-issues head: one collapsed <details> row per repo. */
+.gh-issues-card details { margin: 0; }
+.gh-issues-card summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 6px; }
+.gh-issues-card summary::-webkit-details-marker { display: none; }
+.gh-issues-card summary::before { content: '▸'; color: var(--text3); font-size: 10px; width: 8px; }
+.gh-issues-card details[open] > summary::before { content: '▾'; }
+.gh-issues-card .gh-repo-n { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+.gh-issues-card .gh-repo-go { margin-left: auto; color: var(--text3); text-decoration: none; opacity: 0.6; }
+.gh-issues-card .gh-repo-go:hover { opacity: 1; }
+.gh-issues-card ul { margin-top: 0.1em; }
+.gh-issues-refresh { cursor: pointer; margin-left: 6px; }
+.gh-issues-refresh:hover { color: var(--text); }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 /* Pinned-card chips (Alt-click a card to force it into the filter, regardless of every other
@@ -864,7 +876,7 @@ a { color: inherit; }
            in height: 1rem + 6px above becomes 6px above + 1rem below, so nothing under it moves. -->
       <div class="search-block">
       <div class="searchbar">
-        <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR" oninput="renderFilters();renderList()" />
+        <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR · paste a card id" oninput="renderFilters();renderList()" />
         <!-- One flex-shrink:0 unit so the bookmark and Clear never scatter onto separate wrapped
              lines. The bookmark (shown only while an unsaved search/filter is active) sits between
              the search input and its Clear button. The highlight button sits LAST, outside the
@@ -971,7 +983,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-07-16.9';
+const APP_BUILD = '2026-09-25.1';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1707,6 +1719,14 @@ const TOKEN_RE = /[@#][^\s]+|\S+/g;        // splits a group into @gene/#tag//ty
 function splitOrGroups(raw) {
   return raw ? raw.split(GROUP_SEP_RE).map(s=>s.trim()).filter(Boolean) : [];
 }
+// The card id a search group names, or ''. Ids leak out of the app constantly — entries/<id>.md
+// filenames, git diffs, kb-titles.py reports, the MCP server's get_entry — and until now there was
+// no way back in from one. Accepts the bare id and the [[id|title]] form copyCardRef() writes, so
+// pasting back exactly what the 🔗 icon put on the clipboard lands on the card it names.
+function cardIdFromQuery(q) {
+  const m = (q || '').match(/^\[*([^\s|\]]+)/);
+  return m ? m[1].toLowerCase() : '';
+}
 function resolveType(prefix) {
   const lo = prefix.toLowerCase();
   for (const t of TYPES) if (t.key===lo || t.label.toLowerCase()===lo || t.short.toLowerCase()===lo) return t.key;
@@ -1849,12 +1869,23 @@ function getVisibleItems() {
   if(activeTags.size) vis=vis.filter(i=>(i.tags||[]).some(t=>activeTags.has(t)));
   if(activeGene) vis=vis.filter(i=>(i.genes||[]).some(g=>geneAliasesU(g).includes(activeGene.toUpperCase())));
   if(orGroups.length) vis=vis.filter(i=>orGroups.some(g=>matchesGroup(i,g)));
+  // A search group that is exactly a card id pulls that card up. This is a LOOKUP, not a filter:
+  // it deliberately sits outside matchesGroup() so that pasting an id answers "where is this card"
+  // the same way whatever chips, archive scope or type tokens are active. Ids are opaque, so nobody
+  // types one speculatively — you paste one you already have, and an empty result would read as
+  // "that card is gone" rather than "a chip is hiding it".
+  const idHits = orGroups
+    .map(g => cardIdFromQuery(g.q))
+    .map(id => id && items.find(i => i.id.toLowerCase() === id))
+    .filter(Boolean);
   // Pinned cards (Alt-click) override every filter above, archive scope included — same "always
-  // shows, no matter what" contract as the Genes view's `*GENE` spike. Re-sort after the union so
-  // a pinned-in card lands in its natural sort position instead of tacked on at the end.
-  if(pinnedCardIds.size){
+  // shows, no matter what" contract as the Genes view's `*GENE` spike, and as an id lookup. Re-sort
+  // after the union so a pinned-in card lands in its natural sort position instead of tacked on at
+  // the end.
+  if(pinnedCardIds.size || idHits.length){
     const have=new Set(vis.map(i=>i.id));
-    const extra=[...pinnedCardIds].map(id=>items.find(i=>i.id===id)).filter(i=>i&&!have.has(i.id));
+    const pinned=[...pinnedCardIds].map(id=>items.find(i=>i.id===id)).filter(Boolean);
+    const extra=[...pinned, ...idHits].filter(i=>{ if(have.has(i.id)) return false; have.add(i.id); return true; });
     if(extra.length) vis=sortItems(vis.concat(extra));
   }
   return { vis, orGroups };
@@ -1865,7 +1896,8 @@ function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
 // Dashboard "head" cards — each sits atop a column in digest view, in this order:
-// the special cards (Priorities, Networking, Strategy), then the generated Dashboard digest, then Inbox.
+// the special cards (Priorities, Networking, Strategy), then the generated Dashboard digest, Inbox,
+// then Open issues.
 // Each array entry lands in its own column (round-robin, see renderList) — except Networking and
 // Strategy, which are glued into one entry so Strategy always renders directly under Networking
 // in the same column, instead of scattering across separate columns like the other heads.
@@ -1876,7 +1908,7 @@ function digestHeads(){
     : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
   const cardFor = id => renderSpecialCard(SPECIAL_CARDS.find(s => s.id === id), items.find(i => i.id === id));
   const networkingAndStrategy = cardFor('_networking') + cardFor('_strategy');
-  return [cardFor('_priorities'), networkingAndStrategy, digestHtml, renderInboxCard()].filter(Boolean);
+  return [cardFor('_priorities'), networkingAndStrategy, digestHtml, renderInboxCard(), renderGhIssuesCard()].filter(Boolean);
 }
 function renderLinkBanner() {
   const el = document.getElementById('link-banner');
@@ -7972,12 +8004,16 @@ function ghStoreActivity(item, rawCommits, rawIssues) {
     msg: c.commit.message.split('\n')[0],
     date: c.commit.author.date,
   }));
+  ghStoreIssues(item, rawIssues);
+}
+function ghStoreIssues(item, rawIssues) {
   item._ghIssuesRecent = rawIssues.map(i => ({
     number: i.number, title: i.title, state: i.state,
     date: i.updated_at,
     labels: (i.labels || []).map(l => l.name),
     url: i.html_url,
   }));
+  item._ghIssuesAt = new Date().toISOString();
 }
 
 function getRepoDigest(repoName) {
@@ -8031,19 +8067,74 @@ function ghBuildStatusHtml(commits, issues, repoName) {
   h += '<h2>Next up</h2>';
   const open = issues.filter(i => i.state === 'open').sort((a, b) => b.number - a.number);
   if (open.length) {
-    h += '<ul>';
-    for (const i of open) {
-      const labels = (i.labels || []).map(l => typeof l === 'string' ? l : l.name).join(', ');
-      const labelHtml = labels ? ' <code>' + esc(labels) + '</code>' : '';
-      const url = i.html_url || i.url;
-      const date = i.date || i.updated_at;
-      h += `<li><a href="${esc(url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title)}${labelHtml} <span style="color:var(--muted)">${fmtDate(date)}</span></li>`;
-    }
-    h += '</ul>';
+    h += '<ul>' + open.map(ghOpenIssueLi).join('') + '</ul>';
   } else {
     h += '<p><em>No open issues.</em></p>';
   }
   return h;
+}
+
+// One "Next up" line — shared by a GitHub card's status and the dashboard's Open issues head.
+function ghOpenIssueLi(i) {
+  const labels = (i.labels || []).map(l => typeof l === 'string' ? l : l.name).join(', ');
+  const labelHtml = labels ? ' <code>' + esc(labels) + '</code>' : '';
+  const url = i.html_url || i.url;
+  const date = i.date || i.updated_at;
+  return `<li><a href="${esc(url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title)}${labelHtml} <span style="color:var(--muted)">${fmtDate(date)}</span></li>`;
+}
+
+// Dashboard head: the "Next up" lists of every (unarchived) GitHub card, concatenated — one
+// collapsed row per repo, most recently active repo first. Built purely from each card's cached
+// `_ghIssuesRecent` (filled on sync or when the card is expanded), so it costs no API calls; ↻
+// re-fetches them all. Which rows are open survives re-renders (and reloads, via localStorage).
+let ghIssuesOpenRepos = new Set();
+try { ghIssuesOpenRepos = new Set(JSON.parse(localStorage.getItem('gh_issues_open') || '[]')); } catch {}
+let ghIssuesRefreshing = false;
+function ghIssuesToggle(el) {
+  const id = el.dataset.id;
+  if (el.open) ghIssuesOpenRepos.add(id); else ghIssuesOpenRepos.delete(id);
+  try { localStorage.setItem('gh_issues_open', JSON.stringify([...ghIssuesOpenRepos])); } catch {}
+}
+function ghOpenIssueRepos() {
+  return items
+    .filter(i => i.type === 'github' && !i.archived && Array.isArray(i._ghIssuesRecent))
+    .map(card => ({ card, open: card._ghIssuesRecent.filter(i => i.state === 'open').sort((a, b) => b.number - a.number) }))
+    .filter(r => r.open.length)
+    .sort((a, b) => (b.card.date || '').localeCompare(a.card.date || ''));
+}
+function renderGhIssuesCard() {
+  const repos = ghOpenIssueRepos();
+  if (!repos.length) return '';
+  const total = repos.reduce((n, r) => n + r.open.length, 0);
+  // Age of the stalest cache — the whole card is only as fresh as that.
+  const stamps = repos.map(r => r.card._ghIssuesAt).filter(Boolean);
+  const asOf = stamps.length === repos.length ? stamps.sort((a, b) => new Date(a) - new Date(b))[0] : null;
+  const refresh = `<span class="gh-issues-refresh" title="Re-fetch issues for every repo" onclick="ghRefreshAllIssues()">${ghIssuesRefreshing ? '…' : '↻'}</span>`;
+  const date = `<div class="digest-date">${asOf ? 'Fetched ' + esc(fmtDateAgo(asOf)) : ''}${refresh}</div>`;
+  const rows = repos.map(({ card, open }) =>
+    `<details data-id="${esc(card.id)}"${ghIssuesOpenRepos.has(card.id) ? ' open' : ''} ontoggle="ghIssuesToggle(this)">`
+    + `<summary><span>${esc(card.title)}</span><span class="gh-repo-n">${open.length}</span>`
+    + `<a href="#" class="gh-repo-go" title="Open the ${esc(card.title)} card" onclick="event.preventDefault();event.stopPropagation();navigateToRepoCard('${card.id}')">›</a></summary>`
+    + `<ul>${open.map(ghOpenIssueLi).join('')}</ul></details>`).join('');
+  return `<div class="digest-card gh-issues-card">${date}<h2>Open issues <span class="gh-repo-n">${total}</span></h2>${rows}</div>`;
+}
+// Re-fetch every unarchived GitHub card's issues. A failed fetch leaves that card's cache alone
+// (ghFetchRecentIssues can't tell failure from "no issues", hence the fetch here).
+async function ghRefreshAllIssues() {
+  if (ghIssuesRefreshing) return;
+  ghIssuesRefreshing = true; renderList();
+  const cards = items.filter(i => i.type === 'github' && !i.archived && i._ghFullName);
+  let failed = 0;
+  await Promise.all(cards.map(async card => {
+    try {
+      const resp = await fetch(`https://api.github.com/repos/${card._ghFullName}/issues?state=all&sort=updated&direction=desc&per_page=100`, { headers: ghHeaders() });
+      if (!resp.ok) { failed++; return; }
+      ghStoreIssues(card, (await resp.json()).filter(i => !i.pull_request));
+      saveEntryToFile(card);
+    } catch { failed++; }
+  }));
+  ghIssuesRefreshing = false; renderList();
+  showToast(failed ? `Issues refreshed — ${failed} of ${cards.length} repos failed` : `Issues refreshed for ${cards.length} repos`);
 }
 
 async function ghExpandCard(item) {

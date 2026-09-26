@@ -217,5 +217,67 @@ console.log('\nSpecial cards are not taggable or pinnable');
   eq(api.taggable(api.items.find(i => i.id === 'n1')), true, 'a normal card still does');
 }
 
+console.log('\nOpen issues: every repo card\'s open issues, concatenated, one collapsed row per repo');
+{
+  const iss = (number, state, title, extra = {}) =>
+    ({ number, state, title, date: '2026-09-01T00:00:00Z', labels: [], url: `https://github.com/o/r/issues/${number}`, ...extra });
+  const repo = (name, date, issues, extra = {}) => ({
+    id: 'gh_o_' + name, type: 'github', title: name, tags: [], genes: [], content: '', date,
+    _ghFullName: 'o/' + name, _ghIssuesRecent: issues, ...extra });
+  const cards = () => [
+    repo('old',      '2026-01-01T00:00:00Z', [iss(1, 'open', 'Old one')], { _ghIssuesAt: '2026-09-20T00:00:00Z' }),
+    repo('fresh',    '2026-09-01T00:00:00Z', [iss(3, 'open', 'Third <b>'), iss(7, 'open', 'Seventh', { labels: ['bug'] }), iss(5, 'closed', 'Done')],
+         { _ghIssuesAt: '2026-09-25T00:00:00Z' }),
+    repo('allclosed','2026-09-10T00:00:00Z', [iss(2, 'closed', 'Shut')]),
+    repo('archived', '2026-09-11T00:00:00Z', [iss(9, 'open', 'Hidden')], { archived: true }),
+    repo('uncached', '2026-09-12T00:00:00Z', undefined),
+  ];
+  const { api, sandbox } = setup([note('_priorities', 'Priorities'), ...cards()]);
+  const heads = api.digestHeads();
+  eq(headings(heads), ['Priorities', 'Dashboard', 'Inbox', 'Open issues'], 'Open issues is the last dashboard head');
+  const card = api.renderGhIssuesCard();
+  const repos = [...card.matchAll(/<summary><span>([^<]+)<\/span><span class="gh-repo-n">(\d+)/g)].map(m => [m[1], +m[2]]);
+  eq(repos, [['fresh', 2], ['old', 1]], 'repos with open issues only, most recently active first, with counts');
+  eq(/<h2>Open issues <span class="gh-repo-n">3<\/span>/.test(card), true, 'the heading carries the total');
+  eq(/Done|Shut|Hidden/.test(card), false, 'closed issues and archived repos are left out');
+  eq([...card.matchAll(/>#(\d+)</g)].map(m => +m[1]), [7, 3, 1], 'issues newest-number first within a repo');
+  eq(card.includes('Third &lt;b&gt;') && card.includes('<code>bug</code>'), true, 'titles are escaped; labels shown as on the repo card');
+  eq((card.match(/<details[^>]*>/g) || []).every(t => !/\sopen\b/.test(t)), true, 'every repo row starts collapsed');
+  eq(/Fetched/.test(card), true, 'the card says how old its (stalest) cache is');
+
+  // Open state survives a re-render, and a reload (localStorage).
+  api.ghIssuesToggle({ dataset: { id: 'gh_o_old' }, open: true });
+  eq(/<details data-id="gh_o_old" open/.test(api.renderGhIssuesCard()), true, 'an expanded repo stays expanded on re-render');
+  eq(sandbox.localStorage.getItem('gh_issues_open'), '["gh_o_old"]', 'and is remembered across reloads');
+  api.ghIssuesToggle({ dataset: { id: 'gh_o_old' }, open: false });
+  eq(/<details data-id="gh_o_old" open/.test(api.renderGhIssuesCard()), false, 'collapsing it is remembered too');
+
+  const none = setup([repo('allclosed', '2026-09-10T00:00:00Z', [iss(2, 'closed', 'Shut')])]).api;
+  eq(none.renderGhIssuesCard(), '', 'no open issues anywhere: no card at all');
+}
+
+console.log('\nOpen issues: ↻ re-fetches every repo, and a failed fetch keeps the cache');
+{
+  const raw = (number, state, title, pr) => ({ number, state, title, updated_at: '2026-09-26T00:00:00Z', labels: [{ name: 'x' }],
+    html_url: `https://github.com/o/r/issues/${number}`, ...(pr ? { pull_request: {} } : {}) });
+  const fetchImpl = async url => url.includes('/o/good/')
+    ? { ok: true, status: 200, json: async () => [raw(11, 'open', 'New'), raw(12, 'open', 'A PR', true), raw(4, 'closed', 'Gone')] }
+    : { ok: false, status: 500, json: async () => ({}) };
+  const { api, toasts } = load({ fetchImpl });
+  api.ghRepoMode = true; api.canWrite = true; api.readOnly = false;
+  const mk = name => ({ id: 'gh_o_' + name, type: 'github', title: name, tags: [], genes: [], content: '', date: '2026-09-01T00:00:00Z',
+    _ghFullName: 'o/' + name, _ghCommits: [{ sha: 'abc1234', msg: 'm', date: '2026-09-01T00:00:00Z' }],
+    _ghIssuesRecent: [{ number: 4, state: 'open', title: 'Was open', date: '2026-08-01T00:00:00Z', labels: [], url: 'u' }] });
+  api.items = [mk('good'), mk('bad')];
+  await api.ghRefreshAllIssues();
+  const [good, bad] = api.items;
+  eq(good._ghIssuesRecent.map(i => [i.number, i.state]), [[11, 'open'], [4, 'closed']], 'fetched issues replace the cache (PRs dropped)');
+  eq(good._ghCommits.length, 1, 'commits are left untouched');
+  eq(!!good._ghIssuesAt, true, 'and the fetch time is stamped');
+  eq(bad._ghIssuesRecent.map(i => i.number), [4], 'a failed fetch leaves that repo\'s cache alone');
+  eq([...api.queue.keys()].filter(k => k.includes('gh_o_') && k.endsWith('.json')), ['knowledge-base/entries/gh_o_good.json'], 'only the refreshed card is saved');
+  eq(toasts.at(-1), 'Issues refreshed — 1 of 2 repos failed', 'the toast reports the failure');
+}
+
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);

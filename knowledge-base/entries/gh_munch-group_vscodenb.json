@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/vscodenb",
-  "date": "2026-08-08T10:40:44Z",
+  "date": "2026-08-31T11:41:20Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/vscodenb",
@@ -16,6 +16,21 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "461e78d",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T11:39:50Z"
+    },
+    {
+      "sha": "2619178",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T11:39:48Z"
+    },
+    {
+      "sha": "0ee8309",
+      "msg": "fixed text color for tqdm",
+      "date": "2026-08-31T11:39:31Z"
+    },
     {
       "sha": "b935ca7",
       "msg": "patch  version bump",
@@ -50,21 +65,6 @@
       "sha": "812b359",
       "msg": "patch  version bump",
       "date": "2026-07-21T12:47:20Z"
-    },
-    {
-      "sha": "62a3d50",
-      "msg": "major  version bump",
-      "date": "2026-07-21T12:46:57Z"
-    },
-    {
-      "sha": "5f37a14",
-      "msg": "Now automatically runs set_vscode_theme in import",
-      "date": "2026-07-21T12:46:07Z"
-    },
-    {
-      "sha": "fe73c71",
-      "msg": "patch  version bump",
-      "date": "2026-06-15T14:11:34Z"
     }
   ],
   "_ghIssuesRecent": [

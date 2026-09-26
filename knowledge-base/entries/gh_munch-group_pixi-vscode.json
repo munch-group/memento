@@ -1,0 +1,71 @@
+{
+  "id": "gh_munch-group_pixi-vscode",
+  "type": "github",
+  "title": "pixi-vscode",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/pixi-vscode",
+  "date": "2026-09-07T16:33:07Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/pixi-vscode",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "TypeScript",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "458f8ca",
+      "msg": "update",
+      "date": "2026-09-07T16:33:04Z"
+    },
+    {
+      "sha": "72e7cbe",
+      "msg": "update fix",
+      "date": "2026-09-07T16:32:47Z"
+    },
+    {
+      "sha": "02ab22c",
+      "msg": "fixes",
+      "date": "2026-09-02T09:49:13Z"
+    },
+    {
+      "sha": "b41eed5",
+      "msg": "runAsTAsk fix",
+      "date": "2026-08-31T15:12:14Z"
+    },
+    {
+      "sha": "383efaf",
+      "msg": "runAsTask fix",
+      "date": "2026-08-31T12:17:17Z"
+    },
+    {
+      "sha": "702f28c",
+      "msg": "update",
+      "date": "2026-08-29T15:55:38Z"
+    },
+    {
+      "sha": "d50a1a3",
+      "msg": "update",
+      "date": "2026-08-29T11:03:41Z"
+    },
+    {
+      "sha": "0b086c3",
+      "msg": "Move focus off the status bar after the environment picker closes",
+      "date": "2026-08-29T07:50:49Z"
+    },
+    {
+      "sha": "b0ba5fd",
+      "msg": "update",
+      "date": "2026-08-29T07:44:57Z"
+    },
+    {
+      "sha": "1f0117f",
+      "msg": "tooltip fix",
+      "date": "2026-08-29T07:28:42Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

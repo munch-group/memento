@@ -54,7 +54,7 @@ Hi both,
 
 I am sharing the paper Kasper sent me. This will also give you each other's contacts. 
 
-https://gwern.net/doc/genetics/heritable/2021-mallard-2.pdf
+[gwern.net/doc/…](https://gwern.net/doc/genetics/heritable/2021-mallard-2.pdf)
 
 Best,
 

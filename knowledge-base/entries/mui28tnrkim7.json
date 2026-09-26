@@ -1,7 +1,7 @@
 {
-  "id": "mront6rr34mg",
+  "id": "mui28tnrkim7",
   "type": "note",
-  "title": "",
+  "title": "circRNA plan",
   "genes": [],
   "tags": [],
   "source": "",
@@ -9,15 +9,15 @@
   "archived": false,
   "pinned": false,
   "due": "",
-  "date": "2026-07-17T08:11:54.375Z",
+  "date": "2026-09-26T07:20:42.278Z",
   "synced": false,
   "schedule": {
     "subtasks": [
       {
-        "id": "smront6rrypj",
-        "title": "SINGER tweak",
-        "start": "2026-07-20",
-        "end": "2026-07-23"
+        "id": "smui28tnrua2",
+        "title": "",
+        "start": "2026-09-28",
+        "end": "2026-09-30"
       }
     ]
   },

@@ -1,120 +1,48 @@
 
+All existing projects should use my test suites, but with some of them having students do a few them selves.
+
+The project where they decompose and hand bodies to AI could be a project extending the orffinding project.
+
+The project where they hand everything to AI could be one where they use Biopython / Rest APIs to blast etc. to shortlist found orfs
+
+
+Rewrite claude-drafted chapters
+
+**Add curration project to weekplan**
+
+Use `%%test` for notebook exercises like below, where they are asked to fill in body, tests or both.
+
 ```
 %%test
 
 from pytest import approx
 from im_pytest import requires
 
-CODON_MAP = {
-    'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L', 'TCT': 'S', 'TCC': 'S',
-    'TCA': 'S', 'TCG': 'S', 'TAT': 'Y', 'TAC': 'Y', 'TAA': '*', 'TAG': '*',
-    'TGT': 'C', 'TGC': 'C', 'TGA': '*', 'TGG': 'W', 'CTT': 'L', 'CTC': 'L',
-    'CTA': 'L', 'CTG': 'L', 'CCT': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',
-    'CAT': 'H', 'CAC': 'H', 'CAA': 'Q', 'CAG': 'Q', 'CGT': 'R', 'CGC': 'R',
-    'CGA': 'R', 'CGG': 'R', 'ATT': 'I', 'ATC': 'I', 'ATA': 'I', 'ATG': 'M',
-    'ACT': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T', 'AAT': 'N', 'AAC': 'N',
-    'AAA': 'K', 'AAG': 'K', 'AGT': 'S', 'AGC': 'S', 'AGA': 'R', 'AGG': 'R',
-    'GTT': 'V', 'GTC': 'V', 'GTA': 'V', 'GTG': 'V', 'GCT': 'A', 'GCC': 'A',
-    'GCA': 'A', 'GCG': 'A', 'GAT': 'D', 'GAC': 'D', 'GAA': 'E', 'GAG': 'E',
-    'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',
-}
-
-GENOME_FILE = "e_coli_O157_H157_str_Sakai.fasta"
-
-
 @requires("find_start_positions")
 def test_find_start_positions(module):
     ...
 
 
-@requires("find_next_codon")
-def test_find_next_codon(module):
-    ...
-
-
-@requires("find_next_stop_codon")
-def test_find_next_stop_codon(module):
-    ...
-
-
-@requires("find_orfs")
-def test_find_orfs(module):
-    ...
-
-
-@requires("translate_codon")
-def test_translate_codon(module):
-    ...
-
-@requires("split_codons")
-def test_split_codons(module):
-    ...
-
-
-@requires("translate_orf")
-def test_translate_orf(module):
-    ...
-
-
-@requires("read_genome")
-def test_read_genome(module):
-    ...
-
-@requires("find_candidate_proteins")
-def test_find_candidate_proteins_small(module):
-    ...
-
-
-@requires("find_candidate_proteins", "read_genome")
-def test_find_candidate_proteins_genome(module):
-    ...
-
-
-
-
 def find_start_positions(seq):
     ...
 
+```
 
-def find_next_codon(seq, start, codon):
-    ...
-
-
-
-def find_next_stop_codon(seq, start):
-    ...
-
-
-
-def find_orfs(seq):
-    ...
-
-
-
-def translate_codon(x):
-    ...
-
-
-
-def split_codons(orf):
-    ...
-
-
-
-def translate_orf(orf):
-    ...
-
-
-
-def read_genome(file_name):
-    ...
-
-
-
-def find_candidate_proteins(seq):
-    ...
+Make some oracle exercises where they should make a function that does the same.
 
 ```
+import sys ; sys.path.append('./oracle') ; import oracle
+oracle.enigma_function('ATGTAA')
+```
+
+Use oracle as help when doing projects:
+
+```
+import sys ; sys.path.append('./oracle') ; import oracle
+oracle.split_codons('ATGTAA')
+```
+
+At exam, they should also solve problems where they fix broken functions to make them work...
 
 - Ebbe about his setup
 - Add email and weekplan link to web pages

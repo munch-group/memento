@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/pd-lfs",
-  "date": "2026-04-29T18:35:45Z",
+  "date": "2026-09-01T11:39:40Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/pd-lfs",
@@ -16,6 +16,36 @@
   "_ghPrivate": false,
   "_sortTag": "",
   "_ghCommits": [
+    {
+      "sha": "0278c37",
+      "msg": "patch  version bump",
+      "date": "2026-09-01T11:38:24Z"
+    },
+    {
+      "sha": "0644b4b",
+      "msg": "Added console script",
+      "date": "2026-09-01T11:38:12Z"
+    },
+    {
+      "sha": "be60157",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T16:26:45Z"
+    },
+    {
+      "sha": "d9ee8ee",
+      "msg": "dependencey fix",
+      "date": "2026-08-31T16:26:27Z"
+    },
+    {
+      "sha": "363eee8",
+      "msg": "patch  version bump",
+      "date": "2026-08-31T16:17:54Z"
+    },
+    {
+      "sha": "751605e",
+      "msg": "bug fix",
+      "date": "2026-08-31T16:17:43Z"
+    },
     {
       "sha": "ac0450d",
       "msg": "Add conda-build installation step to workflow",
@@ -35,36 +65,6 @@
       "sha": "193b019",
       "msg": "patch  version bump",
       "date": "2026-04-24T09:42:58Z"
-    },
-    {
-      "sha": "feb937b",
-      "msg": "feat: add GitHub permalink generation for URLs in gh_permalink function",
-      "date": "2026-04-24T09:42:37Z"
-    },
-    {
-      "sha": "f54b8fc",
-      "msg": "refactor: clean up github release script by removing commented code",
-      "date": "2026-04-24T09:19:24Z"
-    },
-    {
-      "sha": "5681d56",
-      "msg": "patch  version bump",
-      "date": "2026-04-24T09:15:05Z"
-    },
-    {
-      "sha": "9fb1698",
-      "msg": "patch  version bump",
-      "date": "2026-04-24T09:15:03Z"
-    },
-    {
-      "sha": "0103437",
-      "msg": "patch  version bump",
-      "date": "2026-04-24T09:07:51Z"
-    },
-    {
-      "sha": "6606089",
-      "msg": "patch  version bump",
-      "date": "2026-04-24T09:06:02Z"
     }
   ],
   "_ghIssuesRecent": []

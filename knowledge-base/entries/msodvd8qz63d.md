@@ -997,7 +997,7 @@ The Output of Protein-Coding Genes Shifts to Circular RNAs When the Pre-mRNA Pro
 
 ## Anti-sense transcript regulation
 
-https://app.readcube.com/library/ff394a98-20f7-4882-871c-840e9f73d65b/all/(sidepanel:details)?item_id=a9d55794-cdc5-4c82-b955-224d9ee138ed&collection_id=ff394a98-20f7-4882-871c-840e9f73d65b
+[app.readcube.com/library/…](<https://app.readcube.com/library/ff394a98-20f7-4882-871c-840e9f73d65b/all/(sidepanel:details)?item_id=a9d55794-cdc5-4c82-b955-224d9ee138ed&collection_id=ff394a98-20f7-4882-871c-840e9f73d65b>)
 
 ## ASD / ADHD
 

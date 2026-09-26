@@ -22,7 +22,7 @@
 
 *A 3D Map of the Human Genome at Kilobase Resolution Reveals Principles of Chromatin Looping*
 
-https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525
+[ncbi.nlm.nih.gov/geo/…](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525)
 
 The pipeline uses BWA (Li and Durbin, 2010) to map each read end separately to the **b37** or mm9 reference genomes;
 

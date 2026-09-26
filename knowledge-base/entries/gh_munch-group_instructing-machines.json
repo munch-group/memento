@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/instructing-machines",
-  "date": "2026-08-18T12:51:24Z",
+  "date": "2026-09-25T16:42:21Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/instructing-machines",
@@ -17,54 +17,54 @@
   "_sortTag": "",
   "_ghCommits": [
     {
-      "sha": "5f5ec80",
+      "sha": "3f6b9bd",
       "msg": "update",
-      "date": "2026-08-18T12:37:21Z"
+      "date": "2026-09-25T16:31:47Z"
     },
     {
-      "sha": "eb397c4",
+      "sha": "d8d445b",
       "msg": "update",
-      "date": "2026-08-18T12:35:33Z"
+      "date": "2026-09-25T15:13:04Z"
     },
     {
-      "sha": "b46fb35",
+      "sha": "1f5f9e3",
       "msg": "update",
-      "date": "2026-08-09T21:59:59Z"
+      "date": "2026-09-25T15:12:11Z"
     },
     {
-      "sha": "c90f591",
+      "sha": "803c3d0",
       "msg": "update",
-      "date": "2026-08-08T21:31:06Z"
+      "date": "2026-09-25T14:02:05Z"
     },
     {
-      "sha": "971cdf9",
+      "sha": "dfe2d4d",
       "msg": "update",
-      "date": "2026-08-08T19:20:55Z"
+      "date": "2026-09-25T11:09:59Z"
     },
     {
-      "sha": "18357c0",
+      "sha": "72f3248",
       "msg": "update",
-      "date": "2026-08-08T16:34:14Z"
+      "date": "2026-09-25T10:54:23Z"
     },
     {
-      "sha": "2f61b74",
+      "sha": "7f232d9",
       "msg": "update",
-      "date": "2026-08-08T12:52:02Z"
+      "date": "2026-09-23T09:23:21Z"
     },
     {
-      "sha": "cb2c796",
+      "sha": "53fb251",
       "msg": "update",
-      "date": "2026-08-08T10:52:04Z"
+      "date": "2026-09-23T06:22:59Z"
     },
     {
-      "sha": "c5e4949",
-      "msg": "Fixes to exercises",
-      "date": "2026-08-08T09:21:25Z"
+      "sha": "d5c82f0",
+      "msg": "update",
+      "date": "2026-09-23T05:08:35Z"
     },
     {
-      "sha": "14a1df6",
-      "msg": "Added badges to exercises",
-      "date": "2026-08-07T22:14:00Z"
+      "sha": "e5a3497",
+      "msg": "update",
+      "date": "2026-09-21T07:03:53Z"
     }
   ],
   "_ghIssuesRecent": [

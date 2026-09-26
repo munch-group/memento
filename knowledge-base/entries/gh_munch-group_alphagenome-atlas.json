@@ -1,0 +1,31 @@
+{
+  "id": "gh_munch-group_alphagenome-atlas",
+  "type": "github",
+  "title": "alphagenome-atlas",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/alphagenome-atlas",
+  "date": "2026-09-14T12:39:18Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/alphagenome-atlas",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false,
+  "_sortTag": "",
+  "_ghCommits": [
+    {
+      "sha": "2df6984",
+      "msg": "Added symlink and crossrepo.yml",
+      "date": "2026-09-14T12:39:06Z"
+    },
+    {
+      "sha": "8df27e4",
+      "msg": "Added files",
+      "date": "2026-09-14T12:15:28Z"
+    }
+  ],
+  "_ghIssuesRecent": []
+}

@@ -1,0 +1,1 @@
+Make pixi environments work in vscode

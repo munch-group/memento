@@ -1,4 +1,5 @@
 ## Today
+Imanol
 - Rewrite chapters, add currationproject, finish testing arc [[mrmacisv6p1p|Bioinformatics plan]]
 - Tidy plan [[mu2ewecoa8tg|Overview / Tidy plan]]
 - Go back to normal security level on laptop

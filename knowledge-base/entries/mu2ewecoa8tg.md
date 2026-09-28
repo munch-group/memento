@@ -10,172 +10,23 @@
 - cDEGexploration
 - chromatin repos
 
-# Laptop repos
 
-- `munch-group.github.io`:
-- `exercise`: 
-- `insntructing-machines`: 
-- `crossrepo`: 
-- `davide_segments_v2`: 
-- `exercise`: 
-- `franklin`: 
-- `franklin-build-base`: 
-- `geneinfo`: 
-- `github-backup`: 
-- `google-cloud-sdk`: 
-- `gpn-star-test`: 
-- `instructing-machines`: 
-- `interaction-store`: 
-- `interference_map`: 
-- `intersect_primate_lof.py`: 
-- `itrails`: 
-- `itrails-workflow`: 
-- `mail-assistant`: 
-- `maps`: 
-- `mcp-servers-split`: 
-- `phasic`: 
-- `phasic-removed-stuff`: 
-- `satelite`: 
-- `sandbox/ext/im-pixi-vscode`: 
-- `sandbox/crossrepo`: 
-- `sandbox/im-course-tools`: 
-- `sandbox/im-pytest`: 
-- `sandbox/instructing-machines`: 
-- `sandbox/ext/im-pixi-vscode`: 
-- `sandbox/widgets/codelens-widget`: 
-- `sandbox/widgets/im-pytest`: 
-- `sandbox/widgets/iplot-widget`: 
-- `sandbox/widgets/puzzle-widget`: 
-- `sandbox/widgets/sandbox-widget`: 
-- `sandbox/widgets/snippet-cast`: 
-- `sandbox/widgets/steps-widget`: 
-- `sandbox/widgets/turtle-widget`: 
-- `cDEGexploration/_pixi.toml`: 
-- `cDEGexploration/_quarto.yml`: 
-- `cDEGexploration/binder`: 
-- `cDEGexploration/captions.lua`: 
-- `cDEGexploration/data`: 
-- `cDEGexploration/environment.yml`: 
-- `cDEGexploration/filters`: 
-- `cDEGexploration/global_params.py`: 
-- `cDEGexploration/global_params.yml`: 
-- `cDEGexploration/index.qmd`: 
-- `cDEGexploration/LICENSE`: 
-- `cDEGexploration/manuscript`: 
-- `cDEGexploration/notebooks`: 
-- `cDEGexploration/pixi.lock`: 
-- `cDEGexploration/pixi.toml`: 
-- `cDEGexploration/README.md`: 
-- `cDEGexploration/references.bib`: 
-- `cDEGexploration/references.qmd`: 
-- `cDEGexploration/reports`: 
-- `cDEGexploration/requirement_suggestions.txt`: 
-- `cDEGexploration/requirements.txt`: 
-- `cDEGexploration/results`: 
-- `cDEGexploration/scripts`: 
-- `cDEGexploration/slides`: 
-- `cDEGexploration/thesis`: 
-- `cDEGexploration/workflow.py`: 
-
-# gdk:/xy-drive/people/kmt
-
-- `atlas-variant-ages`: 
-- `baboons`: 
-- `cDEGexploration`: 
-- `chromatin-structure`: 
-- `compartments_and_edges.ipynb`: 
-- `comp_coords`: 
-- `comp_coords.tar.gz`: 
-- `coords.ipynb`: 
-- `data`: 
-- `experiment.ipynb`: 
-- `hicmaps`: 
-- `hic-spermatogenesis`: 
-- `hic-xy-sperm`: 
-- `human_nean_admixture.ipynb`: 
-- `IR_gwas`: 
-- `macaque_hic.ipynb`: 
-- `nb02_sfari.ipynb`: 
-- `nerd-2026.ipynb`: 
-- `notebook_overview.md`: 
-- `primate-prot-var`: 
-- `PsychENCODE`: 
-- `rajarajan-neuron-hic`: 
-- `relate1Kgenomes`: 
-- `sc-kmt-27485758.out`: 
-- `sojern.ipynb`: 
-- `synapse`: 
-- `tidy_up_notes.qmd`: 
-- `tooltips`: 
-- `wavelets.ipynb`: 
-
-# gdk:/xy-drive/people/kmt/cDEGexploration
-
-- `binder`: 
-- `captions.lua`: 
-- `compartments.csv`: 
-- `comp_coords.pickle`: 
-- `cooler.yml`: 
-- `data`: 
-- `environment.yml`: 
-- `env.yml`: 
-- `filters`: 
-- `global_params.py`: 
-- `global_params.yml`: 
-- `index.qmd`: 
-- `LICENSE`: 
-- `manuscript`: 
-- `_notebooks`: 
-- `notebooks`: 
-- `pixi.lock`: 
-- `pixi.toml`: 
-- `_quarto.yml`: 
-- `README.md`: 
-- `references.bib`: 
-- `references.qmd`: 
-- `reports`: 
-- `requirements.txt`: 
-- `requirement_suggestions.txt`: 
-- `results`: 
-- `scripts`: 
-- `slides`: 
-- `thesis`: 
-- `workflow.py`: 
 
 # All laptop repos
 
 `find ~/ -name '.git' -maxdepth 5 -type d -not -path '**/github-backup/**' -exec dirname {} \;`
 
-- `~/maps`: 
-- `~/.gitkraken/tutorial/Intro`: 
 - `~/crossrepo`: 
 - `~/_itrails-workflow`: 
-- `~/iCloud Drive (Archive) - 1/Desktop/Jupyter references project/jupyter-references`: 
-- `~/iCloud Drive (Archive) - 1/Desktop/kaspermunch.github.io`: 
-- `~/satelite`: 
-- `~/geneinfo`: 
 - `~/interaction-store`: 
 - `~/backup_phasic`: 
 - `~/phasic_backup`: 
-- `~/mcp-servers-split/ensembl-mcp`: 
-- `~/mcp-servers-split/gh-mcp`: 
-- `~/mcp-servers-split/string-mcp`: 
-- `~/mcp-servers-split/mcp-rest-utils`: 
-- `~/franklin-build-base`: 
-- `find: ~/GenomeDK: Device not configured`: 
-- `find: ~/Library/CloudStorage/GoogleDrive-kaspermunch@gmail.com (02-06-2023 07.20)/.tmp: Permission denied`: 
-- `~/Library/CloudStorage/Dropbox/data`: 
-- `~/memento`: 
-- `~/itrails`: 
-- `~/iCloud Drive (Archive)/Desktop/slurm-jupyter`: 
-- `~/mail-assistant`: 
-- `~/.codex/.tmp/plugins`: 
-- `~/sandbox/crossrepo`: 
-- `~/sandbox/im-course-tools`: 
-- `~/sandbox/im-pytest`: 
+- `~/mcp-servers-split/ensembl-mcp`: Left there for Claude to find
+- `~/mcp-servers-split/gh-mcp`:  Left there for Claude to find
+- `~/mcp-servers-split/string-mcp`:  Left there for Claude to find
+- `~/mcp-servers-split/mcp-rest-utils`:  Left there for Claude to find
 - `~/sandbox/ext/im-pixi-vscode`: 
 - `~/sandbox/instructing-machines`: 
-- `~/sandbox/bioinformatics`: 
 - `~/sandbox/widgets/puzzle-widget`: 
 - `~/sandbox/widgets/im-pytest`: 
 - `~/sandbox/widgets/codelens-widget`: 
@@ -184,7 +35,6 @@
 - `~/sandbox/widgets/steps-widget`: 
 - `~/sandbox/widgets/sandbox-widget`: 
 - `~/sandbox/widgets/snippet-cast`: 
-- `~/cDEGexploration`: 
 - `~/franklin/franklin-cli`: 
 - `~/franklin/franklin`: 
 - `~/franklin/franklin-educator`: 
@@ -363,6 +213,101 @@
 - `./faststorage/projects/great_ape_ils_maps/prufer_bonobo_chimp_map/scripts`: 
 - `./faststorage/projects/great_ape_ils_maps/neanderthal_denisova_map/scripts`: 
 - `./sticcs`: 
+
+# cDEGexploration
+
+- `cDEGexploration/_pixi.toml`: 
+- `cDEGexploration/_quarto.yml`: 
+- `cDEGexploration/binder`: 
+- `cDEGexploration/captions.lua`: 
+- `cDEGexploration/data`: 
+- `cDEGexploration/environment.yml`: 
+- `cDEGexploration/filters`: 
+- `cDEGexploration/global_params.py`: 
+- `cDEGexploration/global_params.yml`: 
+- `cDEGexploration/index.qmd`: 
+- `cDEGexploration/LICENSE`: 
+- `cDEGexploration/manuscript`: 
+- `cDEGexploration/notebooks`: 
+- `cDEGexploration/pixi.lock`: 
+- `cDEGexploration/pixi.toml`: 
+- `cDEGexploration/README.md`: 
+- `cDEGexploration/references.bib`: 
+- `cDEGexploration/references.qmd`: 
+- `cDEGexploration/reports`: 
+- `cDEGexploration/requirement_suggestions.txt`: 
+- `cDEGexploration/requirements.txt`: 
+- `cDEGexploration/results`: 
+- `cDEGexploration/scripts`: 
+- `cDEGexploration/slides`: 
+- `cDEGexploration/thesis`: 
+- `cDEGexploration/workflow.py`: 
+
+# gdk:/xy-drive/people/kmt
+
+- `atlas-variant-ages`: 
+- `baboons`: 
+- `cDEGexploration`: 
+- `chromatin-structure`: 
+- `compartments_and_edges.ipynb`: 
+- `comp_coords`: 
+- `comp_coords.tar.gz`: 
+- `coords.ipynb`: 
+- `data`: 
+- `experiment.ipynb`: 
+- `hicmaps`: 
+- `hic-spermatogenesis`: 
+- `hic-xy-sperm`: 
+- `human_nean_admixture.ipynb`: 
+- `IR_gwas`: 
+- `macaque_hic.ipynb`: 
+- `nb02_sfari.ipynb`: 
+- `nerd-2026.ipynb`: 
+- `notebook_overview.md`: 
+- `primate-prot-var`: 
+- `PsychENCODE`: 
+- `rajarajan-neuron-hic`: 
+- `relate1Kgenomes`: 
+- `sc-kmt-27485758.out`: 
+- `sojern.ipynb`: 
+- `synapse`: 
+- `tidy_up_notes.qmd`: 
+- `tooltips`: 
+- `wavelets.ipynb`: 
+
+# gdk:/xy-drive/people/kmt/cDEGexploration
+
+- `binder`: 
+- `captions.lua`: 
+- `compartments.csv`: 
+- `comp_coords.pickle`: 
+- `cooler.yml`: 
+- `data`: 
+- `environment.yml`: 
+- `env.yml`: 
+- `filters`: 
+- `global_params.py`: 
+- `global_params.yml`: 
+- `index.qmd`: 
+- `LICENSE`: 
+- `manuscript`: 
+- `_notebooks`: 
+- `notebooks`: 
+- `pixi.lock`: 
+- `pixi.toml`: 
+- `_quarto.yml`: 
+- `README.md`: 
+- `references.bib`: 
+- `references.qmd`: 
+- `reports`: 
+- `requirements.txt`: 
+- `requirement_suggestions.txt`: 
+- `results`: 
+- `scripts`: 
+- `slides`: 
+- `thesis`: 
+- `workflow.py`: 
+
 
 # Science stuff on Desktop
 

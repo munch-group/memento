@@ -1896,19 +1896,21 @@ function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
 // Dashboard "head" cards — each sits atop a column in digest view, in this order:
-// the special cards (Priorities, Networking, Strategy), then the generated Dashboard digest, Inbox,
-// then Open issues.
-// Each array entry lands in its own column (round-robin, see renderList) — except Networking and
-// Strategy, which are glued into one entry so Strategy always renders directly under Networking
+// the special cards (Priorities, Strategy, Networking), then Open issues (in the slot the generated
+// Dashboard digest used to occupy — that card is hidden for now, code kept below), then Inbox.
+// Each array entry lands in its own column (round-robin, see renderList) — except Strategy and
+// Networking, which are glued into one entry so Networking always renders directly under Strategy
 // in the same column, instead of scattering across separate columns like the other heads.
 function digestHeads(){
-  const d = window._kbDigest;
-  const digestHtml = (!d || !d.markdown)
-    ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
-    : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
+  // Dashboard digest card hidden — uncomment (and restore digestHtml in the array below) to bring it back.
+  // const d = window._kbDigest;
+  // const digestHtml = (!d || !d.markdown)
+  //   ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
+  //   : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
   const cardFor = id => renderSpecialCard(SPECIAL_CARDS.find(s => s.id === id), items.find(i => i.id === id));
-  const networkingAndStrategy = cardFor('_networking') + cardFor('_strategy');
-  return [cardFor('_priorities'), networkingAndStrategy, digestHtml, renderInboxCard(), renderGhIssuesCard()].filter(Boolean);
+  const strategyAndNetworking = cardFor('_strategy') + cardFor('_networking');
+  // was: [cardFor('_priorities'), strategyAndNetworking, digestHtml, renderInboxCard(), renderGhIssuesCard()]
+  return [cardFor('_priorities'), strategyAndNetworking, renderGhIssuesCard(), renderInboxCard()].filter(Boolean);
 }
 function renderLinkBanner() {
   const el = document.getElementById('link-banner');

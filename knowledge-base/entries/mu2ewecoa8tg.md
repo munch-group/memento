@@ -16,64 +16,35 @@
 
 `find ~/ -name '.git' -maxdepth 5 -type d -not -path '**/github-backup/**' -exec dirname {} \;`
 
-- `~/crossrepo`: 
-- `~/_itrails-workflow`: 
-- `~/interaction-store`: 
-- `~/backup_phasic`: 
-- `~/phasic_backup`: 
 - `~/mcp-servers-split/ensembl-mcp`: Left there for Claude to find
 - `~/mcp-servers-split/gh-mcp`:  Left there for Claude to find
 - `~/mcp-servers-split/string-mcp`:  Left there for Claude to find
 - `~/mcp-servers-split/mcp-rest-utils`:  Left there for Claude to find
-- `~/sandbox/ext/im-pixi-vscode`: 
-- `~/sandbox/instructing-machines`: 
-- `~/sandbox/widgets/puzzle-widget`: 
-- `~/sandbox/widgets/im-pytest`: 
-- `~/sandbox/widgets/codelens-widget`: 
-- `~/sandbox/widgets/iplot-widget`: 
-- `~/sandbox/widgets/turtle-widget`: 
-- `~/sandbox/widgets/steps-widget`: 
-- `~/sandbox/widgets/sandbox-widget`: 
-- `~/sandbox/widgets/snippet-cast`: 
-- `~/franklin/franklin-cli`: 
-- `~/franklin/franklin`: 
-- `~/franklin/franklin-educator`: 
-- `~/franklin/franklin-admin`: 
+
+- `~/backup_phasic`: 
+- `~/phasic_backup`: 
+- `~/phasic`: 
+
 - `~/Documents/_desktop_iitems/Fun/magic_markdown`: 
-- `~/Documents/Projects/pymc/pymc`: 
-- `~/Documents/Projects/pymc/pymc-resources`: 
 - `~/Documents/Projects/phasestype/vscode-rcpp-demo`: 
 - `~/Documents/Projects/phasestype/Stein-Variational-Gradient-Descent`: 
-- `~/Documents/Projects/_mbg-exercise-client`: 
-- `~/Documents/Projects/bullet`: 
-- `~/Documents/Projects/shiny_cluster`: 
-- `~/Documents/Projects/shannons_snps/geneinfo`: 
-- `~/Documents/Projects/pick`: 
-- `~/Documents/Projects/davide_intern/tree-stats`: 
+
 - `~/Documents/Fun/tslmm`: 
 - `~/Documents/Fun/magic_markdown`: 
 - `~/Documents/Fun/jscatter/jupyter-scatter-tutorial`: 
 - `~/Documents/Fun/Notebooks/PyPathway`: 
 - `~/Documents/Fun/Notebooks/visJS2jupyter`: 
-- `~/Documents/Teaching/bp/bp-help`: 
+
 - `~/Documents/Teaching/bp/textual`: 
-- `~/Documents/Teaching/bp/__bioinf-prog-course`: 
-- `~/Documents/Teaching/bp/_bioinf-prog-course`: 
 - `~/Documents/Teaching/bp/bioinf-prog-course`: 
 - `~/Documents/Teaching/gt/popgen-dashboards`: 
 - `~/Documents/Teaching/ctib/schedule`: 
-- `~/Documents/Teaching/slurm-jupyter`: 
 - `~/Documents/Teaching/learning-python`: 
 - `~/Documents/Teaching/molecular_biology_ii-chipseq-exercise`: 
-- `~/Documents/Teaching/mbg-docker-exercises`: 
-- `~/Documents/Teaching/mbg-docker-exercises/data`: 
+
 - `~/Documents/Notebooks/vaex/vaex`: 
 - `~/Documents/Notebooks/PyPathway`: 
 - `~/Documents/Notebooks/visJS2jupyter`: 
-- `~/itrails-workflow`: 
-- `~/phasic`: 
-- `~/bioinformatics`: 
-- `~/_bioinformatics`: 
 
 # All cluster repos
 

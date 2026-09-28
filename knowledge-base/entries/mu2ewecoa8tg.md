@@ -35,9 +35,6 @@
 - `~/Documents/Fun/Notebooks/PyPathway`: 
 - `~/Documents/Fun/Notebooks/visJS2jupyter`: 
 
-- `~/Documents/Teaching/bp/textual`: 
-- `~/Documents/Teaching/bp/bioinf-prog-course`: 
-- `~/Documents/Teaching/gt/popgen-dashboards`: 
 - `~/Documents/Teaching/ctib/schedule`: 
 - `~/Documents/Teaching/learning-python`: 
 - `~/Documents/Teaching/molecular_biology_ii-chipseq-exercise`: 

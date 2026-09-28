@@ -4,6 +4,7 @@ Imanol
 - Tidy plan [[mu2ewecoa8tg|Overview / Tidy plan]]
 - Go back to normal security level on laptop
 - SMBE follow-up: Tidy notes / watch talks https://smbe2026.org/virtual-streaming/ Code: SMBE2026 [[mrnfkhbc3h18|SMBE26 notes]]
+- Group meeting presentation [[mul2r84oipmt|- What to present ...]]
 
 ## Week
 - Julien meeting

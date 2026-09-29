@@ -16,171 +16,66 @@
 
 `find ~/ -name '.git' -maxdepth 5 -type d -not -path '**/github-backup/**' -exec dirname {} \;`
 
-- `~/mcp-servers-split/ensembl-mcp`: Left there for Claude to find
-- `~/mcp-servers-split/gh-mcp`:  Left there for Claude to find
-- `~/mcp-servers-split/string-mcp`:  Left there for Claude to find
-- `~/mcp-servers-split/mcp-rest-utils`:  Left there for Claude to find
-
 - `~/backup_phasic`: 
 - `~/phasic_backup`: 
 - `~/phasic`: 
 
-- `~/Documents/_desktop_iitems/Fun/magic_markdown`: 
-- `~/Documents/Projects/phasestype/vscode-rcpp-demo`: 
-- `~/Documents/Projects/phasestype/Stein-Variational-Gradient-Descent`: 
-
-- `~/Documents/Fun/tslmm`: 
-- `~/Documents/Fun/magic_markdown`: 
-- `~/Documents/Fun/jscatter/jupyter-scatter-tutorial`: 
-- `~/Documents/Fun/Notebooks/PyPathway`: 
-- `~/Documents/Fun/Notebooks/visJS2jupyter`: 
-
-- `~/Documents/Teaching/ctib/schedule`: 
-- `~/Documents/Teaching/learning-python`: 
-- `~/Documents/Teaching/molecular_biology_ii-chipseq-exercise`: 
-
-- `~/Documents/Notebooks/vaex/vaex`: 
-- `~/Documents/Notebooks/PyPathway`: 
-- `~/Documents/Notebooks/visJS2jupyter`: 
 
 # All cluster repos
 
 `find -L . -maxdepth 6 -user kmt -name '.git' -type d -not -path '**/.pixi/**' -exec dirname {} \; 2>&1 | grep -v 'Permission denied' | grep -v 'Too many levels of symbolic links'`
 
-- `./mit-ihh-pib/people/vanbruggenmit/mit-ihh-pib`: 
-- `./monkey/faststorage/orangutan/great-ape-recombination`: 
-- `./monkey/faststorage/orangutan/vcf-conversion-tools`: 
-- `./xy-drive/people/kmt/relate1Kgenomes`: 
-- `./xy-drive/people/kmt/primate-prot-var`: 
+- `./pratt_et_al/IBDmix`: 
+
+# Shannon
+
+- `./xy-brain/people/kmt/y-strat-gwas`: 
+
+# Phasic 
+
+- `./phasetype/people/kmt/_phase-type-distributions`: 
+- `./phasetype/people/kmt/_PtDAlgorithms`: 
+- `./sticcs`: 
+
+# GPN
+
+- `./gpn`: 
+- `./johan_gpn/people/johanulsrup/johan_gpn`: 
+
+# Birds
+
+- `./Birds/faststorage/people/kmt/bird-hotspots`: 
+
+# Interference map
+
+- `./primatediversity/people/kmt/interference_map`: 
+- `./hri/faststorage/people/kmt/interference_map`: 
+
+# Baboons
+
+- `./primatediversity/people/kmt/baboon_flagship`: 
+- `./primatediversity/people/kmt/baboons_v3_calling`: 
+
 - `./xy-drive/people/kmt/baboons`: 
-- `./xy-drive/people/kmt/cDEGexploration`: 
-- `./xy-drive/people/kmt/atlas-variant-ages`: 
+
+# Primate prot var
+
+- `./primatediversity/people/kmt/alphagenome_atlas`: 
+- `./primatediversity/people/kmt/vep_data`: 
+- `./primatediversity/people/kmt/atlas-variant-ages`: 
+- `./primatediversity/people/kmt/relate1Kgenomes`: 
+- `./primatediversity/people/kmt/primate-prot-var`: 
+
+# Chromatin
+
+- `./hic-spermatogenesis/data/macaque/HiC-Pro`: 
+- `./hic-spermatogenesis/people/sojern/hic-compartment-borders`: 
 - `./xy-drive/people/kmt/hic-spermatogenesis`: 
 - `./xy-drive/people/kmt/chromatin-structure`: 
 - `./xy-drive/people/kmt/hic-xy-sperm`: 
-- `./arg-dashboard`: 
-- `find: File system loop detected; ‘./greatApeData/faststorage/greatApeData’ is part of the same file system loop as ‘./greatApeData’.`: 
-- `./greatApeData/faststorage/people/kmt/greatape_pyrho_maps`: 
-- `./Camelids/faststorage/people/kmt/MultiPurpose`: 
-- `./Camelids/faststorage/people/kmt/RuffusPipeline`: 
-- `./Camelids/faststorage/people/kmt/alignio-maf`: 
-- `./Camelids/faststorage/people/kmt/CoalhmmPipeline`: 
-- `./Camelids/faststorage/people/kmt/SimulationPipeline`: 
-- `./primatediversity/people/kmt/baboon_flagship`: 
-- `./primatediversity/people/kmt/vep_data`: 
-- `./primatediversity/people/kmt/alphagenome_atlas`: 
-- `./primatediversity/people/kmt/smcpp_workflow`: 
-- `./primatediversity/people/kmt/interference_map`: 
-- `./primatediversity/people/kmt/baboons_v3_calling`: 
-- `./software/paml`: 
-- `./populationgenomics/software/builds/psmc/psmc`: 
-- `./populationgenomics/software/builds/ldhat/LDhat`: 
-- `./populationgenomics/students/karolinesv/pca-admixture-exercise`: 
-- `./populationgenomics/students/karolinesv/arg-dashboard`: 
-- `./populationgenomics/students/kmt/relate-selection-exercise`: 
-- `./populationgenomics/students/kmt/munch-group-project`: 
-- `./populationgenomics/students/kmt/arg-dashboard`: 
-- `./populationgenomics/students/kmt/relate-tree-exercise`: 
-- `./populationgenomics/students/hellem/arg-dashboard`: 
-- `./populationgenomics/people/kmt/genomic-thinking`: 
-- `find: File system loop detected; ‘./Elephants/clover’ is part of the same file system loop as ‘./Elephants’.`: 
-- `./Elephants/faststorage/people/kmt/CoalhmmPipeline`: 
-- `./Elephants/faststorage/people/kmt/RuffusPipeline`: 
-- `./Elephants/faststorage/people/kmt/alignio-maf`: 
-- `./Elephants/faststorage/people/kmt/SimulationPipeline`: 
-- `./davide_intern/people/kmt/gwf-example-workflow`: 
-- `./davide_intern/people/kmt/most_recent_davide-intern`: 
-- `./davide_intern/people/kmt/_davide-intern`: 
-- `./davide_intern/people/kmt/davide-intern`: 
-- `./els/ELS`: 
-- `./ptd_tester/PtDAlgorithms`: 
-- `./.vim/bundle/vim-colors-solarized`: 
-- `./test/argweaver`: 
-- `./GenerationInterval/people/kmt/shiny_cluster`: 
-- `./pratt_et_al/IBDmix`: 
-- `./pratt_et_al/IBDmix/build/_deps/cli11-src`: 
-- `./_phasic`: 
-- `./__phasic`: 
-- `./baboondiversity/people/kmt/fatash/hapla`: 
-- `./gpn`: 
-- `./gpn/gpn`: 
-- `./Primategenomes/people/kmt/primate-ils`: 
-- `./Primategenomes/people/kmt/pipeline_test/Multipurpose`: 
-- `./Primategenomes/people/kmt/pipeline_test/SimulationPipeline`: 
-- `./Primategenomes/people/kmt/pipeline_test/RuffusPipeline`: 
-- `./Primategenomes/people/kmt/pipeline_test/CoalhmmPipeline`: 
-- `./Primategenomes/people/kmt/pipeline_port/RuffusPipeline`: 
-- `./Primategenomes/people/kmt/pipeline_port/CoalhmmPipeline`: 
-- `./Primategenomes/people/kmt/pipeline_port/SimulationPipeline`: 
-- `./Primategenomes/people/kmt/pipeline_port/MultiPurpose`: 
-- `./Primategenomes/people/kmt/bias_correction/SimulationPipeline`: 
-- `./Primategenomes/people/kmt/primatelowils`: 
-- `./Primategenomes/people/kmt/ils-pipeline`: 
-- `./johan_gpn/people/johanulsrup/johan_gpn`: 
-- `find: File system loop detected; ‘./Equids/faststorage/Equids’ is part of the same file system loop as ‘./Equids’.`: 
-- `./hic-spermatogenesis/data/macaque/HiC-Pro`: 
-- `./hic-spermatogenesis/people/sojern/hic-compartment-borders`: 
-- `./_.nvm`: 
-- `./emma_giraf/people/kmt/emma-giraf`: 
-- `./emma_giraf/people/_emmachristensen/emma-giraf`: 
-- `./xy-brain/people/kmt/cDEGexploration`: 
-- `./xy-brain/people/kmt/y-strat-gwas`: 
-- `./phasetype/people/kmt/_phase-type-distributions`: 
-- `./phasetype/people/kmt/_PtDAlgorithms`: 
-- `./Recomb-Mix`: 
-- `./hri/faststorage/people/kmt/_gwf`: 
-- `./hri/faststorage/people/kmt/GenomicIntervals`: 
-- `./hri/faststorage/people/kmt/gwf`: 
-- `./hri/faststorage/people/kmt/interference_map`: 
-- `./clues/people/kmt/_clues`: 
-- `./clues/people/kmt/argweaver-clues/clues`: 
-- `./clues/people/kmt/argweaver-clues`: 
-- `./clues/people/kmt/clues`: 
-- `./clues/people/kmt/relate-clues`: 
-- `./clues/software/argweaver`: 
-- `./clues/software/clues`: 
-- `./funding-agent`: 
-- `./simons/faststorage/people/kmt/ohana`: 
-- `./simons/faststorage/people/kmt`: 
-- `./simons/faststorage/people/kmt/ChromosomeWindows`: 
-- `./simons/faststorage/people/kmt/old_argweaver_installed_globally`: 
-- `./simons/faststorage/people/kmt/clues-v0`: 
-- `./simons/faststorage/people/kmt/sweepstats`: 
-- `./simons/faststorage/people/kmt/clues`: 
-- `./simons/faststorage/people/kmt/genominterv`: 
-- `./simons/faststorage/people/kmt/argweaver`: 
-- `./simons/faststorage/cTools`: 
-- `./sap`: 
-- `./Birds/faststorage/software/EPO/exonerate`: 
-- `./Birds/faststorage/software/EPO/sonLib`: 
-- `./Birds/faststorage/software/EPO/pecan`: 
-- `./Birds/faststorage/software/EPO/ortheus`: 
-- `./Birds/faststorage/progressiveCactus/progressiveCactus`: 
-- `./Birds/faststorage/people/kmt/genominterv`: 
-- `./Birds/faststorage/people/kmt/ChromosomeWindows`: 
-- `./Birds/faststorage/people/kmt/bird-hotspots`: 
-- `./coalhmm_pipeline/MultiPurpose`: 
-- `./coalhmm_pipeline/coalhmm-bpp-13-07-2012/bpp-core`: 
-- `./coalhmm_pipeline/coalhmm-bpp-13-07-2012/bpp-seq`: 
-- `./coalhmm_pipeline/coalhmm-bpp-13-07-2012/bpp-phyl`: 
-- `./coalhmm_pipeline/SimulationPipeline`: 
-- `./coalhmm_pipeline/gwf`: 
-- `./coalhmm_pipeline/coalhmm`: 
-- `./coalhmm_pipeline/RuffusPipeline`: 
-- `./coalhmm_pipeline/CoalhmmPipeline`: 
-- `./coalhmm_pipeline/CoaSim`: 
-- `./coalhmm_pipeline/_CoalhmmPipeline`: 
-- `./ari-intern/people/kmt/ariadna-intern`: 
-- `./faststorage/BACKUP/project_archive/cluster_folders/alignio-maf`: 
-- `./faststorage/BACKUP/project_archive/cluster_folders/MultiPurpose`: 
-- `./faststorage/BACKUP/project_archive/cluster_folders/SimulationPipeline`: 
-- `./faststorage/BACKUP/project_archive/cluster_folders/RuffusPipeline`: 
-- `./faststorage/BACKUP/project_archive/cluster_folders/CoalhmmPipeline`: 
-- `./faststorage/projects/baboon_ils/haplostrips`: 
-- `./faststorage/projects/great_ape_ils_maps/scally_human_chimp_map/scripts`: 
-- `./faststorage/projects/great_ape_ils_maps/prufer_bonobo_chimp_map/scripts`: 
-- `./faststorage/projects/great_ape_ils_maps/neanderthal_denisova_map/scripts`: 
-- `./sticcs`: 
+
+
+-------------------------------------------------------------
 
 # cDEGexploration
 
@@ -282,6 +177,7 @@
 `/Users/kmt/Desktop/Science stuff`
 
 ```
+Science stuff/
 |-- ai-coding-assistant-setup.md
 |-- Akbari_2026_Table_S6.1.csv
 |-- Akbari_et_al-2026-Nature.sup-16 (dragged).pdf
@@ -300,12 +196,6 @@
 |   |-- 04_s-jump.html
 |   `-- 06_signatures.html
 |-- davide_segments_v2
-|   |-- dims
-|   |   `-- metadata.parquet
-|   `-- fragments
-|       |-- phase_state=phased
-|       |   |-- ind=AB02
-|       |   |   `-- LOTS OF PARQUET FILES...
 |-- Eriks paper
 |   |-- allref_reeval.png
 |   |-- allref.png
@@ -326,9 +216,331 @@
 |   |-- ECH_TableS1.csv
 |   |-- ECH.bed
 |   `-- image.png
+|-- Fun
+|   |-- 3dgenomics
+|   |   |-- 3d.ipynb
+|   |   |-- contact_map_with_arcs.ipynb
+|   |   |-- contact_map_with_sidepanel.ipynb
+|   |   |-- contact_map.ipynb
+|   |   |-- contact_map2.ipynb
+|   |   |-- data
+|   |   |   |-- genomic-embeddings.pq
+|   |   |   `-- higlass-viewconfig.json
+|   |   |-- pixi.lock
+|   |   `-- pixi.toml
+|   |-- claude_request.py
+|   |-- claude-session.sh
+|   |-- copilot_api
+|   |   |-- copilot_api.py
+|   |   `-- pixi.toml
+|   |-- crypto
+|   |   |-- 1.11. Ensembles- Gradient boosting, random forests, bagging, voting, stacking — scikit-learn 1.7.2 d….webloc
+|   |   |-- dashboard.ipynb
+|   |   |-- orstein.ipynb
+|   |   |-- pixi.lock
+|   |   `-- pixi.toml
+|   |-- cryptopatterns
+|   |   |-- cryptopatterns
+|   |   |   |-- __init__.py
+|   |   |   |-- data.py
+|   |   |   |-- higher_order.py
+|   |   |   |-- patterns.py
+|   |   |   `-- transfer_entropy.py
+|   |   |-- examples
+|   |   |   `-- tutorial.ipynb
+|   |   |-- LICENSE
+|   |   |-- pyproject.toml
+|   |   |-- README.md
+|   |   `-- tests
+|   |       |-- __init__.py
+|   |       `-- test_basic.py
+|   |-- gene_heat_graphs.ipynb
+|   |-- GPN
+|   |-- jscatter
+|   |   |-- higlass.patch
+|   |   |-- jupyter-scatter-tutorial
+|   |   |   |-- _config.yml
+|   |   |   |-- _toc.yml
+|   |   |   |-- CITATION.cff
+|   |   |   |-- images
+|   |   |   |-- LICENSE
+|   |   |   |-- notebooks
+|   |   |   |-- pyproject.toml
+|   |   |   |-- README.md
+|   |   |   |-- teaser.gif
+|   |   |   `-- uv.lock
+|   |   |-- pixi.lock
+|   |   |-- pixi.toml
+|   |   |-- play_files
+|   |   |   `-- libs
+|   |   |-- play.html
+|   |   |-- play.ipynb
+|   |   `-- play.ipynb - JupyterLab.html
+|   |-- l2-ultramaximizer.pdf
+|   |-- magic_markdown
+|   |   `-- example
+|   |-- Notebooks
+|   |   |-- __pycache__
+|   |   |   |-- data.cpython-37.pyc
+|   |   |   `-- fetchers.cpython-37.pyc
+|   |   |-- 9606.protein.links.v11.0.txt
+|   |   |-- Blackstyle.ipynb
+|   |   |-- Bokeh.ipynb
+|   |   |-- carlota.ipynb
+|   |   |-- chrom_ideograms.ipynb
+|   |   |-- circosplay
+|   |   |   |-- bands.conf
+|   |   |   |-- circos_play.ipynb
+|   |   |   |-- circos.conf
+|   |   |   |-- circos.pdf
+|   |   |   |-- circos.png
+|   |   |   |-- circos.svg
+|   |   |   |-- data
+|   |   |   |-- ideogram.conf
+|   |   |   |-- ideogram.label.conf
+|   |   |   |-- ideogram.position.conf
+|   |   |   |-- mycircos.conf
+|   |   |   |-- mycircos.png
+|   |   |   |-- mycircos.svg
+|   |   |   |-- segdup.txt
+|   |   |   |-- segdupf.txt
+|   |   |   |-- text.genes.znf.txt
+|   |   |   `-- ticks.conf
+|   |   |-- Colors.ipynb
+|   |   |-- crosswavelets.R
+|   |   |-- CurveFitting.py
+|   |   |-- custom_plugins.ipynb
+|   |   |-- CytoscapeConfiguration
+|   |   |   |-- __MACOSX
+|   |   |   |-- 3
+|   |   |   |-- app-data
+|   |   |   |-- commandHistory.txt
+|   |   |   |-- cytoscape3.props
+|   |   |   |-- groupSettings.props
+|   |   |   |-- images3
+|   |   |   |-- layout.attribute-circle.props
+|   |   |   |-- layout.attribute-grid.props
+|   |   |   |-- layout.attributes-layout.props
+|   |   |   |-- layout.circular.props
+|   |   |   |-- layout.cose.props
+|   |   |   |-- layout.degree-circle.props
+|   |   |   |-- layout.force-directed-cl.props
+|   |   |   |-- layout.force-directed.props
+|   |   |   |-- layout.fruchterman-rheingold.props
+|   |   |   |-- layout.grid.props
+|   |   |   |-- layout.hierarchical.props
+|   |   |   |-- layout.isom.props
+|   |   |   |-- layout.kamada-kawai.props
+|   |   |   |-- layout.stacked-node-layout.props
+|   |   |   |-- linkout.props
+|   |   |   |-- tracker.recent.sessions
+|   |   |   |-- vizmapper.props
+|   |   |   `-- web
+|   |   |-- data.py
+|   |   |-- download_sample_data.py
+|   |   |-- ete3_play.ipynb
+|   |   |-- example.txt
+|   |   |-- execute_notebook.sh
+|   |   |-- female_chrx_decode_map_hg19.ipynb
+|   |   |-- female.rmap
+|   |   |-- fetchers.py
+|   |   |-- fisher.ipynb
+|   |   |-- gene_heat_graphs.ipynb
+|   |   |-- gene_info.ipynb
+|   |   |-- gene_lists.ipynb
+|   |   |-- gene-report.csv
+|   |   |-- ggtree.R
+|   |   |-- grm.ipynb
+|   |   |-- hiplot.ipynb
+|   |   |-- horizonplot.R
+|   |   |-- iker_chroms.ipynb
+|   |   |-- image.html
+|   |   |-- importance_sampling.ipynb
+|   |   |-- Interact.ipynb
+|   |   |-- ipyparallel.ipynb
+|   |   |-- iPythonPlay.ipynb
+|   |   |-- iris.html
+|   |   |-- JupyterSlides.ipynb
+|   |   |-- logsum.py
+|   |   |-- london_plaques.png
+|   |   |-- maps.R
+|   |   |-- MCMC-sampling-for-dummies.ipynb
+|   |   |-- Mixed_coalescent_densities.ipynb
+|   |   |-- mpld3_demo.ipynb
+|   |   |-- multiprocess_decorator.ipynb
+|   |   |-- Multiprocessing.ipynb
+|   |   |-- new_ideograms.R
+|   |   |-- NpPresentPlay.ipynb
+|   |   |-- PCA.ipynb
+|   |   |-- PlayingWithSelection.ipynb
+|   |   |-- plotly.ipynb
+|   |   |-- Plotting_Maps.ipynb
+|   |   |-- PlottingCookbook.ipynb
+|   |   |-- PoolNielsen.ipynb
+|   |   |-- PyPathway
+|   |   |   |-- AUTHORS.rst
+|   |   |   |-- clean.sh
+|   |   |   |-- CONTRIBUTING.rst
+|   |   |   |-- docs
+|   |   |   |-- examples
+|   |   |   |-- LICENSE
+|   |   |   |-- MANIFEST
+|   |   |   |-- MANIFEST.in
+|   |   |   |-- notebook_tests
+|   |   |   |-- pypathway
+|   |   |   |-- README.md
+|   |   |   |-- requirements.txt
+|   |   |   |-- setup.cfg
+|   |   |   |-- setup.py
+|   |   |   `-- tests
+|   |   |-- pyslim_tests.ipynb
+|   |   |-- R_to_Python.ipynb
+|   |   |-- RandPython.ipynb
+|   |   |-- rasmus.ipynb
+|   |   |-- rise.css
+|   |   |-- sex-averaged.rmap
+|   |   |-- sex-averaged.rmap.txt
+|   |   |-- sliderPlugin.ipynb
+|   |   |-- som.Rmd
+|   |   |-- StationaryDistribution.ipynb
+|   |   |-- sympy.ipynb
+|   |   |-- template.ipynb
+|   |   |-- template2.ipynb
+|   |   |-- Thumbnails.ipynb
+|   |   |-- tmp.vcf.gz
+|   |   |-- umap.ipynb
+|   |   |-- Untitled.ipynb
+|   |   |-- Untitled1.ipynb
+|   |   |-- Untitled2.ipynb
+|   |   |-- Untitled3.ipynb
+|   |   |-- Untitled4.ipynb
+|   |   |-- vaex
+|   |   |   `-- vaex
+|   |   |-- vaex_jupyter.ipynb
+|   |   |-- vaex.ipynb
+|   |   |-- vcfparsing.ipynb
+|   |   |-- view_high_c_with_vaex.ipynb
+|   |   |-- visJS2jupyter
+|   |   |   |-- _config.yml
+|   |   |   |-- cytoscape_styles
+|   |   |   |-- docs
+|   |   |   |-- LICENSE
+|   |   |   |-- MANIFEST
+|   |   |   |-- notebooks
+|   |   |   |-- README.md
+|   |   |   |-- setup.py
+|   |   |   |-- visJS2jupyter
+|   |   |   `-- visJS2jupyter.egg-info
+|   |   |-- vispy
+|   |   |   |-- axes_plot.py
+|   |   |   |-- display_lines.py
+|   |   |   |-- ipython_fig_playground.py
+|   |   |   |-- line_plot3d.py
+|   |   |   |-- line_update.py
+|   |   |   |-- plot.py
+|   |   |   |-- scatter.py
+|   |   |   |-- test.py
+|   |   |   `-- Untitled.ipynb
+|   |   |-- wavelets.R
+|   |   |-- wavelets2.R
+|   |   |-- widgets.ipynb
+|   |   `-- x_auto_regression.ipynb
+|   |-- pdf_processor
+|   |   |-- interactive_pdf_chat.md
+|   |   |-- interactive_pdf_chat.py
+|   |   |-- pdf_chat_session.json
+|   |   |-- pdf_folder_processor.py
+|   |   |-- pdf_summaries.json
+|   |   |-- pixi.lock
+|   |   |-- pixi.toml
+|   |   |-- README.md
+|   |   |-- results_report.md
+|   |   |-- results.json
+|   |   |-- zotero_pdf_exporter.md
+|   |   `-- zotero_pdf_exporter.py
+|   |-- phdplanner
+|   |   |-- download-pdfs-wayf.py
+|   |   |-- download-pdfs.py
+|   |   |-- find_selectors.py
+|   |   |-- inspect_login.py
+|   |   |-- inspect-wayf.py
+|   |   |-- pixi.lock
+|   |   |-- pixi.toml
+|   |   |-- post_login_page.html
+|   |   |-- test-aarhus-login.py
+|   |   `-- wayf_page.html
+|   |-- save_openio.sh
+|   |-- scikit learn random forrest and gradient descent.webloc
+|   |-- tmux-vscode
+|   |   |-- launch-tmux.sh
+|   |   |-- setup.sh
+|   |   `-- tmux-project-vscode
+|   |       |-- LICENSE
+|   |       |-- Makefile
+|   |       |-- node_modules
+|   |       |-- out
+|   |       |-- package-lock.json
+|   |       |-- package.json
+|   |       |-- pixi.lock
+|   |       |-- pyproject.toml
+|   |       |-- README.md
+|   |       |-- resources
+|   |       |-- src
+|   |       |-- tmux-project-0.1.0.vsix
+|   |       `-- tsconfig.json
+|   |-- tslmm
+|   |   |-- build
+|   |   |   |-- bdist.macosx-11.0-arm64
+|   |   |   `-- lib
+|   |   |-- notebooks
+|   |   |   |-- edge_and_node_r.ipynb
+|   |   |   |-- edge_and_node.ipynb
+|   |   |   |-- outputs
+|   |   |   `-- prediction_example.ipynb
+|   |   |-- pyproject.toml
+|   |   |-- README.md
+|   |   |-- tests
+|   |   |   |-- __init__.py
+|   |   |   |-- test_split.py
+|   |   |   `-- test_tslmm.py
+|   |   |-- tslmm
+|   |   |   |-- __init__.py
+|   |   |   |-- matrices.py
+|   |   |   |-- operations.py
+|   |   |   |-- simulations.py
+|   |   |   |-- trace_estimators.py
+|   |   |   |-- tslmm.py
+|   |   |   `-- tspca.py
+|   |   |-- tslmm.egg-info
+|   |   |   |-- dependency_links.txt
+|   |   |   |-- PKG-INFO
+|   |   |   |-- requires.txt
+|   |   |   |-- SOURCES.txt
+|   |   |   `-- top_level.txt
+|   |   `-- validation
+|   |       |-- check_average_information.py
+|   |       |-- check_conjugate_gradient_preconditioning.py
+|   |       |-- check_genetic_values.py
+|   |       |-- check_gradient_descent.py
+|   |       |-- check_haseman_elston.py
+|   |       |-- check_stochastic_ai_gradient.py
+|   |       |-- check_stochastic_average_information.py
+|   |       |-- check_stochastic_gradient.py
+|   |       |-- check_trace_estimators.py
+|   |       `-- figs
+|   `-- vscode_theme_checker.py
 |-- gene interaction screenshots
 |   |-- Screenshot 2026-03-15 at 22.51.09.png
-|   |-- ...
+|   |-- Screenshot 2026-03-16 at 21.15.06.png
+|   |-- Screenshot 2026-03-16 at 21.17.27.png
+|   |-- Screenshot 2026-03-16 at 21.17.32.png
+|   |-- Screenshot 2026-03-16 at 21.24.24.png
+|   |-- Screenshot 2026-03-20 at 18.08.24.png
+|   |-- Screenshot 2026-03-20 at 18.14.42.png
+|   |-- Screenshot 2026-03-20 at 19.00.01.png
+|   |-- Screenshot 2026-03-20 at 19.00.10.png
+|   |-- Screenshot 2026-03-21 at 09.12.00.png
+|   |-- Screenshot 2026-03-21 at 09.12.18.png
 |   `-- Screenshot 2026-03-27 at 12.09.23.png
 |-- Janne Auning - Autism cases in half siblings.docx
 |-- Jotuns slides.pptx
@@ -342,6 +554,95 @@
 |   `-- Supplementary tables.xlsx
 |-- Meritxell's paper.pdf
 |-- Negative selection on baboon admixture is strongest on chromosome X(3).docx
+|-- Notebooks
+|   |-- 9606.protein.links.v11.0.txt
+|   |-- Blackstyle.ipynb
+|   |-- Bokeh.ipynb
+|   |-- carlota.ipynb
+|   |-- chrom_ideograms.ipynb
+|   |-- circosplay
+|   |-- Colors.ipynb
+|   |-- crosswavelets.R
+|   |-- CurveFitting.py
+|   |-- custom_plugins.ipynb
+|   |-- CytoscapeConfiguration
+|   |-- data.py
+|   |-- download_sample_data.py
+|   |-- ete3_play.ipynb
+|   |-- example.txt
+|   |-- execute_notebook.sh
+|   |-- female_chrx_decode_map_hg19.ipynb
+|   |-- female.rmap
+|   |-- fetchers.py
+|   |-- fisher.ipynb
+|   |-- gene_heat_graphs.ipynb
+|   |-- gene_info.ipynb
+|   |-- gene_lists.ipynb
+|   |-- gene-report.csv
+|   |-- ggtree.R
+|   |-- grm.ipynb
+|   |-- hiplot.ipynb
+|   |-- horizonplot.R
+|   |-- iker_chroms.ipynb
+|   |-- image.html
+|   |-- importance_sampling.ipynb
+|   |-- Interact.ipynb
+|   |-- ipyparallel.ipynb
+|   |-- iPythonPlay.ipynb
+|   |-- iris.html
+|   |-- JupyterSlides.ipynb
+|   |-- logsum.py
+|   |-- london_plaques.png
+|   |-- maps.R
+|   |-- MCMC-sampling-for-dummies.ipynb
+|   |-- Mixed_coalescent_densities.ipynb
+|   |-- mpld3_demo.ipynb
+|   |-- multiprocess_decorator.ipynb
+|   |-- Multiprocessing.ipynb
+|   |-- new_ideograms.R
+|   |-- NpPresentPlay.ipynb
+|   |-- PCA.ipynb
+|   |-- PlayingWithSelection.ipynb
+|   |-- plotly.ipynb
+|   |-- Plotting_Maps.ipynb
+|   |-- PlottingCookbook.ipynb
+|   |-- PoolNielsen.ipynb
+|   |-- PyPathway
+|   |-- pyslim_tests.ipynb
+|   |-- R_to_Python.ipynb
+|   |-- RandPython.ipynb
+|   |-- rasmus.ipynb
+|   |-- rise.css
+|   |-- sex-averaged.rmap
+|   |-- sex-averaged.rmap.txt
+|   |-- sliderPlugin.ipynb
+|   |-- som.Rmd
+|   |-- StationaryDistribution.ipynb
+|   |-- sympy.ipynb
+|   |-- template.ipynb
+|   |-- template2.ipynb
+|   |-- Thumbnails.ipynb
+|   |-- tmp.vcf.gz
+|   |-- umap.ipynb
+|   |-- Untitled.ipynb
+|   |-- Untitled1.ipynb
+|   |-- Untitled2.ipynb
+|   |-- Untitled3.ipynb
+|   |-- Untitled4.ipynb
+|   |-- vaex
+|   |   `-- vaex
+|   |       |-- ...
+|   |       `-- vaex_play.ipynb
+|   |-- vaex_jupyter.ipynb
+|   |-- vaex.ipynb
+|   |-- vcfparsing.ipynb
+|   |-- view_high_c_with_vaex.ipynb
+|   |-- visJS2jupyter
+|   |-- vispy
+|   |-- wavelets.R
+|   |-- wavelets2.R
+|   |-- widgets.ipynb
+|   `-- x_auto_regression.ipynb
 |-- notion_export.zip
 |-- OMA REST API.yaml
 |-- pairwise_dna_covariance_analysis.ipynb
@@ -349,21 +650,20 @@
 |-- Screenshots
 |   |-- ESHG pictures
 |   |   |-- Screenshot 2026-06-18 at 11.27.47.png
-|   |   |-- ...
-|   |   `-- Screenshot 2026-06-18 at 11.55.58.png
+|   |   |-- Screenshot 2026-06-18 at 11.27.53.png
+|   |   `-- ...
 |   |-- IMG_1759.heic
 |   |-- IMG_1759.png
 |   |-- Screenshot 2025-10-14 at 14.36.13.png
-|   |-- ...
+|   |-- Screenshot 2025-10-14 at 15.38.03.png
+|   |   `-- ...
+|   |-- Screenshot 2026-06-11 at 14.50.56.png
 |   |-- Screenshot 2026-06-11 at 15.28.08.png
 |   `-- Screenshots to sort
 |       |-- chromatin_spermatogenesis_report.md
 |       |-- KIS 241507 Opbevaringsboks Scubba Kan stables (B x H x T) 780 x 350 x 395 mm Grå-blå, Sort 1 stk køb….webloc
 |       |-- Screen Recording 2025-12-10 at 10.44.12.mov
-|       |-- Screenshot 2025-11-28 at 13.08.04.png
-|       |-- Screenshot 2025-11-28 at 13.16.16.png
-|       |-- ...
-|       `-- Screenshot 2025-12-14 at 20.42.28.png
+|   |   `-- ...
 |-- Shannons trans-dist paper.docx
 |-- SOM_copied.txt
 |-- SOM_list.txt
@@ -378,4 +678,7 @@
     |-- pixi.toml
     |-- plot_tree.py
     `-- upgma.py
+
+4982 directories, 746 files
+
 ```

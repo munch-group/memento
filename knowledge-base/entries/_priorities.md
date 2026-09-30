@@ -1,13 +1,13 @@
 ## Today
+- Ditlev
 - Email
-- Imanol
-- Julien meeting
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
+- Group meeting presentation [[mul2r84oipmt|- What to present ...]]
 - Tidy plan [[mu2ewecoa8tg|Overview / Tidy plan]]
+- Imanol
 
 ## Week
 - SMBE follow-up: Tidy notes / watch talks https://smbe2026.org/virtual-streaming/ Code: SMBE2026 [[mrnfkhbc3h18|SMBE26 notes]]
-- Group meeting presentation [[mul2r84oipmt|- What to present ...]]
 - Go back to normal security level on laptop
 - Rewrite chapters, add currationproject, finish testing arc [[mrmacisv6p1p|Bioinformatics plan]]
 - List missing baboon bams [[mrn16oodkri8|Baboon plan]]

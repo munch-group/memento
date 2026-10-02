@@ -1,3 +1,8 @@
+- Helles kommentarer
+- Finish chapters two weeks ahead
+- Add execution fix for windows to "pixi run update"
+- Make a "pixi run fixme" that runs "im doctor"
+
 
 All existing projects should use my test suites, but with some of them having students do a few them selves.
 

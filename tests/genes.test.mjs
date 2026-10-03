@@ -743,6 +743,14 @@ function testCardScope() {
   search.value = '';
   api.renderGenes();
   ok(!off('STK11') && !off('MARK1'), 'clearing the search restores both');
+
+  // A pinned card with an empty bar is the whole scope, here as in the Collection and Graph views.
+  api.togglePinnedCard('c2');
+  api.renderGenes();
+  ok(off('STK11') && !off('MARK1'), 'pinning c2 with an empty bar shows only its gene (MARK1)');
+  api.togglePinnedCard('c2');
+  api.renderGenes();
+  ok(!off('STK11') && !off('MARK1'), 'unpinning restores both');
 }
 
 function testNeighboursToggle() {

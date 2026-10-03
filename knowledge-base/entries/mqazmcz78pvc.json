@@ -61,7 +61,6 @@
   ],
   "tags": [
     "Apoptosis",
-    "reference",
     "gene-set"
   ],
   "source": "https://www.mdpi.com/2073-4409/13/22/1838",
@@ -70,5 +69,5 @@
   "due": "",
   "date": "2026-06-13T11:02:47.950Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

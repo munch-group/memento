@@ -159,6 +159,47 @@ def test_mech_excludes_complex():
     eq("IncreaseAmount" in kbi.MECH, True, "transcriptional amount is mechanistic")
 
 
+def test_derive():
+    print("\nderive — the card pass memento.html's geDerive() mirrors")
+    g = lambda sym: {"symbol": sym, "hgnc": "1", "chrom": "1", "start": 1, "end": 2}
+    res = {"MAPT": g("MAPT"), "RLIM": g("RLIM"), "RNF12": g("RLIM"), "XIST": g("XIST")}
+    cards = [
+        {"id": "c1", "tags": ["Drive"], "toks": ["MAPT", "RNF12/RLIM"]},
+        {"id": "s1", "tags": ["gene-set", "xi"], "toks": ["MAPT", "XIST"]},
+    ]
+    inside, member = kbi.derive(cards, res)
+    eq(sorted(inside), ["MAPT", "RLIM"], "thought-card genes are nodes; aliases collapse")
+    eq(inside["MAPT"]["cards"], {"c1"}, "a set card never documents a gene")
+    eq(inside["MAPT"]["groups"], {"Drive", "gene-set", "xi"}, "a node on a set card carries its tags")
+    eq(sorted(member), ["XIST"], "a gene only on a set card is a member")
+
+
+def test_merge_previous_edges():
+    print("\nmerge_previous_edges — a rebuild never drops edges the browser fetched")
+    old = {"edges": [{"a": "A", "b": "B", "t": "Activation", "n": 2},
+                     {"a": "A", "b": "GONE", "t": "Activation", "n": 9},
+                     {"a": "A", "b": "C", "t": "Activation", "n": 1}],
+           "complex_edges": [{"a": "A", "b": "B", "t": "Complex", "n": 1}]}
+    mech = {("A", "C", "Activation"): {"a": "A", "b": "C", "t": "Activation", "n": 5}}
+    cplx = {}
+    kept = kbi.merge_previous_edges(old, {"A", "B", "C"}, mech, cplx)
+    eq(kept, 2, "two edges carried over (A-B mech, A-B complex)")
+    eq(("A", "GONE", "Activation") in mech, False, "an edge to a gene on no live card is dropped")
+    eq(mech[("A", "C", "Activation")]["n"], 5, "the better-evidenced copy wins")
+    eq(("A", "B", "Complex") in cplx, True, "complex edges are carried too")
+
+
+def test_sidecar_json():
+    print("\nsidecar_json — deterministic, matching the browser's writer")
+    sc = {"generated": "d", "source": "s", "resolve": {"b": None, "a": None}, "indra": {}, "genes": {},
+          "members": {}, "canon": {}, "edges": [{"a": "B", "b": "C", "t": "X"}, {"a": "A", "b": "C", "t": "Y"},
+          {"a": "A", "b": "C", "t": "X"}], "complex_edges": [], "bridges": []}
+    out = json.loads(kbi.sidecar_json(sc))
+    eq(list(out["resolve"]), ["a", "b"], "maps are key-sorted")
+    eq([(e["a"], e["t"]) for e in out["edges"]], [("A", "X"), ("A", "Y"), ("B", "X")], "edges sorted by (a, b, t)")
+    eq("é" in kbi.sidecar_json({**sc, "source": "é"}), True, "UTF-8 kept, not \\u-escaped (the browser writes it raw)")
+
+
 if __name__ == "__main__":
     print("kb-interactions.py")
     test_alias_fragments()
@@ -168,5 +209,8 @@ if __name__ == "__main__":
     test_load_cards()
     test_partition_agents()
     test_mech_excludes_complex()
+    test_derive()
+    test_merge_previous_edges()
+    test_sidecar_json()
     print(f"\n{PASS} passed, {FAIL} failed")
     sys.exit(1 if FAIL else 0)

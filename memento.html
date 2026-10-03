@@ -1053,6 +1053,7 @@ let highlightInputGenes = new Set(); // genes typed into the "Highlight genes" i
 // Card ids Alt-clicked onto the filter (togglePinnedCard) — the card-level twin of the Genes
 // view's `*GENE` spike: forces a specific card into getVisibleItems() regardless of every other
 // filter (search text, tags, type, archive scope), the same way a spike overrides card scope there.
+// With no other filter active, the pins alone are the result (not all cards plus the pins).
 let pinnedCardIds = new Set();
 let ghIssuesRepo = null; // when set, show issues for this repo full_name
 let ghIssuesItems = [];  // temporary issue cards (not saved to JSON)
@@ -1160,12 +1161,14 @@ async function reloadNow() {
 
 async function saveEntryToFile(entry) {
   if (readOnly) return;
+  geAutoKick(2000);   // a card's genes or tags may have changed what the gene map derives
   if (ghRepoMode) { ghEnqueueEntry(entry); return ghScheduleFlush(); }
   return fsaSaveEntry(entry);
 }
 
 async function deleteEntryFile(eid) {
   if (readOnly) return;
+  geAutoKick(2000);
   if (ghRepoMode) { ghEnqueueDelete(eid); return ghScheduleFlush(); }
   return fsaDeleteEntry(eid);
 }
@@ -2038,6 +2041,13 @@ function getVisibleItems() {
   // shows, no matter what" contract as the Genes view's `*GENE` spike, and as an id lookup. Re-sort
   // after the union so a pinned-in card lands in its natural sort position instead of tacked on at
   // the end.
+  // With nothing else narrowing the list, pins are the whole selection: "these cards", not "every
+  // card plus these". Archive scope and highlights aren't filters; a group of only *GENE spikes
+  // filters nothing (see parseGroup), so it doesn't count either.
+  const groupFilters = g => g.geneLists.length || g.tagAnd.length || g.tagOr.length || g.typeOr.length || g.q
+    || g.notGenes.length || g.notTags.length || g.notTypes.length || g.notTerms.length;
+  const narrowed = orGroups.some(groupFilters) || activeTypes.size || activeTags.size || activeGene || connFilter !== 'all';
+  if(pinnedCardIds.size && !narrowed) vis = [];
   if(pinnedCardIds.size || idHits.length){
     const have=new Set(vis.map(i=>i.id));
     const pinned=[...pinnedCardIds].map(id=>items.find(i=>i.id===id)).filter(Boolean);
@@ -2086,6 +2096,7 @@ function scheduleOverlapsToday(item){
 function renderList() {
   _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
   renderLinkBanner();   // link mode is a mode of the app, so it must announce itself in every view
+  bulkPrune();
   // The timeline is a sibling container, not a card layout. Routing here rather than at every call
   // site means every existing renderList() caller repaints the right view for free.
   const tlEl = document.getElementById('timeline-view');
@@ -4375,6 +4386,17 @@ function bulkToggle(id){
   if (!updateCardInPlace(id)) renderList();
   bulkRender();
 }
+// The selection is only what you can see: a card the search/filters now hide leaves it. Otherwise it
+// lingered unseen, the bar counted it, the Tag pop-up showed no "shared" tags because a hidden card
+// lacked them, and Pin/Archive/Type/Delete acted on cards no longer on screen. Every view filters
+// through getVisibleItems(), so switching views alone never drops anything.
+function bulkPrune(){
+  if (!_bulkIds.size) return;
+  const vis = new Set(getVisibleItems().vis.map(i => i.id));
+  const before = _bulkIds.size;
+  for (const id of [..._bulkIds]) if (!vis.has(id)) _bulkIds.delete(id);
+  if (_bulkIds.size !== before) bulkRender();
+}
 function bulkClear(){
   const had = bulkMode || _bulkIds.size > 0;
   bulkMode = false; _bulkIds = new Set();
@@ -4647,22 +4669,143 @@ let geDimStrength = Number(localStorage.getItem('ge_dim')) || 0.16;
 // full ~400-frame decay for a graph that mostly isn't moving.
 const GE_CACHE_SETTLE_FRAMES = 20;
 
+// --- Live derivation (v2 sidecar) ---------------------------------------------
+// The card-side half of the sidecar — which genes are yours, which cards document each, their
+// groups — is a pure function of the cards plus a name -> gene lookup. A v2 sidecar (one carrying a
+// `resolve` table; kb-interactions.py writes it) lets the view derive that half LIVE from the
+// current cards, so a retag, a new gene or an archived card takes effect at once instead of at the
+// next rebuild. The file then only stores what costs a network call: `resolve` (MyGene), `indra`
+// (which genes have had their INDRA neighbourhood fetched) and the edges. A legacy sidecar (no
+// `resolve`) is read as the snapshot it is — the pre-v2 behaviour, unchanged.
+function geIsLive(){ return !!(interactions && interactions.resolve && typeof interactions.resolve === 'object'); }
+// kb-interactions.py's alias_fragments(): split a gene token on '/' and let HGNC decide. 'RLIM/RNF12'
+// is two names for one gene and collapses; a name that merely contains slashes grounds to nothing.
+function geFragments(tok){ return String(tok).split('/').map(s => s.trim()).filter(Boolean); }
+// resolve[f] is a gene record, null (looked up: not a gene, or ambiguous) or undefined (never looked
+// up). Exact spelling first, then case-blind — MyGene matching is, so 'Mapt' needn't be looked up
+// again once 'MAPT' was. _geResRev bumps whenever the auto-lookup adds entries, invalidating the index.
+let _geResRev = 0, _geResCI = null, _geResCIobj = null, _geResCIrev = -1;
+function geResolveFrag(f){
+  const r = interactions.resolve;
+  if (Object.prototype.hasOwnProperty.call(r, f)) return r[f];
+  if (!_geResCI || _geResCIobj !== r || _geResCIrev !== _geResRev) {
+    _geResCI = new Map();
+    for (const k of Object.keys(r)) { const lo = k.toLowerCase(); if (!_geResCI.has(lo) || r[k]) _geResCI.set(lo, k); }
+    _geResCIobj = r; _geResCIrev = _geResRev;
+  }
+  const k = _geResCI.get(f.toLowerCase());
+  return k === undefined ? undefined : r[k];
+}
+// The card pass of kb-interactions.py build(), ported: a THOUGHT card's resolved genes are nodes
+// (`genes`, with the cards documenting them); a SET card's are annotations (`members`) whose tags
+// become groups; a gene on both is a node carrying the set's tags too. `sets` (gene -> set cards
+// listing it) is view-only, so a gene-set card in the search scope keeps its genes visible.
+// `pending` = fragments never looked up — the auto-lookup's queue.
+function geDerive(isSetCard){
+  const isSet_ = isSetCard || geIsSetCardView;
+  const inside = new Map(), member = new Map(), pending = new Set(), canon = {};
+  for (const it of items) {
+    if (it.archived || !Array.isArray(it.genes) || !it.genes.length) continue;
+    const toks = it.genes.map(g => String(g == null ? '' : g).trim()).filter(Boolean);
+    if (!toks.length) continue;
+    const isSet = isSet_(it);
+    for (const t of toks) for (const f of geFragments(t)) {
+      const r = geResolveFrag(f);
+      if (r === undefined) { pending.add(f); continue; }
+      if (!r || !r.symbol) continue;
+      const sym = r.symbol;
+      if (f !== sym) canon[f] = sym;
+      const bag = isSet ? member : inside;
+      let g = bag.get(sym);
+      if (!g) bag.set(sym, g = { hgnc: r.hgnc ?? null, chrom: r.chrom ?? null, start: r.start ?? null, end: r.end ?? null,
+                                 cards: new Set(), groups: new Set(), sets: new Set() });
+      (isSet ? g.sets : g.cards).add(it.id);
+      for (const tag of it.tags || []) g.groups.add(tag);
+    }
+  }
+  for (const [sym, m] of member) {
+    const g = inside.get(sym);
+    if (!g) continue;
+    for (const x of m.groups) g.groups.add(x);
+    for (const x of m.sets) g.sets.add(x);
+    member.delete(sym);
+  }
+  const sorted = set => [...set].sort();
+  const genes = {}, members = {}, sets = {};
+  for (const [sym, g] of inside) {
+    genes[sym] = { hgnc: g.hgnc, chrom: g.chrom, start: g.start, end: g.end, cards: sorted(g.cards), groups: sorted(g.groups) };
+    sets[sym] = sorted(g.sets);
+  }
+  for (const [sym, m] of member) members[sym] = sorted(m.groups);
+  return { genes, members, canon, pending, sets };
+}
+// The gene table every Genes-view path reads: derived live from the cards on a v2 sidecar, the
+// stored snapshot on a legacy one. renderGenes refreshes it on every render (so on every card
+// change while the view is up); other paths read the last result, recomputed if the sidecar object
+// itself was swapped (a reload) since.
+let _geD = null;
+function geRefreshDerived(){
+  const src = interactions;
+  _geD = geIsLive() ? geDerive()
+    : { genes: (src && src.genes) || {}, members: (src && src.members) || {}, canon: (src && src.canon) || {}, pending: new Set(), sets: {} };
+  _geD.src = src;
+  return _geD;
+}
+function geGenes(){ if (!_geD || _geD.src !== interactions) geRefreshDerived(); return _geD.genes; }
+function geSetsOf(sym){ return (_geD && _geD.sets && _geD.sets[sym]) || []; }
+// What the built model depends on: the gene set and the size of the stored edge pool. Card edits
+// that only move a gene between cards or groups keep it, so they update nodes in place (geSyncNodeMeta)
+// rather than rebuild.
+function geModelSig(){
+  return Object.keys(geGenes()).sort().join(',') + '#' + ((interactions && interactions.edges) || []).length
+    + '/' + ((interactions && interactions.complex_edges) || []).length;
+}
+function geSyncNodeMeta(){
+  const G = geGenes();
+  for (const n of _geNodes) {
+    const g = G[n.sym];
+    if (!g) continue;
+    n.cards = g.cards || []; n.groups = g.groups || []; n.sets = geSetsOf(n.sym);
+  }
+}
+
 // The node universe and the layout are fixed by the MECHANISTIC edges only, laid
 // out once. Complex edges never spring the layout (they would knot it into a
 // hairball — 88% of all edges); toggling them on only DRAWS lines between nodes
 // already placed. A gene with no mechanistic edge is not drawn (it would only pad
 // an outer ring); the caption counts those.
-function geBuildModel(){
-  const gx = (interactions && interactions.genes) || {};
+// `carry` (a rebuild while a model already exists — the gene set changed under a live sidecar) keeps
+// this session's work: its edges (expansions, refreshes) and its ghost nodes rejoin the new model,
+// so editing a card never throws away an exploration. A ghost that has since become one of your
+// genes simply arrives as the real node instead.
+function geBuildModel(carry){
+  const gx = geGenes();
   const all = Object.keys(gx).map(sym => {
     const g = gx[sym];
     return { sym, id: geIdSafe(sym), chrom: g.chrom, cclass: geChromClass(g.chrom),
-             cards: g.cards || [], groups: g.groups || [], deg: 0, r: GE_NODE_R, ghost: false };
+             cards: g.cards || [], groups: g.groups || [], sets: geSetsOf(sym), deg: 0, r: GE_NODE_R, ghost: false };
   });
   _geFrozenU = new Map(all.map(n => [n.sym.toUpperCase(), n.sym]));
   const byId = new Map(all.map(n => [n.sym, n]));
-  const mech = ((interactions && interactions.edges) || []).filter(e => byId.has(e.a) && byId.has(e.b));
-  const cplx = ((interactions && interactions.complex_edges) || []).filter(e => byId.has(e.a) && byId.has(e.b));
+  const nGenes = all.length;
+  if (carry) for (const n of carry.ghosts) {
+    if (byId.has(n.sym) || _geFrozenU.has(n.sym.toUpperCase())) continue;
+    const g = { ...n, deg: 0 };
+    all.push(g); byId.set(g.sym, g);
+  }
+  const src = [...((interactions && interactions.edges) || []), ...((interactions && interactions.complex_edges) || []),
+               ...(carry ? carry.edges : [])];
+  const seen = new Map(), mech = [], cplx = [];
+  for (const e of src) {
+    if (!byId.has(e.a) || !byId.has(e.b)) continue;
+    const key = e.a + '|' + e.b + '|' + e.t;
+    const prev = seen.get(key);
+    if (prev) { if (!prev.dir && e.dir) prev.dir = e.dir; continue; }   // a later copy may know the direction
+    const c = { a:e.a, b:e.b, t:e.t, nat:geNature(e.t), belief:e.belief, n:e.n, pmid:e.pmid,
+                complex:e.t === 'Complex', dir:e.dir || null };
+    seen.set(key, c);
+    (c.complex ? cplx : mech).push(c);
+  }
   for (const e of mech) { byId.get(e.a).deg++; byId.get(e.b).deg++; }   // kept for the node tooltip
   const wired = new Set();
   for (const e of mech) { wired.add(e.a); wired.add(e.b); }
@@ -4670,9 +4813,8 @@ function geBuildModel(){
   _geById = new Map(_geNodes.map(n => [n.sym, n]));
   _geByU = new Map(_geNodes.map(n => [n.sym.toUpperCase(), n]));
   _geMechEdges = mech;
-  _geEdges = mech.concat(cplx).map(e => ({ a:e.a, b:e.b, t:e.t, nat:geNature(e.t),
-    belief:e.belief, n:e.n, pmid:e.pmid, complex:e.t === 'Complex', dir:e.dir || null }));
-  _geIsolated = all.length - _geNodes.length;
+  _geEdges = mech.concat(cplx);
+  _geIsolated = nGenes - _geNodes.filter(n => !n.ghost).length;
 }
 function geComputeDrawn(){
   const raw = _geEdges.filter(e => !e.complex || geShowComplex);
@@ -4728,8 +4870,8 @@ function geEdgeShown(e){
 function geDrawnShown(e){ return e._members ? e._members.some(geEdgeShown) : geEdgeShown(e); }
 function geShownCount(){
   if (_geBuilt) return _geNodes.length;
-  if (!interactions || !interactions.genes) return 0;
-  const g = interactions.genes, wired = new Set();
+  if (!interactions) return 0;
+  const g = geGenes(), wired = new Set();
   for (const e of (interactions.edges || [])) if (g[e.a] && g[e.b]) { wired.add(e.a); wired.add(e.b); }
   return wired.size;
 }
@@ -4782,10 +4924,11 @@ function renderGenes(){
   // unchanged, do not rebuild: rebuilding would drop live INDRA ghosts and
   // expansions added this session. Just re-filter the map already drawn.
   _geLayoutIds = null;   // a search/facet change (or a fresh build) drops any Relayout focus
-  const frozenSig = String(Object.keys(interactions.genes || {}).length);
-  if (_geBuilt && frozenSig === _geSig) { geSyncSpikes(); geApplyFilter(); return; }
+  geRefreshDerived();
+  const frozenSig = geModelSig();
+  if (_geBuilt && frozenSig === _geSig) { geSyncNodeMeta(); geSyncSpikes(); geApplyFilter(); return; }
   geStop();
-  geBuildModel();
+  geBuildModel(_geNodes.length ? { edges: _geEdges, ghosts: _geNodes.filter(n => n.ghost) } : null);
   _geSig = frozenSig; _geBuilt = false;
   _geBaseSig = geLayoutSig(_geNodes);   // before spikes are merged in — see geApplyLayoutCache
   _geSpikeAdded = new Set();   // geBuildModel wiped the node set; re-derive spikes from scratch
@@ -4810,6 +4953,8 @@ function renderGenes(){
           <input type="range" class="gr-range" min="0" max="1" step="0.05" value="${geMinBelief}" oninput="setGeMinBelief(this.value)"></div>
         <div class="gr-slider"><span class="seg-label" title="Minimum independent evidence texts">ev ≥ <span id="ge-ev-val">${geMinEv}</span></span>
           <input type="range" class="gr-range" min="1" max="5" step="1" value="${geMinEv}" oninput="setGeMinEv(this.value)"></div>
+        ${geIsLive() ? `<div class="gr-slider"><span class="seg-label" title="Cards listing more genes than this are gene sets: their genes annotate the map but are not nodes. Smaller cards' genes are nodes, gene-set tag or not.">sets &gt; <span id="ge-setmax-val">${geSetMax}</span></span>
+          <input type="range" class="gr-range" id="ge-setmax" min="1" max="${GE_SETMAX_LIMIT}" step="1" value="${geSetMax}" oninput="setGeSetMax(this.value)" onchange="setGeSetMax(this.value, true)"></div>` : ''}
         <div class="gr-slider"><span class="seg-label" title="Opacity of background genes/edges under a highlight — drag right to fade them less">bg <span id="ge-dim-val">${Math.round(geDimStrength*100)}%</span></span>
           <input type="range" class="gr-range" min="0" max="1" step="0.01" value="${geDimStrength}" oninput="setGeDimStrength(this.value)"></div>
         <label class="ge-chk" title="Protein-complex membership — 88% of edges, off by default (B)"><input type="checkbox" id="ge-complex-chk" ${geShowComplex?'checked':''} onchange="setGeShowComplex(this.checked)"> complexes</label>
@@ -4818,7 +4963,7 @@ function renderGenes(){
         <label class="ge-chk" title="Also show memento genes with a shown edge to a gene your search/filter kept in scope — one hop, not a chain (W)"><input type="checkbox" id="ge-neighbours-chk" ${geShowNeighbours?'checked':''} onchange="setGeShowNeighbours(this.checked)"> neighbours</label>
         <span class="gr-relayout" onclick="geRelayout()" title="Lay the map out again from scratch (L)">↻ Relayout</span>
         <span class="gr-relayout" id="ge-refresh" onclick="geRefreshAll()" title="Fetch INDRA for every gene in memento and add the interactions BETWEEN them — never genes outside memento. Isolated genes that interact get connected. Incremental and cached; press again to cancel. (R)">↻ Refresh all</span>
-        <span class="gr-relayout" onclick="geFreeze()" title="Write the current interactions back to interactions.json (folder, or a GitHub commit) (F)">⭳ Save edges</span>
+        ${geIsLive() ? '' : `<span class="gr-relayout" onclick="geFreeze()" title="Write the current interactions back to interactions.json (folder, or a GitHub commit) (F)">⭳ Save edges</span>`}
         <span class="gr-relayout" id="ge-addgene-btn" onclick="geToggleAddGene()" title="Spike in a gene by name: fetch it from INDRA and connect it to your memento genes only (no external genes are added). The live cousin of the *GENE search token, which spikes in genes memento already knows. (A)">＋ Spike in</span>
         <input class="ge-addgene-input" id="ge-addgene" type="text" placeholder="gene symbol… ⏎" style="display:none" onkeydown="geAddGeneKey(event)">
       </div>
@@ -4865,7 +5010,8 @@ function renderGenes(){
 // filter is active. Same contract the card graph reads through grVisibleIds.
 function geCardScope(){
   const raw = (document.getElementById('search-input')?.value || '').trim();
-  const facet = activeTypes.size || activeTags.size || activeGene || connFilter !== 'all' || archiveFilter !== 'active';
+  // Pinned cards are a filter too: with an empty bar they ARE the scope (see getVisibleItems).
+  const facet = activeTypes.size || activeTags.size || activeGene || connFilter !== 'all' || archiveFilter !== 'active' || pinnedCardIds.size;
   if (!raw && !facet) return null;
   try { return new Set(getVisibleItems().vis.map(e => e.id)); }
   catch(_) { return null; }
@@ -4878,8 +5024,10 @@ let _geNeighboursRevealed = new Set();
 function geCardOff(){
   const scope = geCardScope();
   const off = new Set();
+  // A gene stays while any card documenting it — or any gene-set card listing it — is in scope.
   if (scope) for (const n of _geNodes) {
-    if (!n.ghost && n.cards.length && !n.cards.some(id => scope.has(id))) off.add(n.sym);
+    const sets = n.sets || [];
+    if (!n.ghost && (n.cards.length || sets.length) && !n.cards.some(id => scope.has(id)) && !sets.some(id => scope.has(id))) off.add(n.sym);
   }
   // "neighbours" (geShowNeighbours, W): also reveal an otherwise-off gene that has a currently-shown
   // edge to a gene the filter kept in scope. One hop only, straight off the ORIGINAL off set — this
@@ -4904,7 +5052,7 @@ function geCardOff(){
 // the sidecar; ambiguous or unknown tokens are ignored. (Aliases like *RNF12 aren't resolved yet.)
 function geSpikes(){
   const raw = document.getElementById('search-input')?.value || '';
-  const keysU = new Map(Object.keys((interactions && interactions.genes) || {}).map(s => [s.toUpperCase(), s]));
+  const keysU = new Map(Object.keys(interactions ? geGenes() : {}).map(s => [s.toUpperCase(), s]));
   const out = new Set();
   for (const m of raw.matchAll(/\*([^\s]+)/g)) for (const part of m[1].split(/[,/]/)) {
     const tok = part.trim().toUpperCase();
@@ -5012,6 +5160,7 @@ function geApplyFilter(){
   const realTotal = _geNodes.length - offcards;
   const realShown = realTotal - _geNodes.reduce((k, n) => k + ((n.cards.length && off.has(n.sym)) ? 1 : 0), 0);
   const cap = document.getElementById('ge-caption');
+  // The auto-sync status (geAutoText) rides at the end; dataset.base lets it update without a re-filter.
   if (cap) cap.textContent = (realShown < realTotal ? `${realShown} of ${realTotal} genes` : `${realTotal} genes`)
     + `${offcards ? ` · ${offcards} not on a card` : ''}`
     + ` · ${shown} ${geSimpleEdges ? 'link' : 'interaction'}${shown === 1 ? '' : 's'} shown`
@@ -5019,6 +5168,7 @@ function geApplyFilter(){
     + `${_geIsolated > 0 ? ` · ${_geIsolated} isolated hidden` : ''}`
     + `${_geNeighboursRevealed.size ? ` · ${_geNeighboursRevealed.size} neighbour${_geNeighboursRevealed.size === 1 ? '' : 's'} shown` : ''}`
     + `${_geSelIds.size ? ` · ${_geSelIds.size} highlighted` : ''}`;
+  if (cap && cap.dataset) { cap.dataset.base = cap.textContent; cap.textContent += geAutoText(); }
   geUpdateAction();
   geRenderCardPanel();
 }
@@ -5619,6 +5769,7 @@ async function geExpand(sym){
       await geCachePut(sym, rec);
     }
     const added = geMergeExpansion(sym, rec);
+    geScheduleSave();
     _geExpanded.add(sym);
     _geExpandLeft.set(sym, added.capped);   // partners still not shown; the next Expand adds them
     const genes = added.ghosts + added.adopted;
@@ -5651,7 +5802,7 @@ function geMergeExpansion(sym, rec){
     if (_geByU.has(U)) return _geByU.get(U);
     const frozen = _geFrozenU.get(U);            // a sidecar gene that was isolated -> real node, not a ghost
     const doc = frozen ? null : live.get(U);     // documented on a card newer than the sidecar -> adopt, not a ghost
-    const meta = frozen ? (interactions.genes[frozen] || {}) : (doc || {});
+    const meta = frozen ? (geGenes()[frozen] || {}) : (doc || {});
     const canonical = frozen || U;
     const chrom = frozen ? meta.chrom : (rec.chrom[U] || null);
     const n = { sym: canonical, id: geIdSafe(canonical), chrom, cclass: geChromClass(chrom),
@@ -5702,6 +5853,28 @@ function geIsSetCard(item){
   const toks = (item.genes||[]).map(g => String(g||'').trim()).filter(Boolean);
   return (item.tags||[]).includes(GE_SET_TAG) || toks.length >= GE_SET_CARD_MIN_GENES;
 }
+// The Genes view's own rule on a live sidecar: a card is a gene set — its genes annotate, they are
+// not nodes — when it lists MORE genes than the "sets >" slider. One rule for every card, gene-set
+// tag or not. A legacy sidecar keeps geIsSetCard, since its node set is a stored snapshot.
+// geIsSetCard itself stays the file's rule: kb-interactions.py, the genes/members the autosave
+// writes, and the gene-set highlight picker all keep using it, so the slider is a view setting
+// that never changes what is written.
+const GE_SETMAX_LIMIT = 200;
+let geSetMax = Math.min(GE_SETMAX_LIMIT, Math.max(1, Math.round(Number(localStorage.getItem('ge_setmax')) || 50)));
+function geCardGeneCount(item){ return (item.genes || []).filter(g => String(g == null ? '' : g).trim()).length; }
+function geIsSetCardView(item){ return geIsLive() ? geCardGeneCount(item) > geSetMax : geIsSetCard(item); }
+// Dragging only moves the label; the release (commit) re-derives, redraws and fetches any genes the
+// new threshold turned into nodes.
+function setGeSetMax(v, commit){
+  geSetMax = Math.min(GE_SETMAX_LIMIT, Math.max(1, Math.round(Number(v) || 50)));
+  const el = document.getElementById('ge-setmax-val'); if (el) el.textContent = geSetMax;
+  if (!commit) return;
+  localStorage.setItem('ge_setmax', geSetMax);
+  _geLayoutIds = null;
+  geRefreshDerived();
+  if (typeof mainView !== 'undefined' && mainView === 'genes') renderGenes();
+  geAutoKick(500);
+}
 // The gene-set highlight picker: every set card, chosen by name, unions/removes its genes in the
 // "Highlight genes" field — a shortcut for what would otherwise be opening the card and copying
 // its gene list by hand. Global (searchbar), not Genes-view-scoped: highlightInputGenes drives
@@ -5746,7 +5919,7 @@ function geneSetChecked(item){
 // documentation, and an archived card doesn't count — the same rule gePromoteGhost's adopt branch
 // and the action bar's Add button both apply, so they can never disagree.
 function geThoughtCards(X){
-  return items.filter(i => !i.archived && !geIsSetCard(i) && (i.genes || []).some(g => geneAliasesU(g).includes(X)));
+  return items.filter(i => !i.archived && !geIsSetCardView(i) && (i.genes || []).some(g => geneAliasesU(g).includes(X)));
 }
 // Upper-cased alias -> {cards, groups} for every gene documented on a live thought card but missing
 // from the loaded sidecar (a card written since the last rebuild). The merge paths consult this so
@@ -5757,7 +5930,7 @@ function geLiveDocsU(){
   const m = new Map();
   for (const it of items) {
     if (it.archived) continue;
-    const set = geIsSetCard(it);
+    const set = geIsSetCardView(it);
     for (const g of it.genes || []) for (const U of geneAliasesU(g)) {
       if (_geFrozenU.has(U)) continue;
       let rec = m.get(U);
@@ -5782,8 +5955,11 @@ function geRenderCardPanel(){
   // and made every search keystroke crawl when all ~hundreds of genes were visible.
   const wantU = new Set(syms.map(s => s.toUpperCase()));
   const want = new Set();
+  // Gene-set cards are annotations, so they stay out of the panel — unless the search, a facet or a
+  // pin put them in scope: then they are what you asked for (#gene-set listed nothing before).
+  const scope = geCardScope();
   for (const it of items) {
-    if (it.archived || geIsSetCard(it)) continue;
+    if (it.archived || (geIsSetCardView(it) && !(scope && scope.has(it.id)))) continue;
     if ((it.genes || []).some(g => geneAliasesU(g).some(a => wantU.has(a)))) want.add(it.id);
   }
   const { vis } = getVisibleItems();
@@ -5952,6 +6128,7 @@ async function geAddGene(name){
     }
     const res = geMergeAddGene(X, rec);
     if (!res) { showToast(`Couldn't resolve ${X}`); return; }
+    geScheduleSave();
     showToast(res.edges
       ? `Added ${res.sym}: ${res.edges} connection${res.edges === 1 ? '' : 's'} to your genes`
       : `${res.sym}: no interactions with genes in memento`);
@@ -6034,9 +6211,9 @@ function geEnsureMementoNode(U){
   if (existing) return existing.ghost ? null : existing;   // never wire a refresh edge to a ghost
   const canonical = _geFrozenU.get(U);
   if (!canonical) return null;                             // not a memento gene -> no ghost
-  const meta = interactions.genes[canonical] || {};
+  const meta = geGenes()[canonical] || {};
   const n = { sym: canonical, id: geIdSafe(canonical), chrom: meta.chrom, cclass: geChromClass(meta.chrom),
-              cards: meta.cards || [], groups: meta.groups || [], deg: 0, r: GE_NODE_R, ghost: false };
+              cards: meta.cards || [], groups: meta.groups || [], sets: geSetsOf(canonical), deg: 0, r: GE_NODE_R, ghost: false };
   _geNodes.push(n); _geById.set(n.sym, n); _geByU.set(U, n);
   const ang = grHash(U) * Math.PI * 2, R = 0.35 * Math.min(_geW, _geH);
   _gePos[n.sym] = { x: _geW / 2 + Math.cos(ang) * R, y: _geH / 2 + Math.sin(ang) * R, vx: 0, vy: 0 };
@@ -6097,7 +6274,7 @@ async function geRefreshAll(){
   // Every gene memento knows about (the whole sidecar vocabulary), not just the
   // ones already drawn — so isolated genes that turn out to interact get
   // connected. Edges to genes outside memento are never added (geMergeNodeEdges).
-  const genes = Object.keys(interactions.genes || {});
+  const genes = Object.keys(geGenes());
   if (!genes.length) return;
   if (typeof navigator !== 'undefined' && navigator.onLine === false) { showToast('Refresh needs a connection'); return; }
   _geRefreshing = true; _geRefreshCancel = false;
@@ -6118,6 +6295,7 @@ async function geRefreshAll(){
           await geCachePut(sym, rec);
         }
         added += geMergeNodeEdges(rec);
+        if (geIsLive()) (interactions.indra || (interactions.indra = {}))[sym] = geToday();
       } catch(_) {}
     }
   };
@@ -6138,6 +6316,7 @@ async function geRefreshAll(){
     geApplyDOM(); geApplyFilter();
   }
   geSetRefreshUI(false);
+  geScheduleSave();
   const tail = `+${added} interaction${added === 1 ? '' : 's'}` + (connected ? `, ${connected} gene${connected === 1 ? '' : 's'} newly connected` : '');
   showToast(cancelled ? `Refresh stopped at ${done}/${genes.length} · ${tail}` : `Refreshed ${genes.length} memento genes · ${tail}`);
 }
@@ -6151,7 +6330,7 @@ async function geRefreshAll(){
 // interactions.genes directly — that object is the loaded baseline and stays untouched so a Freeze
 // before those genes have edges of their own doesn't silently mutate what was actually loaded.
 function geBuildFrozen(){
-  const genes = { ...(interactions.genes || {}), ...Object.fromEntries(_geAdopted) };
+  const genes = { ...geGenes(), ...Object.fromEntries(_geAdopted) };
   const seen = new Set(), mech = [], cplx = [];
   for (const e of _geEdges) {
     if (!genes[e.a] || !genes[e.b]) continue;
@@ -6166,27 +6345,30 @@ function geBuildFrozen(){
   return { ...interactions, generated: new Date().toISOString().slice(0, 10),
            source: 'INDRA db.indra.bio + MyGene.info (frozen in-app)', genes, edges: mech, complex_edges: cplx };
 }
-async function geWriteInteractions(json){
+// `quiet` (the autosave) reports failures through the Genes caption instead of a toast per attempt.
+async function geWriteInteractions(json, quiet){
+  const say = msg => { if (quiet) _geAuto.error = msg; else showToast(msg); };
   if (typeof dirHandle !== 'undefined' && dirHandle) {
     try {
       const fh = await dirHandle.getFileHandle('interactions.json', { create: true });
       const w = await fh.createWritable(); await w.write(json); await w.close();
       return true;
-    } catch(e) { showToast('Write failed: ' + e.message); return false; }
+    } catch(e) { say('Write failed: ' + e.message); return false; }
   }
   if (typeof ghRepoMode !== 'undefined' && ghRepoMode) {
-    if (!ghCanWrite) { showToast('Your GitHub token is read-only'); return false; }
+    if (!ghCanWrite) { say('Your GitHub token is read-only'); return false; }
     try {
       _ghQueue.set(`${GH_KB_PATH}/interactions.json`, { text: json });   // reuse the card commit machinery
       await ghFlush();
       return true;
-    } catch(e) { showToast('Commit failed: ' + e.message); return false; }
+    } catch(e) { say('Commit failed: ' + e.message); return false; }
   }
-  showToast('Connect a folder or GitHub to freeze');
+  say('Connect a folder or GitHub to freeze');
   return false;
 }
 async function geFreeze(){
   if (!interactions) { showToast('Nothing to freeze'); return; }
+  if (geIsLive()) { await geSaveNow(); showToast(_geAuto.error ? _geAuto.error : 'interactions.json is up to date'); return; }
   const out = geBuildFrozen();
   const nm = out.edges.length, nc = out.complex_edges.length;
   if (typeof confirm === 'function' && !confirm(`Save ${nm} mechanistic + ${nc} complex interactions to interactions.json?`)) return;
@@ -6197,12 +6379,269 @@ async function geFreeze(){
   }
 }
 
+// --- Auto-sync (v2 sidecar) ------------------------------------------------------
+// Keeps the sidecar's network half in step with the cards with no button to press: names nobody has
+// looked up go to MyGene (geAutoResolve), your genes nobody has fetched go to INDRA (geAutoIndra), and
+// the result is written back to interactions.json a few seconds later (geScheduleSave). Kicked at
+// load, after every card save or delete, and when the browser comes back online. A legacy sidecar is
+// left alone: without `resolve` there is nothing to derive from (run kb-interactions.py once).
+const GE_RESOLVE_BATCH = 900;   // kb-interactions.py's resolve() batch size
+const GE_AUTO_CONC = 3;         // gentler than Refresh all's 5: this runs unasked, in the background
+let _geAuto = { timer: 0, busy: false, again: false, lookup: 0, indra: 0, offline: false, saving: false, error: '' };
+// Backoff: a gene whose INDRA request failed, or a failed MyGene lookup, is not retried for
+// GE_RETRY_MS — otherwise every card save while a server is down would re-send the whole queue. One
+// retry is scheduled for when the wait is over.
+const GE_RETRY_MS = 10 * 60 * 1000;
+let _geIndraFailAt = new Map(), _geLookupFailAt = 0, _geRetryTimer = 0;
+function geScheduleRetry(){ clearTimeout(_geRetryTimer); _geRetryTimer = setTimeout(() => geAutoKick(0), GE_RETRY_MS + 1000); }
+let _geSaveTimer = 0, _geFileNorm = null;
+function geCanSave(){
+  if (typeof readOnly !== 'undefined' && readOnly) return false;
+  if (typeof dirHandle !== 'undefined' && dirHandle) return true;
+  return typeof ghRepoMode !== 'undefined' && ghRepoMode && !!ghCanWrite;
+}
+function geToday(){ return new Date().toISOString().slice(0, 10); }
+function geAfterLoad(){
+  _geD = null; _geAuto.error = ''; _geAuto.offline = false;
+  // The file as JS would write it — the autosave compares against this, so loading a file and
+  // changing nothing never writes it back (Python's 1.0 vs JS's 1 are normalised away by the round trip).
+  try { _geFileNorm = interactions ? JSON.stringify(interactions, null, 1) : null; } catch(_) { _geFileNorm = null; }
+  geAutoKick(800);
+}
+function geAutoKick(delay){
+  if (!geIsLive() || !geCanSave()) return;
+  clearTimeout(_geAuto.timer);
+  _geAuto.timer = setTimeout(geAutoRun, delay == null ? 1500 : delay);
+}
+async function geAutoRun(){
+  if (!geIsLive()) return;
+  if (_geAuto.busy) { _geAuto.again = true; return; }
+  _geAuto.busy = true;
+  try {
+    do {
+      _geAuto.again = false;
+      await geAutoResolve();
+      await geAutoIndra();
+    } while (_geAuto.again && geIsLive());
+    geScheduleSave();   // card edits alone change the derived genes the file carries
+  } finally { _geAuto.busy = false; geAutoStatus(); }
+}
+function geOffline(){
+  const off = typeof navigator !== 'undefined' && navigator.onLine === false;
+  _geAuto.offline = off;
+  return off;
+}
+// kb-interactions.py resolve(), ported: exactly one hit carrying exactly one HGNC id, else null.
+// Ambiguity is refused, never guessed ('U3' has six candidates). Primary-assembly position only.
+function gePrimaryPos(h){
+  const gp = h && h.genomic_pos;
+  if (!gp) return null;
+  for (const g of (Array.isArray(gp) ? gp : [gp])) if (g && /^(\d+|X|Y|MT)$/.test(String(g.chr)) && Number(g.chr) !== 0 && !(Number(g.chr) > 22)) return g;
+  return null;
+}
+async function geMyGeneResolve(chunk){
+  const body = 'q=' + encodeURIComponent(chunk.join(',')) + '&scopes=' + encodeURIComponent('symbol,alias,retired')
+    + '&fields=' + encodeURIComponent('symbol,HGNC,genomic_pos') + '&species=human';
+  const r = await fetch(GE_MYGENE_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+  if (!r || !r.ok) throw new Error('MyGene ' + (r ? r.status : 'unreachable'));
+  const hits = await r.json();
+  const seen = {};
+  for (const h of hits || []) { if (!h) continue; (seen[h.query] = seen[h.query] || []).push(h); }
+  const out = {};
+  for (const q of chunk) {
+    const hs = (seen[q] || []).filter(h => !h.notfound);
+    const uniq = new Set(hs.map(h => h.HGNC).filter(Boolean));
+    if (hs.length !== 1 || uniq.size !== 1) { out[q] = null; continue; }
+    const h = hs[0], gp = gePrimaryPos(h) || {};
+    out[q] = { symbol: h.symbol, hgnc: h.HGNC, chrom: gp.chr ?? null, start: gp.start ?? null, end: gp.end ?? null };
+  }
+  return out;
+}
+async function geAutoResolve(){
+  const pending = [...geRefreshDerived().pending].sort();
+  // A comma would split the batch query in two; such a token can't be a gene name anyway.
+  const bad = pending.filter(f => f.includes(','));
+  if (bad.length) { for (const f of bad) interactions.resolve[f] = null; _geResRev++; }
+  const todo = pending.filter(f => !f.includes(','));
+  _geAuto.lookup = todo.length; geAutoStatus();
+  if (!todo.length || geOffline() || Date.now() - _geLookupFailAt < GE_RETRY_MS) return;
+  for (let i = 0; i < todo.length; i += GE_RESOLVE_BATCH) {
+    const chunk = todo.slice(i, i + GE_RESOLVE_BATCH);
+    let got;
+    try { got = await geMyGeneResolve(chunk); }
+    catch(e) { _geLookupFailAt = Date.now(); geScheduleRetry(); _geAuto.error = 'gene lookup failed — retrying in 10 min'; return; }
+    if (!geIsLive()) return;   // the sidecar was reloaded meanwhile
+    Object.assign(interactions.resolve, got); _geResRev++;
+    _geAuto.lookup = Math.max(0, todo.length - i - chunk.length); _geAuto.error = '';
+    geAutoStatus(); geScheduleSave();
+  }
+  geRefreshDerived();
+  if (typeof mainView !== 'undefined' && mainView === 'genes') renderGenes();
+}
+// Fold a fetched INDRA record into the STORED edge pool: endpoints mapped to your genes' canonical
+// spelling (INDRA upper-cases), kept only when both are your genes, a/b alphabetical with `dir`
+// flipped to match — the shape kb-interactions.py writes. Returns how many edges were new.
+function gePoolMerge(rec, upMap){
+  const edges = interactions.edges || (interactions.edges = []);
+  const cplx = interactions.complex_edges || (interactions.complex_edges = []);
+  const idx = new Map();
+  for (const e of edges) idx.set(e.a + '|' + e.b + '|' + e.t, e);
+  for (const e of cplx) idx.set(e.a + '|' + e.b + '|' + e.t, e);
+  let added = 0;
+  for (const e of rec.edges || []) {
+    let a = upMap.get(String(e.a).toUpperCase()), b = upMap.get(String(e.b).toUpperCase());
+    if (!a || !b || a === b) continue;
+    let dir = e.dir || null;
+    if (a > b) { [a, b] = [b, a]; if (dir) dir = dir === 'ab' ? 'ba' : 'ab'; }
+    const complex = e.complex || e.t === 'Complex';
+    const key = a + '|' + b + '|' + e.t, prev = idx.get(key);
+    if (prev) {
+      if ((e.n || 0) > (prev.n || 0)) { prev.belief = e.belief; prev.n = e.n; prev.pmid = e.pmid || null; }
+      if (!complex && !prev.dir && dir) prev.dir = dir;
+      continue;
+    }
+    const x = { a, b, t: e.t, belief: e.belief, n: e.n, pmid: e.pmid || null };
+    if (!complex && dir) x.dir = dir;
+    (complex ? cplx : edges).push(x); idx.set(key, x); added++;
+  }
+  return added;
+}
+async function geAutoIndra(){
+  const G = geGenes();
+  const reg = interactions.indra || (interactions.indra = {});
+  const waiting = Object.keys(G).filter(sym => !reg[sym]).sort();
+  const now = Date.now();
+  const todo = waiting.filter(sym => !(now - (_geIndraFailAt.get(sym) || 0) < GE_RETRY_MS));
+  _geAuto.indra = waiting.length; geAutoStatus();
+  if (!todo.length || geOffline()) return;
+  const upMap = new Map(Object.keys(G).map(sym => [sym.toUpperCase(), sym]));
+  const inView = () => typeof mainView !== 'undefined' && mainView === 'genes' && _geBuilt;
+  const before = inView() ? new Set(_geNodes.map(n => n.sym)) : null;
+  let live = 0, failed = 0;
+  const queue = todo.slice();
+  const worker = async () => {
+    while (queue.length && geIsLive() && !_geRefreshing) {
+      const sym = queue.shift();
+      try {
+        let rec = await geCacheGet(sym);
+        if (!rec) {
+          if (geOffline()) { queue.length = 0; return; }
+          const r = await fetch(GE_INDRA_URL + '?agent0=' + encodeURIComponent(sym) + '&format=json&limit=500&ev_limit=1');
+          if (!r || !r.ok) { failed++; _geIndraFailAt.set(sym, Date.now()); continue; }
+          rec = { fetched: new Date().toISOString(), edges: geParseIndra(await r.json(), sym), chrom: {} };
+          await geCachePut(sym, rec);
+        }
+        if (!geIsLive()) return;
+        _geIndraFailAt.delete(sym);
+        gePoolMerge(rec, upMap);
+        reg[sym] = geToday();
+        if (before) live += geMergeNodeEdges(rec);   // the map on screen gains them now, not at the next rebuild
+      } catch(_) { failed++; _geIndraFailAt.set(sym, Date.now()); }
+      _geAuto.indra = Object.keys(G).filter(x => !reg[x]).length; geAutoStatus(); geScheduleSave();
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(GE_AUTO_CONC, queue.length) }, worker));
+  if (failed) { geScheduleRetry(); _geAuto.error = `INDRA unreachable for ${failed} gene${failed === 1 ? '' : 's'} — retrying in 10 min`; }
+  else if (/^INDRA/.test(_geAuto.error)) _geAuto.error = '';
+  if (before && inView()) {
+    if (live) geSettleNewcomers(before); else { geApplyDOM(); geApplyFilter(); }
+    _geSig = geModelSig();   // the drawn model already holds the pool's new edges — no rebuild needed
+  }
+}
+// After edges arrive mid-session: repaint, and settle any newly connected genes while the rest of
+// the map stays pinned (the same move Refresh all ends with).
+function geSettleNewcomers(before){
+  geComputeDrawn(); geRebuildScene();
+  const fresh = _geNodes.filter(n => !before.has(n.sym));
+  if (fresh.length) {
+    _geSim = _geNodes; _geSimIds = new Set(_geNodes.map(n => n.sym));
+    _geUnpinAfter = new Set();
+    for (const n of _geNodes) if (before.has(n.sym) && !_geFixed[n.sym]) { _geFixed[n.sym] = true; _geUnpinAfter.add(n.sym); }
+    geFocusInclude(fresh.map(n => n.sym));
+    geApplyDOM(); geApplyFilter(); geRun(0.8);
+  } else { geApplyDOM(); geApplyFilter(); }
+}
+// The v2 sidecar as it should now read: the network half as stored (plus whatever this session
+// fetched), the card half re-derived from the cards (so a legacy reader — an older app on the phone —
+// still sees current genes), every map key-sorted and every edge list sorted by (a, b, t) so the
+// output is deterministic. An edge survives while both ends are on some live card — node or set member
+// — or are genes INDRA was fetched for: retagging a card gene-set, or dropping a gene and adding it
+// back, must not cost a re-fetch (kb-interactions.py's merge_previous_edges keeps the same set).
+// Ghosts never qualify.
+function geBuildSidecar(){
+  const D = geDerive(geIsSetCard);   // the file's rule, never the view's slider (see geIsSetCardView)
+  const genes = { ...D.genes };
+  for (const [sym, g] of _geAdopted) if (!genes[sym]) genes[sym] = { hgnc: null, chrom: g.chrom ?? null, start: null, end: null, cards: g.cards || [], groups: g.groups || [] };
+  const keep = new Set([...Object.keys(genes), ...Object.keys(D.members), ...Object.keys(interactions.indra || {})]);
+  const seen = new Map();
+  const add = e => {
+    if (!keep.has(e.a) || !keep.has(e.b)) return;
+    const key = e.a + '|' + e.b + '|' + e.t, prev = seen.get(key);
+    if (prev) { if (!prev.dir && e.dir && e.t !== 'Complex') prev.dir = e.dir; return; }
+    const x = { a: e.a, b: e.b, t: e.t, belief: e.belief, n: e.n, pmid: e.pmid || null };
+    if (e.dir && e.t !== 'Complex') x.dir = e.dir;
+    seen.set(key, x);
+  };
+  for (const e of interactions.edges || []) add(e);
+  for (const e of interactions.complex_edges || []) add(e);
+  for (const e of _geEdges) add(e);
+  const cmp = (x, y) => x.a < y.a ? -1 : x.a > y.a ? 1 : x.b < y.b ? -1 : x.b > y.b ? 1 : x.t < y.t ? -1 : x.t > y.t ? 1 : 0;
+  const all = [...seen.values()].sort(cmp);
+  const sortObj = o => Object.fromEntries(Object.keys(o || {}).sort().map(k => [k, o[k]]));
+  return {
+    generated: interactions.generated, source: interactions.source,
+    resolve: sortObj(interactions.resolve), indra: sortObj(interactions.indra),
+    genes: sortObj(genes), members: sortObj(D.members), canon: sortObj(D.canon),
+    edges: all.filter(e => e.t !== 'Complex'), complex_edges: all.filter(e => e.t === 'Complex'),
+    bridges: interactions.bridges || [],
+  };
+}
+function geScheduleSave(){
+  if (!geIsLive() || !geCanSave()) return;
+  clearTimeout(_geSaveTimer);
+  // A commit per save on GitHub (the phone) costs far more than a folder write — batch harder there.
+  const gh = typeof dirHandle === 'undefined' || !dirHandle;
+  _geSaveTimer = setTimeout(geSaveNow, gh ? 20000 : 3000);
+}
+async function geSaveNow(){
+  clearTimeout(_geSaveTimer);
+  if (!geIsLive() || !geCanSave()) return;
+  const json = JSON.stringify(geBuildSidecar(), null, 1);
+  if (json === _geFileNorm) return;   // nothing changed since load or the last save
+  _geAuto.saving = true; geAutoStatus();
+  try {
+    if (await geWriteInteractions(json, true)) { _geFileNorm = json; _geAuto.error = ''; }
+  } finally { _geAuto.saving = false; geAutoStatus(); }
+}
+// The caption's tail: what the auto-sync is still doing, or why it can't. Empty when all is current.
+function geAutoText(){
+  if (!interactions) return '';
+  if (!geIsLive()) return interactions.generated ? ` · snapshot of ${interactions.generated}` : '';
+  const parts = [];
+  if (_geAuto.lookup) parts.push(`${_geAuto.lookup} name${_geAuto.lookup === 1 ? '' : 's'} to look up`);
+  if (_geAuto.indra) parts.push(`${_geAuto.indra} gene${_geAuto.indra === 1 ? '' : 's'} awaiting interactions`);
+  if (parts.length && _geAuto.offline) parts.push('offline — resumes when back online');
+  if (_geAuto.saving) parts.push('saving…');
+  if (_geAuto.error) parts.push(_geAuto.error);
+  if (parts.length && !geCanSave()) parts.push('not saved: read-only');
+  return parts.length ? ' · ' + parts.join(' · ') : '';
+}
+function geAutoStatus(){
+  const cap = document.getElementById('ge-caption');
+  if (cap && cap.dataset && cap.dataset.base != null) cap.textContent = cap.dataset.base + geAutoText();
+}
+if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('online', () => geAutoKick(500));
+
 // Load the sidecar. On the desktop (File System Access) path this reads the same
 // folder the entries came from and makes NO network request — a missing file
 // just leaves the map empty, it never falls through to fetch (fsa-regression
 // guards this). Only when there is no folder handle does a same-origin relative
 // fetch cover the served / http case.
 async function loadInteractions(){
+  await geLoadInteractionsRaw();
+  geAfterLoad();
+}
+async function geLoadInteractionsRaw(){
   interactions = null;
   // Desktop: the folder is the single source of truth; never touch the network.
   if (typeof dirHandle !== 'undefined' && dirHandle) {
@@ -7115,7 +7554,7 @@ function keyHelpHtml(){
       ${row('X','Expand the selected gene')}
       ${row('L','Relayout')}
       ${row('R','Refresh all (again: cancel)')}
-      ${row('F','Save edges to interactions.json')}
+      ${row('F','Save edges to interactions.json (automatic once kb-interactions.py has written the live format)')}
       ${row('B','Complex edges')}
       ${row('W','Show neighbours of the filtered genes')}
       ${row('1 2 3','Promote / suppress / modify')}

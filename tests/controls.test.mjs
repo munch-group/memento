@@ -129,7 +129,9 @@ console.log('\nBulk actions — select with Shift-click or Select mode; pin/arch
   await api.bulkDelete();
   ok(!api.items.some(i => i.id === 'p1'), 'a confirmed Delete removes every selected card');
 
-  // Select mode: plain clicks select; clearing puts mode and selection away together
+  // Select mode: plain clicks select; clearing puts mode and selection away together.
+  // n1 was archived above; un-archive it so it is on screen (hidden cards can't stay selected).
+  api.items.find(i => i.id === 'n1').archived = false;
   api.toggleBulkMode();
   api.toggleCard('n1', { target: { closest: () => null }, stopPropagation(){} });
   eq(api.bulkIds, ['n1'], 'in Select mode a plain click selects');
@@ -178,15 +180,22 @@ console.log('\nPinning a card (Alt-click) forces it into view no matter what els
   ok(el('pinned-cards').innerHTML.includes('Beta'), 'the chip shows the card TITLE, not its opaque id');
   ok(el('pinned-cards').innerHTML.includes("togglePinnedCard('b1')"), 'clicking the chip itself is wired to unpin');
   eq(api.pinnedCardIds, ['b1'], 'b1 recorded as pinned');
-  eq(api.getVisibleItems().vis.map(i => i.id).sort(), ['a1', 'b1'], 'Beta shows despite being archived AND wrong-tagged');
+  eq(api.getVisibleItems().vis.map(i => i.id), ['b1'], 'with an empty bar the pin alone is the result (Beta shows despite being archived)');
   eq(api.expandedId, null, 'Alt-click does not ALSO expand the card');
   eq(api.bulkIds, [], '...or bulk-select it');
 
   api.setTagFilter('Live');   // narrow further: Beta has neither Live nor a matching archive scope
   eq(api.getVisibleItems().vis.map(i => i.id).sort(), ['a1', 'b1'], 'a #Live filter still cannot hide a pinned card');
 
+  api.setTagFilter('Live');   // and off again: back to the pin alone
+  eq(api.getVisibleItems().vis.map(i => i.id), ['b1'], 'removing the last filter leaves only the pinned card');
+  el('search-input').value = '*MAPT';
+  eq(api.getVisibleItems().vis.map(i => i.id), ['b1'], 'a *GENE spike filters no cards, so it does not count as a filter');
+  el('search-input').value = '';
+
   api.togglePinnedCard('b1');
   eq(api.pinnedCardIds, [], 'unpinning empties the set');
+  eq(api.getVisibleItems().vis.map(i => i.id), ['a1'], '...and the unfiltered list is back');
   eq(el('pinned-cards').style.display, 'none', '...and hides the chip row again');
   eq(api.getVisibleItems().vis.map(i => i.id), ['a1'], 'Beta drops back out (still filtered by #Live + archive scope)');
   api.setTagFilter('Live');   // toggle back off, restoring baseline scope for the rest of this block
@@ -780,6 +789,24 @@ console.log('\nOld card types (pre Oct 2026) are mapped on load');
   ]).map(i => [i.type, i.tags]);
   eq(got, [['source', ['fact']], ['source', ['Reference']], ['finding', []], ['idea', ['X', 'hypothesis']], ['note', []]],
      'fact/reference -> source and hypothesis -> idea keep the old name as a tag (never duplicated); observation -> finding');
+}
+
+console.log('\nBulk selection drops cards the search hides (Tag pop-up showed no shared tags)');
+{
+  const { api, sandbox, el } = setup();
+  const shift = () => ({ shiftKey: true, target: { closest: () => null }, stopPropagation(){} });
+  api.items = [note('d1', 'D1', { tags: ['Drive'] }), note('d2', 'D2', { tags: ['Drive', 'LoF'] }), note('l1', 'L1', { tags: ['LoF'] })];
+  el('search-input').value = '#Drive'; api.renderList();
+  api.toggleCard('d1', shift()); api.toggleCard('d2', shift());
+  el('search-input').value = '#LoF'; api.renderList();
+  eq(api.bulkIds, ['d2'], 'd1 is filtered out of view, so it leaves the selection');
+  api.toggleCard('l1', shift());
+  ok(el('bulk-bar').innerHTML.includes('2 selected'), 'the bar counts only the visible selection');
+  api.openBulkTagPicker();
+  ok(el('bt-on').innerHTML.includes('data-tag="LoF"'), 'the pop-up lists the tag the visible cards share');
+  api.closeBulkTagPicker();
+  el('search-input').value = ''; api.renderList();
+  eq(api.bulkIds, ['d2', 'l1'], 'widening the search keeps the selection');
 }
 
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);

@@ -23,7 +23,6 @@
   ],
   "tags": [
     "Recombination",
-    "reference",
     "gene-set"
   ],
   "source": "Liu et al. 2025 / https://www.nature.com/articles/s41586-025-09078-9",
@@ -32,5 +31,5 @@
   "due": "",
   "date": "2026-06-12T13:46:18.005Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

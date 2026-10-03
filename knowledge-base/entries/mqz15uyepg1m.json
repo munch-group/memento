@@ -7,8 +7,7 @@
     "TOP2B"
   ],
   "tags": [
-    "Chromatin",
-    "reference"
+    "Chromatin"
   ],
   "source": "https://www.science.org/doi/10.1126/sciadv.add4920",
   "connection": false,
@@ -16,5 +15,5 @@
   "due": "",
   "date": "2026-07-14T08:39:50.172Z",
   "synced": false,
-  "_sortTag": "Chromatin"
+  "_sortTag": "reference"
 }

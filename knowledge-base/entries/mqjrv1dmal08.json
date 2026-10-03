@@ -7,14 +7,12 @@
     "GDF9",
     "SMAD"
   ],
-  "tags": [
-    "reference"
-  ],
+  "tags": [],
   "source": "https://www.genecards.org/card/BMP15",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-18T17:26:45.946Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

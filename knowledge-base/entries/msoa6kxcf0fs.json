@@ -6,7 +6,6 @@
     "RAC1"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "",
@@ -16,5 +15,5 @@
   "due": "",
   "date": "2026-08-11T06:30:06.960Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

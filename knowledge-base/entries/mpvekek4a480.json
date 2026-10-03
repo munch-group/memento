@@ -27,7 +27,6 @@
     "WASH6P"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "Roman et al. 2023 / https://10.1016/j.xgen.2023.100259",
@@ -36,5 +35,5 @@
   "due": "",
   "date": "2026-06-01T16:08:18.939Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

@@ -6,7 +6,6 @@
     "MMP9"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "",
@@ -16,5 +15,5 @@
   "due": "",
   "date": "2026-08-11T06:29:42.431Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

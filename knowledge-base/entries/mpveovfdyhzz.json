@@ -38,7 +38,6 @@
     "ZNF41"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "",
@@ -47,5 +46,5 @@
   "due": "",
   "date": "2026-06-01T16:11:35.065Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

@@ -75,8 +75,7 @@
     "ZMYM3"
   ],
   "tags": [
-    "gene-set",
-    "reference"
+    "gene-set"
   ],
   "source": "https://doi.org/10.1038/s41598-025-21643-w",
   "connection": false,

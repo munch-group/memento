@@ -661,7 +661,6 @@
     "ZRSR2"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "",
@@ -670,6 +669,6 @@
   "due": "",
   "date": "2026-07-17T15:28:21.120Z",
   "synced": false,
-  "_sortTag": "reference",
+  "_sortTag": "gene-set",
   "pinned": false
 }

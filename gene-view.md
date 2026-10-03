@@ -11,7 +11,10 @@ the literature says they interact.
 - **The short version:** [gene-view-rules.md](gene-view-rules.md) — the one-page
   rule sheet this document explains at length.
 - **Data:** a git-tracked sidecar, `knowledge-base/interactions.json`, built by
-  `kb-interactions.py` and refreshable from inside the app. The map works fully
+  `kb-interactions.py` and kept current from inside the app: on the live format (with a
+  `resolve` table) the card side is derived from the cards on every render, and new gene
+  names and genes are looked up / fetched and saved automatically — see *Automatic updates*
+  in [gene-view-rules.md](gene-view-rules.md). The map works fully
   **offline** from that file; live features light up only when you're online.
 
 ---
@@ -337,6 +340,10 @@ and evidence sliders filter those back out.
 ---
 
 ## Save edges — persisting what you found
+
+> **Since October 2026 this is automatic** on the live sidecar format (one with a `resolve`
+> table): the app saves `interactions.json` itself a few seconds after anything changes, and
+> the button only appears on a legacy sidecar. What follows describes the legacy, manual path.
 
 **⭳ Save edges** writes the current interactions back to `interactions.json`, the same
 structure `kb-interactions.py` produces:

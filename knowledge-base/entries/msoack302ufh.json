@@ -6,7 +6,6 @@
     "CTNNB1"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "",
@@ -16,5 +15,5 @@
   "due": "",
   "date": "2026-08-11T06:34:45.804Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

@@ -126,7 +126,6 @@
   ],
   "tags": [
     "LoF",
-    "reference",
     "gene-set"
   ],
   "source": "Mao et al. 2021 / https://www.nature.com/articles/s41586-021-03519-x",
@@ -135,5 +134,5 @@
   "due": "",
   "date": "2026-06-13T18:56:16.375Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

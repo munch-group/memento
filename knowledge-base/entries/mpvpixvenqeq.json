@@ -25,7 +25,6 @@
     "ZXDB"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "",
@@ -34,5 +33,5 @@
   "due": "",
   "date": "2026-06-01T21:14:54.074Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

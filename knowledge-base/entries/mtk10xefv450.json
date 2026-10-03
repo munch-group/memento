@@ -4,8 +4,7 @@
   "title": "Molecular Ecology | Molecular Genetics Journal | Wiley Online Library",
   "genes": [],
   "tags": [
-    "CTCF",
-    "reference"
+    "CTCF"
   ],
   "source": "https://onlinelibrary.wiley.com/doi/10.1111/mec.17814",
   "connection": false,
@@ -14,5 +13,5 @@
   "due": "",
   "date": "2026-09-02T11:42:24.279Z",
   "synced": false,
-  "_sortTag": "CTCF"
+  "_sortTag": "reference"
 }

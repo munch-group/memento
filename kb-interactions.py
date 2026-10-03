@@ -2,7 +2,14 @@
 """
 kb-interactions.py -- build knowledge-base/interactions.json
 
-The gene sidecar for memento's Genes view. Three stages:
+The gene sidecar for memento's Genes view. Since Oct 2026 the file also carries
+`resolve` (name -> gene, or null) and `indra` (genes whose INDRA neighbourhood was
+fetched). With those, memento.html derives the card side live from the cards and
+tops up lookups and edges itself, saving the file automatically -- so this script
+is for bootstrapping from the local INDRA cache, full rebuilds and the bridge
+report. A rebuild reuses the browser's lookups and keeps its edges.
+
+Three stages:
 
   resolve   card gene tokens -> canonical HGNC symbol + chromosome (MyGene.info)
   ingest    INDRA statements -> thin mechanistic edges
@@ -172,8 +179,13 @@ def _primary_chrom(hit):
     return None
 
 
-def resolve(fragments, cache_file=None, batch=900):
-    """fragment -> {symbol, hgnc, chrom, start, end}. Unresolvable ones absent.
+def resolve(fragments, cache_file=None, batch=900, seed=None):
+    """fragment -> {symbol, hgnc, chrom, start, end} or None (looked up, not a gene).
+
+    Every fragment asked about gets a key, so the sidecar's `resolve` table can
+    tell "not a gene" (None) apart from "never looked up" (absent) -- the
+    browser looks up only the latter. `seed` is the previous sidecar's table:
+    lookups the browser made since the last build are reused, not repeated.
 
     Ambiguity is left unresolved rather than guessed: 'U3' returns six
     candidates (SNORD3A, SNORD3F, SNORD3P1, ...) and picking one would invent a
@@ -182,6 +194,8 @@ def resolve(fragments, cache_file=None, batch=900):
     cache_file = cache_file or (CACHE / "resolve.json")
     cache_file.parent.mkdir(exist_ok=True)
     known = json.loads(cache_file.read_text()) if cache_file.exists() else {}
+    for k, v in (seed or {}).items():
+        known.setdefault(k, v)
 
     todo = sorted({f for f in fragments if f not in known})
     if todo:
@@ -214,8 +228,8 @@ def resolve(fragments, cache_file=None, batch=900):
                     "end": gp.get("end"),
                 }
             log(f"    {min(i+batch, len(todo))}/{len(todo)}")
-        cache_file.write_text(json.dumps(known))
-    return {k: v for k, v in known.items() if v}
+    cache_file.write_text(json.dumps(known))
+    return {f: known.get(f) for f in fragments}
 
 
 # ---------------------------------------------------------------------------
@@ -376,19 +390,13 @@ def pmid_counts(symbols, batch=900):
 # build
 # ---------------------------------------------------------------------------
 
-def build(fetch=False, n_bridges=20, min_links=5):
-    log("[1/4] reading cards")
-    cards = load_cards()
-    thought, sets_ = split_kinds(cards)
-    log(f"  {len(cards)} live cards with genes -> {len(thought)} thought, {len(sets_)} set")
+def derive(cards, res):
+    """Split resolved card genes into (inside, member) -- the card pass.
 
-    frags = {f for c in cards for t in c["toks"] for f in alias_fragments(t)}
-    log(f"  {len(frags)} distinct fragments")
-
-    log("[2/4] grounding against HGNC")
-    res = resolve(frags)
-    log(f"  resolved {len(res)}/{len(frags)} ({100*len(res)//max(len(frags),1)}%)")
-
+    memento.html's geDerive() is the same function in JavaScript: on a v2
+    sidecar the browser recomputes this live from the current cards, so the two
+    must agree. tests/interactions_test.py and tests/genes-auto.test.mjs pin it.
+    """
     # Two populations, and the distinction is the whole model:
     #
     #   inside  -- named on a thought card. These are NODES.
@@ -425,6 +433,66 @@ def build(fetch=False, n_bridges=20, min_links=5):
         if sym in inside:
             inside[sym]["groups"].update(g["groups"])
             del member[sym]
+    return inside, member
+
+
+def merge_previous_edges(old, known, mech, complexes):
+    """Keep edges the previous sidecar had between genes still on some live card.
+
+    The browser fetches INDRA for genes the local cache lacks (and Refresh all /
+    Expand add more); a rebuild from the cache alone would silently drop all of
+    that. `known` is every gene on a live card -- nodes AND set members -- so
+    retagging a card `gene-set` (its genes stop being nodes) parks their edges
+    rather than deleting them; untag it and they are back without a re-fetch.
+    The view only draws edges between nodes. An edge only the old file has is
+    kept; one both have keeps the better-evidenced copy. Returns how many.
+    """
+    kept = 0
+    for lst, tgt in ((old.get("edges") or [], mech), (old.get("complex_edges") or [], complexes)):
+        for e in lst:
+            if e.get("a") not in known or e.get("b") not in known:
+                continue
+            key = (e["a"], e["b"], e.get("t"))
+            prev = tgt.get(key)
+            if prev is None:
+                tgt[key] = dict(e)
+                kept += 1
+            elif (e.get("n") or 0) > (prev.get("n") or 0):
+                tgt[key] = dict(e)
+    return kept
+
+
+def sidecar_json(sidecar):
+    """Serialise the way memento.html's geBuildSidecar() does: maps key-sorted,
+    edges sorted by (a, b, t), UTF-8 kept. Matching output means loading a fresh
+    build in the browser and changing nothing never triggers a rewrite."""
+    out = dict(sidecar)
+    for k in ("resolve", "indra", "genes", "members", "canon"):
+        out[k] = {key: out[k][key] for key in sorted(out.get(k) or {})}
+    for k in ("edges", "complex_edges"):
+        out[k] = sorted(out.get(k) or [], key=lambda e: (e["a"], e["b"], e.get("t") or ""))
+    return json.dumps(out, indent=1, ensure_ascii=False)
+
+
+def build(fetch=False, n_bridges=20, min_links=5):
+    log("[1/4] reading cards")
+    try:
+        old = json.loads(OUT.read_text()) if OUT.exists() else {}
+    except (json.JSONDecodeError, OSError):
+        old = {}
+    cards = load_cards()
+    thought, sets_ = split_kinds(cards)
+    log(f"  {len(cards)} live cards with genes -> {len(thought)} thought, {len(sets_)} set")
+
+    frags = {f for c in cards for t in c["toks"] for f in alias_fragments(t)}
+    log(f"  {len(frags)} distinct fragments")
+
+    log("[2/4] grounding against HGNC")
+    looked = resolve(frags, seed=old.get("resolve"))
+    res = {k: v for k, v in looked.items() if v}
+    log(f"  resolved {len(res)}/{len(frags)} ({100*len(res)//max(len(frags),1)}%)")
+
+    inside, member = derive(cards, res)
     log(f"  {len(inside)} gene nodes (named on thought cards)")
     log(f"  {len(member)} set members (annotated only, not nodes)")
 
@@ -489,7 +557,16 @@ def build(fetch=False, n_bridges=20, min_links=5):
                     if not prev or e["n"] > prev["n"]:
                         tgt[key] = e
 
-    log(f"  {len(mech)} mechanistic edges, {len(complexes)} complex edges")
+    carried = merge_previous_edges(old, set(inside) | set(member), mech, complexes)
+    log(f"  {len(mech)} mechanistic edges, {len(complexes)} complex edges ({carried} kept from the previous sidecar)")
+
+    # Which genes have had their INDRA neighbourhood looked at -- the browser
+    # fetches only genes missing here. stmts is keyed upper-case; map back.
+    today = time.strftime("%Y-%m-%d")
+    indra = dict(old.get("indra") or {})
+    for sym in inside:
+        if sym.upper() in stmts or sym in stmts:
+            indra.setdefault(sym, today)
     log(f"  {len(outside)} outside genes touch >=1 of yours")
 
     log("[4/4] ranking bridges")
@@ -536,8 +613,13 @@ def build(fetch=False, n_bridges=20, min_links=5):
     scored.sort(key=lambda x: (-x["score"], -x["n"]))
 
     sidecar = {
-        "generated": time.strftime("%Y-%m-%d"),
+        "generated": today,
         "source": "INDRA db.indra.bio + MyGene.info",
+        # v2: the name -> gene table and the fetched-genes registry. With these the
+        # browser derives genes/members/canon live from the cards and tops up the
+        # network half itself; the derived fields stay for older readers.
+        "resolve": looked,
+        "indra": indra,
         "genes": {
             g["symbol"]: {
                 "hgnc": g["hgnc"], "chrom": g.get("chrom"),
@@ -549,11 +631,11 @@ def build(fetch=False, n_bridges=20, min_links=5):
         # xi_escape set" when one turns up as a bridge.
         "members": {g["symbol"]: sorted(g["groups"]) for g in member.values()},
         "canon": {f: r["symbol"] for f, r in res.items() if f != r["symbol"]},
-        "edges": sorted(mech.values(), key=lambda e: (e["a"], e["b"])),
-        "complex_edges": sorted(complexes.values(), key=lambda e: (e["a"], e["b"])),
+        "edges": list(mech.values()),
+        "complex_edges": list(complexes.values()),
         "bridges": scored[:n_bridges * 5],
     }
-    OUT.write_text(json.dumps(sidecar, indent=1))
+    OUT.write_text(sidecar_json(sidecar))
     kb = OUT.stat().st_size / 1024
     log(f"\nwrote {OUT} ({kb:.0f} KB)")
 

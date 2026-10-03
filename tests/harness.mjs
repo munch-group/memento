@@ -320,6 +320,10 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       geTestResetExpanded: () => { _geExpanded = new Set(); },
       // M3 refresh-all + freeze
       geRefreshAll, geMergeNodeEdges, geFreeze, geBuildFrozen, geWriteInteractions,
+      geIsLive, geDerive, geRefreshDerived, geGenes, geBuildSidecar, geSaveNow, geAutoRun, geAutoResolve, geAutoIndra,
+      geAfterLoad, gePoolMerge, geMyGeneResolve, geAutoText, geCardScope, geRenderCardPanel,
+      get geAuto(){ return _geAuto; },
+      setGeSetMax, get geSetMax(){ return geSetMax; },
       get geRefreshing(){ return _geRefreshing; },
       set geRefreshCancel(v){ _geRefreshCancel = v; },
       // The sidebar Sort menu drives the timeline's order too, so the tests reach for it directly.

@@ -5,9 +5,7 @@
   "genes": [
     "KANSL1"
   ],
-  "tags": [
-    "reference"
-  ],
+  "tags": [],
   "source": "https://www.nature.com/articles/s41467-026-73174-1?fromPaywallRec=false",
   "connection": false,
   "archived": false,
@@ -15,5 +13,5 @@
   "due": "",
   "date": "2026-09-02T11:47:20.223Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

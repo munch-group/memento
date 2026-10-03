@@ -344,7 +344,6 @@
     "ZZEF1"
   ],
   "tags": [
-    "reference",
     "gene-set"
   ],
   "source": "Akbari et al. 2026 / https://www.nature.com/articles/s41586-026-10358-1",
@@ -353,5 +352,5 @@
   "due": "",
   "date": "2026-06-19T16:29:36.614Z",
   "synced": false,
-  "_sortTag": "reference"
+  "_sortTag": "gene-set"
 }

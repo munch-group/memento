@@ -68,8 +68,7 @@
     "ZNF"
   ],
   "tags": [
-    "gene-set",
-    "reference"
+    "gene-set"
   ],
   "source": "https://doi.org/10.1038/s41559-022-01974-x",
   "connection": false,

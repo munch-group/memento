@@ -1,39 +1,73 @@
 {
   "id": "mrn16oodkri8",
-  "type": "note",
+  "type": "plan",
   "title": "Baboon plan",
   "genes": [],
   "tags": [
-    "Baboons"
+    "Baboons",
+    "X",
+    "Y",
+    "BDMI",
+    "PRDM9"
   ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-09-26T07:24:00.644Z",
+  "date": "2026-10-03T07:39:19.289Z",
   "synced": false,
   "schedule": {
     "subtasks": [
       {
         "id": "smrn16oodjrb",
         "title": "Download BAMs",
-        "start": "2026-10-01",
-        "end": "2026-10-03"
-      },
-      {
-        "id": "smtpy5t6idk1",
-        "title": "",
-        "start": "2026-10-13",
-        "end": "2026-11-27"
+        "start": "2026-10-07",
+        "end": "2026-10-09"
       },
       {
         "id": "smui1nmop8i1",
         "title": "Bam list",
-        "start": "2026-09-28",
-        "end": "2026-09-28"
+        "start": "2026-10-04",
+        "end": "2026-10-04"
+      },
+      {
+        "id": "smurzu4cpn1l",
+        "title": "TTLL10 LoF",
+        "start": "2026-10-29",
+        "end": "2026-10-31"
+      },
+      {
+        "id": "smus2e6i3mzi",
+        "title": "Call variants",
+        "start": "2026-10-10",
+        "end": "2026-10-12"
+      },
+      {
+        "id": "smus2egmbznx",
+        "title": "RFmix",
+        "start": "2026-10-17",
+        "end": "2026-10-19"
+      },
+      {
+        "id": "smus2eoxq2rs",
+        "title": "itrails",
+        "start": "2026-10-20",
+        "end": "2026-10-22"
+      },
+      {
+        "id": "smus2f82j609",
+        "title": "tsinfer/tsdate",
+        "start": "2026-10-23",
+        "end": "2026-10-25"
+      },
+      {
+        "id": "smus2fqy1c3r",
+        "title": "Relate",
+        "start": "2026-10-26",
+        "end": "2026-10-28"
       }
     ]
   },
-  "_sortTag": "Baboons",
-  "pinned": true
+  "_sortTag": "X",
+  "pinned": false
 }

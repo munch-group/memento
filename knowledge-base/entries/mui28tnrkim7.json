@@ -1,6 +1,6 @@
 {
   "id": "mui28tnrkim7",
-  "type": "note",
+  "type": "plan",
   "title": "circRNA plan",
   "genes": [],
   "tags": [],
@@ -9,15 +9,15 @@
   "archived": false,
   "pinned": true,
   "due": "",
-  "date": "2026-09-26T07:20:42.278Z",
+  "date": "2026-10-03T07:38:57.132Z",
   "synced": false,
   "schedule": {
     "subtasks": [
       {
-        "id": "smui28tnrua2",
-        "title": "",
-        "start": "2026-09-28",
-        "end": "2026-09-30"
+        "id": "smurzoad9rfn",
+        "title": "Brush off ideas",
+        "start": "2026-10-05",
+        "end": "2026-10-05"
       }
     ]
   },

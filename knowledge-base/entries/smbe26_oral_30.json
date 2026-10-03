@@ -18,7 +18,7 @@
     "TOP2B"
   ],
   "connection": false,
-  "archived": false,
+  "archived": true,
   "due": "",
   "_sortTag": "SMBE26",
   "pinned": false

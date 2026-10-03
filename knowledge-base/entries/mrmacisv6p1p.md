@@ -1,4 +1,7 @@
-- Helles kommentarer
+
+Rewrite chapters, add currationproject, finish testing arc
+
+- - Helles kommentarer
 - Finish chapters two weeks ahead
 - Add execution fix for windows to "pixi run update"
 - Make a "pixi run fixme" that runs "im doctor"

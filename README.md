@@ -59,6 +59,7 @@ Each entry has a type, shown as an icon on the card:
 | Hypothesis | 🧩 | Testable conjectures |
 | Idea | 💡 | Open-ended thoughts |
 | Note | 📄 | General notes (default for new cards) |
+| Plan | ☰ | Plans and schedules (same bars icon as the timeline button) |
 | Person | 👤 | Collaborators and contacts |
 | GitHub | 🐙 | Synced from GitHub repos (read-only) |
 
@@ -256,7 +257,7 @@ The companion `{id}.md` contains the Markdown content. For `_digest` entries, th
 
 A legacy single-file format (`knowledge-base.json`, a flat JSON array) is also present but no longer used by the CLI tools.
 
-Valid types: `fact`, `reference`, `observation`, `hypothesis`, `idea`, `note`, `people`, `github`.
+Valid types: `fact`, `reference`, `observation`, `hypothesis`, `idea`, `note`, `plan`, `people`, `github`.
 
 ## Command-line tool (kb-manage.py)
 

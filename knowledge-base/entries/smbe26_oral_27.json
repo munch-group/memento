@@ -10,7 +10,7 @@
   "synced": false,
   "genes": [],
   "connection": false,
-  "archived": false,
+  "archived": true,
   "due": "",
   "_sortTag": "SMBE26"
 }

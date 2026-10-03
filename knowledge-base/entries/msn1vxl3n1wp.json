@@ -1,6 +1,6 @@
 {
   "id": "msn1vxl3n1wp",
-  "type": "note",
+  "type": "plan",
   "title": "Lundbeck wrap-up plan",
   "genes": [],
   "tags": [
@@ -9,9 +9,9 @@
   "source": "",
   "connection": false,
   "archived": false,
-  "pinned": true,
+  "pinned": false,
   "due": "2026-11-30",
-  "date": "2026-09-26T07:16:14.561Z",
+  "date": "2026-10-03T07:39:33.916Z",
   "synced": false,
   "_sortTag": "Funding"
 }

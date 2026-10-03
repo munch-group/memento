@@ -100,6 +100,21 @@ console.log('\nBulk actions — select with Shift-click or Select mode; pin/arch
      'a tag on every selected card is removed from all of them');
   api.closeBulkTagPicker();
 
+  // the type picker: the editor's pills, lit when shared; one pick retypes the lot
+  ok(el('bulk-bar').innerHTML.includes('openBulkTypePicker()'), 'the bar offers Type…');
+  api.openBulkTypePicker();
+  const tOverlay = sandbox.document.__created.find(elc => elc.innerHTML.includes('Change to'));
+  ok(!!tOverlay && /type-opt active" data-type="note"/.test(tOverlay.innerHTML), 'the shared type (note) is the lit pill');
+  ok(!/data-type="(view|github)"/.test(tOverlay.innerHTML), 'View and GitHub are not offered');
+  await api.bulkSetType('plan');
+  ok(['n1', 'n2'].every(id => api.items.find(i => i.id === id).type === 'plan'), 'picking Plan retypes every selected card');
+  eq(api.bulkIds, ['n1', 'n2'], 'and the selection stays for the next action');
+  api.items.push({ id: 'v1', type: 'view', title: '', tags: [], genes: [], content: 'v', date: '2026-07-14T00:00:00Z', view: { q: 'x' } });
+  api.bulkToggle('v1');
+  await api.bulkSetType('note');
+  eq(['n1', 'n2', 'v1'].map(id => api.items.find(i => i.id === id).type), ['note', 'note', 'view'], 'a selected view card keeps its type');
+  api.bulkToggle('v1');
+
   // archive consumes the selection (the cards leave the scope)
   await api.bulkArchive();
   ok(['n1', 'n2'].every(id => api.items.find(i => i.id === id).archived), 'Archive archives every selected card');
@@ -471,8 +486,8 @@ function facetSetup() {
   sandbox.window._kbInbox = ''; sandbox.window._kbDigest = null;
   api.setDashboard(false);
   const el = id => sandbox.document.getElementById(id);
-  const tags  = () => [...el('tag-filter-list').innerHTML.matchAll(/setTagFilter\('([^']+)'\)/g)].map(m => m[1]).sort();
-  const types = () => [...el('filter-list').innerHTML.matchAll(/setFilter\('([^']+)'\)/g)].map(m => m[1]).sort();
+  const tags  = () => [...el('tag-filter-list').innerHTML.matchAll(/setTagFilter\('([^']+)',event\)/g)].map(m => m[1]).sort();
+  const types = () => [...el('filter-list').innerHTML.matchAll(/setFilter\('([^']+)',event\)/g)].map(m => m[1]).sort();
   // "How many cards am I looking at" — the title reports it, whichever scope you're in.
   const count = () => {
     const h = el('page-title').innerHTML;
@@ -703,6 +718,56 @@ console.log('\nThe push-to-Claude machinery is gone');
   eq(html.includes('reloadNow()'), true, 'and it is wired to reloadNow()');
   // The field itself must stay: kb-manage.py's validate command requires it on every entry.
   eq(html.includes('synced:false'), true, 'new entries still carry `synced` (kb-manage.py validate requires it)');
+}
+
+console.log('\nSearch-bar bookmark: save when a search is active, else browse saved views');
+{
+  const { api, el } = setup();
+  const view = (id, content, q, extra = {}) =>
+    ({ id, type: 'view', title: '', tags: [], genes: [], content, date: '2026-07-14T00:00:00Z', view: { q, types: [], tags: [] }, ...extra });
+  api.items = [...api.items, view('v1', 'Zebra view', '@ZZZ'), view('v2', '# alpha view\nmore', '@AAA'),
+               view('v3', 'Old view', '@OLD', { archived: true })];
+  el('search-input').value = '';
+  api.syncViewBookmark();
+  eq(el('view-save').classList.contains('save'), false, 'empty search -> browse mode (outline icon)');
+  el('search-input').value = 'drive';
+  api.syncViewBookmark();
+  eq(el('view-save').classList.contains('save'), true, 'active search -> save mode (filled icon)');
+  eq(api.viewMenuItems().map(api.viewMenuLabel), ['alpha view', 'Zebra view'],
+     'menu lists unarchived views, labelled by their first line (heading # stripped), sorted');
+  el('search-input').value = '';
+  api.pickViewMenu(api.items.find(i => i.id === 'v1'));
+  eq([api.activeViewId, el('search-input').value], ['v1', '@ZZZ'], 'picking a view runs it and fills the search');
+  api.syncViewBookmark();
+  eq(el('view-save').classList.contains('save'), false, 'while a view runs the bookmark browses (to switch views)');
+  api.pickViewMenu(api.items.find(i => i.id === 'v2'));
+  eq([api.activeViewId, el('search-input').value], ['v2', '@AAA'], 'picking another view switches to it');
+}
+
+console.log('\nShift-click on a sidebar Type/Tag excludes it (!/type, !#tag)');
+{
+  const { api, el } = setup();
+  api.items = [note('a', 'A', { tags: ['LoF', 'Drive'] }), note('b', 'B', { tags: ['X'], type: 'fact' })];
+  const q = () => el('search-input').value;
+  const shift = { shiftKey: true };
+  el('search-input').value = 'meiosis';
+  api.setTagFilter('LoF', shift);
+  eq(q(), 'meiosis !#LoF', 'shift-click a tag appends !#tag, keeping the typed text');
+  api.setTagFilter('Drive', shift);
+  eq(q(), 'meiosis !#LoF,Drive', 'a second excluded tag joins the same !# token');
+  eq([...api.excludedFacets().tags].sort(), ['drive', 'lof'], 'both read back as excluded (chip shows struck through)');
+  api.setTagFilter('LoF', shift);
+  eq(q(), 'meiosis !#Drive', 'shift-click again un-excludes');
+  api.setTagFilter('Drive');
+  eq([q(), api.activeTags], ['#Drive meiosis', ['Drive']], 'plain click on an excluded tag includes it instead');
+  api.setTagFilter('Drive', shift);
+  eq([q(), api.activeTags], ['meiosis !#Drive', []], 'shift-click on an included tag excludes it instead');
+  api.setFilter('fact', shift);
+  eq(q(), 'meiosis !#Drive !/fact', 'shift-click a type appends !/type');
+  eq([...api.excludedFacets().types], ['fact'], 'and it reads back as excluded');
+  el('search-input').value = '!#lo, other';
+  api.setTagFilter('LoF', shift);
+  eq(q(), ', other'.replace(/^\s*,\s*/, ''), 'un-excluding matches a hand-typed prefix and leaves other OR-groups alone');
 }
 
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);

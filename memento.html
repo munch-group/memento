@@ -47,6 +47,8 @@ a { color: inherit; }
 .sb-section.collapsed .sb-arrow { transform: rotate(-90deg); }
 .filter-chip { display: block; width: 100%; text-align: left; font-size: 13.5px; padding: 4px 1.25rem; border: none; background: transparent; cursor: pointer; color: var(--text); transition: background 0.15s, color 0.15s; }
 .filter-chip.active { background: var(--bg3); color: var(--text); font-weight: 500; }
+/* Shift-clicked: written as !/type or !#tag in the search, so these cards are left out. */
+.filter-chip.excluded { color: var(--text3); text-decoration: line-through; }
 #tag-items .filter-chip, #sort-list .filter-chip, #filter-list .filter-chip { color: #747472; }
 #tag-items .filter-chip.active, #sort-list .filter-chip.active, #filter-list .filter-chip.active { color: var(--text); }
 .sb-count { float: right; font-size: 12px; color: var(--text3); }
@@ -79,6 +81,15 @@ a { color: inherit; }
 .btn-danger:hover { background: rgba(200,0,0,0.05); }
 .view-bookmark { display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; background: none; border: none; color: #6E56CF; cursor: pointer; opacity: 0.75; transition: opacity 0.15s; }
 .view-bookmark:hover { opacity: 1; }
+/* Outline = "browse saved views", filled = "save this search" — the click does what the icon shows. */
+.view-bookmark svg { fill: none; stroke: currentColor; stroke-width: 2; }
+.view-bookmark.save svg { fill: currentColor; stroke: none; }
+.view-menu { position: fixed; z-index: 1000; min-width: 220px; max-width: min(360px, calc(100vw - 32px)); max-height: 60vh; overflow-y: auto; background: #ffffff; border: 1px solid var(--border); border-radius: var(--r); box-shadow: 0 4px 16px var(--shadow-hover); padding: 4px 0; }
+.view-menu-item { padding: 6px 12px; cursor: pointer; border-left: 2px solid transparent; }
+.view-menu-item.active { background: var(--bg3); }
+.view-menu-item.running { border-left-color: #6E56CF; }
+.view-menu-title { font-size: 13px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.view-menu-empty { padding: 8px 12px; font-size: 12px; color: var(--text3); }
 .view-capture-summary { font-family: var(--mono); font-size: 12px; color: var(--text2); background: var(--bg2); padding: 7px 10px; border-radius: var(--r); border: 1px solid var(--border); }
 .card.view-active { border-color: var(--tc); box-shadow: 0 0 0 1px var(--tc); }
 .btn-wide { width: 100%; }
@@ -254,8 +265,8 @@ a { color: inherit; }
 .tag { font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 2px 7px; border-radius: 3px; cursor: pointer; } /* alt bg: #F0EEE6 */
 .tag:hover { background: var(--bg3); }
 /* Pinned-card chips (Alt-click a card to force it into the filter, regardless of every other
-   filter — the card-level twin of the Genes view's `*GENE` spike). Accent-tinted like .card-ref,
-   since it's the same "specific card by reference" idea; unlike .card-ref it removes on click. */
+   filter — the card-level twin of the Genes view's `*GENE` spike). Accent-tinted to stand out as an
+   active filter; unlike .card-ref (a gray inline link) it removes on click. */
 .pinned-cards { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 0 0; }
 .pin-chip { display: inline-flex; align-items: center; gap: 5px; max-width: 240px; font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(217,119,87,0.08); padding: 2px 7px; border-radius: 3px; cursor: pointer; }
 .pin-chip:hover { background: rgba(217,119,87,0.16); }
@@ -332,8 +343,9 @@ a { color: inherit; }
 .link-mode-banner { font-family: var(--mono); font-size: 11px; color: var(--accent); background: rgba(217,119,87,0.06); border: 1px solid rgba(217,119,87,0.2); border-radius: var(--r); padding: 6px 10px; margin-bottom: 1rem; text-align: center; }
 .card.link-target { cursor: pointer; }
 .card.link-target:hover { border-color: var(--accent); box-shadow: 0 0 0 1.5px rgba(217,119,87,0.2); }
-.card-ref { display: inline-block; font-family: var(--mono); font-size: 10px; color: var(--accent); background: rgba(217,119,87,0.08); padding: 1px 6px; border-radius: 3px; cursor: pointer; margin-right: 3px; }
-.card-ref:hover { background: rgba(217,119,87,0.15); text-decoration: underline; }
+/* Gray, like .tag, so an inline link reads no louder than the prose around it. */
+.card-ref { display: inline-block; font-family: var(--mono); font-size: 10px; color: var(--text2); background: var(--bg2); padding: 1px 6px; border-radius: 3px; cursor: pointer; margin-right: 3px; }
+.card-ref:hover { background: var(--bg3); }
 .card-bottom-actions { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
 /* The date leads the row, a little set off from the buttons that follow it. */
 .card-bottom-actions .card-date { margin-right: 3px; }
@@ -712,6 +724,7 @@ a { color: inherit; }
 [data-type="hypothesis"]  { --tc:#c31851; --tbg:rgba(153,53,86,0.10); }
 [data-type="idea"]        { --tc:#A68B0A; --tbg:rgba(166,139,10,0.10); }
 [data-type="note"]        { --tc:#6b6b70; --tbg:rgba(95,94,90,0.10); }
+[data-type="plan"]        { --tc:#0F7B8A; --tbg:rgba(15,123,138,0.10); }
 [data-type="people"]      { --tc:#854F0B; --tbg:rgba(133,79,11,0.10); }
 [data-type="github"]      { --tc:var(--accent); --tbg:rgba(217,119,87,0.10); }
 [data-type="view"]        { --tc:#6E56CF; --tbg:rgba(110,86,207,0.10); }
@@ -878,14 +891,14 @@ a { color: inherit; }
       <div class="searchbar">
         <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR · paste a card id" oninput="renderFilters();renderList()" />
         <!-- One flex-shrink:0 unit so the bookmark and Clear never scatter onto separate wrapped
-             lines. The bookmark (shown only while an unsaved search/filter is active) sits between
+             lines. The bookmark (always shown: saves an active search, else lists saved views) sits between
              the search input and its Clear button. The highlight button sits LAST, outside the
              group, with its input wrap right before it: opening the input (flex:1) expands it
              leftwards from the button, to the right of everything else on the row. The gene-set
              picker button rides last of all — it only ever opens a modal, so it never needs to
              make room for an inline input the way the highlight button does. -->
         <div class="searchbar-actions">
-          <button class="view-bookmark" id="view-save" style="display:none" onclick="startSaveView()" title="Save the current search & filters as a view card"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
+          <button class="view-bookmark" id="view-save" onclick="viewBookmarkClick()" title="Saved views"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
           <button class="btn btn-sm" title="Clear the search (Esc Esc)" onclick="document.getElementById('search-input').value='';renderFilters();renderList()">Clear</button>
         </div>
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
@@ -908,7 +921,7 @@ a { color: inherit; }
         <!-- Grouped so the grid still sees 3 children (view-seg | detail-seg | this group) — a
              bare 4th child would overflow the explicit column tracks and drop to a new row. -->
         <div class="control-bar-right">
-          <div class="seg"><span class="seg-opt" id="bulk-btn" onclick="toggleBulkMode()" title="Select cards for bulk pin / archive / tag / delete — taps select while on. Shift-click always selects. (M)">Select</span></div>
+          <div class="seg"><span class="seg-opt" id="bulk-btn" onclick="toggleBulkMode()" title="Select cards for bulk pin / archive / tag / type / delete — taps select while on. Shift-click always selects. (M)">Select</span></div>
           <!-- Connections. Always on screen, so it can never narrow the list from behind the ☰.
                Populated by renderFilters() only when connection cards exist. -->
           <div class="seg" id="conn-seg"></div>
@@ -947,7 +960,7 @@ a { color: inherit; }
 const TYPES = [
   {key:'fact',label:'Fact',short:'Fact'},{key:'reference',label:'Reference',short:'Ref'},
   {key:'observation',label:'Observation',short:'Obs'},{key:'hypothesis',label:'Hypothesis',short:'Hypo'},
-  {key:'idea',label:'Idea',short:'Idea'},{key:'note',label:'Note',short:'Note'},{key:'people',label:'Person',short:'Pers'},
+  {key:'idea',label:'Idea',short:'Idea'},{key:'note',label:'Note',short:'Note'},{key:'plan',label:'Plan',short:'Plan'},{key:'people',label:'Person',short:'Pers'},
   {key:'github',label:'GitHub',short:'Git'},{key:'view',label:'View',short:'View'},
 ];
 const TYPE_ICONS = {
@@ -957,6 +970,8 @@ const TYPE_ICONS = {
   hypothesis: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4c-1.1 0-2 .9-2 2v3.8h1.5a2.5 2.5 0 0 1 0 5H2V20c0 1.1.9 2 2 2h3.8v-1.5a2.5 2.5 0 0 1 5 0V22H17c1.1 0 2-.9 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/></svg>',
   idea: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
   note: '<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M87.24,52.59a8,8,0,0,0-14.48,0l-64,136a8,8,0,1,0,14.48,6.81L39.9,160h80.2l16.66,35.4a8,8,0,1,0,14.48-6.81ZM47.43,144,80,74.79,112.57,144ZM200,96c-12.76,0-22.73,3.47-29.63,10.32a8,8,0,0,0,11.26,11.36c3.8-3.77,10-5.68,18.37-5.68,13.23,0,24,9,24,20v3.22A42.76,42.76,0,0,0,200,128c-22.06,0-40,16.15-40,36s17.94,36,40,36a42.73,42.73,0,0,0,24-7.25,8,8,0,0,0,16-.75V132C240,112.15,222.06,96,200,96Zm0,88c-13.23,0-24-9-24-20s10.77-20,24-20,24,9,24,20S213.23,184,200,184Z"/></svg>',
+  // Same three staggered bars as TL_ICON (the per-card timeline button), at type-icon size.
+  plan: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="13" y2="7"/><line x1="8" y1="12" x2="19" y2="12"/><line x1="5" y1="17" x2="15" y2="17"/></svg>',
   people: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a6 6 0 0 1 16 0v2H4z"/></svg>',
   github: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>',
   view: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg>',
@@ -1460,13 +1475,14 @@ function renderFilters() {
   // cards' types and tags, not the active ones'. Otherwise the sidebar offers you filters that
   // can only ever return nothing.
   const scope = scopedItems();
+  const excl = excludedFacets();
   const used = [...new Set(scope.map(i=>i.type))];
   // No "All" chip: selecting nothing already means everything, so a chip for it would be a second
   // way to say the same thing — and one you could get into a fight with.
   let html = '';
   TYPES.filter(t=>used.includes(t.key)).forEach(t=>{
     const n=scope.filter(i=>i.type===t.key).length;
-    html+=`<button class="filter-chip ${activeTypes.has(t.key)?'active':''}" data-type="${t.key}" onclick="setFilter('${t.key}')">${t.label} <span class="sb-count">${n}</span></button>`;
+    html+=`<button class="filter-chip ${activeTypes.has(t.key)?'active':''}${excl.types.has(t.key)?' excluded':''}" data-type="${t.key}" title="Shift-click to exclude" onmousedown="if(event.shiftKey)event.preventDefault()" onclick="setFilter('${t.key}',event)">${t.label} <span class="sb-count">${n}</span></button>`;
   });
   const filterEl = document.getElementById('filter-list');
   filterEl.innerHTML=html;
@@ -1499,7 +1515,7 @@ function renderFilters() {
     allTags.forEach(tag => {
       const n = tagCounts[tag];
       const safe = tag.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-      tagHtml += `<button class="filter-chip ${activeTags.has(tag)?'active':''}" onclick="setTagFilter('${safe}')">${esc(tag)} <span class="sb-count">${n}</span></button>`;
+      tagHtml += `<button class="filter-chip ${activeTags.has(tag)?'active':''}${excl.tags.has(tag.toLowerCase())?' excluded':''}" title="Shift-click to exclude" onmousedown="if(event.shiftKey)event.preventDefault()" onclick="setTagFilter('${safe}',event)">${esc(tag)} <span class="sb-count">${n}</span></button>`;
     });
     tagHtml += `</div>`;
   }
@@ -1588,8 +1604,22 @@ function clearAllFilters() {
 // Each chip is its own switch. They no longer wipe each other out: a Type and a Tag can both be on,
 // and they narrow together.
 function toggleIn(set, v) { if (set.has(v)) set.delete(v); else set.add(v); }
-function setFilter(type) { toggleIn(activeTypes, type); syncSearchTextFromFacets(); renderFilters(); renderList(); }
-function setTagFilter(tag) { toggleIn(activeTags, tag); syncSearchTextFromFacets(); renderFilters(); renderList(); }
+// A sidebar chip has three states: off, included (click) and excluded (Shift-click). Clicking an
+// excluded chip includes it instead; Shift-clicking an included one excludes it instead.
+function setFilter(type, ev) { setFacet('/', activeTypes, type, type, ev); }
+function setTagFilter(tag, ev) { setFacet('#', activeTags, tag, tag.toLowerCase(), ev); }
+function setFacet(prefix, active, name, key, ev) {
+  const excluded = (prefix === '/' ? excludedFacets().types : excludedFacets().tags).has(key);
+  if (ev && ev.shiftKey) {
+    if (prefix === '#' && /[\s,]/.test(name)) { showToast("A tag with a space or comma can't be excluded"); return; }
+    active.delete(name); syncSearchTextFromFacets();
+    editExclusion(prefix, name, key, !excluded);
+  } else {
+    if (excluded) editExclusion(prefix, name, key, false);
+    toggleIn(active, name); syncSearchTextFromFacets();
+  }
+  renderFilters(); renderList();
+}
 function cycleTagSort() { tagSort = tagSort==='name' ? 'count' : tagSort==='count' ? 'date' : 'name'; renderFilters(); }
 // Alt-click a card (see toggleCard) to force it into the visible set regardless of every other
 // filter — the card-level twin of the Genes view's `*GENE` spike. Kept out of the search text
@@ -1708,6 +1738,86 @@ function applyView(item) {
 // Exit a running view: restore the dashboard and a clean, unfiltered list.
 function exitView() { clearAllFilters(); }
 
+// The bookmark is dual-action: with an unsaved search/filter active it saves it as a view card;
+// otherwise (empty search, or a view already running) it opens a menu of the saved views to run.
+function viewBookmarkSaves() { return hasActiveView() && !activeViewId; }
+function syncViewBookmark() {
+  const b = document.getElementById('view-save'); if (!b) return;
+  const save = viewBookmarkSaves();
+  b.classList.toggle('save', save);
+  b.title = save ? 'Save the current search & filters as a view card' : 'Saved views';
+}
+function viewBookmarkClick() {
+  if (_viewMenu) { closeViewMenu(); return; }
+  if (viewBookmarkSaves()) startSaveView(); else openViewMenu();
+}
+// The menu's element, or null when closed — same idiom as _geneSetPicker/_keyHelp.
+let _viewMenu = null, _viewMenuSel = 0;
+// Views are usually untitled, so the label is the body's first line, uncut — CSS ellipsizes it.
+function viewMenuLabel(it) {
+  return (it.title || '').trim() || (it.content || '').split('\n')[0].replace(/^#+\s*/, '').trim() || describeView(it.view);
+}
+function viewMenuItems() {
+  return items.filter(i => i.type === 'view' && !i.archived)
+    .sort((a, b) => viewMenuLabel(a).localeCompare(viewMenuLabel(b), undefined, {sensitivity: 'base'}));
+}
+function openViewMenu() {
+  const btn = document.getElementById('view-save'); if (!btn) return;
+  const views = viewMenuItems();
+  const m = document.createElement('div');
+  m.className = 'view-menu';
+  m.innerHTML = views.length
+    ? views.map((it, k) => `<div class="view-menu-item${it.id === activeViewId ? ' running' : ''}" data-k="${k}" title="${esc(describeView(it.view))}">`
+        + `<div class="view-menu-title">${esc(viewMenuLabel(it))}</div></div>`).join('')
+    : '<div class="view-menu-empty">No saved views yet — enter a search, then click the bookmark to save it.</div>';
+  m.addEventListener('mousemove', ev => { const r = ev.target.closest('.view-menu-item'); if (r) setViewMenuSel(+r.dataset.k); });
+  m.addEventListener('click', ev => { const r = ev.target.closest('.view-menu-item'); if (r) pickViewMenu(views[+r.dataset.k]); });
+  document.body.appendChild(m);
+  // Right-aligned under the bookmark, clamped to the 16px gutter so it never runs off a phone screen.
+  const r = btn.getBoundingClientRect();
+  m.style.top = (r.bottom + 4) + 'px';
+  m.style.left = Math.max(16, Math.min(r.right - m.offsetWidth, window.innerWidth - 16 - m.offsetWidth)) + 'px';
+  _viewMenu = m; _viewMenu._views = views;
+  setViewMenuSel(Math.max(0, views.findIndex(v => v.id === activeViewId)));
+  document.addEventListener('keydown', viewMenuKey, true);
+  document.addEventListener('mousedown', viewMenuOutside, true);
+  window.addEventListener('resize', closeViewMenu);
+}
+function closeViewMenu() {
+  document.removeEventListener('keydown', viewMenuKey, true);
+  document.removeEventListener('mousedown', viewMenuOutside, true);
+  window.removeEventListener('resize', closeViewMenu);
+  if (_viewMenu) _viewMenu.remove();
+  _viewMenu = null;
+}
+function setViewMenuSel(k) {
+  if (!_viewMenu) return;
+  _viewMenuSel = k;
+  _viewMenu.querySelectorAll('.view-menu-item').forEach(el => el.classList.toggle('active', +el.dataset.k === k));
+  const el = _viewMenu.querySelector(`.view-menu-item[data-k="${k}"]`); if (el) el.scrollIntoView({block: 'nearest'});
+}
+// The bookmark itself is excluded so its own click toggles the menu shut rather than reopening it.
+function viewMenuOutside(ev) {
+  if (_viewMenu && !_viewMenu.contains(ev.target) && !ev.target.closest('#view-save')) closeViewMenu();
+}
+// Capture phase, like geneSetPickerKey: the app's single-letter shortcuts must not fire behind it.
+function viewMenuKey(ev) {
+  const n = _viewMenu ? _viewMenu._views.length : 0;
+  if (ev.key === 'Escape') { ev.preventDefault(); closeViewMenu(); }
+  else if (ev.key === 'ArrowDown' && n) { ev.preventDefault(); setViewMenuSel((_viewMenuSel + 1) % n); }
+  else if (ev.key === 'ArrowUp' && n) { ev.preventDefault(); setViewMenuSel((_viewMenuSel - 1 + n) % n); }
+  else if (ev.key === 'Enter' && n) { ev.preventDefault(); pickViewMenu(_viewMenu._views[_viewMenuSel]); }
+  ev.stopPropagation();
+}
+// Same as clicking the view card. Switching from one running view to another first clears the old
+// one, so none of its filters leak into the new view (applyView only sets what the view stored).
+function pickViewMenu(item) {
+  closeViewMenu();
+  if (!item || item.id === activeViewId) return;
+  if (activeViewId) clearAllFilters();
+  applyView(item);
+}
+
 // --- List & Cards ---
 // Shared query grammar — hoisted to module scope so both getVisibleItems() (which needs every
 // OR-group, for actual filtering) and deriveFacetsFromSearchText() (which only ever looks at the
@@ -1810,6 +1920,39 @@ function syncSearchTextFromFacets() {
   const newFirst = [...fresh, ...kept].join(' ');
   si.value = newFirst ? newFirst + rest : rest.replace(/^\s*,\s*/, '');
 }
+function tagResolver() {
+  const allTagNames = [...new Set(items.flatMap(i=>(i.tags||[]).map(t=>t.toLowerCase())))];
+  return prefix => { const lo=prefix.toLowerCase(); if (allTagNames.includes(lo)) return lo; const m=allTagNames.filter(t=>t.startsWith(lo)); return m.length===1?m[0]:lo; };
+}
+// The types and (lowercased) tags the first OR-group negates — the group the sidebar mirrors.
+function excludedFacets() {
+  const first = splitOrGroups((document.getElementById('search-input')?.value||'').trim())[0];
+  if (!first) return { types: new Set(), tags: new Set() };
+  const g = parseGroup(first, x => x.toUpperCase(), tagResolver());
+  return { types: new Set(g.notTypes), tags: new Set(g.notTags) };
+}
+// Adds `name` to, or removes it from, the first group's !/type or !#tag token (prefix '/' or '#').
+// Removal matches by resolved `key`, so a hand-typed prefix like !#lo also goes when un-excluding LoF.
+// Every other token, and every other OR-group, is left exactly as typed.
+function editExclusion(prefix, name, key, add) {
+  const si = document.getElementById('search-input');
+  if (!si) return;
+  const resolve = prefix === '/' ? resolveType : tagResolver();
+  const raw = si.value;
+  const m = GROUP_SEP_RE.exec(raw);
+  const first = m ? raw.slice(0, m.index) : raw;
+  const rest = m ? raw.slice(m.index) : '';
+  let placed = false;
+  const toks = (first.match(TOKEN_RE) || []).map(tok => {
+    if (!tok.startsWith('!' + prefix)) return tok;
+    const names = tok.slice(2).split(',').filter(n => n && resolve(n) !== key);
+    if (add && !placed) { names.push(name); placed = true; }
+    return names.length ? '!' + prefix + names.join(',') : null;
+  }).filter(Boolean);
+  if (add && !placed) toks.push('!' + prefix + name);
+  const newFirst = toks.join(' ');
+  si.value = newFirst ? newFirst + rest : rest.replace(/^\s*,\s*/, '');
+}
 function getVisibleItems() {
   const raw=(document.getElementById('search-input')?.value||'').trim();
   const allGeneNames = [...new Set(items.flatMap(i=>(i.genes||[]).flatMap(g=>geneAliasesU(g))))];
@@ -1859,7 +2002,7 @@ function getVisibleItems() {
   });
   highlightGenes = new Set([...highlightInputGenes, ...searchGenes]);
   document.getElementById('highlight-btn')?.classList.toggle('active', highlightGenes.size > 0);
-  const _vs = document.getElementById('view-save'); if (_vs) _vs.style.display = (hasActiveView() && !activeViewId) ? '' : 'none';
+  syncViewBookmark();
   let vis=sortItems(items);
   if(archiveFilter==='archived') vis=vis.filter(i=>i.archived);
   else vis=vis.filter(i=>!i.archived);
@@ -4199,7 +4342,7 @@ function closeTagEditor() {
 }
 
 // --- Bulk actions -----------------------------------------------------------
-// Select several cards, then pin/archive/tag/delete them all at once. Two ways in: Shift-click
+// Select several cards, then pin/archive/tag/retype/delete them all at once. Two ways in: Shift-click
 // any card (desktop), or Select mode (the control-bar button, or M) where plain clicks/taps
 // select — the touch path. Selected cards wear a blue ring; a floating bar appears while
 // anything is selected. Every write goes through the per-card save path, so on the GitHub
@@ -4239,6 +4382,7 @@ function bulkRender(){
     <button class="btn btn-sm" onclick="bulkPin()">${allPinned ? 'Unpin' : 'Pin'}</button>
     <button class="btn btn-sm" onclick="bulkArchive()">${allArchived ? 'Unarchive' : 'Archive'}</button>
     <button class="btn btn-sm" onclick="openBulkTagPicker()">Tag…</button>
+    <button class="btn btn-sm" onclick="openBulkTypePicker()">Type…</button>
     <button class="btn btn-sm btn-danger" onclick="bulkDelete()">Delete</button>
     <button class="btn btn-sm" onclick="bulkClear()" title="Clear selection (Esc)">✕</button>`;
 }
@@ -4330,6 +4474,51 @@ function closeBulkTagPicker(){
   document.removeEventListener('keydown', bulkTagKey, true);
   document.querySelector('.bulk-tag-overlay')?.remove();
   computeSortTags(); renderFilters(); renderList();
+}
+// The type pop-up: the editor's type pills (same set — no View/GitHub, which need data a plain
+// card lacks). One tap retypes every selected card and closes. View and GitHub cards in the
+// selection are skipped for the same reason; the pill of a type every card already has is lit.
+const BULK_FIXED_TYPES = new Set(['view', 'github']);
+function openBulkTypePicker(){
+  if (readOnly || !_bulkIds.size) return;
+  const sel = bulkSelected().filter(i => !BULK_FIXED_TYPES.has(i.type));
+  if (!sel.length) { showToast("View and GitHub cards can't change type"); return; }
+  const shared = sel.every(i => i.type === sel[0].type) ? sel[0].type : null;
+  const skipped = _bulkIds.size - sel.length;
+  const overlay = document.createElement('div');
+  overlay.className = 'tag-editor-overlay bulk-type-overlay';
+  overlay.innerHTML = `
+    <div class="tag-editor">
+      <div class="te-head">Type — ${sel.length} card${sel.length === 1 ? '' : 's'}</div>
+      <div class="te-label"><span>Change to</span><span class="te-hint">${skipped ? `${skipped} view/GitHub card${skipped === 1 ? '' : 's'} skipped` : 'tap to apply to all'}</span></div>
+      <div class="type-picker">${TYPES.filter(t => !BULK_FIXED_TYPES.has(t.key)).map(t =>
+        `<button class="type-opt${t.key === shared ? ' active' : ''}" data-type="${t.key}">${t.label}</button>`).join('')}</div>
+      <div class="te-actions"><button class="btn btn-sm" id="bty-cancel">Cancel</button></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', ev => {
+    const opt = ev.target.closest('.type-opt');
+    if (opt) { bulkSetType(opt.dataset.type); return; }
+    if (ev.target === overlay || ev.target.id === 'bty-cancel') closeBulkTypePicker();
+  });
+  document.addEventListener('keydown', bulkTypeKey, true);
+}
+// Capture phase, like bulkTagKey: the app's single-letter shortcuts must not fire behind it.
+function bulkTypeKey(ev){
+  if (ev.key === 'Escape') { ev.preventDefault(); closeBulkTypePicker(); }
+  ev.stopPropagation();
+}
+function closeBulkTypePicker(){
+  document.removeEventListener('keydown', bulkTypeKey, true);
+  document.querySelector('.bulk-type-overlay')?.remove();
+}
+async function bulkSetType(type){
+  closeBulkTypePicker();
+  const sel = bulkSelected().filter(i => !BULK_FIXED_TYPES.has(i.type));
+  let n = 0;
+  for (const it of sel) if (it.type !== type) { it.type = type; it.synced = false; await saveEntryToFile(it); n++; }
+  renderFilters(); renderList(); bulkRender();
+  showToast(`Changed ${n} to ${TYPES.find(t => t.key === type)?.label || type}`);
 }
 // ============================================================================
 // Genes view (M1: offline) — a gene-centric map. Nodes are GENES from the
@@ -6198,7 +6387,9 @@ function renderSpecialCard(spec, item) {
   if (!item) {
     return `<div class="digest-card special-card" style="border-style:dashed;color:var(--text3);text-align:center" onclick="createSpecialCard('${spec.id}')"><p>Click to create a ${esc(spec.title.toLowerCase())} card</p></div>`;
   }
-  const dateStr = item.date ? fmtDateAgo(item.date) : '';
+  // Always a day count past the first day, never a date: the point is how long since you looked.
+  const age = item.date ? new Date() - new Date(item.date) : 0;
+  const dateStr = !item.date ? '' : age < 86400000 ? fmtDateAgo(item.date) : Math.floor(age/86400000) + 'd ago';
   const stale = item.date && (new Date() - new Date(item.date)) > spec.staleDays*86400000;
   return `<div class="digest-card special-card" onclick="editItem(event,'${spec.id}')">${dateStr ? '<div class="digest-date"' + (stale ? ' style="color:#c44"' : '') + '>Edited ' + esc(dateStr) + '</div>' : ''}<h2>${esc(spec.title)}</h2>${md(item.content)}</div>`;
 }
@@ -7692,7 +7883,7 @@ document.addEventListener('paste', imagePaste);
 // --- Markdown file drop → new card ---
 // Card types that can be safely created from an imported file (excludes 'view'/'github',
 // which need a captured view object / GitHub metadata to render).
-const IMPORTABLE_TYPES = ['fact','reference','observation','hypothesis','idea','note','people'];
+const IMPORTABLE_TYPES = ['fact','reference','observation','hypothesis','idea','note','plan','people'];
 
 function isMarkdownFile(f) {
   return /\.(md|markdown|mdown|mkd|txt|text)$/i.test(f.name)

@@ -1,6 +1,6 @@
 {
   "id": "mrmacisv6p1p",
-  "type": "note",
+  "type": "plan",
   "title": "Bioinformatics plan",
   "genes": [],
   "tags": [
@@ -10,7 +10,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-10-02T15:11:52.403Z",
+  "date": "2026-10-03T07:40:58.964Z",
   "synced": false,
   "_sortTag": "Teaching",
   "schedule": {
@@ -30,38 +30,26 @@
       {
         "id": "smtb9zioha9r",
         "title": "Rewrite AI chapters",
-        "start": "2026-09-26",
-        "end": "2026-09-27"
-      },
-      {
-        "id": "smtba0l4np3p",
-        "title": "Project progression",
-        "start": "2026-10-02",
-        "end": "2026-10-03"
-      },
-      {
-        "id": "smtba51ypdk8",
-        "title": "Final project",
         "start": "2026-10-04",
-        "end": "2026-10-06"
+        "end": "2026-10-05"
       },
       {
         "id": "smtbabfl4odo",
         "title": "Turtle arc",
-        "start": "2026-10-01",
-        "end": "2026-10-01"
+        "start": "2026-10-08",
+        "end": "2026-10-09"
       },
       {
         "id": "smtbabohziwu",
-        "title": "Testing arc",
-        "start": "2026-09-28",
-        "end": "2026-09-29"
+        "title": "Projects",
+        "start": "2026-10-06",
+        "end": "2026-10-07"
       },
       {
-        "id": "smur3l9146f2",
-        "title": "",
-        "start": "2026-10-02",
-        "end": "2026-10-04"
+        "id": "smus2bigeua0",
+        "title": "New topics to fill space",
+        "start": "2026-10-10",
+        "end": "2026-10-12"
       }
     ]
   },

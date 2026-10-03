@@ -125,7 +125,7 @@ def search_entries(
             Regex is supported; an invalid pattern is treated as literal text.
         tag: Only entries carrying this tag (exact, case-insensitive).
         type: Only entries of this type (fact, reference, observation, hypothesis, idea, note,
-            people, github, view).
+            plan, people, github, view).
         gene: Only entries listing this gene (matches gene aliases too).
         include_archived: Archived entries are excluded unless this is true.
         limit: Maximum number of matches to return.

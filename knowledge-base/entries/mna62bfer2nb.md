@@ -1,1 +1,0 @@
-Kinda lines are hybrid incompatible from swamping AEA. Do LAI for Kinda genome wide.

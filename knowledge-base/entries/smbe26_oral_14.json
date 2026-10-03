@@ -6,11 +6,12 @@
     "SMBE26"
   ],
   "source": "",
-  "date": "2026-06-28T09:00:13.000Z",
+  "date": "2026-10-03T07:08:32.007Z",
   "synced": false,
   "genes": [],
   "connection": false,
-  "archived": false,
+  "archived": true,
   "due": "",
-  "_sortTag": "SMBE26"
+  "_sortTag": "SMBE26",
+  "pinned": false
 }

@@ -1,6 +1,6 @@
 {
   "id": "mrma9fvk3v68",
-  "type": "note",
+  "type": "plan",
   "title": "Phasic plan",
   "genes": [],
   "tags": [
@@ -10,7 +10,7 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-09-18T08:57:28.695Z",
+  "date": "2026-10-03T07:39:06.328Z",
   "synced": false,
   "_sortTag": "Phasic",
   "schedule": {
@@ -18,20 +18,20 @@
       {
         "id": "smrn7nqex4ex",
         "title": "Phasic 1.0",
-        "start": "2026-10-10",
-        "end": "2026-10-14"
+        "start": "2026-10-12",
+        "end": "2026-10-16"
       },
       {
         "id": "smrn7pzrhuly",
         "title": "Applied prob. paper",
-        "start": "2026-10-15",
-        "end": "2026-10-26"
+        "start": "2026-10-19",
+        "end": "2026-10-30"
       },
       {
         "id": "smrn7qknpc1y",
         "title": "Selection paper",
-        "start": "2026-10-27",
-        "end": "2026-11-07"
+        "start": "2026-11-02",
+        "end": "2026-11-13"
       }
     ]
   },

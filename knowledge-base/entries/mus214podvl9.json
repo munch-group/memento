@@ -1,0 +1,53 @@
+{
+  "id": "mus214podvl9",
+  "type": "view",
+  "title": "",
+  "genes": [],
+  "tags": [],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-10-03T07:12:25.116Z",
+  "synced": false,
+  "view": {
+    "q": "/fact,reference,observation,hypothesis,idea,note #Apoptosis,Archaic,Baboons,BDMI,cDEG,chr17,chr3,Chromatin,circRNA,CTCF,Drive,LAI,LoF,Meiosis,MT,PRDM9,Recombination,X,Y",
+    "types": [
+      "fact",
+      "reference",
+      "observation",
+      "hypothesis",
+      "idea",
+      "note"
+    ],
+    "tags": [
+      "Apoptosis",
+      "Archaic",
+      "Baboons",
+      "BDMI",
+      "cDEG",
+      "chr17",
+      "chr3",
+      "Chromatin",
+      "circRNA",
+      "CTCF",
+      "Drive",
+      "LAI",
+      "LoF",
+      "Meiosis",
+      "MT",
+      "PRDM9",
+      "Recombination",
+      "X",
+      "Y"
+    ],
+    "gene": null,
+    "genes": [],
+    "pinnedIds": [],
+    "sortKey": "date",
+    "sortAsc": false,
+    "conn": "all",
+    "archive": "active"
+  }
+}

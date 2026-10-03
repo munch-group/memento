@@ -1,11 +1,13 @@
 {
   "id": "mqaxcbcyps5x",
-  "type": "reference",
+  "type": "source",
   "title": "PRKDC: new biomarker and drug target for checkpoint blockade immunotherapy | Journal for ImmunoTherapy of Cancer",
   "genes": [
     "PRKDC"
   ],
-  "tags": [],
+  "tags": [
+    "reference"
+  ],
   "source": "https://jitc.bmj.com/content/8/1/e000485",
   "connection": false,
   "archived": false,

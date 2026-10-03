@@ -1,6 +1,6 @@
 {
   "id": "mqaslkfj2uda",
-  "type": "observation",
+  "type": "finding",
   "title": "LAVA regions with heritability both I and R males",
   "genes": [
     "ABLIM2",

@@ -1,6 +1,6 @@
 {
   "id": "mqarxlki4i5a",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "BHLHB9",
@@ -21,12 +21,15 @@
     "USF1",
     "ZFP763"
   ],
-  "tags": [],
+  "tags": [
+    "fact",
+    "gene-set"
+  ],
   "source": "Hunnicut et al. / https://academic.oup.com/genetics/article/229/2/iyae198/7909257",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-12T10:20:35.956Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

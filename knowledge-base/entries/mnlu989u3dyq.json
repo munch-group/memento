@@ -1,6 +1,6 @@
 {
   "id": "mnlu989u3dyq",
-  "type": "observation",
+  "type": "finding",
   "title": "High freq ASD genes CACNA1C CACNA1F connections with cDEGs",
   "genes": [
     "CACNA1C",

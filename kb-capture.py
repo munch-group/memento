@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from kb_io import load_all, save_entry
 
 KB_DIR = os.path.expanduser("~/knowledge-base")
-TYPES = ["fact", "idea", "hypothesis", "quote", "observation", "connection", "reference", "people"]
+TYPES = ["source", "finding", "idea", "note", "plan", "people"]
 
 JXA_CONTENT_DIALOG = """\
 ObjC.import("Cocoa");
@@ -126,7 +126,7 @@ def ask_meta(preview):
         set theType to choose from list {type_list} ¬
             with title "Knowledge Base" ¬
             with prompt "Type — \\"{safe_preview}…\\"" ¬
-            default items {{"fact"}} without multiple selections allowed and empty selection allowed
+            default items {{"note"}} without multiple selections allowed and empty selection allowed
         if theType is false then error "cancelled"
         return item 1 of theType
     ''')

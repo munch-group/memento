@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pzlvod",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: shannon genes",
   "genes": [
     "ADRA2C",
@@ -25,7 +25,8 @@
     "XRN2"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

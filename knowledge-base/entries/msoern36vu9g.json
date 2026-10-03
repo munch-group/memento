@@ -1,12 +1,13 @@
 {
   "id": "msoern36vu9g",
-  "type": "reference",
+  "type": "source",
   "title": "LEP",
   "genes": [
     "LEP"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

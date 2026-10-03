@@ -1,6 +1,6 @@
 {
   "id": "mqay44snu2r4",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "GEN1",
@@ -17,12 +17,14 @@
     "XPF",
     "ERCC1"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-12T13:13:14.229Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

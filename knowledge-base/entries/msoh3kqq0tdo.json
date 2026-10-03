@@ -1,12 +1,13 @@
 {
   "id": "msoh3kqq0tdo",
-  "type": "reference",
+  "type": "source",
   "title": "TCF3",
   "genes": [
     "TCF3"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

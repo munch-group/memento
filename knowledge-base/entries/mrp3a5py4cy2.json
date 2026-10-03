@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5py4cy2",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: circRNA",
   "genes": [
     "ACOT9",
@@ -40,7 +40,8 @@
     "TXLNG"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5q01i0u",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: NF-kB signalling",
   "genes": [
     "EDA",
@@ -8,7 +8,8 @@
     "NFKB1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

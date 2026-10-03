@@ -1,13 +1,14 @@
 {
   "id": "mrp3a5q1m928",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: Centriolar/manchette",
   "genes": [
     "OFD1",
     "SPATC1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

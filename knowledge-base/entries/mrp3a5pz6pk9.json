@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pz6pk9",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: linAR_human",
   "genes": [
     "AC244197.3",
@@ -23,7 +23,8 @@
     "TMSB15B"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1126/science.abm1696",
   "connection": false,

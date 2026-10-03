@@ -331,6 +331,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       deriveFacetsFromSearchText, syncSearchTextFromFacets, applyView, captureView, hasActiveView, describeView,
       syncViewBookmark, viewMenuItems, viewMenuLabel, pickViewMenu,
       excludedFacets,
+      normalizeLegacyTypes, get TYPES(){ return TYPES; },
       get activeViewId(){ return activeViewId; },
       get activeTags(){ return [...activeTags].sort(); },
       get activeTypes(){ return [...activeTypes].sort(); },

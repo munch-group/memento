@@ -1,6 +1,6 @@
 {
   "id": "mpve9r8xz0qe",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "AP1S2",
@@ -58,12 +58,15 @@
     "ZFX",
     "ZMYM3"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "Hunnicut et al. / https://academic.oup.com/genetics/article/229/2/iyae198/7909257",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-12T10:20:28.035Z",
+  "date": "2026-10-03T08:12:12.108Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact",
+  "pinned": false
 }

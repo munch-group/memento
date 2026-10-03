@@ -1,13 +1,15 @@
 {
   "id": "mqjrv1dmal08",
-  "type": "reference",
+  "type": "source",
   "title": "BMP15 Gene - GeneCards",
   "genes": [
     "BMP15",
     "GDF9",
     "SMAD"
   ],
-  "tags": [],
+  "tags": [
+    "reference"
+  ],
   "source": "https://www.genecards.org/card/BMP15",
   "connection": false,
   "archived": false,

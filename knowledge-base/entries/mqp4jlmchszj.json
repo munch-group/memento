@@ -1,6 +1,6 @@
 {
   "id": "mqp4jlmchszj",
-  "type": "fact",
+  "type": "idea",
   "title": "",
   "genes": [
     "FOXN2",
@@ -15,13 +15,15 @@
   ],
   "tags": [
     "ASD",
-    "Archaic"
+    "Archaic",
+    "chr17"
   ],
   "source": "https://doi.org/10.64898/2026.04.03.716297",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-22T11:21:01.609Z",
+  "date": "2026-10-03T08:16:28.634Z",
   "synced": false,
-  "_sortTag": "ASD"
+  "_sortTag": "ASD",
+  "pinned": false
 }

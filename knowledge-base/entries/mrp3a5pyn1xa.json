@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pyn1xa",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: cDEG",
   "genes": [
     "AKAP4",
@@ -31,7 +31,8 @@
     "VCX2"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

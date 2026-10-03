@@ -1,6 +1,6 @@
 {
   "id": "mqay35gaet5t",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "MCM8",
@@ -30,12 +30,14 @@
     "HOP2",
     "RAD54B"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-12T13:13:49.905Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

@@ -1,6 +1,6 @@
 {
   "id": "mnbcf2rq9uwq",
-  "type": "fact",
+  "type": "source",
   "title": "Xi uncertain",
   "genes": [
     "AMER1",
@@ -26,9 +26,11 @@
     "USP27X",
     "WASH6P"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "Roman et al. 2023 / https://doi.org/10.1016/j.xgen.2023.100259",
   "date": "2026-03-29T05:53:10.598Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

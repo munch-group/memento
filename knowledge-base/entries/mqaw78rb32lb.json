@@ -1,6 +1,6 @@
 {
   "id": "mqaw78rb32lb",
-  "type": "observation",
+  "type": "finding",
   "title": "LAVA regions with different heritability in I and R males",
   "genes": [
     "SORCS2",

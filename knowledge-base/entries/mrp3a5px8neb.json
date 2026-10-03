@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5px8neb",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: accel_reg_simiiformes_br",
   "genes": [
     "ACSL4",
@@ -58,7 +58,8 @@
     "ZNF75D"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1126/science.abn6919",
   "connection": false,

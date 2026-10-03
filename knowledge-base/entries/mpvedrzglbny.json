@@ -1,6 +1,6 @@
 {
   "id": "mpvedrzglbny",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "AKAP4",
@@ -31,9 +31,9 @@
     "VCX2"
   ],
   "tags": [
-    "cDEG",
     "Drive",
-    "gene-set"
+    "gene-set",
+    "fact"
   ],
   "source": "",
   "connection": false,
@@ -41,6 +41,6 @@
   "due": "",
   "date": "2026-10-02T15:32:05.193Z",
   "synced": false,
-  "_sortTag": "Drive",
+  "_sortTag": "gene-set",
   "pinned": false
 }

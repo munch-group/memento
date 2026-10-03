@@ -53,11 +53,9 @@ Each entry has a type, shown as an icon on the card:
 
 | Type | Icon | Description |
 |------|------|-------------|
-| Fact | ☐✓ | Verified information |
-| Reference | ❞ | Citations, papers, clippings |
-| Observation | 👁 | Things noticed or seen |
-| Hypothesis | 🧩 | Testable conjectures |
-| Idea | 💡 | Open-ended thoughts |
+| Source | ❞ | What others have established: papers, citations, clippings, known facts, gene sets |
+| Finding | 👁 | What *I* saw in my own data and analyses |
+| Idea | 💡 | What I suspect or want to test, from hunches to testable hypotheses |
 | Note | 📄 | General notes (default for new cards) |
 | Plan | ☰ | Plans and schedules (same bars icon as the timeline button) |
 | Person | 👤 | Collaborators and contacts |
@@ -257,7 +255,9 @@ The companion `{id}.md` contains the Markdown content. For `_digest` entries, th
 
 A legacy single-file format (`knowledge-base.json`, a flat JSON array) is also present but no longer used by the CLI tools.
 
-Valid types: `fact`, `reference`, `observation`, `hypothesis`, `idea`, `note`, `plan`, `people`, `github`.
+Valid types: `source`, `finding`, `idea`, `note`, `plan`, `people`, `github`, `view`.
+
+Until October 2026 there were also `fact`, `reference`, `observation` and `hypothesis`. They were merged: fact and reference became `source`, observation became `finding`, and hypothesis became `idea`. Where two types merged, each card kept its old type as a tag (`#fact`, `#reference`, `#hypothesis`). The app still reads cards that carry an old name, and the MCP search accepts the old names.
 
 ## Command-line tool (kb-manage.py)
 

@@ -1,12 +1,13 @@
 {
   "id": "msoppmb518fs",
-  "type": "reference",
+  "type": "source",
   "title": "DIAPH1",
   "genes": [
     "DIAPH1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

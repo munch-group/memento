@@ -1,6 +1,6 @@
 {
   "id": "mnbcwuztcimc",
-  "type": "fact",
+  "type": "source",
   "title": "ECH90 genes",
   "genes": [
     "ABCB7",
@@ -98,10 +98,12 @@
     "XK",
     "ZC3H12B"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "Skov et al. / https://doi.org/10.1016/j.xgen.2023.100274",
   "date": "2026-03-29T06:07:00.329Z",
   "synced": false,
-  "_sortTag": "",
+  "_sortTag": "fact",
   "connection": false
 }

@@ -1,6 +1,6 @@
 {
   "id": "mqay4qbf9qwj",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "STAG3",
@@ -17,12 +17,14 @@
     "RAD21",
     "SMC1B"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-12T13:13:06.856Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

@@ -1,6 +1,6 @@
 {
   "id": "mnbl8uw9d40a",
-  "type": "fact",
+  "type": "source",
   "title": "Human Neanderthal chrX introgression",
   "genes": [
     "ADGRG4",
@@ -71,12 +71,14 @@
     "YY2"
   ],
   "tags": [
-    "Archaic"
+    "Archaic",
+    "fact",
+    "gene-set"
   ],
   "source": "Hubisz et al. 2020 / https://doi.org/10.1371/journal.pgen.1008895",
   "date": "2026-06-13T15:05:00.798Z",
   "synced": false,
-  "_sortTag": "Archaic",
+  "_sortTag": "fact",
   "connection": false,
   "archived": false,
   "due": ""

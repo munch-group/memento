@@ -1,6 +1,6 @@
 {
   "id": "mnptlb0wibbj",
-  "type": "reference",
+  "type": "source",
   "title": "Systematic analysis and prediction of genes associated with monogenic disorders on human chromosome X | Nature Communications",
   "genes": [
     "MECP2",
@@ -16,7 +16,9 @@
     "EFNB1"
   ],
   "tags": [
-    "X"
+    "X",
+    "reference",
+    "gene-set"
   ],
   "source": "https://www.nature.com/articles/s41467-022-34264-y",
   "connection": false,
@@ -24,5 +26,5 @@
   "due": "",
   "date": "2026-04-08T09:05:48.059Z",
   "synced": false,
-  "_sortTag": "X"
+  "_sortTag": "reference"
 }

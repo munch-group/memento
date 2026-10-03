@@ -1,6 +1,6 @@
 {
   "id": "mnbco6ym8f41",
-  "type": "fact",
+  "type": "source",
   "title": "Expression Xi copy number modulated",
   "genes": [
     "ACOT9",
@@ -39,7 +39,9 @@
   ],
   "tags": [
     "Xi",
-    "X"
+    "X",
+    "fact",
+    "gene-set"
   ],
   "source": "Roman et al. / https://doi.org/10.1016/j.xgen.2023.100259",
   "date": "2026-03-29T06:00:15.930Z",

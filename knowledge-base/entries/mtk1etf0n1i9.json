@@ -1,9 +1,11 @@
 {
   "id": "mtk1etf0n1i9",
-  "type": "reference",
+  "type": "source",
   "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "reference"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5q0ed14",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: Neurotrophin/endosome",
   "genes": [
     "BEX2",
@@ -8,7 +8,8 @@
     "SORCS3"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

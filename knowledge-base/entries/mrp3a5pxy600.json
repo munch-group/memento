@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pxy600",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: cargo_gating",
   "genes": [
     "ARL13B",
@@ -63,7 +63,8 @@
     "UNC119B"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

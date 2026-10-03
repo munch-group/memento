@@ -575,7 +575,7 @@ function testZoomFit() {
   };
   api.items = [
     { id: 'c1', type: 'note', title: 'a', tags: ['Drive'], genes: ['STK11', 'MARK1'], source: '', content: 'x', date: '2026-01-01T00:00:00Z' },
-    { id: 'c2', type: 'fact', title: 'b', tags: ['Other'], genes: ['MARK2'], source: '', content: 'y', date: '2026-01-01T00:00:00Z' },
+    { id: 'c2', type: 'source', title: 'b', tags: ['Other'], genes: ['MARK2'], source: '', content: 'y', date: '2026-01-01T00:00:00Z' },
   ];
   const search = sandbox.document.getElementById('search-input');
   search.value = '#Drive';
@@ -721,7 +721,7 @@ function testCardScope() {
   };
   api.items = [
     { id: 'c1', type: 'note', title: 'a', tags: ['Drive'], genes: ['STK11'], source: '', content: 'x', date: '2026-01-01T00:00:00Z' },
-    { id: 'c2', type: 'fact', title: 'b', tags: ['Other'], genes: ['MARK1'], source: '', content: 'y', date: '2026-01-01T00:00:00Z' },
+    { id: 'c2', type: 'source', title: 'b', tags: ['Other'], genes: ['MARK1'], source: '', content: 'y', date: '2026-01-01T00:00:00Z' },
   ];
   const search = sandbox.document.getElementById('search-input');
   const off = sym => /ge-off/.test(sandbox.document.getElementById('ge-n-' + sym).className);
@@ -735,9 +735,9 @@ function testCardScope() {
   ok(off('MARK1'), 'MARK1 (only on the #Other card) hidden by #Drive');
   ok(!off('STK11'), 'STK11 (on the #Drive card) stays shown');
 
-  search.value = '/fact';
+  search.value = '/source';
   api.renderGenes();
-  ok(off('STK11'), 'STK11 (a note) hidden by /fact');
+  ok(off('STK11'), 'STK11 (a note) hidden by /source');
   ok(!off('MARK1'), 'MARK1 (a fact) stays shown');
 
   search.value = '';

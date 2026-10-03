@@ -1,11 +1,13 @@
 {
   "id": "mtk179r3hc1r",
-  "type": "reference",
+  "type": "source",
   "title": "Recurrent structural variation and recent turnover at the 17q21.31 locus in humans and great apes | Nature Communications",
   "genes": [
     "KANSL1"
   ],
-  "tags": [],
+  "tags": [
+    "reference"
+  ],
   "source": "https://www.nature.com/articles/s41467-026-73174-1?fromPaywallRec=false",
   "connection": false,
   "archived": false,

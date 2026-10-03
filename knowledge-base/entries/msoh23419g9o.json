@@ -1,12 +1,13 @@
 {
   "id": "msoh23419g9o",
-  "type": "reference",
+  "type": "source",
   "title": "STAT1",
   "genes": [
     "STAT1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

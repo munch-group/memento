@@ -1,6 +1,6 @@
 {
   "id": "mpvejcc8a96r",
-  "type": "reference",
+  "type": "source",
   "title": "Escaping somatic X inactivation (XI)",
   "genes": [
     "AFF2",
@@ -92,7 +92,9 @@
   ],
   "tags": [
     "Xi",
-    "X"
+    "X",
+    "reference",
+    "gene-set"
   ],
   "source": "Roman et al. 2023 / https://10.1016/j.xgen.2023.100259",
   "connection": false,
@@ -100,5 +102,5 @@
   "due": "",
   "date": "2026-06-01T16:08:13.559Z",
   "synced": false,
-  "_sortTag": "X"
+  "_sortTag": "reference"
 }

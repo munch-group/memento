@@ -1,6 +1,6 @@
 {
   "id": "mtlewn6trm8i",
-  "type": "reference",
+  "type": "source",
   "title": "Recurrent structural variation and recent turnover at the 17q21.31 locus in humans and great apes | Nature Communications",
   "genes": [
     "MAP3K14",
@@ -14,7 +14,8 @@
     "WNT3"
   ],
   "tags": [
-    "chr17"
+    "chr17",
+    "reference"
   ],
   "source": "https://www.nature.com/articles/s41467-026-73174-1",
   "connection": false,

@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5q03nfk",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: Phosphoinositide",
   "genes": [
     "AKT1",
@@ -9,7 +9,8 @@
     "TPTE"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

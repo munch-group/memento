@@ -1,6 +1,6 @@
 {
   "id": "mqjrom4fr3kw",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "CACNA2D2",
@@ -11,13 +11,15 @@
     "DOCK3"
   ],
   "tags": [
-    "ASD"
+    "ASD",
+    "fact",
+    "gene-set"
   ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-06-18T17:21:46.239Z",
+  "date": "2026-10-03T08:17:34.983Z",
   "synced": false,
   "_sortTag": "ASD",
   "pinned": false

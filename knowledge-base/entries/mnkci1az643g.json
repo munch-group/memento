@@ -1,6 +1,6 @@
 {
   "id": "mnkci1az643g",
-  "type": "fact",
+  "type": "source",
   "title": "MT-Auto coevolving genes",
   "genes": [
     "MRPS7",
@@ -19,7 +19,9 @@
   ],
   "tags": [
     "MT",
-    "X"
+    "X",
+    "fact",
+    "gene-set"
   ],
   "source": "Cohen et al. / https://doi.org/10.1371/journal.pgen.1006407",
   "connection": false,

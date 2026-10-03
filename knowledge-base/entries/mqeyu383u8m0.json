@@ -1,11 +1,13 @@
 {
   "id": "mqeyu383u8m0",
-  "type": "reference",
+  "type": "source",
   "title": "Normal embryo development needs MEIG1‐mediated sperm formation - Sheng - 2025 - The FASEB Journal - Wiley Online Library",
   "genes": [
     "MEIG1"
   ],
-  "tags": [],
+  "tags": [
+    "reference"
+  ],
   "source": "https://faseb.onlinelibrary.wiley.com/doi/10.1096/fj.202500109R",
   "connection": false,
   "archived": false,

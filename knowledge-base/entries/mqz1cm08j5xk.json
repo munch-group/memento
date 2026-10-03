@@ -1,6 +1,6 @@
 {
   "id": "mqz1cm08j5xk",
-  "type": "reference",
+  "type": "source",
   "title": "Remodeling of XIST regulatory landscape during primate evolution | Science Advances",
   "genes": [
     "XIST",
@@ -8,7 +8,8 @@
   ],
   "tags": [
     "Xi",
-    "X"
+    "X",
+    "reference"
   ],
   "source": "https://www.science.org/doi/10.1126/sciadv.adw5839",
   "connection": false,

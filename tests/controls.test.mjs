@@ -366,7 +366,7 @@ function scopeSetup() {
     note('c2', 'Connection archived', { connection: true, archived: true }),
     note('n1', 'Plain'),
     note('n2', 'Plain archived', { archived: true }),
-    note('f1', 'A fact', { type: 'fact' }),
+    note('f1', 'A fact', { type: 'source' }),
   ];
   sandbox.window._kbInbox = '';
   sandbox.window._kbDigest = null;
@@ -454,7 +454,7 @@ console.log('\nTwo filters at once both show (the old title could only show one)
 console.log('\nScope ANDs with a facet (it does not replace it)');
 {
   const { api, el } = scopeSetup();
-  api.setFilter('fact');                       // a facet
+  api.setFilter('source');                       // a facet
   eq(shown(api, el), ['f1'], 'type=fact alone');
   api.setConnFilter('conn');                   // + a scope
   eq(shown(api, el), [], 'type=fact AND connections-only -> nothing matches both');
@@ -480,7 +480,7 @@ function facetSetup() {
   api.ghRepoMode = true; api.canWrite = true; api.readOnly = false;
   api.items = [
     note('a1', 'Active idea',  { type: 'idea', tags: ['Live', 'Shared'] }),
-    note('a2', 'Active fact',  { type: 'fact', tags: ['Live'] }),
+    note('a2', 'Active fact',  { type: 'source', tags: ['Live'] }),
     note('z1', 'Old note',     { type: 'note', tags: ['Dead', 'Shared'], archived: true }),
   ];
   sandbox.window._kbInbox = ''; sandbox.window._kbDigest = null;
@@ -516,7 +516,7 @@ console.log('\nTypes follow it too — and there is no "All" chip any more');
   // the same thing, and one you could get into a fight with (is "All" on while "Fact" is?).
   const { api, types, count } = facetSetup();
   api.renderFilters();
-  eq(types(), ['fact', 'idea'], 'Active  -> only the types active cards use, and no "all"');
+  eq(types(), ['idea', 'source'], 'Active  -> only the types active cards use, and no "all"');
   eq(count(), 2, 'the title counts the active cards');
 
   api.setArchiveFilter('archived');
@@ -541,19 +541,19 @@ console.log('\nType and Tag are multi-select: each chip is its own switch');
   const { api, el } = facetSetup();
   eq([api.activeTypes, api.activeTags], [[], []], 'nothing selected to begin with — which means everything');
 
-  api.setFilter('fact');
-  eq(api.activeTypes, ['fact'], 'a click turns a type on');
+  api.setFilter('source');
+  eq(api.activeTypes, ['source'], 'a click turns a type on');
   api.setFilter('idea');
-  eq(api.activeTypes, ['fact', 'idea'], '...and another turns a SECOND one on rather than replacing it');
-  api.setFilter('fact');
+  eq(api.activeTypes, ['idea', 'source'], '...and another turns a SECOND one on rather than replacing it');
+  api.setFilter('source');
   eq(api.activeTypes, ['idea'], '...and clicking it again turns it back off');
 
   // Selecting several types is an OR; a type and a tag together are an AND.
-  api.setFilter('fact');
+  api.setFilter('source');
   eq(shown(api, el), ['a1', 'a2'], 'two types selected shows the cards of either');
   api.setTagFilter('Live');
   eq(api.activeTags, ['Live'], 'a tag can be on at the same time as a type...');
-  eq(api.activeTypes, ['fact', 'idea'], '...and does not wipe the types out, as it used to');
+  eq(api.activeTypes, ['idea', 'source'], '...and does not wipe the types out, as it used to');
   api.setTagFilter('Live');
   eq(api.activeTags, [], 'and the tag toggles off again');
 }
@@ -588,11 +588,11 @@ console.log('\nA facet that cannot survive the scope change is dropped');
 console.log('\nA sidebar click writes the matching /type token into the search bar');
 {
   const { api, el } = facetSetup();
-  api.setFilter('fact');
-  eq(el('search-input').value, '/fact', 'clicking a Type chip writes its token');
+  api.setFilter('source');
+  eq(el('search-input').value, '/source', 'clicking a Type chip writes its token');
   api.setFilter('idea');
-  eq(el('search-input').value, '/fact,idea', 'a second type appends in TYPES-array order, not click order');
-  api.setFilter('fact');
+  eq(el('search-input').value, '/source,idea', 'a second type appends in TYPES-array order, not click order');
+  api.setFilter('source');
   eq(el('search-input').value, '/idea', 'toggling one back off leaves just the other');
   api.setFilter('idea');
   eq(el('search-input').value, '', 'toggling the last one off empties the box');
@@ -605,26 +605,26 @@ console.log('\nA sidebar tag click writes #tag too, alongside any type token');
   eq(el('search-input').value, '#Shared', 'clicking a Tag chip writes its token');
   api.setTagFilter('Live');
   eq(el('search-input').value, '#Live,Shared', 'a second tag appends alphabetically');
-  api.setFilter('fact');
-  eq(el('search-input').value, '/fact #Live,Shared', 'a type token is prepended ahead of the tag token');
+  api.setFilter('source');
+  eq(el('search-input').value, '/source #Live,Shared', 'a type token is prepended ahead of the tag token');
   api.setTagFilter('Live'); api.setTagFilter('Shared');
-  eq(el('search-input').value, '/fact', 'toggling both tags off strips the tag token but keeps the type token');
+  eq(el('search-input').value, '/source', 'toggling both tags off strips the tag token but keeps the type token');
 }
 
 console.log('\nSyncing a chip leaves free text and other OR-groups untouched');
 {
   const { api, el } = facetSetup();
   el('search-input').value = 'foo, bar baz';
-  api.setFilter('fact');
-  eq(el('search-input').value, '/fact foo, bar baz', 'the token is prepended to group 1; group 2 survives verbatim');
+  api.setFilter('source');
+  eq(el('search-input').value, '/source foo, bar baz', 'the token is prepended to group 1; group 2 survives verbatim');
 }
 
 console.log('\nTyping a /type or #tag token selects the matching sidebar chip');
 {
   const { api, el } = facetSetup();
-  el('search-input').value = '/fact';
+  el('search-input').value = '/source';
   api.renderFilters();
-  eq(api.activeTypes, ['fact'], 'typing /fact selects the Fact chip');
+  eq(api.activeTypes, ['source'], 'typing /source selects the Source chip');
 
   el('search-input').value = '#live';   // lowercase — resolveTag() always lowercases
   api.renderFilters();
@@ -663,7 +663,7 @@ console.log('\nA multi-OR-group query freezes both facets — ambiguous which gr
   api.setFilter('idea');
   eq(api.activeTypes, ['idea'], 'baseline: Idea selected via the sidebar');
 
-  el('search-input').value = '/fact, other text';   // a second, unrelated OR-group
+  el('search-input').value = '/source, other text';   // a second, unrelated OR-group
   api.renderFilters();
   eq(api.activeTypes, ['idea'], 'the sidebar stays put rather than being overwritten from group 1 alone');
 }
@@ -682,20 +682,20 @@ console.log('\nSwitching archive scope drops the stale token from the search tex
 
 console.log('\nAn old-format saved view (singular type/tag, tokens not yet baked into q) still applies');
 {
-  const view = { id: 'v1', type: 'view', title: 'Old view', view: { type: 'fact', tag: 'Live', q: 'legacy text' } };
+  const view = { id: 'v1', type: 'view', title: 'Old view', view: { type: 'source', tag: 'Live', q: 'legacy text' } };
   const { api, el } = facetSetup();
   api.applyView(view);
-  eq(api.activeTypes, ['fact'], 'legacy singular `type` still restores the Type chip');
+  eq(api.activeTypes, ['source'], 'legacy singular `type` still restores the Type chip');
   eq(api.activeTags, ['Live'], 'legacy singular `tag` still restores the Tag chip');
-  eq(el('search-input').value, '/fact #Live legacy text', 'the search box now shows the tokens too, not just the old free text');
+  eq(el('search-input').value, '/source #Live legacy text', 'the search box now shows the tokens too, not just the old free text');
 }
 
 console.log('\nA click round-trips through the text back to the same Set (idempotent)');
 {
   const { api } = facetSetup();
-  api.setFilter('fact'); api.setTagFilter('Live');
+  api.setFilter('source'); api.setTagFilter('Live');
   api.renderFilters();   // simulates the extra derive pass a real oninput would also trigger
-  eq(api.activeTypes, ['fact'], 'activeTypes unchanged by the round trip');
+  eq(api.activeTypes, ['source'], 'activeTypes unchanged by the round trip');
   eq(api.activeTags, ['Live'], 'activeTags unchanged by the round trip');
 }
 
@@ -747,7 +747,7 @@ console.log('\nSearch-bar bookmark: save when a search is active, else browse sa
 console.log('\nShift-click on a sidebar Type/Tag excludes it (!/type, !#tag)');
 {
   const { api, el } = setup();
-  api.items = [note('a', 'A', { tags: ['LoF', 'Drive'] }), note('b', 'B', { tags: ['X'], type: 'fact' })];
+  api.items = [note('a', 'A', { tags: ['LoF', 'Drive'] }), note('b', 'B', { tags: ['X'], type: 'source' })];
   const q = () => el('search-input').value;
   const shift = { shiftKey: true };
   el('search-input').value = 'meiosis';
@@ -762,12 +762,24 @@ console.log('\nShift-click on a sidebar Type/Tag excludes it (!/type, !#tag)');
   eq([q(), api.activeTags], ['#Drive meiosis', ['Drive']], 'plain click on an excluded tag includes it instead');
   api.setTagFilter('Drive', shift);
   eq([q(), api.activeTags], ['meiosis !#Drive', []], 'shift-click on an included tag excludes it instead');
-  api.setFilter('fact', shift);
-  eq(q(), 'meiosis !#Drive !/fact', 'shift-click a type appends !/type');
-  eq([...api.excludedFacets().types], ['fact'], 'and it reads back as excluded');
+  api.setFilter('source', shift);
+  eq(q(), 'meiosis !#Drive !/source', 'shift-click a type appends !/type');
+  eq([...api.excludedFacets().types], ['source'], 'and it reads back as excluded');
   el('search-input').value = '!#lo, other';
   api.setTagFilter('LoF', shift);
   eq(q(), ', other'.replace(/^\s*,\s*/, ''), 'un-excluding matches a hand-typed prefix and leaves other OR-groups alone');
+}
+
+console.log('\nOld card types (pre Oct 2026) are mapped on load');
+{
+  const { api } = setup();
+  eq(api.TYPES.map(t => t.key), ['source', 'finding', 'idea', 'note', 'plan', 'people', 'github', 'view'], 'the type list');
+  const got = api.normalizeLegacyTypes([
+    note('f', 'F', { type: 'fact' }), note('r', 'R', { type: 'reference', tags: ['Reference'] }),
+    note('o', 'O', { type: 'observation' }), note('h', 'H', { type: 'hypothesis', tags: ['X'] }), note('n', 'N'),
+  ]).map(i => [i.type, i.tags]);
+  eq(got, [['source', ['fact']], ['source', ['Reference']], ['finding', []], ['idea', ['X', 'hypothesis']], ['note', []]],
+     'fact/reference -> source and hypothesis -> idea keep the old name as a tag (never duplicated); observation -> finding');
 }
 
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);

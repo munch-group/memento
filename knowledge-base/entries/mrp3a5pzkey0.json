@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pzkey0",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: NMD/RNA processing",
   "genes": [
     "DDX3X",
@@ -11,7 +11,8 @@
     "XRN2"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

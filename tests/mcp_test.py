@@ -49,10 +49,10 @@ def load_server(kb):
 
 kb = tempfile.mkdtemp()
 try:
-    write_entry(kb, "a1", "Meiotic drive on the X in baboons.", type="hypothesis",
-                title="Drive on X", tags=["Baboons", "LoF"], genes=["SMC1B"], date="2026-07-10T00:00:00Z")
-    write_entry(kb, "a2", "Recombination rate varies along the chromosome.", type="fact",
-                tags=["Baboons"], genes=["RLIM/RNF12"], date="2026-07-05T00:00:00Z")
+    write_entry(kb, "a1", "Meiotic drive on the X in baboons.", type="idea",
+                title="Drive on X", tags=["Baboons", "LoF", "hypothesis"], genes=["SMC1B"], date="2026-07-10T00:00:00Z")
+    write_entry(kb, "a2", "Recombination rate varies along the chromosome.", type="source",
+                tags=["Baboons", "fact"], genes=["RLIM/RNF12"], date="2026-07-05T00:00:00Z")
     write_entry(kb, "z1", "An old idea I archived.", tags=["Dead"], archived=True, date="2026-01-01T00:00:00Z")
     write_entry(kb, "_digest", "Digest summarising everything above.", type="_digest", date="2026-07-11T00:00:00Z")
     write_entry(kb, "_priorities", "- ship the talk", title="Priorities", date="2026-07-09T00:00:00Z")
@@ -66,7 +66,10 @@ try:
 
     eq([e["id"] for e in m.search_entries(tag="Baboons")["entries"]], ["a1", "a2"], "filter by tag")
     eq([e["id"] for e in m.search_entries(tag="baboons")["entries"]], ["a1", "a2"], "tag match is case-insensitive")
-    eq([e["id"] for e in m.search_entries(type="fact")["entries"]], ["a2"], "filter by type")
+    eq([e["id"] for e in m.search_entries(type="source")["entries"]], ["a2"], "filter by type")
+    eq([e["id"] for e in m.search_entries(type="fact")["entries"]], ["a2"], "old type name matches the merged card tagged with it")
+    eq([e["id"] for e in m.search_entries(type="hypothesis")["entries"]], ["a1"], "...hypothesis too")
+    eq([e["id"] for e in m.search_entries(type="reference")["entries"]], [], "...but not a merged card without that tag")
     eq([e["id"] for e in m.search_entries(gene="SMC1B")["entries"]], ["a1"], "filter by gene")
     eq([e["id"] for e in m.search_entries(gene="RLIM")["entries"]], ["a2"], "gene alias matches (RLIM of RLIM/RNF12)")
     eq([e["id"] for e in m.search_entries(gene="RNF12")["entries"]], ["a2"], "...and the other alias too")
@@ -101,7 +104,7 @@ try:
     eq(m.get_entry("a1")["schedule"], {}, "an unscheduled one reports an empty schedule, not a missing key")
 
     print("\nlist_tags / list_genes")
-    eq([t["tag"] for t in m.list_tags()["tags"]], ["Baboons", "LoF"], "tags exclude archived-only vocabulary")
+    eq([t["tag"] for t in m.list_tags()["tags"]], ["Baboons", "fact", "LoF", "hypothesis"], "tags exclude archived-only vocabulary")
     genes = [g["gene"] for g in m.list_genes()["genes"]]
     eq(sorted(genes), ["RLIM/RNF12", "SMC1B"], "genes are reported as stored, not split on '/'")
     # Splitting would shred amplicon names like amplicon_chrX_CSAG1/2/3_0 into "2", "3_0".

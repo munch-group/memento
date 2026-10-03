@@ -1,12 +1,13 @@
 {
   "id": "msoesvehb0oq",
-  "type": "reference",
+  "type": "source",
   "title": "LPA",
   "genes": [
     "LPA"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

@@ -1,12 +1,13 @@
 {
   "id": "msoh2xi4qvmj",
-  "type": "reference",
+  "type": "source",
   "title": "IFNG",
   "genes": [
     "IFNG"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

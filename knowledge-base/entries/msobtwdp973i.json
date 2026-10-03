@@ -1,12 +1,13 @@
 {
   "id": "msobtwdp973i",
-  "type": "reference",
+  "type": "source",
   "title": "BUB3",
   "genes": [
     "BUB3"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

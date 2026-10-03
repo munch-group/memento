@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pwxdlw",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: ech90_regions",
   "genes": [
     "ABCB7",
@@ -99,7 +99,8 @@
     "ZC3H12B"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1016/j.xgen.2023.100274",
   "connection": false,

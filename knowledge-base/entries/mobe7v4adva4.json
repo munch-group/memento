@@ -1,6 +1,6 @@
 {
   "id": "mobe7v4adva4",
-  "type": "fact",
+  "type": "source",
   "title": "Genes under recent selection in either Mathieson et al. 2015, Field et al. 2016, Le et al. 2022, Kerner et al. 2023, Irving-Pease et al. 2024",
   "genes": [
     "ABCG1",
@@ -42,13 +42,15 @@
     "WWP2"
   ],
   "tags": [
-    "LoF"
+    "LoF",
+    "chr17"
   ],
   "source": "Mathieson et al. 2015, Field et al. 2016, Le et al. 2022, Kerner et al. 2023, Irving-Pease et al. 2024",
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-04-23T13:41:47.291Z",
+  "date": "2026-10-03T08:17:22.179Z",
   "synced": false,
-  "_sortTag": "LoF"
+  "_sortTag": "LoF",
+  "pinned": false
 }

@@ -1,10 +1,11 @@
 {
   "id": "mtk13l60iam3",
-  "type": "reference",
+  "type": "source",
   "title": "Recurrent inversion toggling and great ape genome evolution | Nature Genetics",
   "genes": [],
   "tags": [
-    "CTCF"
+    "CTCF",
+    "reference"
   ],
   "source": "https://www.nature.com/articles/s41588-020-0646-x",
   "connection": false,

@@ -1,13 +1,14 @@
 {
   "id": "mrp3a5q1uhe0",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: gametologs",
   "genes": [
     "PRKX",
     "PRKY"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

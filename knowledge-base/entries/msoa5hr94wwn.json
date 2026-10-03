@@ -1,11 +1,14 @@
 {
   "id": "msoa5hr94wwn",
-  "type": "reference",
+  "type": "source",
   "title": "APP",
   "genes": [
     "APP"
   ],
-  "tags": [],
+  "tags": [
+    "reference",
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
@@ -13,5 +16,5 @@
   "due": "",
   "date": "2026-08-11T06:29:16.197Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

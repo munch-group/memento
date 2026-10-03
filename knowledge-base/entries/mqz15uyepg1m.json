@@ -1,13 +1,14 @@
 {
   "id": "mqz15uyepg1m",
-  "type": "reference",
+  "type": "source",
   "title": "Untangling the roles of TOP2A and TOP2B in transcription and cancer | Science Advances",
   "genes": [
     "TOP2A",
     "TOP2B"
   ],
   "tags": [
-    "Chromatin"
+    "Chromatin",
+    "reference"
   ],
   "source": "https://www.science.org/doi/10.1126/sciadv.add4920",
   "connection": false,

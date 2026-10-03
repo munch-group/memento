@@ -1,12 +1,13 @@
 {
   "id": "msoelsetsquf",
-  "type": "reference",
+  "type": "source",
   "title": "PXN",
   "genes": [
     "PXN"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

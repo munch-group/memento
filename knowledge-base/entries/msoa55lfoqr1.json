@@ -1,11 +1,14 @@
 {
   "id": "msoa55lfoqr1",
-  "type": "reference",
+  "type": "source",
   "title": "STAT3",
   "genes": [
     "STAT3"
   ],
-  "tags": [],
+  "tags": [
+    "reference",
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
@@ -13,5 +16,5 @@
   "due": "",
   "date": "2026-08-11T06:29:00.435Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

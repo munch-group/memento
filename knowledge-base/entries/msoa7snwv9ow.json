@@ -1,11 +1,14 @@
 {
   "id": "msoa7snwv9ow",
-  "type": "reference",
+  "type": "source",
   "title": "CDH1",
   "genes": [
     "CDH1"
   ],
-  "tags": [],
+  "tags": [
+    "reference",
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
@@ -13,5 +16,5 @@
   "due": "",
   "date": "2026-08-11T06:31:03.644Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

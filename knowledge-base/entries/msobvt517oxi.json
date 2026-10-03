@@ -1,12 +1,13 @@
 {
   "id": "msobvt517oxi",
-  "type": "reference",
+  "type": "source",
   "title": "MTOR",
   "genes": [
     "MTOR"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

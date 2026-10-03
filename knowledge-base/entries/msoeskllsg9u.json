@@ -1,12 +1,13 @@
 {
   "id": "msoeskllsg9u",
-  "type": "reference",
+  "type": "source",
   "title": "TARDBP",
   "genes": [
     "TARDBP"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

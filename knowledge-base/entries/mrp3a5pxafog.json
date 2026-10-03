@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pxafog",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: hybridDEG",
   "genes": [
     "AP1S2",
@@ -75,7 +75,8 @@
     "ZMYM3"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1038/s41598-025-21643-w",
   "connection": false,

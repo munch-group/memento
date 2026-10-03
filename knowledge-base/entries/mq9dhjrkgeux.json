@@ -1,6 +1,6 @@
 {
   "id": "mq9dhjrkgeux",
-  "type": "observation",
+  "type": "finding",
   "title": "Shannon XWAS genes",
   "genes": [
     "CYLC1",

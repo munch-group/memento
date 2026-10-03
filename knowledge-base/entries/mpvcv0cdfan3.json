@@ -1,13 +1,14 @@
 {
   "id": "mpvcv0cdfan3",
-  "type": "reference",
+  "type": "source",
   "title": "Role of the imprinted allele of the Cdkn1c gene in mouse neocortical development | Scientific Reports",
   "genes": [
     "CDKN1C"
   ],
   "tags": [
     "X",
-    "ASD"
+    "ASD",
+    "reference"
   ],
   "source": "https://www.nature.com/articles/s41598-020-58629-9",
   "connection": false,

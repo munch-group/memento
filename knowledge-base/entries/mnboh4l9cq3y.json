@@ -1,6 +1,6 @@
 {
   "id": "mnboh4l9cq3y",
-  "type": "observation",
+  "type": "finding",
   "title": "Primate CodeML genes",
   "genes": [
     "ABCD1",

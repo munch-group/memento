@@ -1,12 +1,13 @@
 {
   "id": "msoh2qw3z1un",
-  "type": "reference",
+  "type": "source",
   "title": "SRC",
   "genes": [
     "SRC"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

@@ -1,6 +1,6 @@
 {
   "id": "mnbp2wsjudjz",
-  "type": "fact",
+  "type": "source",
   "title": "Orang LinAR genes",
   "genes": [
     "AFF2",
@@ -35,9 +35,12 @@
     "XAGE5",
     "ZNF41"
   ],
-  "tags": [],
+  "tags": [
+    "fact",
+    "gene-set"
+  ],
   "source": "Cui et al. 2025 / https://www.nature.com/articles/s41586-025-08622-x",
   "date": "2026-03-29T11:47:37.987Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

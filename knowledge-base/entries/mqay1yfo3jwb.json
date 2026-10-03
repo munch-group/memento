@@ -1,6 +1,6 @@
 {
   "id": "mqay1yfo3jwb",
-  "type": "fact",
+  "type": "source",
   "title": "Recombination genes",
   "genes": [
     "HELLS",
@@ -154,7 +154,8 @@
     "RAD54B"
   ],
   "tags": [
-    "Recombination"
+    "Recombination",
+    "gene-set"
   ],
   "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
   "connection": false,
@@ -162,5 +163,5 @@
   "due": "",
   "date": "2026-06-18T12:20:58.031Z",
   "synced": false,
-  "_sortTag": "Recombination"
+  "_sortTag": "fact"
 }

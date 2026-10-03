@@ -1,12 +1,13 @@
 {
   "id": "msoh1xjhinnx",
-  "type": "reference",
+  "type": "source",
   "title": "DVL2",
   "genes": [
     "DVL2"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

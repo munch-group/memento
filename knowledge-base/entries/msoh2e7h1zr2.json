@@ -1,12 +1,13 @@
 {
   "id": "msoh2e7h1zr2",
-  "type": "reference",
+  "type": "source",
   "title": "PPP1CB",
   "genes": [
     "PPP1CB"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

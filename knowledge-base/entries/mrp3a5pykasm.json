@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pykasm",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: expr_mod_xi_copynr",
   "genes": [
     "ACOT9",
@@ -38,7 +38,8 @@
     "ZNF41"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1016/j.xgen.2023.100259",
   "connection": false,

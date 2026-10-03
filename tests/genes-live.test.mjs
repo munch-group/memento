@@ -294,7 +294,7 @@ async function testPromoteNewGeneIsReferenceNoTag() {
   sandbox.document.getElementById('add-form').style.display = '';
   sandbox.document.getElementById('f-tags').value = '';
   await api.gePromoteGhost('PRKAA1');
-  eq(api.selectedType, 'reference', 'type defaults to reference for sourced-info cards');
+  eq(api.selectedType, 'source', 'type defaults to source for sourced-info cards');
   eq(sandbox.document.getElementById('f-tags').value, '', 'no tag is auto-added');
 }
 

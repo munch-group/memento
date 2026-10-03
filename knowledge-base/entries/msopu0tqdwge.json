@@ -1,12 +1,13 @@
 {
   "id": "msopu0tqdwge",
-  "type": "reference",
+  "type": "source",
   "title": "JAK1",
   "genes": [
     "JAK1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

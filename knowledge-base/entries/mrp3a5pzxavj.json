@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pzxavj",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: Xq27 miRNA cluster",
   "genes": [
     "MIR888",
@@ -12,7 +12,8 @@
     "MIR892C"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

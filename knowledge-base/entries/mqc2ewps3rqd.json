@@ -1,6 +1,6 @@
 {
   "id": "mqc2ewps3rqd",
-  "type": "observation",
+  "type": "finding",
   "title": "Genes controlling XCI",
   "genes": [
     "XIST",

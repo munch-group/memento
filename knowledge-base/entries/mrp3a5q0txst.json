@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5q0txst",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: MT lattice/transport",
   "genes": [
     "DYNLT3",
@@ -9,7 +9,8 @@
     "MAPT"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

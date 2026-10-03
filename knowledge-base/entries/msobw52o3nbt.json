@@ -1,12 +1,13 @@
 {
   "id": "msobw52o3nbt",
-  "type": "reference",
+  "type": "source",
   "title": "ID1",
   "genes": [
     "ID1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

@@ -1,12 +1,13 @@
 {
   "id": "msoerz1g0cij",
-  "type": "reference",
+  "type": "source",
   "title": "IGF1",
   "genes": [
     "IGF1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

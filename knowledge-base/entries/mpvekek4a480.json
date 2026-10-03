@@ -1,6 +1,6 @@
 {
   "id": "mpvekek4a480",
-  "type": "reference",
+  "type": "source",
   "title": "X genes uncertain XI status",
   "genes": [
     "AMER1",
@@ -26,12 +26,15 @@
     "USP27X",
     "WASH6P"
   ],
-  "tags": [],
+  "tags": [
+    "reference",
+    "gene-set"
+  ],
   "source": "Roman et al. 2023 / https://10.1016/j.xgen.2023.100259",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-01T16:08:18.939Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

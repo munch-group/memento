@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pv61kk",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: tubulin_transport",
   "genes": [
     "ACTR10",
@@ -137,7 +137,8 @@
     "WDR60"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

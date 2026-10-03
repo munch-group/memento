@@ -1,9 +1,11 @@
 {
   "id": "mnhp4s89q35d",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "fact"
+  ],
   "source": "",
   "connection": false,
   "archived": true,

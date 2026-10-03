@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pxzamr",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: hum_nean_admix",
   "genes": [
     "ADGRG4",
@@ -71,7 +71,8 @@
     "YY2"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

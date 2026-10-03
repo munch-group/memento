@@ -1,6 +1,6 @@
 {
   "id": "mqc8uzghfjvp",
-  "type": "fact",
+  "type": "source",
   "title": "Pos. sel. apoptosis genes (human-chimp codeml)",
   "genes": [
     "EMP2",
@@ -29,7 +29,9 @@
     "CDKN2A"
   ],
   "tags": [
-    "Apoptosis"
+    "Apoptosis",
+    "fact",
+    "gene-set"
   ],
   "source": "http://dx.doi.org/10.1016/j.febslet.2009.12.022",
   "connection": false,
@@ -37,5 +39,5 @@
   "due": "",
   "date": "2026-06-13T11:41:02.186Z",
   "synced": false,
-  "_sortTag": "Apoptosis"
+  "_sortTag": "fact"
 }

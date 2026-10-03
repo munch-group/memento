@@ -1,6 +1,6 @@
 {
   "id": "mpvecri9abyt",
-  "type": "reference",
+  "type": "source",
   "title": "",
   "genes": [
     "ABCB7",
@@ -660,13 +660,16 @@
     "ZNF81",
     "ZRSR2"
   ],
-  "tags": [],
+  "tags": [
+    "reference",
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-07-17T15:28:21.120Z",
   "synced": false,
-  "_sortTag": "",
+  "_sortTag": "reference",
   "pinned": false
 }

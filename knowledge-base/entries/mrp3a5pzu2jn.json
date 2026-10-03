@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pzu2jn",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: cAMP/PKA module",
   "genes": [
     "ADCY",
@@ -11,7 +11,8 @@
     "PRKY"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

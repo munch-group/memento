@@ -105,6 +105,22 @@ def _compile(query: str) -> re.Pattern | None:
 
 
 # --- tools ---------------------------------------------------------------------------------
+# The types merged away in Oct 2026 (the memento.html LEGACY_TYPES map). Where two types merged the
+# migration kept the old name as a tag, so an old-name filter can still be exact.
+LEGACY_TYPES = {"fact": "source", "reference": "source", "observation": "finding", "hypothesis": "idea"}
+LEGACY_TAGGED = {"fact", "reference", "hypothesis"}
+
+
+def _type_matches(e, want):
+    want = want.lower()
+    if want not in LEGACY_TYPES:
+        return e.get("type") == want
+    if e.get("type") not in (want, LEGACY_TYPES[want]):
+        return False
+    return want not in LEGACY_TAGGED or e.get("type") == want or \
+        want in [t.lower() for t in (e.get("tags") or [])]
+
+
 @mcp.tool()
 def search_entries(
     query: str = "",
@@ -124,8 +140,10 @@ def search_entries(
         query: Free text, matched case-insensitively against content, title, tags and genes.
             Regex is supported; an invalid pattern is treated as literal text.
         tag: Only entries carrying this tag (exact, case-insensitive).
-        type: Only entries of this type (fact, reference, observation, hypothesis, idea, note,
-            plan, people, github, view).
+        type: Only entries of this type (source, finding, idea, note, plan, people, github, view).
+            Source = literature/established knowledge, finding = own data/results, idea = hunches
+            and testable hypotheses. The pre-Oct-2026 names still work: fact/reference/hypothesis
+            match the merged cards that carry that old name as a tag, observation = finding.
         gene: Only entries listing this gene (matches gene aliases too).
         include_archived: Archived entries are excluded unless this is true.
         limit: Maximum number of matches to return.
@@ -139,7 +157,7 @@ def search_entries(
             continue
         if tag and tag.lower() not in [t.lower() for t in (e.get("tags") or [])]:
             continue
-        if type and e.get("type") != type:
+        if type and not _type_matches(e, type):
             continue
         if gene:
             aliases = [a.upper() for g in (e.get("genes") or []) for a in str(g).split("/")]

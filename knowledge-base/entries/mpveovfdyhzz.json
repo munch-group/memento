@@ -1,6 +1,6 @@
 {
   "id": "mpveovfdyhzz",
-  "type": "reference",
+  "type": "source",
   "title": "Expression  modulated by Xi copy number",
   "genes": [
     "ACOT9",
@@ -37,12 +37,15 @@
     "ZFX",
     "ZNF41"
   ],
-  "tags": [],
+  "tags": [
+    "reference",
+    "gene-set"
+  ],
   "source": "",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-01T16:11:35.065Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

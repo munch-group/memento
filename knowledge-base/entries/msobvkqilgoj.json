@@ -1,12 +1,13 @@
 {
   "id": "msobvkqilgoj",
-  "type": "reference",
+  "type": "source",
   "title": "INS",
   "genes": [
     "INS"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

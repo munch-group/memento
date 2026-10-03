@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pw5kip",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: nDEG",
   "genes": [
     "AFF2",
@@ -99,7 +99,8 @@
     "ZMAT1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

@@ -1,12 +1,13 @@
 {
   "id": "msoel2lnsdcc",
-  "type": "reference",
+  "type": "source",
   "title": "RPGRIP1L",
   "genes": [
     "RPGRIP1L"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

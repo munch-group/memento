@@ -1,6 +1,6 @@
 {
   "id": "mnbp7lskset7",
-  "type": "fact",
+  "type": "source",
   "title": "Gorilla LinAR genes",
   "genes": [
     "ATP6AP2",
@@ -14,9 +14,11 @@
     "TAB3",
     "TMSB15B"
   ],
-  "tags": [],
+  "tags": [
+    "gene-set"
+  ],
   "source": "Cui et al. 2025 / https://www.nature.com/articles/s41586-025-08622-x",
   "date": "2026-03-29T11:51:17.012Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

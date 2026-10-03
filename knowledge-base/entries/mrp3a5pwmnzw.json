@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pwmnzw",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: xi_escape",
   "genes": [
     "AFF2",
@@ -91,7 +91,8 @@
     "ZRSR2"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1016/j.xgen.2023.100259",
   "connection": false,

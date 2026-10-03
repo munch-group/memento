@@ -1,10 +1,11 @@
 {
   "id": "mnlu34fxscnr",
-  "type": "reference",
+  "type": "source",
   "title": "",
   "genes": [],
   "tags": [
-    "ASD"
+    "ASD",
+    "reference"
   ],
   "source": "https://biobank.ndph.ox.ac.uk/ukb/search.cgi?wot=0&srch=autism&yfirst=2000&ylast=2025",
   "connection": false,

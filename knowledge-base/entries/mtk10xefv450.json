@@ -1,10 +1,11 @@
 {
   "id": "mtk10xefv450",
-  "type": "reference",
+  "type": "source",
   "title": "Molecular Ecology | Molecular Genetics Journal | Wiley Online Library",
   "genes": [],
   "tags": [
-    "CTCF"
+    "CTCF",
+    "reference"
   ],
   "source": "https://onlinelibrary.wiley.com/doi/10.1111/mec.17814",
   "connection": false,

@@ -1,12 +1,14 @@
 {
   "id": "mqdxyj6h0fso",
-  "type": "reference",
+  "type": "source",
   "title": "Transcriptional adaptation upregulates utrophin in Duchenne muscular dystrophy | Nature",
   "genes": [
     "DMD",
     "UTRN"
   ],
-  "tags": [],
+  "tags": [
+    "reference"
+  ],
   "source": "https://www.nature.com/articles/s41586-024-08539-x",
   "connection": false,
   "archived": false,

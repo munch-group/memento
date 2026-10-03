@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pyohtv",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: ari_nonPUR",
   "genes": [
     "AMMECR1",
@@ -45,7 +45,8 @@
     "ZMYM3"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1016/j.xgen.2023.100259",
   "connection": false,

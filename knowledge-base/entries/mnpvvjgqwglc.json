@@ -1,6 +1,6 @@
 {
   "id": "mnpvvjgqwglc",
-  "type": "reference",
+  "type": "source",
   "title": "",
   "genes": [
     "MECP2",
@@ -15,7 +15,9 @@
     "PCDH19",
     "EFNB1"
   ],
-  "tags": [],
+  "tags": [
+    "reference"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

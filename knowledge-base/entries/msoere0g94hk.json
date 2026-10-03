@@ -1,12 +1,13 @@
 {
   "id": "msoere0g94hk",
-  "type": "reference",
+  "type": "source",
   "title": "F2R",
   "genes": [
     "F2R"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

@@ -1,6 +1,6 @@
 {
   "id": "mobk6icwmtnq",
-  "type": "reference",
+  "type": "source",
   "title": "CSV file extracted from SOM figures in Akbari et al.",
   "genes": [
     "A4GNT",
@@ -343,12 +343,15 @@
     "ZSWIM6",
     "ZZEF1"
   ],
-  "tags": [],
+  "tags": [
+    "reference",
+    "gene-set"
+  ],
   "source": "Akbari et al. 2026 / https://www.nature.com/articles/s41586-026-10358-1",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-19T16:29:36.614Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "reference"
 }

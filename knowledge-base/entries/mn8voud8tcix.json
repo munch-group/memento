@@ -1,18 +1,20 @@
 {
   "id": "mn8voud8tcix",
-  "type": "fact",
+  "type": "source",
   "title": "CACNA1C ILS",
   "tags": [
     "LoF",
     "X",
-    "ASD"
+    "ASD",
+    "fact"
   ],
   "source": "Mao et al. 2021 / https://www.nature.com/articles/s41586-021-03519-x?fromPaywallRec=false",
-  "date": "2026-04-04T08:17:58.054Z",
+  "date": "2026-10-03T08:20:48.952Z",
   "synced": false,
   "genes": [],
   "_sortTag": "LoF",
   "connection": false,
   "archived": false,
-  "due": ""
+  "due": "",
+  "pinned": false
 }

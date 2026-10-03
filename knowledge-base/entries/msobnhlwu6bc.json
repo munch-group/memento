@@ -1,12 +1,13 @@
 {
   "id": "msobnhlwu6bc",
-  "type": "reference",
+  "type": "source",
   "title": "CP",
   "genes": [
     "CP"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

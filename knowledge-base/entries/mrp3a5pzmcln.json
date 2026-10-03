@@ -1,6 +1,6 @@
 {
   "id": "mrp3a5pzmcln",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: IRS2/Akt module",
   "genes": [
     "AKT1",
@@ -10,7 +10,8 @@
     "TPTE"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

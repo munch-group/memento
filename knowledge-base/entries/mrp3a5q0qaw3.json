@@ -1,13 +1,14 @@
 {
   "id": "mrp3a5q0qaw3",
-  "type": "reference",
+  "type": "source",
   "title": "Gene set: signalling/ion channel",
   "genes": [
     "CACNA1C",
     "CACNA1F"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "https://doi.org/10.1371/journal.pgen.1008895",
   "connection": false,

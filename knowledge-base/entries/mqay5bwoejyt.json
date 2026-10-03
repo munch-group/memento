@@ -1,6 +1,6 @@
 {
   "id": "mqay5bwoejyt",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "HUS1",
@@ -18,12 +18,15 @@
     "PLK1",
     "ZCWPW1"
   ],
-  "tags": [],
+  "tags": [
+    "fact",
+    "gene-set"
+  ],
   "source": "Joseph et al. 2026 / https://doi.org/10.64898/2026.06.01.729254",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-12T13:13:01.285Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

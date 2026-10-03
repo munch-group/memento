@@ -1,12 +1,14 @@
 {
   "id": "mq9h9wpudyp1",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "RADX",
     "RPA1"
   ],
-  "tags": [],
+  "tags": [
+    "fact"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

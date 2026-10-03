@@ -1,6 +1,6 @@
 {
   "id": "mnc2f6egdaoe",
-  "type": "fact",
+  "type": "finding",
   "title": "Human cDEG genes admixed into Neanderthals",
   "genes": [
     "CFAP47",
@@ -12,11 +12,15 @@
     "Archaic",
     "Drive",
     "BDMI",
-    "X"
+    "X",
+    "fact"
   ],
   "source": "[[mnbbkl1iacgl|cDEG genes]] [[mnbl8uw9d40a|Human Neanderthal introgression]]",
   "connection": true,
-  "date": "2026-03-29T18:01:05.320Z",
+  "date": "2026-10-03T08:15:17.723Z",
   "synced": false,
-  "_sortTag": "X"
+  "_sortTag": "X",
+  "archived": false,
+  "due": "",
+  "pinned": false
 }

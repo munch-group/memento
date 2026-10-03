@@ -1,12 +1,13 @@
 {
   "id": "msoeopb9dhvu",
-  "type": "reference",
+  "type": "source",
   "title": "SPP1",
   "genes": [
     "SPP1"
   ],
   "tags": [
-    "gene-set"
+    "gene-set",
+    "reference"
   ],
   "source": "",
   "connection": false,

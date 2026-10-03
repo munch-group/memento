@@ -1,6 +1,6 @@
 {
   "id": "mqat3efxc4ri",
-  "type": "fact",
+  "type": "source",
   "title": "",
   "genes": [
     "ENPP4",
@@ -1723,12 +1723,15 @@
     "DHRS4L1",
     "DERPC"
   ],
-  "tags": [],
+  "tags": [
+    "fact",
+    "gene-set"
+  ],
   "source": "Cui et al. 2025 / https://doi.org/10.1038/s41586-025-08622-x",
   "connection": false,
   "archived": false,
   "due": "",
   "date": "2026-06-12T10:51:20.157Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "fact"
 }

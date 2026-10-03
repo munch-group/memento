@@ -10,7 +10,7 @@ thing that made shuttling gene lists between the two tools necessary.
 This turns each group into a memento card instead of a registry row:
 
     group 'xi_escape' (86 genes)  ->  one card:
-        type   reference
+        type   source
         tags   ['xi_escape', 'gene-set']
         genes  [AFF2, AKAP17A, ALG13, ...]   (all 86)
         source most common DOI across the group's references
@@ -141,7 +141,7 @@ def do_import(kb_dir, agents_path, dry_run=False):
         doi = info["dois"].most_common(1)[0][0] if info["dois"] else ""
         entry = {
             "id": mint_id(taken),
-            "type": "reference",
+            "type": "source",
             "title": f"Gene set: {name}",
             "genes": genes,
             "tags": [tag, MARK_TAG],

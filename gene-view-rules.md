@@ -4,7 +4,7 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 
 ## What exists (nodes)
 
-- **Your genes** are the genes on your live (non-archived) **thought cards**, derived from the cards on every render. A card listing **more genes than the `sets >` slider** (default 50, remembered) is a **gene set**: its genes are **set members**, annotations rather than nodes. The `gene-set` tag doesn't matter here; size alone decides. The slider is a view setting: what's written to `interactions.json` (and `kb-interactions.py`, and the gene-set highlight picker) keeps the builder's rule, `gene-set` tag or ≥100 genes. On a legacy sidecar there's no slider.
+- **Your genes** are the genes on your live (non-archived) **thought cards**, derived from the cards on every render. A card listing **more genes than the `sets >` slider** (default 50, remembered) is **left out of the Genes view entirely**: it makes no nodes, adds no tags to other genes, is never in the card panel, and doesn't count when a search or pin decides which genes stay visible. Searching for only such a card gives an empty map at any slider value. The `gene-set` tag doesn't matter here; size alone decides. The slider is a view setting: what's written to `interactions.json` (and `kb-interactions.py`, and the gene-set highlight picker) keeps the builder's rule, `gene-set` tag or ≥100 genes. On a legacy sidecar there's no slider.
 - A gene is a node iff it is one of your genes with ≥1 **mechanistic** edge — or it was brought in live this session (expand, spike-in, `*GENE` spike).
 - Genes with only complex edges, or none, are **isolated**: counted in the caption, never drawn.
 - A card edit (new gene, retag, archive) shows on the next render. No rebuild needed — see *Automatic updates*.
@@ -17,7 +17,7 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 
 ## What shows (visibility)
 
-- The search bar, sidebar facets and pinned cards scope **cards**; a node hides iff every card documenting it **and** every gene-set card listing it fall out of scope. So `#gene-set`, or a pinned gene-set card, shows that set's genes. Nodes with no cards (ghosts, added genes) are never scoped out.
+- The search bar, sidebar facets and pinned cards scope **cards**; a node hides iff every card documenting it falls out of scope. Cards above the `sets >` slider never count. Nodes with no cards (ghosts, added genes) are never scoped out.
 - An edge shows iff both ends show **and** it passes the filters: nature checkboxes (mechanistic only), the **complexes** toggle (the *only* control over complex edges), conf ≥, ev ≥.
 - **neighbours** (off by default): also reveals a scoped-out gene that has a currently-shown edge to a gene the filter kept in scope — one hop off the filtered set, not a chain (a gene only reachable *through* a revealed neighbour stays hidden).
 - **simple** (default): one grey undirected line per pair, shown iff *any* of the pair's interactions passes the filters. Untick for per-nature colours, arrowheads, and fans.
@@ -27,7 +27,7 @@ One-page contract. The long-form doc is [gene-view.md](gene-view.md).
 
 - The highlight set *is* the **Highlight genes** input (`H`); clicking nodes edits it, typing in it selects — two-way. Hiding the panel mutes the highlight without losing it. `Esc` (or a click on empty canvas) clears the set.
 - Highlighted genes wear a ring; they and their (currently shown) neighbours stay full; everything else dims; only edges touching a highlighted gene stay full.
-- The card panel (**cards**, default): highlighted genes → their cards; nothing highlighted → cards of every visible gene. A highlighted gene's cards show even when the search scopes them out. Gene-set cards appear only when the search, a facet or a pin puts them in scope.
+- The card panel (**cards**, default): highlighted genes → their cards; nothing highlighted → cards of every visible gene. A highlighted gene's cards show even when the search scopes them out. Cards above the `sets >` slider never appear.
 
 ## In / not in memento
 

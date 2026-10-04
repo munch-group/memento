@@ -513,10 +513,9 @@ a { color: inherit; }
    connect. If the label were in flow the box centre would sit between dot and label, and edges
    would meet a point below the dot. */
 .ge-node { position: absolute; left: 0; top: 0; cursor: grab; z-index: 2; will-change: transform; touch-action: none; }
-/* Node discs counter-scale with zoom (via --ge-nodescale, set in geApplyDOM) so they hold a
-   constant on-screen size as you zoom in, the way the labels do. The scale is max(1, zoom): it
-   caps growth when zoomed IN (the case that obscured the map) but leaves the fit/overview view
-   untouched, so zooming out still shrinks the cloud to an overview. */
+/* Node discs counter-scale with zoom (via --ge-nodescale, set in geApplyDOM — see geNodeScale):
+   GE_NODE_DOT_PX across right after a fit, whatever the gene count; zooming in grows them up to
+   full size (--r) and no further, zooming out still shrinks the cloud to an overview. */
 .ge-dot { display: block; width: calc(var(--r, 12px) / var(--ge-nodescale, 1)); height: calc(var(--r, 12px) / var(--ge-nodescale, 1)); border-radius: 50%; border: calc(1.5px / var(--ge-nodescale, 1)) solid rgba(20,20,19,0.28); box-shadow: 0 1px 2px rgba(20,20,19,0.12); }
 /* Chromosome colours, from the theme palette: violet (the bookmark/view colour) X, orange Y, a
    warm grey for the autosome majority so X and Y pop, blue mitochondrial, white for unknown.
@@ -4696,12 +4695,14 @@ function geResolveFrag(f){
   const k = _geResCI.get(f.toLowerCase());
   return k === undefined ? undefined : r[k];
 }
-// The card pass of kb-interactions.py build(), ported: a THOUGHT card's resolved genes are nodes
+// The card pass of kb-interactions.py derive(), ported: a THOUGHT card's resolved genes are nodes
 // (`genes`, with the cards documenting them); a SET card's are annotations (`members`) whose tags
-// become groups; a gene on both is a node carrying the set's tags too. `sets` (gene -> set cards
-// listing it) is view-only, so a gene-set card in the search scope keeps its genes visible.
-// `pending` = fragments never looked up — the auto-lookup's queue.
-function geDerive(isSetCard){
+// become groups; a gene on both is a node carrying the set's tags too. That is the FILE's model
+// (geBuildSidecar calls this with geIsSetCard, matching the Python builder). The view calls it with
+// `excludeSets`: in the Genes view a card above the "sets >" slider is fully excluded — no nodes, no
+// tags on other genes, no say in what a search keeps — so its size, not the slider, can never change
+// what it shows. `pending` = fragments never looked up — the auto-lookup's queue.
+function geDerive(isSetCard, excludeSets){
   const isSet_ = isSetCard || geIsSetCardView;
   const inside = new Map(), member = new Map(), pending = new Set(), canon = {};
   for (const it of items) {
@@ -4709,6 +4710,7 @@ function geDerive(isSetCard){
     const toks = it.genes.map(g => String(g == null ? '' : g).trim()).filter(Boolean);
     if (!toks.length) continue;
     const isSet = isSet_(it);
+    if (isSet && excludeSets) continue;
     for (const t of toks) for (const f of geFragments(t)) {
       const r = geResolveFrag(f);
       if (r === undefined) { pending.add(f); continue; }
@@ -4718,8 +4720,8 @@ function geDerive(isSetCard){
       const bag = isSet ? member : inside;
       let g = bag.get(sym);
       if (!g) bag.set(sym, g = { hgnc: r.hgnc ?? null, chrom: r.chrom ?? null, start: r.start ?? null, end: r.end ?? null,
-                                 cards: new Set(), groups: new Set(), sets: new Set() });
-      (isSet ? g.sets : g.cards).add(it.id);
+                                 cards: new Set(), groups: new Set() });
+      if (!isSet) g.cards.add(it.id);
       for (const tag of it.tags || []) g.groups.add(tag);
     }
   }
@@ -4727,17 +4729,14 @@ function geDerive(isSetCard){
     const g = inside.get(sym);
     if (!g) continue;
     for (const x of m.groups) g.groups.add(x);
-    for (const x of m.sets) g.sets.add(x);
     member.delete(sym);
   }
   const sorted = set => [...set].sort();
-  const genes = {}, members = {}, sets = {};
-  for (const [sym, g] of inside) {
+  const genes = {}, members = {};
+  for (const [sym, g] of inside)
     genes[sym] = { hgnc: g.hgnc, chrom: g.chrom, start: g.start, end: g.end, cards: sorted(g.cards), groups: sorted(g.groups) };
-    sets[sym] = sorted(g.sets);
-  }
   for (const [sym, m] of member) members[sym] = sorted(m.groups);
-  return { genes, members, canon, pending, sets };
+  return { genes, members, canon, pending };
 }
 // The gene table every Genes-view path reads: derived live from the cards on a v2 sidecar, the
 // stored snapshot on a legacy one. renderGenes refreshes it on every render (so on every card
@@ -4746,13 +4745,12 @@ function geDerive(isSetCard){
 let _geD = null;
 function geRefreshDerived(){
   const src = interactions;
-  _geD = geIsLive() ? geDerive()
-    : { genes: (src && src.genes) || {}, members: (src && src.members) || {}, canon: (src && src.canon) || {}, pending: new Set(), sets: {} };
+  _geD = geIsLive() ? geDerive(geIsSetCardView, true)
+    : { genes: (src && src.genes) || {}, members: (src && src.members) || {}, canon: (src && src.canon) || {}, pending: new Set() };
   _geD.src = src;
   return _geD;
 }
 function geGenes(){ if (!_geD || _geD.src !== interactions) geRefreshDerived(); return _geD.genes; }
-function geSetsOf(sym){ return (_geD && _geD.sets && _geD.sets[sym]) || []; }
 // What the built model depends on: the gene set and the size of the stored edge pool. Card edits
 // that only move a gene between cards or groups keep it, so they update nodes in place (geSyncNodeMeta)
 // rather than rebuild.
@@ -4765,7 +4763,7 @@ function geSyncNodeMeta(){
   for (const n of _geNodes) {
     const g = G[n.sym];
     if (!g) continue;
-    n.cards = g.cards || []; n.groups = g.groups || []; n.sets = geSetsOf(n.sym);
+    n.cards = g.cards || []; n.groups = g.groups || [];
   }
 }
 
@@ -4783,7 +4781,7 @@ function geBuildModel(carry){
   const all = Object.keys(gx).map(sym => {
     const g = gx[sym];
     return { sym, id: geIdSafe(sym), chrom: g.chrom, cclass: geChromClass(g.chrom),
-             cards: g.cards || [], groups: g.groups || [], sets: geSetsOf(sym), deg: 0, r: GE_NODE_R, ghost: false };
+             cards: g.cards || [], groups: g.groups || [], deg: 0, r: GE_NODE_R, ghost: false };
   });
   _geFrozenU = new Map(all.map(n => [n.sym.toUpperCase(), n.sym]));
   const byId = new Map(all.map(n => [n.sym, n]));
@@ -4953,7 +4951,7 @@ function renderGenes(){
           <input type="range" class="gr-range" min="0" max="1" step="0.05" value="${geMinBelief}" oninput="setGeMinBelief(this.value)"></div>
         <div class="gr-slider"><span class="seg-label" title="Minimum independent evidence texts">ev ≥ <span id="ge-ev-val">${geMinEv}</span></span>
           <input type="range" class="gr-range" min="1" max="5" step="1" value="${geMinEv}" oninput="setGeMinEv(this.value)"></div>
-        ${geIsLive() ? `<div class="gr-slider"><span class="seg-label" title="Cards listing more genes than this are gene sets: their genes annotate the map but are not nodes. Smaller cards' genes are nodes, gene-set tag or not.">sets &gt; <span id="ge-setmax-val">${geSetMax}</span></span>
+        ${geIsLive() ? `<div class="gr-slider"><span class="seg-label" title="Cards listing more genes than this are left out of the Genes view entirely: no nodes, no tags, not in the card panel, not counted by a search. Smaller cards' genes are nodes, gene-set tag or not.">sets &gt; <span id="ge-setmax-val">${geSetMax}</span></span>
           <input type="range" class="gr-range" id="ge-setmax" min="1" max="${GE_SETMAX_LIMIT}" step="1" value="${geSetMax}" oninput="setGeSetMax(this.value)" onchange="setGeSetMax(this.value, true)"></div>` : ''}
         <div class="gr-slider"><span class="seg-label" title="Opacity of background genes/edges under a highlight — drag right to fade them less">bg <span id="ge-dim-val">${Math.round(geDimStrength*100)}%</span></span>
           <input type="range" class="gr-range" min="0" max="1" step="0.01" value="${geDimStrength}" oninput="setGeDimStrength(this.value)"></div>
@@ -5024,10 +5022,8 @@ let _geNeighboursRevealed = new Set();
 function geCardOff(){
   const scope = geCardScope();
   const off = new Set();
-  // A gene stays while any card documenting it — or any gene-set card listing it — is in scope.
   if (scope) for (const n of _geNodes) {
-    const sets = n.sets || [];
-    if (!n.ghost && (n.cards.length || sets.length) && !n.cards.some(id => scope.has(id)) && !sets.some(id => scope.has(id))) off.add(n.sym);
+    if (!n.ghost && n.cards.length && !n.cards.some(id => scope.has(id))) off.add(n.sym);
   }
   // "neighbours" (geShowNeighbours, W): also reveal an otherwise-off gene that has a currently-shown
   // edge to a gene the filter kept in scope. One hop only, straight off the ORIGINAL off set — this
@@ -5220,12 +5216,24 @@ function geHeadClear(n, dx, dy, rNode, zoom){
   if (tin <= tout && tout > 0) t = Math.max(t, tout);   // the ray passes through the pill: clear its far edge
   return t;
 }
+// The --ge-nodescale divisor. A disc used to be full size × zoom on screen, so its size followed
+// the fit zoom — i.e. the gene count: fewer genes, less zoom-out, fatter dots. Now it is
+// GE_NODE_DOT_PX right after any fit (the size the 674-gene map had) and scales with YOUR zooming
+// from there, capped at full size (GE_NODE_R*2 on screen) when zoomed in.
+const GE_NODE_DOT_PX = 6;
+let _geFitZoom = null;
+function geNodeScale(){
+  const z = _geZoom || 1;
+  if (!_geFitZoom) return Math.max(1, z);
+  const px = Math.min(GE_NODE_R * 2, GE_NODE_DOT_PX * z / _geFitZoom);
+  return (GE_NODE_R * 2 * z) / px;
+}
 function geApplyDOM(){
   const scene = document.getElementById('ge-scene');
   if (scene) scene.style.transform = `translate(${_gePan.x}px, ${_gePan.y}px) scale(${_geZoom})`;
   if (scene && scene.style.setProperty) {
     scene.style.setProperty('--ge-zoom', _geZoom);                        // labels: constant on-screen
-    scene.style.setProperty('--ge-nodescale', Math.max(1, _geZoom));      // discs: capped so they don't balloon when zoomed in
+    scene.style.setProperty('--ge-nodescale', geNodeScale());             // discs: fixed size at a fit, see geNodeScale
     scene.style.setProperty('--ge-dim-node', geDimStrength);              // .ge-dim opacity: the toolbar slider
   }
   for (const n of _geNodes) {
@@ -5234,7 +5242,7 @@ function geApplyDOM(){
   }
   // A directed edge stops at its TARGET node's footprint (disc, and the label pill if the edge
   // arrives from below) so the arrowhead sits clear of both — nodes and labels render z-above edges.
-  const zoom = _geZoom || 1, rNode = GE_NODE_R / Math.max(1, zoom), clr = 3 / zoom, step = GE_FAN_STEP / zoom;
+  const zoom = _geZoom || 1, rNode = GE_NODE_R / geNodeScale(), clr = 3 / zoom, step = GE_FAN_STEP / zoom;
   _geDrawn.forEach((e, i) => {
     const line = document.getElementById('ge-e' + i), pa = _gePos[e.a], pb = _gePos[e.b];
     if (!line || !pa || !pb || !line.setAttribute) return;
@@ -5426,6 +5434,7 @@ function geFit(cw, ch, only){
   const M = 40, w = Math.max(1, x1 - x0), h = Math.max(1, y1 - y0);
   _geZoom = Math.max(0.1, Math.min(1.6, Math.min(Math.max(40, cw - 2 * M) / w, Math.max(40, ch - 2 * M) / h)));
   _gePan = { x: (cw - w * _geZoom) / 2 - x0 * _geZoom, y: (ch - h * _geZoom) / 2 - y0 * _geZoom };
+  _geFitZoom = _geZoom;   // the reference geNodeScale sizes discs against
 }
 // Z: re-fit the map to the canvas — the keyboard way back after a wild pan/zoom, without
 // Relayout's re-simulation. Pan/zoom only; no node moves. Fits what is currently VISIBLE
@@ -5931,6 +5940,7 @@ function geLiveDocsU(){
   for (const it of items) {
     if (it.archived) continue;
     const set = geIsSetCardView(it);
+    if (set && geIsLive()) continue;   // above the "sets >" slider: excluded from the view, tags included
     for (const g of it.genes || []) for (const U of geneAliasesU(g)) {
       if (_geFrozenU.has(U)) continue;
       let rec = m.get(U);
@@ -5955,11 +5965,8 @@ function geRenderCardPanel(){
   // and made every search keystroke crawl when all ~hundreds of genes were visible.
   const wantU = new Set(syms.map(s => s.toUpperCase()));
   const want = new Set();
-  // Gene-set cards are annotations, so they stay out of the panel — unless the search, a facet or a
-  // pin put them in scope: then they are what you asked for (#gene-set listed nothing before).
-  const scope = geCardScope();
   for (const it of items) {
-    if (it.archived || (geIsSetCardView(it) && !(scope && scope.has(it.id)))) continue;
+    if (it.archived || geIsSetCardView(it)) continue;   // above the "sets >" slider: excluded from the view
     if ((it.genes || []).some(g => geneAliasesU(g).some(a => wantU.has(a)))) want.add(it.id);
   }
   const { vis } = getVisibleItems();
@@ -5987,9 +5994,10 @@ function gePromoteGhost(sym){
   const X = sym.toUpperCase();
   const thought = geThoughtCards(X);
   if (thought.length) {
-    const matching = items.filter(i => !i.archived && (i.genes||[]).some(g => geneAliasesU(g).includes(X)));
+    // Legacy: set cards' tags fold in too (the file's model). Live: cards above the slider are excluded.
+    const matching = geIsLive() ? thought : items.filter(i => !i.archived && (i.genes||[]).some(g => geneAliasesU(g).includes(X)));
     const cards = thought.map(i => i.id);
-    const groups = [...new Set(matching.flatMap(i => i.tags || []))];   // both kinds contribute groups
+    const groups = [...new Set(matching.flatMap(i => i.tags || []))];
     return geAdoptLiveGene(sym, X, cards, groups);
   }
   const f = document.getElementById('add-form');
@@ -6213,7 +6221,7 @@ function geEnsureMementoNode(U){
   if (!canonical) return null;                             // not a memento gene -> no ghost
   const meta = geGenes()[canonical] || {};
   const n = { sym: canonical, id: geIdSafe(canonical), chrom: meta.chrom, cclass: geChromClass(meta.chrom),
-              cards: meta.cards || [], groups: meta.groups || [], sets: geSetsOf(canonical), deg: 0, r: GE_NODE_R, ghost: false };
+              cards: meta.cards || [], groups: meta.groups || [], deg: 0, r: GE_NODE_R, ghost: false };
   _geNodes.push(n); _geById.set(n.sym, n); _geByU.set(U, n);
   const ang = grHash(U) * Math.PI * 2, R = 0.35 * Math.min(_geW, _geH);
   _gePos[n.sym] = { x: _geW / 2 + Math.cos(ang) * R, y: _geH / 2 + Math.sin(ang) * R, vx: 0, vy: 0 };

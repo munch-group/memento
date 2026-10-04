@@ -324,6 +324,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       geAfterLoad, gePoolMerge, geMyGeneResolve, geAutoText, geCardScope, geRenderCardPanel,
       get geAuto(){ return _geAuto; },
       setGeSetMax, get geSetMax(){ return geSetMax; },
+      geNodeScale, set geZoomRaw(v){ _geZoom = v; }, set geFitZoomRaw(v){ _geFitZoom = v; },
       get geRefreshing(){ return _geRefreshing; },
       set geRefreshCancel(v){ _geRefreshCancel = v; },
       // The sidebar Sort menu drives the timeline's order too, so the tests reach for it directly.

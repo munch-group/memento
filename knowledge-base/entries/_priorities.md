@@ -1,5 +1,5 @@
-Rather than excluding cards with tag gene-set, can you add a slider to the controls of the Gene view canvas that controls a maximum size of gene-sets above which they are excluded?
-
+## Where am I
+- Worked on LoF repos and decided only the orthologs
 Please add a button to the multi-select options that lets me pin all the selected cards to the search field.
 
 Please add a custom ordering scheme to the Dashboard view so that pinned cards and cards with upcoming timeline tasks appear at the top of the rightmost column only (what column that is depends on the display width).

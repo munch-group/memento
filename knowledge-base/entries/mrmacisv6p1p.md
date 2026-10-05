@@ -1,3 +1,4 @@
+Make a set of Turtle exercises asking the students to produce code that draws a shown path/figure.
 
 Rewrite chapters, add currationproject, finish testing arc
 

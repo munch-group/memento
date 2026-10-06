@@ -1,3 +1,7 @@
+Sander Kudahl Larsen <skl@bce.au.dk>; Anna Bredgaard Bucka-Lassen <202507866@post.au.dk>; Rikke Redanz Mammen <202505478@post.au.dk>; Sarah Marie Østergaard <202504883@post.au.dk>; Louise Jensen <202505428@post.au.dk>; Marcus Nørsøller Mørch Andersen <marcus.andersen@au.dk>; Lærke Caroline Kristensen <202508912@post.au.dk>; Selma Tobberup Skipper <202506978@post.au.dk>; Ida Vandborg Jensen <202507629@post.au.dk>; Theodor Ortmann Hall <202505835@post.au.dk>
+
+
+
 Make a set of Turtle exercises asking the students to produce code that draws a shown path/figure.
 
 Rewrite chapters, add currationproject, finish testing arc

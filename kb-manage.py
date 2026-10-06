@@ -9,7 +9,7 @@ from pathlib import Path
 
 import click
 
-from kb_io import load_all, save_entry, save_all, delete_entry, entry_ids_on_disk
+from kb_io import load_all, save_entry, save_all, delete_entry, entry_ids_on_disk, find_orphan_images
 
 
 def now_iso():
@@ -586,37 +586,19 @@ def clean(kb_dir):
 @click.option("--dry-run", is_flag=True, help="Show what would be deleted without removing files.")
 def prune_images(kb_dir, dry_run):
     """Delete images in the images/ subfolder that are not referenced by any entry."""
-    entries = load_all(kb_dir)
     img_dir = Path(kb_dir) / "images"
 
     if not img_dir.is_dir():
         click.echo("No images/ subfolder found.")
         return
 
-    referenced = set()
-    for e in entries:
-        for field in ("content", "source"):
-            text = e.get(field, "")
-            if not isinstance(text, str):
-                continue
-            for m in re.finditer(r'!\[[^\]]*\]\(images/([^)]+)\)', text):
-                referenced.add(m.group(1))
-            for m in re.finditer(r'images/([^\s"\'<>)]+)', text):
-                referenced.add(m.group(1))
-
-    on_disk = set()
-    for p in img_dir.iterdir():
-        if p.is_file():
-            on_disk.add(p.name)
-
-    orphaned = on_disk - referenced
-    kept = on_disk - orphaned
+    orphaned, kept = find_orphan_images(kb_dir)
 
     if not orphaned:
-        click.echo(f"No orphaned images. All {len(on_disk)} images are referenced.")
+        click.echo(f"No orphaned images. All {kept} images are referenced.")
         return
 
-    for name in sorted(orphaned):
+    for name in orphaned:
         if dry_run:
             click.echo(f"  would delete: images/{name}")
         else:
@@ -624,7 +606,7 @@ def prune_images(kb_dir, dry_run):
             click.echo(f"  deleted: images/{name}")
 
     total_label = "Would delete" if dry_run else "Deleted"
-    click.echo(f"\n{total_label} {len(orphaned)} orphaned images ({len(kept)} kept).")
+    click.echo(f"\n{total_label} {len(orphaned)} orphaned images ({kept} kept).")
 
 
 if __name__ == "__main__":

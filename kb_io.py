@@ -125,3 +125,38 @@ def entry_ids_on_disk(kb_dir):
     if not os.path.isdir(edir):
         return set()
     return {name[:-5] for name in os.listdir(edir) if name.endswith(".json")}
+
+
+# Deliberately loose: stops only at characters that end a markdown/HTML link target, so an
+# unusual filename is over-matched (image kept) rather than truncated (image deleted).
+_IMAGE_REF_RE = re.compile(r"images/([^\s\"'<>()\[\]]+)")
+
+
+def find_orphan_images(kb_dir):
+    """Return (orphaned, referenced_count) for files in kb_dir/images/.
+
+    A file is referenced if its name appears as `images/<name>` anywhere in any card file
+    (entries/*.md and entries/*.json, every field), URL-encoded or not. Dotfiles are ignored.
+    """
+    from urllib.parse import unquote
+
+    img_dir = os.path.join(kb_dir, "images")
+    if not os.path.isdir(img_dir):
+        return [], 0
+    on_disk = {n for n in os.listdir(img_dir)
+               if not n.startswith(".") and os.path.isfile(os.path.join(img_dir, n))}
+
+    referenced = set()
+    edir = _entries_dir(kb_dir)
+    if os.path.isdir(edir):
+        for name in os.listdir(edir):
+            if not name.endswith((".md", ".json")):
+                continue
+            with open(os.path.join(edir, name), encoding="utf-8") as f:
+                text = f.read()
+            for m in _IMAGE_REF_RE.finditer(text):
+                referenced.add(m.group(1))
+                referenced.add(unquote(m.group(1)))
+
+    orphaned = sorted(on_disk - referenced)
+    return orphaned, len(on_disk) - len(orphaned)

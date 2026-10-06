@@ -186,6 +186,14 @@ Images need a connected folder (or the GitHub backend, where the image is commit
 card in one commit). Image markdown is stripped during Claude sync since local images aren't
 accessible to Claude.
 
+Removing an image reference or deleting a card leaves the file behind in `images/`. To find and
+clean up images that no card references:
+
+```bash
+pixi run orphan-images            # list orphaned images
+pixi run orphan-images --delete   # list and delete them
+```
+
 ## Web clipper bookmarklet
 
 Clip selected text from any web page directly into the knowledge base.

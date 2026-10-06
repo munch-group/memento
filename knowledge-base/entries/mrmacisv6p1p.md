@@ -1,3 +1,33 @@
+## Holdrepræsentantmøde
+
+# Studerende:
+
+- Anna 
+- Selma 
+- Sara
+- louise
+- Ida 
+- Markus
+- Sander
+- Theodor
+
+# Minutes
+
+- 60-70 studerende total
+- Plotting / notebooks / pandas / excel?
+- Initial confusion, Better to organize an Exercise for all students for only setting up.
+- Tend to fall back to notebooks, Maybe postpone notebooks 
+- Formålet med terminalen? Hvad bruger man til hvad? 
+- "Inden du kørere koden.."
+- Del alle paragraffer op i celler
+- Del coding lectures with clean breaks for catching up 
+- Recap slides / take home for hver forelæsning (Hvad har vi lært hvad skal vi kunne indtil nu) Kan være første slide i hvert deck
+- Feedback til projekter
+- Bytte aflevering, måske
+- Ryd ud i AI opgaver
+-
+
+
 Sander Kudahl Larsen <skl@bce.au.dk>; Anna Bredgaard Bucka-Lassen <202507866@post.au.dk>; Rikke Redanz Mammen <202505478@post.au.dk>; Sarah Marie Østergaard <202504883@post.au.dk>; Louise Jensen <202505428@post.au.dk>; Marcus Nørsøller Mørch Andersen <marcus.andersen@au.dk>; Lærke Caroline Kristensen <202508912@post.au.dk>; Selma Tobberup Skipper <202506978@post.au.dk>; Ida Vandborg Jensen <202507629@post.au.dk>; Theodor Ortmann Hall <202505835@post.au.dk>
 
 

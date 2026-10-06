@@ -208,6 +208,43 @@ console.log('\nA card whose timeline bar spans today leads the dashboard, then d
      'in-progress card first, then ascending due date, then the due-less pin last');
 }
 
+console.log('\nDashboard cards stack at the top of the rightmost column, whatever the width');
+{
+  // Pinned, in-progress (bar spans today) and due-within-two-weeks cards all go to the last column,
+  // in the dashboard's sort order, above that column's head(s). The other columns hold only heads.
+  const { api, sandbox } = setup([]);
+  const T = api.todayISO(), at = n => api.addDaysISO(T, n);
+  api.items = [
+    note('_priorities', 'Priorities'),
+    note('_strategy', 'Strategy'),
+    note('_networking', 'Networking'),
+    note('pin',    'Pinned, no due',  { pinned: true }),
+    note('urgent', 'Due in 2 days',   { due: at(2) }),
+    note('over',   'Overdue',         { due: at(-3) }),
+    note('soon',   'Due in a week',   { due: at(7) }),
+    note('far',    'Due in 20 days',  { due: at(20) }),
+    note('plain',  'Nothing'),
+    note('inprog', 'Bar spans today'),
+  ];
+  api.tlSeed(api.items.find(i => i.id === 'inprog'));
+  const list = sandbox.document.getElementById('item-list');
+  const want = ['inprog', 'over', 'urgent', 'soon', 'pin'];
+  for (const [width, nCols] of [[450, 1], [1200, 2], [1400, 3], [1900, 4]]) {
+    list.offsetWidth = width;
+    api.renderList();
+    const cols = list.innerHTML.split('class="item-col"').slice(1);
+    const ids = c => [...c.matchAll(/data-id="([^"]+)"/g)].map(m => m[1]);
+    const last = ids(cols[cols.length - 1]);
+    eq(cols.length, nCols, `width ${width}: ${nCols} column(s)`);
+    eq(last.slice(0, want.length), want, `${nCols} col: rightmost column opens with every dashboard card, in sort order`);
+    const normal = new Set([...want, 'far', 'plain']);
+    eq(last.slice(want.length).some(id => normal.has(id)), false, `${nCols} col: only heads follow them`);
+    eq(cols.slice(0, -1).some(c => ids(c).some(id => normal.has(id))), false,
+       `${nCols} col: the other columns hold no ordinary cards`);
+    eq((list.innerHTML.match(/<h2>(Priorities|Strategy|Networking)<\/h2>/g) || []).length, 3, `${nCols} col: all special heads still render`);
+  }
+}
+
 console.log('\nSpecial cards are not taggable or pinnable');
 {
   const { api } = setup([note('_priorities', 'Priorities'), note('_strategy', 'Strategy'), note('_networking', 'Networking'), note('n1', 'Normal')]);

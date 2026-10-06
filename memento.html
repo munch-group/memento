@@ -2092,6 +2092,9 @@ function scheduleOverlapsToday(item){
   const today = todayISO();
   return tlSubs(item).some(s => s.start <= today && today <= s.end);
 }
+// Needs attention: pinned, a timeline bar spanning today, or due inside two weeks. These are the
+// dashboard's cards, and they stack at the top of its rightmost column (see renderList).
+function dashAttention(item){ return !!item.pinned || dueSoon(item) || scheduleOverlapsToday(item); }
 function renderList() {
   _streamGen++; if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf = 0; }   // supersede any in-flight progressive insert
   renderLinkBanner();   // link mode is a mode of the app, so it must announce itself in every view
@@ -2147,7 +2150,7 @@ function renderList() {
     // ordered by due date, soonest on top, with due-less cards (plain pins) trailing. Borders are
     // quiet here (no pinned outline, no red due-state edge) EXCEPT a deadline less than four days
     // out, which gets a red border — see the .dash-view CSS and the deadline-urgent class in renderCard.
-    vis = vis.filter(i => !SPECIAL_IDS.has(i.id) && (i.pinned || dueSoon(i) || scheduleOverlapsToday(i)));
+    vis = vis.filter(i => !SPECIAL_IDS.has(i.id) && dashAttention(i));
     vis = vis.slice().sort((a, b) => {
       const oa = scheduleOverlapsToday(a), ob = scheduleOverlapsToday(b);
       if (oa !== ob) return oa ? -1 : 1;                        // today's timeline bar first
@@ -2189,9 +2192,15 @@ function renderList() {
   // Render the first ~screenful of bodies eagerly (visible cards are complete on first paint, no flash);
   // everything below stays a lazy placeholder. md() is memoized, so re-renders of seen cards stay cheap.
   const EAGER = 6 * nCols;
-  vis.forEach((item, i) => cols[i % nCols].push(renderCard(item, false, i < EAGER)));
-  // Dashboard view: pinned and deadline-approaching cards fill the top of each column; Dashboard /
-  // Priorities / Inbox sit below.
+  if (mainView === 'dash') {
+    // Dashboard: every card on it is an attention card (dashAttention), and they all stack at the top
+    // of the RIGHTMOST column — which one that is follows nCols, i.e. the display width — in the
+    // order sorted above. The other columns hold only heads.
+    vis.forEach((item, i) => cols[nCols - 1].push(renderCard(item, false, i < EAGER)));
+  } else {
+    vis.forEach((item, i) => cols[i % nCols].push(renderCard(item, false, i < EAGER)));
+  }
+  // Dashboard heads (Priorities, Strategy + Networking, Open issues, Inbox) go round-robin below.
   if (mainView === 'dash') {
     const heads = digestHeads();
     const headCols = Array.from({length: nCols}, () => []);
@@ -7929,6 +7938,16 @@ function md(s){
   const hit = _mdCache.get(key); if(hit !== undefined) return hit;
   let out;
   try {
+    // Set code aside FIRST: the math and [[ref]] passes below run on raw text and would otherwise
+    // pair a '$' in one code block with a '$' far away, swallowing fences in between. Fenced blocks
+    // (``` or ~~~, ≤3-space indent, closed by a same-char run at least as long, or by end of text
+    // as marked does), then inline spans (`…`, ``…``) that don't cross a blank line. Restored
+    // verbatim right before marked.parse.
+    const codes = [];
+    const codePh = m => '\x00CODE' + (codes.push(m) - 1) + '\x00';
+    const unCode = t => t.replace(/\x00CODE(\d+)\x00/g, (_, i) => codes[+i]);
+    s = s.replace(/^ {0,3}((`|~)\2{2,})(?:(?<=`)[^`\n]*|(?<=~)[^\n]*)\n[\s\S]*?(?:^ {0,3}\1\2*[ \t]*$|(?![\s\S]))/gm, codePh);
+    s = s.replace(/(?<!`)(`+)(?!`)((?:(?!\n[ \t]*\n)[\s\S])*?[^`])\1(?!`)/g, codePh);
     // Extract math BEFORE marked so LaTeX doesn't get HTML-escaped
     const placeholders = [];
     function ph(tex, display) {
@@ -7952,9 +7971,14 @@ function md(s){
     s = s.replace(/\\\[([\s\S]+?)\\\]/g, (_, tex) => ph(tex, true));
     // LaTeX environments: \begin{...}...\end{...}
     s = s.replace(/\\begin\{([^}]+)\}([\s\S]*?)\\end\{\1\}/g, (m, env, body) => ph(m, true));
-    // Inline math: $...$ and \(...\)
-    s = s.replace(/(?<!\$)\$(?!\$)((?:[^$\\]|\\.)+?)\$(?!\$)/g, (_, tex) => ph(tex, false));
+    // Inline math: $...$ and \(...\) — $…$ never crosses a blank line, so two stray '$' in
+    // separate paragraphs (e.g. shell variables in prose) aren't paired into one formula
+    s = s.replace(/(?<!\$)\$(?!\$)((?:(?!\n[ \t]*\n)[^$\\]|\\.)+?)\$(?!\$)/g, (_, tex) => ph(tex, false));
     s = s.replace(/\\\(([\s\S]+?)\\\)/g, (_, tex) => ph(tex, false));
+    // Put code back (also into any math/ref span that happened to straddle a code placeholder)
+    s = unCode(s);
+    for (const p of placeholders) p.tex = unCode(p.tex);
+    for (const r of refPlaceholders) if (r.title) r.title = unCode(r.title);
     // Run marked on the math-free string
     var h = marked.parse(s);
     // Restore math placeholders with KaTeX rendering. Isolate each one: if KaTeX is missing or

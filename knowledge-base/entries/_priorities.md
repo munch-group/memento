@@ -1,5 +1,7 @@
 Please male the default height of the card body infect field three times as high 
 
+In the timeline view, clicking the cava titles does not show the side panel with cords
+.
 ## Where am I
 - Decided to abandon LoF for now
 - 

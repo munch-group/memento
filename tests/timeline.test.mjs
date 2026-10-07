@@ -542,6 +542,12 @@ console.log('\nHovering a task label shows the card, the same as the graph — a
   // (the guard is on _tlDrag; we can't set it from here, so just confirm a normal hover still works)
   hover();
   eq(pop().style.display, 'block', 'a normal hover shows it');
+
+  // iOS Safari swallows the click of a tap whose touchstart reveals content, so a hover card on
+  // touch would keep the task name from ever opening the card panel.
+  api.popHide();
+  api.tlRowPop({ currentTarget: anchor, pointerType: 'touch' }, 'a');
+  eq(pop().style.display, 'none', 'a touch "hover" shows nothing, so the tap\'s click gets through');
 }
 
 console.log('\nThe Task column minimises to a markers-only strip on click, and restores on click');

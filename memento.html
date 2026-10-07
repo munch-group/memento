@@ -461,8 +461,9 @@ a { color: inherit; }
   .gr-tools:hover { background: rgba(255,255,255,0.78); transition-delay: 0s; }
   .gr-tools:hover > * { opacity: 1; pointer-events: auto; transition-delay: 0s; }
 }
-.gr-check { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
-.gr-check input { margin: 0; accent-color: var(--accent); cursor: pointer; }
+/* .ge-chk: the Genes view's checkboxes, styled exactly as the Graph's. */
+.gr-check, .ge-chk { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 11px; color: var(--text3); cursor: pointer; user-select: none; }
+.gr-check input, .ge-chk input { margin: 0; accent-color: var(--accent); cursor: pointer; }
 /* Thin and quiet: with a couple of thousand of them the web has to read as texture behind the
    cards, not as a drawing in its own right. */
 .gr-web { stroke: #d3d1c8; stroke-width: 0.6; }
@@ -537,7 +538,6 @@ a { color: inherit; }
 .ge-node.ge-sel .ge-dot { border-color: var(--accent); box-shadow: 0 0 0 calc(3px / var(--ge-nodescale, 1)) rgba(217,119,87,0.4); }
 .ge-tools { flex-wrap: wrap; max-width: min(92%, 760px); }
 .ge-filter-group { display: flex; gap: 10px; align-items: center; }
-.ge-chk { display: flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; }
 /* Split view (P): a single-column panel of live cards on the right; the canvas shrinks.
    flex-basis 0 (not the inherited auto) is load-bearing: with basis auto, the panel's stack of
    in-flow cards becomes #genes-view's intrinsic height, the whole view grows to content height
@@ -2690,7 +2690,11 @@ function showCardPop(e, el){
   resolveImages();   // the body may carry images, and they are placeholders until this runs
 }
 // The timeline task label's tooltip — the same card the graph shows on hover.
+// Not on touch: there a tap fires pointerenter at touchstart, and iOS Safari treats a tap that makes
+// new content visible as a hover and swallows its click — so the hover card would stop the task name
+// from ever opening the card panel. The tap opens the full card there anyway.
 function tlRowPop(ev, id){
+  if (ev && ev.pointerType === 'touch') return;
   if (_tlDrag) return;
   if (id === tlCardId) return;   // that card is already open, full size, a few pixels to the right
   showCardPop(items.find(i => i.id === id), ev && (ev.currentTarget || ev.target));

@@ -1,16 +1,8 @@
-Please male the default height of the card body infect field three times as high 
-
-In the timeline view, clicking the cava titles does not show the side panel with cords
-
-Tick boxes in genes view
-.
 ## Where am I
-- Decided to abandon LoF for now
-- 
+- Decided to abandon LoF for now - but maybe look at Vasili's TTLL10 alignments
 
 ## Have-TODO
 - Info om Zoom (incl. formøde) med alle deltagere
-- 
 
 ## Today
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]

@@ -9,17 +9,17 @@ Tick boxes in genes view
 - 
 
 ## Have-TODO
--
+- Info om Zoom (incl. formøde) med alle deltagere
+- 
 
 ## Today
-- Info om Zoom (incl. formøde) med alle deltagere
-- Email
-- Menti
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
-- circRNA [[mui28tnrkim7|circRNA plan]]
-- Tidy plan / cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
+- Bjørn
+- Email
 
 ## Week
+- Tidy plan / cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
+- Emma about her Guenons - Why their synteny is so conserved, and what is at the sites of recurrent inversions. 
 - Finish chapters and announce on brightspace when they are done
 - Bioinformatics material [[mrmacisv6p1p|Bioinformatics plan]]
 - Email PhD opponents about practicals and lunch

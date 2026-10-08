@@ -344,7 +344,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get connFilter(){ return connFilter; },
       get archiveFilter(){ return archiveFilter; },
       // Images (drop + paste)
-      imageFileName, saveImageFile, insertImagesAtCaret, appendImagesToCard, clipboardImages, imagePaste,
+      imageFileName, saveImageFile, insertImagesAtCaret, appendImagesToCard, clipboardImages, imagePaste, clipPaste, geneCandidates, findGeneNames, findGenesInForm,
       cardDrop, contentDrop,
       set ghEditMode(v){ ghEditMode = v; },
       togglePinnedCard, renderPinnedCards,

@@ -1,4 +1,3 @@
-# miR-9, miR-124, intercellular bridge trafficking, and the tubulin code in spermatids
 
 **Scope note.** Every factual claim below carries an inline reference to a peer-reviewed paper that was checked to support that specific claim. Where a mechanism is plausible but untested, it is placed under an explicit *Not established* heading rather than asserted. Two sources are preprints and are labelled as such. "OTG" in the request is read here as **OGT** (O-GlcNAc transferase), the catalytic partner of OGA and the enzyme that O-GlcNAcylates MAPT; if a different gene was intended (e.g. *OTOG*/*OTOGL*), that section needs replacing — see [§4.4](#44-a-note-on-otogotogl).
 
@@ -68,7 +67,7 @@ Dicer and microRNP components — Ago proteins and microRNAs — are highly conc
 | **Terminates CREM transcription** | KIF17b binds ACT (coactivator of CREM), colocalises with it in haploid spermatids, and mediates its nuclear→cytoplasmic export; KIF17b dose suppresses ACT-dependent transcription | [Macho et al. 2002](https://doi.org/10.1126/science.1077265) |
 | **Timing** | KIF17b-mediated relocalisation of ACT to the cytoplasm temporally correlates with cessation of transcription of CREM-regulated genes | [Kotaja et al. 2004](https://pmc.ncbi.nlm.nih.gov/articles/PMC489983) |
 | **Non-canonical regulation** | KIF17b shuttling and ACT transport require neither its motor domain nor microtubules; PKA phosphorylation controls its localisation | [Kotaja et al. 2005](https://doi.org/10.1074/jbc.M505971200) |
-| **mRNA transport, incl. between cells** | KIF17b coimmunoprecipitates with TB-RBP in an RNP carrying specific CREM-regulated mRNAs; KIF17b and TB-RBP dissociate sequentially, with TB-RBP release coinciding with translation. TB-RBP transports mRNAs intracellularly **and intercellularly** in male germ cells | [Chennathukuzhi et al. 2003](https://pmc.ncbi.nlm.nih.gov/articles/PMC307608) |
+| **mRNA transport, incl. between cells** | KIF17b coimmunoprecipitates with TB-RBP in an RNP carrying specific CREM-regulated mRNAs; KIF17b and TB-RBP (TSN) dissociate sequentially, with TB-RBP release coinciding with translation. TB-RBP transports mRNAs intracellularly **and intercellularly** in male germ cells | [Chennathukuzhi et al. 2003](https://pmc.ncbi.nlm.nih.gov/articles/PMC307608) |
 | **Chromatoid body motor** | KIF17b localises to the CB and physically interacts with MIWI, offering a mechanism for microtubule-dependent CB mobility and for loading components in and out of the CB; *Miwi*-null CBs fail to compact | [Kotaja et al. 2006b](https://pubmed.ncbi.nlm.nih.gov/16787948) |
 
 ### 3.5 CREM

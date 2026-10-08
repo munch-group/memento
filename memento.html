@@ -850,7 +850,10 @@ a { color: inherit; }
           <div class="meta-col">
             <div class="field field-full">
               <label>Genes <span style="font-weight:400;opacity:0.5">(comma-separated)</span></label>
-              <input type="text" id="f-genes" placeholder="MAPT, HDAC6, CACNA1C">
+              <div class="source-row">
+                <input type="text" id="f-genes" placeholder="MAPT, HDAC6, CACNA1C">
+                <button class="btn btn-sm" id="btn-find-genes" type="button" onclick="findGenesInForm()" title="Find gene names in the title and body (all-caps words checked against MyGene)">Find</button>
+              </div>
             </div>
             <div class="field field-full" id="field-source">
               <label>Source</label>
@@ -7476,62 +7479,117 @@ function htmlToMarkdown(html) {
   }
   return s;
 }
+function addGenesToField(genes) {
+  const field = document.getElementById('f-genes');
+  const existing = field.value.split(/[\s,]+/).map(g => g.trim()).filter(Boolean);
+  const have = new Set(existing.map(g => g.toUpperCase()));
+  const added = [...new Set(genes)].filter(g => !have.has(g.toUpperCase()));
+  if (added.length) field.value = [...existing, ...added].join(', ');
+  return added;
+}
 function fillGenesFromMarkdown(content) {
   // Extract gene names: italicized uppercase words like *MECP2*, *DDX3X*, *PCDH19*
   const genes = new Set();
   const re = /\*([A-Z][A-Z0-9]{1,})\*/g;
   let m;
   while ((m = re.exec(content)) !== null) genes.add(m[1]);
-  if (genes.size) {
-    const field = document.getElementById('f-genes');
-    const existing = field.value.split(/[\s,]+/).map(g => g.trim()).filter(Boolean);
-    const merged = [...new Set([...existing, ...genes])];
-    field.value = merged.join(', ');
-  }
+  if (genes.size) addGenesToField([...genes]);
 }
-async function tryClipImport() {
+// --- Gene names in free text ---
+// All-caps words (TTLL10, NAP1, H2A) checked against MyGene as a human symbol OR alias; hits go into
+// GENES as written. An alias may be ambiguous (NAP1 names nine genes) — accepted on purpose: the
+// Genes view's own grounding (geMyGeneResolve) refuses ambiguity, so such a token shows on the card
+// but never becomes a node. MyGene, not Ensembl: one batch POST covers symbols and aliases alike.
+const GENE_FIND_MAX = 300;
+function geneCandidates(text) {
+  const s = String(text || '')
+    .replace(/^\[[^\]]+\]:.*$/gm, ' ')        // footnote definitions
+    .replace(/\]\([^)\s]*\)/g, '] ')            // markdown link targets
+    .replace(/\b(?:https?|ftp):\/\/\S+/g, ' ')
+    .replace(/\bdoi:\S+/gi, ' ');
+  const out = [], seen = new Set();
+  const add = t => { if (t.length >= 2 && t.length <= 12 && !seen.has(t)) { seen.add(t); out.push(t); } };
+  // "H2A/B" is shorthand for H2A and H2B; "H2A/H2B" is just two tokens.
+  const re = /(?<![A-Za-z0-9-])([A-Z][A-Z0-9-]*[A-Z0-9])(?:\/([A-Z0-9]+))?(?![A-Za-z0-9])/g;
+  let m;
+  while ((m = re.exec(s)) !== null) {
+    add(m[1]);
+    const sfx = m[2];
+    if (sfx) add(sfx.length < m[1].length ? m[1].slice(0, -sfx.length) + sfx : sfx);
+  }
+  return out.slice(0, GENE_FIND_MAX);
+}
+// Candidates MyGene knows as a human gene symbol or alias, in order of appearance.
+async function findGeneNames(text) {
+  const cands = geneCandidates(text);
+  if (!cands.length) return [];
+  const body = 'q=' + encodeURIComponent(cands.join(',')) + '&scopes=' + encodeURIComponent('symbol,alias')
+    + '&fields=symbol&species=human';
+  const r = await fetch(GE_MYGENE_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+  if (!r || !r.ok) throw new Error('MyGene ' + (r ? r.status : 'unreachable'));
+  const known = new Set((await r.json() || []).filter(h => h && !h.notfound).map(h => h.query));
+  return cands.filter(c => known.has(c));
+}
+// Find button + after a clip import: scan the form's title and body, merge hits into GENES.
+let _findGenesBusy = false;
+async function findGenesInForm(quiet = false) {
+  if (_findGenesBusy) return;
+  const text = document.getElementById('f-title').value + '\n' + document.getElementById('f-content').value;
+  if (!geneCandidates(text).length) { if (!quiet) showToast('No all-caps words to check'); return; }
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) { showToast('Gene lookup needs a connection'); return; }
+  const form = document.getElementById('add-form'), forId = editingId;
+  const btn = document.getElementById('btn-find-genes');
+  _findGenesBusy = true; if (btn) btn.disabled = true;
   try {
-    // Try reading structured clip (from bookmarklet) first
-    const text = await navigator.clipboard.readText();
-    let clip = null;
-    try { clip = JSON.parse(text); } catch(_) {}
-    if (clip && clip._kb_clip) {
-      const f = document.getElementById('add-form');
-      if (f.style.display === 'none') toggleForm();
-      const content = clip.html ? htmlToMarkdown(clip.html) : clip.content;
-      if (content) document.getElementById('f-content').value = '> ' + content.replace(/\n/g, '\n> ');
-      if (clip.source) document.getElementById('f-source').value = clip.source;
-      if (clip.title) document.getElementById('f-title').value = clip.title;
-      if (content) fillGenesFromMarkdown(content);
-      selectedType = 'source';
-      buildTypePicker();
-      document.getElementById('f-content').focus();
-      navigator.clipboard.writeText('');
-      showToast('Clip imported — edit and save');
-      return true;
-    }
-    // Fall back: read HTML from clipboard (browser puts it there on normal copy)
-    const clipItems = await navigator.clipboard.read();
-    for (const item of clipItems) {
-      if (item.types.includes('text/html')) {
-        const blob = await item.getType('text/html');
-        const html = await blob.text();
-        if (!html) continue;
-        const content = htmlToMarkdown(html);
-        if (!content) continue;
-        const f = document.getElementById('add-form');
-        if (f.style.display === 'none') toggleForm();
-        document.getElementById('f-content').value = '> ' + content.replace(/\n/g, '\n> ');
-        fillGenesFromMarkdown(content);
-        selectedType = 'source';
-        buildTypePicker();
-        document.getElementById('f-content').focus();
-        showToast('Clip imported from HTML — add source and save');
-        return true;
-      }
-    }
-    return false;
-  } catch(err) { console.warn('Clip import failed:', err); return false; }
+    const found = await findGeneNames(text);
+    if (form.style.display === 'none' || editingId !== forId) return;   // form moved on
+    const added = addGenesToField(found);
+    if (added.length) showToast('Genes added: ' + added.join(', '));
+    else if (!quiet) showToast(found.length ? 'Genes already listed' : 'No gene names found');
+  } catch(err) {
+    showToast('Gene lookup failed — ' + err.message);
+  } finally { _findGenesBusy = false; if (btn) btn.disabled = false; }
+}
+// Clip import on Cmd/Ctrl+V outside a text field: a structured clip from the "Clip to memento"
+// bookmarklet (JSON with _kb_clip), else whatever HTML a normal copy put on the clipboard.
+// Runs on the paste event, not keydown: clipboardData is readable synchronously there, so
+// preventDefault() lands before the browser's own paste. (Awaiting the clipboard API from keydown
+// let the native paste through, dumping the raw clip JSON into the just-focused content field.)
+function clipImport(text, html) {
+  let clip = null;
+  if (text) { try { clip = JSON.parse(text); } catch(_) {} }
+  const isClip = !!(clip && clip._kb_clip);
+  const content = isClip ? (clip.html ? htmlToMarkdown(clip.html) : clip.content)
+                         : (html ? htmlToMarkdown(html) : '');
+  if (!isClip && !content) return false;
+  const f = document.getElementById('add-form');
+  if (f.style.display === 'none') toggleForm();
+  if (content) {
+    document.getElementById('f-content').value = '> ' + content.replace(/\n/g, '\n> ');
+    fillGenesFromMarkdown(content);
+  }
+  if (isClip && clip.source) document.getElementById('f-source').value = clip.source;
+  if (isClip && clip.title) document.getElementById('f-title').value = clip.title;
+  selectedType = 'source';
+  buildTypePicker();
+  document.getElementById('f-content').focus();
+  if (isClip) {
+    try { navigator.clipboard.writeText('').catch(() => {}); } catch(_) {}
+    showToast('Clip imported — edit and save');
+  } else showToast('Clip imported from HTML — add source and save');
+  findGenesInForm(true);   // async; fills GENES when MyGene answers
+  return true;
+}
+function clipPaste(e) {
+  const active = document.activeElement;
+  if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) return;
+  if (document.getElementById('app-area').style.display === 'none') return;
+  const dt = e.clipboardData;
+  if (!dt) return;
+  if (clipboardImages(e).length) return;   // a screenshot: imagePaste's business
+  try {
+    if (clipImport(dt.getData('text/plain'), dt.getData('text/html'))) e.preventDefault();
+  } catch(err) { console.warn('Clip import failed:', err); }
 }
 // --- Keyboard cheat-sheet (?) ----------------------------------------------
 // Same chassis as the tag pop-up (openTagEditor): a lazily built overlay, click-outside/Done to
@@ -7646,13 +7704,6 @@ document.addEventListener('mousedown', e => {
 const ESC_DBL_MS = 500;
 let _lastEscAt = 0;
 document.addEventListener('keydown', async e=>{
-  if((e.metaKey||e.ctrlKey)&&e.key==='v'){
-    const active = document.activeElement;
-    if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) return;
-    if (document.getElementById('app-area').style.display==='none') return;
-    const imported = await tryClipImport();
-    if (imported) e.preventDefault();
-  }
   if(!e.altKey && !e.metaKey && !e.ctrlKey && !e.shiftKey){
     const active = document.activeElement;
     const inField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
@@ -8366,6 +8417,7 @@ async function imagePaste(e) {
     showToast('Image save failed: ' + err.message);
   }
 }
+document.addEventListener('paste', clipPaste);
 document.addEventListener('paste', imagePaste);
 
 // --- Markdown file drop → new card ---

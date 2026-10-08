@@ -912,6 +912,13 @@
    "start": 112285509,
    "end": 112442621
   },
+  "ALT": {
+   "symbol": "GPT",
+   "hgnc": "4552",
+   "chrom": "8",
+   "start": 144502608,
+   "end": 144507494
+  },
   "AMELX": {
    "symbol": "AMELX",
    "hgnc": "461",
@@ -1780,6 +1787,13 @@
    "start": 15235288,
    "end": 15270467
   },
+  "ASF1A": {
+   "symbol": "ASF1A",
+   "hgnc": "20995",
+   "chrom": "6",
+   "start": 118894020,
+   "end": 118909264
+  },
   "ASIC4": {
    "symbol": "ASIC4",
    "hgnc": "21263",
@@ -2245,6 +2259,13 @@
    "start": 64269828,
    "end": 64291946
   },
+  "BAF53a": {
+   "symbol": "ACTL6A",
+   "hgnc": "24124",
+   "chrom": "3",
+   "start": 179562886,
+   "end": 179588462
+  },
   "BAG2": {
    "symbol": "BAG2",
    "hgnc": "938",
@@ -2647,6 +2668,13 @@
    "chrom": "22",
    "start": 43110742,
    "end": 43129712
+  },
+  "BIR": {
+   "symbol": "KCNJ11",
+   "hgnc": "6257",
+   "chrom": "11",
+   "start": 17364082,
+   "end": 17389364
   },
   "BIRC2": {
    "symbol": "BIRC2",
@@ -4810,6 +4838,13 @@
    "start": 88051940,
    "end": 88149885
   },
+  "CHAF1B": {
+   "symbol": "CHAF1B",
+   "hgnc": "1911",
+   "chrom": "21",
+   "start": 36385354,
+   "end": 36419015
+  },
   "CHCHD2P8": null,
   "CHCHD7": {
    "symbol": "CHCHD7",
@@ -5537,6 +5572,13 @@
    "chrom": "12",
    "start": 12611812,
    "end": 12645375
+  },
+  "CREM": {
+   "symbol": "CREM",
+   "hgnc": "2352",
+   "chrom": "10",
+   "start": 35126791,
+   "end": 35212958
   },
   "CRHR1": {
    "symbol": "CRHR1",
@@ -6327,6 +6369,13 @@
    "chrom": "19",
    "start": 3958453,
    "end": 3971130
+  },
+  "DAXX": {
+   "symbol": "DAXX",
+   "hgnc": "2681",
+   "chrom": "6",
+   "start": 33318558,
+   "end": 33323259
   },
   "DCAF10": {
    "symbol": "DCAF10",
@@ -9298,6 +9347,13 @@
    "start": 154348524,
    "end": 154374643
   },
+  "FLOT2": {
+   "symbol": "FLOT2",
+   "hgnc": "3758",
+   "chrom": "17",
+   "start": 28879335,
+   "end": 28897741
+  },
   "FLRT1": {
    "symbol": "FLRT1",
    "hgnc": "3760",
@@ -11165,6 +11221,7 @@
    "start": null,
    "end": null
   },
+  "H3": null,
   "HACD1": {
    "symbol": "HACD1",
    "hgnc": "9639",
@@ -11492,6 +11549,13 @@
    "chrom": "1",
    "start": 113929324,
    "end": 113977869
+  },
+  "HIRA": {
+   "symbol": "HIRA",
+   "hgnc": "4916",
+   "chrom": "22",
+   "start": 19330185,
+   "end": 19447450
   },
   "HIST1H2BD": {
    "symbol": "H2BC5",
@@ -19495,6 +19559,13 @@
    "start": 13734667,
    "end": 13777955
   },
+  "OGA": {
+   "symbol": "OGA",
+   "hgnc": "7056",
+   "chrom": "10",
+   "start": 101784443,
+   "end": 101818620
+  },
   "OGFOD1": {
    "symbol": "OGFOD1",
    "hgnc": "25585",
@@ -26929,6 +27000,13 @@
    "start": 48695554,
    "end": 48709556
   },
+  "SUV39H2": {
+   "symbol": "SUV39H2",
+   "hgnc": "17287",
+   "chrom": "10",
+   "start": 14878323,
+   "end": 14906331
+  },
   "SUZ12": {
    "symbol": "SUZ12",
    "hgnc": "17101",
@@ -27701,6 +27779,13 @@
    "chrom": "X",
    "start": 124246249,
    "end": 124336863
+  },
+  "TEX14": {
+   "symbol": "TEX14",
+   "hgnc": "11737",
+   "chrom": "17",
+   "start": 58556678,
+   "end": 58692055
   },
   "TEX28": {
    "symbol": "TEX28",
@@ -29127,6 +29212,7 @@
    "start": 73792205,
    "end": 73829231
   },
+  "TSN": null,
   "TSNAXIP1": {
    "symbol": "TSNAXIP1",
    "hgnc": "18586",
@@ -31928,6 +32014,8 @@
   "chr6": null,
   "formation": null,
   "invasion": null,
+  "miR-124": null,
+  "miR-9": null,
   "or": null,
   "processing": null,
   "rs191668974": null,
@@ -31951,6 +32039,7 @@
   "ACOT9": "2026-10-03",
   "ACP4": "2026-10-04",
   "ACSL4": "2026-10-04",
+  "ACTL6A": "2026-10-08",
   "ACTN1": "2026-10-04",
   "ACTN2": "2026-10-04",
   "ACTN3": "2026-10-04",
@@ -32030,6 +32119,7 @@
   "ARSL": "2026-10-03",
   "ASB11": "2026-10-04",
   "ASB9": "2026-10-04",
+  "ASF1A": "2026-10-08",
   "ASMTL": "2026-10-04",
   "ATAT1": "2026-10-03",
   "ATF6": "2026-10-04",
@@ -32173,6 +32263,7 @@
   "CFAP47": "2026-10-03",
   "CFLAR": "2026-10-04",
   "CFP": "2026-10-04",
+  "CHAF1B": "2026-10-08",
   "CHD4": "2026-10-04",
   "CHD8": "2026-10-04",
   "CHIC1": "2026-10-04",
@@ -32207,6 +32298,7 @@
   "CP": "2026-10-04",
   "CPXCR1": "2026-10-04",
   "CREBBP": "2026-10-04",
+  "CREM": "2026-10-08",
   "CRHR1": "2026-10-04",
   "CRLF2": "2026-10-04",
   "CROCC": "2026-10-04",
@@ -32248,6 +32340,7 @@
   "CYSLTR1": "2026-10-04",
   "DAAM1": "2026-10-04",
   "DACH2": "2026-10-04",
+  "DAXX": "2026-10-08",
   "DCAF8L2": "2026-10-04",
   "DCLRE1C": "2026-10-04",
   "DCTN1": "2026-10-04",
@@ -32267,6 +32360,7 @@
   "DIAPH1": "2026-10-04",
   "DIAPH2": "2026-10-03",
   "DIAPH2-AS1": "2026-10-04",
+  "DICER1": "2026-10-08",
   "DKC1": "2026-10-03",
   "DMD": "2026-10-03",
   "DMRT3": "2026-10-04",
@@ -32398,6 +32492,7 @@
   "FKBP14": "2026-10-04",
   "FKBP6": "2026-10-04",
   "FLNA": "2026-10-03",
+  "FLOT2": "2026-10-08",
   "FMR1NB": "2026-10-04",
   "FOXN2": "2026-10-04",
   "FOXO4": "2026-10-04",
@@ -32454,6 +32549,7 @@
   "GPRASP3": "2026-10-04",
   "GPRC5A": "2026-10-04",
   "GPRC5C": "2026-10-04",
+  "GPT": "2026-10-08",
   "GRIA3": "2026-10-04",
   "GRIN2B": "2026-10-04",
   "GRIPAP1": "2026-10-03",
@@ -32493,6 +32589,7 @@
   "HERC2": "2026-10-04",
   "HERC4": "2026-10-04",
   "HFM1": "2026-10-04",
+  "HIRA": "2026-10-08",
   "HIVEP3": "2026-10-04",
   "HMGB3": "2026-10-04",
   "HMGN4": "2026-10-04",
@@ -32581,6 +32678,7 @@
   "KATNA1": "2026-10-04",
   "KCND1": "2026-10-04",
   "KCNF1": "2026-10-04",
+  "KCNJ11": "2026-10-08",
   "KCNJ8": "2026-10-04",
   "KDM5C": "2026-10-03",
   "KDM6A": "2026-10-04",
@@ -32852,6 +32950,7 @@
   "OCRL": "2026-10-04",
   "ODAM": "2026-10-04",
   "OFD1": "2026-10-04",
+  "OGA": "2026-10-08",
   "OGFR": "2026-10-04",
   "OGT": "2026-10-03",
   "OPHN1": "2026-10-04",
@@ -33181,6 +33280,7 @@
   "STUB1": "2026-10-04",
   "SUSD3": "2026-10-04",
   "SUV39H1": "2026-10-04",
+  "SUV39H2": "2026-10-08",
   "SUZ12": "2026-10-04",
   "SVBP": "2026-10-04",
   "SWSAP1": "2026-10-04",
@@ -33223,6 +33323,7 @@
   "TENT5D": "2026-10-04",
   "TEX11": "2026-10-04",
   "TEX12": "2026-10-04",
+  "TEX14": "2026-10-08",
   "TEX28": "2026-10-04",
   "TFCP2L1": "2026-10-04",
   "TFDP3": "2026-10-04",
@@ -33428,6 +33529,7 @@
   "ZNF717": "2026-10-04",
   "ZNF737": "2026-10-04",
   "ZNF75D": "2026-10-04",
+  "ZNF827": "2026-10-08",
   "ZNF843": "2026-10-04",
   "ZNF844": "2026-10-04",
   "ZNRF1": "2026-10-04",
@@ -33516,6 +33618,16 @@
    "groups": [
     "ASD"
    ]
+  },
+  "ACTL6A": {
+   "hgnc": "24124",
+   "chrom": "3",
+   "start": 179562886,
+   "end": 179588462,
+   "cards": [
+    "muz7x9vmbdzx"
+   ],
+   "groups": []
   },
   "ADAMTS9": {
    "hgnc": "13202",
@@ -33723,6 +33835,16 @@
     "gene-set"
    ]
   },
+  "ASF1A": {
+   "hgnc": "20995",
+   "chrom": "6",
+   "start": 118894020,
+   "end": 118909264,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": []
+  },
   "ATAT1": {
    "hgnc": "21186",
    "chrom": "6",
@@ -33774,7 +33896,8 @@
    "start": 77504862,
    "end": 77786233,
    "cards": [
-    "mqc2ewps3rqd"
+    "mqc2ewps3rqd",
+    "muzdvt8ammnv"
    ],
    "groups": [
     "Recombination",
@@ -34161,13 +34284,24 @@
     "gene-set"
    ]
   },
+  "CHAF1B": {
+   "hgnc": "1911",
+   "chrom": "21",
+   "start": 36385354,
+   "end": 36419015,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": []
+  },
   "CHD4": {
    "hgnc": "1919",
    "chrom": "12",
    "start": 6570081,
    "end": 6614982,
    "cards": [
-    "mqc2ewps3rqd"
+    "mqc2ewps3rqd",
+    "muzdvt8ammnv"
    ],
    "groups": [
     "X",
@@ -34271,6 +34405,16 @@
     "fact",
     "gene-set"
    ]
+  },
+  "CREM": {
+   "hgnc": "2352",
+   "chrom": "10",
+   "start": 35126791,
+   "end": 35212958,
+   "cards": [
+    "muz7x9vmbdzx"
+   ],
+   "groups": []
   },
   "CRHR1": {
    "hgnc": "2357",
@@ -34429,6 +34573,16 @@
     "chr17"
    ]
   },
+  "DAXX": {
+   "hgnc": "2681",
+   "chrom": "6",
+   "start": 33318558,
+   "end": 33323259,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": []
+  },
   "DDX3X": {
    "hgnc": "2745",
    "chrom": "X",
@@ -34483,6 +34637,19 @@
     "LAI",
     "X",
     "Xi",
+    "fact",
+    "gene-set"
+   ]
+  },
+  "DICER1": {
+   "hgnc": "17098",
+   "chrom": "14",
+   "start": 95086228,
+   "end": 95158010,
+   "cards": [
+    "muz7x9vmbdzx"
+   ],
+   "groups": [
     "fact",
     "gene-set"
    ]
@@ -34597,7 +34764,8 @@
    "start": 10133342,
    "end": 10231286,
    "cards": [
-    "mqc2ewps3rqd"
+    "mqc2ewps3rqd",
+    "muzdvt8ammnv"
    ],
    "groups": [
     "X",
@@ -34967,6 +35135,16 @@
     "gene-set"
    ]
   },
+  "FLOT2": {
+   "hgnc": "3758",
+   "chrom": "17",
+   "start": 28879335,
+   "end": 28897741,
+   "cards": [
+    "muz7x9vmbdzx"
+   ],
+   "groups": []
+  },
   "FOXN2": {
    "hgnc": "5281",
    "chrom": "2",
@@ -35275,6 +35453,16 @@
     "ASD"
    ]
   },
+  "GPT": {
+   "hgnc": "4552",
+   "chrom": "8",
+   "start": 144502608,
+   "end": 144507494,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": []
+  },
   "GRIPAP1": {
    "hgnc": "18706",
    "chrom": "X",
@@ -35453,6 +35641,16 @@
     "LoF",
     "chr17"
    ]
+  },
+  "HIRA": {
+   "hgnc": "4916",
+   "chrom": "22",
+   "start": 19330185,
+   "end": 19447450,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": []
   },
   "HNRNPK": {
    "hgnc": "5044",
@@ -35752,6 +35950,16 @@
     "gene-set"
    ]
   },
+  "KCNJ11": {
+   "hgnc": "6257",
+   "chrom": "11",
+   "start": 17364082,
+   "end": 17389364,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": []
+  },
   "KDM5C": {
    "hgnc": "11114",
    "chrom": "X",
@@ -35792,7 +36000,8 @@
    "end": 20718018,
    "cards": [
     "mqgpz9jgnimw",
-    "mqi3yaapzor1"
+    "mqi3yaapzor1",
+    "muz7x9vmbdzx"
    ],
    "groups": [
     "Drive",
@@ -36796,6 +37005,16 @@
     "gene-set"
    ]
   },
+  "OGA": {
+   "hgnc": "7056",
+   "chrom": "10",
+   "start": 101784443,
+   "end": 101818620,
+   "cards": [
+    "muz7x9vmbdzx"
+   ],
+   "groups": []
+  },
   "OGT": {
    "hgnc": "8127",
    "chrom": "X",
@@ -36803,7 +37022,8 @@
    "end": 71575892,
    "cards": [
     "mnbcs33cmmn3",
-    "mpvpkl156ryz"
+    "mpvpkl156ryz",
+    "muz7x9vmbdzx"
    ],
    "groups": [
     "BDMI",
@@ -38263,7 +38483,8 @@
    "end": 48709556,
    "cards": [
     "mnbcs33cmmn3",
-    "mpvpkl156ryz"
+    "mpvpkl156ryz",
+    "muzdvt8ammnv"
    ],
    "groups": [
     "BDMI",
@@ -38273,6 +38494,16 @@
     "fact",
     "gene-set"
    ]
+  },
+  "SUV39H2": {
+   "hgnc": "17287",
+   "chrom": "10",
+   "start": 14878323,
+   "end": 14906331,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": []
   },
   "SUZ12": {
    "hgnc": "17101",
@@ -38431,6 +38662,16 @@
     "fact",
     "gene-set"
    ]
+  },
+  "TEX14": {
+   "hgnc": "11737",
+   "chrom": "17",
+   "start": 58556678,
+   "end": 58692055,
+   "cards": [
+    "muz7x9vmbdzx"
+   ],
+   "groups": []
   },
   "TFCP2L1": {
    "hgnc": "17925",
@@ -38818,7 +39059,8 @@
     "mqi3yaapzor1",
     "mqjakhy5jrq3",
     "mqjcxe8k2a2j",
-    "mqjgzj1eg0cb"
+    "mqjgzj1eg0cb",
+    "muz7knhq62x7"
    ],
    "groups": [
     "BDMI",
@@ -38836,7 +39078,8 @@
    "cards": [
     "mna0610oovuf",
     "mqgpz9jgnimw",
-    "mqi3yaapzor1"
+    "mqi3yaapzor1",
+    "muz7x9vmbdzx"
    ],
    "groups": [
     "Drive",
@@ -38867,7 +39110,8 @@
    "cards": [
     "mna0610oovuf",
     "mqgpz9jgnimw",
-    "mqi3yaapzor1"
+    "mqi3yaapzor1",
+    "muz7x9vmbdzx"
    ],
    "groups": [
     "Drive",
@@ -39229,6 +39473,19 @@
    ],
    "groups": [
     "Xi",
+    "fact",
+    "gene-set"
+   ]
+  },
+  "ZNF827": {
+   "hgnc": "27193",
+   "chrom": "4",
+   "start": 145757627,
+   "end": 145939036,
+   "cards": [
+    "muzdvt8ammnv"
+   ],
+   "groups": [
     "fact",
     "gene-set"
    ]
@@ -42355,10 +42612,6 @@
    "gene-set"
   ],
   "DIAPH3": [
-   "fact",
-   "gene-set"
-  ],
-  "DICER1": [
    "fact",
    "gene-set"
   ],
@@ -53454,10 +53707,6 @@
    "fact",
    "gene-set"
   ],
-  "ZNF827": [
-   "fact",
-   "gene-set"
-  ],
   "ZNF830": [
    "fact",
    "gene-set"
@@ -53535,8 +53784,11 @@
  },
  "canon": {
   "A10": "IGKV6D-21",
+  "ALT": "GPT",
+  "BAF53a": "ACTL6A",
   "BHLHB9": "GPRASP3",
   "BICDR1": "BICDL1",
+  "BIR": "KCNJ11",
   "C11orf80": "TOP6BL",
   "C12orf73": "UQCC6",
   "C16ORF89": "C16orf89",
@@ -56581,6 +56833,24 @@
    "belief": 0.5,
    "n": 6,
    "pmid": "39652084",
+   "dir": "ab"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "CDK2",
+   "t": "Activation",
+   "belief": 0.366,
+   "n": 3,
+   "pmid": "33541412",
+   "dir": "ab"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "CDK2",
+   "t": "IncreaseAmount",
+   "belief": 0.526,
+   "n": 3,
+   "pmid": "33469301",
    "dir": "ab"
   },
   {
@@ -59831,6 +60101,33 @@
    "n": 1,
    "pmid": "39342428",
    "dir": "ba"
+  },
+  {
+   "a": "AKT1",
+   "b": "HIRA",
+   "t": "Activation",
+   "belief": 0.534,
+   "n": 2,
+   "pmid": "27515126",
+   "dir": "ab"
+  },
+  {
+   "a": "AKT1",
+   "b": "HIRA",
+   "t": "Inhibition",
+   "belief": 0.436,
+   "n": 1,
+   "pmid": "27515126",
+   "dir": "ba"
+  },
+  {
+   "a": "AKT1",
+   "b": "HIRA",
+   "t": "Phosphorylation",
+   "belief": 0.889,
+   "n": 13,
+   "pmid": "27515126",
+   "dir": "ab"
   },
   {
    "a": "AKT1",
@@ -63533,6 +63830,15 @@
   },
   {
    "a": "APP",
+   "b": "FLOT2",
+   "t": "Activation",
+   "belief": 0.626,
+   "n": 6,
+   "pmid": "24465508",
+   "dir": "ba"
+  },
+  {
+   "a": "APP",
    "b": "FYN",
    "t": "Activation",
    "belief": 0.844,
@@ -64394,6 +64700,24 @@
    "n": 13,
    "pmid": "23575365",
    "dir": "ab"
+  },
+  {
+   "a": "APP",
+   "b": "OGA",
+   "t": "Activation",
+   "belief": 0.376,
+   "n": 4,
+   "pmid": "27259471",
+   "dir": "ba"
+  },
+  {
+   "a": "APP",
+   "b": "OGA",
+   "t": "IncreaseAmount",
+   "belief": 0.472,
+   "n": 2,
+   "pmid": "39967653",
+   "dir": "ba"
   },
   {
    "a": "APP",
@@ -67609,6 +67933,69 @@
    "dir": "ab"
   },
   {
+   "a": "ASF1A",
+   "b": "ATRX",
+   "t": "Inhibition",
+   "belief": 0.436,
+   "n": 1,
+   "pmid": "33479235",
+   "dir": "ab"
+  },
+  {
+   "a": "ASF1A",
+   "b": "CTNNB1",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "28625518",
+   "dir": "ba"
+  },
+  {
+   "a": "ASF1A",
+   "b": "CTNNB1",
+   "t": "IncreaseAmount",
+   "belief": 0.472,
+   "n": 2,
+   "pmid": "28625518",
+   "dir": "ab"
+  },
+  {
+   "a": "ASF1A",
+   "b": "DAXX",
+   "t": "Inhibition",
+   "belief": 0.436,
+   "n": 1,
+   "pmid": "33479235",
+   "dir": "ba"
+  },
+  {
+   "a": "ASF1A",
+   "b": "HIRA",
+   "t": "Activation",
+   "belief": 0.372,
+   "n": 1,
+   "pmid": "25086063",
+   "dir": "ab"
+  },
+  {
+   "a": "ASF1A",
+   "b": "HIRA",
+   "t": "Inhibition",
+   "belief": 0.436,
+   "n": 1,
+   "pmid": "17544228",
+   "dir": "ba"
+  },
+  {
+   "a": "ASF1A",
+   "b": "PRKDC",
+   "t": "Phosphorylation",
+   "belief": 0.774,
+   "n": 3,
+   "pmid": "29478807",
+   "dir": "ba"
+  },
+  {
    "a": "ASMTL",
    "b": "TLR7",
    "t": "DecreaseAmount",
@@ -68843,6 +69230,24 @@
   },
   {
    "a": "ATRX",
+   "b": "DAXX",
+   "t": "Activation",
+   "belief": 0.394,
+   "n": 6,
+   "pmid": "28875283",
+   "dir": "ab"
+  },
+  {
+   "a": "ATRX",
+   "b": "DAXX",
+   "t": "Inhibition",
+   "belief": 0.647,
+   "n": 10,
+   "pmid": "33479235",
+   "dir": "ba"
+  },
+  {
+   "a": "ATRX",
    "b": "EME1",
    "t": "Activation",
    "belief": 0.372,
@@ -68852,11 +69257,29 @@
   },
   {
    "a": "ATRX",
+   "b": "GPT",
+   "t": "Inhibition",
+   "belief": 0.441,
+   "n": 2,
+   "pmid": "28082393",
+   "dir": "ab"
+  },
+  {
+   "a": "ATRX",
    "b": "HELQ",
    "t": "Activation",
    "belief": 0.372,
    "n": 1,
    "pmid": "20493853",
+   "dir": "ba"
+  },
+  {
+   "a": "ATRX",
+   "b": "HIRA",
+   "t": "Activation",
+   "belief": 0.372,
+   "n": 1,
+   "pmid": "36810573",
    "dir": "ba"
   },
   {
@@ -92216,6 +92639,15 @@
   },
   {
    "a": "CASP8",
+   "b": "DAXX",
+   "t": "Activation",
+   "belief": 0.409,
+   "n": 4,
+   "pmid": "32782452",
+   "dir": "ba"
+  },
+  {
+   "a": "CASP8",
    "b": "DIABLO",
    "t": "Activation",
    "belief": 0.639,
@@ -94922,6 +95354,15 @@
    "n": 6,
    "pmid": "22132221",
    "dir": "ba"
+  },
+  {
+   "a": "CDK2",
+   "b": "HIRA",
+   "t": "Phosphorylation",
+   "belief": 0.828,
+   "n": 5,
+   "pmid": "11238922",
+   "dir": "ab"
   },
   {
    "a": "CDK2",
@@ -98264,6 +98705,15 @@
   },
   {
    "a": "CDKN2A",
+   "b": "SUV39H2",
+   "t": "DecreaseAmount",
+   "belief": 0.468,
+   "n": 1,
+   "pmid": "21060834",
+   "dir": "ba"
+  },
+  {
+   "a": "CDKN2A",
    "b": "SYCP2",
    "t": "Activation",
    "belief": 0.372,
@@ -100276,6 +100726,24 @@
    "belief": 0.475,
    "n": 2,
    "pmid": "34073097",
+   "dir": "ba"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "INS",
+   "t": "Inhibition",
+   "belief": 0.436,
+   "n": 1,
+   "pmid": "19216786",
+   "dir": "ab"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "TCF3",
+   "t": "Activation",
+   "belief": 0.397,
+   "n": 1,
+   "pmid": "41153416",
    "dir": "ba"
   },
   {
@@ -102566,6 +103034,15 @@
   },
   {
    "a": "CP",
+   "b": "GPT",
+   "t": "Inhibition",
+   "belief": 0.441,
+   "n": 2,
+   "pmid": "8121241",
+   "dir": "ab"
+  },
+  {
+   "a": "CP",
    "b": "GSTM2",
    "t": "IncreaseAmount",
    "belief": 0.472,
@@ -102697,6 +103174,15 @@
    "belief": 0.748,
    "n": 2,
    "pmid": "29730992",
+   "dir": "ab"
+  },
+  {
+   "a": "CP",
+   "b": "OGA",
+   "t": "Activation",
+   "belief": 0.376,
+   "n": 4,
+   "pmid": "19681060",
    "dir": "ab"
   },
   {
@@ -103381,6 +103867,114 @@
    "belief": 0.518,
    "n": 21,
    "pmid": "15023334",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "IFNG",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": null,
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "INS",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "10409662",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "INS",
+   "t": "DecreaseAmount",
+   "belief": 0.638,
+   "n": 4,
+   "pmid": "22509362",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "INS",
+   "t": "IncreaseAmount",
+   "belief": 0.472,
+   "n": 2,
+   "pmid": "10409662",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "INS",
+   "t": "Inhibition",
+   "belief": 0.63,
+   "n": 5,
+   "pmid": "37628737",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "JUN",
+   "t": "DecreaseAmount",
+   "belief": 0.635,
+   "n": 3,
+   "pmid": null,
+   "dir": "ba"
+  },
+  {
+   "a": "CREM",
+   "b": "JUN",
+   "t": "Inhibition",
+   "belief": 0.441,
+   "n": 2,
+   "pmid": "8562304",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "LEP",
+   "t": "IncreaseAmount",
+   "belief": 0.472,
+   "n": 2,
+   "pmid": "23936817",
+   "dir": "ba"
+  },
+  {
+   "a": "CREM",
+   "b": "NEUROD1",
+   "t": "Inhibition",
+   "belief": 0.441,
+   "n": 2,
+   "pmid": "22509362",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "STAT3",
+   "t": "IncreaseAmount",
+   "belief": 0.503,
+   "n": 3,
+   "pmid": "37629166",
+   "dir": "ba"
+  },
+  {
+   "a": "CREM",
+   "b": "SYK",
+   "t": "DecreaseAmount",
+   "belief": 0.7,
+   "n": 8,
+   "pmid": "21953500",
+   "dir": "ab"
+  },
+  {
+   "a": "CREM",
+   "b": "SYK",
+   "t": "Inhibition",
+   "belief": 0.614,
+   "n": 3,
+   "pmid": "21953500",
    "dir": "ab"
   },
   {
@@ -104600,6 +105194,15 @@
   },
   {
    "a": "CTNNB1",
+   "b": "DAXX",
+   "t": "Activation",
+   "belief": 0.366,
+   "n": 3,
+   "pmid": "19563778",
+   "dir": "ba"
+  },
+  {
+   "a": "CTNNB1",
    "b": "DDX3X",
    "t": "Activation",
    "belief": 0.717,
@@ -105325,6 +105928,24 @@
    "belief": 0.631,
    "n": 3,
    "pmid": "36932062",
+   "dir": "ba"
+  },
+  {
+   "a": "CTNNB1",
+   "b": "HIRA",
+   "t": "DecreaseAmount",
+   "belief": 0.485,
+   "n": 3,
+   "pmid": "28515277",
+   "dir": "ba"
+  },
+  {
+   "a": "CTNNB1",
+   "b": "HIRA",
+   "t": "IncreaseAmount",
+   "belief": 0.504,
+   "n": 4,
+   "pmid": "28515277",
    "dir": "ba"
   },
   {
@@ -110584,6 +111205,51 @@
    "dir": "ba"
   },
   {
+   "a": "DAXX",
+   "b": "HIRA",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "23863878",
+   "dir": "ba"
+  },
+  {
+   "a": "DAXX",
+   "b": "HIRA",
+   "t": "Inhibition",
+   "belief": 0.441,
+   "n": 2,
+   "pmid": "37227756",
+   "dir": "ab"
+  },
+  {
+   "a": "DAXX",
+   "b": "IFNG",
+   "t": "IncreaseAmount",
+   "belief": 0.644,
+   "n": 3,
+   "pmid": "29896440",
+   "dir": "ba"
+  },
+  {
+   "a": "DAXX",
+   "b": "STAT1",
+   "t": "Inhibition",
+   "belief": 0.425,
+   "n": 3,
+   "pmid": "38564904",
+   "dir": "ab"
+  },
+  {
+   "a": "DAXX",
+   "b": "STAT1",
+   "t": "Phosphorylation",
+   "belief": 0.631,
+   "n": 4,
+   "pmid": "38564904",
+   "dir": "ab"
+  },
+  {
    "a": "DCLRE1C",
    "b": "EXO1",
    "t": "Activation",
@@ -112681,6 +113347,42 @@
    "dir": "ab"
   },
   {
+   "a": "DICER1",
+   "b": "IFNG",
+   "t": "Activation",
+   "belief": 0.418,
+   "n": 13,
+   "pmid": "23450173",
+   "dir": "ab"
+  },
+  {
+   "a": "DICER1",
+   "b": "IFNG",
+   "t": "IncreaseAmount",
+   "belief": 0.504,
+   "n": 5,
+   "pmid": "19118902",
+   "dir": "ba"
+  },
+  {
+   "a": "DICER1",
+   "b": "IFNG",
+   "t": "Inhibition",
+   "belief": 0.492,
+   "n": 4,
+   "pmid": "24678908",
+   "dir": "ab"
+  },
+  {
+   "a": "DICER1",
+   "b": "TARDBP",
+   "t": "Activation",
+   "belief": 0.375,
+   "n": 5,
+   "pmid": "36834853",
+   "dir": "ba"
+  },
+  {
    "a": "DKC1",
    "b": "GATA1",
    "t": "Activation",
@@ -113713,6 +114415,15 @@
    "belief": 0.42,
    "n": 2,
    "pmid": "16980612",
+   "dir": "ba"
+  },
+  {
+   "a": "DNMT1",
+   "b": "SUV39H2",
+   "t": "IncreaseAmount",
+   "belief": 0.484,
+   "n": 1,
+   "pmid": "33890331",
    "dir": "ba"
   },
   {
@@ -119657,6 +120368,15 @@
   },
   {
    "a": "EXO1",
+   "b": "KCNJ11",
+   "t": "Inhibition",
+   "belief": 0.41,
+   "n": 3,
+   "pmid": "25089886",
+   "dir": "ab"
+  },
+  {
+   "a": "EXO1",
    "b": "MLH1",
    "t": "Activation",
    "belief": 0.367,
@@ -121025,6 +121745,15 @@
   },
   {
    "a": "F2R",
+   "b": "FLOT2",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "18166162",
+   "dir": "ba"
+  },
+  {
+   "a": "F2R",
    "b": "GNA12",
    "t": "Activation",
    "belief": 0.555,
@@ -122263,6 +122992,15 @@
    "belief": 0.458,
    "n": 1,
    "pmid": "25557546",
+   "dir": "ab"
+  },
+  {
+   "a": "FANCM",
+   "b": "KCNJ11",
+   "t": "Inhibition",
+   "belief": 0.476,
+   "n": 3,
+   "pmid": "39368985",
    "dir": "ab"
   },
   {
@@ -123514,6 +124252,96 @@
    "belief": 0.476,
    "n": 3,
    "pmid": "36849408",
+   "dir": "ab"
+  },
+  {
+   "a": "FLOT2",
+   "b": "FYN",
+   "t": "Phosphorylation",
+   "belief": 0.799,
+   "n": 4,
+   "pmid": null,
+   "dir": "ba"
+  },
+  {
+   "a": "FLOT2",
+   "b": "INS",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "21295117",
+   "dir": "ab"
+  },
+  {
+   "a": "FLOT2",
+   "b": "LEP",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "27999190",
+   "dir": "ba"
+  },
+  {
+   "a": "FLOT2",
+   "b": "MTOR",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "31074049",
+   "dir": "ab"
+  },
+  {
+   "a": "FLOT2",
+   "b": "SRC",
+   "t": "Activation",
+   "belief": 0.531,
+   "n": 2,
+   "pmid": "36042526",
+   "dir": "ab"
+  },
+  {
+   "a": "FLOT2",
+   "b": "SRC",
+   "t": "Phosphorylation",
+   "belief": 0.575,
+   "n": 2,
+   "pmid": "24983503",
+   "dir": "ba"
+  },
+  {
+   "a": "FLOT2",
+   "b": "STAT3",
+   "t": "Activation",
+   "belief": 0.366,
+   "n": 3,
+   "pmid": "30080291",
+   "dir": "ab"
+  },
+  {
+   "a": "FLOT2",
+   "b": "STAT3",
+   "t": "IncreaseAmount",
+   "belief": 0.503,
+   "n": 3,
+   "pmid": "38161417",
+   "dir": "ab"
+  },
+  {
+   "a": "FLOT2",
+   "b": "STAT3",
+   "t": "Ubiquitination",
+   "belief": 0.502,
+   "n": 2,
+   "pmid": "38161417",
+   "dir": "ab"
+  },
+  {
+   "a": "FLOT2",
+   "b": "WNT3",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "37174724",
    "dir": "ab"
   },
   {
@@ -129116,6 +129944,15 @@
   },
   {
    "a": "GSK3B",
+   "b": "HIRA",
+   "t": "Phosphorylation",
+   "belief": 0.781,
+   "n": 6,
+   "pmid": "27515126",
+   "dir": "ab"
+  },
+  {
+   "a": "GSK3B",
    "b": "HNRNPK",
    "t": "Dephosphorylation",
    "belief": 0.548,
@@ -132914,6 +133751,15 @@
   },
   {
    "a": "HELQ",
+   "b": "KCNJ11",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "38659927",
+   "dir": "ab"
+  },
+  {
+   "a": "HELQ",
    "b": "MAPT",
    "t": "Activation",
    "belief": 0.397,
@@ -133180,6 +134026,15 @@
    "belief": 0.372,
    "n": 1,
    "pmid": "33093614",
+   "dir": "ba"
+  },
+  {
+   "a": "HIRA",
+   "b": "INS",
+   "t": "Activation",
+   "belief": 0.431,
+   "n": 4,
+   "pmid": "26858689",
    "dir": "ba"
   },
   {
@@ -139763,6 +140618,42 @@
   },
   {
    "a": "INS",
+   "b": "KCNJ11",
+   "t": "Activation",
+   "belief": 0.376,
+   "n": 4,
+   "pmid": "16934222",
+   "dir": "ba"
+  },
+  {
+   "a": "INS",
+   "b": "KCNJ11",
+   "t": "DecreaseAmount",
+   "belief": 0.474,
+   "n": 1,
+   "pmid": "15910875",
+   "dir": "ba"
+  },
+  {
+   "a": "INS",
+   "b": "KCNJ11",
+   "t": "IncreaseAmount",
+   "belief": 0.472,
+   "n": 2,
+   "pmid": "15588728",
+   "dir": "ba"
+  },
+  {
+   "a": "INS",
+   "b": "KCNJ11",
+   "t": "Inhibition",
+   "belief": 0.497,
+   "n": 8,
+   "pmid": "16416420",
+   "dir": "ba"
+  },
+  {
+   "a": "INS",
    "b": "KDM6A",
    "t": "DecreaseAmount",
    "belief": 0.485,
@@ -140471,6 +141362,24 @@
    "n": 1,
    "pmid": "26908121",
    "dir": "ab"
+  },
+  {
+   "a": "INS",
+   "b": "OGA",
+   "t": "Activation",
+   "belief": 0.367,
+   "n": 2,
+   "pmid": "36768465",
+   "dir": "ba"
+  },
+  {
+   "a": "INS",
+   "b": "OGA",
+   "t": "IncreaseAmount",
+   "belief": 0.472,
+   "n": 2,
+   "pmid": "29155174",
+   "dir": "ba"
   },
   {
    "a": "INS",
@@ -144506,6 +145415,15 @@
   },
   {
    "a": "JUN",
+   "b": "TEX14",
+   "t": "DecreaseAmount",
+   "belief": 0.63,
+   "n": 1,
+   "pmid": null,
+   "dir": "ab"
+  },
+  {
+   "a": "JUN",
    "b": "TFE3",
    "t": "DecreaseAmount",
    "belief": 0.635,
@@ -144926,6 +145844,150 @@
    "n": 1,
    "pmid": "36385523",
    "dir": "ab"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "MUS81",
+   "t": "Activation",
+   "belief": 0.375,
+   "n": 4,
+   "pmid": "38254628",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "MUS81",
+   "t": "Inhibition",
+   "belief": 0.425,
+   "n": 3,
+   "pmid": "34113447",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "NEUROD1",
+   "t": "DecreaseAmount",
+   "belief": 0.474,
+   "n": 1,
+   "pmid": "36563694",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "PIF1",
+   "t": "Activation",
+   "belief": 0.419,
+   "n": 7,
+   "pmid": "33473214",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "PIF1",
+   "t": "Inhibition",
+   "belief": 0.436,
+   "n": 4,
+   "pmid": "27938663",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD51",
+   "t": "Activation",
+   "belief": 0.418,
+   "n": 10,
+   "pmid": "34500463",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD51",
+   "t": "Inhibition",
+   "belief": 0.476,
+   "n": 3,
+   "pmid": "32502392",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD52",
+   "t": "Activation",
+   "belief": 0.422,
+   "n": 30,
+   "pmid": "36002000",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD52",
+   "t": "Inhibition",
+   "belief": 0.403,
+   "n": 2,
+   "pmid": "34500463",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD54B",
+   "t": "Activation",
+   "belief": 0.372,
+   "n": 1,
+   "pmid": "25367035",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD54B",
+   "t": "Inhibition",
+   "belief": 0.476,
+   "n": 2,
+   "pmid": "37850655",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD9A",
+   "t": "Activation",
+   "belief": 0.366,
+   "n": 3,
+   "pmid": "32576832",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "RAD9A",
+   "t": "Inhibition",
+   "belief": 0.441,
+   "n": 2,
+   "pmid": "32576832",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "SLX4",
+   "t": "Activation",
+   "belief": 0.366,
+   "n": 3,
+   "pmid": "39291733",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "SLX4",
+   "t": "Inhibition",
+   "belief": 0.441,
+   "n": 1,
+   "pmid": "37105990",
+   "dir": "ba"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "XRCC6",
+   "t": "Activation",
+   "belief": 0.372,
+   "n": 1,
+   "pmid": "37134182",
+   "dir": "ba"
   },
   {
    "a": "KCNJ8",
@@ -153637,6 +154699,42 @@
    "belief": 0.841,
    "n": 20,
    "pmid": "39805841",
+   "dir": "ba"
+  },
+  {
+   "a": "MAPT",
+   "b": "OGA",
+   "t": "Activation",
+   "belief": 0.391,
+   "n": 7,
+   "pmid": "24326295",
+   "dir": "ba"
+  },
+  {
+   "a": "MAPT",
+   "b": "OGA",
+   "t": "Dephosphorylation",
+   "belief": 0.519,
+   "n": 4,
+   "pmid": "35588599",
+   "dir": "ba"
+  },
+  {
+   "a": "MAPT",
+   "b": "OGA",
+   "t": "Inhibition",
+   "belief": 0.476,
+   "n": 3,
+   "pmid": "38278659",
+   "dir": "ba"
+  },
+  {
+   "a": "MAPT",
+   "b": "OGA",
+   "t": "Phosphorylation",
+   "belief": 0.584,
+   "n": 8,
+   "pmid": "19732809",
    "dir": "ba"
   },
   {
@@ -163838,6 +164936,15 @@
   },
   {
    "a": "NEUROD1",
+   "b": "OGA",
+   "t": "Activation",
+   "belief": 0.372,
+   "n": 1,
+   "pmid": "19647786",
+   "dir": "ba"
+  },
+  {
+   "a": "NEUROD1",
    "b": "POU3F4",
    "t": "Activation",
    "belief": 0.372,
@@ -164122,6 +165229,15 @@
    "belief": 0.471,
    "n": 19,
    "pmid": "29562203",
+   "dir": "ba"
+  },
+  {
+   "a": "NFKB1",
+   "b": "SUV39H2",
+   "t": "DecreaseAmount",
+   "belief": 0.474,
+   "n": 1,
+   "pmid": "36650321",
    "dir": "ba"
   },
   {
@@ -166310,6 +167426,60 @@
    "n": 1,
    "pmid": "35646931",
    "dir": "ba"
+  },
+  {
+   "a": "OGA",
+   "b": "OGT",
+   "t": "Activation",
+   "belief": 0.51,
+   "n": 39,
+   "pmid": "33278716",
+   "dir": "ab"
+  },
+  {
+   "a": "OGA",
+   "b": "OGT",
+   "t": "DecreaseAmount",
+   "belief": 0.515,
+   "n": 22,
+   "pmid": "37186669",
+   "dir": "ab"
+  },
+  {
+   "a": "OGA",
+   "b": "OGT",
+   "t": "Glycosylation",
+   "belief": 0.42,
+   "n": 2,
+   "pmid": "19782947",
+   "dir": "ba"
+  },
+  {
+   "a": "OGA",
+   "b": "OGT",
+   "t": "IncreaseAmount",
+   "belief": 0.711,
+   "n": 20,
+   "pmid": "28488703",
+   "dir": "ab"
+  },
+  {
+   "a": "OGA",
+   "b": "OGT",
+   "t": "Inhibition",
+   "belief": 0.717,
+   "n": 29,
+   "pmid": "37820866",
+   "dir": "ab"
+  },
+  {
+   "a": "OGA",
+   "b": "PLK1",
+   "t": "DecreaseAmount",
+   "belief": 0.485,
+   "n": 3,
+   "pmid": "23946484",
+   "dir": "ab"
   },
   {
    "a": "OGFR",
@@ -169873,6 +171043,42 @@
    "belief": 0.798,
    "n": 9,
    "pmid": "35274968",
+   "dir": "ab"
+  },
+  {
+   "a": "PLK1",
+   "b": "TEX14",
+   "t": "Activation",
+   "belief": 0.531,
+   "n": 2,
+   "pmid": "22405274",
+   "dir": "ab"
+  },
+  {
+   "a": "PLK1",
+   "b": "TEX14",
+   "t": "DecreaseAmount",
+   "belief": 0.553,
+   "n": 2,
+   "pmid": "22405274",
+   "dir": "ab"
+  },
+  {
+   "a": "PLK1",
+   "b": "TEX14",
+   "t": "Dephosphorylation",
+   "belief": 0.493,
+   "n": 1,
+   "pmid": "22405274",
+   "dir": "ba"
+  },
+  {
+   "a": "PLK1",
+   "b": "TEX14",
+   "t": "Phosphorylation",
+   "belief": 0.928,
+   "n": 10,
+   "pmid": "23141205",
    "dir": "ab"
   },
   {
@@ -183638,6 +184844,24 @@
   },
   {
    "a": "SUV39H1",
+   "b": "SUV39H2",
+   "t": "DecreaseAmount",
+   "belief": 0.474,
+   "n": 1,
+   "pmid": "32698678",
+   "dir": "ba"
+  },
+  {
+   "a": "SUV39H1",
+   "b": "SUV39H2",
+   "t": "Methylation",
+   "belief": 0.501,
+   "n": 13,
+   "pmid": "11701123",
+   "dir": "ab"
+  },
+  {
+   "a": "SUV39H1",
    "b": "TARDBP",
    "t": "IncreaseAmount",
    "belief": 0.503,
@@ -188052,6 +189276,14 @@
   },
   {
    "a": "ABL1",
+   "b": "ACTL6A",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "33101383"
+  },
+  {
+   "a": "ABL1",
    "b": "ADAM15",
    "t": "Complex",
    "belief": 0.684,
@@ -189609,6 +190841,54 @@
    "belief": 0.471,
    "n": 5,
    "pmid": "38591063"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "CDK2",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "21699904"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "DNTT",
+   "t": "Complex",
+   "belief": 0.424,
+   "n": 2,
+   "pmid": "39471175"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "ERCC1",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "40510426"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "PRKDC",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "35831314"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "SLX4",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "37071664"
+  },
+  {
+   "a": "ACTL6A",
+   "b": "TOP2B",
+   "t": "Complex",
+   "belief": 0.684,
+   "n": 1,
+   "pmid": "12837248"
   },
   {
    "a": "ACTN1",
@@ -193132,6 +194412,14 @@
   },
   {
    "a": "AKT1",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.411,
+   "n": 2,
+   "pmid": "27515126"
+  },
+  {
+   "a": "AKT1",
    "b": "IKBKG",
    "t": "Complex",
    "belief": 0.833,
@@ -195529,6 +196817,14 @@
    "belief": 0.83,
    "n": 1,
    "pmid": "21832049"
+  },
+  {
+   "a": "APP",
+   "b": "FLOT2",
+   "t": "Complex",
+   "belief": 0.889,
+   "n": 10,
+   "pmid": "22737128"
   },
   {
    "a": "APP",
@@ -198939,6 +200235,78 @@
    "pmid": "33268465"
   },
   {
+   "a": "ASF1A",
+   "b": "BRIP1",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "34079125"
+  },
+  {
+   "a": "ASF1A",
+   "b": "CHAF1B",
+   "t": "Complex",
+   "belief": 0.869,
+   "n": 13,
+   "pmid": "26066981"
+  },
+  {
+   "a": "ASF1A",
+   "b": "CTNNB1",
+   "t": "Complex",
+   "belief": 0.72,
+   "n": 20,
+   "pmid": "36428674"
+  },
+  {
+   "a": "ASF1A",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.865,
+   "n": 106,
+   "pmid": "21763476"
+  },
+  {
+   "a": "ASF1A",
+   "b": "JUN",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "23602572"
+  },
+  {
+   "a": "ASF1A",
+   "b": "MCM4",
+   "t": "Complex",
+   "belief": 0.822,
+   "n": 3,
+   "pmid": "22407294"
+  },
+  {
+   "a": "ASF1A",
+   "b": "POLA1",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "33575221"
+  },
+  {
+   "a": "ASF1A",
+   "b": "RADX",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "34079125"
+  },
+  {
+   "a": "ASF1A",
+   "b": "RBBP7",
+   "t": "Complex",
+   "belief": 0.823,
+   "n": 6,
+   "pmid": "28514442"
+  },
+  {
    "a": "ASMTL",
    "b": "CTAG2",
    "t": "Complex",
@@ -199884,6 +201252,14 @@
   },
   {
    "a": "ATRX",
+   "b": "DAXX",
+   "t": "Complex",
+   "belief": 0.859,
+   "n": 990,
+   "pmid": "33068409"
+  },
+  {
+   "a": "ATRX",
    "b": "DDX3X",
    "t": "Complex",
    "belief": 0.426,
@@ -199945,6 +201321,14 @@
    "belief": 0.426,
    "n": 1,
    "pmid": "31963867"
+  },
+  {
+   "a": "ATRX",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.547,
+   "n": 10,
+   "pmid": "28934504"
   },
   {
    "a": "ATRX",
@@ -212612,6 +213996,14 @@
   },
   {
    "a": "CASP8",
+   "b": "CHAF1B",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "31772230"
+  },
+  {
+   "a": "CASP8",
    "b": "CYLD",
    "t": "Complex",
    "belief": 0.778,
@@ -214020,6 +215412,14 @@
   },
   {
    "a": "CDK2",
+   "b": "CHAF1B",
+   "t": "Complex",
+   "belief": 0.684,
+   "n": 1,
+   "pmid": "10938080"
+  },
+  {
+   "a": "CDK2",
    "b": "CITED1",
    "t": "Complex",
    "belief": 0.83,
@@ -214121,6 +215521,14 @@
    "belief": 0.83,
    "n": 1,
    "pmid": "21319273"
+  },
+  {
+   "a": "CDK2",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "35087762"
   },
   {
    "a": "CDK2",
@@ -215196,6 +216604,14 @@
   },
   {
    "a": "CDKN2A",
+   "b": "CHAF1B",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "33616161"
+  },
+  {
+   "a": "CDKN2A",
    "b": "CTCF",
    "t": "Complex",
    "belief": 0.554,
@@ -215209,6 +216625,14 @@
    "belief": 0.789,
    "n": 9,
    "pmid": "19208841"
+  },
+  {
+   "a": "CDKN2A",
+   "b": "DAXX",
+   "t": "Complex",
+   "belief": 0.856,
+   "n": 5,
+   "pmid": "18583933"
   },
   {
    "a": "CDKN2A",
@@ -217131,6 +218555,62 @@
    "pmid": "39995862"
   },
   {
+   "a": "CHAF1B",
+   "b": "CHD4",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "24981860"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "DNMT1",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "33616161"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.411,
+   "n": 3,
+   "pmid": "24120531"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "MCM4",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "33575221"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "POLA1",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "33575221"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "RPA3",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "37827155"
+  },
+  {
+   "a": "CHAF1B",
+   "b": "SMARCA1",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "24981860"
+  },
+  {
    "a": "CHD4",
    "b": "CUL4A",
    "t": "Complex",
@@ -217601,6 +219081,14 @@
    "belief": 0.822,
    "n": 3,
    "pmid": "32744500"
+  },
+  {
+   "a": "CHD4",
+   "b": "ZNF827",
+   "t": "Complex",
+   "belief": 0.833,
+   "n": 2,
+   "pmid": "25150861"
   },
   {
    "a": "CHD8",
@@ -220099,6 +221587,22 @@
    "pmid": "19416967"
   },
   {
+   "a": "CREM",
+   "b": "JUN",
+   "t": "Complex",
+   "belief": 0.411,
+   "n": 2,
+   "pmid": "27313580"
+  },
+  {
+   "a": "CREM",
+   "b": "MAPT",
+   "t": "Complex",
+   "belief": 0.443,
+   "n": 9,
+   "pmid": "15109746"
+  },
+  {
    "a": "CRHR1",
    "b": "FUT2",
    "t": "Complex",
@@ -221580,6 +223084,14 @@
   },
   {
    "a": "CTNNB1",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.471,
+   "n": 5,
+   "pmid": "28515277"
+  },
+  {
+   "a": "CTNNB1",
    "b": "HNRNPK",
    "t": "Complex",
    "belief": 0.882,
@@ -222441,6 +223953,14 @@
    "belief": 0.457,
    "n": 2,
    "pmid": "36736422"
+  },
+  {
+   "a": "CTSG",
+   "b": "TEX14",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "32707033"
   },
   {
    "a": "CTSG",
@@ -224403,6 +225923,86 @@
    "pmid": "21653829"
   },
   {
+   "a": "DAXX",
+   "b": "DKC1",
+   "t": "Complex",
+   "belief": 0.822,
+   "n": 4,
+   "pmid": "25416818"
+  },
+  {
+   "a": "DAXX",
+   "b": "DNMT1",
+   "t": "Complex",
+   "belief": 0.937,
+   "n": 18,
+   "pmid": "20620219"
+  },
+  {
+   "a": "DAXX",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.716,
+   "n": 24,
+   "pmid": "29479426"
+  },
+  {
+   "a": "DAXX",
+   "b": "MECP2",
+   "t": "Complex",
+   "belief": 0.455,
+   "n": 4,
+   "pmid": "22500635"
+  },
+  {
+   "a": "DAXX",
+   "b": "RAD51",
+   "t": "Complex",
+   "belief": 0.451,
+   "n": 7,
+   "pmid": "31029033"
+  },
+  {
+   "a": "DAXX",
+   "b": "SPIN2B",
+   "t": "Complex",
+   "belief": 0.822,
+   "n": 3,
+   "pmid": "33961781"
+  },
+  {
+   "a": "DAXX",
+   "b": "STAT1",
+   "t": "Complex",
+   "belief": 0.543,
+   "n": 7,
+   "pmid": "38564904"
+  },
+  {
+   "a": "DAXX",
+   "b": "STAT3",
+   "t": "Complex",
+   "belief": 0.883,
+   "n": 12,
+   "pmid": "16331268"
+  },
+  {
+   "a": "DAXX",
+   "b": "SUV39H1",
+   "t": "Complex",
+   "belief": 0.863,
+   "n": 13,
+   "pmid": "26496610"
+  },
+  {
+   "a": "DAXX",
+   "b": "TCF3",
+   "t": "Complex",
+   "belief": 0.854,
+   "n": 6,
+   "pmid": "19308989"
+  },
+  {
    "a": "DCLRE1C",
    "b": "EXO1",
    "t": "Complex",
@@ -226004,6 +227604,14 @@
   },
   {
    "a": "DDX3X",
+   "b": "DICER1",
+   "t": "Complex",
+   "belief": 0.489,
+   "n": 6,
+   "pmid": "27462427"
+  },
+  {
+   "a": "DDX3X",
    "b": "DNMT1",
    "t": "Complex",
    "belief": 0.424,
@@ -226899,6 +228507,14 @@
    "pmid": "31871319"
   },
   {
+   "a": "DICER1",
+   "b": "TARDBP",
+   "t": "Complex",
+   "belief": 0.755,
+   "n": 15,
+   "pmid": "25883138"
+  },
+  {
    "a": "DKC1",
    "b": "EED",
    "t": "Complex",
@@ -227153,6 +228769,14 @@
    "belief": 0.684,
    "n": 1,
    "pmid": "15174051"
+  },
+  {
+   "a": "DMD",
+   "b": "KCNJ11",
+   "t": "Complex",
+   "belief": 0.424,
+   "n": 2,
+   "pmid": "38891777"
   },
   {
    "a": "DMD",
@@ -227929,6 +229553,14 @@
    "belief": 0.959,
    "n": 28,
    "pmid": "32033081"
+  },
+  {
+   "a": "DNMT1",
+   "b": "SUV39H2",
+   "t": "Complex",
+   "belief": 0.426,
+   "n": 1,
+   "pmid": "26296162"
   },
   {
    "a": "DNMT1",
@@ -232356,6 +233988,14 @@
   },
   {
    "a": "EDA",
+   "b": "FLOT2",
+   "t": "Complex",
+   "belief": 0.441,
+   "n": 10,
+   "pmid": "37007999"
+  },
+  {
+   "a": "EDA",
    "b": "GABRA3",
    "t": "Complex",
    "belief": 0.83,
@@ -234001,6 +235641,14 @@
    "belief": 0.426,
    "n": 1,
    "pmid": "16916646"
+  },
+  {
+   "a": "ELF4",
+   "b": "HIRA",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "35140242"
   },
   {
    "a": "ELF4",
@@ -237628,6 +239276,14 @@
   },
   {
    "a": "F2R",
+   "b": "FLOT2",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 6,
+   "pmid": "15969748"
+  },
+  {
+   "a": "F2R",
    "b": "GNA12",
    "t": "Complex",
    "belief": 0.886,
@@ -240281,6 +241937,70 @@
    "belief": 0.83,
    "n": 1,
    "pmid": "31048545"
+  },
+  {
+   "a": "FLOT2",
+   "b": "FYN",
+   "t": "Complex",
+   "belief": 0.424,
+   "n": 2,
+   "pmid": null
+  },
+  {
+   "a": "FLOT2",
+   "b": "HDAC6",
+   "t": "Complex",
+   "belief": 0.776,
+   "n": 2,
+   "pmid": "35676659"
+  },
+  {
+   "a": "FLOT2",
+   "b": "JUN",
+   "t": "Complex",
+   "belief": 0.411,
+   "n": 2,
+   "pmid": "36535580"
+  },
+  {
+   "a": "FLOT2",
+   "b": "MAPT",
+   "t": "Complex",
+   "belief": 0.413,
+   "n": 15,
+   "pmid": "24151487"
+  },
+  {
+   "a": "FLOT2",
+   "b": "PIF1",
+   "t": "Complex",
+   "belief": 0.424,
+   "n": 2,
+   "pmid": null
+  },
+  {
+   "a": "FLOT2",
+   "b": "SRC",
+   "t": "Complex",
+   "belief": 0.767,
+   "n": 3,
+   "pmid": "25909165"
+  },
+  {
+   "a": "FLOT2",
+   "b": "STAT3",
+   "t": "Complex",
+   "belief": 0.489,
+   "n": 6,
+   "pmid": "38161417"
+  },
+  {
+   "a": "FLOT2",
+   "b": "WNT3",
+   "t": "Complex",
+   "belief": 0.423,
+   "n": 3,
+   "pmid": "36040316"
   },
   {
    "a": "FOXN2",
@@ -248155,6 +249875,46 @@
    "pmid": "33823531"
   },
   {
+   "a": "HIRA",
+   "b": "INS",
+   "t": "Complex",
+   "belief": 0.43,
+   "n": 10,
+   "pmid": "35074483"
+  },
+  {
+   "a": "HIRA",
+   "b": "JUN",
+   "t": "Complex",
+   "belief": 0.833,
+   "n": 2,
+   "pmid": "23602572"
+  },
+  {
+   "a": "HIRA",
+   "b": "MECP2",
+   "t": "Complex",
+   "belief": 0.822,
+   "n": 3,
+   "pmid": "28514442"
+  },
+  {
+   "a": "HIRA",
+   "b": "OGT",
+   "t": "Complex",
+   "belief": 0.822,
+   "n": 4,
+   "pmid": "27217568"
+  },
+  {
+   "a": "HIRA",
+   "b": "PLK1",
+   "t": "Complex",
+   "belief": 0.83,
+   "n": 1,
+   "pmid": "29764989"
+  },
+  {
    "a": "HIVEP3",
    "b": "JUN",
    "t": "Complex",
@@ -253604,6 +255364,14 @@
   },
   {
    "a": "INS",
+   "b": "KCNJ11",
+   "t": "Complex",
+   "belief": 0.659,
+   "n": 6,
+   "pmid": "28435278"
+  },
+  {
+   "a": "INS",
    "b": "KIF13B",
    "t": "Complex",
    "belief": 0.83,
@@ -255761,6 +257529,14 @@
    "belief": 0.426,
    "n": 1,
    "pmid": "41449820"
+  },
+  {
+   "a": "KCNJ11",
+   "b": "LEP",
+   "t": "Complex",
+   "belief": 0.424,
+   "n": 2,
+   "pmid": "25477898"
   },
   {
    "a": "KCNJ8",
@@ -271140,6 +272916,14 @@
   },
   {
    "a": "NEUROD1",
+   "b": "OGA",
+   "t": "Complex",
+   "belief": 0.557,
+   "n": 5,
+   "pmid": "23647930"
+  },
+  {
+   "a": "NEUROD1",
    "b": "OGT",
    "t": "Complex",
    "belief": 0.664,
@@ -273353,6 +275137,14 @@
    "belief": 0.426,
    "n": 1,
    "pmid": "27013032"
+  },
+  {
+   "a": "OGA",
+   "b": "OGT",
+   "t": "Complex",
+   "belief": 0.913,
+   "n": 100,
+   "pmid": "37907462"
   },
   {
    "a": "OGFR",
@@ -276297,6 +278089,14 @@
    "belief": 0.774,
    "n": 8,
    "pmid": "27390342"
+  },
+  {
+   "a": "PLK1",
+   "b": "TEX14",
+   "t": "Complex",
+   "belief": 0.888,
+   "n": 21,
+   "pmid": "22405274"
   },
   {
    "a": "PLK1",
@@ -282387,6 +284187,14 @@
    "pmid": "40437099"
   },
   {
+   "a": "RBBP7",
+   "b": "ZNF827",
+   "t": "Complex",
+   "belief": 0.822,
+   "n": 3,
+   "pmid": "25150861"
+  },
+  {
    "a": "RBBP8",
    "b": "RIMBP2",
    "t": "Complex",
@@ -287428,6 +289236,14 @@
   },
   {
    "a": "STAT1",
+   "b": "SUV39H2",
+   "t": "Complex",
+   "belief": 0.407,
+   "n": 4,
+   "pmid": "41078093"
+  },
+  {
+   "a": "STAT1",
    "b": "TCTN3",
    "t": "Complex",
    "belief": 0.423,
@@ -287812,6 +289628,14 @@
   },
   {
    "a": "SUV39H1",
+   "b": "SUV39H2",
+   "t": "Complex",
+   "belief": 0.698,
+   "n": 22,
+   "pmid": "26304540"
+  },
+  {
+   "a": "SUV39H1",
    "b": "SUZ12",
    "t": "Complex",
    "belief": 0.455,
@@ -287857,6 +289681,14 @@
    "belief": 0.426,
    "n": 1,
    "pmid": "30967995"
+  },
+  {
+   "a": "SUV39H2",
+   "b": "UBE2V2",
+   "t": "Complex",
+   "belief": 0.684,
+   "n": 1,
+   "pmid": "16169070"
   },
   {
    "a": "SUZ12",

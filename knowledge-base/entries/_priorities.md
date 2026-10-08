@@ -1,5 +1,6 @@
 ## Where am I
 - Decided to abandon LoF for now - but maybe look at Vasili's TTLL10 alignments
+- Thinking about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 and 
 
 ## Have-TODO
 - Info om Zoom (incl. formøde) med alle deltagere
@@ -8,6 +9,7 @@
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 - Bjørn
 - Email
+- `/plugin enable cc-plugin-you-should-know@builtin`
 
 ## Week
 - Tidy plan / cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 

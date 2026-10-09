@@ -997,6 +997,7 @@ function normalizeLegacyTypes(list) { (list || []).forEach(normalizeLegacyType);
 const SPECIAL_CARDS = [
   { id: '_priorities', title: 'Priorities',  staleDays: 4 },
   { id: '_networking', title: 'Networking',  staleDays: 14 },
+  { id: '_admin',      title: 'Admin',       staleDays: 14 },
   { id: '_strategy',   title: 'Strategy',    staleDays: 30 },
 ];
 const SPECIAL_IDS = new Set([...SPECIAL_CARDS.map(s => s.id), '_digest']);
@@ -1013,7 +1014,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-09-25.1';
+const APP_BUILD = '2026-10-09.2';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -1902,9 +1903,8 @@ function deriveFacetsFromSearchText() {
   const raw = (document.getElementById('search-input')?.value||'').trim();
   const groups = splitOrGroups(raw);
   if (groups.length > 1) return;   // ambiguous which group is "the" facet scope — leave chips as they are
-  const allGeneNames = [...new Set(items.flatMap(i=>(i.genes||[]).flatMap(g=>geneAliasesU(g))))];
   const allTagNames = [...new Set(items.flatMap(i=>(i.tags||[]).map(t=>t.toLowerCase())))];
-  const resolveGene = prefix => { const up=prefix.toUpperCase(); if (allGeneNames.includes(up)) return up; const m=allGeneNames.filter(g=>g.startsWith(up)); return m.length===1?m[0]:up; };
+  const resolveGene = name => name.toUpperCase();   // @gene is exact (case-insensitive): @CTB never means CTBP2
   const resolveTag = prefix => { const lo=prefix.toLowerCase(); if (allTagNames.includes(lo)) return lo; const m=allTagNames.filter(t=>t.startsWith(lo)); return m.length===1?m[0]:lo; };
   const g = groups.length ? parseGroup(groups[0], resolveGene, resolveTag) : { typeOr: [], tagAnd: [], tagOr: [] };
   activeTypes = new Set(g.typeOr);   // /type is always pure-OR — always safe to mirror
@@ -1973,14 +1973,10 @@ function editExclusion(prefix, name, key, add) {
 }
 function getVisibleItems() {
   const raw=(document.getElementById('search-input')?.value||'').trim();
-  const allGeneNames = [...new Set(items.flatMap(i=>(i.genes||[]).flatMap(g=>geneAliasesU(g))))];
   const allTagNames = [...new Set(items.flatMap(i=>(i.tags||[]).map(t=>t.toLowerCase())))];
-  function resolveGene(prefix) {
-    const up = prefix.toUpperCase();
-    if (allGeneNames.includes(up)) return up;
-    const m = allGeneNames.filter(g => g.startsWith(up));
-    return m.length === 1 ? m[0] : up;
-  }
+  // @gene matches only the exact symbol or alias (case-insensitive) — no prefix completion, so
+  // @CTB never silently becomes CTBP2 just because CTBP2 is the only gene starting with CTB.
+  function resolveGene(name) { return name.toUpperCase(); }
   function resolveTag(prefix) {
     const lo = prefix.toLowerCase();
     if (allTagNames.includes(lo)) return lo;
@@ -2064,11 +2060,11 @@ function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
 // Dashboard "head" cards — each sits atop a column in digest view, in this order:
-// the special cards (Priorities, Strategy, Networking), then Open issues (in the slot the generated
+// the special cards (Priorities, Admin, Strategy, Networking), then Open issues (in the slot the generated
 // Dashboard digest used to occupy — that card is hidden for now, code kept below), then Inbox.
-// Each array entry lands in its own column (round-robin, see renderList) — except Strategy and
-// Networking, which are glued into one entry so Networking always renders directly under Strategy
-// in the same column, instead of scattering across separate columns like the other heads.
+// Each array entry lands in its own column (round-robin, see renderList) — except Admin, Strategy and
+// Networking, which are glued into one entry so they always render stacked in that order in the same
+// column, instead of scattering across separate columns like the other heads.
 function digestHeads(){
   // Dashboard digest card hidden — uncomment (and restore digestHtml in the array below) to bring it back.
   // const d = window._kbDigest;
@@ -2076,9 +2072,9 @@ function digestHeads(){
   //   ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
   //   : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
   const cardFor = id => renderSpecialCard(SPECIAL_CARDS.find(s => s.id === id), items.find(i => i.id === id));
-  const strategyAndNetworking = cardFor('_strategy') + cardFor('_networking');
+  const adminStrategyNetworking = cardFor('_admin') + cardFor('_strategy') + cardFor('_networking');
   // was: [cardFor('_priorities'), strategyAndNetworking, digestHtml, renderInboxCard(), renderGhIssuesCard()]
-  return [cardFor('_priorities'), strategyAndNetworking, renderGhIssuesCard(), renderInboxCard()].filter(Boolean);
+  return [cardFor('_priorities'), adminStrategyNetworking, renderGhIssuesCard(), renderInboxCard()].filter(Boolean);
 }
 function renderLinkBanner() {
   const el = document.getElementById('link-banner');
@@ -5058,8 +5054,8 @@ function geCardOff(){
   _geNeighboursRevealed = revealed;
   return off;
 }
-// '*GENE' spikes parsed from the search bar. Resolves a gene name like @ does (exact, else
-// unique-prefix) against the sidecar's OWN gene vocabulary (interactions.genes) — self-contained,
+// '*GENE' spikes parsed from the search bar. Resolves a gene name exactly, else by
+// unique prefix (unlike @, which is exact only), against the sidecar's OWN gene vocabulary (interactions.genes) — self-contained,
 // so there's no dependency on the last build's maps. Returns uppercase canonical syms that exist in
 // the sidecar; ambiguous or unknown tokens are ignored. (Aliases like *RNF12 aren't resolved yet.)
 function geSpikes(){

@@ -1,15 +1,15 @@
 {
-  "id": "_priorities",
+  "id": "_admin",
   "type": "note",
-  "title": "Priorities",
+  "title": "Admin",
   "tags": [],
   "genes": [],
   "source": "",
-  "date": "2026-10-09T11:19:49.639Z",
+  "date": "2026-10-09T11:19:55.897Z",
   "synced": false,
   "connection": false,
   "archived": false,
   "due": "",
-  "_sortTag": "",
-  "pinned": false
+  "pinned": false,
+  "_sortTag": ""
 }

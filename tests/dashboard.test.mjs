@@ -1,4 +1,4 @@
-// The dashboard's special cards (Priorities, Networking, Strategy). They are ordinary note
+// The dashboard's special cards (Priorities, Networking, Admin, Strategy). They are ordinary note
 // entries with reserved ids — so the Python tooling needs no special-casing — that render as
 // dashboard heads and never appear in the normal card list.
 import { load } from './harness.mjs';
@@ -14,9 +14,9 @@ const noop = async () => ({ ok: true, status: 200, json: async () => ({}), text:
 const note = (id, title, extra = {}) =>
   ({ id, type: 'note', title, tags: [], genes: [], content: 'body of ' + id, date: '2026-07-14T00:00:00Z', ...extra });
 
-// The <h2> of every dashboard head, in emission order. Networking and Strategy are glued into a
+// The <h2> of every dashboard head, in emission order. Admin, Strategy and Networking are glued into a
 // single array entry (see digestHeads), so this pulls every <h2> out of each entry rather than
-// just the first — otherwise Strategy's heading would be invisible to this helper. A head with no
+// just the first — otherwise the later headings would be invisible to this helper. A head with no
 // <h2> is the "click to create" placeholder for a special card that doesn't exist yet.
 const headings = html => html
   .flatMap(h => [...h.matchAll(/<h2[^>]*>(?:<a[^>]*>)?([^<]+)/g)].map(m => m[1].trim()));
@@ -33,28 +33,30 @@ function setup(cards) {
 console.log('\nThe registry');
 {
   const { api } = setup([]);
-  eq(api.SPECIAL_CARDS.map(s => s.id), ['_priorities', '_networking', '_strategy'], 'Priorities, Networking, then Strategy');
-  eq([...api.SPECIAL_IDS], ['_priorities', '_networking', '_strategy', '_digest'], 'the generated digest is special too');
+  eq(api.SPECIAL_CARDS.map(s => s.id), ['_priorities', '_networking', '_admin', '_strategy'], 'Priorities, Networking, Admin, then Strategy');
+  eq([...api.SPECIAL_IDS], ['_priorities', '_networking', '_admin', '_strategy', '_digest'], 'the generated digest is special too');
 }
 
-console.log('\nDashboard order: Priorities, Networking, Strategy, Dashboard, then Inbox');
+console.log('\nDashboard order: Priorities, Admin, Strategy, Networking, Open issues, then Inbox');
 {
   const { api } = setup([
     note('_strategy', 'Strategy'),        // deliberately out of order in `items`...
     note('_networking', 'Networking'),
+    note('_admin', 'Admin'),
     note('_priorities', 'Priorities'),
     note('n1', 'Normal'),
   ]);
   // ...the dashboard order comes from the registry, not from entry order on disk.
-  eq(headings(api.digestHeads()), ['Priorities', 'Networking', 'Strategy', 'Dashboard', 'Inbox'], 'heads render in the intended order');
+  eq(headings(api.digestHeads()), ['Priorities', 'Admin', 'Strategy', 'Networking', 'Inbox'], 'heads render in the intended order');
 }
 
-console.log('\nNetworking and Strategy are glued to one column, Strategy directly below Networking');
+console.log('\nAdmin, Strategy and Networking are glued to one column, stacked in that order');
 {
   // Heads distribute round-robin across columns (see renderList), which would otherwise scatter
-  // Networking and Strategy into different columns. Check every column count the layout can pick.
+  // Admin, Strategy and Networking into different columns. Check every column count the layout can pick.
   const { api, sandbox } = setup([
     note('_priorities', 'Priorities'),
+    note('_admin', 'Admin'),
     note('_networking', 'Networking'),
     note('_strategy', 'Strategy'),
   ]);
@@ -65,12 +67,13 @@ console.log('\nNetworking and Strategy are glued to one column, Strategy directl
     api.renderList();
     const cols = list.innerHTML.split('class="item-col"').slice(1);
     eq(cols.length, nCols, `width ${width}: layout picks ${nCols} column(s)`);
-    const col = cols.find(c => c.includes('<h2>Networking</h2>'));
-    const iN = col ? col.indexOf('<h2>Networking</h2>') : -1;
-    const iS = col ? col.indexOf('<h2>Strategy</h2>') : -1;
-    eq(iN !== -1 && iS > iN, true, `${nCols} column(s): Strategy is in the same column, after Networking`);
-    eq(iN !== -1 && !col.slice(iN + '<h2>Networking</h2>'.length, iS === -1 ? undefined : iS).includes('<h2>'), true,
-       `${nCols} column(s): nothing else sits between Networking and Strategy`);
+    const col = cols.find(c => c.includes('<h2>Admin</h2>'));
+    const at = h => col ? col.indexOf(`<h2>${h}</h2>`) : -1;
+    const [iA, iS, iN] = ['Admin', 'Strategy', 'Networking'].map(at);
+    eq(iA !== -1 && iS > iA && iN > iS, true, `${nCols} column(s): Admin, Strategy, Networking share a column, in that order`);
+    const between = (a, b) => col.slice(a, b).match(/<h2>/g).length;
+    eq(iA !== -1 && between(iA, iS) === 1 && between(iS, iN) === 1, true,
+       `${nCols} column(s): nothing else sits between them`);
   }
 }
 
@@ -78,7 +81,7 @@ console.log('\nA missing special card offers to create itself');
 {
   const { api } = setup([note('_priorities', 'Priorities')]);
   const heads = api.digestHeads();
-  eq(headings(heads), ['Priorities', 'Dashboard', 'Inbox'], 'Strategy is absent from the headings');
+  eq(headings(heads), ['Priorities', 'Inbox'], 'Strategy is absent from the headings');
   eq(heads.some(h => /Click to create a strategy card/.test(h)), true, 'a placeholder invites creating it');
 
   await api.createSpecialCard('_strategy');
@@ -88,7 +91,7 @@ console.log('\nA missing special card offers to create itself');
   eq([...api.queue.keys()].sort(),
      ['knowledge-base/entries/_strategy.json', 'knowledge-base/entries/_strategy.md'],
      'and it is queued for commit like any other card');
-  eq(headings(api.digestHeads()), ['Priorities', 'Strategy', 'Dashboard', 'Inbox'], 'it now takes its place on the dashboard');
+  eq(headings(api.digestHeads()), ['Priorities', 'Strategy', 'Inbox'], 'it now takes its place on the dashboard');
 }
 
 console.log('\nSpecial cards never appear in the normal list');
@@ -97,6 +100,7 @@ console.log('\nSpecial cards never appear in the normal list');
     note('_priorities', 'Priorities'),
     note('_strategy', 'Strategy'),
     note('_networking', 'Networking'),
+    note('_admin', 'Admin'),
     note('p1', 'Pinned', { pinned: true }),
     note('n1', 'Normal'),
   ]);
@@ -106,7 +110,7 @@ console.log('\nSpecial cards never appear in the normal list');
   api.renderList();
   const list = listHtml();
   eq(/data-id="n1"/.test(list), true, 'a normal card is listed');
-  eq(/data-id="_priorities"/.test(list) || /data-id="_strategy"/.test(list) || /data-id="_networking"/.test(list), false,
+  eq(/data-id="_priorities"/.test(list) || /data-id="_strategy"/.test(list) || /data-id="_networking"/.test(list) || /data-id="_admin"/.test(list), false,
      'no special card leaks into the list');
 
   api.digestVisible = true;       // the dashboard
@@ -117,6 +121,8 @@ console.log('\nSpecial cards never appear in the normal list');
   eq(/data-id="_strategy"/.test(dash), false, 'and Strategy appears only as a head, never as a card');
   eq(/<h2>Strategy<\/h2>/.test(dash), true, 'the Strategy head is rendered');
   eq(/data-id="_networking"/.test(dash), false, 'and Networking appears only as a head, never as a card');
+  eq(/data-id="_admin"/.test(dash), false, 'and Admin appears only as a head, never as a card');
+  eq(/<h2>Admin<\/h2>/.test(dash), true, 'the Admin head is rendered');
   eq(/<h2>Networking<\/h2>/.test(dash), true, 'the Networking head is rendered');
 }
 
@@ -271,7 +277,7 @@ console.log('\nOpen issues: every repo card\'s open issues, concatenated, one co
   ];
   const { api, sandbox } = setup([note('_priorities', 'Priorities'), ...cards()]);
   const heads = api.digestHeads();
-  eq(headings(heads), ['Priorities', 'Dashboard', 'Inbox', 'Open issues'], 'Open issues is the last dashboard head');
+  eq(headings(heads), ['Priorities', 'Open issues', 'Inbox'], 'Open issues comes after the special cards, before Inbox');
   const card = api.renderGhIssuesCard();
   const repos = [...card.matchAll(/<summary><span>([^<]+)<\/span><span class="gh-repo-n">(\d+)/g)].map(m => [m[1], +m[2]]);
   eq(repos, [['fresh', 2], ['old', 1]], 'repos with open issues only, most recently active first, with counts');

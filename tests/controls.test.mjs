@@ -809,5 +809,19 @@ console.log('\nBulk selection drops cards the search hides (Tag pop-up showed no
   eq(api.bulkIds, ['d2', 'l1'], 'widening the search keeps the selection');
 }
 
+console.log('\n@gene matches exactly, never by prefix');
+{
+  // @CTB used to auto-complete to CTBP2 whenever CTBP2 was the only gene starting with CTB.
+  const { api, el } = setup();
+  api.items = [note('c2', 'CtBP2 card', { genes: ['CTBP2'] }), note('c1', 'CTB card', { genes: ['CTB'] })];
+  const ids = q => { el('search-input').value = q; return api.getVisibleItems().vis.map(i => i.id).sort(); };
+  eq(ids('@CTB'), ['c1'], '@CTB matches CTB, not CTBP2');
+  eq(ids('@ctbp2'), ['c2'], 'matching is case-insensitive');
+  api.items = [note('c2', 'CtBP2 card', { genes: ['CTBP2'] })];
+  eq(ids('@CTB'), [], 'a unique prefix (CTB -> only CTBP2) no longer completes');
+  eq(ids('!@CTB'), ['c2'], 'nor does a negated one exclude CTBP2');
+  el('search-input').value = '';
+}
+
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'}: ${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);

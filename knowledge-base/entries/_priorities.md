@@ -1,30 +1,28 @@
 ## Where am I
 - Decided to abandon LoF for now - but maybe look at Vasili's TTLL10 alignments
 - Thinking about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 and 
+- On Emma's data, just have a look at which genes overlap human inversions
 
 ## Have-TODO
-- Info om Zoom (incl. formøde) med alle deltagere
 
+
+-----------------------------------------------------------------
 ## Today
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
-- Bjørn
 - Email
 - `/plugin enable cc-plugin-you-should-know@builtin`
 
 ## Week
 - Tidy plan / cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
-- Emma about her Guenons - Why their synteny is so conserved, and what is at the sites of recurrent inversions. 
-- Finish chapters and announce on brightspace when they are done
-- Bioinformatics material [[mrmacisv6p1p|Bioinformatics plan]]
-- Email PhD opponents about practicals and lunch
+- Finish chapters and announce on brightspace when they are done  [[mrmacisv6p1p|Bioinformatics plan]]
 - Mikkel about putblication and LF wrap up with controller / UKbiobank [[msn1vxl3n1wp|Lundbeck wrap-up plan]]
+- Email PhD opponents about practicals and lunch
 - List missing baboon bams [[mrn16oodkri8|Baboon plan]]
 - Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]
-- Sort out Claude subscriptions and permissions, finish organization setup, and Claude science setup.
-- Check nr of seats and billing for GitHub organization
 - Go back to normal security level on laptop
 
 ## Month
+- Check nr of seats and billing for GitHub organization
 - Phasic 1.0
 - PsychENCODE access request
 - Africa genomes access request

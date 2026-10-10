@@ -169,15 +169,89 @@
 - Ryd ud i AI opgaver
 -
 
+## TAs
 
 Sander Kudahl Larsen <skl@bce.au.dk>; Anna Bredgaard Bucka-Lassen <202507866@post.au.dk>; Rikke Redanz Mammen <202505478@post.au.dk>; Sarah Marie Østergaard <202504883@post.au.dk>; Louise Jensen <202505428@post.au.dk>; Marcus Nørsøller Mørch Andersen <marcus.andersen@au.dk>; Lærke Caroline Kristensen <202508912@post.au.dk>; Selma Tobberup Skipper <202506978@post.au.dk>; Ida Vandborg Jensen <202507629@post.au.dk>; Theodor Ortmann Hall <202505835@post.au.dk>
 
 Add "execution policy fix" to "pixi run update": `set-executionpolicy -Scope CurentUser remotesigned`
 
-Reminder exercises with crossrefs to other sections
+## Imporvements
 
+- Reminder exercises with crossrefs to other sections
+- More exercises with less hints (coding practise) in the early weeks before projects.
+- Stay in terminal for long er and go back and forth rather than use only notebooks after hello world.
+- Make a set of Turtle exercises asking the students to produce code that draws a shown path/figure. Could be source of the extra exercises needed.
+- Find a more robust way for kernels
 
-Make a set of Turtle exercises asking the students to produce code that draws a shown path/figure.
+## UV setup
+
+- Basically just use `uv` as dropin replacement for `pixi` and drop the `im-pixi-vscode` extension. That way everything becomes "native" vscode and the student can safely follow the instructions for any extension recommendations and missing dependencies.
+- Update `im-course-tool` and `.pin_shell_path.sh` to use `uv` instead of `pixi`:
+  - `pixi install` -> `uv sync`
+  - `pixi shell` ->  Not needed if they *only* use the VScode terminal.
+- In `vscode/extensions.json`, `"recommendations": ["munch-group.im-pixi-vscode"],` must be removed.
+- New `vscode/settings.json`:
+
+  ```
+  {
+      "chat.disableAIFeatures": true,
+      "files.exclude": {
+          "**/.pin_pixi_path.py": true,
+          "**/.pin_shell_path.py": true,
+          "**/.check_env.py": true,
+          "**/.check_vscode.py": true,
+          "**/__pycache__": true,
+          "**/.pytest_cache": true
+      },
+      "editor.inlineSuggest.edits.allowCodeShifting": "never",
+      "editor.inlineSuggest.edits.renderSideBySide": "never",
+      "editor.acceptSuggestionOnEnter": "off",
+      "editor.snippetSuggestions": "none",
+      "workbench.welcomePage.walkthroughs.openOnInstall": false,
+  }
+  ```
+
+- Install Mac:
+
+  ```
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+
+  # maybe to make sure:
+  # Add to Zsh (macOS default)
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+  # Add to Bash
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
+  ```
+
+- Install Windows:
+
+  ```
+  powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+  ```
+
+- Generate env:
+
+  ```
+  uv sync
+
+  # force reinstall and do not rely on cached deps info
+  uv sync --reinstall --refresh
+
+  # if folder is moved:
+  rm -rf .venv ; uv sync
+  ```
+
+To switch from pixi to uv:
+
+- Add `.python-version`, `.env`, and `pyproject.toml`
+- Remove `pixi.toml` and `pixi.lock`
+- Make CI use `uv.lock` instead of `pixi.lock`
+- Change `vscode/extensions.json` and `vscode/settings.json`
+- Install `uv` and pin paths
+- Make students use `im update` and `im get` in stead of the the `pixi run` versions.
+- Make `im update` remove all pixi and the `im-course-tools extension`.
+
+## TODO
 
 Rewrite chapters, add currationproject, finish testing arc
 
@@ -196,6 +270,8 @@ The project where they hand everything to AI could be one where they use Biopyth
 Rewrite claude-drafted chapters
 
 **Add curration project to weekplan**
+
+## Testing 
 
 Use `%%test` for notebook exercises like below, where they are asked to fill in body, tests or both.
 
@@ -258,16 +334,6 @@ At exam, they should also solve problems where they fix broken functions to make
 - Ensure an early experience that AI does cannot produce what they want, that there are prompts they are not able to express, it produces results they cannot validate.
 - Add exercises for *recalling*: "Write some code that uses all the building blocks you know so far". "List all the rules you know so far. Both specific and general". "List the general rules you know (E.g. the meaning of a colon)".
 
-- [x] Finish coherent draft of all chapters
-- [x] Identify sequence of projects and the role of each one. 
-- [x] Introduction explaining ai-arc and exercise badges.
-- [x] Make notes on script-vs-nobook and jupyter-ui
-- [x] Make draft slides
-- [x] Consider using the turtle widget as a fun through-line as well - same as the projects.
-- [x] Notes explaining Jupyter in VScode
-- [x] Have Claude write classes (based on my slides).
-- [x] Have Claude write data analysis and visualization chapter (pandas and iplot)
-- [x] Have Claude write chapter about modules and packages
 # Projects:
 - [ ] pytest unit/usage testing: notebooks / projects / tests produced by AI
 - [ ] Figure out sequence of projects and which part (decomposing (signatures), implementing, testing) they do for each one:

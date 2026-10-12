@@ -8787,7 +8787,7 @@ function ghBuildStatusHtml(commits, issues, repoName) {
       const labels = (i.labels || []).map(l => typeof l === 'string' ? l : l.name).join(', ');
       const labelHtml = labels ? ' <code>' + esc(labels) + '</code>' : '';
       const date = i.date || i.updated_at;
-      h += `<li><s>#${i.number} ${esc(i.title)}</s>${labelHtml} <span style="color:var(--muted)">${fmtDate(date)}</span></li>`;
+      h += `<li><s>#${i.number} ${esc(i.title)}</s>${labelHtml} <span style="color:var(--text3)">— ${fmtDate(date)}</span></li>`;
     }
     h += '</ul>';
   } else {
@@ -8809,11 +8809,11 @@ function ghOpenIssueLi(i) {
   const labelHtml = labels ? ' <code>' + esc(labels) + '</code>' : '';
   const url = i.html_url || i.url;
   const date = i.date || i.updated_at;
-  return `<li><a href="${esc(url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title)}${labelHtml} <span style="color:var(--muted)">${fmtDate(date)}</span></li>`;
+  return `<li><a href="${esc(url)}" target="_blank" rel="noopener">#${i.number}</a> ${esc(i.title)}${labelHtml} <span style="color:var(--text3)">— ${fmtDate(date)}</span></li>`;
 }
 
 // Dashboard head: the "Next up" lists of every (unarchived) GitHub card, concatenated — one
-// collapsed row per repo, most recently active repo first. Built purely from each card's cached
+// collapsed row per repo, repo with the most recent open issue first. Built purely from each card's cached
 // `_ghIssuesRecent` (filled on sync or when the card is expanded), so it costs no API calls; ↻
 // re-fetches them all. Which rows are open survives re-renders (and reloads, via localStorage).
 let ghIssuesOpenRepos = new Set();
@@ -8829,7 +8829,8 @@ function ghOpenIssueRepos() {
     .filter(i => i.type === 'github' && !i.archived && Array.isArray(i._ghIssuesRecent))
     .map(card => ({ card, open: card._ghIssuesRecent.filter(i => i.state === 'open').sort((a, b) => b.number - a.number) }))
     .filter(r => r.open.length)
-    .sort((a, b) => (b.card.date || '').localeCompare(a.card.date || ''));
+    .map(r => ({ ...r, newest: r.open.reduce((m, i) => (i.date || '') > m ? i.date : m, '') }))
+    .sort((a, b) => b.newest.localeCompare(a.newest) || (b.card.date || '').localeCompare(a.card.date || ''));
 }
 function renderGhIssuesCard() {
   const repos = ghOpenIssueRepos();

@@ -79,5 +79,6 @@
     "markdown": "**interaction-store**  \nUpdated yesterday with a brief commit message, suggesting minor maintenance or tweaks to this gene interaction exploration tool that integrates Claude Code and INDRA.",
     "fingerprint": "9cb3ce9774eef6458ec5e9c7c54edd514087968d",
     "generated_at": "2026-04-21T07:55:07.504+00:00"
-  }
+  },
+  "_ghIssuesAt": "2026-10-12T14:38:20.294Z"
 }

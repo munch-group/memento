@@ -280,7 +280,7 @@ console.log('\nOpen issues: every repo card\'s open issues, concatenated, one co
   eq(headings(heads), ['Priorities', 'Open issues', 'Inbox'], 'Open issues comes after the special cards, before Inbox');
   const card = api.renderGhIssuesCard();
   const repos = [...card.matchAll(/<summary><span>([^<]+)<\/span><span class="gh-repo-n">(\d+)/g)].map(m => [m[1], +m[2]]);
-  eq(repos, [['fresh', 2], ['old', 1]], 'repos with open issues only, most recently active first, with counts');
+  eq(repos, [['fresh', 2], ['old', 1]], 'repos with open issues only, with counts');
   eq(/<h2>Open issues <span class="gh-repo-n">3<\/span>/.test(card), true, 'the heading carries the total');
   eq(/Done|Shut|Hidden/.test(card), false, 'closed issues and archived repos are left out');
   eq([...card.matchAll(/>#(\d+)</g)].map(m => +m[1]), [7, 3, 1], 'issues newest-number first within a repo');
@@ -297,6 +297,13 @@ console.log('\nOpen issues: every repo card\'s open issues, concatenated, one co
 
   const none = setup([repo('allclosed', '2026-09-10T00:00:00Z', [iss(2, 'closed', 'Shut')])]).api;
   eq(none.renderGhIssuesCard(), '', 'no open issues anywhere: no card at all');
+
+  // Repos are ordered by their newest open issue, not by the card's (push) date; closed issues don't count.
+  const byIssue = setup([
+    repo('pushedLate', '2026-09-30T00:00:00Z', [iss(1, 'open', 'a', { date: '2026-08-01T00:00:00Z' }), iss(2, 'closed', 'b', { date: '2026-10-01T00:00:00Z' })]),
+    repo('pushedEarly', '2026-01-01T00:00:00Z', [iss(1, 'open', 'c', { date: '2026-07-01T00:00:00Z' }), iss(2, 'open', 'd', { date: '2026-09-15T00:00:00Z' })]),
+  ]).api.renderGhIssuesCard();
+  eq([...byIssue.matchAll(/<summary><span>([^<]+)</g)].map(m => m[1]), ['pushedEarly', 'pushedLate'], 'repos sorted by most recent open issue');
 }
 
 console.log('\nOpen issues: ↻ re-fetches every repo, and a failed fetch keeps the cache');

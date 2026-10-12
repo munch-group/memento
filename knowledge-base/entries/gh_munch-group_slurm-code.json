@@ -72,5 +72,6 @@
     "markdown": "**slurm-code**  \nRecent flurry of activity yesterday with multiple patch version bumps and an important fix to prevent environment variable conflicts by adding VS_ prefixes to avoid interference with srun and sbatch commands.",
     "fingerprint": "d4a65744a7c0748753e082b693ece3cdc05f20c5",
     "generated_at": "2026-04-20T10:51:34.506+00:00"
-  }
+  },
+  "_ghIssuesAt": "2026-10-12T14:38:20.474Z"
 }

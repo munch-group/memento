@@ -3,7 +3,9 @@
   "type": "note",
   "title": "KIF17b / CREM",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Tubulin"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

@@ -1,0 +1,5 @@
+AGBL4 encodes AGBL carboxypeptidase 4, a metallocarboxypeptidase that removes C-terminal glutamyl residues from proteins. It acts on tubulin and other substrates, linking its enzymatic activity to protein deglutamylation and broader protein turnover processes. The protein is detected in the cytoplasm and at the Golgi apparatus, centriole, and ciliary basal body, placing it in compartments where microtubule- and trafficking-related functions converge.
+
+Mechanistically, **AGBL4 trims long polyglutamate side chains on tubulin** and on non-tubulin substrates such as MYLK and CGAS. Through deglutamylation of CGAS, it regulates cGAS-mediated antiviral defense activation. It also influences KLF4 degradation, thereby suppressing cell pluripotency maintenance. Expression measurements show relatively high levels in the brain, endocrine system, and respiratory system.
+
+Clinical associations have been reported for AGBL4 in soft tissue sarcoma and prostate cancer. These disease links place the gene in cancer-related contexts alongside its roles in protein deglutamylation and regulation of turnover. No gene-specific drugs are named for AGBL4 in the provided information.

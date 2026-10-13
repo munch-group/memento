@@ -3,7 +3,9 @@
   "type": "note",
   "title": "Old research notes",
   "genes": [],
-  "tags": [],
+  "tags": [
+    "Tubulin"
+  ],
   "source": "",
   "connection": false,
   "archived": false,

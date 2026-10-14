@@ -1,18 +1,17 @@
 ## Where am I
-- Decided to abandon LoF for now - but maybe look at Vasili's TTLL10 alignments
-- Thinking about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 and 
-- On Emma's data, just have a look at which genes overlap human inversions
+- Abandoned LoF for now - but maybe look at Vasili's TTLL10 alignments
+- Thinking about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 for project with Christian D.
+- Focusing on Phasic and Baboons
 
-## Have-TODO
-
-
------------------------------------------------------------------
 ## Today
-- Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 - Email
-- `/plugin enable cc-plugin-you-should-know@builtin`
+- Phasic notebook tests
+- Bioinformatics chapters
+- Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 
 ## Week
+- In Emma's data, just have a quick look at which genes overlap human inversions.
+- Meta analysis setup [[mrn8x1cswi91|Meta-repo / hypothesis plan]]
 - Tidy plan / cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Finish chapters and announce on brightspace when they are done  [[mrmacisv6p1p|Bioinformatics plan]]
 - Mikkel about putblication and LF wrap up with controller / UKbiobank [[msn1vxl3n1wp|Lundbeck wrap-up plan]]

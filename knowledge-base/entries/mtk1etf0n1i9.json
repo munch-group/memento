@@ -1,7 +1,7 @@
 {
   "id": "mtk1etf0n1i9",
   "type": "note",
-  "title": "",
+  "title": "CTFC inversions",
   "genes": [],
   "tags": [
     "CTCF"
@@ -9,9 +9,9 @@
   "source": "",
   "connection": false,
   "archived": false,
-  "pinned": true,
+  "pinned": false,
   "due": "",
-  "date": "2026-10-03T08:45:07.312Z",
+  "date": "2026-10-14T07:41:08.008Z",
   "synced": false,
-  "_sortTag": ""
+  "_sortTag": "CTCF"
 }

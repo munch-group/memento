@@ -16,42 +16,24 @@
   "schedule": {
     "subtasks": [
       {
-        "id": "smsfvgwo7zl9",
-        "title": "Finish course material",
-        "start": "2026-08-05",
-        "end": "2026-08-07"
-      },
-      {
-        "id": "smsoj1hvskd9",
-        "title": "Peter korrektur",
-        "start": "2026-08-12",
-        "end": "2026-08-17"
-      },
-      {
         "id": "smtb9zioha9r",
         "title": "Rewrite AI chapters",
-        "start": "2026-10-04",
-        "end": "2026-10-05"
-      },
-      {
-        "id": "smtbabfl4odo",
-        "title": "Turtle arc",
-        "start": "2026-10-08",
-        "end": "2026-10-09"
+        "start": "2026-10-17",
+        "end": "2026-10-20"
       },
       {
         "id": "smtbabohziwu",
         "title": "Projects",
-        "start": "2026-10-06",
-        "end": "2026-10-07"
+        "start": "2026-10-21",
+        "end": "2026-10-24"
       },
       {
         "id": "smus2bigeua0",
         "title": "New topics to fill space",
-        "start": "2026-10-10",
-        "end": "2026-10-12"
+        "start": "2026-10-14",
+        "end": "2026-10-16"
       }
     ]
   },
-  "pinned": true
+  "pinned": false
 }

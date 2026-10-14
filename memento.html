@@ -889,7 +889,7 @@ a { color: inherit; }
            in height: 1rem + 6px above becomes 6px above + 1rem below, so nothing under it moves. -->
       <div class="search-block">
       <div class="searchbar">
-        <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR · paste a card id" oninput="renderFilters();renderList()" />
+        <input type="search" id="search-input" placeholder="space = AND · , = OR · !x = NOT · @gene · #tag · /type · /type1,type2 = OR · paste a card id" oninput="onSearchInput()" />
         <!-- One flex-shrink:0 unit so the bookmark and Clear never scatter onto separate wrapped
              lines. The bookmark (always shown: saves an active search, else lists saved views) sits between
              the search input and its Clear button. The highlight button sits LAST, outside the
@@ -899,7 +899,7 @@ a { color: inherit; }
              make room for an inline input the way the highlight button does. -->
         <div class="searchbar-actions">
           <button class="view-bookmark" id="view-save" onclick="viewBookmarkClick()" title="Saved views"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/></svg></button>
-          <button class="btn btn-sm" title="Clear the search (Esc Esc)" onclick="document.getElementById('search-input').value='';renderFilters();renderList()">Clear</button>
+          <button class="btn btn-sm" title="Clear the search (Esc Esc)" onclick="clearSearch()">Clear</button>
         </div>
         <div class="highlight-input-wrap" id="highlight-input-wrap" style="display:none">
           <input type="text" id="highlight-input" placeholder="MAPT HDAC6 or @MAPT,HDAC6 — highlights without filtering" oninput="updateHighlightSet()" />
@@ -1756,6 +1756,16 @@ function applyView(item) {
 }
 // Exit a running view: restore the dashboard and a clean, unfiltered list.
 function exitView() { clearAllFilters(); }
+// Emptying the search box while a view runs leaves the view card describing a screen that is no
+// longer shown, so it also exits the view (deselecting the card) rather than just dropping the text.
+function clearSearch() {
+  if (activeViewId) { exitView(); return; }
+  document.getElementById('search-input').value=''; renderFilters(); renderList();
+}
+function onSearchInput() {
+  if (activeViewId && !document.getElementById('search-input').value.trim()) { exitView(); return; }
+  renderFilters(); renderList();
+}
 
 // The bookmark is dual-action: with an unsaved search/filter active it saves it as a view card;
 // otherwise (empty search, or a view already running) it opens a menu of the saved views to run.
@@ -7809,7 +7819,7 @@ document.addEventListener('keydown', async e=>{
       // be half of it. That leaves one way in — two presses into an app with nothing left to
       // dismiss — which is deliberate enough to stand in for the Clear button.
       const si = document.getElementById('search-input');
-      if(dblEsc && si && si.value){ si.value=''; renderFilters(); renderList(); return; }
+      if(dblEsc && si && (si.value || activeViewId)){ clearSearch(); return; }
       // Nothing else for Esc to do — if a "← back" link is showing in the title, follow it.
       const back = document.querySelector('#page-title [onclick]');
       if(back){ back.click(); return; }   // a navigation is a close: leaves the gesture disarmed

@@ -1,0 +1,33 @@
+{
+  "id": "mv7rzshpzz3l",
+  "type": "note",
+  "title": "PhD defenses",
+  "genes": [],
+  "tags": [
+    "Admin"
+  ],
+  "source": "",
+  "connection": false,
+  "archived": false,
+  "pinned": false,
+  "due": "",
+  "date": "2026-10-14T07:16:04.043Z",
+  "synced": false,
+  "schedule": {
+    "subtasks": [
+      {
+        "id": "smv7rzshr86r",
+        "title": "Set up pre-defence meeting",
+        "start": "2026-10-14",
+        "end": "2026-10-14"
+      },
+      {
+        "id": "smv7s14byv1i",
+        "title": "Johan Nygaard Vinther defence",
+        "start": "2026-10-21",
+        "end": "2026-10-21"
+      }
+    ]
+  },
+  "_sortTag": "Admin"
+}

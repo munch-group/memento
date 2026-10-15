@@ -1,7 +1,39 @@
 
 ## TODO
 
-- Rewrite claude-drafted chapters
+- Rewrite AI chapters:
+  - ai/practical-ai-use.ipynb
+  - ai/ask-for-another-way.ipynb
+  - ai/let-it-draft.ipynb
+  - ai/reading-and-judging.ipynb
+  - ai/tests-are-the-contract.ipynb
+  - ai/documentation-and-resources.ipynb
+  - ai/the-docs-are-the-test.ipynb
+  - ai/plan-before-you-prompt.ipynb
+  - ai/directing-a-resource.ipynb
+  - ai/delegate-the-full-problem.ipynb
+  - ai/learning-with-an-ai.ipynb
+  - ai/surviving-ai.ipynb
+  - ai/the-ai-off-test.ipynb
+- Rewrite python chapters:
+  - python/classes.ipynb
+  - python/debugging.qmd
+  - turtle/turtle-classes-debugging.ipynb
+  - turtle/turtle-limits-to-visual-checks.ipynb
+  - python/packages-modules.ipynb
+   - new/biopython.ipynb
+  - python/recursion.ipynb
+  - python/decomposition.qmd
+  - python/dataframes.ipynb
+- Change projects to fit testing arc:
+  - projects/codonbias-project.qmd
+  - projects/hiv-project.qmd
+  - projects/assembly-project.qmd
+  - projects/orf-project.qmd
+
+
+
+
 - Move modules "code in other files" to week 8 so we can start using BioPython 
 - Introduce pandas/plotting and broadcasting (lin alg.)
 - Finish chapters two weeks ahead
@@ -28,6 +60,7 @@
 
 - UV setup (see below)
 - Add execution fix for windows to "pixi run update" ((Set-ExecutionPolicy RemoteSigned -Scope CurrentUser  or  Set-ExecutionPolicy -ExecutionPolicy Unrestricted))
+- Add " <br>—" to the end of each exercise to mark where it ends.
 - Screencast with setup walk-through
 - Make sure the "prompt" > is gone everywhere
 - All paragraphs in separate cells

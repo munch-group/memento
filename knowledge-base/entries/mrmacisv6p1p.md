@@ -7,6 +7,10 @@
 Make a lecture that goes through how back
  propagation is used in neuro networks
 
+Make an affinity design a file for figures for the lecture notes.
+Make figures for a neuron network chapter.
+
+
 - Rewrite AI chapters:
   - ai/practical-ai-use.ipynb
   - ai/ask-for-another-way.ipynb

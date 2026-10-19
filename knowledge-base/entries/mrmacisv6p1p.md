@@ -1,6 +1,12 @@
 
 ## TODO
 
+-make a blast programming project.
+
+- Make it a project that takes them through all the classes of the NCB blast system in bio Python.
+Make a lecture that goes through how back
+ propagation is used in neuro networks
+
 - Rewrite AI chapters:
   - ai/practical-ai-use.ipynb
   - ai/ask-for-another-way.ipynb

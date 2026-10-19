@@ -4,6 +4,8 @@
 Rename uv student folder to inst-mach for independent installation
 put mon/wed slides on same pane and link pane swapping
 
+https://playground.tensorflow.org. (the link holds state, so you can prepare links for different exercises)
+
 -make a blast programming project.
 
 - Make it a project that takes them through all the classes of the NCB blast system in bio Python.

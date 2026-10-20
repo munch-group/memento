@@ -2,6 +2,8 @@
 
 Spikes: Most particles merge into a cluster far narrower than the bandwidth. While the bandwidth is set by the spread-out particles (~1e-2), the kernel's repulsion between cluster members is roughly (distance / bandwidth²), i.e. ~1e-7 / 1e-4 = 1e-3: too weak to hold them apart against the score's pull. 
 
+I seems like learning_rate=AdaptiveStepSize does not really work...
+
 ---
 
 ❯ what should I do in response to warnings like: "[WARNING] phasic.svgd: svgd_step: clipped 1/100 particle gradient norm(s) exceeding 10000x the healthy batch median (a loss singularity or a diverging particle was encountered) -- inference for those particles is damped, not exact, for this step.

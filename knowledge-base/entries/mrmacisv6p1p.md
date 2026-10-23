@@ -1,4 +1,10 @@
 
+## For next year / last part
+
+- Notebooks from "Deep learning for visual recognition"
+- AI exercises need to be fewer and harder and more "targeted.
+- Drop Turtle next year.
+
 ## TODO
 
 http://neuralnetworksanddeeplearning.com/chap1.html

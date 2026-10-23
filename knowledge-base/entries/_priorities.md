@@ -5,8 +5,7 @@
 
 ## Today
 - Email
-- Phasic notebook tests
-- Bioinformatics chapters
+- Check orf/hiv/assembly projects work with data files
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 
 ## Week
@@ -21,6 +20,7 @@
 - Go back to normal security level on laptop
 
 ## Month
+- Go visit Aylwyn Scally and Andrea Manica in Cambridge
 - Check nr of seats and billing for GitHub organization
 - Phasic 1.0
 - PsychENCODE access request

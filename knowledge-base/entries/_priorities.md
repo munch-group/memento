@@ -4,9 +4,10 @@
 
 ## Today
 - Email
+- Read the [Fortes-Lima paper](https://www.nature.com/articles/s41586-023-06770-6) and send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
 - Eriks paper
 - **FUNDING WRAPUP**
-
+- DSB billetter
 
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 

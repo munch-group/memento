@@ -6894,7 +6894,7 @@ function editInbox(e) {
   f.style.display = '';
   document.getElementById('btn-add-toggle').textContent = '× Cancel';
   document.getElementById('f-content').value = window._kbInbox || '';
-  document.getElementById('f-content').focus();
+  focusContentTop();
   showFormEditButtons(false);
   f.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
@@ -7135,6 +7135,14 @@ function resetFormChecks() {
     const el = document.getElementById(id); if (el) el.checked = false;
   });
 }
+// Focus the editor with the caret and scroll at the top: setting .value leaves the caret at the end,
+// and focus() would otherwise scroll a long card's textarea to its bottom.
+function focusContentTop() {
+  const ta = document.getElementById('f-content');
+  ta.focus();
+  ta.setSelectionRange(0, 0);
+  ta.scrollTop = 0;
+}
 function editItem(e, id) {
   e.stopPropagation();
   if (readOnly) return;
@@ -7162,7 +7170,7 @@ function editItem(e, id) {
   // Timeline membership is derived (a due date or a bar), not a stored flag — reflect it, and let
   // ticking it seed the card onto the timeline on save.
   if (!ghEditMode) document.getElementById('f-timeline').checked = tlOnTimeline(item);
-  (ghEditMode ? document.getElementById('f-tags') : document.getElementById('f-content')).focus();
+  if (ghEditMode) document.getElementById('f-tags').focus(); else focusContentTop();
   showFormEditButtons(!ghEditMode, item);
   f.scrollIntoView({behavior:'smooth', block:'nearest'});
 }

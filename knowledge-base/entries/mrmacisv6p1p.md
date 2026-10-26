@@ -10,16 +10,20 @@
 - **Mandatory assignment**
 - Check orf/hiv/assembly projects work with data files, and consider having students add tests
 - Finish chapters:
-  - regex chapter
+  - neural_networks/digit-recognition.ipynb
+   - neural_networks/language-models.ipynb
   - ai/tests-are-the-contract.ipynb 
   - python/biopython.ipynb
-  - python/regular-expressions.ipynb
+  - bioinf/BLAST.qmd
+  - ai/plan-before-you-prompt.ipynb
   - python/numpy-and-pandas.ipynb
   - python/plotting.ipynb
-  - ai/plan-before-you-prompt.ipynb
-  - python/recursion.ipynb
   - ai/delegate-the-full-problem.ipynb
-- Write finale project.
+  - python/regular-expressions.ipynb
+  - python/recursion.ipynb
+- Write project:
+  - Gene finding finale
+  - Fully delegated project
 
 
 - Visualization exercise with geneinfo 

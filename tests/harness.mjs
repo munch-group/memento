@@ -42,7 +42,7 @@ function fakeEl(focusCell) {
     get className() { return [...classes].join(' '); },
     childNodes: [], children: [], firstChild: null, nodeType: 1,   // truncateRendered() walks these
     addEventListener(){}, removeEventListener(){}, appendChild(){}, remove(){},
-    scrollIntoView(){}, focus(){}, click(){},
+    scrollIntoView(){}, focus(){}, click(){}, setSelectionRange(){},
     blur(){ if (focusCell && focusCell.el === el) focusCell.el = null; },
     querySelector(){ return fakeEl(focusCell); }, querySelectorAll(){ return []; },
     getAttribute(k){ return k in this.attrs ? this.attrs[k] : null; },

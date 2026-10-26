@@ -1,5 +1,10 @@
 ## Phasic TODO
 
+Try the two-locus model and estimate both recombination and coalescence rates. Should also give more power for two-locus models.
+
+Try the two-locus model and estimate both recombination and coalescence rates.
+
+
 Spikes: Most particles merge into a cluster far narrower than the bandwidth. While the bandwidth is set by the spread-out particles (~1e-2), the kernel's repulsion between cluster members is roughly (distance / bandwidth²), i.e. ~1e-7 / 1e-4 = 1e-3: too weak to hold them apart against the score's pull. 
 
 I seems like learning_rate=AdaptiveStepSize does not really work...

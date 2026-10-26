@@ -4,10 +4,12 @@
 - Notebooks from "Deep learning for visual recognition"
 - AI exercises need to be fewer and harder and more "targeted.
 - Drop Turtle next year.
+- Put answers to exercises in "Read on..." collapsed callouts, so the student does not see the answers by acccient.
 
 ## TODO
 
-# regex chapter
+- regex chapter
+- Visualization exercise with geneinfo 
 
 http://neuralnetworksanddeeplearning.com/chap1.html
 

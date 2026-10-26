@@ -5,6 +5,7 @@
 
 ## Today
 - Email
+- **FUNDING WRAPUP**
 - Check orf/hiv/assembly projects work with data files
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 

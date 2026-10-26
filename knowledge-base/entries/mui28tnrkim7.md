@@ -1,1 +1,6 @@
-Brush off circRNA hypotheses
+- ENCODE CLIP data: Binding of RNA binding proteins along the genome
+- Phase seperation, stress granules
+- circRNA bliver i kernen (E.g. hvis de har bundet U1 splice factors)
+- CIRI2: circRNA inference
+- circRNA depleted in stress granules, maybe because the are actively excluded/degraded
+- ZNF827: circRNA

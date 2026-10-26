@@ -1,6 +1,6 @@
 {
   "id": "mnajw2ag8ced",
-  "type": "idea",
+  "type": "plan",
   "title": "Drive and LoF",
   "genes": [],
   "tags": [
@@ -8,7 +8,11 @@
     "LoF"
   ],
   "source": "",
-  "date": "2026-03-28T16:34:34.264Z",
+  "date": "2026-10-26T12:12:51.813Z",
   "synced": false,
-  "_sortTag": "LoF"
+  "_sortTag": "LoF",
+  "connection": false,
+  "archived": false,
+  "due": "",
+  "pinned": false
 }

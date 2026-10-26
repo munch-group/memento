@@ -1,22 +1,24 @@
 ## Where am I
-- Abandoned LoF for now - but maybe look at Vasili's TTLL10 alignments
-- Thinking about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 for project with Christian D.
-- Focusing on Phasic and Baboons
+
+*Finishing teaching material. Focusing on Phasic and Baboons*
 
 ## Today
 - Email
+- Eriks paper
 - **FUNDING WRAPUP**
-- Check orf/hiv/assembly projects work with data files
+
+
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 
 ## Week
+- Think about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 for project with Christian D. [[mui28tnrkim7|circRNA plan]]
 - In Emma's data, just have a quick look at which genes overlap human inversions.
 - Meta analysis setup [[mrn8x1cswi91|Meta-repo / hypothesis plan]]
 - Tidy plan / cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Finish chapters and announce on brightspace when they are done  [[mrmacisv6p1p|Bioinformatics plan]]
 - Mikkel about putblication and LF wrap up with controller / UKbiobank [[msn1vxl3n1wp|Lundbeck wrap-up plan]]
 - Email PhD opponents about practicals and lunch
-- List missing baboon bams [[mrn16oodkri8|Baboon plan]]
+- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
 - Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]
 - Go back to normal security level on laptop
 

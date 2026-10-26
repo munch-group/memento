@@ -7,8 +7,21 @@
 - Put answers to exercises in "Read on..." collapsed callouts, so the student does not see the answers by acccient.
 
 ## TODO
+- **Mandatory assignment**
+- Check orf/hiv/assembly projects work with data files, and consider having students add tests
+- Finish chapters:
+  - regex chapter
+  - ai/tests-are-the-contract.ipynb 
+  - python/biopython.ipynb
+  - python/regular-expressions.ipynb
+  - python/numpy-and-pandas.ipynb
+  - python/plotting.ipynb
+  - ai/plan-before-you-prompt.ipynb
+  - python/recursion.ipynb
+  - ai/delegate-the-full-problem.ipynb
+- Write finale project.
 
-- regex chapter
+
 - Visualization exercise with geneinfo 
 
 http://neuralnetworksanddeeplearning.com/chap1.html

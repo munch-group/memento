@@ -7,6 +7,8 @@
 
 ## TODO
 
+# regex chapter
+
 http://neuralnetworksanddeeplearning.com/chap1.html
 
 http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/#backpropagation_algorithm

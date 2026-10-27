@@ -4,6 +4,7 @@ Try the two-locus model and estimate both recombination and coalescence rates. S
 
 Try the two-locus model and estimate both recombination and coalescence rates.
 
+Can "Dynamic time warping" be used to transform the PDF by "warping" the time passed to graph.pdf(t) (like the coalescence time can be scaled to produce a a pdf for exponentially increasing N)? 
 
 Spikes: Most particles merge into a cluster far narrower than the bandwidth. While the bandwidth is set by the spread-out particles (~1e-2), the kernel's repulsion between cluster members is roughly (distance / bandwidth²), i.e. ~1e-7 / 1e-4 = 1e-3: too weak to hold them apart against the score's pull. 
 

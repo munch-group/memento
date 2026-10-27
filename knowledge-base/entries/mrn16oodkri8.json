@@ -20,56 +20,68 @@
       {
         "id": "smrn16oodjrb",
         "title": "Download BAMs",
-        "start": "2026-10-15",
-        "end": "2026-10-16"
+        "start": "2026-10-29",
+        "end": "2026-10-30"
       },
       {
         "id": "smui1nmop8i1",
         "title": "Bam list",
-        "start": "2026-10-14",
-        "end": "2026-10-14"
+        "start": "2026-10-28",
+        "end": "2026-10-28"
       },
       {
         "id": "smurzu4cpn1l",
         "title": "TTLL10 LoF",
-        "start": "2026-12-21",
-        "end": "2026-12-27"
+        "start": "2027-01-14",
+        "end": "2027-01-20"
       },
       {
         "id": "smus2e6i3mzi",
         "title": "Call variants",
-        "start": "2026-10-26",
-        "end": "2026-11-08"
+        "start": "2026-11-09",
+        "end": "2026-11-22"
       },
       {
         "id": "smus2egmbznx",
-        "title": "RFmix",
+        "title": "RFmix workflow",
         "start": "2026-11-23",
-        "end": "2026-11-29"
+        "end": "2026-11-27"
       },
       {
         "id": "smus2eoxq2rs",
-        "title": "itrails",
+        "title": "iTrails workflow",
         "start": "2026-11-30",
-        "end": "2026-12-06"
+        "end": "2026-12-04"
       },
       {
         "id": "smus2f82j609",
-        "title": "tsinfer/tsdate",
+        "title": "tsinfer/tsdate workflow",
         "start": "2026-12-07",
-        "end": "2026-12-13"
+        "end": "2026-12-11"
       },
       {
         "id": "smus2fqy1c3r",
-        "title": "Relate",
+        "title": "Relate workflow",
         "start": "2026-12-14",
-        "end": "2026-12-20"
+        "end": "2026-12-18"
       },
       {
         "id": "smv7t7vtw5ov",
         "title": "PRDM9 admixture",
+        "start": "2027-01-21",
+        "end": "2027-01-27"
+      },
+      {
+        "id": "smvqjqrfac55",
+        "title": "Ghostbuster workflow",
+        "start": "2026-12-21",
+        "end": "2026-12-25"
+      },
+      {
+        "id": "smvqjs4wnzci",
+        "title": "Run workflows",
         "start": "2026-12-28",
-        "end": "2027-01-03"
+        "end": "2027-01-10"
       }
     ]
   },

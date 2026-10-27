@@ -5,17 +5,18 @@
 - Check up on Eriks paper
 - Send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
 - DSB billetter
-- FUNDING WRAPUP
-- Tidy up timelines
+- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
 - Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
-- Check nr of seats and billing for GitHub organization
-- Time Machine on office machine
 
 ## Week
+- Funding wrapup
+- Finish teaching material
+- Time Machine on office machine
+- Check nr of seats and billing for GitHub organization
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
-- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
 - Go back to normal security level on laptop
 - Try [cenv as container for claude](https://github.com/oschulz/container-env)
+- [Configure Claude permissions](https://code.claude.com/docs/en/permissions)
 
 ## Month
 - Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]

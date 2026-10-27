@@ -10,28 +10,34 @@
   "connection": false,
   "archived": false,
   "due": "",
-  "date": "2026-10-26T13:34:31.712Z",
+  "date": "2026-10-27T11:27:37.972Z",
   "synced": false,
   "_sortTag": "Teaching",
   "schedule": {
     "subtasks": [
       {
         "id": "smtb9zioha9r",
-        "title": "Rewrite AI chapters",
-        "start": "2026-10-17",
-        "end": "2026-10-20"
+        "title": "Finish chapters",
+        "start": "2026-10-28",
+        "end": "2026-10-28"
       },
       {
         "id": "smtbabohziwu",
-        "title": "Projects",
-        "start": "2026-10-21",
-        "end": "2026-10-24"
+        "title": "Finish projects",
+        "start": "2026-10-29",
+        "end": "2026-10-29"
       },
       {
         "id": "smus2bigeua0",
         "title": "New topics to fill space",
         "start": "2026-10-14",
         "end": "2026-10-16"
+      },
+      {
+        "id": "smvqlu9qbyuy",
+        "title": "Week13 topic",
+        "start": "2026-10-30",
+        "end": "2026-10-30"
       }
     ]
   },

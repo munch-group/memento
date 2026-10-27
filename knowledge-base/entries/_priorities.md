@@ -1,21 +1,19 @@
-## Where am I
-
-*Finishing teaching material. Focusing on Phasic and Baboons*
-
 ## Today
+- Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
+- PhD defence
 - Email
-- **FUNDING WRAPUP**
+- Check up on Eriks paper
 - Send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
 - DSB billetter
-- Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
-- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
-- Check up on Eriks paper
+- FUNDING WRAPUP
+- Tidy up timelines
 - Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Check nr of seats and billing for GitHub organization
 - Time Machine on office machine
 
 ## Week
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
+- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
 - Go back to normal security level on laptop
 - Try [cenv as container for claude](https://github.com/oschulz/container-env)
 

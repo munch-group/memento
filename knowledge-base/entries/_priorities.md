@@ -10,6 +10,7 @@
 
 ## Week
 - Funding wrapup
+- Read "my" new primate paper before next baboon call
 - Finish teaching material
 - Time Machine on office machine
 - Check nr of seats and billing for GitHub organization

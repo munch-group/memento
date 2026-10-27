@@ -250,6 +250,9 @@ a { color: inherit; }
 .special-card { cursor: pointer; }
 .inbox-card { cursor: pointer; }
 .special-card:hover { border-color: var(--border2); }
+.special-vs { position: absolute; bottom: 8px; right: 10px; background: none; border: none; cursor: pointer; font-size: 11px; font-weight: 600; color: var(--text); padding: 2px; opacity: 0; transition: opacity 0.15s; }
+.special-card:hover .special-vs { opacity: 0.45; }
+.special-card .special-vs:hover { opacity: 0.85; }
 /* Open-issues head: one collapsed <details> row per repo. */
 .gh-issues-card details { margin: 0; }
 .gh-issues-card summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 6px; }
@@ -6872,7 +6875,7 @@ function renderSpecialCard(spec, item) {
   const age = item.date ? new Date() - new Date(item.date) : 0;
   const dateStr = !item.date ? '' : age < 86400000 ? fmtDateAgo(item.date) : Math.floor(age/86400000) + 'd ago';
   const stale = item.date && (new Date() - new Date(item.date)) > spec.staleDays*86400000;
-  return `<div class="digest-card special-card" onclick="editItem(event,'${spec.id}')">${dateStr ? '<div class="digest-date"' + (stale ? ' style="color:#c44"' : '') + '>Edited ' + esc(dateStr) + '</div>' : ''}<h2>${esc(spec.title)}</h2>${md(item.content)}</div>`;
+  return `<div class="digest-card special-card" onclick="editItem(event,'${spec.id}')">${dateStr ? '<div class="digest-date"' + (stale ? ' style="color:#c44"' : '') + '>Edited ' + esc(dateStr) + '</div>' : ''}<h2>${esc(spec.title)}</h2>${md(item.content)}${basePath?`<button class="special-vs" onclick="event.stopPropagation();openInVSCode('${spec.id}')" title="Open in VS Code">VS</button>`:''}</div>`;
 }
 function renderInboxCard() {
   const text = window._kbInbox;

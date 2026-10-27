@@ -4,32 +4,29 @@
 
 ## Today
 - Email
-- Read the [Fortes-Lima paper](https://www.nature.com/articles/s41586-023-06770-6) and send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
-- Eriks paper
 - **FUNDING WRAPUP**
+- Send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
 - DSB billetter
-
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
+- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
+- Check up on Eriks paper
+- Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
+- Check nr of seats and billing for GitHub organization
+- Time Machine on office machine
 
 ## Week
-- Think about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 for project with Christian D. [[mui28tnrkim7|circRNA plan]]
-- In Emma's data, just have a quick look at which genes overlap human inversions.
-- Meta analysis setup [[mrn8x1cswi91|Meta-repo / hypothesis plan]]
-- Tidy plan / cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
-- Finish chapters and announce on brightspace when they are done  [[mrmacisv6p1p|Bioinformatics plan]]
-- Mikkel about putblication and LF wrap up with controller / UKbiobank [[msn1vxl3n1wp|Lundbeck wrap-up plan]]
-- Email PhD opponents about practicals and lunch
-- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
-- Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]
+- Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
 - Go back to normal security level on laptop
+- Try [cenv as container for claude](https://github.com/oschulz/container-env)
 
 ## Month
-- Go visit Aylwyn Scally and Andrea Manica in Cambridge
-- Check nr of seats and billing for GitHub organization
-- Phasic 1.0
-- PsychENCODE access request
-- Africa genomes access request
+- Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]
 - Read Juliens papers
-- Time Machine on office machine
 - Complete hypothesis doc [[mndbilmcd0xt|Meiotic drive as engine of change]]
-- Funding strategy
+- Zoom with Celia about Africa genomes (maybe I don't access request)
+- Meta analysis setup [[mrn8x1cswi91|Meta-repo / hypothesis plan]]
+- In Emma's data, just have a quick look at which genes overlap human inversions.
+- itrails workflow for Roos postdoc
+- PsychENCODE access request
+- Funding strategy (for traveling)
+- Linda about mouse mir and circRNA / human ortholog and / check my own mir target list and circRNA list [[mrp3a5pzxavj|Gene set: Xq27 miRNA cluster]]

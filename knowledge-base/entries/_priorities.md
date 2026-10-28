@@ -1,5 +1,4 @@
 ## Today
-- Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 - PhD defence
 - Email
 - Check up on Eriks paper
@@ -9,6 +8,7 @@
 - Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 
 ## Week
+- Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 - Funding wrapup
 - Read "my" new primate paper before next baboon call
 - Finish teaching material

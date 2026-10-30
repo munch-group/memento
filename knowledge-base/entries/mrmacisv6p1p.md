@@ -5,13 +5,12 @@
 - Finish chapters:
   - neural_networks/digit-recognition.ipynb
    - neural_networks/language-models.ipynb
-  - ai/tests-are-the-contract.ipynb 
   - python/biopython.ipynb
   - bioinf/BLAST.qmd
   - ai/plan-before-you-prompt.ipynb
   - python/numpy-and-pandas.ipynb
   - python/plotting.ipynb
-  - ai/delegate-the-full-problem.ipynb
+  - ai/delegate-the-full-problem.ipynb (merge with tests-are-the-contract that is pasted in at the top)
   - python/regular-expressions.ipynb
   - python/recursion.ipynb
 - Projects:

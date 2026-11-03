@@ -2,6 +2,10 @@
 ## TODO
 - **Mandatory assignment**
 - Check orf/hiv/assembly projects work with data files, and consider having students add tests
+- Lectures:
+  - Biopython
+  - NN training
+  - LLMs https://poloclub.github.io/transformer-explainer/
 - Finish chapters:
   - neural_networks/digit-recognition.ipynb
    - neural_networks/language-models.ipynb

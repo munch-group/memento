@@ -1,13 +1,13 @@
 ## Today
 - PhD defence
+- DSB billetter
+- Send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
 - Email
 - Check up on Eriks paper
-- Send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
-- DSB billetter
 - List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
-- Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 
 ## Week
+- Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 - Funding wrapup
 - Read "my" new primate paper before next baboon call

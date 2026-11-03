@@ -1,22 +1,19 @@
 ## Today
-- PhD defence
+- PhD defence assesment
 - DSB billetter
 - Send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
 - Email
-- Check up on Eriks paper
-- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
 
 ## Week
+- Check up on Eriks paper
+- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
 - Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
 - Funding wrapup
 - Read "my" new primate paper before next baboon call
-- Finish teaching material
-- Time Machine on office machine
-- Check nr of seats and billing for GitHub organization
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
 - Go back to normal security level on laptop
-- Try [cenv as container for claude](https://github.com/oschulz/container-env)
+- Check nr of seats and billing for GitHub organization
 - [Configure Claude permissions](https://code.claude.com/docs/en/permissions)
 
 ## Month

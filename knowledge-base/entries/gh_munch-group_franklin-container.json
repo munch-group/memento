@@ -5,7 +5,7 @@
   "tags": [],
   "genes": [],
   "source": "https://github.com/munch-group/franklin-container",
-  "date": "2025-08-19T20:47:19Z",
+  "date": "2025-10-02T11:24:21Z",
   "synced": false,
   "connection": false,
   "_ghFullName": "munch-group/franklin-container",
@@ -77,5 +77,5 @@
       "url": "https://github.com/munch-group/franklin-container/issues/1"
     }
   ],
-  "_ghIssuesAt": "2026-10-12T14:38:20.563Z"
+  "_ghIssuesAt": "2026-11-04T18:08:16.690Z"
 }

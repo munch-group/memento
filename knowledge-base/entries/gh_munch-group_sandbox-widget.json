@@ -17,6 +17,26 @@
   "_sortTag": "",
   "_ghCommits": [
     {
+      "sha": "52b01bf",
+      "msg": "patch  version bump",
+      "date": "2026-10-26T10:40:52Z"
+    },
+    {
+      "sha": "a886bb1",
+      "msg": "update",
+      "date": "2026-10-26T10:40:47Z"
+    },
+    {
+      "sha": "83f2b05",
+      "msg": "patch  version bump",
+      "date": "2026-10-26T09:15:03Z"
+    },
+    {
+      "sha": "fb3c69a",
+      "msg": "Made cwd that of the notebooks",
+      "date": "2026-10-26T09:14:42Z"
+    },
+    {
       "sha": "9ead29d",
       "msg": "patch  version bump",
       "date": "2026-08-09T21:51:37Z"
@@ -45,28 +65,8 @@
       "sha": "2501dfa",
       "msg": "update",
       "date": "2026-08-09T20:58:29Z"
-    },
-    {
-      "sha": "53769ad",
-      "msg": "patch  version bump",
-      "date": "2026-08-09T20:53:16Z"
-    },
-    {
-      "sha": "06dc994",
-      "msg": "patch  version bump",
-      "date": "2026-08-09T20:53:15Z"
-    },
-    {
-      "sha": "49d929d",
-      "msg": "update",
-      "date": "2026-08-09T20:53:15Z"
-    },
-    {
-      "sha": "0ffe859",
-      "msg": "patch  version bump",
-      "date": "2026-08-09T17:26:06Z"
     }
   ],
   "_ghIssuesRecent": [],
-  "_ghIssuesAt": "2026-10-12T14:38:20.172Z"
+  "_ghIssuesAt": "2026-11-04T18:08:17.472Z"
 }

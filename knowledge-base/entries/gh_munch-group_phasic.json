@@ -21,54 +21,54 @@
   "due": "",
   "_ghCommits": [
     {
-      "sha": "56cd79c",
-      "msg": "test(correctness): record the settled budget-vs-defect verdict on each pin",
-      "date": "2026-08-17T06:23:59Z"
+      "sha": "a252c70",
+      "msg": "Deleted some old, now moved, content",
+      "date": "2026-10-23T10:18:03Z"
     },
     {
-      "sha": "3ca5da6",
-      "msg": "derisk(inference): pin 4 (two_island 186v) is genuinely budget-limited -- the exception",
-      "date": "2026-08-17T06:07:38Z"
+      "sha": "2e39f6d",
+      "msg": "Consistent HPD/HDR naming with deprecated aliases; add hpd_intervals()",
+      "date": "2026-10-23T10:15:38Z"
     },
     {
-      "sha": "c6e7c58",
-      "msg": "derisk(inference): settle budget-vs-defect for three of four pins -- all DEFECTS",
-      "date": "2026-08-17T05:38:29Z"
+      "sha": "ad3cc69",
+      "msg": "Better Adamelia logging and and an extra option to plot_hdr.",
+      "date": "2026-10-23T07:31:55Z"
     },
     {
-      "sha": "e3f1b53",
-      "msg": "test(correctness): mixed-scale multi-parameter recovery -- and the limitation it exposes",
-      "date": "2026-08-16T20:26:18Z"
+      "sha": "742619e",
+      "msg": "Added likelibood function and fixed bug",
+      "date": "2026-10-23T07:24:31Z"
     },
     {
-      "sha": "a85ee34",
-      "msg": "test(correctness): pin the 186-vertex two_island off-truth overshoot",
-      "date": "2026-08-16T18:51:42Z"
+      "sha": "eac2707",
+      "msg": "updated notebook tests",
+      "date": "2026-10-15T11:31:03Z"
     },
     {
-      "sha": "03d7962",
-      "msg": "test(correctness): off-truth priors, explicit schedules, and four new convergence diagnostics",
-      "date": "2026-08-16T18:09:56Z"
+      "sha": "06eaea2",
+      "msg": "updated environment",
+      "date": "2026-10-15T11:08:40Z"
     },
     {
-      "sha": "6c108d3",
-      "msg": "docs(test): record measured tier timings and the sample() seeding gotcha",
-      "date": "2026-08-16T15:03:18Z"
+      "sha": "7f7f04e",
+      "msg": "Updated coalescent notebook with some code for plotting formula strings as latex markdown",
+      "date": "2026-10-15T11:07:52Z"
     },
     {
-      "sha": "7987252",
-      "msg": "test(correctness): fix non-deterministic seeding, a vacuous fixture, and add sampler-vs-density checks",
-      "date": "2026-08-16T14:56:54Z"
+      "sha": "6cf1f28",
+      "msg": "fix: bugfix for plotting",
+      "date": "2026-10-15T11:06:55Z"
     },
     {
-      "sha": "609f313",
-      "msg": "fix(docs): tape growth is MODEL-DEPENDENT, not universally quadratic",
-      "date": "2026-08-16T14:26:56Z"
+      "sha": "683cc0b",
+      "msg": "fix(notebook): added missing quarto crossref)",
+      "date": "2026-10-15T07:30:17Z"
     },
     {
-      "sha": "1716163",
-      "msg": "docs(test): correct measured timings and document the correctness tests in CLAUDE.md",
-      "date": "2026-08-16T12:06:33Z"
+      "sha": "49ddc0b",
+      "msg": "fix(cpp): Graph copy-assignment initialises every reference-block field",
+      "date": "2026-10-15T07:15:15Z"
     }
   ],
   "_ghIssuesRecent": [
@@ -329,5 +329,5 @@
     "fingerprint": "ff1b53fb34cd140c6bed53385147c969da54f775",
     "generated_at": "2026-04-20T10:51:38.836+00:00"
   },
-  "_ghIssuesAt": "2026-10-12T14:38:20.324Z"
+  "_ghIssuesAt": "2026-11-04T18:08:17.268Z"
 }

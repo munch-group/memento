@@ -2,6 +2,7 @@
 - PhD defence assesment
 - Send [jarvis paper](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1002641) to claudia
 - Email
+- Exam date (after Jan 17.) and zoom censor for Imanol.
 - Mandatory assignment on brightspace (with announcement)
 - Make sure `pixi run update` adds new data files to student-folder/data (and explain in notebooks how to find the files from other folders)
 

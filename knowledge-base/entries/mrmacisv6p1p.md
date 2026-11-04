@@ -1,5 +1,6 @@
 
 ## TODO
+- Talk about exam next time
 - **Mandatory assignment**
 - Check orf/hiv/assembly projects work with data files, and consider having students add tests
 - Lectures:
@@ -19,7 +20,7 @@
   - python/recursion.ipynb
 - Projects:
   - Finish testing arc (see Testing below)
-  - Write gene finding finale project
+  - Finish gene finding finale project `claude --remote-control --resume 3d3298d9-f1ca-43da-9aee-82ed6b73571d`
   - Write fully delegated project
 - TA comments on
   - https://munch-group.org/instructing-machines/ai/practical-ai-use.html

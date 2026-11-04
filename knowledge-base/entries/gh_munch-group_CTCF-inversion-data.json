@@ -1,0 +1,17 @@
+{
+  "id": "gh_munch-group_CTCF-inversion-data",
+  "type": "github",
+  "title": "CTCF-inversion-data",
+  "tags": [],
+  "genes": [],
+  "source": "https://github.com/munch-group/CTCF-inversion-data",
+  "date": "2026-09-29T13:12:13Z",
+  "synced": false,
+  "connection": false,
+  "_ghFullName": "munch-group/CTCF-inversion-data",
+  "_ghStars": 0,
+  "_ghForks": 0,
+  "_ghLang": "Python",
+  "_ghOpenIssues": 0,
+  "_ghPrivate": false
+}

@@ -81,7 +81,9 @@ Global Needleman–Wunsch alignment (Biopython, BLOSUM62, gap open −11 / exten
 
 The least-conserved 25-aa window is **52%, centred at residue 16**, inside the nuclear export signal.
 
-![Sliding-window amino-acid identity between DDX3X and DDX3Y along the DDX3X sequence, with domain architecture shaded. The two helicase domains are near-invariant while both intrinsically disordered regions diverge; the single least-conserved window falls in the N-terminal nuclear export signal.][ddx3x_ddx3y_identity.png](images/mw2fmdmnmupv_ddx3x_ddx3y_identity.png)
+![](images/mw2fmdmnmupv_ddx3x_ddx3y_identity.png)
+
+*Sliding-window amino-acid identity between DDX3X and DDX3Y along the DDX3X sequence, with domain architecture shaded. The two helicase domains are near-invariant while both intrinsically disordered regions diverge. the single least-conserved window falls in the N-terminal nuclear export signal.*
 
 **Why this matters.** The N-terminal low-complexity domain is the module that drives DDX3X
 condensation: medulloblastoma-associated DDX3X mutations cause stress-granule hyper-assembly with

@@ -1,6 +1,7 @@
 
 ## TODO
 - Talk about exam next time
+- Tell the students that their student folder may not be backed up (they should copy it to a backed up location)
 - **Mandatory assignment**
 - Check orf/hiv/assembly projects work with data files, and consider having students add tests
 - Lectures:

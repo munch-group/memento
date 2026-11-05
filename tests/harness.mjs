@@ -89,8 +89,10 @@ function fakeIndexedDB(seed) {
 }
 
 export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = false, frames = false,
-                       idbSeed = null, hostname = '', protocol = 'http:' }) {
-  const store = new Map(pat ? [['gh_pat', pat]] : []);
+                       idbSeed = null, hostname = '', protocol = 'http:', storage = {}, selectorSeed = [] }) {
+  // `storage` pre-seeds localStorage and `selectorSeed` pre-registers selectors, for state the
+  // script reads while it loads (before a test could set either up).
+  const store = new Map([...(pat ? [['gh_pat', pat]] : []), ...Object.entries(storage)]);
   const toasts = [];
   const created = [];        // every element the script builds, so tests can inspect popup markup
   const byId = new Map();    // stable per id, so what the app renders into an element persists
@@ -99,7 +101,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
   // keep the handlers so press() below can deliver a synthetic event to the real code.
   const listeners = new Map();
   const focusCell = { el: null };
-  const selectors = new Map();
+  const selectors = new Map(selectorSeed);
   const doc = {
     getElementById: id => { if (!byId.has(id)) byId.set(id, fakeEl(focusCell)); return byId.get(id); },
     // Permissive by default (any selector matches a fresh element), because most callers only poke
@@ -301,7 +303,7 @@ export function load({ fetchImpl, pat = 'ghp_test', full = false, hasFSAccess = 
       get geCardPanel(){ return geCardPanel; },
       get geZoom(){ return _geZoom; }, get gePan(){ return _gePan; },
       set geSpacing(v){ geSpacing = v; },
-      geZoomFit, toggleKeyHelp, keyHelpVisible,
+      geZoomFit, toggleKeyHelp, keyHelpVisible, toggleSidebar,
       // Layout cache (persisted settled positions, so a reopen can skip resimulating from scratch)
       geLayoutSig, geApplyLayoutCache, geSaveLayoutCache, GE_CACHE_SETTLE_FRAMES,
       get geBaseSig(){ return _geBaseSig; },

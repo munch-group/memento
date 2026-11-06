@@ -1,28 +1,22 @@
 
 ## TODO
-- Talk about exam next time
-- Tell the students that their student folder may not be backed up (they should copy it to a backed up location)
 - **Mandatory assignment**
 - Check orf/hiv/assembly projects work with data files, and consider having students add tests
-- Lectures:
-  - Biopython
+- Talk about exam next time
+- Tell the students that their student folder may not be backed up (they should copy it to a backed up location)
+- Finish chapters:
+  - blast
+  - molecular-evolution
+  - recursion
+  - plasmid-project
+  - regular expressions
+  - LLMs
+ - Lectures: 
   - NN training
   - LLMs https://poloclub.github.io/transformer-explainer/
-- Finish chapters:
-  - neural_networks/digit-recognition.ipynb
-   - neural_networks/language-models.ipynb
-  - python/biopython.ipynb
-  - bioinf/BLAST.qmd
-  - ai/plan-before-you-prompt.ipynb
-  - python/numpy-and-pandas.ipynb
-  - python/plotting.ipynb
-  - ai/delegate-the-full-problem.ipynb (merge with tests-are-the-contract that is pasted in at the top)
-  - python/regular-expressions.ipynb
-  - python/recursion.ipynb
+  - Dangers of AI
 - Projects:
-  - Finish testing arc (see Testing below)
   - Finish gene finding finale project `claude --remote-control --resume 3d3298d9-f1ca-43da-9aee-82ed6b73571d`
-  - Write fully delegated project
 - TA comments on
   - https://munch-group.org/instructing-machines/ai/practical-ai-use.html
   - https://munch-group.org/instructing-machines/ai/ask-for-another-way.html

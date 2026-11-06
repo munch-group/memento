@@ -1,4 +1,3 @@
-# DDX3X as a candidate regulator of condensate material state in spermatids
 
 *Working hypothesis document. Everything below about DDX3X and condensates is established in
 neurons, cancer cells and reconstituted systems; the application to spermatid intercellular

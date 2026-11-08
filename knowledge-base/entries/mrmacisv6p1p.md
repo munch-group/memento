@@ -28,6 +28,76 @@
 - Add "execution policy fix" to "pixi run update": `set-executionpolicy -Scope CurentUser remotesigned`
 - Visualization exercise with geneinfo 
 
+## Grammarly
+
+- [ ] notes_slides_recordings.qmd
+- [ ] index.qmd
+- [ ] slides/flashcards.qmd
+- [ ] python/course-tools.ipynb
+- [ ] intro/course-introduction.qmd 
+- [x] ai/insides.ipynb
+- [ ] python/terminal.qmd
+- [ ] python/getting_set_up.qmd
+- [ ] python/hello-world.qmd
+- [ ] ai/meet-ai.ipynb
+- [ ] ai/instruction.ipynb
+- [ ] intro/notebooks.ipynb        
+- [ ] python/values-operators-logic.ipynb
+- [ ] python/variables.ipynb
+- [ ] python/precedence-steps.ipynb
+- [ ] python/control-flow.ipynb
+- [ ] python/functions.ipynb 
+- [ ] python/list-comprehensions.ipynb 
+- [ ] ai/predict-then-prove.ipynb
+- [ ] python/objects.ipynb
+- [ ] ai/how-models-produce-code.ipynb
+- [ ] python/lists.ipynb
+- [ ] python/dictionaries.ipynb
+- [ ] python/tuples.ipynb
+- [ ] turtle/turtle-the-object.ipynb 
+- [ ] ai/explain-then-confirm.ipynb
+- [ ] python/iteration.ipynb
+- [ ] python/testing.ipynb 
+- [ ] turtle/turtle-loops-and-tests.ipynb 
+- [ ] ai/practical-ai-use.ipynb
+- [ ] python/data_structures.ipynb
+- [ ] python/files.ipynb
+- [ ] turtle/turtle-drawing-from-data.ipynb 
+- [ ] python/testing_programming_projects.qmd
+- [ ] projects/translation-project.qmd 
+- [ ] ai/ask-for-another-way.ipynb 
+- [ ] python/composition.qmd
+- [ ] turtle/turtle-functions.ipynb 
+- [ ] projects/folding-project.qmd 
+- [ ] python/classes.ipynb
+- [ ] ai/let-it-draft.ipynb 
+- [ ] python/debugging.ipynb
+- [ ] turtle/turtle-classes-debugging.ipynb 
+- [ ] projects/codonbias-project.qmd 
+- [ ] python/modules-and-packages.ipynb
+- [x] neural_networks/neurons.qmd
+- [x] neural_networks/neural-networks.qmd
+- [ ] projects/orf-project.qmd 
+- [ ] python/numpy-and-pandas.ipynb
+- [ ] python/plotting.ipynb
+- [ ] python/biopython.ipynb
+- [ ] projects/assembly-project.qmd  
+- [ ] ai/plan-before-you-prompt.ipynb 
+- [x] neural_networks/training.qmd 
+- [ ] neural_networks/digit-recognition.ipynb 
+- [x] bioinf/pairwise-alignment.qmd 
+- [x] projects/alignment-project.qmd 
+- [x] bioinf/blast.qmd 
+- [x] bioinf/dna-evolution.qmd 
+- [x] bioinf/scoring-matrices.qmd 
+- [ ] projects/hiv-project.qmd 
+- [x] python/recursion.ipynb 
+- [x] python/regular-expressions.ipynb 
+- [x] ai/delegate-the-full-problem.ipynb 
+- [x] projects/plasmid-project.qmd 
+- [x] ai/llm.qmd 
+- [x] ai/dangers-of-AI.qmd 
+
 ## Testing 
 
 Use `%%test` for notebook exercises like below, where they are asked to fill in body, tests or both.

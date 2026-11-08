@@ -1,5 +1,6 @@
 | Are there any mechanisms by which the two genes could affect the selective directional transport across cytoplasmic bridges between spermatids
 
+
 Nothing direct is known, so what follows is mechanism-building rather than reporting. But there are a few routes that aren't unreasonable, and one of them is better supported than you might expect.
 
 **The strongest candidate: O-GlcNAc as a motor-adaptor brake.** The best-characterised case of O-GlcNAcylation controlling directional transport is Milton/TRAK, the kinesin adaptor for mitochondria. OGT modifies Milton in response to glucose flux, and this arrests mitochondrial movement locally — a nutrient-responsive switch that stops cargo at particular positions along the track (Pekkurnaz et al. 2014, *Cell*, as far as I recall; worth verifying). If an analogous adaptor operates on spermatid cargo, then OGT activity gradients would decide where cargo stops rather than which direction it sets off in. That's a positional brake, which in a syncytium with bridges is functionally equivalent to selective delivery: cargo that fails to be released in compartment A keeps moving and accumulates in B.

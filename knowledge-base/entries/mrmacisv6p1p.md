@@ -120,7 +120,7 @@ def find_start_positions(seq):
 
 ## For next year / last part
 
-- Notebooks from "Deep learning for visual recognition"
+- Notebooks from "Deep learning for visual recognition" kursus af Henrik Pedersen, en ekstern lektor på datalogi. hpe@cs.au.dk
 - Read these [online notes](http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/#backpropagation_algorithm) and improve neural network material.
 - AI exercises need to be fewer and harder and more "targeted.
 - Drop Turtle next year.

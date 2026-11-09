@@ -1,6 +1,10 @@
 ## Today
 - PhD defence assesment
 - Email
+- Censor karakterer
+- Read shannons paper
+- RejsUd
+- Sign up for BiRC Christmas lunch and figure out when MBGs party is
 - Mandatory assignment on brightspace (with announcement)
 - Check up on Eriks paper
 - Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
@@ -9,7 +13,15 @@
 - Exam date (after Jan 17.) and zoom censor for Imanol.
 
 ## Week
+- Check up on:
+  - "Transcriptomic differences in X- and Y-carrying gametes are associated with regions under positive selection on the human X-chromosome"
+  - "Genome-wide scan for transmission ratio distortion in trios from the Norwegian MoBa cohort rules out moderate distortion at common variants"
+  - "A curated genome-scale nucleotide diversity panel of non-human primates"
+  - Eriks paper
+  - Shannon's XWAS
+  - Shannon's Y paper
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
+- Consider [ProbGen2027](https://meetings.cshl.edu/meetings.aspx?meet=probgen)
 - Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Read "my" new primate paper before next baboon call
 - Zoom with Celia about Africa genomes (maybe I don't access request)

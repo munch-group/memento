@@ -3,6 +3,8 @@
 - Visit Aylwyn Scally and Andrea Manica in Cambridge
 - Think about circRNA, RNA binding proteins, chromatoid bodies, TTLL10 for project with Christian D. [[mui28tnrkim7|circRNA plan
 - John Huelsenbeck about Phasic and MCMC
+- Sohini about pedigree ARG
+- David Reich about his paper
 - Shriram about Phasic
 - [Andreas Basse-O'Connor](https://sites.google.com/site/basseoconnor/Home)
 

@@ -68,5 +68,15 @@
   "date": "2026-10-03T08:12:12.108Z",
   "synced": false,
   "_sortTag": "gene-set",
-  "pinned": false
+  "pinned": false,
+  "schedule": {
+    "subtasks": [
+      {
+        "id": "smwamm9h06vu",
+        "title": "",
+        "start": "2026-11-10",
+        "end": "2026-11-12"
+      }
+    ]
+  }
 }

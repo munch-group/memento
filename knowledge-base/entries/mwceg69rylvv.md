@@ -1,3 +1,4 @@
+# PABPC1L2A — gene, protein, mechanism, interaction partners, and the spermatogenesis question
 
 *Compiled from primary database records (NCBI/MyGene, Ensembl, UniProt, InterPro, QuickGO, GTEx v8, Human Protein Atlas 25.1, IntAct, STRING v12) and PubMed/Europe PMC literature retrieval. All values below were pulled programmatically; sources are listed at the end.*
 
@@ -206,7 +207,65 @@ In mouse, the real protein is GUG-initiated with an N-terminal low-complexity do
 
 ---
 
-## 9. Caveats on the record itself
+## 9. What the rest of the family says about specificity — and what PABPC1L2A's poly(A) surface predicts
+
+### 9.1 How PABPs achieve specificity: two mechanisms, neither available to PABPC1L2A
+
+Poly(A) binding is not a selectivity mechanism — every mRNA has a tail. Across the family, target selectivity comes from two features located **outside** the poly(A)-reading module:
+
+1. **RRM3–RRM4.** In PABPC1, RRM1/RRM2 preferentially bind poly(A) while **RRM3/RRM4 bind poly(A) and A/U-rich sequences equally well**. This second module is how family members pick mRNA classes. **PABPC4** impacts a subset of erythroid mRNAs through a high-value **AU-rich motif in their 3′ UTRs**, and that motif enhances PABPC4's association with mRNAs carrying **critically shortened poly(A) tails**, apparently protecting them from decay; depleting PABPC4 blocks terminal erythroid maturation (Mol Cell Biol 2014, PMID 24469397, doi:10.1128/MCB.01683-13). **ePABP/PABPC1L** was likewise identified as a protein that **binds AU-rich sequences and prevents poly(A) shortening** (Mol Cell Biol 2005, PMID 15713657, doi:10.1128/MCB.25.5.2060-2071.2005), and it protects stored mRNAs from deadenylation during oogenesis, spermatogenesis and early embryogenesis (Mol Reprod Dev 2019, PMID 31408254, doi:10.1002/mrd.23253).
+2. **The MLLE/PABC domain**, which recruits PAIP1/PAIP2, eRF3, PAN3 and CCR4–NOT adaptors — i.e. decides what *happens* to the bound message.
+
+**PABPC1L2A has neither.** It is RRM1–RRM2 and nothing else. The two mechanisms by which every other cytoplasmic PABP selects its mRNA class and its downstream effect are both deleted. Whatever selectivity this protein has must come from somewhere else — the unique N-terminal A/V/E-rich extension (the one feature no other PABPC possesses), partner proteins, or simple steric fit.
+
+For orientation, the rest of the family and the classes they act on:
+
+| Protein | Binding beyond poly(A) | mRNA class / context |
+|---|---|---|
+| PABPC1 | RRM3/4 bind A/U-rich; ~**27-nt periodic footprint** along the tail; blocks CAF1 but activates CCR4 (Mol Cell 2018, PMID 29932901, doi:10.1016/j.molcel.2018.05.009) | bulk cytoplasmic mRNA; sets deadenylation periodicity |
+| PABPC3 / tPABP | 631 aa, 92.5% identical to PABP1 (Nucleic Acids Res 2001, PMID 11328870, doi:10.1093/nar/29.9.1872) | primate testis-specific; stored spermatid mRNAs |
+| PABPC4 / iPABP | AU-rich 3′UTR motif; prefers short tails | erythroid differentiation mRNAs |
+| PABPC1L / ePABP | AU-rich; anti-deadenylation | maternal/germline stored mRNAs |
+| PABPC5 | 382 aa, four RRMs, 60% identical to PABPC4 (Genomics 2001, PMID 11374897, doi:10.1006/geno.2001.6530) | X-linked, poorly characterised |
+| PABPN1 | nuclear | drives **hyperadenylation-coupled decay** with PAPα/γ and the exosome (PLoS Genet 2013, PMID 24146636, doi:10.1371/journal.pgen.1003893) |
+| **PABPC1L2A / neuPABP** | **nothing beyond RRM1–2** | ribosomal- and mitochondrial-protein mRNAs; BC1 ncRNA |
+
+### 9.2 The poly(A) surface itself: adenine reading is intact
+
+Resolving the 43 poly(A) contacts in 4F02 by what they touch: **34 residues contact adenine base atoms** (16 in RRM1, 18 in RRM2) and 9 touch only ribose/phosphate. Conservation of the 34 base-readers:
+
+| Protein | Adenine base-readers conserved | Substitutions |
+|---|---|---|
+| PABPC4 | 34/34 (100%) | none |
+| **PABPC1L2A (human)** | **33/34 (97%)** | **M46K** |
+| **neuPABP (mouse)** | **33/34 (97%)** | **M46K** |
+| PABPC3 / tPABP | 30/34 (88%) | M46L, L52S, K129N, R172Q |
+| ePABP | 30/34 (88%) | M46V, K138R, Y140F, R172H |
+| PABPC5 | 29/34 (85%) | S12A, M46P, R89P, F142Y, F169Y |
+
+PABPC1L2A has the **second most intact adenine-reading surface in the family** — better preserved than tPABP or ePABP, both of which are accepted poly(A) binders. Its single substitution sits at **position 46, the family's most variable base-reader** (L in tPABP, V in ePABP, P in PABPC5, K here). There is therefore **no structural basis to predict a shift away from adenine**, which is exactly what the RNAcompete result (consensus AAAAAA) and the Kd ≈ 50 nM for oligo(A) show. Note the contrast with section 8.2: the same protein keeps 97% of its base-reading residues while losing 29% of its eIF4G contacts. The surfaces have been under opposite selective regimes.
+
+### 9.3 The informative clue is the footprint, not the chemistry
+
+Since the chemistry of adenine recognition is unchanged, the discriminating variable is **how much tail the protein covers**. The RRM1–2 module crystallises with an 11-mer poly(A), and in 4F02 one PABP molecule contacts **9 of the 11 nucleotides** of a given RNA copy (further contacts in the lattice come from a neighbouring RNA molecule). Full-length PABPC1, by contrast, lays down a **~27-nt periodic footprint**. Consistently, the 2023 EMSA showed **two neuPABP molecules binding A₂₅ where only one PABPC1 fits**.
+
+This generates the most useful prediction available about what PABPC1L2A binds:
+
+- **Short poly(A) tails.** A ~12-nt footprint can stably occupy tails that are too short for full-length PABPC1 — i.e. **deadenylated, stored, translationally silent messages**. This is precisely the niche PABPC4 occupies via a different route (it prefers mRNAs with critically shortened tails).
+- **Internal A-tracts, not just 3′ ends.** The one experimentally identified RNA target, **BC1**, carries its A-rich element **internally**, not as a terminal tail. A half-size footprint makes internal A-stretches — too short to hold a 27-nt PABPC1 — accessible. This reframes the protein as a binder of **A-rich elements** rather than of poly(A) tails *per se*, and it is directly testable by comparing binding to A₁₂ vs A₂₅ vs an internal A-tract in a longer transcript.
+- **A protective, non-licensing mode.** PABPC1 coating both blocks CAF1 and activates CCR4, setting the periodicity of tail trimming. A PABP that covers half as much and has **no MLLE to recruit CCR4–NOT or PAN3 adaptors** would be predicted to shield a short tail **without licensing further trimming** — a plausible molecular basis for long-term mRNA storage, and a clean biochemical experiment.
+
+### 9.4 One suggestive convergence, flagged as hypothesis
+
+neuPABP's RIP-seq targets — mRNAs for **ribosomal and mitochondrial proteins** — are the classic **5′ TOP mRNA** class. The other poly(A)-binding repressor of that same class is **LARP1**, whose La-module binds TOP motifs and poly(A) **simultaneously**, and which regulates the stability and translation of mRNAs encoding the translation machinery (RNA Biol 2019, PMID 31601159, doi:10.1080/15476286.2019.1669404; the direction of LARP1's effect remains contested — RNA Biol 2020, PMID 32233986, doi:10.1080/15476286.2020.1733787). Two unrelated poly(A)-binding proteins converging on the same mRNA class, both associated with repression, is at minimum a precedent that a poly(A) binder can be class-selective without an AU-rich-reading module. Whether PABPC1L2A cooperates with, competes with, or is independent of LARP1 is untested, and nothing in the current data links them.
+
+### 9.5 Reading this back onto spermatogenesis
+
+Two points sharpen the earlier assessment. First, the **stored spermatid mRNA class** (Prm1, Prm2, Tnp1, Tnp2, Odf1, Smcp, Akap4, Gapdhs and relatives) is held with **shortened poly(A) tails** and re-adenylated on activation — i.e. the substrate that the footprint argument predicts this protein should prefer. Second, a caution on phenotype expectations: **mouse knockouts of the testis-specific PABPCs are fertile.** *Pabpc6* is dispensable for spermatogenesis (Biol Reprod 2024, PMID 38281153, doi:10.1093/biolre/ioae017), and mice lacking **both** PABPC2 and PABPC6 show **normal spermatogenesis and fertility** (J Reprod Dev 2025, PMID 40254460, doi:10.1262/jrd.2025-012), with that work noting that rodents carry two testis-specific PABPCs and primates one (PABPC3), all encoded by **intronless genes that may have diverged independently** — the same structural class as PABPC1L2A/B. Redundancy among intronless PABPC paralogs is the rule in this family, so a null phenotype for a PABPC1L2A/B double knockout would not by itself argue against a spermatid function.
+
+---
+
+## 10. Caveats on the record itself
 
 - UniProt still flags the protein as possibly non-functional on the basis of the missing PABC domain; NCBI annotated the mouse ortholog as a putative pseudogene. Both predate — and are contradicted in their main thrust by — the 2023 demonstration of a real, poly(A)-binding, GUG-initiated protein.
 - The human protein length (200 aa) is probably an under-annotation; expect a conserved N-terminal extension by analogy with the validated mouse 312-aa form.
@@ -215,7 +274,7 @@ In mouse, the real protein is GUG-initiated with an N-terminal low-complexity do
 
 ---
 
-## 10. Sources
+## 11. Sources
 
 **Literature (retrieved via PubMed; DOIs as supplied by the PubMed record):**
 

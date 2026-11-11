@@ -1,6 +1,7 @@
 ## Today
 - Email
 - Check up on Eriks paper
+- https://motion.au.dk/en/become-an-au-motion-member
 
 ## Week
 - Exam date (after Jan 17.) and zoom censor for Imanol.

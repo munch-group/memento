@@ -3,6 +3,13 @@
 - Check up on Eriks paper
 - /faststorage/project/simons/people/kmt/steps
 - https://motion.au.dk/en/become-an-au-motion-member
+- Check up on:
+  - "Transcriptomic differences in X- and Y-carrying gametes are associated with regions under positive selection on the human X-chromosome"
+  - "Genome-wide scan for transmission ratio distortion in trios from the Norwegian MoBa cohort rules out moderate distortion at common variants"
+  - "A curated genome-scale nucleotide diversity panel of non-human primates"
+  - Eriks paper
+  - Shannon's XWAS
+  - Shannon's Y paper
 
 ## Week
 - Exam date (after Jan 17.) and zoom censor for Imanol.
@@ -13,13 +20,6 @@
 - List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
 - Read shannons paper
 - RejsUd
-- Check up on:
-  - "Transcriptomic differences in X- and Y-carrying gametes are associated with regions under positive selection on the human X-chromosome"
-  - "Genome-wide scan for transmission ratio distortion in trios from the Norwegian MoBa cohort rules out moderate distortion at common variants"
-  - "A curated genome-scale nucleotide diversity panel of non-human primates"
-  - Eriks paper
-  - Shannon's XWAS
-  - Shannon's Y paper
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
 - Consider [ProbGen2027](https://meetings.cshl.edu/meetings.aspx?meet=probgen)
 - Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 

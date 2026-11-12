@@ -1,6 +1,7 @@
 ## Today
 - Email
 - Check up on Eriks paper
+- people/eriks/admixture_baboons/steps/rfmix_gen100/eth_olive_focus/all_chrX.windows.txt
 - /faststorage/project/simons/people/kmt/steps
 - https://motion.au.dk/en/become-an-au-motion-member
 - Check up on:

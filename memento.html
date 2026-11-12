@@ -2088,10 +2088,10 @@ function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
 // Dashboard "head" cards — each sits atop a column in digest view, in this order:
-// the special cards (Priorities, Admin, Strategy, Networking), then Open issues (in the slot the generated
+// the special cards (Priorities, Admin, Networking, Strategy), then Open issues (in the slot the generated
 // Dashboard digest used to occupy — that card is hidden for now, code kept below), then Inbox.
-// Each array entry lands in its own column (round-robin, see renderList) — except Admin, Strategy and
-// Networking, which are glued into one entry so they always render stacked in that order in the same
+// Each array entry lands in its own column (round-robin, see renderList) — except Admin, Networking and
+// Strategy, which are glued into one entry so they always render stacked in that order in the same
 // column, instead of scattering across separate columns like the other heads.
 function digestHeads(){
   // Dashboard digest card hidden — uncomment (and restore digestHtml in the array below) to bring it back.
@@ -2100,9 +2100,9 @@ function digestHeads(){
   //   ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
   //   : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
   const cardFor = id => renderSpecialCard(SPECIAL_CARDS.find(s => s.id === id), items.find(i => i.id === id));
-  const adminStrategyNetworking = cardFor('_admin') + cardFor('_strategy') + cardFor('_networking');
+  const adminNetworkingStrategy = cardFor('_admin') + cardFor('_networking') + cardFor('_strategy');
   // was: [cardFor('_priorities'), strategyAndNetworking, digestHtml, renderInboxCard(), renderGhIssuesCard()]
-  return [cardFor('_priorities'), adminStrategyNetworking, renderGhIssuesCard(), renderInboxCard()].filter(Boolean);
+  return [cardFor('_priorities'), adminNetworkingStrategy, renderGhIssuesCard(), renderInboxCard()].filter(Boolean);
 }
 function renderLinkBanner() {
   const el = document.getElementById('link-banner');

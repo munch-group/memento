@@ -1,6 +1,7 @@
 ## Today
 - Email
 - Check up on Eriks paper
+- /faststorage/project/simons/people/kmt/steps
 - https://motion.au.dk/en/become-an-au-motion-member
 
 ## Week

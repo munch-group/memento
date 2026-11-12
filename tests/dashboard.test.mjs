@@ -14,7 +14,7 @@ const noop = async () => ({ ok: true, status: 200, json: async () => ({}), text:
 const note = (id, title, extra = {}) =>
   ({ id, type: 'note', title, tags: [], genes: [], content: 'body of ' + id, date: '2026-07-14T00:00:00Z', ...extra });
 
-// The <h2> of every dashboard head, in emission order. Admin, Strategy and Networking are glued into a
+// The <h2> of every dashboard head, in emission order. Admin, Networking and Strategy are glued into a
 // single array entry (see digestHeads), so this pulls every <h2> out of each entry rather than
 // just the first — otherwise the later headings would be invisible to this helper. A head with no
 // <h2> is the "click to create" placeholder for a special card that doesn't exist yet.
@@ -37,7 +37,7 @@ console.log('\nThe registry');
   eq([...api.SPECIAL_IDS], ['_priorities', '_networking', '_admin', '_strategy', '_digest'], 'the generated digest is special too');
 }
 
-console.log('\nDashboard order: Priorities, Admin, Strategy, Networking, Open issues, then Inbox');
+console.log('\nDashboard order: Priorities, Admin, Networking, Strategy, Open issues, then Inbox');
 {
   const { api } = setup([
     note('_strategy', 'Strategy'),        // deliberately out of order in `items`...
@@ -47,13 +47,13 @@ console.log('\nDashboard order: Priorities, Admin, Strategy, Networking, Open is
     note('n1', 'Normal'),
   ]);
   // ...the dashboard order comes from the registry, not from entry order on disk.
-  eq(headings(api.digestHeads()), ['Priorities', 'Admin', 'Strategy', 'Networking', 'Inbox'], 'heads render in the intended order');
+  eq(headings(api.digestHeads()), ['Priorities', 'Admin', 'Networking', 'Strategy', 'Inbox'], 'heads render in the intended order');
 }
 
-console.log('\nAdmin, Strategy and Networking are glued to one column, stacked in that order');
+console.log('\nAdmin, Networking and Strategy are glued to one column, stacked in that order');
 {
   // Heads distribute round-robin across columns (see renderList), which would otherwise scatter
-  // Admin, Strategy and Networking into different columns. Check every column count the layout can pick.
+  // Admin, Networking and Strategy into different columns. Check every column count the layout can pick.
   const { api, sandbox } = setup([
     note('_priorities', 'Priorities'),
     note('_admin', 'Admin'),
@@ -69,10 +69,10 @@ console.log('\nAdmin, Strategy and Networking are glued to one column, stacked i
     eq(cols.length, nCols, `width ${width}: layout picks ${nCols} column(s)`);
     const col = cols.find(c => c.includes('<h2>Admin</h2>'));
     const at = h => col ? col.indexOf(`<h2>${h}</h2>`) : -1;
-    const [iA, iS, iN] = ['Admin', 'Strategy', 'Networking'].map(at);
-    eq(iA !== -1 && iS > iA && iN > iS, true, `${nCols} column(s): Admin, Strategy, Networking share a column, in that order`);
+    const [iA, iN, iS] = ['Admin', 'Networking', 'Strategy'].map(at);
+    eq(iA !== -1 && iN > iA && iS > iN, true, `${nCols} column(s): Admin, Networking, Strategy share a column, in that order`);
     const between = (a, b) => col.slice(a, b).match(/<h2>/g).length;
-    eq(iA !== -1 && between(iA, iS) === 1 && between(iS, iN) === 1, true,
+    eq(iA !== -1 && between(iA, iN) === 1 && between(iN, iS) === 1, true,
        `${nCols} column(s): nothing else sits between them`);
   }
 }

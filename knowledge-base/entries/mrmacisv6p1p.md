@@ -1,6 +1,7 @@
 
 ## TODO
 - Praktisk vejledning - praktisk forklaring af gennemgang af kode
+- https://gradual-disempowerment.ai/
 - Python vs. Notebooks, og filer-paths gennemgang.
 - Add snippet-casts
 - Check orf/hiv/assembly projects work with data files, and consider having students add tests
@@ -121,13 +122,14 @@ def find_start_positions(seq):
 ```
 
 ## For next year / last part
-
+- Spend the first weeks on scripts before introducing notebooks next year.
+- Introduce them to the file structure and paths. Make a treasure hunt where they navigate around in a big folder structure I give them, with "poster"/hints they need to find/read to get the next clue.
 - Få dem til at skrive af fra hjemmesiden i stedet for bare at køre notebooks.
 - Annocer mandatory afl. i god tid. og tidligere på kurset
 - Tests fejler fordi CODON_MAP er i både upper og lower case
-- Biopython (moduler) understrej det det som demo næste år, og fokuser og brug pandas i stedet.
-- Figurer skal linkes fra github
-- Reveals for at skjule svar.
+- Take Biopython out  and focus on pandas instead and add a project where they use it for stats and plotting.
+- Figurer skal linkes fra github. E.g. https://github.com/munch-group/instructing-machines/blob/refs/heads/main/docs/bioinf/images/aln140.png
+- Use reveals to avoid students read answers/solutions by accident.
 - Notebooks from "Deep learning for visual recognition" kursus af Henrik Pedersen, en ekstern lektor på datalogi. hpe@cs.au.dk
 - Read these [online notes](http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/#backpropagation_algorithm) and improve neural network material.
 - AI exercises need to be fewer and harder and more "targeted.

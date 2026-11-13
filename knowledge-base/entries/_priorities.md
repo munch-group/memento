@@ -14,6 +14,7 @@
 
 ## Week
 - Exam date (after Jan 17.) and zoom censor for Imanol.
+- https://meetings.cshl.edu/meetings.aspx?meet=probgen
 - Sign up for BiRC Christmas lunch and figure out when MBGs party is
 - Censor karakterer
 - Funding wrapup

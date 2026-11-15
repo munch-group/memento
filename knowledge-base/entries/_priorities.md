@@ -11,6 +11,7 @@
   - Eriks paper
   - Shannon's XWAS
   - Shannon's Y paper
+  - https://www.cambridge.org/core/journals/journal-of-applied-probability/article/summary-statistics-for-endpointconditioned-continuoustime-markov-chains/50F8EE4E74283BE61141D25BC4926F8B
 
 ## Week
 - Exam date (after Jan 17.) and zoom censor for Imanol.

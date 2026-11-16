@@ -10,6 +10,7 @@
 - Morteza about macaques genomes
 - Send final instructing-machines to Paul Denny the AI@NAT people running python courses.
 - Davide Marnetto (Italien guy)
+- about howler monkey sex chromosome karytypes 
 
 ## Visiting
 - Aylwyn Scally and Andrea Manica in Cambridge

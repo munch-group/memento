@@ -4,21 +4,23 @@
 - Lectures
 
 ## Week
+- Plan/tidy in Memento
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
 - See what to move from cDEGexploration to crossrepo/tracks_template.ipynb before extracting small meta-analysis repo[[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Read "my" new primate paper before next baboon call
+- Hypothesis [[mndbilmcd0xt|Meiotic drive as engine of change]] 
 
 ## Month
 - Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]
-- itrails workflow for Roos postdoc
+- Baboon calling
 - [Configure Claude permissions](https://code.claude.com/docs/en/permissions)
-- Hypothesis [[mndbilmcd0xt|Meiotic drive as engine of change]] 
 - PsychENCODE access request
 
-## Quarter plan
+## Quarter
+- itrails workflow for Roos postdoc
 - Phasic paper on coalescent with selection.  
 
-## Year strategy
+## Year
 - Phasic paper on joint probability.  
 - Phasic paper on PSMC/BFFG/demography.  
 - Baboon paper on Awash and layered swampings (Phasic FMC, BDMI sims. Hum-Nean admix, macaque hic).  
@@ -26,5 +28,5 @@
 - More funding (for travel and visits).  
 - Tree selection stats paper.
 
-## Three-year goals
-- Larger group. 
+## Three years
+- Two-postdoc group. 

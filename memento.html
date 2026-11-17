@@ -1016,7 +1016,6 @@ const SPECIAL_CARDS = [
   { id: '_priorities', title: 'Priorities',  staleDays: 4 },
   { id: '_networking', title: 'Networking',  staleDays: 14 },
   { id: '_admin',      title: 'Admin',       staleDays: 14 },
-  { id: '_strategy',   title: 'Strategy',    staleDays: 30 },
 ];
 const SPECIAL_IDS = new Set([...SPECIAL_CARDS.map(s => s.id), '_digest']);
 
@@ -1032,7 +1031,7 @@ const GH_ENTRIES_PATH = GH_KB_PATH + '/entries';
 const GH_BRANCH = 'main';
 // Shown in the sidebar. iOS caches this file hard, so without a visible stamp there is no way to
 // tell whether a device is running the build you just pushed. Bump it on every meaningful change.
-const APP_BUILD = '2026-10-09.2';
+const APP_BUILD = '2026-11-17.1';
 let _mdFailed = null;   // md() sets this when the markdown/math engines are missing or throw
 let items = [];
 // Type and Tag are multi-select facets: each chip toggles on and off on its own, and selecting
@@ -2088,11 +2087,11 @@ function geneOverflowPass(){
   document.querySelectorAll('.gene-list').forEach(el => el.classList.toggle('overflowing', el.scrollWidth > el.clientWidth));
 }
 // Dashboard "head" cards — each sits atop a column in digest view, in this order:
-// the special cards (Priorities, Admin, Networking, Strategy), then Open issues (in the slot the generated
+// the special cards (Priorities, Admin, Networking), then Open issues (in the slot the generated
 // Dashboard digest used to occupy — that card is hidden for now, code kept below), then Inbox.
-// Each array entry lands in its own column (round-robin, see renderList) — except Admin, Networking and
-// Strategy, which are glued into one entry so they always render stacked in that order in the same
-// column, instead of scattering across separate columns like the other heads.
+// Each array entry lands in its own column (round-robin, see renderList) — except Admin and
+// Networking, which are glued into one entry so they always render stacked in that order in the
+// same column, instead of scattering across separate columns like the other heads.
 function digestHeads(){
   // Dashboard digest card hidden — uncomment (and restore digestHtml in the array below) to bring it back.
   // const d = window._kbDigest;
@@ -2100,9 +2099,8 @@ function digestHeads(){
   //   ? '<div class="digest-card"><p style="color:var(--text3)">No digest yet — run <code>pixi run digest</code></p></div>'
   //   : `<div class="digest-card">${d.date ? '<div class="digest-date">Generated ' + esc(fmtDate(d.date)) + '</div>' : ''}<h2>Dashboard</h2>${linkifyDigestRepos(md(d.markdown))}</div>`;
   const cardFor = id => renderSpecialCard(SPECIAL_CARDS.find(s => s.id === id), items.find(i => i.id === id));
-  const adminNetworkingStrategy = cardFor('_admin') + cardFor('_networking') + cardFor('_strategy');
-  // was: [cardFor('_priorities'), strategyAndNetworking, digestHtml, renderInboxCard(), renderGhIssuesCard()]
-  return [cardFor('_priorities'), adminNetworkingStrategy, renderGhIssuesCard(), renderInboxCard()].filter(Boolean);
+  const adminNetworking = cardFor('_admin') + cardFor('_networking');
+  return [cardFor('_priorities'), adminNetworking, renderGhIssuesCard(), renderInboxCard()].filter(Boolean);
 }
 function renderLinkBanner() {
   const el = document.getElementById('link-banner');
@@ -2227,7 +2225,7 @@ function renderList() {
   } else {
     vis.forEach((item, i) => cols[i % nCols].push(renderCard(item, false, i < EAGER)));
   }
-  // Dashboard heads (Priorities, Strategy + Networking, Open issues, Inbox) go round-robin below.
+  // Dashboard heads (Priorities, Admin + Networking, Open issues, Inbox) go round-robin below.
   if (mainView === 'dash') {
     const heads = digestHeads();
     const headCols = Array.from({length: nCols}, () => []);
@@ -9396,6 +9394,7 @@ function toggleSidebar(force) {
 try { if (localStorage.getItem('sb_collapsed') === '1') toggleSidebar(true); } catch {}
 
 // --- Init ---
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 // Auto-close sidebar on mobile after tapping a filter
 document.getElementById('sidebar').addEventListener('click', e => {
   if (e.target.closest('.filter-chip') && window.innerWidth <= 640) {

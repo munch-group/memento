@@ -1284,8 +1284,8 @@ async function tryRestoreHandle() {
         await loadFromFile();
         showApp();
       } else {
-        updateFileStatus(dh.name + ' (click Connect to re-authorize)');
-        showApp();
+        // Permission not granted yet — stay on the connect screen so the user
+        // can click "Choose folder" (a user gesture is required to re-grant).
       }
     }
   } catch(e) {}

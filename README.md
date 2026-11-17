@@ -28,10 +28,52 @@ memento can run as its own standalone app — a chromeless window with its own D
 by installing it as a Chrome PWA. Chrome only installs from a secure origin (not `file://`),
 so a launchd agent serves the repo locally:
 
-- `~/Library/LaunchAgents/com.kmt.memento-serve.plist` runs
-  `python3 -m http.server 8765 --bind 127.0.0.1 --directory /Users/kmt/memento` at login
-  (localhost-only; the knowledge base is never exposed to the network). Load it once with
-  `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kmt.memento-serve.plist`.
+- Create `~/Library/LaunchAgents/com.kmt.memento-serve.plist` with the following content:
+
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.kmt.memento-serve</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/bin/python3</string>
+      <string>-m</string>
+      <string>http.server</string>
+      <string>8765</string>
+      <string>--bind</string>
+      <string>127.0.0.1</string>
+      <string>--directory</string>
+      <string>/Users/kmt/memento</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/memento-serve.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/memento-serve.log</string>
+  </dict>
+  </plist>
+  ```
+
+  This runs `python3 -m http.server 8765 --bind 127.0.0.1 --directory /Users/kmt/memento`
+  at login (localhost-only; the knowledge base is never exposed to the network). Load it once
+  with:
+
+  ```bash
+  launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kmt.memento-serve.plist
+  ```
+
+  Verify with `launchctl list | grep memento`. To unload:
+
+  ```bash
+  launchctl bootout gui/$(id -u)/com.kmt.memento-serve
+  ```
 - **Install once:** open `http://localhost:8765/memento.html` in Chrome and click the install
   icon in the address bar (or ⋮ → Save and share → Install page as app). Chrome creates
   `Memento.app` under `~/Applications/Chrome Apps.localized/` with the icon from

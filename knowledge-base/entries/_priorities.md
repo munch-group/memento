@@ -1,47 +1,30 @@
 ## Today
-- Email
-- Popgroup Conference https://popgroup60.com/
-- Conference: https://royalsociety.org/science-events-and-lectures/2027/04/recombinant-genealogies/
-- Check up on Eriks paper
-- https://public.gi.ucsc.edu/~pnhebbar/hubs/t2tPrimates/assemblyHub/
-- people/eriks/admixture_baboons/steps/rfmix_gen100/eth_olive_focus/all_chrX.windows.txt
-- /faststorage/project/simons/people/kmt/steps
-- https://motion.au.dk/en/become-an-au-motion-member
-- Check up on:
-  - "Transcriptomic differences in X- and Y-carrying gametes are associated with regions under positive selection on the human X-chromosome"
-  - "Genome-wide scan for transmission ratio distortion in trios from the Norwegian MoBa cohort rules out moderate distortion at common variants"
-  - "A curated genome-scale nucleotide diversity panel of non-human primates"
-  - Eriks paper
-  - Shannon's XWAS
-  - Shannon's Y paper
-  - https://www.cambridge.org/core/journals/journal-of-applied-probability/article/summary-statistics-for-endpointconditioned-continuoustime-markov-chains/50F8EE4E74283BE61141D25BC4926F8B
+- Check up on Erik's and Shannon's papers  [[mui1eaefsta4|Shannon plan]]
+- Prepare Zoom with Celia about African genomes
+- Lectures
 
 ## Week
-- Exam date (after Jan 17.) and zoom censor for Imanol.
-- https://meetings.cshl.edu/meetings.aspx?meet=probgen
-- Sign up for BiRC Christmas lunch and figure out when MBGs party is
-- Censor karakterer
-- Funding wrapup
-- Shannons papers/meeting [[mui1eaefsta4|Shannon plan]]
-- List and download missing baboon bams [[mrn16oodkri8|Baboon plan]]
-- Read shannons paper
-- RejsUd
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
-- Consider [ProbGen2027](https://meetings.cshl.edu/meetings.aspx?meet=probgen)
-- Finish tidying up incl. cDEGexploration [[mu2ewecoa8tg|Overview / Tidy plan]] 
+- See what to move from cDEGexploration to crossrepo/tracks_template.ipynb before extracting small meta-analysis repo[[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Read "my" new primate paper before next baboon call
-- Zoom with Celia about Africa genomes (maybe I don't access request)
-- Go back to normal security level on laptop
-- Check nr of seats and billing for GitHub organization
-- [Configure Claude permissions](https://code.claude.com/docs/en/permissions)
 
 ## Month
 - Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]
-- Read Juliens papers
-- Complete hypothesis doc [[mndbilmcd0xt|Meiotic drive as engine of change]]
-- Meta analysis setup [[mrn8x1cswi91|Meta-repo / hypothesis plan]]
-- In Emma's data, just have a quick look at which genes overlap human inversions.
 - itrails workflow for Roos postdoc
+- [Configure Claude permissions](https://code.claude.com/docs/en/permissions)
+- Hypothesis [[mndbilmcd0xt|Meiotic drive as engine of change]] 
 - PsychENCODE access request
-- Funding strategy (for traveling)
-- Linda about mouse mir and circRNA / human ortholog and / check my own mir target list and circRNA list [[mrp3a5pzxavj|Gene set: Xq27 miRNA cluster]]
+
+## Quarter plan
+- Phasic paper on coalescent with selection.  
+
+## Year strategy
+- Phasic paper on joint probability.  
+- Phasic paper on PSMC/BFFG/demography.  
+- Baboon paper on Awash and layered swampings (Phasic FMC, BDMI sims. Hum-Nean admix, macaque hic).  
+- LoF paper on primate protein diversity (Relate, ILS).  
+- More funding (for travel and visits).  
+- Tree selection stats paper.
+
+## Three-year goals
+- Larger group. 

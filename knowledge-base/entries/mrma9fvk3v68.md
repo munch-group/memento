@@ -1,5 +1,7 @@
 ## Phasic TODO
 
+[Summary Statistics for Endpoint-Conditioned Continuous-Time Markov Chains](https://www.cambridge.org/core/journals/journal-of-applied-probability/article/summary-statistics-for-endpointconditioned-continuoustime-markov-chains/50F8EE4E74283BE61141D25BC4926F8B)
+
 Try the two-locus model and estimate both recombination and coalescence rates. Should also give more power for two-locus models.
 
 Try the two-locus model and estimate both recombination and coalescence rates.

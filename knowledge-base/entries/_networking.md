@@ -1,25 +1,23 @@
-## In contact
-- John Huelsenbeck about Phasic and MCMC
-- Sohini about pedigree ARG
-- David Reich about his paper
-- Shriram about Phasic
-- [Andreas Basse-O'Connor](https://sites.google.com/site/basseoconnor/Home)
-- Kalle / Charlotte about ABC bears (chrX/rfmix/itrails/ghostbuster/phasic).
-- John about hybrid incompatibility and XY haplotype driver pairs
-- Anjali Gupta (Kansas) about simulations and her autosome paper
-- Morteza about macaques genomes
-- Send final instructing-machines to Paul Denny the AI@NAT people running python courses.
-- Davide Marnetto (Italien guy)
-- about howler monkey sex chromosome karytypes 
 
-## Visiting
-- Aylwyn Scally and Andrea Manica in Cambridge
-- Leo in Tokyo
+Update homepage, Complete or remove hypothesis doc 
 
 ## Collaborations
-- Cecilia Padilla-Iglesias [[mwdkgxcum9aj|Cecilia Padilla-Iglesias]]
-- circRNA, RNA binding proteins, chromatoid bodies, project with Christian D. [[mui28tnrkim7|circRNA plan
-- Prepare for Cleo's arrival (interested in structural variation - maybe involve her in CTCF inversions)
+- Cecilia Padilla-Iglesias on [[mwkpwemrunyv|African admixture plan]]
+- Christian Damgaard on [[mui28tnrkim7|circRNA plan]]
 
+## Conferences and visits
+- [Popgroup 2027](https://popgroup60.com/) Glasgow
+- [Recombinant Genealogies](https://royalsociety.org/science-events-and-lectures/2027/04/recombinant-genealogies/) Edinburgh
+- [ProbGen 2027](https://meetings.cshl.edu/meetings.aspx?meet=probgen)
+- Aylwyn Scally and Andrea Manica in Cambridge
 
-
+## Oportunities
+- Shriram about Phasic
+- John Huelsenbeck about Phasic and MCMC
+- Sohini about pedigree ARG
+- Maybe Andreas Basse-O'Connor from math.
+- Morteza about macaque genomes
+- Kalle / Charlotte about ABC bears
+- John about hybrid incompatibility and XY haplotype driver pairs
+- Anjali Gupta (Kansas) about simulations and her autosome paper
+- David Reich about his paper

@@ -1,6 +1,9 @@
 ## Today
 - Email
+- Popgroup Conference https://popgroup60.com/
+- Conference: https://royalsociety.org/science-events-and-lectures/2027/04/recombinant-genealogies/
 - Check up on Eriks paper
+- https://public.gi.ucsc.edu/~pnhebbar/hubs/t2tPrimates/assemblyHub/
 - people/eriks/admixture_baboons/steps/rfmix_gen100/eth_olive_focus/all_chrX.windows.txt
 - /faststorage/project/simons/people/kmt/steps
 - https://motion.au.dk/en/become-an-au-motion-member

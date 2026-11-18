@@ -1,6 +1,6 @@
 // Service worker — offline shell cache.
 // CACHE_VERSION must match APP_BUILD in memento.html; bump both together.
-const CACHE_VERSION = '2026-11-17.1';
+const CACHE_VERSION = '2026-11-18.1';
 const CACHE_NAME = 'memento-v' + CACHE_VERSION;
 
 const SHELL = [

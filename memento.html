@@ -794,9 +794,9 @@ a { color: inherit; }
 </head>
 <body>
 <div class="layout">
-  <button class="sb-menu-btn" onclick="toggleSidebar()" title="Show sidebar (\)">☰</button>
+  <button class="sb-menu-btn" onclick="toggleSidebar()" title="Show sidebar (M or \)">☰</button>
   <div class="sidebar" id="sidebar">
-    <div class="sb-title sb-title-toggle" onclick="toggleSidebar()" title="Hide sidebar (\)">Memento<span class="sb-collapse-btn">«</span></div>
+    <div class="sb-title sb-title-toggle" onclick="toggleSidebar()" title="Hide sidebar (M or \)">Memento<span class="sb-collapse-btn">«</span></div>
     <div class="sb-scroll">
       <div class="sb-section collapsed" id="sb-sort" style="margin-top:1rem" onclick="toggleSection('sb-sort','sort-list')"><span>Sort</span><span class="sb-arrow">▾</span></div>
       <div id="sort-list" style="display:none"></div>
@@ -939,7 +939,7 @@ a { color: inherit; }
         <!-- Grouped so the grid still sees 3 children (view-seg | detail-seg | this group) — a
              bare 4th child would overflow the explicit column tracks and drop to a new row. -->
         <div class="control-bar-right">
-          <div class="seg"><span class="seg-opt" id="bulk-btn" onclick="toggleBulkMode()" title="Select cards for bulk pin / archive / tag / type / delete — taps select while on. Shift-click always selects. (M)">Select</span></div>
+          <div class="seg"><span class="seg-opt" id="bulk-btn" onclick="toggleBulkMode()" title="Select cards for bulk pin / archive / tag / type / delete — taps select while on. Shift-click always selects. (U)">Select</span></div>
           <!-- Connections. Always on screen, so it can never narrow the list from behind the ☰.
                Populated by renderFilters() only when connection cards exist. -->
           <div class="seg" id="conn-seg"></div>
@@ -7085,7 +7085,7 @@ function toggleCard(id,e){
     togglePinnedCard(id);
     return;
   }
-  // Bulk selection: Shift-click anywhere, or any plain click while Select mode (M) is on.
+  // Bulk selection: Shift-click anywhere, or any plain click while Select mode (U) is on.
   if(!readOnly && e && (e.shiftKey || bulkMode) && !e.metaKey && !e.ctrlKey && items.find(i=>i.id===id)){
     e.stopPropagation && e.stopPropagation();
     // The mousedown guard below stops shift-click from extending the text selection; drop any
@@ -7649,12 +7649,12 @@ function keyHelpHtml(){
       ${row('T','Timeline')}
       ${row('V','Card detail (Title · Tags · Body)')}
       ${row('H','Highlight-genes panel')}
-      ${row('M','Select mode — bulk pin / archive / tag / delete')}
+      ${row('U','Select mode — bulk pin / archive / tag / delete')}
       ${row('⇧ click','Select a card for bulk actions')}
       ${row('⌥ click','Pin/unpin a card to the filter, no matter what else it hides')}
       ${row('Esc','Close / clear, step by step — never the search')}
       ${row2('<kbd>Esc</kbd> <kbd>Esc</kbd>','Clear the search — once Esc has nothing left to close')}
-      ${row('\\','Hide / show the sidebar')}
+      ${row('M / \\','Hide / show the sidebar')}
       ${row('?','This cheat-sheet')}
     </table></div>
     <div><h3>Genes view</h3><table>
@@ -7760,7 +7760,8 @@ document.addEventListener('keydown', async e=>{
       if(code==='KeyT'){ e.preventDefault(); setView('timeline'); return; }
       if(code==='KeyV'){ e.preventDefault(); togglePreviews(); return; }
       if(code==='KeyH'){ e.preventDefault(); toggleHighlightInput(); return; }
-      if(code==='KeyM' && !readOnly){ e.preventDefault(); toggleBulkMode(); return; }
+      if(code==='KeyU' && !readOnly){ e.preventDefault(); toggleBulkMode(); return; }
+      if(code==='KeyM'){ e.preventDefault(); toggleSidebar(); return; }   // M = menu; \ below does the same
       // E toggles simple edges — the first view-scoped key: only meaningful (and only bound) in Genes.
       if(code==='KeyE' && mainView==='genes'){ e.preventDefault(); setGeSimpleEdges(!geSimpleEdges); return; }
       if(code==='KeyP' && mainView==='genes'){ e.preventDefault(); setGeCardPanel(!geCardPanel); return; }

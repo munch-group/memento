@@ -13,7 +13,7 @@ A single-file browser app for managing a local JSON knowledge base with Claude m
 Select several cards and act on all of them at once:
 
 - **Shift-click** any card to select it (desktop), or turn on **Select** in the control bar
-  (also the `M` key) so plain clicks/taps select — the touch path. Selected cards wear a blue
+  (also the `U` key) so plain clicks/taps select — the touch path. Selected cards wear a blue
   ring.
 - A floating bar appears while anything is selected: **Pin / Archive / Tag… / Delete**, plus
   the count. Pin and Archive act toward the shared state — if every selected card is already

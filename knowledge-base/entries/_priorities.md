@@ -1,6 +1,8 @@
 ## Today
 - Check up on Erik's and Shannon's papers  [[mui1eaefsta4|Shannon plan]]
 - Prepare Zoom with Celia about African genomes
+- Prepare lectures for Monday
+- Parse and correct mandatory assignmnets
 
 ## Week
 - Plan/tidy in Memento

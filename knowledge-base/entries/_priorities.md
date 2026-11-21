@@ -1,11 +1,14 @@
 ## Today
-- Check up on Erik's and Shannon's papers  [[mui1eaefsta4|Shannon plan]]
-- Prepare Zoom with Celia about African genomes
+- Email
 - Prepare lectures for Monday
-- Parse and correct mandatory assignmnets
+- Plan/tidy in Memento
+- Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
+- Censor reimbursements: https://sund.ku.dk/uddannelse/censor/#collapse-1681376140920
 
 ## Week
-- Plan/tidy in Memento
+- Parse and correct mandatory assignmnets
+- Prepare Zoom with Celia about African genomes
+- Check up on Erik's and Shannon's papers  [[mui1eaefsta4|Shannon plan]]
 - Finish teaching material[[mrmacisv6p1p|Bioinformatics plan]]
 - See what to move from cDEGexploration to crossrepo/tracks_template.ipynb before extracting small meta-analysis repo[[mu2ewecoa8tg|Overview / Tidy plan]] 
 - Read "my" new primate paper before next baboon call

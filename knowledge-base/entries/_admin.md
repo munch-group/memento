@@ -1,7 +1,5 @@
 # Exams
 - Rene about Zoom censor (after Jan 17.) for Imanol's PiB 
-- Sign up Christian as censor for BP
-- KBH censor karakterer
 - RejsUd
 
 # PhD committee

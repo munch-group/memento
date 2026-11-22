@@ -1,9 +1,11 @@
 ## Today
 - Email
+- Cecilia
 - PhD committee preparation
+- Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
+- Science review
 - Prepare lectures for Monday
 - Plan/tidy in Memento
-- Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
 - Censor reimbursements: https://sund.ku.dk/uddannelse/censor/#collapse-1681376140920
 
 ## Week

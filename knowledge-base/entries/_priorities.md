@@ -1,5 +1,6 @@
 ## Today
 - Email
+- PhD committee preparation
 - Prepare lectures for Monday
 - Plan/tidy in Memento
 - Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper

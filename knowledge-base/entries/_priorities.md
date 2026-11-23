@@ -1,14 +1,14 @@
 ## Today
-- Cecilia
-- Censor reimbursements: https://sund.ku.dk/uddannelse/censor/#collapse-1681376140920
 - Email
-- Science review
-- Parse and correct mandatory assignmnets
-- Wednesday lecture / hypothesis notes
-- Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
+- Cecilia email
 - Prepare Zoom with Celia about African genomes
+- Wednesday lecture / hypothesis notes
 
 ## Week
+- Parse and correct mandatory assignmnets
+- Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
+- Censor reimbursements: https://sund.ku.dk/uddannelse/censor/#collapse-1681376140920
+- Science review
 - Check up on Erik's paper
 - Snippet-casts
 - Read "my" new primate paper before next baboon call

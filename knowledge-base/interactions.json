@@ -41244,6 +41244,7 @@
   ],
   "C3orf18": [
    "ASD",
+   "MT",
    "fact",
    "gene-set"
   ],
@@ -41274,6 +41275,7 @@
   ],
   "CACNA2D2": [
    "ASD",
+   "MT",
    "fact",
    "gene-set"
   ],
@@ -42136,6 +42138,7 @@
   ],
   "CISH": [
    "ASD",
+   "MT",
    "fact",
    "gene-set"
   ],
@@ -43064,6 +43067,7 @@
   ],
   "DOCK3": [
    "ASD",
+   "MT",
    "fact",
    "gene-set"
   ],
@@ -45020,6 +45024,7 @@
   ],
   "HEMK1": [
    "ASD",
+   "MT",
    "fact",
    "gene-set"
   ],
@@ -46911,6 +46916,7 @@
   ],
   "MAPKAPK3": [
    "ASD",
+   "MT",
    "fact",
    "gene-set"
   ],

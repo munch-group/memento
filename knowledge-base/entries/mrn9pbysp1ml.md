@@ -1,5 +1,7 @@
-- Meiotic drive
-- Evolutionary perspective
+- Meiotic drive, hypotheses, expectations, predictions, autosomal effects, ASD
+- ECHs, nean-human and denisova-humanm admixture human-nean-admixture and baboon LAI and chrX
+- sperm X chromatin and ECHs and LAI and Emmas inversions
+- Y chromosome heterochromatin
 - MAPT, OTA, OTF
 - TTLL10
 - 

@@ -34190,7 +34190,9 @@
     "mqaslkfj2uda"
    ],
    "groups": [
-    "ASD"
+    "ASD",
+    "Archaic",
+    "Chromatin"
    ]
   },
   "CASK": {
@@ -34458,6 +34460,8 @@
     "mqc2ewps3rqd"
    ],
    "groups": [
+    "Archaic",
+    "Chromatin",
     "X",
     "Xi"
    ]
@@ -34790,6 +34794,7 @@
     "Archaic",
     "BDMI",
     "Baboons",
+    "Chromatin",
     "Drive",
     "LAI",
     "X",
@@ -35974,6 +35979,7 @@
     "Archaic",
     "BDMI",
     "Baboons",
+    "Chromatin",
     "LAI",
     "fact",
     "gene-set"
@@ -36243,6 +36249,8 @@
     "mqgpz9jgnimw"
    ],
    "groups": [
+    "Archaic",
+    "Chromatin",
     "LoF",
     "Tubulin",
     "gene-set"
@@ -36667,6 +36675,8 @@
     "mna0610oovuf"
    ],
    "groups": [
+    "Archaic",
+    "Chromatin",
     "LoF",
     "Tubulin",
     "chr17",
@@ -39921,6 +39931,8 @@
    "gene-set"
   ],
   "ACVR2A": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -40000,6 +40012,8 @@
    "gene-set"
   ],
   "ADM": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -40358,6 +40372,8 @@
   ],
   "APLN": [],
   "APOBR": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "APOL6": [
@@ -40637,6 +40653,8 @@
    "gene-set"
   ],
   "ASXL1": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "ASXL2": [
@@ -40685,6 +40703,8 @@
    "gene-set"
   ],
   "ATP11B": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -40831,6 +40851,8 @@
    "gene-set"
   ],
   "BAG2": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "BAG3": [
@@ -40898,6 +40920,8 @@
    "gene-set"
   ],
   "BBX": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -41056,6 +41080,8 @@
    "gene-set"
   ],
   "BMP2": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -41288,6 +41314,8 @@
    "gene-set"
   ],
   "CADM1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -41455,6 +41483,8 @@
    "gene-set"
   ],
   "CATSPER2": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "CATSPERG": [
@@ -41628,6 +41658,8 @@
    "gene-set"
   ],
   "CCNF": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "CCNL2": [
@@ -41685,6 +41717,8 @@
   ],
   "CD40LG": [],
   "CD86": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "CD99": [
@@ -41722,6 +41756,8 @@
    "gene-set"
   ],
   "CDH10": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -41806,7 +41842,10 @@
    "fact",
    "gene-set"
   ],
-  "CDX4": [],
+  "CDX4": [
+   "Archaic",
+   "Chromatin"
+  ],
   "CEACAM19": [
    "gene-set"
   ],
@@ -42210,6 +42249,8 @@
    "gene-set"
   ],
   "CLSTN2": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -42358,6 +42399,8 @@
    "gene-set"
   ],
   "CPE": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "CPEB2": [
@@ -42594,6 +42637,8 @@
   ],
   "CTSG": [
    "Apoptosis",
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -42758,6 +42803,8 @@
    "gene-set"
   ],
   "DCC": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -43223,6 +43270,8 @@
    "gene-set"
   ],
   "DYNC2I1": [
+   "Archaic",
+   "Chromatin",
    "Tubulin",
    "gene-set"
   ],
@@ -43324,6 +43373,8 @@
    "gene-set"
   ],
   "EDIL3": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -44164,6 +44215,8 @@
    "gene-set"
   ],
   "FOXP1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -44196,6 +44249,8 @@
    "gene-set"
   ],
   "FREM2": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -44585,6 +44640,8 @@
    "gene-set"
   ],
   "GOPC": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -44891,6 +44948,8 @@
   ],
   "GZMH": [
    "Apoptosis",
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -44933,6 +44992,8 @@
    "gene-set"
   ],
   "HADHA": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -45173,6 +45234,8 @@
    "gene-set"
   ],
   "HORMAD2": [
+   "Archaic",
+   "Chromatin",
    "Recombination",
    "gene-set"
   ],
@@ -45466,6 +45529,8 @@
    "gene-set"
   ],
   "IFT74": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "IFT81": [
@@ -45734,6 +45799,8 @@
    "gene-set"
   ],
   "IRX1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -46090,6 +46157,8 @@
    "gene-set"
   ],
   "KIRREL3": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -46352,6 +46421,8 @@
    "gene-set"
   ],
   "LIG4": [
+   "Archaic",
+   "Chromatin",
    "Recombination",
    "gene-set"
   ],
@@ -46732,6 +46803,8 @@
    "gene-set"
   ],
   "MAGEB2": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "MAGEB3": [
@@ -47118,6 +47191,8 @@
    "gene-set"
   ],
   "MFAP1": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "MFFP3": [],
@@ -47647,6 +47722,8 @@
    "gene-set"
   ],
   "MTMR3": [
+   "Archaic",
+   "Chromatin",
    "LoF",
    "gene-set"
   ],
@@ -48253,6 +48330,8 @@
    "gene-set"
   ],
   "NTM": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -48369,6 +48448,8 @@
    "gene-set"
   ],
   "NXPH1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -48537,6 +48618,8 @@
    "gene-set"
   ],
   "PABPC1L": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -48807,6 +48890,8 @@
    "gene-set"
   ],
   "PDZRN3": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -48898,6 +48983,8 @@
    "gene-set"
   ],
   "PHF7": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -49065,6 +49152,8 @@
    "gene-set"
   ],
   "PLAGL2": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -49084,6 +49173,8 @@
    "gene-set"
   ],
   "PLCL2": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -49230,6 +49321,8 @@
   ],
   "POF1B": [],
   "POFUT1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -49288,6 +49381,8 @@
    "gene-set"
   ],
   "POU3F1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -49472,6 +49567,8 @@
    "gene-set"
   ],
   "PRKAA2": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -49801,6 +49898,8 @@
    "gene-set"
   ],
   "RAB23": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "RAB26": [
@@ -50146,6 +50245,8 @@
    "gene-set"
   ],
   "RFX2": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "RFX3": [
@@ -50180,6 +50281,8 @@
    "gene-set"
   ],
   "RHOT1": [
+   "Archaic",
+   "Chromatin",
    "Tubulin",
    "gene-set"
   ],
@@ -50311,6 +50414,8 @@
    "gene-set"
   ],
   "ROBO1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -50505,6 +50610,8 @@
   ],
   "RTL9": [],
   "RTN4": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -50520,6 +50627,8 @@
    "gene-set"
   ],
   "RUNDC3B": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "RUNX1T1": [
@@ -50571,6 +50680,8 @@
    "gene-set"
   ],
   "SALL1": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -50633,6 +50744,8 @@
    "gene-set"
   ],
   "SBF2": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -50727,6 +50840,8 @@
    "gene-set"
   ],
   "SEMA3G": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "SEMA4D": [
@@ -50833,6 +50948,8 @@
    "gene-set"
   ],
   "SH2B1": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "SH2B3": [
@@ -51075,6 +51192,8 @@
    "gene-set"
   ],
   "SLC39A8": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "SLC43A2": [
@@ -51373,6 +51492,8 @@
    "gene-set"
   ],
   "SPACA5": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "SPACA5B": [
@@ -51754,6 +51875,8 @@
    "gene-set"
   ],
   "STRC": [
+   "Archaic",
+   "Chromatin",
    "LoF",
    "gene-set"
   ],
@@ -51797,6 +51920,8 @@
    "gene-set"
   ],
   "SUGCT": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "SUGT1": [
@@ -51822,6 +51947,8 @@
    "gene-set"
   ],
   "SUSD6": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -51859,6 +51986,8 @@
    "gene-set"
   ],
   "SYCP2": [
+   "Archaic",
+   "Chromatin",
    "Recombination",
    "gene-set"
   ],
@@ -51971,6 +52100,8 @@
    "gene-set"
   ],
   "TBC1D5": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -52150,6 +52281,8 @@
    "gene-set"
   ],
   "TEK": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "TENM2": [
@@ -52317,6 +52450,8 @@
    "gene-set"
   ],
   "TM9SF4": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -52548,6 +52683,8 @@
    "gene-set"
   ],
   "TNIK": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -53024,12 +53161,16 @@
    "gene-set"
   ],
   "TUBGCP4": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "TUBGCP5": [
    "gene-set"
   ],
   "TUFM": [
+   "Archaic",
+   "Chromatin",
    "gene-set"
   ],
   "TULP3": [
@@ -53325,6 +53466,8 @@
    "gene-set"
   ],
   "VASH2": [
+   "Archaic",
+   "Chromatin",
    "Tubulin",
    "gene-set"
   ],
@@ -53358,6 +53501,8 @@
    "gene-set"
   ],
   "VCX3A": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -53396,6 +53541,8 @@
    "gene-set"
   ],
   "VPS13B": [
+   "Archaic",
+   "Chromatin",
    "LoF",
    "fact",
    "gene-set"
@@ -53666,6 +53813,8 @@
    "gene-set"
   ],
   "YWHAB": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -54061,6 +54210,8 @@
    "gene-set"
   ],
   "ZNF704": [
+   "Archaic",
+   "Chromatin",
    "fact",
    "gene-set"
   ],
@@ -54113,6 +54264,8 @@
    "gene-set"
   ],
   "ZNF81": [
+   "Archaic",
+   "Chromatin",
    "Xi",
    "fact",
    "gene-set"

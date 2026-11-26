@@ -3,6 +3,7 @@
 - Cecilia email
 - Prepare Zoom with Celia about African genomes
 - Wednesday lecture / hypothesis notes
+- Jeg har 30,000 til publication charges på et grant der ender på mandag. Jeg skal bruge dem til at dække Shannon’s artikler, men hun er ikke blevet færdig med dem endnu. Jeg tænkte om jeg kunne betale “primate diversity” artiklen i Genome Biology, og/eller for Meritxell’s artikel, hvis du har noget på den allerede. 
 
 ## Week
 - Parse and correct mandatory assignmnets

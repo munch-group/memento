@@ -1,0 +1,7 @@
+
+> Reconstructing the 3D genome organization of Neanderthals reveals that chromatin folding shaped phenotypic and sequence divergence. 
+>
+>2.4 Regions with 3D divergence highlight AH-MH phenotypic differences
+> To explore the functional effects of AH-MH 3D genome divergence, we tested for phenotypic annotation enrichment. We considered the 43 loci with shared divergence between MHs and all three Neanderthals (Fig. 3B). Although the loci were identified at approximately 1 Mb resolution, most 3D modifications disrupt a smaller sub-window. Thus, as described in the example above (Fig. 3C), we used in silico mutagenesis to identify the AH-MH sequence change(s) that produced the largest disruption in the contact maps. We will refer to these as “3D-modifying variants” (Methods). We then intersected the predicted 3D-modifying variants with experimentally defined TADs to determine the genes to which they are physically linked. Ultimately, we found 88 physical links to protein-coding genes (85 unique genes) for the 45 3D-modifying variants in the 43 Neanderthal-MH 3D divergent loci (Tables S2,S5). We tested if these genes are enriched for phenotypic annotations using both gene-phenoty
+>
+> Suppl. mat. Table S5:

@@ -1,13 +1,10 @@
 ## Today
 - Email
-- Cecilia email
-- Prepare Zoom with Celia about African genomes
-- Wednesday lecture / hypothesis notes
-- Jeg har 30,000 til publication charges på et grant der ender på mandag. Jeg skal bruge dem til at dække Shannon’s artikler, men hun er ikke blevet færdig med dem endnu. Jeg tænkte om jeg kunne betale “primate diversity” artiklen i Genome Biology, og/eller for Meritxell’s artikel, hvis du har noget på den allerede. 
+- Monday lecture 
+- Parse and correct mandatory assignmnets
 
 ## Week
-- Parse and correct mandatory assignmnets
-- Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
+- Prepare Zoom with Celia about African genomes
 - Censor reimbursements: https://sund.ku.dk/uddannelse/censor/#collapse-1681376140920
 - Science review
 - Check up on Erik's paper
@@ -19,6 +16,7 @@
 - See what to move from cDEGexploration to crossrepo/tracks_template.ipynb before extracting small meta-analysis repo[[mu2ewecoa8tg|Overview / Tidy plan]] 
 
 ## Month
+- Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
 - Baboon calling
 - Hypothesis [[mndbilmcd0xt|Meiotic drive as engine of change]] 
 - Finish Phasic refactor [[mrma9fvk3v68|Phasic plan]]

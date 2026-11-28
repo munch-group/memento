@@ -1,15 +1,14 @@
 ## Today
 - Email
-- Monday lecture 
-- Parse and correct mandatory assignmnets
-- Postpone MBG lecture
-
-## Week
-- Prepare Zoom with Celia about African genomes
+- Postpone BiRC and MBG talk
+- Monday lecture
 - Censor reimbursements: https://sund.ku.dk/uddannelse/censor/#collapse-1681376140920
 - Science review
 - Check up on Erik's paper
-- Snippet-casts
+- Parse and correct mandatory assignments
+
+## Week
+- Prepare Zoom with Celia about African genomes
 - Read "my" new primate paper before next baboon call
 -  Shannon's papers  [[mui1eaefsta4|Shannon plan]]
 - PsychENCODE access request

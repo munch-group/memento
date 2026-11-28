@@ -1,4 +1,5 @@
 - Clean up chr3 notebook in geneinfo repo
+- See what to move from cDEGexploration to crossrepo/tracks_template.ipynb before extracting small meta-analysis repo
 
 ---------------------------------------------------------------------------
 

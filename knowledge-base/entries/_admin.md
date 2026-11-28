@@ -1,5 +1,5 @@
 # Exams
-- Rene about Zoom censor (after Jan 17.) for Imanol's PiB 
+- Submit Rene about as censor
 - RejsUd
 
 # PhD committee

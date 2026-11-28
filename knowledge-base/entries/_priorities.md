@@ -4,10 +4,10 @@
 - Monday lecture
 - Censor reimbursements: https://sund.ku.dk/uddannelse/censor/#collapse-1681376140920
 - Science review
-- Check up on Erik's paper
-- Parse and correct mandatory assignments
 
 ## Week
+- Check up on Erik's paper
+- Parse and correct mandatory assignments
 - Prepare Zoom with Celia about African genomes
 - Read "my" new primate paper before next baboon call
 -  Shannon's papers  [[mui1eaefsta4|Shannon plan]]

@@ -9,7 +9,7 @@
 - Check up on Erik's paper
 - Parse and correct mandatory assignments
 - Prepare Zoom with Celia about African genomes
-- Read "my" new primate paper before next baboon call
+- Read primate paper before next baboon call
 -  Shannon's papers  [[mui1eaefsta4|Shannon plan]]
 - PsychENCODE access request
 - Plan/tidy in Memento

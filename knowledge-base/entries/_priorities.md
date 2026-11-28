@@ -2,6 +2,7 @@
 - Email
 - Monday lecture 
 - Parse and correct mandatory assignmnets
+- Postpone MBG lecture
 
 ## Week
 - Prepare Zoom with Celia about African genomes

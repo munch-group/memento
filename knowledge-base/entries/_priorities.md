@@ -13,7 +13,7 @@
 -  Shannon's papers  [[mui1eaefsta4|Shannon plan]]
 - PsychENCODE access request
 - Plan/tidy in Memento
-- See what to move from cDEGexploration to crossrepo/tracks_template.ipynb before extracting small meta-analysis repo[[mu2ewecoa8tg|Overview / Tidy plan]] 
+- Finish [[mu2ewecoa8tg|Overview / Tidy plan]] 
 
 ## Month
 - Funding wrap-up incl. UKbiobank and publication charges for Meritxell's paper
